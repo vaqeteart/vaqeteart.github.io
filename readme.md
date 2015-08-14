@@ -54,13 +54,14 @@ $sudo make install
 	    Done installing documentation for bundler, bundle after 4 seconds
 	    2 gems installed
 	```  
-	注：
-		* 此处安装可能会有错误，提示类似如下：
+	注：  
+		* 此处安装可能会有错误，提示类似如下：  
 		```
 		$gem install bundle
 		ERROR:  While executing gem ... (Gem::Exception)
 		Unable to require openssl, install OpenSSL and rebuild ruby (preferred) or use non-HTTPS sources
 		```
+
 		* 如果这样，我们可以查看一下源信息：  
 		```
 		$ gem sources -l
@@ -69,18 +70,19 @@ $sudo make install
 		https://rubygems.org/
 
 		```  
-    	* 然后换一个没有被“墙”的代理，如下尝试：
-    	```
-    	$ gem sources --remove https://rubygems.org/
-		  https://rubygems.org/ removed from sources
-		  $ gem sources -a http://ruby.taobao.org/
-		  http://ruby.taobao.org/ added to sources
-		  $ gem sources -l
-		  *** CURRENT SOURCES ***
+		* 然后换一个没有被“墙”的代理，如下尝试：  
+		```
+		$ gem sources --remove https://rubygems.org/
+		https://rubygems.org/ removed from sources
+		$ gem sources -a http://ruby.taobao.org/
+		http://ruby.taobao.org/ added to sources
+		$ gem sources -l
+		*** CURRENT SOURCES ***
 
-		  http://ruby.taobao.org/
+		http://ruby.taobao.org/
 
-    	```
+		```
+
 	- 配置***Gemfile***文件  
 	```
 	$>Gemfile
@@ -93,20 +95,21 @@ $sudo make install
 	```
 	- 安装jekyll环境  
 	下面根据实际安装时出现的状况，给出两种方式。  
-		1. 方式一、利用bundle安装与更新(***报错***, 待解决)
+		1. 方式一、利用bundle安装与更新(***报错***, 待解决)  
 		  ```
 		  $ bundle install
 		  参考：/home/miracle/bund.log
 		  $ bundle update
 		  ```
-		2. 方式二、手动安装：
+
+		2. 方式二、手动安装：  
 		```
 		$sudo gem update --system
 		$sudo gem install jekyll
 		$jekyll --version
 		```
-		可能遇到的问题：
-			* 如果`jekyll --version`运行失败，安装依赖
+		可能遇到的问题：  
+			* 如果`jekyll --version`运行失败，安装依赖  
 			```
 			$sudo gem install directory_watcher
 			$sudo gem install liquid
@@ -120,7 +123,7 @@ $sudo make install
 			$sudo apt-get install nodejs
 			$jekyll --version
 			```
-			* 如果nodejs安装失败，手动源码安装
+			* 如果nodejs安装失败，手动源码安装  
 			```
 			$ sudo apt-get install python
 			$ sudo apt-get install build-essential
@@ -136,7 +139,7 @@ $sudo make install
 			$node -v
 			v0.12.7
 			```
-	- 启动和转化本地服务  
+	- 启动和转化本地服务    
 	`$ bundle exec jekyll serve`
 
 ___
