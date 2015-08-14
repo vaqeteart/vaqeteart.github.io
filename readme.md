@@ -41,25 +41,25 @@ $sudo make install
 + 搭建和github一样的环境  
 	- 安装bundle  
 	```
-	    $ sudo gem install bundle
-	    [sudo] password for quietheart:
-	    Fetching: bundler-1.10.6.gem (100%)
-	    Successfully installed bundler-1.10.6
-	    Fetching: bundle-0.0.1.gem (100%)
-	    Successfully installed bundle-0.0.1
-	    Parsing documentation for bundler-1.10.6
-	    Installing ri documentation for bundler-1.10.6
-	    Parsing documentation for bundle-0.0.1
-	    Installing ri documentation for bundle-0.0.1
-	    Done installing documentation for bundler, bundle after 4 seconds
-	    2 gems installed
+    $ sudo gem install bundle
+    [sudo] password for quietheart:
+    Fetching: bundler-1.10.6.gem (100%)
+    Successfully installed bundler-1.10.6
+    Fetching: bundle-0.0.1.gem (100%)
+    Successfully installed bundle-0.0.1
+    Parsing documentation for bundler-1.10.6
+    Installing ri documentation for bundler-1.10.6
+    Parsing documentation for bundle-0.0.1
+    Installing ri documentation for bundle-0.0.1
+    Done installing documentation for bundler, bundle after 4 seconds
+    2 gems installed
 	```  
 	注：  
 		* 此处安装可能会有错误，提示类似如下：  
 		```
-		$gem install bundle
-		ERROR:  While executing gem ... (Gem::Exception)
-		Unable to require openssl, install OpenSSL and rebuild ruby (preferred) or use non-HTTPS sources
+        $gem install bundle
+        ERROR:  While executing gem ... (Gem::Exception)
+        Unable to require openssl, install OpenSSL and rebuild ruby (preferred) or use non-HTTPS sources
 		```
 
 		* 如果这样，我们可以查看一下源信息：  
@@ -95,49 +95,49 @@ $sudo make install
 	```
 	- 安装jekyll环境  
 	下面根据实际安装时出现的状况，给出两种方式。  
-		1. 方式一、利用bundle安装与更新(***报错***, 待解决)  
-		  ```
-		  $ bundle install
-		  $ bundle update
-		  ```
+        1. 方式一、利用bundle安装与更新(***报错***, 待解决)  
+          ```
+          $ bundle install
+          $ bundle update
+          ```
 
-		2. 方式二、手动安装：  
-		```
-		$sudo gem update --system
-		$sudo gem install jekyll
-		$jekyll --version
-		```  
-		可能遇到的问题：  
-			* 如果`jekyll --version`运行失败，安装依赖  
-			```
-			$sudo gem install directory_watcher
-			$sudo gem install liquid
-			$sudo gem install open4
-			$sudo gem install maruku
-			$sudo gem install classifier
-			$sudo gem install rdiscount
-			$sudo gem install rouge
-			$sudo gem install therubyracer
-			$sudo gem install execjs
-			$sudo apt-get install nodejs
-			$jekyll --version
-			```  
-			* 如果nodejs安装失败，手动源码安装  
-			```
-			$ sudo apt-get install python
-			$ sudo apt-get install build-essential
-			$ sudo apt-get install gcc
-			$ sudo apt-get install g++
-			$ wget -c https://nodejs.org/dist/v0.12.7/node-v0.12.7.tar.gz
-			$ tar -xzvf node-v0.12.7.tar.gz
-			$ mkdir -p ~/myinstalled
-			$ mv node-v0.12.7 ~/myinstalled && cd ~/myinstalled
-			$./configure
-			$make
-			$sudo make install
-			$node -v
-			v0.12.7
-			```
+        2. 方式二、手动安装：  
+        ```
+        $sudo gem update --system
+        $sudo gem install jekyll
+        $jekyll --version
+        ```  
+        可能遇到的问题：  
+            * 如果`jekyll --version`运行失败，安装依赖  
+            ```
+            $sudo gem install directory_watcher
+            $sudo gem install liquid
+            $sudo gem install open4
+            $sudo gem install maruku
+            $sudo gem install classifier
+            $sudo gem install rdiscount
+            $sudo gem install rouge
+            $sudo gem install therubyracer
+            $sudo gem install execjs
+            $sudo apt-get install nodejs
+            $jekyll --version
+            ```  
+            * 如果nodejs安装失败，手动源码安装  
+            ```
+            $ sudo apt-get install python
+            $ sudo apt-get install build-essential
+            $ sudo apt-get install gcc
+            $ sudo apt-get install g++
+            $ wget -c https://nodejs.org/dist/v0.12.7/node-v0.12.7.tar.gz
+            $ tar -xzvf node-v0.12.7.tar.gz
+            $ mkdir -p ~/myinstalled
+            $ mv node-v0.12.7 ~/myinstalled && cd ~/myinstalled
+            $./configure
+            $make
+            $sudo make install
+            $node -v
+            v0.12.7
+            ```
 	- 启动和转化本地服务  
 	`$ bundle exec jekyll serve`
 
