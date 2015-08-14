@@ -1,12 +1,33 @@
-<html>
+---
+layout: default
+title: 首页
+---
 
-<head>
+<ul class="post-list">
+    {% for post in site.posts %}
+        <a href="{{site.baseurl}}{{post.url}}"> {{ post.title }}  </a> <br>
+        {{ post.date | date: "%F" }} <br>
+        {{ post.category }} <br>
+    {% endfor %}
+</ul>
+
+<!--ul class="post-list">
+    {% for post in site.posts %}
+        <a href="{{site.baseurl}}{{post.url}}"> {{ post.title }}  </a> <br>
+        {{ post.date | date: "%F" }} <br>
+        {{ post.category }} <br>
+        {{ post.excerpt }}
+    {% endfor %}
+</ul-->
+
+<!--html-->
+<!--head-->
 <!-- Auto redirect for test.-->
-<meta http-equiv="refresh" content="5; url=http://quietheart.cublog.cn">
-</head>
+<!--meta http-equiv="refresh" content="5; url=http://quietheart.cublog.cn"-->
+<!--/head-->
 
-<body>
+<!--body>
 hello world!
 Auto redirect.
-<body>
-</html>
+<body-->
+<!--/html-->

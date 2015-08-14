@@ -147,7 +147,12 @@ http://www.pchou.info/web-build/2014/07/04/build-github-blog-page-08.html
 https://pages.github.com/
 https://help.github.com/articles/using-jekyll-with-pages/
 http://www.cnblogs.com/netbuddy/p/3501147.html
-http://www.cnblogs.com/purediy/archive/2013/03/07/2948892.html
+
 
 http://segmentfault.com/q/1010000000476530
 http://www.cnblogs.com/hwpayg/archive/2012/11/04/2753404.html
+
+good:
+http://www.cnblogs.com/purediy/archive/2013/03/07/2948892.html
+http://blog.csdn.net/on_1y/article/details/19259435
+https://github.com/minixalpha/minixalpha.github.io
