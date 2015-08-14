@@ -156,3 +156,4 @@ good:
 http://www.cnblogs.com/purediy/archive/2013/03/07/2948892.html
 http://blog.csdn.net/on_1y/article/details/19259435
 https://github.com/minixalpha/minixalpha.github.io
+http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html
