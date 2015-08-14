@@ -139,7 +139,64 @@ $sudo make install
             v0.12.7
             ```
 	- 启动和转化本地服务  
-	`$ bundle exec jekyll serve`
+	`$ bundle exec jekyll serve`（失败）
+
+建立站点文件：
+```
+miracle@miracle-Zhaoyang-E49:~/github/vaqeteart.github.io$ pwd
+/home/miracle/github/vaqeteart.github.io
+miracle@miracle-Zhaoyang-E49:~/github/vaqeteart.github.io$ tree
+.
+├── assets
+├── _config.yml
+├── _includes
+├── index.html
+├── _layouts
+│   └── default.html
+├── _plugins
+├── _posts
+│   └── 2015-08-14-first_page.md
+├── readme.md
+└── _site
+    ├── index.html
+    ├── readme.md
+    └── 工具
+        └── 2015
+            └── 08
+                └── 14
+                    └── first_page.html
+
+```
+
+运行编译：
+```
+miracle@miracle-Zhaoyang-E49:~/github/vaqeteart.github.io$ jekyll build
+Configuration file: /media/sda6/study/github/vaqeteart.github.io/_config.yml
+            Source: /media/sda6/study/github/vaqeteart.github.io
+       Destination: /media/sda6/study/github/vaqeteart.github.io/_site
+      Generating...
+                    done.
+ Auto-regeneration: disabled. Use --watch to enable.
+```
+如果语法错误会提示。
+
+运行服务器：
+```
+miracle@miracle-Zhaoyang-E49:~/github/vaqeteart.github.io$ jekyll server
+Configuration file: /media/sda6/study/github/vaqeteart.github.io/_config.yml
+            Source: /media/sda6/study/github/vaqeteart.github.io
+       Destination: /media/sda6/study/github/vaqeteart.github.io/_site
+      Generating...
+                    done.
+ Auto-regeneration: enabled for '/media/sda6/study/github/vaqeteart.github.io'
+Configuration file: /media/sda6/study/github/vaqeteart.github.io/_config.yml
+    Server address: http://127.0.0.1:4000/
+  Server running... press ctrl-c to stop.
+      Regenerating: 1 file(s) changed at 2015-08-14 18:56:40 ...done in 0.018106602 seconds.
+```
+如果不知道命令可以运行`jelly --help`
+
+运行之后，可以在浏览器上通过`http://127.0.0.1:4000/`访问页面。
 
 ___
 ### 参考资料：
