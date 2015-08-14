@@ -4,7 +4,7 @@
 `username/username.github.io`
 
 + 检出仓库：  
-`$git clone https://github.com/username/username.github.io`
+`$git clone https://github.com/username/username.github.io`  
 个人主页的网站内容是在master分支下的。
 
 + 创建主页：  
@@ -35,7 +35,7 @@ $cd ~/myinstalled/ruby-2.2.2
 $./configure
 $make
 $sudo make install
-```
+```  
 这里要求ruby大于2.0.0，所以直接从官方下载源代码安装。
 
 + 搭建和github一样的环境  
@@ -69,7 +69,7 @@ $sudo make install
 
 		https://rubygems.org/
 
-		```  
+ 		```
 		* 然后换一个没有被“墙”的代理，如下尝试：  
 		```
 		$ gem sources --remove https://rubygems.org/
@@ -98,7 +98,6 @@ $sudo make install
 		1. 方式一、利用bundle安装与更新(***报错***, 待解决)  
 		  ```
 		  $ bundle install
-		  参考：/home/miracle/bund.log
 		  $ bundle update
 		  ```
 
@@ -107,7 +106,7 @@ $sudo make install
 		$sudo gem update --system
 		$sudo gem install jekyll
 		$jekyll --version
-		```
+		```  
 		可能遇到的问题：  
 			* 如果`jekyll --version`运行失败，安装依赖  
 			```
@@ -122,7 +121,7 @@ $sudo make install
 			$sudo gem install execjs
 			$sudo apt-get install nodejs
 			$jekyll --version
-			```
+			```  
 			* 如果nodejs安装失败，手动源码安装  
 			```
 			$ sudo apt-get install python
@@ -139,7 +138,7 @@ $sudo make install
 			$node -v
 			v0.12.7
 			```
-	- 启动和转化本地服务    
+	- 启动和转化本地服务  
 	`$ bundle exec jekyll serve`
 
 ___
