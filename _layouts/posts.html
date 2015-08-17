@@ -3,7 +3,7 @@
   <head>
     <meta charset='utf-8'>
     <link rel="stylesheet" type="text/css"
-      href="/assets/css/home.css" media="screen" />
+      href="/assets/css/posts.css" media="screen" />
     <!--link rel="stylesheet" type="text/css"
       href="/assets/css/pygments.css" media="screen" /-->
     <title>{{ page.title }}</title>
@@ -30,20 +30,16 @@
         </div>
       </header>
 
+      <h1>{{ page.title }}</h1>
       <article>
-        <ul class="post-list">
-          {% for post in site.posts %}
-            <a href="{{site.baseurl}}{{post.url}}"> {{ post.title }}  </a> <br>
-            {{ post.date | date: "%F" }} <br>
-          {% endfor %}
-        </ul>
+        <div>
+          {{ content }}
+        </div>
       </article>
-
 
       <footer>
         Copyright (c) 2015
       </footer>
-
     </div>
   </body>
 </html>

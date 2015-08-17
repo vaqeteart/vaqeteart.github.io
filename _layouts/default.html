@@ -3,15 +3,18 @@
   <head>
     <meta charset='utf-8'>
     <!--link rel="stylesheet" type="text/css"
-      href="/assets/css/straybirds.css" media="screen" /-->
+      href="/assets/css/default.css" media="screen" /-->
     <!--link rel="stylesheet" type="text/css"
       href="/assets/css/pygments.css" media="screen" /-->
     <title>{{ page.title }}</title>
   </head>
 
   <body>
-    {% include category_list.ext %}
     <div class="container">
+      <aside id="left-side">
+        {% include category_list.ext %}
+      </aside>
+
       <header>
         <div class="container">
           <h1>

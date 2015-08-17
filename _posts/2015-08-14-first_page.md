@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: posts
 title: My first page
 category: study
 comments: true
