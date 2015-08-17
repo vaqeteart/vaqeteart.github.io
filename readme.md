@@ -198,6 +198,8 @@ Configuration file: /media/sda6/study/github/vaqeteart.github.io/_config.yml
 
 运行之后，可以在浏览器上通过`http://127.0.0.1:4000/`访问页面。
 
+rake page
+
 ___
 ### 参考资料：
 http://www.pchou.info/web-build/2014/07/04/build-github-blog-page-08.html

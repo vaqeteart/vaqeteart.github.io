@@ -1,0 +1,24 @@
+<aside id="left-side">
+  <h2> 分类 </h2>
+  <ul class="category-list">
+    <li>
+      <a href="/categories/note"> 记事 (20) </a>
+    </li>
+
+    <li>
+      <a href="/categories/life"> 生活 (20) </a>
+    </li>
+
+    <li>
+      <a href="/categories/study"> 学习 (3) </a>
+    </li>
+
+    <li>
+      <a href="/categories/work"> 工作 (6) </a>
+    </li>
+
+    <li>
+      <a href="/categories/others"> 其它 (6) </a>
+    </li>
+  </ul>
+</aside>
