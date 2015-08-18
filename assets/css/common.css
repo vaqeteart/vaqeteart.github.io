@@ -1,8 +1,8 @@
 body {
     background:
-      url('/assets/images/bg3.jpg');
+      url('/assets/images/bg2.jpg');
     background-size: cover;
-    color: #D6DBDF;
+    color: #000000;
     font-family:
         Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
     height: 100%;
@@ -12,6 +12,13 @@ body {
 .container {
     min-height: 100%;
     position: relative;
+}
+
+header {
+    height: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 aside {
@@ -26,4 +33,30 @@ aside {
 
 #right-side {
     float: right;
+}
+
+article {
+    background-color: #444;
+    opacity: 0.2;
+    width: 1000px;
+    margin: 0px 300px 0px 250px;
+    padding: 10px 40px 10px 40px;
+    font-size: 120%;
+}
+
+footer {
+    height: 20px;
+    width: 100%;
+    clear: both;
+    text-align: center;
+    margin: 20px 0px 10px 0px;
+}
+
+a {
+  color: #08c;
+  text-decoration: none;
+}
+
+h1 {
+  text-align: center;
 }
