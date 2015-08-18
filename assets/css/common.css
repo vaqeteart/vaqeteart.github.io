@@ -1,0 +1,29 @@
+body {
+    background:
+      url('/assets/images/bg3.jpg');
+    background-size: cover;
+    color: #D6DBDF;
+    font-family:
+        Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+    height: 100%;
+    line-height: 27px;
+}
+
+.container {
+    min-height: 100%;
+    position: relative;
+}
+
+aside {
+    width: 200px;
+    height: 700px;
+    font-size: 120%;
+}
+
+#left-side {
+    float: left;
+}
+
+#right-side {
+    float: right;
+}

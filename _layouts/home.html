@@ -1,48 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    {% include common_header.ext %}
     <link rel="stylesheet" type="text/css"
       href="/assets/css/home.css" media="screen" />
-    <!--link rel="stylesheet" type="text/css"
-      href="/assets/css/pygments.css" media="screen" /-->
-    <title>{{ page.title }}</title>
   </head>
 
   <body>
     <div class="container">
-      <aside id="left-side">
-        {% include category_list.ext %}
-      </aside>
+      {% include common_page_header.ext %}
 
-      <header>
-        <div class="container">
-          <h1>
-            <a href="/" title="Home Page"> QuietHeart</a>
-          <!--span class="github-src">
-            <a href ="https://github.com/minixalpha/minixalpha.github.io"
-               target="_blank"
-               title="Fork me on GitHub">
-              <img src="/assets/images/GitHub-Mark-Light-32px.png" alt="">
-            </a>
-          </span-->
-          </h1>
-        </div>
-      </header>
+      {% include category_list.ext %}
 
-      <article>
-        <ul class="post-list">
-          {% for post in site.posts %}
-            <a href="{{site.baseurl}}{{post.url}}"> {{ post.title }}  </a> <br>
-            {{ post.date | date: "%F" }} <br>
-          {% endfor %}
-        </ul>
-      </article>
+      {% include home_posts.ext %}
 
-
-      <footer>
-        Copyright (c) 2015
-      </footer>
+      {% include common_footer.ext %}
 
     </div>
   </body>

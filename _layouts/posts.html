@@ -1,45 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    {% include common_header.ext %}
     <link rel="stylesheet" type="text/css"
       href="/assets/css/posts.css" media="screen" />
-    <!--link rel="stylesheet" type="text/css"
-      href="/assets/css/pygments.css" media="screen" /-->
-    <title>{{ page.title }}</title>
   </head>
 
   <body>
     <div class="container">
-      <aside id="left-side">
-        {% include category_list.ext %}
-      </aside>
+      {% include common_page_header.ext %}
 
-      <header>
-        <div class="container">
-          <h1>
-            <a href="/" title="Home Page"> QuietHeart</a>
-          <!--span class="github-src">
-            <a href ="https://github.com/minixalpha/minixalpha.github.io"
-               target="_blank"
-               title="Fork me on GitHub">
-              <img src="/assets/images/GitHub-Mark-Light-32px.png" alt="">
-            </a>
-          </span-->
-          </h1>
-        </div>
-      </header>
+      {% include category_list.ext %}
 
-      <h1>{{ page.title }}</h1>
-      <article>
-        <div>
-          {{ content }}
-        </div>
-      </article>
+      {% include post_content.ext %}
 
-      <footer>
-        Copyright (c) 2015
-      </footer>
+      {% include common_footer.ext %}
     </div>
   </body>
 </html>
