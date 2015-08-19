@@ -1,7 +1,8 @@
 body {
     background:
-      url('/assets/images/bg2.jpg');
-    background-size: cover;
+      url('/assets/images/bg7.jpg');
+    /*background-size: cover;*/
+    background-size: repeat;
     color: #000000;
     font-family:
         Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;

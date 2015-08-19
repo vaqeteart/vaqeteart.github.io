@@ -2,23 +2,23 @@
   <h2> 分类 </h2>
   <ul class="category-list">
     <li>
-      <a href="/categories/note"> 记事 (20) </a>
+      <a href="/categories/note"> 记事 </a>
     </li>
 
     <li>
-      <a href="/categories/life"> 生活 (20) </a>
+      <a href="/categories/life"> 生活 </a>
     </li>
 
     <li>
-      <a href="/categories/study"> 学习 (3) </a>
+      <a href="/categories/study"> 学习 </a>
     </li>
 
     <li>
-      <a href="/categories/work"> 工作 (6) </a>
+      <a href="/categories/work"> 工作 </a>
     </li>
 
     <li>
-      <a href="/categories/others"> 其它 (6) </a>
+      <a href="/categories/others"> 其它 </a>
     </li>
   </ul>
 </aside>
