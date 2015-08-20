@@ -1,0 +1,75 @@
+<tr>
+  <!--td height="38"><img height="38" src="images/leftlist_head.jpg" width="200" /></td-->
+  <td height="38">分类</td>
+</tr>
+<tr>
+  <td align="center" valign="top" background="images/leftlist_bg.jpg">
+    <TABLE cellSpacing=0 cellPadding=0 width="88%" border=0>
+      <TBODY>
+        <TR>
+          <TD style="PADDING-LEFT: 20px" background="" height=23>
+            <A href="www.baidu.com">文管产品</A>
+          </TD>
+        </TR>
+        <TR id=LM1><!-- 如何设置展开和折叠? -->
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+                <TR>
+                  <TD style="PADDING-LEFT: 40px" height=23>
+                    <A title=文件夹  href="http://www.knowsky.com/" target=_parent>文件夹</A>
+                  </TD>
+                </TR>
+                <TR>
+                  <TD background="" height=3></TD>
+                </TR>
+                <TR>
+                  <TD style="PADDING-LEFT: 40px" height=23>
+                    <A title=资料册  href="http://www.knowsky.com/" target=_parent>文件夹</A>
+                  </TD>
+                </TR>
+                <TR>
+                  <TD background="" height=3></TD>
+                </TR>
+              </TBODY>
+            </TABLE>
+          </TD>
+        </TR>
+        <TR>
+          <TD style="PADDING-LEFT: 20px" background="" height=23>
+            <A  href="www.baidu.com">桌面文具</A>
+          </TD>
+        </TR>
+        <TR id=LM2 style="DISPLAY: none">
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+                <TR>
+                  <TD style="PADDING-LEFT: 40px" height=23>
+                    <A title=削笔机 href="http://www.knowsky.com/" target=_parent>削笔机</A>
+                  </TD>
+                </TR>
+                <TR>
+                  <TD background="" height=3></TD>
+                </TR>
+                <TR>
+                  <TD style="PADDING-LEFT: 40px" height=23>
+                    <A title=订书机 href="http://www.knowsky.com/" target=_parent>订书机</A>
+                  </TD>
+                </TR>
+                <TR>
+                  <TD background="" height=3></TD>
+                </TR>
+              </TBODY>
+            </TABLE>
+          </TD>
+        </TR>
+        <TR>
+          <TD style="PADDING-LEFT: 20px" background="" height=23>
+            <A title=碎纸机 href="http://www.knowsky.com/" target=_parent>碎纸机</A>
+          </TD>
+        </TR>
+      </TBODY>
+    </TABLE>
+  </td>
+</tr>

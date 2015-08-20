@@ -1,24 +1,69 @@
 <aside id="left-side">
-  <h2> 分类 </h2>
-  <ul class="category-list">
-    <li>
-      <a href="/categories/note"> 记事 </a>
-    </li>
-
-    <li>
-      <a href="/categories/life"> 生活 </a>
-    </li>
-
-    <li>
-      <a href="/categories/study"> 学习 </a>
-    </li>
-
-    <li>
-      <a href="/categories/work"> 工作 </a>
-    </li>
-
-    <li>
-      <a href="/categories/others"> 其它 </a>
-    </li>
-  </ul>
+  <table width="200" height="250" border="1" align="center" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <!--td height="38"><img height="38" src="images/leftlist_head.jpg" width="200" /></td-->
+        <td height="38">分类</td>
+      </tr>
+      <tr>
+        <td align="center" valign="top" background="images/leftlist_bg.jpg">
+          <TABLE cellSpacing=0 cellPadding=0 width="88%" border=0>
+            <TBODY>
+              <!-- 一级分类 -->
+              <TR>
+                <TD style="PADDING-LEFT: 20px" background="" height=23>
+                  <A title=note href="/categories/note">记事</A>
+                </TD>
+              </TR>
+              <TR id=LM1><!-- 如何设置展开和折叠? -->
+                <TD>
+                  <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+                    <TBODY>
+                      <!-- 二级分类 -->
+                      <TR>
+                        <TD style="PADDING-LEFT: 30px" height=23>
+                          <A title=memo  href="http://www.knowsky.com/" target=_parent>备忘</A>
+                        </TD>
+                      </TR>
+                      <TR>
+                        <TD background="" height=3></TD>
+                      </TR>
+                      <TR>
+                        <TD style="PADDING-LEFT: 30px" height=23>
+                          <A title=plan  href="http://www.knowsky.com/" target=_parent>计划</A>
+                        </TD>
+                      </TR>
+                      <TR>
+                        <TD background="" height=3></TD>
+                      </TR>
+                    </TBODY>
+                  </TABLE>
+                </TD>
+              </TR>
+              <TR>
+                <TD style="PADDING-LEFT: 20px" background="" height=23>
+                  <A title=study href="/categories/study">学习</A>
+                </TD>
+              </TR>
+              <TR>
+                <TD style="PADDING-LEFT: 20px" background="" height=23>
+                  <A title=work href="/categories/work" target=_parent>工作</A>
+                </TD>
+              </TR>
+              <TR>
+                <TD style="PADDING-LEFT: 20px" background="" height=23>
+                  <A title=life href="/categories/life" target=_parent>生活</A>
+                </TD>
+              </TR>
+              <TR>
+                <TD style="PADDING-LEFT: 20px" background="" height=23>
+                  <A title=others href="/categories/others" target=_parent>其它</A>
+                </TD>
+              </TR>
+            </TBODY>
+          </TABLE>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </aside>
