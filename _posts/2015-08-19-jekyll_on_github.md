@@ -18,11 +18,11 @@ comments: true
 
 + 创建主页：  
 ```
-$cd username.github.io  
-$echo "Hello World" > index.html  
-$git add --all  
-$git commit -m "Initial commit"  
-$git push -u origin master  
+  $cd username.github.io  
+  $echo "Hello World" > index.html  
+  $git add --all  
+  $git commit -m "Initial commit"  
+  $git push -u origin master  
 ```
 注意：第一次push的时候使用`-u origin master`，以后直接用`git push`命令即可。
 
