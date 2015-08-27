@@ -1,6 +1,10 @@
-<ul class="post-list">
-  {% for post in site.posts %}
-    <a href="{{site.baseurl}}{{post.url}}"> {{ post.title }}  </a> <br>
-    {{ post.date | date: "%F" }} <br>
-  {% endfor %}
-</ul>
+<article>
+  <div>
+    <ul class="post-list">
+      {% for post in site.posts %}
+        <a href="{{site.baseurl}}{{post.url}}"> {{ post.title }}  </a> <br>
+        {{ post.date | date: "%F" }} <br>
+      {% endfor %}
+    </ul>
+  </div>
+</article>

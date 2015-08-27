@@ -1,6 +1,7 @@
 body {
-    background:
-      url('/assets/images/bg7.jpg');
+    /*background:
+      url('/assets/images/bg7.jpg');*/
+    background-color: #228B22;
     /*background-size: cover;*/
     background-size: repeat;
     color: #000000;
@@ -29,11 +30,19 @@ aside {
 }
 
 #left-side {
+    background-color: #006400;
     float: left;
 }
 
 #right-side {
     float: right;
+}
+
+hr {
+  align: center;
+  width: 300;
+  color: 987cb9;
+  size: 1;
 }
 
 article {

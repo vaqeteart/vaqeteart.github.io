@@ -1,37 +1,38 @@
+<script src="/assets/js/categories.js"></script>
 <aside id="left-side">
   <h2> 分类 </h2>
   <ul>
-    <li onclick="note_lv1.style.display='block'">
+    <li onclick="change_fold('note_lv1')">
       <a href="/categories/note"> 记事 </a>
-      <ul id="note_lv1" style="display:none; margin-left:10px;">
+      <ul id="note_lv1" style="margin-left:1px;">
         <li>备忘</li>
         <li>计划</li>
       </ul>
     </li>
-    <li onclick="study_lv1.style.display='block'">
+    <li onclick="change_fold('study_lv1')">
       <a href="/categories/study"> 学习 </a>
-      <ul id="study_lv1" style="display:none; margin-left:10px;">
+      <ul id="study_lv1" style="margin-left:1px;">
         <li>第2节点--1</li>
         <li>第2节点--2</li>
       </ul>
     </li>
-    <li onclick="work_lv1.style.display='block'">
+    <li onclick="change_fold('work_lv1')">
       <a href="/categories/work"> 工作 </a>
-      <ul id="work_lv1" style="display:none; margin-left:10px;">
+      <ul id="work_lv1" style="margin-left:1px;">
         <li>第2节点--1</li>
         <li>第2节点--2</li>
       </ul>
     </li>
-    <li onclick="life_lv1.style.display='block'">
+    <li onclick="change_fold('life_lv1')">
       <a href="/categories/life"> 生活 </a>
-      <ul id="life_lv1" style="display:none; margin-left:10px;">
+      <ul id="life_lv1" style="margin-left:1px;">
         <li>第2节点--1</li>
         <li>第2节点--2</li>
       </ul>
     </li>
-    <li onclick="others_lv1.style.display='block'">
+    <li onclick="change_fold('others_lv1')">
       <a href="/categories/others"> 其它 </a>
-      <ul id="others_lv1" style="display:none; margin-left:10px;">
+      <ul id="others_lv1" style="margin-left:1px;">
         <li>第2节点--1</li>
         <li>第2节点--2</li>
       </ul>
