@@ -2,7 +2,7 @@ function change_fold(id)
 {
   //var display=e.getAttribute("data-id");
   e = document.getElementById(id);
-  ee = e.parent;
+  //ee = e.parent;
   if ( e.style.display == "block")
   {
     e.style.display='none';

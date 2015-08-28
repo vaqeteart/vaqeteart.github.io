@@ -4,6 +4,7 @@
       {% for post in site.posts %}
         <a href="{{site.baseurl}}{{post.url}}"> {{ post.title }}  </a> <br>
         {{ post.date | date: "%F" }} <br>
+        <a href="/categories/{{ post.category }}"> {{site.baseurl}}/{{ post.category }} </a> <br>
       {% endfor %}
     </ul>
   </div>

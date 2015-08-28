@@ -12,29 +12,27 @@
     <li onclick="change_fold('study_lv1')">
       <a href="/categories/study"> 学习 </a>
       <ul id="study_lv1" style="margin-left:1px;">
-        <li>第2节点--1</li>
-        <li>第2节点--2</li>
+        <li>问题</li>
       </ul>
     </li>
     <li onclick="change_fold('work_lv1')">
       <a href="/categories/work"> 工作 </a>
       <ul id="work_lv1" style="margin-left:1px;">
-        <li>第2节点--1</li>
-        <li>第2节点--2</li>
+        <li>进度</li>
       </ul>
     </li>
     <li onclick="change_fold('life_lv1')">
       <a href="/categories/life"> 生活 </a>
       <ul id="life_lv1" style="margin-left:1px;">
-        <li>第2节点--1</li>
-        <li>第2节点--2</li>
+        <li>经验技巧</li>
+        <li>小常识</li>
       </ul>
     </li>
     <li onclick="change_fold('others_lv1')">
       <a href="/categories/others"> 其它 </a>
       <ul id="others_lv1" style="margin-left:1px;">
-        <li>第2节点--1</li>
-        <li>第2节点--2</li>
+        <li>测试</li>
+        <li>临时</li>
       </ul>
     </li>
   </ul>
