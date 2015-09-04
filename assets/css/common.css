@@ -1,7 +1,7 @@
 body {
     /*background:
       url('/assets/images/bg7.jpg');*/
-    background-color: #228B22;
+    //background-color: #228B22;
     /*background-size: cover;*/
     background-size: repeat;
     color: #000000;
@@ -46,9 +46,9 @@ hr {
 }
 
 article {
-    background-color: #444;
+    //background-color: #444;
     /*opacity: 0.2;*/
-    background-color:rgba(0,0,0,0.2);
+    //background-color:rgba(0,0,0,0.2);
     width: 1000px;
     margin: 0px 300px 0px 250px;
     padding: 10px 40px 10px 40px;

@@ -6,7 +6,7 @@
       href="/assets/css/home.css" media="screen" />
   </head>
 
-  <body>
+  <body onload="change_category('{{ page._name }}')">
     <div class="container">
       {% include common_page_header.ext %}
 
@@ -15,6 +15,7 @@
       {% include home_posts.ext %}
 
       {% include common_footer.ext %}
+      //<script>alert({{ site.categories["study"]["index.html"].name }});</script>
     </div>
   </body>
 </html>

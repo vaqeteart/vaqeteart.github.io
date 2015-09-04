@@ -19,3 +19,16 @@ function change_fold(id)
     //ee.type='circle';
   }
 }
+
+function change_category(id)
+{
+    e = document.getElementById(id);
+    //{% for post in site.posts[page.category] %}
+    //    alert({{ 'post._name' }});
+    //{% endfor %}
+    if (e != null)
+    {
+        e.style.display = "block";
+    }
+    //home_state = "category"
+}

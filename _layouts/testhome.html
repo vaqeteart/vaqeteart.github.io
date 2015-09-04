@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            var page_info = 
+            {
+            layout: "home",
+            title: "主页",
+            _name: "home",
+            _parent: ""
+            };
+            var home_states = 
+            {
+                home:"home_posts.ext", 
+                category:"category_posts.ext", 
+                post:"post_content.ext"
+            };
+            var home_state = "category";
+        </script>
+        {% include common_header.ext %}
+        <link rel="stylesheet" type="text/css"
+        href="/assets/css/home.css" media="screen" />
+    </head>
+
+    <body>
+        <div class="container">
+            {% include common_page_header.ext %}
+            {% include category_list.ext %}
+
+            <script>if (home_states[home_state] == "home_posts.ext"){</script>
+            {% include home_posts.ext %}
+
+            <script>}else if (home_states[home_state] == "category_posts.ext"){</script>
+            {% include category_posts.ext %}
+
+            <script>}else if (home_states[home_state] == "post_content.ext"){</script>
+            {% include post_content.ext %}
+            <script>}else {document.write("Unknown state!");}</script>
+            {% include common_footer.ext %}
+        </div>
+    </body>
+</html>
