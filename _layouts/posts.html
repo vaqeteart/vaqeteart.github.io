@@ -7,16 +7,20 @@
   </head>
 
   <body onload="change_category('category_{{page.categories | first}}')">
-    <div class="container">
-      {% include common_page_header.ext %}
-
-      {% include category_list.ext %}
-
-      {% include tag_list.ext %}
-
-      {% include post_content.ext %}
-
-      {% include common_footer.ext %}
-    </div>
+    <table class="container">
+        <tbody>
+            <tr>
+                <th id="td_page_header" colspan="6">{% include common_page_header.ext %}</td>
+            </tr>
+            <tr>
+                <td id="td_category_list"  colspan="1" valign="top">{% include category_list.ext %}</td>
+                <td id="td_posts" colspan="4" valign="top">{% include post_content.ext %}</td>
+                <td id="td_tag_list" colspan="1" valign="top">{% include tag_list.ext %}</td>
+            </tr>
+            <tr>
+                <td id="td_page_footer" colspan="6">{% include common_footer.ext %}</td>
+            </tr>
+        </tbody>
+    </table>
   </body>
 </html>
