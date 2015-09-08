@@ -99,7 +99,7 @@ article {
     height:100%;
     width: 100%;
     font-size: 120%;
-    overflow: auto;
+    overflow-x: auto;
     wrap:hard;
 }
 
