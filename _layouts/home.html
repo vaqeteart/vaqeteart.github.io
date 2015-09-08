@@ -6,16 +6,18 @@
       href="/assets/css/home.css" media="screen" />
   </head>
 
-  <body onload="change_category('{{ page._name }}')">
+  <body>
     <div class="container">
       {% include common_page_header.ext %}
 
       {% include category_list.ext %}
 
+      {% include tag_list.ext %}
+
       {% include home_posts.ext %}
 
       {% include common_footer.ext %}
-      //<script>alert({{ site.categories["study"]["index.html"].name }});</script>
+      
     </div>
   </body>
 </html>

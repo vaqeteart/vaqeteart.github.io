@@ -1,38 +1,60 @@
 <aside id="left-side" >
   <h2> 分类 </h2>
-  <ul>
-    <li onclick="change_fold('note')">
-      <a href="/categories/note"> 记事 </a>
-      <ul id="note" style="display:none;margin-left:1px;">
-        <li>备忘</li>
-        <li>计划</li>
-      </ul>
+  <ul id="category_ul" class="category_level0">
+    <li id="category_note" class="category_item_tree">
+        <span id="category_note_switch" class="tree_switch" onclick="switch_fold('category_note')">+</span>
+        <a href="/categories/note" > 
+            <span id="category_note_title">记事</span>
+            <span id="category_note_count">({{site.categories.note|size}})</span>
+        </a>
+        <ul id="category_note_ul" class="level1" style="display:none;">
+            <li id="category_note_remind">
+                <a href="">
+                    <span id="category_note_remind_title">备忘</span>
+                </a>
+            </li>
+            <li id="category_note_plan">
+                <a href="">
+                    <span id="category_note_plan_title">计划</span>
+                </a>
+            </li>
+        </ul>
     </li>
-    <li onclick="change_fold('study')">
-      <a href="/categories/study"> 学习 </a>
-      <ul id="study" style="display:none;margin-left:1px;">
-        <li>问题</li>
-      </ul>
+    <li id="category_study" onclick="change_fold('study')">
+        <a href="/categories/study"> 
+            <span>学习({{site.categories.study|size}})</span>
+        </a>
+        <ul id="category_study_ul" class="level1" style="display:none;margin-left:1px;">
+            <li id="category_study_problem">
+                <span>问题</span>
+            </li>
+        </ul>
     </li>
-    <li onclick="change_fold('work')">
-      <a href="/categories/work"> 工作 </a>
-      <ul id="work" style="display:none;margin-left:1px;">
-        <li>进度</li>
-      </ul>
+    <li id="category_work" onclick="change_fold('work')">
+        <a href="/categories/work"> 
+            <span>工作({{site.categories.work|size}})</span> 
+        </a>
+        <ul id="category_work_ul" class="level1" style="display:none;margin-left:1px;">
+            <li>
+                <span>进度</span>
+            </li>
+        </ul>
     </li>
-    <li onclick="change_fold('life')">
-      <a href="/categories/life"> 生活 </a>
-      <ul id="life" style="display:none;margin-left:1px;">
-        <li>经验技巧</li>
-        <li>小常识</li>
-      </ul>
+    <li id="category_life" onclick="change_fold('life')">
+        <a href="/categories/life"> 
+            <span>生活({{site.categories.life|size}})</span>
+        </a>
+        <ul id="category_life_ul" class="level1" style="display:none;margin-left:1px;">
+            <li>经验技巧</li>
+            <li>小常识</li>
+        </ul>
     </li>
-    <li onclick="change_fold('others')">
-      <a href="/categories/others"> 其它 </a>
-      <ul id="others" style="display:none;margin-left:1px;">
-        <li>测试</li>
-        <li>临时</li>
-      </ul>
+    <li id="category_others" onclick="change_fold('others')">
+        <a href="/categories/others"> 其它({{site.categories.others|size}}) </a>
+        <ul id="category_others_ul" class="level1" style="display:none;margin-left:1px;">
+            <li>测试</li>
+            <li>临时</li>
+        </ul>
     </li>
   </ul>
 </aside>

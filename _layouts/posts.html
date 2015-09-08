@@ -6,11 +6,13 @@
       href="/assets/css/posts.css" media="screen" />
   </head>
 
-  <body onload="change_category('{{ page._name }}')">
+  <body onload="change_category('category_{{page.categories | first}}')">
     <div class="container">
       {% include common_page_header.ext %}
 
       {% include category_list.ext %}
+
+      {% include tag_list.ext %}
 
       {% include post_content.ext %}
 

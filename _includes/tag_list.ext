@@ -1,0 +1,8 @@
+<aside id="right-side" >
+  <h2> 标签 </h2>
+  <ul id="tag_ul" class="tag_ul">
+    {% for tag in site.tags %}
+    <li id="{{ tag | first }}" onclick="change_tag(id)"> {{ tag |first }}({{tag |last |size}})</li>
+    {% endfor %}
+  </ul>
+</aside>

@@ -2,7 +2,8 @@ baseurl: ""
 markdown: rdiscount
 redcarpet:
     extensions: [tables]
-safe: false
+highlighter: true
+safe: true
 rouge: true
 excerpt_separator: "\n\n\n"
 paginate: 5
