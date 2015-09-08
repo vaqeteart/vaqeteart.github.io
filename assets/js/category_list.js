@@ -8,18 +8,18 @@ function switch_fold(id)
   if ( element_ul.style.display == "block")
   {
     element_ul.style.display='none';
-    element_switch.innerHTML="+"
+    element_switch.getElementsByTagName("img")[0].src="/assets/icons/blacks/16x16/br_next.png"
     //ee.type='circle';
   }
   else if (element_ul.style.display == "none")
   {
     element_ul.style.display='block';
-    element_switch.innerHTML="-"
+    element_switch.getElementsByTagName("img")[0].src="/assets/icons/blacks/16x16/br_down.png"
     //ee.type = 'disc';
   }
   else
   {
-    e.style.display='none';
+    alert("unknown for list item.");
     //ee.type='circle';
   }
 }
@@ -32,7 +32,7 @@ function change_category(id)
     if (e != null)
     {
         element_ul.style.display='block';
-        element_switch.innerHTML="-"
+        element_switch.getElementsByTagName("img")[0].src="/assets/icons/blacks/16x16/br_down.png"
     }
     //home_state = "category"
 }

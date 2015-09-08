@@ -2,7 +2,7 @@ baseurl: ""
 markdown: rdiscount
 redcarpet:
     extensions: [tables]
-highlighter: true
+highlighter: pygments
 safe: true
 rouge: true
 excerpt_separator: "\n\n\n"

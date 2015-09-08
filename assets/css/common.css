@@ -15,7 +15,7 @@ table.container {
     table-layout:fixed;
     height: 100%;
     width: 100%;
-    min-height: 1000;
+    min-height: 1000px;
     position: relative;
 }
 table.tr_page_content {
@@ -55,6 +55,7 @@ table.tr_page_content {
 #td_page_footer{
     align= center;
 }
+
 header {
     height: 100px;
     margin-top: 20px;
@@ -65,16 +66,19 @@ header {
 aside {
     width: 100%;
     font-size: 100%;
-    valign: top;
+    /*valign: top;*/
 }
 
+/*
 #left-side {
 }
 
 #right-side {
 }
+*/
 
 ul.category_level0 {
+    /*type: none; no use?*/
     height:90%;
 }
 
@@ -113,4 +117,9 @@ a {
 
 h1 {
   text-align: center;
+}
+
+img {
+    max-width:100%;
+    height:auto;
 }

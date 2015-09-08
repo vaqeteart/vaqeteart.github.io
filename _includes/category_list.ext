@@ -1,13 +1,13 @@
 <aside id="left-side" >
   <h2> 分类 </h2>
-  <ul id="category_ul" class="category_level0">
+  <ul id="category_ul" class="category_level0" type="none">
     <li id="category_note" class="category_item_tree">
-        <span id="category_note_switch" class="tree_switch" onclick="switch_fold('category_note')">+</span>
+        <span id="category_note_switch" class="tree_switch" onclick="switch_fold('category_note')"><img src="/assets/icons/blacks/16x16/br_next.png" /img></span>
         <a href="/categories/note" > 
             <span id="category_note_title">记事</span>
             <span id="category_note_count">({{site.categories.note|size}})</span>
         </a>
-        <ul id="category_note_ul" class="level1" style="display:none;">
+        <ul id="category_note_ul" class="category_level1" style="display:none;">
             <li class="category_item_tree_item" id="category_note_remind">
                 <a href="">
                     <span id="category_note_remind_title">备忘</span>
@@ -21,12 +21,12 @@
         </ul>
     </li>
     <li id="category_study"  class="category_item_tree">
-        <span id="category_study_switch" class="tree_switch" onclick="switch_fold('category_study')">+</span>
+        <span id="category_study_switch" class="tree_switch" onclick="switch_fold('category_study')"><img src="/assets/icons/blacks/16x16/br_next.png" /img></span>
         <a href="/categories/study"> 
             <span id="category_study_title">学习</span>
             <span id="category_study_count">({{site.categories.study|size}})</span>
         </a>
-        <ul id="category_study_ul" class="level1" style="display:none;">
+        <ul id="category_study_ul" class="category_level1" style="display:none;">
             <li class="category_item_tree_item" id="category_study_problem">
                 <a href="">
                     <span id="category_study_problem_title">问题</span>
@@ -35,12 +35,12 @@
         </ul>
     </li>
     <li id="category_work" class="category_item_tree">
-        <span id="category_work_switch" class="tree_switch" onclick="switch_fold('category_work')">+</span>
+        <span id="category_work_switch" class="tree_switch" onclick="switch_fold('category_work')"><img src="/assets/icons/blacks/16x16/br_next.png" /img></span>
         <a href="/categories/work"> 
             <span id="category_work_title">工作</span>
             <span id="category_work_count">({{site.categories.work|size}})</span> 
         </a>
-        <ul id="category_work_ul" class="level1" style="display:none;">
+        <ul id="category_work_ul" class="category_level1" style="display:none;">
             <li class="category_item_tree_item" id="category_work_item">
                 <a href="">
                     <span id="category_work_item_title">进度</span>
@@ -49,12 +49,12 @@
         </ul>
     </li>
     <li id="category_life" class="category_item_tree">
-        <span id="category_life_switch" class="tree_switch" onclick="switch_fold('category_life')">+</span>
+        <span id="category_life_switch" class="tree_switch" onclick="switch_fold('category_life')"><img src="/assets/icons/blacks/16x16/br_next.png" /img></span>
         <a href="/categories/life"> 
             <span id="category_life_title">生活</span>
             <span id="category_life_count">({{site.categories.life|size}})</span> 
         </a>
-        <ul id="category_life_ul" class="level1" style="display:none;">
+        <ul id="category_life_ul" class="category_level1" style="display:none;">
             <li class="category_item_tree_item" id="category_life_experience">
                 <a href="">
                     <span id="category_life_experience_title">经验技巧</span>
@@ -68,12 +68,12 @@
         </ul>
     </li>
     <li id="category_others" class="category_item_tree">
-        <span id="category_others_switch" class="tree_switch" onclick="switch_fold('category_others')">+</span>
+        <span id="category_others_switch" class="tree_switch" onclick="switch_fold('category_others')"><img src="/assets/icons/blacks/16x16/br_next.png" /img></span>
         <a href="/categories/others"> 
             <span id="category_others_title">其它</span>
             <span id="category_others_count">({{site.categories.others|size}})</span> 
         </a>
-        <ul id="category_others_ul" class="level1" style="display:none;">
+        <ul id="category_others_ul" class="category_level1" style="display:none;">
             <li class="category_item_tree_item" id="category_others_test">
                 <a href="">
                     <span id="category_others_test_title">测试</span>
