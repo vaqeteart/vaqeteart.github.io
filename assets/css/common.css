@@ -13,7 +13,7 @@ body {
 
 table.container {
     table-layout:fixed;
-    height: 100%;
+    /*height: 100%;*/
     width: 100%;
     min-height: 1000px;
     position: relative;
