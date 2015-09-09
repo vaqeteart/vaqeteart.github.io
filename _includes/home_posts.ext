@@ -7,7 +7,7 @@
         <div>
             <a href="{{site.baseurl}}{{post.url}}"> {{ post.title }}  </a> <br>
             {{ post.date | date: "%F" }} <br>
-            <a href="/categories/{{ post.category |first }}"> {{site.baseurl}}/{{ post.category |first }} </a> <br>
+            <a href="{{ post.categories |join:'/' }}"> {{site.baseurl}}/{{ post.categories |join:"/" }} </a> <br>
             <div id='tags'>{{ post.tags |array_to_sentence_string }}</div>
         </div>
       {% endfor %}

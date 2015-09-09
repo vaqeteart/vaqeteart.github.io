@@ -1,7 +1,6 @@
 ---
 layout: posts
 title: Jekyll建站问题
-category: [note]
 tags: [gtd_next]
 comments: true
 ---

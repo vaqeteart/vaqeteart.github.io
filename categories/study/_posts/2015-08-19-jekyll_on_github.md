@@ -1,7 +1,6 @@
 ---
 layout: posts
 title: Jekyll+github建站实践
-category: [study]
 tags: [gtd_next]
 comments: true
 ---
@@ -204,17 +203,19 @@ github使用的就是Jekyll来生成站点项目的网页，所以这里我们�
 
 
 ### 参考资料###
-下面列出一些不错的参考资料：
-http://www.cnblogs.com/purediy/archive/2013/03/07/2948892.html
-http://blog.csdn.net/on_1y/article/details/19259435
-https://github.com/minixalpha/minixalpha.github.io
-http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html
-http://higrid.net/c-art-blog_jekyll.htm
+下面列出一些不错的参考资料：  
+http://www.cnblogs.com/purediy/archive/2013/03/07/2948892.html  
+http://blog.csdn.net/on_1y/article/details/19259435  
+https://github.com/minixalpha/minixalpha.github.io  
+http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html  
+http://higrid.net/c-art-blog_jekyll.htm  
+http://www.tuicool.com/m/articles/INBnMz  
+http://higrid.net/c-art-jeklly_template_data.htm  
 
-其它的还有：
-http://www.pchou.info/web-build/2014/07/04/build-github-blog-page-08.html
-https://pages.github.com/
-https://help.github.com/articles/using-jekyll-with-pages/
-http://www.cnblogs.com/netbuddy/p/3501147.html
-http://segmentfault.com/q/1010000000476530
-http://www.cnblogs.com/hwpayg/archive/2012/11/04/2753404.html
+其它的还有：  
+http://www.pchou.info/web-build/2014/07/04/build-github-blog-page-08.html  
+https://pages.github.com/  
+https://help.github.com/articles/using-jekyll-with-pages/  
+http://www.cnblogs.com/netbuddy/p/3501147.html  
+http://segmentfault.com/q/1010000000476530  
+http://www.cnblogs.com/hwpayg/archive/2012/11/04/2753404.html  
