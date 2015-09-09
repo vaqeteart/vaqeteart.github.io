@@ -26,6 +26,8 @@ function switch_fold(id)
 
 function change_category(id)
 {
+    //id.replace(/\//g, "_");
+    //alert(id);
     e = document.getElementById(id);
     element_switch=document.getElementById(id+"_switch");
     element_ul=document.getElementById(id+"_ul");
