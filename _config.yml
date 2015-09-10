@@ -1,4 +1,5 @@
 baseurl: ""
+permalink: none
 markdown: rdiscount
 redcarpet:
     extensions: [tables]

@@ -27,7 +27,7 @@ comments: true
     但是仅限本地。这样便可对外展示，对本地而言​动态，同时又不借助动态插件，达到动态效果。
 
 + 插入图片的大小无法自动适配显示？
-参见：  [测试代码](/others/2015/08/19/test_link.html "2015-08-19-test_link.md")  
+参见：  [测试代码](/categories/others/test_link.html "2015-08-19-test_link.md")  
 
 
 #### 下一步 ####
@@ -49,11 +49,11 @@ comments: true
 
 #### 已处理 ####
 + 链接的相对路径引用如何使用？比如引用一个文件等等？  
-参见：  [测试代码](/others/2015/08/19/test_link.html "2015-08-19-test_link.md")  
+参见：  [测试代码](/categories/others/test_link.html "2015-08-19-test_link.md")  
 + 如何在_posts文章内部引用其他的_posts文章？  
-参见：  [测试代码](/others/2015/08/19/test_link.html "2015-08-19-test_link.md")  
+参见：  [测试代码](/categories/others/test_link.html "2015-08-19-test_link.md")  
 + 如何实现子分类？  
-参见：  [测试代码](/others/2015/08/19/test_link.html "2015-08-19-test_link.md")
+参见：  [测试代码](/categories/others/test_link.html "2015-08-19-test_link.md")
 
 #### 取消 ####
 

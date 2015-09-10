@@ -1,12 +1,10 @@
 body {
     /*background:
       url('/assets/images/bg7.jpg');*/
-    /*background-color: #C7EDCC;*/
-    background-color: #000000;
+    background-color: #C7EDCC;
     /*background-size: cover;*/
     background-size: repeat;
-    /*color: #000000;*/
-    color: #00FF00;
+    color: #000000;
     font-family:
         Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
     height: 100%;
@@ -113,7 +111,7 @@ footer {
 }
 
 a {
-  color: #C7EDCC;
+  color: #191970;
   text-decoration: none;
 }
 
