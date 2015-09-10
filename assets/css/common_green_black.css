@@ -87,11 +87,24 @@ ul.categories_level0 {
 ul.tag_ul {
     height:90%;
 }
+
 hr {
-  align: center;
-  /*width: 300;*/
-  color: 987cb9;
-  size: 1;
+    color: 987cb9;
+}
+
+#title_line{
+    height:5px;
+    border:none;
+    border-top:3px ridge green;
+    align: center;
+    /*width: 300;*/
+}
+
+#article_line{
+    align: center;
+    height:1px;
+    border:none;
+    border-top:1px dashed #C7EDCC;
 }
 
 article {

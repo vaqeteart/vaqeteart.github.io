@@ -1,5 +1,7 @@
 <meta charset='utf-8'>
 <title>{{ page.title }}</title>
+
+<!--theme-->
 <link rel="stylesheet" type="text/css"
-  href="/assets/css/common.css" media="screen" />
+  href="/assets/css/common_green_black.css" media="screen" />
 <script src="/assets/js/category_list.js"></script>
