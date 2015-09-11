@@ -6,7 +6,13 @@
       {% for post in site.posts %}
         <div>
             [{{ post.date | date: "%F" }}]<a href="{{site.baseurl}}{{post.url}}">{{ post.title }}</a> <br>
-            ||<a href="{{ post.categories |join:'/' }}" style="color:#0066CC">{{site.baseurl}}/{{ post.categories |join:"/" }}</a>
+            ||<a href="{{ post.categories |join:'/' }}" style="color:#0066CC">
+                {% assign title = site.data.categories %}
+                {% for category in post.categories %}
+                    {% assign title = title[category] %}
+                    {{title.name}}/
+                {% endfor %}
+            </a>
             <hr id='article_line'>
         </div>
       {% endfor %}
