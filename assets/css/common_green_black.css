@@ -71,6 +71,10 @@ aside {
     /*valign: top;*/
 }
 
+span.tree_switch{
+    font-size: 130%;
+}
+
 /*
 #left-side {
 }

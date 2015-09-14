@@ -2,7 +2,7 @@
   <h2> 分类 </h2>
   <ul id="categories_ul" class="categories_level0" type="none">
     <li id="categories_note" class="categories_item_tree">
-        <span id="categories_note_switch" class="tree_switch" onclick="switch_fold('categories_note')"><img src="/assets/icons/blacks/16x16/br_next.png" /img></span>
+        <span id="categories_note_switch" class="tree_switch" onclick="switch_fold('categories_note')">▷</span>
         <a href="/categories/note" > 
             <span id="categories_note_title">记事</span>
             <span id="categories_note_count">({{site.categories.note|size}})</span>
@@ -21,7 +21,7 @@
         </ul>
     </li>
     <li id="categories_study"  class="categories_item_tree">
-        <span id="categories_study_switch" class="tree_switch" onclick="switch_fold('categories_study')"><img src="/assets/icons/blacks/16x16/br_next.png" /img></span>
+        <span id="categories_study_switch" class="tree_switch" onclick="switch_fold('categories_study')">▷</span>
         <a href="/categories/study"> 
             <span id="categories_study_title">学习</span>
             <span id="categories_study_count">({{site.categories.study|size}})</span>
@@ -35,7 +35,7 @@
         </ul>
     </li>
     <li id="categories_work" class="categories_item_tree">
-        <span id="categories_work_switch" class="tree_switch" onclick="switch_fold('categories_work')"><img src="/assets/icons/blacks/16x16/br_next.png" /img></span>
+        <span id="categories_work_switch" class="tree_switch" onclick="switch_fold('categories_work')">▷</span>
         <a href="/categories/work"> 
             <span id="categories_work_title">工作</span>
             <span id="categories_work_count">({{site.categories.work|size}})</span> 
@@ -49,7 +49,7 @@
         </ul>
     </li>
     <li id="categories_life" class="categories_item_tree">
-        <span id="categories_life_switch" class="tree_switch" onclick="switch_fold('categories_life')"><img src="/assets/icons/blacks/16x16/br_next.png" /img></span>
+        <span id="categories_life_switch" class="tree_switch" onclick="switch_fold('categories_life')">▷</span>
         <a href="/categories/life"> 
             <span id="categories_life_title">生活</span>
             <span id="categories_life_count">({{site.categories.life|size}})</span> 
@@ -68,7 +68,7 @@
         </ul>
     </li>
     <li id="categories_others" class="categories_item_tree">
-        <span id="categories_others_switch" class="tree_switch" onclick="switch_fold('categories_others')"><img src="/assets/icons/blacks/16x16/br_next.png" /img></span>
+        <span id="categories_others_switch" class="tree_switch" onclick="switch_fold('categories_others')">▷</span>
         <a href="/categories/others"> 
             <span id="categories_others_title">其它</span>
             <span id="categories_others_count">({{site.categories.others|size}})</span> 

@@ -8,13 +8,15 @@ function switch_fold(id)
   if ( element_ul.style.display == "block")
   {
     element_ul.style.display='none';
-    element_switch.getElementsByTagName("img")[0].src="/assets/icons/blacks/16x16/br_next.png"
+    element_switch.innerHTML="▷";
+    //element_switch.getElementsByTagName("img")[0].src="/assets/icons/blacks/16x16/br_next.png"
     //ee.type='circle';
   }
   else if (element_ul.style.display == "none")
   {
     element_ul.style.display='block';
-    element_switch.getElementsByTagName("img")[0].src="/assets/icons/blacks/16x16/br_down.png"
+    //element_switch.getElementsByTagName("img")[0].src="/assets/icons/blacks/16x16/br_down.png";
+    element_switch.innerHTML="▽";
     //ee.type = 'disc';
   }
   else
@@ -34,7 +36,8 @@ function change_category(id)
     if (e != null)
     {
         element_ul.style.display='block';
-        element_switch.getElementsByTagName("img")[0].src="/assets/icons/blacks/16x16/br_down.png"
+        //element_switch.getElementsByTagName("img")[0].src="/assets/icons/blacks/16x16/br_down.png";
+        element_switch.innerHTML="▽";
     }
     //home_state = "category"
 }

@@ -1,29 +1,44 @@
 {
 	"categories":{
+		"title":"分类",
+		"parent":null,
+		"children":{
 		"note":{
-			"name":"记事", 
-				"parent":null, 
-				"children":[]
+			"title":"记事", 
+				"parent":"categories", 
+				"children":{
+					"remark":{
+						"title":"备忘",
+						"parent":"note",
+						"children":[]
+					},
+					"plan":{
+						"title":"计划",
+						"parent":"note",
+						"children":[]
+					}
+				}
 		},
 		"study":{
-			"name":"学习", 
-			"parent":null, 
+			"title":"学习", 
+			"parent":"categories", 
 			"children":[]
 		},
 		"work":{
-			"name":"工作",
-			"parent":null,
+			"title":"工作",
+			"parent":"categories",
 			"children":[]
 		},
 		"life":{
-			"name":"生活", 
-			"parent":null, 
+			"title":"生活", 
+			"parent":"categories", 
 			"children":[]
 		},
 		"others":{
-			"name":"其它", 
-			"parent":null, 
+			"title":"其它", 
+			"parent":"categories", 
 			"children":[]
 		}
+	}
 	}
 }

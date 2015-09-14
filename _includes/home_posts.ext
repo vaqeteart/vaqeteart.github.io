@@ -7,10 +7,15 @@
         <div>
             [{{ post.date | date: "%F" }}]<a href="{{site.baseurl}}{{post.url}}">{{ post.title }}</a> <br>
             ||<a href="{{ post.categories |join:'/' }}" style="color:#0066CC">
-                {% assign title = site.data.categories %}
+                {% assign path = site.data.categories %}
                 {% for category in post.categories %}
-                    {% assign title = title[category] %}
-                    {{title.name}}/
+                    {% assign path = path[category] %}
+                    {% if category == post.categories[0]%}
+                    {{path.title}}:
+                    {% else %}
+                    {{path.title}}/
+                    {% endif %}
+                    {% assign path = path.children %}
                 {% endfor %}
             </a>
             <hr id='article_line'>
