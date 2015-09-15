@@ -1,7 +1,7 @@
 ---
 layout: posts
 title: My first page
-categories: [others]
+categories: [categories, others]
 tags: [gtd_done, others]
 comments: true
 ---

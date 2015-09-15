@@ -1,0 +1,90 @@
+<aside id="left-side" >
+  <h2> 分类 </h2>
+  <ul id="categories_ul" class="categories_level0" type="none">
+    <li id="categories_note" class="categories_item_tree">
+        <span id="categories_note_switch" class="tree_switch" onclick="switch_fold('categories_note')">▷</span>
+        <a href="/categories/note" > 
+            <span id="categories_note_title">记事</span>
+            <span id="categories_note_count">({{site.categories.note|size}})</span>
+        </a>
+        <ul id="categories_note_ul" class="categories_level1" style="display:none;">
+            <li class="categories_item_tree_item" id="categories_note_remind">
+                <a href="">
+                    <span id="categories_note_remind_title">备忘</span>
+                </a>
+            </li>
+            <li class="categories_item_tree_item" id="categories_note_plan">
+                <a href="">
+                    <span id="categories_note_plan_title">计划</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li id="categories_study"  class="categories_item_tree">
+        <span id="categories_study_switch" class="tree_switch" onclick="switch_fold('categories_study')">▷</span>
+        <a href="/categories/study"> 
+            <span id="categories_study_title">学习</span>
+            <span id="categories_study_count">({{site.categories.study|size}})</span>
+        </a>
+        <ul id="categories_study_ul" class="categories_level1" style="display:none;">
+            <li class="categories_item_tree_item" id="categories_study_problem">
+                <a href="">
+                    <span id="categories_study_problem_title">问题</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li id="categories_work" class="categories_item_tree">
+        <span id="categories_work_switch" class="tree_switch" onclick="switch_fold('categories_work')">▷</span>
+        <a href="/categories/work"> 
+            <span id="categories_work_title">工作</span>
+            <span id="categories_work_count">({{site.categories.work|size}})</span> 
+        </a>
+        <ul id="categories_work_ul" class="categories_level1" style="display:none;">
+            <li class="categories_item_tree_item" id="categories_work_item">
+                <a href="">
+                    <span id="categories_work_item_title">进度</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li id="categories_life" class="categories_item_tree">
+        <span id="categories_life_switch" class="tree_switch" onclick="switch_fold('categories_life')">▷</span>
+        <a href="/categories/life"> 
+            <span id="categories_life_title">生活</span>
+            <span id="categories_life_count">({{site.categories.life|size}})</span> 
+        </a>
+        <ul id="categories_life_ul" class="categories_level1" style="display:none;">
+            <li class="categories_item_tree_item" id="categories_life_experience">
+                <a href="">
+                    <span id="categories_life_experience_title">经验技巧</span>
+                </a>
+            </li>
+            <li class="categories_item_tree_item" id="categories_life_tips">
+                <a href="">
+                    <span id="categories_life_tips_title">小常识</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li id="categories_others" class="categories_item_tree">
+        <span id="categories_others_switch" class="tree_switch" onclick="switch_fold('categories_others')">▷</span>
+        <a href="/categories/others"> 
+            <span id="categories_others_title">其它</span>
+            <span id="categories_others_count">({{site.categories.others|size}})</span> 
+        </a>
+        <ul id="categories_others_ul" class="categories_level1" style="display:none;">
+            <li class="categories_item_tree_item" id="categories_others_test">
+                <a href="">
+                    <span id="categories_others_test_title">测试</span>
+                </a>
+            </li>
+            <li class="categories_item_tree_item" id="categories_others_temp">
+                <a href="">
+                    <span id="categories_others_temp_title">临时</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+  </ul>
+</aside>
