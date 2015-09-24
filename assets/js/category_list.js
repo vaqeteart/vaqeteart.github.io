@@ -1,4 +1,4 @@
-function create_categories(category, level)
+function create_categories(category, level, countmap)
 {
     var line = "";
     if(category.children == null)
@@ -11,13 +11,17 @@ function create_categories(category, level)
             /*<span id="categories_note_switch" class="tree_switch">○</span>*/
             line += "<span id='" + category.id 
             + "_switch' class='tree_switch'>○</span>";
-
+            /*<a href="/categories/xxx" >*/ 
+            line += "<a href='" + category.path + "'>";
             /*<span id="categories_note_title">记事</span>*/
             line += "<span id='" + category.id +"_title'>" + category.title 
             + "</span>";
 
             /*<span id="categories_note_count">({{site.categories.note|size}})</span>*/
-            line += "<span id='" + category.id + "_count'>(" + ")</span>";
+            line += "<span id='" + category.id + "_count'>(" 
+            + (typeof(countmap[category.path]) == "undefined"?
+                0:countmap[category.path]) 
+            + ")</span>";
             line += "</a>";
 
             /*</li>*/
@@ -49,7 +53,8 @@ function create_categories(category, level)
 
             /*<span id="categories_note_count">({{site.categories.note|size}})</span>*/
             line += "<span id='" + category.id + "_count'>(" 
-            + "" 
+            + (typeof(countmap[category.path]) == "undefined"?
+                0:countmap[category.path]) 
             + ")</span>";
             line += "</a>";
 
@@ -67,7 +72,7 @@ function create_categories(category, level)
 
         for(var key in category.children)
         {
-            create_categories(category.children[key], level+1);
+            create_categories(category.children[key], level+1, countmap);
         }
         /*</ul>*/
         line += "</ul>";

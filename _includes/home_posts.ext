@@ -1,22 +1,13 @@
 <article>
-  <h1 id='header1'>{{ page.title }}</h1>
+  <h1 id='header1' style="text-align: center;">{{ page.title }}</h1>
   <hr id='title_line'>
   <div>
     <ul id="post-list" class="post-list">
       {% for post in site.posts %}
         <div>
             [{{ post.date | date: "%F" }}]<a href="{{site.baseurl}}{{post.url}}">{{ post.title }}</a> <br>
-            ||<a href="{{ post.categories |join:'/' }}" style="color:#0066CC">
-                {% assign path = site.data.categories %}
-                {% for category in post.categories %}
-                    {% assign path = path[category] %}
-                    {% if category == post.categories[0]%}
-                    {{path.title}}:
-                    {% else %}
-                    {{path.title}}/
-                    {% endif %}
-                    {% assign path = path.children %}
-                {% endfor %}
+            ||<a href="{{ post.categories |join:'/' }}" style="color:#0066CC; font-size:75%;">
+            {% include _post_path.ext %}
             </a>
             <hr id='article_line'>
         </div>

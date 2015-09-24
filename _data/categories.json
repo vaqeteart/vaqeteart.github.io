@@ -12,8 +12,8 @@
 					"parent":"categories", 
 					"children":{
 						"remark":{
-							"id":"categories_note_remark",
-							"path":"/categories/note/remark",
+							"id":"categories_note_remind",
+							"path":"/categories/note/remind",
 							"title":"备忘",
 							"parent":"note",
 							"children":null
@@ -37,6 +37,13 @@
 						"id":"categories_study_problem",
 						"path":"/categories/study/problem",
 						"title":"问题",
+						"parent":"study",
+						"children":null
+					},
+					"git":{
+						"id":"categories_study_git",
+						"path":"/categories/study/git",
+						"title":"git",
 						"parent":"study",
 						"children":null
 					}
