@@ -15,14 +15,14 @@
 							"id":"categories_note_remind",
 							"path":"/categories/note/remind",
 							"title":"备忘",
-							"parent":"note",
+							"parent":"categories_note",
 							"children":null
 						},
 						"plan":{
 							"id":"categories_note_plan",
 							"path":"/categories/note/plan",
 							"title":"计划",
-							"parent":"note",
+							"parent":"categories_note",
 							"children":null
 						}
 					}
@@ -37,14 +37,14 @@
 						"id":"categories_study_problem",
 						"path":"/categories/study/problem",
 						"title":"问题",
-						"parent":"study",
+						"parent":"categories_study",
 						"children":null
 					},
 					"git":{
 						"id":"categories_study_git",
 						"path":"/categories/study/git",
 						"title":"git",
-						"parent":"study",
+						"parent":"categories_study",
 						"children":null
 					}
 				}
@@ -59,7 +59,7 @@
 						"id":"categories_work_progress",
 						"path":"/categories/work/progress",
 						"title":"进度",
-						"parent":"work",
+						"parent":"categories_work",
 						"children":null
 					}
 				}
@@ -74,14 +74,14 @@
 						"id":"categories_life_experience",
 						"path":"/categories/life/experience",
 						"title":"经验",
-						"parent":"life",
+						"parent":"categories_life",
 						"children":null
 					},
 					"tips":{
 						"id":"categories_life_tips",
 						"path":"/categories/life/tips",
 						"title":"技巧",
-						"parent":"life",
+						"parent":"categories_life",
 						"children":null
 					}
 				}
@@ -96,14 +96,14 @@
 						"id":"categories_others_temp",
 						"path":"/categories/others/temp",
 						"title":"临时",
-						"parent":"others",
+						"parent":"categories_others",
 						"children":null
 					},
 					"test":{
 						"id":"categories_others_test",
 						"path":"/categories/others/test",
 						"title":"测试",
-						"parent":"others",
+						"parent":"categories_others",
 						"children":null
 					}
 				}

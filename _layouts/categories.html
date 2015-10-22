@@ -6,7 +6,8 @@
       href="/assets/css/categories.css" media="screen" />
   </head>
 
-  <body onload="change_category('categories_{{ page._name }}')">
+  <!--body onload="change_category('categories_{{ page._name }}')"-->
+  <body onload="change_categories('{{ page._path |join:"_" }}')">
     <table class="container">
         <tbody>
             <tr>

@@ -6,7 +6,9 @@
       href="/assets/css/posts.css" media="screen" />
   </head>
 
-  <body onload="change_category('{{ page.categories |join:"_" }}')">
+  <!--body onload="change_categories('{{ page.categories |join:"_" }}'))"-->
+  <body onload="change_categories('{{ page.categories |join:"_" }}')">
+  <!--body onload="change_categories(eval('{{ page.categories | json}}'))"-->
     <table class="container">
         <tbody>
             <tr>
