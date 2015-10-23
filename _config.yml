@@ -1,8 +1,9 @@
 baseurl: ""
 permalink: none
 markdown: kramdown
-redcarpet:
-    extensions: [tables]
+kramdown:
+  input:  GFM
+    use_coderay: true
 highlighter: pygments
 safe: true
 rouge: true
