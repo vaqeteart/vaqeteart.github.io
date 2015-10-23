@@ -1,6 +1,6 @@
 baseurl: ""
 permalink: none
-markdown: rdiscount
+markdown: kramdown
 redcarpet:
     extensions: [tables]
 highlighter: pygments
