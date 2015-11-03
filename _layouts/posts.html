@@ -6,10 +6,8 @@
       href="/assets/css/posts.css" media="screen" />
   </head>
 
-  <!--body onload="change_categories('{{ page.categories |join:"_" }}'))"-->
-  <body onload="change_categories('{{ page.categories |join:"_" }}')">
-  <!--body onload="change_categories(eval('{{ page.categories | json}}'))"-->
-    <table class="container">
+   <body onload="change_categories('{{ page.categories |join:"_" }}')">
+     <table class="container">
         <tbody>
             <tr>
                 <th id="td_page_header" colspan="6">{% include common_page_header.ext %}</td>
@@ -17,8 +15,7 @@
             <tr>
                 <td id="td_category_list"  colspan="1" valign="top">{% include category_list.ext %}</td>
                 <td id="td_posts" colspan="5" valign="top">{% include post_content.ext %}</td>
-                <!--td id="td_tag_list" colspan="1" valign="top">{% include tag_list.ext %}</td-->
-            </tr>
+             </tr>
             <tr>
                 <td id="td_page_footer" colspan="6">{% include common_footer.ext %}</td>
             </tr>

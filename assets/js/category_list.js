@@ -149,17 +149,24 @@ function change_categories(cats)
         e = document.getElementById(ids[i]);
         element_switch=document.getElementById(ids[i]+"_switch");
         element_ul=document.getElementById(ids[i]+"_ul");
+	
         if (e != null)
         {
-            element_ul.style.display='block';
-            //element_switch.getElementsByTagName("img")[0].src="/assets/icons/blacks/16x16/br_down.png";
-	    if (element_switch.innerHTML=="▷")
+	    if (element_ul != null)
 	    {
-		element_switch.innerHTML="▽";
+		element_ul.style.display='block';
 	    }
-	    else if (element_switch.innerHTML=="○")
+
+	    if (element_switch != null)
 	    {
-		element_switch.innerHTML="●";//??
+		if (element_switch.innerHTML=="▷")
+		{
+		    element_switch.innerHTML="▽";
+		}
+		else if (element_switch.innerHTML=="○")
+		{
+		    element_switch.innerHTML="●";
+		}
 	    }
         }
     }
