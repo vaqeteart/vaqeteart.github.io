@@ -46,6 +46,13 @@
 						"title":"git",
 						"parent":"categories_study",
 						"children":null
+					},
+					"vim":{
+						"id":"categories_study_vim",
+						"path":"/categories/study/vim",
+						"title":"vim",
+						"parent":"categories_study",
+						"children":null
 					}
 				}
 			},
