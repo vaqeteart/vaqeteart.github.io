@@ -131,13 +131,6 @@ textarea {
     overflow-x: auto; 
 }
 
-code {
-    border:groove #555555;
-    border-width:thin;
-    background-color: #111111;
-    color: #C7EDCC;
-}
-
 footer {
     height: 20px;
     width: 100%;
