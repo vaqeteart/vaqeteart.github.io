@@ -1,0 +1,30 @@
+<aside id="left-side" >
+  <h2> 分类 </h2>
+  {% assign categories = site.data.categories %}
+  <script>
+    var categories = {{site.data.categories.categories |jsonify}};
+    var categories_count = JSON.parse('{"/categories":0}');
+
+    {% for post in site.posts %}
+    var post_categories = '{{post.categories|join:"/"|prepend:"/"}}';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    {% endfor %}
+
+    create_categories(categories, 0, categories_count);
+    //document.write("hello")
+  </script>
+</aside>

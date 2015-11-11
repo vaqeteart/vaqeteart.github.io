@@ -9,14 +9,15 @@
   <body>
         <table class="container">
             <tbody>
-                <tr>
-                    <th id="td_page_header" colspan="6">{% include common_page_header.ext %}</td>
-                </tr>
-                <tr id="tr_page_content">
-                    <td id="td_category_list"  colspan="1" valign="top">{% include category_list.ext %}</td>
-                    <td id="td_posts" colspan="5" valign="top">{% include home_posts.ext %}</td>
-                    <!--td id="td_tag_list" colspan="1" valign="top">{% include tag_list.ext %}</td-->
-                </tr>
+	      <tr>
+		{% include navbar.ext %}
+	      </tr>
+	      <tr>
+                  {% include common_page_header.ext %}
+	      </tr>
+               <tr id="tr_page_content">
+                     <td id="td_posts" colspan="6" valign="top">{% include home_posts.ext %}</td>
+                 </tr>
                 <tr>
                     <td id="td_page_footer" colspan="6">{% include common_footer.ext %}</td>
                 </tr>

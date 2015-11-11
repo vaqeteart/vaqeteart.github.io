@@ -83,6 +83,7 @@ function create_categories(category, level, countmap)
     }
 }
 
+
 function switch_fold(id)
 {
   //var display=e.getAttribute("data-id");
@@ -163,9 +164,16 @@ function change_categories(cats)
 		{
 		    element_switch.innerHTML="▽";
 		}
-		else if (element_switch.innerHTML=="○")
+	    }
+	    else
+	    {
+		element_item=document.getElementById(ids[i]+"_item");
+		if (element_item != null)
 		{
-		    element_switch.innerHTML="●";
+		    if (element_item.innerHTML=="○")
+		    {
+			element_item.innerHTML="●";
+		    }
 		}
 	    }
         }

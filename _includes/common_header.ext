@@ -5,3 +5,4 @@
 <link rel="stylesheet" type="text/css"
   href="/assets/css/common_green_black.css" media="screen" />
 <script src="/assets/js/category_list.js"></script>
+<script src="/assets/js/jquery-1.11.3.min.js"></script>
