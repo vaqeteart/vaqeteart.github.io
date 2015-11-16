@@ -193,20 +193,21 @@ img {
 /*nav bar*/
 table.navbar {
     position:fixed;
-    margin:0;
+    margin:0px 0px;
+    top:0em;
     padding:0;
-    /*width:100%;*/
+    width:100%;
 }
 
 .navbar th.navitm {
     border-style:solid;
     border-width:1px;
     border-top:0px;
-    width:20%;
+    width:3%;
 }
 
 .navbar th.navblank {
-    width:5%;
+    width:1%;
 }
 
 .navbar th.navitm a:hover {
@@ -235,11 +236,18 @@ table.navbar {
     border-right:0px;
     border-top:0px;
     border-left:0px;
+    text-align: left;
 }
 
 #topbtn {
+    color:#00FF00;
+    border-style:solid;
+    border-left:0px;
+    border-right:0px;
+    border-bottom:0px;
     float:right;
     width:12px;
     position:fixed; 
     right:3px;
+    top:0em;
 }

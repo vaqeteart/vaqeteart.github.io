@@ -1,8 +1,15 @@
 <script src="/assets/js/nav.js"></script>
-<th id="th_navbar" style="width:100%;">
+<th id="th_navbar">
     <table class="navbar"> <tbody> <tr>
 	<th class="navitm">
-	      <a href='http://www.navbar.com/nav/'>分类</a>
+	    <a href='/'>主页</a>
+	</th>
+
+	<th class="navblank">
+	</th>
+
+	<th class="navitm">
+	      <a href='#'>分类</a>
 	      <div id="category_menus" class="second">
   	      	   {% assign categories = site.data.categories %}
 
@@ -39,17 +46,26 @@
 	</th>
 
         <th class="navitm">
-	      <a href='http://www.navbar.com/tab/'>标签</a>
+	      <a href='#'>标签</a>
+	      <div id="tag_menus" class="second">
+	          {% for tag in site.tags %}
+		      <a id="{{ tag | first }}" href="#"> {{ tag |first }}({{tag |last |size}})</a>
+		  {% endfor %}
+	      </div>
+        </th>
+
+	<th class="navblank" style="width:35%;">
+	</th>
+
+        <!--th class="navitm">
+	      <a href='http://www.navbar.com/tab/'>友情链接</a>
 	      <div id="tag_menus" class="second">
 	      	   <a href='http://www.navbar.com/tab/'>tab1</a>
 		   <a href='http://www.navbar.com/tab/'>tab2</a>
 		   <a href='http://www.navbar.com/tab/'>tab3</a>
 		   <a href='http://www.navbar.com/tab/'>tab4</a>
 	      </div>
-        </th>
-
-	<th class="navblank" style="width:55%;">
-	</th>
+        </th-->
 
 	<a href='#' id="topbtn">⇈</a>
 	<!--⇇⇈⇉⇊-->
