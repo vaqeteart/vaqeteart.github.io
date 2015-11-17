@@ -251,3 +251,69 @@ table.navbar {
     right:3px;
     top:0em;
 }
+
+/*duoshuo comment*/
+/*hide share button*/
+/*.ds-sync{display:none !important;}*/
+
+/*整体背景*/
+#ds-thread {background: #001111;}
+
+/*文本框背景*/
+.ds-textarea-wrapper.ds-rounded-top{
+    background: #222222 !important;
+}
+
+
+/*底部状态条定制*/
+#ds-reset .ds-gradient-bg{background:none !important;}
+
+#ds-thread{
+    border-radius: 5px;
+    border-color: #00FF00;
+}
+
+/*字体定制*/
+#ds-thread #ds-reset .ds-textarea-wrapper textarea, #ds-thread #ds-reset .ds-textarea-wrapper .ds-hidden-text {
+    font-family: ‘微软雅黑’ ‘Microsoft Yahei’!important;
+    font-size:12px;letter-spacing:1px;
+    border-color: #00FF00;
+}
+
+/*字体颜色*/
+#ds-thread #ds-reset .ds-comment-body p {
+    color: #00ff00;
+    border-color: #00FF00;
+}
+
+/*发布按钮字体和背景*/
+#ds-thread #ds-reset .ds-post-button{
+    font-family: ‘微软雅黑’‘Microsoft Yahei’!important;
+    font-weight: bold;font-size:12px;background:none !important;color:#49976b !important;
+    border-color: #00FF00;
+}
+
+/*隐藏上面最新最热排序按钮*/
+#ds-thread #ds-reset .ds-sort {display:none;}
+
+/*隐藏评论左上方 评论总数背景色及边框*/
+#ds-thread #ds-reset li.ds-tab a.ds-current{
+}
+
+/*隐藏底部多说版权*/
+#ds-thread #ds-reset .ds-powered-by{display:none;}
+
+/*喜欢按钮*/
+#ds-thread #ds-reset a.ds-like-thread-button {
+    /*display:none;*/
+    /*color: #222222;
+      padding: 4px 4px;
+      border-width: 1px;
+      border-style: solid;
+      
+      border-color: #CCC #CCC #AAA;
+      margin-right: 15px;
+      text-shadow: 0px 1px 0px #FFF;
+      background-color: #333355;
+    */
+}

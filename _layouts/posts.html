@@ -17,10 +17,13 @@
 	      </tr>
              <tr>
                 <!--td id="td_category_list"  colspan="1" valign="top">{% include category_list.ext %}</td-->
-                <td id="td_posts" colspan="6" valign="top">{% include post_content.ext %}</td>
+                <td id="td_posts" colspan="6" valign="top">
+		  {% include post_content.ext %}
+		  {% include duoshuo_comment.ext %}
+		</td>
              </tr>
             <tr>
-                <td id="td_page_footer" colspan="6">{% include common_footer.ext %}</td>
+                {% include common_footer.ext %}
             </tr>
         </tbody>
     </table>
