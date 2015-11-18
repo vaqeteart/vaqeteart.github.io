@@ -11,7 +11,7 @@
 				"title":"记事", 
 					"parent":"categories", 
 					"children":{
-						"remark":{
+						"remind":{
 							"id":"categories_note_remind",
 							"path":"/categories/note/remind",
 							"title":"备忘",

@@ -1,7 +1,7 @@
 ---
 layout: posts
 title: Jekyll+github建站实践
-tags: [gtd_next]
+tags: [gtd_next, study]
 comments: true
 ---
 
