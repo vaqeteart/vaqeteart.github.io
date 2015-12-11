@@ -45,7 +45,15 @@ table.container {
 /*    margin: 0px 0px;*/
     padding: 0px 5px;
 }
+
+table.tr_page_nav {
+    valign:bottom;
+}
+
 table.tr_page_content {
+    valign:top;
+}
+table.tr_page_comment {
     valign:top;
 }
 
