@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+<title>Vim实践与学习-06编程</title>
+
+<!--theme-->
+<link rel="stylesheet" type="text/css"
+  href="/assets/css/common_green_black.css" media="screen" />
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/category_list.js"></script>
+<script src="/assets/js/jquery-1.11.3.min.js"></script>
+
+    <link rel="stylesheet" type="text/css"
+      href="/assets/css/posts.css" media="screen" />
+  </head>
+
+   <body onload="change_categories('categories_study_vim')">
+     <table class="container">
+        <tbody>
+	      <tr>
+		<script src="/assets/js/nav.js"></script>
+<th id="th_navbar">
+    <table class="navbar"> <tbody> <tr>
+	<th class="navitm">
+	    <a href='/'>主页</a>
+	</th>
+
+	<th class="navblank">
+	</th>
+
+	<th class="navitm">
+	      <a href=/categories/study/vim/vim_use_tutor_06Programing.html>分类</a>
+	      <div id="category_menus" class="second">
+  	      	   
+
+		   <script>
+		       var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+		       var categories_count = JSON.parse('{"/categories":0}');
+
+  		       
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/life';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/git';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others/rambles';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others/rambles';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+
+    			create_category_menu(categories, 0, categories_count);
+    			//document.write("hello")
+		    </script>
+	      </div>
+	</th>
+
+	<th class="navblank">
+	</th>
+
+        <th class="navitm">
+	      <a href='#'>标签</a>
+	      <div id="tag_menus" class="second">
+	          
+		      <a id="gtd_next" href="#"> gtd_next(13)</a>
+		  
+		      <a id="study" href="#"> study(10)</a>
+		  
+		      <a id="gtd_done" href="#"> gtd_done(4)</a>
+		  
+		      <a id="others" href="#"> others(3)</a>
+		  
+		      <a id="life" href="#"> life(1)</a>
+		  
+	      </div>
+        </th>
+
+	<th class="navblank" style="width:35%;">
+	</th>
+
+        <th class="navitm">
+	      <a href='more.html'>更多</a>
+        </th>
+
+        <th class="navitm">
+	      <a href='about.html'>关于</a>
+        </th>
+
+	<th class="navblank">
+	</th>
+
+	<a href='#' id="topbtn">⇑</a>
+
+	<a href='#bottom' id="bottombtn">⇓</a>
+	<!--⇐⇑⇒⇓-->
+
+  <tr> </tbody> </table>
+</th>
+
+	      </tr>
+	      <tr>
+                  <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+    <header style="text-align: center;">
+	<h1>
+	       <a href="/" title="Home Page">QuietHeart's Site</a>
+	</h1>
+    </header>
+</td>
+
+
+
+	      </tr>
+             <tr>
+                <!--td id="td_category_list"  colspan="1" valign="top"><aside id="left-side" >
+  <h2> 分类 </h2>
+  
+  <script>
+    var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+    var categories_count = JSON.parse('{"/categories":0}');
+
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/life';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/git';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others/rambles';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others/rambles';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+
+    create_categories(categories, 0, categories_count);
+    //document.write("hello")
+  </script>
+</aside>
+</td-->
+                <td id="td_posts" colspan="6" valign="top">
+		  <article>
+  <h1 id='header1' style="text-align: center;">
+      Vim实践与学习-06编程
+  </h1>
+  <hr id='title_line'>
+  <div>
+    <p>这里的内容是针对编程序或者阅读源代码时候使用的，本来它的有些内容可以属于其它类的，但是这里单独用&quot;编程相关&quot;将这类命令集中起来了。</p>
+
+<ul>
+<li><p>编译并自动定位第一个错误：<br><br>
+输入<code class="prettyprint">:make filename</code>。<br><br>
+注意：在vi中编译test.c,直接用<code class="prettyprint">:make test</code>就可以了,注意是不带后缀的哟。如果有makefile的话可以再vi直接敲<code class="prettyprint">:make</code>，然后就能够定位到第一个错误上面了。</p></li>
+<li><p>关于ctags跳转：<br><br>
+通常我们需要使用名为ctags的程序来生成这样的tag文件。vim能直接使用ctags程序所生成的tag文件。  </p>
+
+<ul>
+<li><p>安装ctags：  </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$sudo apt-get install ctags
+</code></pre></div>
+<p>注意这里是在ubuntu下。</p></li>
+<li><p>为当前目录文件生成tags文件：  </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ctags -R ./
+</code></pre></div>
+<p>或  </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ctags -R
+</code></pre></div>
+<p>这里，如果<code class="prettyprint">ctags -R ../</code>将会也生成父目录文件的tags，ctags利用tags进行跳转。</p></li>
+<li><p>载入当前标签：<br><br>
+输入<code class="prettyprint">:set tags=tags</code>.<br><br>
+这将载入（当前目录的）所需标签文件，如果不载入则没有ctags所需要的tags文件，为了实现自动载入启动可以在~/.vimrc加入如下内容：  </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">if has(&quot;ctags&quot;)
+    if filereadable(&quot;tags&quot;)
+        set tags=tags
+    endif
+endif
+</code></pre></div></li>
+<li><p>直接打开文件并跳转到函数:<br><br>
+    $vim -t func<br>
+这样，将打开vim并且直接跳转到func函数的位置。</p></li>
+<li><p>跳转到当前光标函数实现内部：<br><br>
+输入<code class="prettyprint">[Ctrl]]</code>.<br><br>
+实现这个功能需要有tags标签。</p></li>
+<li><p>回到[Ctrl][之前的位置：<br><br>
+输入<code class="prettyprint">[Ctrl]T</code>.<br><br>
+这里，应该是<code class="prettyprint">[Ctrl]]</code>之前的位置，有待修改。</p></li>
+<li><p>分割一个窗口并跳转到当前光标函数实现内部：<br><br>
+输入<code class="prettyprint">[Ctrl]w ]</code>.  </p></li>
+<li><p>跳转到指定函数实现处：<br><br>
+输入<code class="prettyprint">:tag func</code>.<br><br>
+或输入<code class="prettyprint">:tselect func</code><br><br>
+这样将跳到func函数的实现地方,tag func如果有多个将自动跳到第1个,tselect func如果多个则显示一个所有匹配列表，让你选择哪个。这里标签名可以用[Tab]进行命令补全.</p></li>
+<li><p>新开一个窗口，查看tag的函数：<br><br>
+输入<code class="prettyprint">:stag tagname</code>.<br><br>
+这里，tagname是一个tag标签（例如函数名）效果相当于首先用:split，再用tag tagname.窗口是水平的。<br><br>
+如果有多个tag匹配则：  </p>
+
+<ul>
+<li>切换到下一个匹配标签处：<br>
+输入<code class="prettyprint">:tnext</code></li>
+<li>切换到上一个匹配标签处：<br>
+输入<code class="prettyprint">:tprev</code></li>
+<li>切换到第一个匹配标签处：<br>
+输入<code class="prettyprint">:tfirst</code></li>
+<li>切换到最后一个匹配标签处：<br>
+输入<code class="prettyprint">:tlast</code></li>
+<li>显示所有匹配标签:<br>
+输入<code class="prettyprint">:tags</code></li>
+<li>显示所有匹配标签并让你选择指定的：<br>
+输入<code class="prettyprint">:tselect</code>。</li>
+</ul></li>
+</ul></li>
+<li><p>关于代码折叠  </p>
+
+<ul>
+<li>设置可以折叠<br>
+输入<code class="prettyprint">:set fdm=syntax</code>.<br>
+或输入<code class="prettyprint">:set fdm=indent</code>.<br>
+这里，fdm实际上是foldmethod的简写,第1个syntax方式是按照语法进行折叠（我倾向用这个所以后面都是对这个方式折叠下的命令），第2个是对大括号内的进行折叠。</li>
+<li>对当前代码块进行折叠：<br>
+输入<code class="prettyprint">zc</code>.<br>
+这里，需要把当前光标放置到需要折叠的代码块的内部，因为一般程序结构都是嵌套的，这个命令折叠的是最内层的代码块。<br></li>
+<li>对当前代码块所在范围代码块全部折叠：<br>
+输入<code class="prettyprint">zC</code>.<br>
+这里，折叠的不仅仅是最内层的代码块了，而是连带着递归地折叠了包含该代码块的这个代码块。</li>
+<li>展开当前代码最外层折叠：<br>
+输入<code class="prettyprint">zo</code>.<br>
+这里，是对光标下的折叠代码块最外层折叠进行打开，内层的折叠仍旧折叠着，除非你移动到那里再次用这个命令打开折叠，有时候你按一下左右方向键也会打开折叠。</li>
+<li>展开当前代码包含的所有折叠：<br>
+输入<code class="prettyprint">zO</code>.<br>
+这里，展开的不仅仅是最外层的代码块了，而是连带着递归地展开了该代码块包含的所有内层代码块。</li>
+<li>折叠当前文件所有可能折叠的代码：<br>
+输入<code class="prettyprint">zM</code>.<br>
+这样，将把当前文件的所有可以折叠的代码进行折叠。</li>
+<li>展开当前文件所有折叠的代码：<br>
+输入<code class="prettyprint">zR</code>.<br>
+或输入<code class="prettyprint">:set foldlevel=999</code>.<br>
+这样，将把当前文件的所有折叠的代码展开。</li>
+<li>全部展开或折叠当前文件所有可以折叠的代码：<br>
+输入<code class="prettyprint">zi</code>.<br>
+这里，相当于zR和zM命令的“综合”，这个命令在全部折叠和全部展开两个命令之间进行“开关”切换。</li>
+<li>到当前打开的折叠的开始处:<br>
+输入<code class="prettyprint">[z</code>.</li>
+<li>到当前打开的折叠的末尾处:<br>
+输入<code class="prettyprint">]z</code>.</li>
+<li>跳到下一个折叠的开始处:<br>
+输入<code class="prettyprint">zj</code>.<br>
+这里，关闭的折叠也被计入。</li>
+<li>跳到上一个折叠的末尾处:<br>
+输入<code class="prettyprint">zk</code>.<br>
+这里，关闭的折叠也被计入。</li>
+</ul></li>
+<li><p>cscope的使用  </p>
+
+<ul>
+<li>cscioe功能：<br>
+可以解决类似如下的问题：<br>
+
+<ol>
+<li>符号在哪里实用的？<br></li>
+<li>在哪里定义的？<br></li>
+<li>变量从哪里得到它的值的？<br></li>
+<li>全局变量的定义？<br></li>
+<li>这个函数在源代码中的什么文件中？<br></li>
+<li>什么函数调用了这个函数？<br></li>
+<li>这个函数调用了什么函数？<br></li>
+<li>消息“out of space”来自哪里？<br></li>
+<li>这个源文件在目录中的结构？<br></li>
+<li>哪些文件包含了这个头文件？<br></li>
+</ol></li>
+<li>软件下载：<br>
+<a href="http://sourceforge.net/project/showfiles.php?group_id=4664">http://sourceforge.net/project/showfiles.php?group_id=4664</a><br></li>
+<li>软件安装:<br>
+
+<ol>
+<li><code class="prettyprint">./configure --with-flex</code> (注：如果平台是Linux,最好带上 <code class="prettyprint">--with-flex</code>选项)<br></li>
+<li><code class="prettyprint">make</code> (注：我没有遇到错误)<br></li>
+<li><code class="prettyprint">make install</code> (注： 直接安装好了)<br></li>
+</ol></li>
+<li>cscope配置<br>
+修改vim配置文件vimrc.你可以修改/etc/vimrc使用所有用户都使用本配置文件，当然你还可以修改~/.vimrc<br>
+
+<ol>
+<li>下载cscope配置文件：cscope_map.vim  （<a href="http://cscope.sourceforge.net/cscope_maps.vim%EF%BC%89">http://cscope.sourceforge.net/cscope_maps.vim）</a><br></li>
+<li>把cscope_map.vim里从 if has(&quot;cscope&quot;)? 到 endif里边的内容复制到/etc/vimrc里边去<br></li>
+<li>里边的命令意思自己琢磨<br></li>
+</ol></li>
+<li>cscope相关命令<br>
+生成索引文件,在源代码目录中输入：<code class="prettyprint">$cscope -Rb</code><br>
+另外，有的时候：<code class="prettyprint">$cscope -Rbkq&lt;回车&gt;</code><br>
+这里，<br>
+R 表示把所有子目录里的文件也建立索引<br>
+b 表示cscope不启动自带的用户界面，而仅仅建立符号数据库<br>
+q生成cscope.in.out和cscope.po.out文件，加快cscope的索引速度<br>
+k在生成索引文件时，不搜索/usr/include目录<br>
+更多查看man.<br></li>
+<li><p>vim下的相关命令：  </p>
+
+<ul>
+<li>简单的帮助命令列表：<br>
+输入<code class="prettyprint">:cs help</code><br>
+或输入<code class="prettyprint">:cs</code><br>
+cs是cscope的简写命令，后面也是如此。<br></li>
+<li>添加一个新的cscope数据库链接:<br>
+输入<code class="prettyprint">:cs add cscope.out</code><br>
+这样，把当前目录下面的cscope.out这个cscope数据文件添加了，就可以利用其中的内容了，如果没有链接数据库，那么就用不了相应的功能了。可以把这个命令加入到.vimrc中，省得人工输入。<br></li>
+<li>查看当前已经链接的cscope数据库链接:<br>
+输入<code class="prettyprint">:cs show</code><br></li>
+<li><p>查找相关命令：</p>
+
+<ol>
+<li>查找C语言符号，即查找函数名、宏、枚举值等出现的地方<br>
+输入<code class="prettyprint">:cs find s &lt;符号名&gt;</code>.<br>
+或输入<code class="prettyprint">cs f s &lt;符号名&gt;</code>.</li>
+</ol>
+
+<p>这里,等价于<code class="prettyprint">:cs find 0</code>.  </p></li>
+</ul></li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">  2. 查找函数、宏、枚举等定义的位置，类似ctags所提供的功能:  
+        输入`:cs find g &lt;符号名&gt;`.  
+        或输入`cs f g &lt;符号名&gt;`.  
+    这里,等价于`:cs find 1`.  
+
+  3. 查找本函数调用的函数:  
+        输入`:cs find d &lt;符号名&gt;`.  
+        或输入`:cs f d &lt;符号名&gt;`.  
+        这里,等价于`:cs find 2`.  
+
+  4. 查找调用本函数的函数:  
+        输入`:cs find c &lt;符号名&gt;`.  
+        或输入`:cs f c &lt;符号名&gt;`.  
+        这里,等价于`:cs find 3`.  
+
+  5. 查找指定的字符串:  
+        输入`:cs find t &lt;符号名&gt;`.  
+        或输入`:cs f t &lt;符号名&gt;`.  
+        这里等价于`:cs find 4`  
+
+  6. 查找egrep模式，相当于egrep功能，但查找速度快多了:  
+        输入`:cs find e &lt;字符串&gt;`.  
+        或输入`:cs f e &lt;字符串&gt;`.  
+        这里,等价于`:cs find 6`，注意没有5.  
+
+  7. 查找并打开文件，类似vim的find功能:  
+        输入`:cs find f &lt;文件&gt;`.  
+        或输入`:cs f f &lt;文件&gt;`.  
+        这里,等价于`:cs find 7`.  
+
+  8. 查找包含本文件的文件:  
+        输入`:cs find i &lt;文件&gt;`  
+        这里等价于`:cs find 8`.  
+        以上的`cs find`均可简写为`cs f`.  
+
+- 将cscope的数据库内容作为tags:  
+    输入`:set cst`.  
+    或输入`:set cscopetag`.  
+    这样就 会把cscope的数据库当成tag文件了，在只有cscopt.out的情况下可以用[Ctrl]]进入相应的函数了。这样只用cscope不用ctags了。关闭这个功能是`:set nocst`.但是cscope无法在tag的时候自动不全标号，另外，cscope虽然搜索全局字符串似乎挺好，但是在用cscope的方式tag函数的时候，如果源文件修改了例如增加几个空行之类的，那么回出现定位错位，而ctags就不会。  
+
+- 察看光标下的函数:  
+    输入`[Ctrl]\g`.  
+    这里，是加入cscope.vim的相关语句到.vimrc中之后有的快捷键。cscope.vim内容在“其他相关“里面最后有列出了。  
+
+- 察看调用光标下函数的函数：  
+    输入`[Ctrl]\c`.  
+    还有其他等等，察看脚本内容就知道了，实际是`[Ctrl]\`等价于输入`:cs f`，之后输入相应的字符f,g,c等，就可以查找当前光标下标号的东西了。  
+</code></pre></div></li>
+<li><p>到当前局部变量的定义处:<br><br>
+输入<code class="prettyprint">gd</code>.<br><br>
+这里，当前的意思是光标停留其上的单词。  </p></li>
+<li><p>到当前全局变量的定义处:<br><br>
+输入<code class="prettyprint">gD</code>.  </p></li>
+<li><p>跳转到当前代码块的开头:<br><br>
+输入<code class="prettyprint">[{</code>.<br><br>
+这里代码块一般是用<code class="prettyprint">{}</code>扩起来的。  </p></li>
+<li><p>查找在头文件中的某个相关定义：<br><br>
+输入<code class="prettyprint">[Ctrl]w[Ctrl]i</code>.<br><br>
+这样，vim可以直接根据头文件进行查看，察看当前光标下的符号在头文件的相关定义。  </p></li>
+<li><p>注释第1行到第20行:<br><br>
+输入<code class="prettyprint">:1,20s/^/\/\//g</code>.<br><br>
+这里，<code class="prettyprint">^</code>表示在行首插入,因为Vim/Vi替换命令格式中默认<code class="prettyprint">/</code>为分隔符，这样就需要使用转义符<code class="prettyprint">\</code>，表示<code class="prettyprint">/</code>就要写成<code class="prettyprint">\/</code>才可以，所以命令如上所示。强烈建议各位看官使用，省时省力省键盘还，如果shell的注释符号&#39;#&#39;就不用转义了。  </p></li>
+<li><p>简单重排功能  </p>
+
+<ul>
+<li>当前行向右移一个shiftwidth:<br>
+输入<code class="prettyprint">&gt;&gt;</code>.<br>
+这里， 整行会向右移一个 shiftwidth（预设是 8 个字元，可重设）。<br></li>
+<li>当前行向左移一个shiftwidth:<br>
+输入<code class="prettyprint">&lt;&lt;</code>.<br>
+这里， 整行会向左移一个 shiftwidth（预设是 8 个字元，可重设）。<br></li>
+<li>将<code class="prettyprint">{}</code>,<code class="prettyprint">()</code>或<code class="prettyprint">[]</code>等符号括起来的文本都右移:<br>
+输入<code class="prettyprint">&gt;%</code>.<br>
+这里,您必须把光标放在这些符号(<code class="prettyprint">{}</code>,<code class="prettyprint">()</code>或<code class="prettyprint">[]</code>)上面.<br></li>
+<li>将<code class="prettyprint">{}</code>,<code class="prettyprint">()</code>或<code class="prettyprint">[]</code>等符号括起来的文本都左移:<br>
+输入<code class="prettyprint">&lt;%</code>.<br>
+这里,您必须把光标放在这些符号(<code class="prettyprint">{}</code>,<code class="prettyprint">()或</code>[]`)上面.<br></li>
+<li>自动缩进选中代码的格式：<br>
+
+<ol>
+<li>输入<code class="prettyprint">v</code>，<br></li>
+<li>移动光标，选择待调整的代码块，<br></li>
+<li>输入<code class="prettyprint">=</code>。<br>
+这里，关键是先进入选择模式选择相应的代码，然后按‘＝’键，如果只按=就格式化当前行（需移动一下光标才看得出来）。<br></li>
+</ol></li>
+</ul></li>
+<li><p>打开一个预览窗口来显示函数 <code class="prettyprint">write_char</code>：<br><br>
+输入<code class="prettyprint">:ptag write_char</code>.<br><br>
+这样之后，光标会自动移动回原来的位置。窗口是水平的。  </p></li>
+<li><p>关闭预览窗口：<br><br>
+输入<code class="prettyprint">:pclose</code>.<br><br>
+这里，尽管当前光标不在预览窗口，也会关闭预览窗口。  </p></li>
+<li><p>在预览窗口中编辑一个指定的文件:<br><br>
+输入 <code class="prettyprint">:pedit</code>。<br><br>
+这在编辑头文件时很有用，这里的是要编辑的文件名,还可以同时定位到函数比如：<code class="prettyprint">:pedit +/funcs defs.h</code>。这样可以在原有光标不变的情况下在预览窗口中修改。  </p></li>
+<li><p>查找当前文件和任何包含文件中的单词并在预览窗口中显示匹配:<br><br>
+输入<code class="prettyprint">psearch &lt;函数名&gt;</code>。<br><br>
+这在使用没有标签文件的库函数时十分有用。虽然它不是很智能，但是它能够到库头文件中搜索。  </p></li>
+<li><p>quickfix定位代码错误的使用<br><br>
+Quickfix模式的主要思想是保存一个位置列表，然后提供一系列命令，实现在这个位置列表中跳转。加快你的开发速度。<br><br>
+假设:你编写了一个程序，在vi中输入<code class="prettyprint">:make</code>调用makefile来编译的时候程序中有错误，回车就会返回编辑界面（实际会自动定位到第一个错误）。运行如下命令可以定位错误：  </p>
+
+<ul>
+<li>显示并定位到第n个错误：<br>
+输入<code class="prettyprint">:cc n</code>.<br>
+这样就会自动定位到第n个错误的位置，并显示相应的错误信息，如果没有n参数，就重现当前错误信息。<br></li>
+<li>定位到当前错误的下一个错误处：<br>
+输入<code class="prettyprint">:cn</code>.<br>
+这样如果当前在第n个错误的状态，这样会切换到第n+1个错误并定位到相应的位置。<br></li>
+<li>定位到当前错误的上一个错误处：<br>
+输入<code class="prettyprint">:cp</code>.<br>
+这样如果当前在第n个错误的状态，这样会切换到第n-1个错误并定位到相应的位置。<br></li>
+<li>列出当前所有错误列表：<br>
+输入<code class="prettyprint">:cl</code>.<br>
+这样列出一个错误列表，只是显示出了所有错误回车就又回到先前界面了。<br></li>
+<li>在当前窗口底部打开一个quickfix窗口列出所有错误信息：<br>
+输入<code class="prettyprint">:cw</code>.<br>
+这样会在当前窗口底部新开一个窗口，方便的看到所有错误信息，还可以把光标移动到相应的错误之处然后回车，就会回到代码窗口并定位到相应的错误位置。<br></li>
+<li>回到上一个错误列表：<br>
+输入<code class="prettyprint">:colder</code>.<br>
+或输入<code class="prettyprint">:col</code>.<br>
+这样回到上一次的quickfix错误列表，例如再次编译还有错误，这个命令返回的是上次而不是这次的错误列表，运用cw等都是上次的错误信息。<br></li>
+<li>进入较新的错误列表：<br>
+输入<code class="prettyprint">:cnewer</code>.<br>
+或输入<code class="prettyprint">:cnew</code>.<br>
+这个命令的作用和前面colder相反，进入更新的错误列表。<br></li>
+</ul></li>
+<li><p>关于自动补全：  </p>
+
+<ul>
+<li>显示自动补全列表：<br>
+输入<code class="prettyprint">[Ctrl]p</code><br>
+这里，是在插入模式下进行的，例如当前输入了<code class="prettyprint">aa</code>字符，然后输入[Ctrl]p这样会列出所有以aa为开头的单词列表。它们会在当前缓冲区、其它缓冲区，以及当前文件所包含的头文件中查找以光标前关键字开始的单词。<br></li>
+<li>选择自动补全列表中匹配的下一项：<br>
+输入<code class="prettyprint">[Ctrl]n</code>.<br>
+这样如果有多个匹配的单词项那么会高亮下一项进行选择。如果不够则循环显示。<br></li>
+<li>选择自动补全列表中匹配的上一项：<br>
+输入<code class="prettyprint">[Ctrl]p</code>.<br>
+这样如果有多个匹配的单词项那么会高亮上一项进行选择。如果不够则循环显示。<br></li>
+<li>自动匹配整个行：<br>
+输入<code class="prettyprint">[Ctrl]x[Ctrl]l</code>.<br>
+这里，注意要在编辑状态下面运行的，会弹出文件中所有的整个行，之后用[Ctrl]p等就可以自动匹配了。<br>
+如果CTRL-N和CTRL-P补全时查找所包含的头文件，耗时会比较久。此时，可以在’complete‘选项中去掉&#39;i&#39;标记<code class="prettyprint">:set complete-=i</code> 。<br></li>
+</ul></li>
+</ul>
+
+  </div>
+</article>
+
+		  <!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="/categories/study/vim/vim_use_tutor_06Programing" data-title="Vim实践与学习-06编程" data-url="http://vaqeteart.github.io//categories/study/vim/vim_use_tutor_06Programing.html"></div>
+<!-- 多说评论框 end -->
+<script src="/assets/js/comment.js"></script>
+		</td>
+             </tr>
+            <tr>
+                <td id="td_page_footer" colspan="6">
+<footer>
+  &copy 2015
+</footer>
+<a id="bottom"></a>
+</td>
+
+
+            </tr>
+        </tbody>
+    </table>
+  </body>
+</html>

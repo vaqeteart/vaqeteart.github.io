@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+<title>Vim实践与学习-01简介</title>
+
+<!--theme-->
+<link rel="stylesheet" type="text/css"
+  href="/assets/css/common_green_black.css" media="screen" />
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/category_list.js"></script>
+<script src="/assets/js/jquery-1.11.3.min.js"></script>
+
+    <link rel="stylesheet" type="text/css"
+      href="/assets/css/posts.css" media="screen" />
+  </head>
+
+   <body onload="change_categories('categories_study_vim')">
+     <table class="container">
+        <tbody>
+	      <tr>
+		<script src="/assets/js/nav.js"></script>
+<th id="th_navbar">
+    <table class="navbar"> <tbody> <tr>
+	<th class="navitm">
+	    <a href='/'>主页</a>
+	</th>
+
+	<th class="navblank">
+	</th>
+
+	<th class="navitm">
+	      <a href=/categories/study/vim/vim_use_tutor_01Introduction.html>分类</a>
+	      <div id="category_menus" class="second">
+  	      	   
+
+		   <script>
+		       var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+		       var categories_count = JSON.parse('{"/categories":0}');
+
+  		       
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/life';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/git';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others/rambles';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others/rambles';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+
+    			create_category_menu(categories, 0, categories_count);
+    			//document.write("hello")
+		    </script>
+	      </div>
+	</th>
+
+	<th class="navblank">
+	</th>
+
+        <th class="navitm">
+	      <a href='#'>标签</a>
+	      <div id="tag_menus" class="second">
+	          
+		      <a id="gtd_next" href="#"> gtd_next(13)</a>
+		  
+		      <a id="study" href="#"> study(10)</a>
+		  
+		      <a id="gtd_done" href="#"> gtd_done(4)</a>
+		  
+		      <a id="others" href="#"> others(3)</a>
+		  
+		      <a id="life" href="#"> life(1)</a>
+		  
+	      </div>
+        </th>
+
+	<th class="navblank" style="width:35%;">
+	</th>
+
+        <th class="navitm">
+	      <a href='more.html'>更多</a>
+        </th>
+
+        <th class="navitm">
+	      <a href='about.html'>关于</a>
+        </th>
+
+	<th class="navblank">
+	</th>
+
+	<a href='#' id="topbtn">⇑</a>
+
+	<a href='#bottom' id="bottombtn">⇓</a>
+	<!--⇐⇑⇒⇓-->
+
+  <tr> </tbody> </table>
+</th>
+
+	      </tr>
+	      <tr>
+                  <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+    <header style="text-align: center;">
+	<h1>
+	       <a href="/" title="Home Page">QuietHeart's Site</a>
+	</h1>
+    </header>
+</td>
+
+
+
+	      </tr>
+             <tr>
+                <!--td id="td_category_list"  colspan="1" valign="top"><aside id="left-side" >
+  <h2> 分类 </h2>
+  
+  <script>
+    var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+    var categories_count = JSON.parse('{"/categories":0}');
+
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/life';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/git';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others/rambles';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others/rambles';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+
+    create_categories(categories, 0, categories_count);
+    //document.write("hello")
+  </script>
+</aside>
+</td-->
+                <td id="td_posts" colspan="6" valign="top">
+		  <article>
+  <h1 id='header1' style="text-align: center;">
+      Vim实践与学习-01简介
+  </h1>
+  <hr id='title_line'>
+  <div>
+    <h3 id="什么是vim">什么是Vim</h3>
+
+<p>没有明确的定义，这里给出一些经验性的概括</p>
+
+<blockquote>
+<ul>
+<li>Vim是上世纪这个世界上诞生的两款最著名的编辑神器之一，另外一个是Emacs</li>
+<li>Vim和Emacs若只提两者之一而不提另外一个，这个世界便显得不平衡</li>
+<li>这两款编辑器均诞生在Linux/Unix平台上，后来也被移植到其他操作系统中</li>
+<li>二者是软件世界中的神话，历经半个世纪的洗礼、淘汰筛选、甚至它们本身相互之间的圣战至今，仍然长盛不衰，其强大之处让其它同类工具望尘莫及</li>
+<li>虽说是传闻但是在各个不同版本和来源上的传闻都意指：真正强悍的程序员开发使用的不是IDE，而是Vim和Emacs</li>
+<li>本人喜欢寻找各类功能强大、灵活、方便的开发以及文档撰写编辑等工具，随着经验、技术和实践、成长的积累，最终也渐渐将目标集中在这两款编辑器中</li>
+<li>有人甚至总结出世界上有三种程序员：使用Vim的程序员、使用Emacs的程序员、和其它程序员</li>
+</ul>
+</blockquote>
+
+<p>本文主要介绍Vim编辑器，Emacs的介绍放在其它之处</p>
+
+<p>目前我们实际使用的都是Vim，它其实是vi的改进版本之一，是最流行的改进版本，所以现在所说的Vi基本上就是Vim了</p>
+
+<h3 id="vim能做什么">Vim能做什么</h3>
+
+<p>Vim能够处理的事情很多，前面说了那么多空话，为避免有广告之嫌，这里列出其中一些常用的功能应用：  </p>
+
+<blockquote>
+<ul>
+<li>编辑和浏览文本文件<br></li>
+<li>浏览和管理文件目录<br></li>
+<li>阅读程序源代码<br></li>
+<li>提供编程、调试环境<br></li>
+<li>利用自带的脚本语言扩展自身<br></li>
+<li>自动化智能、批量地处理文本</li>
+</ul>
+
+<p>等等……</p>
+</blockquote>
+
+<h3 id="与其他编辑器的比较">与其他编辑器的比较</h3>
+
+<p>这里的比较主要是针对与它的“对手”Emacs而言，前面众多说法中，有一种可以这样解释：在Linux/Unix界，有三种编辑器：一种是Emacs，一种是Vim，还有一种是除此之外的编辑器，由此可见Vim在编辑器领域的地位。</p>
+
+<h4 id="操作理念不同">操作理念不同</h4>
+
+<p>Vim与Emacs，两者各有千秋，下面只列出其中少许</p>
+
+<blockquote>
+<ul>
+<li>Vim侧重简洁、快速、高效；Emacs侧重大而全、具有超强的扩展与配置能力</li>
+<li>Vim更专注于编辑功能本身，将编辑功能发挥到极致，将每一次的操作任务一气呵成</li>
+<li>Emacs注重全面，集成了编辑中你能想到的方方面面，将因频繁切换被打断的思路减至最少</li>
+</ul>
+
+<p>等等……</p>
+</blockquote>
+
+<p>其实，Vim更算是一款编辑器，而Emacs则像是隐藏在编辑器下的操作系统。</p>
+
+<h4 id="工作方式不同">工作方式不同</h4>
+
+<p>有人做过这样的比喻，Vim是编辑器之神，Emacs是神之编辑器。</p>
+
+<ul>
+<li><p>使用Vim时</p>
+
+<ul>
+<li>其编辑之高效，将所思想如行云流水般实现</li>
+<li>随着对Vim的熟练，甚至不注意时操作会超越思维，还没有想完下一步的操作，手指就已经被Vim控制着完成了任务</li>
+<li>使用Vim容易让人有种走火入魔，成为“编辑器神之奴”的感觉</li>
+</ul></li>
+<li><p>使用Emacs时</p>
+
+<ul>
+<li>总会不满当前操作效率，对当前的编辑操作提出更高要求；不满过后，总能在后续的完善配置扩展中找到能够达到、甚至超过预期需求的特性</li>
+<li>达到需求后，又再次陷入不满、配置、扩展、满足的循环当中</li>
+<li>在这种不断进步并且提高效率过程中，让人不断地因找到更好方式而满足，因不断发现缺陷而失落，使得Emacs逐渐成为让我们踏足“神域”的桥梁</li>
+</ul></li>
+</ul>
+
+<p>两者除各自擅长之处外，又各自在对方擅长的领域表现优异，令其它类编辑器“无可乘之机”，也另对方不敢有丝毫“松懈”。</p>
+
+<h4 id="建议">建议</h4>
+
+<p>历史上两者的阵营之间爆发过多次“圣战”，涉及的方面太多，这里不一一列举，在实用的原则上，这里给出一点建议：<br>
+* 对两者的选择，应当建立在对它们的了解之上<br>
+* 使用Vim之时要给自己的思维一点空闲时间，防止进入“走火入魔”的境地<br>
+* 而对Emacs的使用，其配置和扩展能够达到一定实用价值即可，避免为了不断提升Emacs而使用Emacs（虽然不断的提升是值得的）</p>
+
+<h4 id="vim的特征">Vim的特征</h4>
+
+<p>本文并无意加入Vim和Emacs的圣战中来；因讲述的是Vim的使用，所以针对其特点进行叙述；相应地Emacs也有它的特点，在讲述Emacs之时也会相应提到。</p>
+
+<p>一般使用过两者的人，可能会有如下的感觉：</p>
+
+<ul>
+<li>相比Emacs而言，Vim更为“通用”，这里的通用是指，并不是所有机器上都配有Emacs、但是大多数机器上都配有vi编辑器</li>
+<li>使用Vim不会像Emacs那样过度依赖本地配置与扩展，有些配置可以在使用Vim时按需即时开启（比如语法高亮与代码折叠）</li>
+<li>Vim启动迅速（启动Vim时，一般不需加载过多增强插件），按键简短（Vim的按键命令一般不会过长，组合键的情况很少）</li>
+<li>Vim只将编辑相关操作发挥极致，不做多余之事（与其它工具配合度高，编辑外的事情在Linux中自然有专门软件替它实现，如搜索文本通过grep完成）</li>
+</ul>
+
+<p>还有许多，这里也不过多叙述，为避免卷入圣战，还是需要做一点补充：当然，若不频繁切换自己的环境，或者能找到一种方式稳定在同一环境下工作的话，Emacs迟早也同样能做到甚至超越这些方面（记得有一款Emacs插件叫&quot;evil&quot;，作用是将vim的功能包含到Emacs中来，可见这款插件的意图是多么的邪恶<sup>_<sup>）。</sup></sup></p>
+
+<p>总之，使用工具的方式，决定工具的价值。</p>
+
+<h4 id="与emacs的共通之处">与Emacs的共通之处</h4>
+
+<p>Vim与Emacs其实也有许多共通之处，这里只给出我们最容易遇见和理解的两条：</p>
+
+<ul>
+<li>相比其他编辑器，Vim的入门门槛高一些，这里给出一个编辑器的学习曲线图：</li>
+</ul>
+
+<p><img src="/data/2010-04-02-vim_use_tutor_01Introduction.files/image/2010-04-02-editor_study_line.jpg" alt="主流编辑器学习曲线图"></p>
+
+<ul>
+<li>虽然两者入门难度较大，但是两者又都有一个非常好的学习捷径：避免只看理论，尽早让实践成为习惯，在实践中学习。</li>
+</ul>
+
+<h3 id="开始学习">开始学习</h3>
+
+<h4 id="本文约定">本文约定</h4>
+
+<p>特殊按键表示：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Space: &lt;SPC&gt;  
+Ctrl: &lt;CTRL&gt;或&lt;C&gt;  
+Alt: &lt;ALT&gt;或&lt;M&gt;  
+Esc: &lt;ESC&gt;（注意，Emacs也将Esc键归为&lt;M&gt;）  
+Shift: &lt;SHIFT&gt;或&lt;S&gt;  
+Tab: &lt;Tab&gt;  
+Enter: &lt;Enter&gt;（有些时候为&lt;RET&gt;或&lt;CR&gt;）  
+BackSpace:&lt;&lt;BS&gt;（注意，Emacs上表示为&lt;DEL&gt;，Emacs上&lt;DEL&gt;不是Delete按键）  
+Delete:&lt;Del&gt;  
+</code></pre></div>
+<p>组合键的表示：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;Esc&gt;: Escape key
+&lt;C-G&gt;: CTRL-G
+&lt;Up&gt;: cursor up key
+&lt;C-LeftMouse&gt;: Control- left mouse click
+&lt;S-F11&gt;: Shifted function key 11
+&lt;M-a&gt;: Meta- a  (&#39;a&#39; with bit 8 set)
+&lt;M-A&gt;: Meta- A  (&#39;A&#39; with bit 8 set)
+&lt;t_kd&gt;: &quot;kd&quot; termcap entry (cursor down key)
+</code></pre></div>
+<p>更多内容可以打开Vim并输入<code class="prettyprint">:help keycode</code>，参考其帮助手册给出的Key表示。</p>
+
+<p>在没有歧义的情况下，可以使用任何方式表示。</p>
+
+<h4 id="模式的概念　　">模式的概念　　</h4>
+
+<p>Vim具有多种模式，后面会详述，初学时，我们最好能理解其中两种最常见的模式：</p>
+
+<ul>
+<li><p>输入模式<br><br>
+又可称为或插入模式、编辑模式。<br><br>
+输入模式下输入字符，字符会插入至文本中，并显示在屏幕上。  </p></li>
+<li><p>指令模式<br><br>
+又可称为命令模式，是Vim启动后默认的模式。<br><br>
+指令模式下输入字符，并不会将相应的字符插入文本，而是将字符解释为一个输入命令并执行，理解指令模式最简单方式就是想象平时剪切、复制以及粘贴数据时所发生的情况。  </p>
+
+<ul>
+<li>行命令模式<br>
+是在指令模式下一种特殊的情况，可以输入复杂的命令用户 。<br>
+进入行命令模式后，vim底部会有一行空间，供用户输入。用户输入的字符会在这里显示，键入回车后执行相应的命令。</li>
+</ul></li>
+</ul>
+
+<p>总结起来，在本文中，“插入模式”＝“输入模式”＝“编辑模式”、“指令模式”＝“命令模式”、“行命令模式”是特殊的指令模式。</p>
+
+<h4 id="基本操作">基本操作</h4>
+
+<p>这里提供了使用vi得最基本的操作，能够实现基本的编辑目的。<br><br>
+如果你肯花几分钟把这里的内容都实践一下，那么至少能够独立地在Vim中朝你想要得方向“前进”。<br><br>
+如果你不想学习，也可以把它当作一个“便签”，现查现用。</p>
+
+<ul>
+<li><p>打开一个文件：<br><br>
+输入<code class="prettyprint">vi filename</code>。<br><br>
+这里，<code class="prettyprint">filename</code>就是你要打开的文件的名字，默认打开文件后vi处于指令模式。</p></li>
+<li><p>进入编辑模式编辑打开的文件：<br><br>
+输入<code class="prettyprint">i</code>.<br><br>
+或输入<code class="prettyprint">a</code>.<br><br>
+进入编辑模式后，你可以直接敲入想要输入的字符到文件，两者的区别是i在当前字符前面开始插入，a在当前字符后面开始插入。</p></li>
+<li><p>退出编辑模式：<br><br>
+输入<code class="prettyprint">&lt;ESC&gt;</code>.<br><br>
+这样，将返回指令模式，准备接收你要传达给vi的指令并执行，如果之前已经在指令模式下，那么系统将响铃提醒一下。</p></li>
+<li><p>以下命令都是在命令模式下进行：</p>
+
+<ul>
+<li>撤销修改<br>
+输入<code class="prettyprint">u</code>.<br>
+这里，相比以前的vi来说，vim支持多步撤销。</li>
+<li>恢复修改<br>
+输入<code class="prettyprint">&lt;C-r&gt;</code>.<br>
+这里，和撤销命令相反，是撤销的撤销，也可多步。</li>
+<li>复制行到剪切板：<br>
+输入<code class="prettyprint">yy</code>.</li>
+<li><p>复制选定内容到剪切板：  </p>
+
+<ol>
+<li>输入<code class="prettyprint">v</code>。<br></li>
+<li>按方向键将高亮选择的内容。<br></li>
+<li>输入<code class="prettyprint">y</code>。<br></li>
+</ol>
+
+<p>这里，开始输入v使vi临时进入了一个&quot;选择模式&quot;，输入方向键可以选择，输入y将选择的内容复制剪切板。  </p></li>
+<li><p>删除行：<br><br>
+输入<code class="prettyprint">dd</code>.<br><br>
+注意，vi的删除等价于剪切，删除的内容会保存到剪切板中。</p></li>
+<li><p>删除选定内容：  </p>
+
+<ol>
+<li>输入<code class="prettyprint">v</code>。<br></li>
+<li>按方向键将高亮选择的内容。<br></li>
+<li>输入<code class="prettyprint">d</code>。<br>
+这里，开始输入<code class="prettyprint">v</code>使vi临时进入了一个“选择模式”，输入方向键可以选择，输入<code class="prettyprint">d</code>将选择的内容删除。</li>
+</ol></li>
+<li><p>粘贴：<br><br>
+输入<code class="prettyprint">p</code>.<br><br>
+这样会将剪切板的内容粘贴到光标位置或者光标下一行。</p></li>
+<li><p>查找字符并定位到第一个匹配处：<br><br>
+输入<code class="prettyprint">/character</code>.<br><br>
+这里<code class="prettyprint">character</code>是待查找的字符，只要先输入<code class="prettyprint">/</code>，再输入待查字符，最后回车即可定位到第一个匹配的字符处。</p></li>
+<li><p>定位到匹配查找的下一个字符处：<br><br>
+输入<code class="prettyprint">n</code>.</p></li>
+<li><p>定位到匹配查找的上一个字符处：<br><br>
+输入<code class="prettyprint">N</code>.</p></li>
+<li><p>保存文件：<br><br>
+输入<code class="prettyprint">:w</code>.<br><br>
+注意<code class="prettyprint">w</code>前面的<code class="prettyprint">:</code>，输入<code class="prettyprint">:</code>之后，vim会将<code class="prettyprint">:</code>之后的输入解释为待执行的指令。</p></li>
+<li><p>退出：<br><br>
+输入<code class="prettyprint">:q</code>.<br><br>
+这里，如果文件没有保存，将提示无法退出，除非你强制退出，不保存文件，或者保存退出。</p></li>
+<li><p>强制退出：<br><br>
+输入<code class="prettyprint">:q!</code>.</p></li>
+<li><p>保存退出：<br><br>
+输入<code class="prettyprint">:wq</code>.<br><br>
+或输入<code class="prettyprint">:x</code>.<br><br>
+或输入<code class="prettyprint">ZZ</code>.  </p></li>
+<li><p>察看帮助<br><br>
+输入<code class="prettyprint">:help</code>.</p></li>
+</ul></li>
+</ul>
+
+  </div>
+</article>
+
+		  <!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="/categories/study/vim/vim_use_tutor_01Introduction" data-title="Vim实践与学习-01简介" data-url="http://vaqeteart.github.io//categories/study/vim/vim_use_tutor_01Introduction.html"></div>
+<!-- 多说评论框 end -->
+<script src="/assets/js/comment.js"></script>
+		</td>
+             </tr>
+            <tr>
+                <td id="td_page_footer" colspan="6">
+<footer>
+  &copy 2015
+</footer>
+<a id="bottom"></a>
+</td>
+
+
+            </tr>
+        </tbody>
+    </table>
+  </body>
+</html>

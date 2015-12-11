@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+<title>My first page</title>
+
+<!--theme-->
+<link rel="stylesheet" type="text/css"
+  href="/assets/css/common_green_black.css" media="screen" />
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/category_list.js"></script>
+<script src="/assets/js/jquery-1.11.3.min.js"></script>
+
+    <link rel="stylesheet" type="text/css"
+      href="/assets/css/posts.css" media="screen" />
+  </head>
+
+   <body onload="change_categories('categories_study_emacs')">
+     <table class="container">
+        <tbody>
+	      <tr>
+		<script src="/assets/js/nav.js"></script>
+<th id="th_navbar">
+    <table class="navbar"> <tbody> <tr>
+	<th class="navitm">
+	    <a href='/'>主页</a>
+	</th>
+
+	<th class="navblank">
+	</th>
+
+	<th class="navitm">
+	      <a href=/draft/emacs/emacs_simple_tutor.html>分类</a>
+	      <div id="category_menus" class="second">
+  	      	   
+
+		   <script>
+		       var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+		       var categories_count = JSON.parse('{"/categories":0}');
+
+  		       
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/life';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/git';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others/rambles';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others/rambles';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+
+    			create_category_menu(categories, 0, categories_count);
+    			//document.write("hello")
+		    </script>
+	      </div>
+	</th>
+
+	<th class="navblank">
+	</th>
+
+        <th class="navitm">
+	      <a href='#'>标签</a>
+	      <div id="tag_menus" class="second">
+	          
+		      <a id="gtd_next" href="#"> gtd_next(13)</a>
+		  
+		      <a id="study" href="#"> study(10)</a>
+		  
+		      <a id="gtd_done" href="#"> gtd_done(4)</a>
+		  
+		      <a id="others" href="#"> others(3)</a>
+		  
+		      <a id="life" href="#"> life(1)</a>
+		  
+	      </div>
+        </th>
+
+	<th class="navblank" style="width:35%;">
+	</th>
+
+        <th class="navitm">
+	      <a href='more.html'>更多</a>
+        </th>
+
+        <th class="navitm">
+	      <a href='about.html'>关于</a>
+        </th>
+
+	<th class="navblank">
+	</th>
+
+	<a href='#' id="topbtn">⇑</a>
+
+	<a href='#bottom' id="bottombtn">⇓</a>
+	<!--⇐⇑⇒⇓-->
+
+  <tr> </tbody> </table>
+</th>
+
+	      </tr>
+	      <tr>
+                  <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+    <header style="text-align: center;">
+	<h1>
+	       <a href="/" title="Home Page">QuietHeart's Site</a>
+	</h1>
+    </header>
+</td>
+
+
+
+	      </tr>
+             <tr>
+                <!--td id="td_category_list"  colspan="1" valign="top"><aside id="left-side" >
+  <h2> 分类 </h2>
+  
+  <script>
+    var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+    var categories_count = JSON.parse('{"/categories":0}');
+
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/life';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/git';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others/rambles';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others/rambles';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+
+    create_categories(categories, 0, categories_count);
+    //document.write("hello")
+  </script>
+</aside>
+</td-->
+                <td id="td_posts" colspan="6" valign="top">
+		  <article>
+  <h1 id='header1' style="text-align: center;">
+      My first page
+  </h1>
+  <hr id='title_line'>
+  <div>
+    <p>这里是对Emacs中的简易教程的翻译和总结。</p>
+
+<p>Emacs简易教程阅读：<br>
+命令：<br>
+$emacs<br>
+进入之后，输入：<br>
+C-h t<br>
+这里，C-h表示按住[Ctrl]键的同时按h</p>
+
+<p>20090620</p>
+
+<p>*退出：<br>
+输入“C-x C-c”</p>
+
+<p>*撤销：<br>
+输入&quot;C-x u&quot;<br>
+或输入&quot;C-<em>&quot;<br>
+这里，&quot;C-</em>&quot;比较好输入一些(好像C--也行)，但是有的键盘上面没有&quot;_&quot;就只能输入“C-x u”了，撤销动作能进行20次。</p>
+
+<p>*向上翻页：<br>
+输入&quot;M-v&quot;<br>
+这里，右手的M好像不好使？</p>
+
+<p>*向下翻页：<br>
+输入&quot;C-v&quot;</p>
+
+<p>*刷新屏幕：<br>
+输入&quot;C-l&quot;<br>
+这里，l不是1，执行之后光标和相应文字都跑到屏幕中间。</p>
+
+<p>*基本移动光标：<br>
+C-f 向前移动一个字符。<br>
+C-b 向后移动一个字符。<br>
+M-f 向前移动一个单词。<br>
+M-b 向后移动一个单词。<br>
+C-n 移动到下一行。<br>
+C-p 移动到上一行。<br>
+C-a 移动到行首。<br>
+C-e 移动到行尾。<br>
+M-a 向前移动到句子的开头，可能跨多行或一行都不到。<br>
+M-e 向后移动到句子的末尾，可能跨多行或一行都不到。<br>
+从以上几个命令可知，M是和语言相关的控制键，C之后基本单元有关。Emacs有个特点，就是你移动光标的时候，如果光标超出了屏幕范围（向上或者向下），则立刻将光标及附近文字居屏幕中央。</p>
+
+<p>*重复一定次数的操作：<br>
+输入&quot;C-u &lt;数字&gt; &lt;你想要重复操作的命令或输入的字符&gt;&quot;<br>
+这里，<br>
+C-u &lt;数字&gt;是一个“前缀”，数字是要执行后面的命令的次数；例如&quot;C-u 8 C-p&quot;表示向前8行。<br>
+多数命令把这个“前缀”做为重复，但是有些特殊命令不是这样，以后会遇到的。<br>
+C-v和M-v加上这个数字表示的是把屏幕移动多少行而不是翻多少页。</p>
+
+<p>*终止现在正在执行的命令：<br>
+输入&quot;C-g&quot;</p>
+
+<p>*关掉其它窗口，只显示光标所在窗口：<br>
+输入&quot;C-x 1&quot;<br>
+在多窗口的时候，这样就会把所有窗口关掉，只显示一个窗口了。</p>
+
+<p>*让光标所在行跑到屏幕顶部：<br>
+输入&quot;C-u 0 C-l&quot;</p>
+
+<p>*查看C-f的文档解释：<br>
+输入&quot;C-h k C-f&quot;<br>
+这样，将新开一个窗口显示该命令(C-f)的解释,其它命令解释类似。</p>
+
+<p>*基本删除操作：<br>
+<Delback> 删除光标前面的字符，不可再粘贴<br>
+M-<Delback> 除去光标前面的单词<br>
+C-d 删除光标后面的字符,<br>
+M-d 除去光标后面的单词<br>
+C-k 除去从光标位置到行尾的内容，可再粘贴<br>
+M-k 除去到当前句子的末尾</p>
+
+<h4 id="阅读至386行">阅读至386行</h4>
+
+<p>20090621</p>
+
+<p>*kill一个块的内容：<br>
+1）在块的一端输入&quot;C-<SPC>&quot;或&quot;C-@&quot;.<br>
+这样将设定一个标记。<br>
+2）在块的另一端输入&quot;C-w&quot;.<br>
+至此，这个块（在两端之间的部分）将被删除。<br>
+kill和delete的区别是，kill掉的部分可以被粘贴上去，类似剪切。</p>
+
+<p>*kill当前行的光标和光标之后的部分：<br>
+输入“C-k”<br>
+这样，会删除相应包括光标所在内容，再按&quot;C-k&quot;删除换行符号。</p>
+
+<p>*粘贴最近kill方式删除的文本：<br>
+输入&quot;C-y&quot;</p>
+
+<p>*粘贴前几次某次kill删除的文本：<br>
+1）先输入&quot;C-y&quot;<br>
+这样会把最近的kill删除的文本粘贴回来。<br>
+2）多次输入&quot;M-y&quot;<br>
+这样，会不断用之前的kill删除的文本来替换当前刚刚粘贴上去的文本(循环的)，这样一直进行下去，直到粘贴上之前某次删除的文本。</p>
+
+<p>*打开一个文件yourfilename：<br>
+命令行下:$emacs yourfilename<br>
+或者emacs下输入：&quot;C-x C-f <yourfilename>&quot;<br>
+这样，如果文件名不存在则新建一个，第二个命令&quot;C-x C-f&quot;后有提示让你输入待打开的文件的路径，当前的文件没有保存也不会提示但是退出时候会提示你刚才载入新文件之前没有保存的文件是否保存，没新打开一个文件emacs会新建立一个buffer存放该文件。</p>
+
+<p><em>保存一个文件：<br>
+输入“C-x C-s”.<br>
+这样会保存文件,如果没有保存则提示。如果你没有保存文件，底部的提示行会用</em>表示未保存。</p>
+
+<p>*查看emacs所有的buffer列表：<br>
+输入&quot;C-x C-b&quot;<br>
+这样，会显示一个buffer列表，每项显示打开的一个文件的名字。</p>
+
+<p>*切换到相应buffer列表：<br>
+输入&quot;C-x b <buffer列表名>&quot;<br>
+这里，&quot;C-x b&quot;之后直接输入buffer列表名字，比&quot;C-x C-f&quot;的方式切换简单多了。</p>
+
+<p>*保存buffer内容：<br>
+ 输入&quot;C-x s&quot;<br>
+这样，输入&quot;C-x s&quot;之后，会依次询问你那些被改变的没有保存的buffer文件是否保存，你只需要回答就行了。</p>
+
+<h6 id="阅读至650行">####阅读至650行</h6>
+
+<p>*替换字符串：<br>
+1)输入&quot;M-x &quot;<br>
+这样，提示你输入替换命令,可以用<TAB>自动补全。<br>
+2)输入&quot;repl s<TAB>&quot;<br>
+这里就是利用<TAB>来自动补全命令的，如果不补全回车的话，命令唯一则也行。<br>
+3)输入“<Return>”<br>
+回车<Return>之后，提示要你输入要替换的字符。<br>
+4)输入&quot;要替换的字符&quot;<br>
+5)输入&quot;<Return>&quot;<br>
+回车<Return>之后，提示要你输入要替换成的字符。<br>
+6)输入&quot;要替换成的字符&quot;<br>
+7)输入&quot;<Return>&quot;</p>
+
+<p>*自动保存功能：<br>
+emacs提供自动保存功能，例如当你修改“hello.c”文件的时候，它会生成一个“#hello.c#”文件（称做自动保存文件），并且周期的向这个文件写入最新数据，当你保存文件的时候，emacs才会删掉这个文件。当你机器挂掉的时候，你可以利用这个文件进行恢复。</p>
+
+<p>*利用自动保存文件恢复文件：<br>
+假设文件hello.c的自动保存文件是#hello.c#恢复步骤如下：<br>
+1)输入&quot;M-x&quot;<br>
+这样，提示你输入恢复命令,可以用<TAB>自动补全。<br>
+2)输入&quot;recover<TAB>&quot;<br>
+这样会自动补全为recover-file<br>
+3)输入&quot;<Return>&quot;<br>
+4)输入&quot;hello.c&quot;<br>
+这里输入的就是要恢复的文件名，而不是#hello.c#<br>
+5)输入&quot;yes&quot;<br>
+这里根据提示输入&quot;yes&quot;表示确认恢复。</p>
+
+<p>*转换主要显示模式：<br>
+假设转换为fundamental模式，步骤如下：<br>
+1）输入“M-x”<br>
+2）输入“fundamental<TAB>”<br>
+这里输入的是模式的名称，利用<TAB>自动补全。<br>
+3）输入“<Return>”<br>
+这样就把模式转换成为fundatmental模式了。emacs中有几种不同的主要模式，它们用来编辑的不同类型的文本，当前所处的主要模式的名称显示在底部的状态栏上面，不同的主要模式中的命令行为稍微不同。例如：text模式在M-f和M-b的时候，把顿号也视为单词的一部分，而fundatmental模式把顿号视为分隔符号等等，不过命令大体行为是一样的。</p>
+
+<p>*查看你当前主要模式下的帮助文档：<br>
+输入&quot;C-h m&quot;</p>
+
+<p>*打开关闭次要模式：<br>
+假设打开关闭的是Auto Fill mode，步骤如下：<br>
+1)输入&quot;M-x&quot;<br>
+2)输入&quot;auto-fill-mode&quot;<br>
+3)输入&quot;<Return>&quot;<br>
+回车之后，就会打开或者关闭auto-fill-mode模式（切换），这个模式在human-language text编辑中非常有用，该模式为on的时候，当一行单词数目过多的时候，它会在最后一个单词尾（注意就是必须要整个单词接空格的那种）自动插入换行而不是续行符号。<br>
+既然有主要模式，当然也有次要模式，次要模式并不能替代主要模式，它们只是一些类似“选项”的东西来稍微改变主模式的行为，能够独立于主模式或者其它次要模式来打开和关闭。</p>
+
+<p>*改变一行的填充（不明白?）：<br>
+假设改变为20，输入如下：<br>
+1）输入&quot;C-u 2 0 C-x f&quot;<br>
+2）输入&quot;M-q&quot;<br>
+这样设置后auto-fill-mode不管用了，想要重新re-fill，要在当前段内输入M-q。 会发现该段变成了每行20个字符。</p>
+
+<h6 id="阅读至850行">####阅读至850行</h6>
+
+<p>*搜索：<br>
+假设搜索“cursor”，步骤如下：<br>
+1)输入 “C-s”<br>
+这时候，底部会出现一个提示，提示你输入要搜索的字符串<br>
+2)输入“&lt;你要搜索的字符串&gt;”<br>
+这时候，你会发现，随着你的输入，emacs会高亮相应的匹配并且光标向后跳到最近匹配，当你搜索的时候删除一个字符，emacs会跳到上次光标搜索的单词处（少一个字符的），当删成了空的时候，应该光标就跳回到最开始你搜索之前的位置了。<br>
+3)输入&quot;C-s&quot;<br>
+这样会把光标跳到下一个匹配的字符串。<br>
+4)输入&quot;<Return>&quot;<br>
+回车之后，会结束搜索（下次连续两个&quot;C-s&quot;会继续搜索上次的搜索字符串）。<br>
+注意，有的系统会把&quot;C-s&quot;解释为锁屏，而不等把命令传给emacs，这时你可以按C-q停止锁屏，然后查看文档的“Spontaneous Entry to Incremental Search”部分。</p>
+
+<p>*反向搜索：<br>
+方法同“搜索”的方法，不过把&quot;C-s&quot;改成了&quot;C-r&quot;</p>
+
+<p>*把当前光标及所在行设置为屏幕中第一行：<br>
+输入&quot;C-u 0 C-l&quot;<br>
+这里是小写L不是1。</p>
+
+<p>*分割窗口：<br>
+输入“C-x 2”<br>
+这样会水平把当前窗口分割成为两个，可以两个窗口显示不同的文件。</p>
+
+<p>*光标在当前窗口，给底部的窗口翻页：<br>
+输入“C-M-v”<br>
+或者输入“<Esc> C-v”<br>
+这里，emacs处于水平分割为两个窗口的状态，当前光标在上面的窗口中，然后这个命令会给下面的窗口翻页；如果光标在下面的窗口中会给上面的窗口翻页；注意如果你没有M控制键（就是Alt）那么你要实现这个功能就用第二个方法，先输入<Esc>再C-v。</p>
+
+<p>*在分割的上下两个窗口间切换：<br>
+输入“C-x o”<br>
+这样，光标会在上下两个窗口之间切换。</p>
+
+<p>*分割一个窗口载入另外一个文件：<br>
+输入“C-x 4 C-f &lt;你的文件名&gt;”</p>
+
+<p>*当你处于recursive edit level的时候，你不能够利用C-g来取消命令了，那么你需要利用<Esc><Esc><Esc>（或者更多次）来取消，据说这个模式下会用方括号把模式括起来，例如用[(Fundamental..)]替代(Fundamental)但是实际上我看似乎不是这样啊？</p>
+
+<h6 id="阅读至995行">####阅读至995行</h6>
+
+<p>*如何获得更多的帮助：<br>
+输入“C-h ?”<br>
+或输入“M-x help <Return>”<br>
+一般用第一个，如果第一个不好用，就用第二个，<Return>表示回车。</p>
+
+<p>*查看某个命令按键或者命令次序简单的帮助：<br>
+假设查看C-p的信息：<br>
+输入：&quot;C-h c C-p&quot;<br>
+这里，会显示一条描述该命令（C-p）的简短信息。关键是先输入&quot;C-h c&quot;，再输入命令。</p>
+
+<p>*查看某个命令按键或者命令次序详细的帮助：<br>
+假设查看C-p的信息：<br>
+输入：&quot;C-h k C-p&quot;<br>
+这里会显示该命令（C-p）的详细信息。关键是输入“C-h k”，再输入命令。</p>
+
+<h6 id="阅读至1050行">####阅读至1050行</h6>
+
+<p>20090808<br>
+*查找一个函数的功能：<br>
+输入“C-h f”<br>
+然后输入一个特定的emacs函数。</p>
+
+<p>*列出部分匹配：<br>
+输入&quot;C-h a&quot;<br>
+之后，输入一个词，会列出包含这个词的所有命令（meta键激起的）</p>
+
+<p>*在线info手册：<br>
+输入&quot;C-h i&quot;<br>
+这样，会打开info如果查看emacs输入“m emacs”，如果不知道作甚么，那么输入&#39;?&#39;可以显示一些info基本的操作。</p>
+
+  </div>
+</article>
+
+		  <!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="" data-title="My first page" data-url="http://vaqeteart.github.io//draft/emacs/emacs_simple_tutor.html"></div>
+<!-- 多说评论框 end -->
+<script src="/assets/js/comment.js"></script>
+		</td>
+             </tr>
+            <tr>
+                <td id="td_page_footer" colspan="6">
+<footer>
+  &copy 2015
+</footer>
+<a id="bottom"></a>
+</td>
+
+
+            </tr>
+        </tbody>
+    </table>
+  </body>
+</html>
