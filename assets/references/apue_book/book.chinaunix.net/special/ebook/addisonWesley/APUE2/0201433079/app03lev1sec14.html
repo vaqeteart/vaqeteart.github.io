@@ -1,0 +1,222 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Chapter 14</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec13.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec15.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app03lev1sec14"></a>
+<h3 class="docSection1Title">Chapter 14</h3>
+<p class="docText"></P>
+<P><table border="0" cellspacing="16" cellpadding="0"><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch14qa1q1a1"></a><B><a class="docLink" href="ch14lev1sec11.html#ch14qa1q1">14.1</a></b></TD><td><p class="docText"><a name="idd1e108637"></a><a name="idd1e108642"></a><a name="idd1e108647"></a><a name="idd1e108652"></a><a name="idd1e108657"></a><a name="idd1e108662"></a><a name="idd1e108667"></a><a name="idd1e108672"></a><a name="idd1e108677"></a>The test program is shown in <a class="docLink" href="app03lev1sec14.html#app03fig14">Figure C.14</a></P>
+<a name="app03fig14"></a>
+<H5 class="docExampleTitle">Figure C.14. Determine record-locking behavior</H5>
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+#include &lt;errno.h&gt;
+
+void
+sigint(int signo)
+{
+}
+
+int
+main(void)
+{
+    pid_t pid1, pid2, pid3;
+    int fd;
+
+    setbuf(stdout, NULL);
+    signal_intr(SIGINT, sigint);
+
+    /*
+     * Create a file.
+     */
+    if ((fd = open("lockfile", O_RDWR|O_CREAT, 0666)) &lt; 0)
+        err_sys("can't open/create lockfile");
+    /*
+     * Read-lock the file.
+     */
+    if ((pid1 = fork()) &lt; 0) {
+        err_sys("fork failed");
+    } else if (pid1 == 0) { /* child */
+        if (lock_reg(fd, F_SETLK, F_RDLCK, 0, SEEK_SET, 0) &lt; 0)
+            err_sys("child 1: can't read-lock file");
+        printf("child 1: obtained read lock on file\n");
+        pause();
+        printf("child 1: exit after pause\n");
+        exit(0);
+    } else {        /* parent */
+        sleep(2);
+    }
+
+    /*
+     * Parent continues ... read-lock the file again.
+     */
+    if ((pid2 = fork()) &lt; 0) {
+        err_sys("fork failed");
+    } else if (pid2 == 0) { /* child */
+        if (lock_reg(fd, F_SETLK, F_RDLCK, 0, SEEK_SET, 0) &lt; 0)
+            err_sys("child 2: can't read-lock file");
+        printf("child 2: obtained read lock on file\n");
+        pause();
+        printf("child 2: exit after pause\n");
+        exit(0);
+    } else {        /* parent */
+       sleep(2);
+    }
+
+    /*
+     * Parent continues ... block while trying to write-lock
+     * the file.
+     */
+    if ((pid3 = fork()) &lt; 0) {
+        err_sys("fork failed");
+    } else if (pid3 == 0) { /* child */
+        if (lock_reg(fd, F_SETLK, F_WRLCK, 0, SEEK_SET, 0) &lt; 0)
+            printf("child 3: can't set write lock: %s\n",
+              strerror(errno));
+        printf("child 3 about to block in write-lock...\n");
+        if (lock_reg(fd, F_SETLKW, F_WRLCK, 0, SEEK_SET, 0) &lt; 0)
+            err_sys("child 3: can't write-lock file");
+        printf("child 3 returned and got write lock????\n");
+        pause();
+        printf("child 3: exit after pause\n");
+        exit(0);
+    } else {        /* parent */
+        sleep(2);
+    }
+    /*
+     * See if a pending write lock will block the next
+     * read-lock attempt.
+     */
+    if (lock_reg(fd, F_SETLK, F_RDLCK, 0, SEEK_SET, 0) &lt; 0)
+        printf("parent: can't set read lock: %s\n",
+          strerror(errno));
+    else
+        printf("parent: obtained additional read lock while"
+          " write lock is pending\n");
+    printf("killing child 1...\n");
+    kill(pid1, SIGINT);
+    printf("killing child 2...\n");
+    kill(pid2, SIGINT);
+    printf("killing child 3...\n");
+    kill(pid3, SIGINT);
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e108704"></a><a name="idd1e108709"></a><a name="idd1e108714"></a><a name="idd1e108719"></a><a name="idd1e108724"></a><a name="idd1e108729"></a><a name="idd1e108734"></a><a name="idd1e108739"></a><a name="idd1e108744"></a><a name="idd1e108749"></a><a name="idd1e108767"></a><a name="idd1e108772"></a><a name="idd1e108777"></a><a name="idd1e108782"></a><a name="idd1e108787"></a>On all four systems described in this book, the behavior is the same: additional readers can starve pending writers. Running the program gives us</P>
+<pre>
+   child 1: obtained read lock on file
+   child 2: obtained read lock on file
+   child 3: can't set write lock: Resource temporarily unavailable
+   child 3 about to block in write-lock...
+   parent: obtained additional read lock while write lock is pending
+   killing child 1...
+   child 1: exit after pause
+   killing child 2...
+   child 2: exit after pause
+   killing child 3...
+   child 3: can't write-lock file: Interrupted system call
+</pre><br>
+</TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch14qa1q2a1"></a><B><a class="docLink" href="ch14lev1sec11.html#ch14qa1q2">14.2</a></b></TD><td><p class="docText">Most systems define the <tt>fd_set</tt> data type to be a structure that contains a single member: an array of long integers. One bit in this array corresponds to each descriptor. The four <tt>FD_</tt> macros then manipulate this array of longs, turning specific bits on and off and testing specific bits.</P>
+<p class="docText">One reason that the data type is defined to be a structure containing an array and not simply an array is to allow variables of type <tt>fd_set</tt> to be assigned to one another with the C assignment statement.</P></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch14qa1q3a1"></a><B><a class="docLink" href="ch14lev1sec11.html#ch14qa1q3">14.3</a></b></td><TD><p class="docText">Most systems allow us to define the constant <tt>FD_SETSIZE</tt> before including the header <tt>&lt;sys/select.h&gt;</tt>. For example, we can write</p>
+<pre>
+    #define FD_SETSIZE 2048
+    #include &lt;sys/select.h&gt;
+</pre><BR>
+
+<p class="docText">to define the <tt>fd_set</tt> data type to accommodate 2,048 descriptors. This works on FreeBSD 5.2.1, Mac OS X 10.3, and Solaris 9. Linux 2.4.22 implements things differently.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch14qa1q4a1"></a><b><a class="docLink" href="ch14lev1sec11.html#ch14qa1q4">14.4</a></b></td><td><p class="docText"><a name="idd1e108892"></a><a name="idd1e108895"></a><a name="idd1e108900"></a><a name="idd1e108905"></a><a name="idd1e108910"></a><a name="idd1e108915"></a><a name="idd1e108920"></a><a name="idd1e108925"></a><a name="idd1e108930"></a><a name="idd1e108935"></a><a name="idd1e108940"></a><a name="idd1e108945"></a><a name="idd1e108950"></a><a name="idd1e108955"></a><a name="idd1e108960"></a><a name="idd1e108965"></a><a name="idd1e108970"></a><a name="idd1e108975"></a><a name="idd1e108978"></a><a name="idd1e108985"></a><a name="idd1e108990"></a>The following table lists the functions that do similar things.</p>
+<a name="inta169"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="100"><col width="100"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>FD_ZERO</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>sigemptyset</tt></p></td></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>FD_SET</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>sigaddset</tt></p></TD></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>FD_CLR</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>sigdelset</tt></P></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>FD_ISSET</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>sigismember</tt></p></td></tr></table></p><BR>
+<p class="docText">There is not an <tt>FD_xxx</tt> function that corresponds to <tt>sigfillset</tt>. With signal sets, the pointer to the set is always the first argument, and the signal number is the second argument. With descriptor sets, the descriptor number is the first argument, and the pointer to the set is the next argument.</p></TD></tr><TR valign="top"><td align="right" class="docText" width="50"><a name="ch14qa1q5a1"></a><b><a class="docLink" href="ch14lev1sec11.html#ch14qa1q5">14.5</a></b></td><td><p class="docText">Up to five types of information are returned by <tt>getmsg</tt>: the data itself, the length of the data, the control information, the length of the control information, and the flags.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch14qa1q6a1"></a><b><a class="docLink" href="ch14lev1sec11.html#ch14qa1q6">14.6</a></b></td><td><p class="docText"><a class="docLink" href="app03lev1sec14.html#app03fig15">Figure C.15</a> shows an implementation using <tt>select</tt>.</p>
+<a name="app03fig15"></a>
+<h5 class="docExampleTitle">Figure C.15. Implementation of <tt>sleep_us</tt> using <tt>select</tt></h5>
+<pre>
+#include "apue.h"
+#include &lt;sys/select.h&gt;
+
+void
+sleep_us(unsigned int nusecs)
+{
+     struct timeval  tval;
+
+     tval.tv_sec = nusecs / 1000000;
+     tval.tv_usec = nusecs % 1000000;
+     select(0, NULL, NULL, NULL, &amp;tval);
+}
+</pre><br>
+
+
+<p class="docText"><a class="docLink" href="app03lev1sec14.html#app03fig16">Figure C.16</a> shows an implementation using <tt>poll</tt>.</p>
+<a name="app03fig16"></a>
+<H5 class="docExampleTitle">Example C.16. Implementation of <tt>sleep_us</tt> using <tt>poll</tt></H5>
+<pre>
+#include &lt;poll.h&gt;
+
+void
+sleep_us(unsigned int nusecs)
+{
+    struct pollfd   dummy;
+    int             timeout;
+
+    if ((timeout = nusecs / 1000) &lt;= 0)
+        timeout = 1;
+    poll(&amp;dummy, 0, timeout);
+}
+</pre><br>
+
+
+<p class="docText">As the BSD <tt>usleep</tt>(3) manual page states, <tt>usleep</tt> uses the <tt>setitimer</tt> interval timer and performs eight system calls each time it's called. It correctly interacts with other timers set by the calling process, and it is not interrupted if a signal is caught.</P></TD></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch14qa1q7a1"></a><B><a class="docLink" href="ch14lev1sec11.html#ch14qa1q7">14.7</a></b></TD><td><p class="docText"><a name="idd1e109250"></a><a name="idd1e109255"></a><a name="idd1e109258"></a><a name="idd1e109261"></a><a name="idd1e109264"></a><a name="idd1e109269"></a><a name="idd1e109274"></a><a name="idd1e109279"></a><a name="idd1e109284"></a><a name="idd1e109287"></a><a name="idd1e109292"></a><a name="idd1e109297"></a><a name="idd1e109302"></a>No. What we would like to do is have <tt>TELL_WAIT</tt> create a temporary file and use 1 byte for the parent's lock and 1 byte for the child's lock. <tt>WAIT_CHILD</tt> would have the parent wait to obtain a lock on the child's byte, and <tt>TELL_PARENT</tt> would have the child release the lock on the child's byte. The problem, however, is that calling <tt>fork</tt> releases all the locks in the child, so the child can't start off with any locks of its own.</P></td></TR><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch14qa1q8a1"></a><b><a class="docLink" href="ch14lev1sec11.html#ch14qa1q8">14.8</a></b></TD><TD><p class="docText">A solution is shown in <a class="docLink" href="app03lev1sec14.html#app03fig17">Figure C.17</a>.</p>
+<a name="app03fig17"></a>
+<H5 class="docExampleTitle">Figure C.17. Calculation of pipe capacity using nonlocking writes</H5>
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+
+int
+main(void)
+{
+    int i, n;
+    int fd[2];
+
+    if (pipe(fd) &lt; 0)
+        err_sys("pipe error");
+    set_fl(fd[1], O_NONBLOCK);
+
+    /*
+     * Write 1 byte at a time until pipe is full.
+     */
+   for (n = 0; ; n++) {
+       if ((i = write(fd[1], "a", 1)) != 1) {
+           printf("write ret %d, ", i);
+           break;
+       }
+   }
+   printf("pipe capacity = %d\n", n);
+   exit(0);
+}
+</pre><br>
+
+
+<p class="docText">The following table shows the values calculated for our four platforms.</p>
+<p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><colgroup><col width="100"><col width="200"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Platform</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Pipe Capacity (bytes)</span></p></th></TR></thead><tr><TD class="rightBorder" align="left" valign="top"><p class="docText">FreeBSD 5.2.1</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">16,384</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">Linux 2.4.22</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">4,096</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">Mac OS X 10.3</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">8,192</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText">Solaris 9</P></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">9,216</p></TD></tr></table></P><BR>
+<p class="docText">These values can differ from the corresponding <tt>PIPE_BUF</tt> values, because <tt>PIPE_BUF</tt> is defined to be the maximum amount of data that can be written to a pipe <span class="docEmphasis">atomically</span>. Here, we calculate the amount of data that a pipe can hold independent of any atomicity constraints.</P></td></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch14qa1q10a1"></a><B><a class="docLink" href="ch14lev1sec11.html#ch14qa1q10">14.10</a></b></TD><td><p class="docText">Whether the program in <a class="docLink" href="ch14lev1sec9.html#ch14fig32">Figure 14.32</a> updates the last-access time for the input file depends on the operating system and the type of file system on which the file resides.</p></td></tr></table></P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec13.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec15.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

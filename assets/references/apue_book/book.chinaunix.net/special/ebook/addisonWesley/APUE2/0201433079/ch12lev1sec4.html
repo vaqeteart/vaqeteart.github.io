@@ -1,0 +1,290 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 12.4.&nbsp; Synchronization Attributes</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch12lev1sec4"></a>
+<h3 class="docSection1Title">12.4. Synchronization Attributes</h3>
+<p class="docText">Just as threads have attributes, so too do their synchronization objects. In this section, we discuss the attributes of mutexes, readerwriter locks, and condition variables.</P>
+<a name="ch12lev2sec2"></a>
+<H4 class="docSection2Title">Mutex Attributes</h4>
+<p class="docText">We use <tt>pthread_mutexattr_init</tt> to initialize a <tt>pthread_mutexattr_t</tt> structure and <tt>pthread_mutexattr_destroy</tt> to deinitialize one.</P>
+<a name="inta221"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch12lev1sec4.html#PLID0">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_mutexattr_init(pthread_mutexattr_t *<span class="docEmphItalicAlt">attr</span>);
+
+int pthread_mutexattr_destroy(pthread_mutexattr_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">attr</span>);
+</pre><BR>
+
+</P></TD></tr><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</P></TD></TR></table></p><BR>
+<p class="docText"><a name="idd1e86972"></a><a name="idd1e86977"></a><a name="idd1e86982"></a><a name="idd1e86987"></a><a name="idd1e86994"></a><a name="idd1e86999"></a><a name="idd1e87006"></a><a name="idd1e87011"></a><a name="idd1e87016"></a><a name="idd1e87021"></a><a name="idd1e87026"></a><a name="idd1e87031"></a><a name="idd1e87036"></a><a name="idd1e87041"></a><a name="idd1e87044"></a><a name="idd1e87049"></a><a name="idd1e87054"></a>The <tt>pthread_mutexattr_init</tt> function will initialize the <tt>pthread_mutexattr_t</tt> structure with the default mutex attributes. Two attributes of interest are the <span class="docEmphasis">process-shared</span> attribute and the <span class="docEmphasis">type</span> attribute. Within POSIX.1, the <span class="docEmphasis">process-shared</span> attribute is optional; you can test whether a platform supports it by checking whether the <tt>_POSIX_THREAD_PROCESS_SHARED</tt> symbol is defined. You can also check at runtime by passing the <tt>_SC_THREAD_PROCESS_SHARED</tt> parameter to the <tt>sysconf</tt> function. Although this option is not required to be provided by POSIX-conforming operating systems, the Single UNIX Specification requires that XSI-conforming operating systems do support this option.</P>
+<p class="docText">Within a process, multiple threads can access the same synchronization object. This is the default behavior, as we saw in <a class="docLink" href="ch11.html#ch11">Chapter 11</a>. In this case, the <span class="docEmphasis">process-shared</span> mutex attribute is set to <tt>PTHREAD_PROCESS_PRIVATE</tt>.</p>
+<p class="docText">As we shall see in <a class="docLink" href="ch14.html#ch14">Chapters 14</a> and <a class="docLink" href="ch15.html#ch15">15</a>, mechanisms exist that allow independent processes to map the same extent of memory into their independent address spaces. Access to shared data by multiple processes usually requires synchronization, just as does access to shared data by multiple threads. If the <span class="docEmphasis">process-shared</span> mutex attribute is set to <tt>PTHREAD_PROCESS_SHARED</tt>, a mutex allocated from a memory extent shared between multiple processes may be used for synchronization by those processes.</P>
+<p class="docText">We can use the <tt>pthread_mutexattr_getpshared</tt> function to query a <tt>pthread_mutexattr_t</tt> structure for its <span class="docEmphasis">process-shared</span> attribute. We can change the <span class="docEmphasis">process-shared</span> attribute with the <tt>pthread_mutexattr_setpshared</tt> function.</P>
+<a name="inta222"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID1"></a><div class="v1"><a href="ch12lev1sec4.html#PLID1">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_mutexattr_getpshared(const
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> pthread_mutexattr_t *
+                                 restrict <span class="docEmphItalicAlt">attr</span>,
+                                 int *restrict
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">pshared</span>);
+
+int pthread_mutexattr_setpshared
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif">(pthread_mutexattr_t *<span class="docEmphItalicAlt">attr</span>,
+                                 int <span class="docEmphItalicAlt">pshared</span>);
+</pre><br>
+
+</P></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</p></td></tr></table></p><br>
+<p class="docText">The <span class="docEmphasis">process-shared</span> mutex attribute allows the pthread library to provide more efficient mutex implementations when the attribute is set to <tt>PTHREAD_PROCESS_PRIVATE</tt>, which is the default case with multithreaded applications. Then the pthread library can restrict the more expensive implementation to the case in which mutexes are shared among processes.</p>
+<p class="docText">The <span class="docEmphasis">type</span> mutex attribute controls the characteristics of the mutex. POSIX.1 defines four types. The <tt>PTHREAD_MUTEX_NORMAL</tt> type is a standard mutex that doesn't do any special error checking or deadlock detection. The <tt>PTHREAD_MUTEX_ERRORCHECK</tt> mutex type provides error checking.</p>
+<p class="docText">The <tt>PTHREAD_MUTEX_RECURSIVE</tt> mutex type allows the same thread to lock it multiple times without first unlocking it. A recursive mutex maintains a lock count and isn't released until it is unlocked the same number of times it is locked. So if you lock a recursive mutex twice and then unlock it, the mutex remains locked until it is unlocked a second time.</p>
+<p class="docText"><a name="idd1e87198"></a><a name="idd1e87203"></a><a name="idd1e87208"></a><a name="idd1e87213"></a><a name="idd1e87220"></a><a name="idd1e87225"></a><a name="idd1e87232"></a>Finally, the <tt>PTHREAD_MUTEX_DEFAULT</tt> type can be used to request default semantics. Implementations are free to map this to one of the other types. On Linux, for example, this type is mapped to the normal mutex type.</p>
+<p class="docText">The behavior of the four types is shown in <a class="docLink" href="ch12lev1sec4.html#ch12fig05">Figure 12.5</a>. The &quot;Unlock when not owned&quot; column refers to one thread unlocking a mutex that was locked by a different thread. The &quot;Unlock when unlocked&quot; column refers to what happens when a thread unlocks a mutex that is already unlocked, which usually is a coding mistake.</p>
+<a name="ch12fig05"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 12.5. Mutex type behavior</h5></caption><colgroup><col width="100"><col width="130"><col width="130"><col width="130"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Mutex type</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Relock without unlock?</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Unlock when not owned?</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Unlock when unlocked?</span></P></th></TR></thead><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>PTHREAD_MUTEX_NORMAL</tt></P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">deadlock</P></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">undefined</p></TD><td class="docTableCell" align="center" valign="top"><p class="docText">undefined</P></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>PTHREAD_MUTEX_ERRORCHECK</tt></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">returns error</P></td><td class="rightBorder" align="center" valign="top"><p class="docText">returns error</p></td><TD class="docTableCell" align="center" valign="top"><p class="docText">returns error</p></TD></tr><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>PTHREAD_MUTEX_RECURSIVE</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">allowed</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">returns error</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">returns error</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>PTHREAD_MUTEX_DEFAULT</tt></p></td><TD class="rightBorder" align="center" valign="top"><p class="docText">undefined</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">undefined</P></TD><td class="docTableCell" align="center" valign="top"><p class="docText">undefined</P></TD></TR></table></p><BR>
+<p class="docText">We can use <tt>pthread_mutexattr_gettype</tt> to get the mutex <span class="docEmphasis">type</span> attribute and <tt>pthread_mutexattr_settype</tt> to change the mutex <span class="docEmphasis">type</span> attribute.</p>
+<a name="inta223"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID2"></a><div class="v1"><a href="ch12lev1sec4.html#PLID2">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_mutexattr_gettype(const
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> pthread_mutexattr_t *
+                              restrict <span class="docEmphItalicAlt">attr</span>, int
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">type</span>);
+
+int pthread_mutexattr_settype(pthread_mutexattr_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">attr</span>, int <span class="docEmphItalicAlt">type</span>);
+</pre><br>
+
+</P></TD></tr><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</p></td></tr></table></p><BR>
+<p class="docText">Recall from <a class="docLink" href="ch11lev1sec6.html#ch11lev1sec6">Section 11.6</a> that a mutex is used to protect the condition that is associated with a condition variable. Before blocking the thread, the <tt>pthread_cond_wait</tt> and the <tt>pthread_cond_timedwait</tt> functions release the mutex associated with the condition. This allows other threads to acquire the mutex, change the condition, release the mutex, and signal the condition variable. Since the mutex must be held to change the condition, it is not a good idea to use a recursive mutex. If a recursive mutex is locked multiple times and used in a call to <tt>pthread_cond_wait</tt>, the condition can never be satisfied, because the unlock done by <tt>pthread_cond_wait</tt> doesn't release the mutex.</p>
+<p class="docText">Recursive mutexes are useful when you need to adapt existing single-threaded interfaces to a multithreaded environment, but can't change the interfaces to your functions because of compatibility constraints. However, using recursive locks can be tricky, and they should be used only when no other solution is possible.</P>
+<a name="ch12ex02"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText"><a class="docLink" href="ch12lev1sec4.html#ch12fig06">Figure 12.6</a> illustrates a situation in which a recursive mutex might seem to solve a concurrency problem. Assume that <tt>func1</tt> and <tt>func2</tt> are existing functions in a library whose interfaces can't be changed, because applications exist that call them, and the applications can't be changed.</p>
+<p class="docText">To keep the interfaces the same, we embed a mutex in the data structure whose address (<tt>x</tt>) is passed in as an argument. This is possible only if we have provided an allocator function for the structure, so the application doesn't know about its size (assuming we must increase its size when we add a mutex to it).</p>
+<blockquote>
+<p class="docText">This is also possible if we originally defined the structure with enough padding to allow us now to replace some pad fields with a mutex. Unfortunately, most programmers are unskilled at predicting the future, so this is not a common practice.</p>
+</blockquote>
+<p class="docText">If both <tt>func1</tt> and <tt>func2</tt> must manipulate the structure and it is possible to access it from more than one thread at a time, then <tt>func1</tt> and <tt>func2</tt> must lock the mutex before manipulating the data. If <tt>func1</tt> must call <tt>func2</tt>, we will deadlock if the mutex type is not recursive. We could avoid using a recursive mutex if we could release the mutex before calling <tt>func2</tt> and reacquire it after <tt>func2</tt> returns, but this opens a window where another thread can possibly grab control of the mutex and change the data structure in the middle of <tt>func1</tt>. This may not be acceptable, depending on what protection the mutex is intended to provide.</p>
+<p class="docText"><a class="docLink" href="ch12lev1sec4.html#ch12fig07">Figure 12.7</a> shows an alternative to using a recursive mutex in this case. We can leave the interfaces to <tt>func1</tt> and <tt>func2</tt> unchanged and avoid a recursive mutex by providing a private version of <tt>func2</tt>, called <tt>func2_locked</tt>. To call <tt>func2_locked</tt>, we must hold the mutex embedded in the data structure whose address we pass as the argument. The body of <tt>func2_locked</tt> contains a copy of <tt>func2</tt>, and <tt>func2</tt> now simply acquires the mutex, calls <tt>func2_locked</tt>, and then releases the mutex.</p>
+<p class="docText">If we didn't have to leave the interfaces to the library functions unchanged, we could have added a second parameter to each function to indicate whether the structure is locked by the caller. It is usually better to leave the interfaces unchanged if we can, however, instead of polluting it with implementation artifacts.</p>
+<p class="docText">The strategy of providing locked and unlocked versions of functions is usually applicable in simple situations. In more complex situations, such as when the library needs to call a function outside the library, which then might call back into the library, we need to rely on recursive locks.</p>
+
+<a name="ch12fig06"></a><p><center>
+<h5 class="docFigureTitle">Figure 12.6. Recursive locking opportunity</h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/12fig06_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" id="195131139046" width="500" height="331" SRC="images/0201433079/graphics/12fig06.gif;423615"></p>
+</center></p><br>
+<a name="ch12fig07"></a><p><center>
+<h5 class="docFigureTitle">Figure 12.7. Avoiding a recursive locking opportunity</h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/12fig07_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" id="195131139046" width="500" height="297" SRC="images/0201433079/graphics/12fig07.gif;423615"></p>
+</center></P><BR>
+<a name="ch12ex03"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText">The program in <a class="docLink" href="ch12lev1sec4.html#ch12fig08">Figure 12.8</a> illustrates another situation in which a recursive mutex is necessary. Here, we have a &quot;timeout&quot; function that allows us to schedule another function to be run at some time in the future. Assuming that threads are an inexpensive resource, we can create a thread for each pending timeout. The thread waits until the time has been reached, and then it calls the function we've requested.</P>
+<p class="docText">The problem arises when we can't create a thread or when the scheduled time to run the function has already passed. In these cases, we simply call the requested function now, from the current context. Since the function acquires the same lock that we currently hold, a deadlock will occur unless the lock is recursive.</P>
+<p class="docText"><a name="idd1e87605"></a><a name="idd1e87610"></a><a name="idd1e87615"></a><a name="idd1e87620"></a><a name="idd1e87627"></a><a name="idd1e87632"></a><a name="idd1e87639"></a><a name="idd1e87644"></a><a name="idd1e87651"></a><a name="idd1e87656"></a><a name="idd1e87663"></a><a name="idd1e87668"></a><a name="idd1e87673"></a>We use the <tt>makethread</tt> function from <a class="docLink" href="ch12lev1sec3.html#ch12fig04">Figure 12.4</a> to create a thread in the detached state. We want the function to run in the future, and we don't want to wait around for the thread to complete.</p>
+<p class="docText">We could call <tt>sleep</tt> to wait for the timeout to expire, but that gives us only second granularity. If we want to wait for some time other than an integral number of seconds, we need to use <tt>nanosleep</tt>(2), which provides similar functionality.</P>
+<blockquote>
+<p class="docText">Although <tt>nanosleep</tt> is required to be implemented only in the real-time extensions of the Single UNIX Specification, all the platforms discussed in this text support it.</P>
+</blockquote>
+<p class="docText">The caller of <tt>timeout</tt> needs to hold a mutex to check the condition and to schedule the <tt>retry</tt> function as an atomic operation. The <tt>retry</tt> function will try to lock the same mutex. Unless the mutex is recursive, a deadlock will occur if the <tt>timeout</tt> function calls <tt>retry</tt> directly.</P>
+
+<a name="ch12fig08"></a>
+<h5 class="docExampleTitle">Figure 12.8. Using a recursive mutex</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;pthread.h&gt;
+#include &lt;time.h&gt;
+#include &lt;sys/time.h&gt;
+
+extern int makethread(void *(*)(void *), void *);
+
+struct to_info {
+    void    (*to_fn)(void *);    /* function */
+    void    *to_arg;             /* argument */
+    struct timespec to_wait;     /* time to wait */
+};
+
+#define SECTONSEC  1000000000    /* seconds to nanoseconds */
+#define USECTONSEC 1000          /* microseconds to nanoseconds */
+
+void *
+timeout_helper(void *arg)
+{
+    struct to_info *tip;
+
+    tip = (struct to_info *)arg;
+    nanosleep(&amp;tip-&gt;to_wait, NULL);
+    (*tip-&gt;to_fn)(tip-&gt;to_arg);
+    return(0);
+}
+
+void
+timeout(const struct timespec *when, void (*func)(void *), void *arg)
+{
+    struct timespec now;
+    struct timeval  tv;
+    struct to_info  *tip;
+    int             err;
+
+    gettimeofday(&amp;tv, NULL);
+    now.tv_sec = tv.tv_sec;
+    now.tv_nsec = tv.tv_usec * USECTONSEC;
+    if ((when-&gt;tv_sec &gt; now.tv_sec) ||
+      (when-&gt;tv_sec == now.tv_sec &amp;&amp; when-&gt;tv_nsec &gt; now.tv_nsec)) {
+        tip = malloc(sizeof(struct to_info));
+        if (tip != NULL) {
+            tip-&gt;to_fn = func;
+            tip-&gt;to_arg = arg;
+            tip-&gt;to_wait.tv_sec = when-&gt;tv_sec - now.tv_sec;
+            if (when-&gt;tv_nsec &gt;= now.tv_nsec) {
+                tip-&gt;to_wait.tv_nsec = when-&gt;tv_nsec - now.tv_nsec;
+            } else {
+                tip-&gt;to_wait.tv_sec--;
+                tip-&gt;to_wait.tv_nsec = SECTONSEC - now.tv_nsec +
+                  when-&gt;tv_nsec;
+
+           }
+           err = makethread(timeout_helper, (void *)tip);
+           if (err == 0)
+               return;
+        }
+    }
+
+    /*
+     * We get here if (a) when &lt;= now, or (b) malloc fails, or
+     * (c) we can't make a thread, so we just call the function now.
+     */
+    (*func)(arg);
+}
+
+pthread_mutexattr_t attr;
+pthread_mutex_t mutex;
+
+void
+retry(void *arg)
+{
+    pthread_mutex_lock(&amp;mutex);
+    /* perform retry steps ... */
+    pthread_mutex_unlock(&amp;mutex);
+}
+
+int
+main(void)
+{
+    int             err, condition, arg;
+    struct timespec when;
+
+    if ((err = pthread_mutexattr_init(&amp;attr)) != 0)
+        err_exit(err, "pthread_mutexattr_init failed");
+    if ((err = pthread_mutexattr_settype(&amp;attr,
+      PTHREAD_MUTEX_RECURSIVE)) != 0)
+        err_exit(err, "can't set recursive type");
+    if ((err = pthread_mutex_init(&amp;mutex, &amp;attr)) != 0)
+        err_exit(err, "can't create recursive mutex");
+    /* ... */
+    pthread_mutex_lock(&amp;mutex);
+    /* ... */
+    if (condition) {
+        /* calculate target time "when" */
+        timeout(&amp;when, retry, (void *)arg);
+    }
+    /* ... */
+    pthread_mutex_unlock(&amp;mutex);
+    /* ... */
+    exit(0);
+}
+</pre><br>
+
+
+
+<a name="ch12lev2sec3"></a>
+<H4 class="docSection2Title">ReaderWriter Lock Attributes</H4>
+<p class="docText"><a name="idd1e87743"></a><a name="idd1e87748"></a><a name="idd1e87753"></a><a name="idd1e87758"></a><a name="idd1e87763"></a><a name="idd1e87785"></a><a name="idd1e87790"></a><a name="idd1e87795"></a><a name="idd1e87800"></a><a name="idd1e87805"></a><a name="idd1e87810"></a><a name="idd1e87815"></a><a name="idd1e87820"></a>Readerwriter locks also have attributes, similar to mutexes. We use <tt>pthread_rwlockattr_init</tt> to initialize a <tt>pthread_rwlockattr_t</tt> structure and <tt>pthread_rwlockattr_destroy</tt> to deinitialize the structure.</P>
+<p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID4"></a><div class="v1"><a href="ch12lev1sec4.html#PLID4">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_rwlockattr_init(pthread_rwlockattr_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">attr</span>);
+
+int pthread_rwlockattr_destroy
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif">(pthread_rwlockattr_t *<span class="docEmphItalicAlt">attr</span>);
+</pre><br>
+
+</P></TD></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</p></TD></tr></table></P><br>
+<p class="docText">The only attribute supported for readerwriter locks is the <span class="docEmphasis">process-shared</span> attribute. It is identical to the mutex <span class="docEmphasis">process-shared</span> attribute. Just as with the mutex <span class="docEmphasis">process-shared</span> attributes, a pair of functions is provided to get and set the <span class="docEmphasis">process-shared</span> attributes of readerwriter locks.</P>
+<a name="inta233"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID5"></a><div class="v1"><a href="ch12lev1sec4.html#PLID5">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_rwlockattr_getpshared(const
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> pthread_rwlockattr_t *
+                                  restrict <span class="docEmphItalicAlt">attr</span>,
+                                  int *restrict
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">pshared</span>);
+
+int pthread_rwlockattr_setpshared
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif">(pthread_rwlockattr_t *<span class="docEmphItalicAlt">attr</span>,
+                                  int <span class="docEmphItalicAlt">pshared</span>);
+</pre><br>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</p></td></tr></table></p><br>
+<p class="docText">Although POSIX defines only one readerwriter lock attribute, implementations are free to define additional, nonstandard ones.</p>
+
+<a name="ch12lev2sec4"></a>
+<h4 class="docSection2Title">Condition Variable Attributes</h4>
+<p class="docText"><a name="idd1e87935"></a><a name="idd1e87940"></a><a name="idd1e87945"></a><a name="idd1e87950"></a><a name="idd1e87955"></a><a name="idd1e87962"></a><a name="idd1e87967"></a><a name="idd1e87974"></a><a name="idd1e87979"></a><a name="idd1e87986"></a><a name="idd1e87991"></a><a name="idd1e87998"></a><a name="idd1e88003"></a><a name="idd1e88006"></a><a name="idd1e88011"></a><a name="idd1e88016"></a><a name="idd1e88021"></a><a name="idd1e88026"></a><a name="idd1e88031"></a>Condition variables have attributes, too. There is a pair of functions for initializing and deinitializing them, similar to mutexes and readerwriter locks.</P>
+<a name="inta235"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID6"></a><div class="v1"><a href="ch12lev1sec4.html#PLID6">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_condattr_init(pthread_condattr_t *<span class="docEmphItalicAlt">attr</span>);
+
+int pthread_condattr_destroy(pthread_condattr_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">attr</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</p></TD></tr></table></P><BR>
+<p class="docText">Just as with the other synchronization primitives, condition variables support the <span class="docEmphasis">process-shared</span> attribute.</P>
+<a name="inta201"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID7"></a><div class="v1"><a href="ch12lev1sec4.html#PLID7">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_condattr_getpshared(const
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> pthread_condattr_t *
+                                restrict <span class="docEmphItalicAlt">attr</span>,
+                                int *restrict
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">pshared</span>);
+
+int pthread_condattr_setpshared(pthread_condattr_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">attr</span>,
+                                int <span class="docEmphItalicAlt">pshared</span>);
+</pre><br>
+
+</P></TD></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</p></TD></tr></table></P><br>
+
+
+<UL></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

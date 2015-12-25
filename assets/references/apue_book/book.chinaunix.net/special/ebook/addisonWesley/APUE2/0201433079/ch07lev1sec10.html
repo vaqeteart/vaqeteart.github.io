@@ -1,0 +1,282 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 7.10.&nbsp; setjmp and longjmp Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch07lev1sec10"></a>
+<h3 class="docSection1Title">7.10. <tt>setjmp</tt> and <tt>longjmp</tt> Functions</h3>
+<p class="docText">In C, we can't <tt>goto</tt> a label that's in another function. Instead, we must use the <tt>setjmp</tt> and <tt>longjmp</tt> functions to perform this type of branching. As we'll see, these two functions are useful for handling error conditions that occur in a deeply nested function call.</P>
+<p class="docText">Consider the skeleton in <a class="docLink" href="ch07lev1sec10.html#ch07fig09">Figure 7.9</a>. It consists of a main loop that reads lines from standard input and calls the function <tt>do_line</tt> to process each line. This function then calls <tt>get_token</tt> to fetch the next token from the input line. The first token of a line is assumed to be a command of some form, and a <tt>switch</tt> statement selects each command. For the single command shown, the function <tt>cmd_add</tt> is called.</P>
+<a name="ch07fig09"></a>
+<h5 class="docExampleTitle">Figure 7.9. Typical program skeleton for command processing</H5>
+
+<pre>
+#include "apue.h"
+
+#define TOK_ADD    5
+
+void     do_line(char *);
+void     cmd_add(void);
+int      get_token(void);
+
+int
+main(void)
+{
+     char    line[MAXLINE];
+
+     while (fgets(line, MAXLINE, stdin) != NULL)
+         do_line(line);
+     exit(0);
+}
+
+char     *tok_ptr;       /* global pointer for get_token() */
+
+void
+do_line(char *ptr)       /* process one line of input */
+{
+    int    cmd;
+
+    tok_ptr = ptr;
+    while ((cmd = get_token()) &gt; 0) {
+        switch (cmd) { /* one case for each command */
+        case TOK_ADD:
+                cmd_add();
+                break;
+        }
+    }
+}
+
+void
+cmd_add(void)
+{
+   int      token;
+   
+   token = get_token();
+   /* rest of processing for this command */
+}
+
+int
+get_token(void)
+{
+   /* fetch next token from line pointed to by tok_ptr */
+}
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e50357"></a><a name="idd1e50362"></a>The skeleton in <a class="docLink" href="ch07lev1sec10.html#ch07fig09">Figure 7.9</a> is typical for programs that read commands, determine the command type, and then call functions to process each command. <a class="docLink" href="ch07lev1sec10.html#ch07fig10">Figure 7.10</a> shows what the stack could look like after <tt>cmd_add</tt> has been called.</P>
+<a name="ch07fig10"></a><p><center>
+<H5 class="docFigureTitle">Figure 7.10. Stack frames after <tt>cmd_add</tt> has been called</H5>
+
+<p class="docText">
+<img border="0" alt="" width="398" height="252" SRC="images/0201433079/graphics/07fig10.gif;423615"></P>
+
+</center></p><BR>
+<p class="docText"><a name="idd1e50409"></a><a name="idd1e50412"></a><a name="idd1e50417"></a><a name="idd1e50424"></a><a name="idd1e50429"></a><a name="idd1e50434"></a><a name="idd1e50441"></a><a name="idd1e50444"></a>Storage for the automatic variables is within the stack frame for each function. The array <tt>line</tt> is in the stack frame for <tt>main</tt>, the integer <tt>cmd</tt> is in the stack frame for <tt>do_line</tt>, and the integer <tt>token</tt> is in the stack frame for <tt>cmd_add</tt>.</p>
+<p class="docText">As we've said, this type of arrangement of the stack is typical, but not required. Stacks do not have to grow toward lower memory addresses. On systems that don't have built-in hardware support for stacks, a C implementation might use a linked list for its stack frames.</P>
+<p class="docText">The coding problem that's often encountered with programs like the one shown in <a class="docLink" href="ch07lev1sec10.html#ch07fig09">Figure 7.9</a> is how to handle nonfatal errors. For example, if the <tt>cmd_add</tt> function encounters an errorsay, an invalid numberit might want to print an error, ignore the rest of the input line, and return to the <tt>main</tt> function to read the next input line. But when we're deeply nested numerous levels down from the <tt>main</tt> function, this is difficult to do in C. (In this example, in the <tt>cmd_add</tt> function, we're only two levels down from <tt>main</tt>, but it's not uncommon to be five or more levels down from where we want to return to.) It becomes messy if we have to code each function with a special return value that tells it to return one level.</P>
+<p class="docText">The solution to this problem is to use a nonlocal <tt>goto</tt>: the <tt>setjmp</tt> and <tt>longjmp</tt> functions. The adjective nonlocal is because we're not doing a normal C <tt>goto</tt> statement within a function; instead, we're branching back through the call frames to a function that is in the call path of the current function.</P>
+<a name="inta154"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+  #include &lt;setjmp.h&gt;
+
+  int setjmp(jmp_buf <span class="docEmphItalicAlt">env</span>);
+</pre><br>
+
+</P></TD></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if called directly, nonzero if returning from a call to <tt>longjmp</tt>
+</p></TD></tr><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+  void longjmp(jmp_buf <span class="docEmphItalicAlt">env</span>, int <span class="docEmphItalicAlt">val</span>);</pre><BR>
+
+</p></td></tr></table></p><br>
+<p class="docText"><a name="idd1e50559"></a><a name="idd1e50564"></a><a name="idd1e50569"></a>We call <tt>setjmp</tt> from the location that we want to return to, which in this example is in the <tt>main</tt> function. In this case, <tt>setjmp</tt> returns 0 because we called it directly. In the call to <tt>setjmp</tt>, the argument <span class="docEmphasis">env</span> is of the special type <tt>jmp_buf</tt>. This data type is some form of array that is capable of holding all the information required to restore the status of the stack to the state when we call <tt>longjmp</tt>. Normally, the <span class="docEmphasis">env</span> variable is a global variable, since we'll need to reference it from another function.</p>
+<p class="docText">When we encounter an errorsay, in the <tt>cmd_add</tt> functionwe call <tt>longjmp</tt> with two arguments. The first is the same <span class="docEmphasis">env</span> that we used in a call to <tt>setjmp</tt>, and the second, <span class="docEmphasis">val</span>, is a nonzero value that becomes the return value from <tt>setjmp</tt>. The reason for the second argument is to allow us to have more than one <tt>longjmp</tt> for each <tt>setjmp</tt>. For example, we could <tt>longjmp</tt> from <tt>cmd_add</tt> with a <span class="docEmphasis">val</span> of 1 and also call <tt>longjmp</tt> from <tt>get_token</tt> with a <span class="docEmphasis">val</span> of 2. In the <tt>main</tt> function, the return value from <tt>setjmp</tt> is either 1 or 2, and we can test this value, if we want, and determine whether the <tt>longjmp</tt> was from <tt>cmd_add</tt> or <tt>get_token</tt>.</p>
+<p class="docText">Let's return to the example. <a class="docLink" href="ch07lev1sec10.html#ch07fig11">Figure 7.11</a> shows both the <tt>main</tt> and <tt>cmd_add</tt> functions. (The other two functions, <tt>do_line</tt> and <tt>get_token</tt>, haven't changed.)</p>
+<a name="ch07fig11"></a>
+<h5 class="docExampleTitle">Figure 7.11. Example of <tt>setjmp</tt> and <tt>longjmp</tt></h5>
+
+<pre>
+#include "apue.h"
+#include &lt;setjmp.h&gt;
+
+#define TOK_ADD    5
+
+jmp_buf jmpbuffer;
+
+int
+main(void)
+{
+     char    line[MAXLINE];
+
+     if (setjmp(jmpbuffer) != 0)
+         printf("error");
+     while (fgets(line, MAXLINE, stdin) != NULL)
+        do_line(line);
+     exit(0);
+}
+
+ ...
+
+void
+cmd_add(void)
+{
+    int     token;
+
+    token = get_token();
+    if (token &lt; 0)    /* an error has occurred */
+        longjmp(jmpbuffer, 1);
+    /* rest of processing for this command */
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e50711"></a><a name="idd1e50714"></a><a name="idd1e50717"></a><a name="idd1e50722"></a><a name="idd1e50727"></a><a name="idd1e50732"></a>When <tt>main</tt> is executed, we call <tt>setjmp</tt>, which records whatever information it needs to in the variable <tt>jmpbuffer</tt> and returns 0. We then call <tt>do_line</tt>, which calls <tt>cmd_add</tt>, and assume that an error of some form is detected. Before the call to <tt>longjmp</tt> in <tt>cmd_add</tt>, the stack looks like that in <a class="docLink" href="ch07lev1sec10.html#ch07fig10">Figure 7.10</a>. But <tt>longjmp</tt> causes the stack to be &quot;unwound&quot; back to the <tt>main</tt> function, throwing away the stack frames for <tt>cmd_add</tt> and <tt>do_line</tt> (<a class="docLink" href="ch07lev1sec10.html#ch07fig12">Figure 7.12</a>). Calling <tt>longjmp</tt> causes the <tt>setjmp</tt> in <tt>main</tt> to return, but this time it returns with a value of 1 (the second argument for <tt>longjmp</tt>).</p>
+<a name="ch07fig12"></a><p><center>
+<h5 class="docFigureTitle">Figure 7.12. Stack frame after <tt>longjmp</tt> has been called</h5>
+
+<p class="docText">
+<img border="0" alt="" width="398" height="226" SRC="images/0201433079/graphics/07fig12.gif;423615"></p>
+
+</center></p><BR>
+<a name="ch07lev2sec8"></a>
+<H4 class="docSection2Title">Automatic, Register, and Volatile Variables</h4>
+<p class="docText">We've seen what the stack looks like after calling <tt>longjmp</tt>. The next question is, &quot;what are the states of the automatic variables and register variables in the <tt>main</tt> function?&quot; When <tt>main</tt> is returned to by the <tt>longjmp</tt>, do these variables have values corresponding to when the <tt>setjmp</tt> was previously called (i.e., are their values rolled back), or are their values left alone so that their values are whatever they were when <tt>do_line</tt> was called (which caused <tt>cmd_add</tt> to be called, which caused <tt>longjmp</tt> to be called)? Unfortunately, the answer is &quot;it depends.&quot; Most implementations do not try to roll back these automatic variables and register variables, but the standards say only that their values are indeterminate. If you have an automatic variable that you don't want rolled back, define it with the <tt>volatile</tt> attribute. Variables that are declared global or static are left alone when <tt>longjmp</tt> is executed.</P>
+<a name="ch07ex04"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText">The program in <a class="docLink" href="ch07lev1sec10.html#ch07fig13">Figure 7.13</a> demonstrates the different behavior that can be seen with automatic, global, register, static, and volatile variables after calling <tt>longjmp</tt>.</p>
+<p class="docText"><a name="idd1e50863"></a><a name="idd1e50866"></a><a name="idd1e50869"></a><a name="idd1e50874"></a><a name="idd1e50879"></a><a name="idd1e50884"></a><a name="idd1e50887"></a><a name="idd1e50892"></a><a name="idd1e50897"></a><a name="idd1e50902"></a><a name="idd1e50907"></a>If we compile and test the program in <a class="docLink" href="ch07lev1sec10.html#ch07fig13">Figure 7.13</a>, with and without compiler optimizations, the results are different:</P>
+
+<pre>
+    $ <span class="docEmphStrong">cc testjmp.c</span>               <span class="docEmphItalicAlt">compile without any optimization</span>
+    $ <span class="docEmphStrong">./a.out</span>
+    in f1():
+    globval = 95, autoval = 96, regival = 97, volaval = 98, statval = 99
+    after longjmp:
+    globval = 95, autoval = 96, regival = 97, volaval = 98, statval = 99
+    $ <span class="docEmphStrong">cc -O testjmp.c</span>            <span class="docEmphItalicAlt">compile with full optimization</span>
+    $ <span class="docEmphStrong">./a.out</span>
+    in f1():
+    globval = 95, autoval = 96, regival = 97, volaval = 98, statval = 99
+    after longjmp:
+    globval = 95, autoval = 2, regival = 3, volaval = 98, statval = 99
+</pre><BR>
+
+<p class="docText">Note that the optimizations don't affect the global, static, and volatile variables; their values after the <tt>longjmp</tt> are the last values that they assumed. The <tt>setjmp</tt>(3) manual page on one system states that variables stored in memory will have values as of the time of the <tt>longjmp</tt>, whereas variables in the CPU and floating-point registers are restored to their values when <tt>setjmp</tt> was called. This is indeed what we see when we run the program in <a class="docLink" href="ch07lev1sec10.html#ch07fig13">Figure 7.13</a>. Without optimization, all five variables are stored in memory (the <tt>register</tt> hint is ignored for <tt>regival</tt>). When we enable optimization, both <tt>autoval</tt> and <tt>regival</tt> go into registers, even though the former wasn't declared <tt>register</tt>, and the <tt>volatile</tt> variable stays in memory. The thing to realize with this example is that you must use the <tt>volatile</tt> attribute if you're writing portable code that uses nonlocal jumps. Anything else can change from one system to the next.</P>
+<p class="docText">Some <tt>printf</tt> format strings in <a class="docLink" href="ch07lev1sec10.html#ch07fig13">Figure 7.13</a> are longer than will fit comfortably for display in a programming text. Instead of making multiple calls to <tt>printf</tt>, we rely on ISO C's string concatenation feature, where the sequence</p>
+
+<pre>
+    "string1" "string2"
+</pre><BR>
+
+<p class="docText">is equivalent to</p>
+
+<pre>
+    "string1string2"
+</pre><BR>
+
+
+<a name="ch07fig13"></a>
+<H5 class="docExampleTitle">Figure 7.13. Effect of <tt>longjmp</tt> on various types of variables</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;setjmp.h&gt;
+
+static void f1(int, int, int, int);
+static void f2(void);
+
+static jmp_buf jmpbuffer;
+static int     globval;
+
+int
+main(void)
+{
+     int             autoval;
+     register int    regival;
+     volatile int    volaval;
+     static int      statval;
+
+     globval = 1; autoval = 2; regival = 3; volaval = 4; statval = 5;
+
+     if (setjmp(jmpbuffer) != 0) {
+         printf("after longjmp:\n");
+         printf("globval = %d, autoval = %d, regival = %d,"
+             " volaval = %d, statval = %d\n",
+             globval, autoval, regival, volaval, statval);
+         exit(0);
+     }
+
+     /*
+      * Change variables after setjmp, but before longjmp.
+      */
+     globval = 95; autoval = 96; regival = 97; volaval = 98;
+     statval = 99;
+
+     f1(autoval, regival, volaval, statval); /* never returns */
+     exit(0);
+}
+
+static void
+f1(int i, int j, int k, int l)
+{
+    printf("in f1():\n");
+    printf("globval = %d, autoval = %d, regival = %d,"
+        " volaval = %d, statval = %d\n", globval, i, j, k, l);
+    f2();
+}
+static void
+f2(void)
+{
+    longjmp(jmpbuffer, 1);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e51020"></a>We'll return to these two functions, <tt>setjmp</tt> and <tt>longjmp</tt>, in <a class="docLink" href="ch10.html#ch10">Chapter 10</a> when we discuss signal handlers and their signal versions: <tt>sigsetjmp</tt> and <tt>siglongjmp</tt>.</P>
+
+<a name="ch07lev2sec9"></a>
+<H4 class="docSection2Title">Potential Problem with Automatic Variables</h4>
+<p class="docText">Having looked at the way stack frames are usually handled, it is worth looking at a potential error in dealing with automatic variables. The basic rule is that an automatic variable can never be referenced after the function that declared it returns. There are numerous warnings about this throughout the UNIX System manuals.</P>
+<p class="docText"><a class="docLink" href="ch07lev1sec10.html#ch07fig14">Figure 7.14</a> shows a function called <tt>open_data</tt> that opens a standard I/O stream and sets the buffering for the stream.</P>
+<a name="ch07fig14"></a>
+<h5 class="docExampleTitle">Figure 7.14. Incorrect usage of an automatic variable</h5>
+
+<pre>
+#include    &lt;stdio.h&gt;
+
+#define DATAFILE    "datafile"
+
+FILE *
+open_data(void)
+{
+    FILE    *fp;
+    char    databuf[BUFSIZ];   /* setvbuf makes this the stdio buffer */
+
+    if ((fp = fopen(DATAFILE, "r")) == NULL)
+        return(NULL);
+    if (setvbuf(fp, databuf, _IOLBF, BUFSIZ) != 0)
+        return(NULL);
+    return(fp);     /* error */
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e51097"></a><a name="idd1e51102"></a><a name="idd1e51107"></a><a name="idd1e51112"></a><a name="idd1e51117"></a><a name="idd1e51124"></a><a name="idd1e51129"></a><a name="idd1e51134"></a><a name="idd1e51137"></a><a name="idd1e51142"></a><a name="idd1e51147"></a><a name="idd1e51154"></a><a name="idd1e51159"></a><a name="idd1e51162"></a>The problem is that when <tt>open_data</tt> returns, the space it used on the stack will be used by the stack frame for the next function that is called. But the standard I/O library will still be using that portion of memory for its stream buffer. Chaos is sure to result. To correct this problem, the array <tt>databuf</tt> needs to be allocated from global memory, either statically (<tt>static</tt> or <tt>extern</tt>) or dynamically (one of the <tt>alloc</tt> functions).</p>
+
+
+<UL></ul></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

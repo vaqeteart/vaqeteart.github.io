@@ -1,0 +1,50 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 18.7.&nbsp; Baud Rate Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch18lev1sec7"></a>
+<h3 class="docSection1Title">18.7. Baud Rate Functions</h3>
+<p class="docText">The term <span class="docEmphasis">baud rate</span> is a historical term that should be referred to today as &quot;bits per second.&quot; Although most terminal devices use the same baud rate for both input and output, the capability exists to set the two to different values, if the hardware allows this.</P>
+<a name="inta09"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;termios.h&gt;
+
+speed_t cfgetispeed(const struct termios *<span class="docEmphItalicAlt">termptr</span>);
+
+speed_t cfgetospeed(const struct termios *<span class="docEmphItalicAlt">termptr</span>);</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: baud rate value
+</p></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID1"></a><div class="v1"><a href="ch18lev1sec7.html#PLID1">[View full width]</a></div><pre>
+int cfsetispeed(struct termios *<span class="docEmphItalicAlt">termptr</span>, speed_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">speed</span>);
+
+int cfsetospeed(struct termios *<span class="docEmphItalicAlt">termptr</span>, speed_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">speed</span>);</pre><BR>
+
+</p></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, 1 on error</P></td></tr></table></p><br>
+<p class="docText">The return value from the two <tt>cfget</tt> functions and the <span class="docEmphasis">speed</span> argument to the two <tt>cfset</tt> functions are one of the following constants: <tt>B50</tt>, <tt>B75</tt>, <tt>B110</tt>, <tt>B134</tt>, <tt>B150</tt>, <tt>B200</tt>, <tt>B300</tt>, <tt>B600</tt>, <tt>B1200</tt>, <tt>B1800</tt>, <tt>B2400</tt>, <tt>B4800</tt>, <tt>B9600</tt>, <tt>B19200</tt>, or <tt>B38400</tt>. The constant <tt>B0</tt> means &quot;hang up.&quot; When <tt>B0</tt> is specified as the output baud rate when <tt>tcsetattr</tt> is called, the modem control lines are no longer asserted.</P>
+<blockquote>
+<p class="docText">Most systems define additional baud rate values, such as <tt>B57600</tt> and <tt>B115200</tt>.</p>
+</blockquote>
+<p class="docText">To use these functions, we must realize that the input and output baud rates are stored in the device's <tt>termios</tt> structure, as shown in <a class="docLink" href="ch18lev1sec2.html#ch18fig08">Figure 18.8</a>. Before calling either of the <tt>cfget</tt> functions, we first have to obtain the device's <tt>termios</tt> structure using <tt>tcgetattr</tt>. Similarly, after calling either of the two <tt>cfset</tt> functions, all we've done is set the baud rate in a <tt>termios</tt> structure. For this change to affect the device, we have to call <tt>tcsetattr</tt>. If there is an error in either of the baud rates that we set, we may not find out about the error until we call <tt>tcsetattr</tt>.</P>
+<p class="docText"><a name="idd1e140831"></a><a name="idd1e140836"></a><a name="idd1e140841"></a><a name="idd1e140844"></a><a name="idd1e140847"></a><a name="idd1e140850"></a><a name="idd1e140853"></a><a name="idd1e140858"></a><a name="idd1e140865"></a><a name="idd1e140870"></a><a name="idd1e140877"></a><a name="idd1e140882"></a><a name="idd1e140889"></a><a name="idd1e140894"></a><a name="idd1e140899"></a><a name="idd1e140904"></a><a name="idd1e140909"></a><a name="idd1e140914"></a><a name="idd1e140919"></a><a name="idd1e140924"></a><a name="idd1e140929"></a><a name="idd1e140936"></a>The four baud rate functions exist to insulate applications from differences in the way that implementations represent baud rates in the <tt>termios</tt> structure. BSD-derived platforms tend to store baud rates as numeric values equal to the rates (i.e., 9,600 baud is stored as the value 9,600), whereas Linux and System Vderived platforms tend to encode the baud rate in a bitmask. The speed values we get from the <tt>cfget</tt> functions and pass to the <tt>cfset</tt> functions are untranslated from their representation as they are stored in the <tt>termios</tt> structure.</p>
+
+<UL></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

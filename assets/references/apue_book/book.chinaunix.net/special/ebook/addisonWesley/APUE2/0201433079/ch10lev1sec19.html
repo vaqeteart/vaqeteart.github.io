@@ -1,0 +1,97 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 10.19.&nbsp; sleep Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec18.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec20.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch10lev1sec19"></a>
+<h3 class="docSection1Title">10.19. <tt>sleep</tt> Function</h3>
+<p class="docText">We've used the <tt>sleep</tt> function in numerous examples throughout the text, and we showed two flawed implementations of it in <a class="docLink" href="ch10lev1sec10.html#ch10fig07">Figures 10.7</a> and <a class="docLink" href="ch10lev1sec10.html#ch10fig08">10.8</a>.</P>
+<a name="inta326"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+unsigned int sleep(unsigned int <span class="docEmphItalicAlt">seconds</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 or number of unslept seconds</p></TD></tr></table></P><BR>
+<p class="docText">This function causes the calling process to be suspended until either</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">The amount of wall clock time specified by <span class="docEmphasis">seconds</span> has elapsed.</P></div></LI><li><div style="font-weight:normal"><p class="docList">A signal is caught by the process and the signal handler returns.</P></div></LI></ol></div>
+<p class="docText"><a name="idd1e80289"></a><a name="idd1e80294"></a><a name="idd1e80297"></a><a name="idd1e80300"></a><a name="idd1e80303"></a><a name="idd1e80308"></a><a name="idd1e80313"></a><a name="idd1e80318"></a><a name="idd1e80323"></a><a name="idd1e80326"></a>As with an <tt>alarm</tt> signal, the actual return may be at a time later than requested, because of other system activity.</p>
+<p class="docText">In case 1, the return value is 0. When <tt>sleep</tt> returns early, because of some signal being caught (case 2), the return value is the number of unslept seconds (the requested time minus the actual time slept).</p>
+<p class="docText">Although <tt>sleep</tt> can be implemented with the <tt>alarm</tt> function (<a class="docLink" href="ch10lev1sec10.html#ch10lev1sec10">Section 10.10</a>), this isn't required. If <tt>alarm</tt> is used, however, there can be interactions between the two functions. The POSIX.1 standard leaves all these interactions unspecified. For example, if we do an <tt>alarm(10)</tt> and 3 wall clock seconds later do a <tt>sleep(5)</tt>, what happens? The <tt>sleep</tt> will return in 5 seconds (assuming that some other signal isn't caught in that time), but will another <tt>SIGALRM</tt> be generated 2 seconds later? These details depend on the implementation.</p>
+<blockquote>
+<p class="docText">Solaris 9 implements <tt>sleep</tt> using <tt>alarm</tt>. The Solaris <tt>sleep(3)</tt> manual page says that a previously scheduled alarm is properly handled. For example, in the preceding scenario, before <tt>sleep</tt> returns, it will reschedule the alarm to happen 2 seconds later; <tt>sleep</tt> returns 0 in this case. (Obviously, <tt>sleep</tt> must save the address of the signal handler for <tt>SIGALRM</tt> and reset it before returning.) Also, if we do an <tt>alarm(6)</tt> and 3 wall clock seconds later do a <tt>sleep(5)</tt>, the <tt>sleep</tt> returns in 3 seconds (when the alarm goes off), not in 5 seconds. Here, the return value from <tt>sleep</tt> is 2 (the number of unslept seconds).</p>
+<p class="docText">FreeBSD 5.2.1, Linux 2.4.22, and Mac OS X 10.3, on the other hand, use another technique: the delay is provided by <tt>nanosleep</tt>(2). This function is specified to be a high-resolution delay by the real-time extensions in the Single UNIX Specification. This function allows the implementation of <tt>sleep</tt> to be independent of signals.</P>
+<p class="docText">For portability, you shouldn't make any assumptions about the implementation of <tt>sleep</tt>, but if you have any intentions of mixing calls to <tt>sleep</tt> with any other timing functions, you need to be aware of possible interactions.</p>
+</blockquote>
+<a name="ch10ex19"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText"><a class="docLink" href="ch10lev1sec19.html#ch10fig29">Figure 10.29</a> shows an implementation of the POSIX.1 <tt>sleep</tt> function. This function is a modification of <a class="docLink" href="ch10lev1sec10.html#ch10fig07">Figure 10.7</a>, which handles signals reliably, avoiding the race condition in the earlier implementation. We still do not handle any interactions with previously set alarms. (As we mentioned, these interactions are explicitly undefined by POSIX.1.)</P>
+<p class="docText">It takes more code to write this reliable implementation than what is shown in <a class="docLink" href="ch10lev1sec10.html#ch10fig07">Figure 10.7</a>. We don't use any form of nonlocal branching (as we did in <a class="docLink" href="ch10lev1sec10.html#ch10fig08">Figure 10.8</a> to avoid the race condition between the <tt>alarm</tt> and <tt>pause</tt>), so there is no effect on other signal handlers that may be executing when the <tt>SIGALRM</tt> is handled.</p>
+
+<a name="ch10fig29"></a>
+<h5 class="docExampleTitle">Figure 10.29. Reliable implementation of <tt>sleep</tt></h5>
+
+<pre>
+#include "apue.h"
+
+static void
+sig_alrm(int signo)
+{
+    /* nothing to do, just returning wakes up sigsuspend() */
+}
+
+unsigned int
+sleep(unsigned int nsecs)
+{
+    struct sigaction    newact, oldact;
+    sigset_t            newmask, oldmask, suspmask;
+    unsigned int        unslept;
+
+    /* set our handler, save previous information */
+    newact.sa_handler = sig_alrm;
+    sigemptyset(&amp;newact.sa_mask);
+    newact.sa_flags = 0;
+    sigaction(SIGALRM, &amp;newact, &amp;oldact);
+
+    /* block SIGALRM and save current signal mask */
+    sigemptyset(&amp;newmask);
+    sigaddset(&amp;newmask, SIGALRM);
+    sigprocmask(SIG_BLOCK, &amp;newmask, &amp;oldmask);
+
+    alarm(nsecs);
+
+    suspmask = oldmask;
+    sigdelset(&amp;suspmask, SIGALRM);    /* make sure SIGALRM isn't blocked */
+    sigsuspend(&amp;suspmask);            /* wait for any signal to be caught */
+
+    /* some signal has been caught,   SIGALRM is now blocked */
+
+    unslept = alarm(0);
+    sigaction(SIGALRM, &amp;oldact, NULL);  /* reset previous action */
+
+    /* reset signal mask, which unblocks SIGALRM */
+    sigprocmask(SIG_SETMASK, &amp;oldmask, NULL);
+    return(unslept);
+}
+</pre><br>
+
+
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec18.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec20.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

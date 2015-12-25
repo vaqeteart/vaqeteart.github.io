@@ -1,0 +1,338 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 17.3.&nbsp; UNIX Domain Sockets</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch17lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch17lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch17lev1sec3"></a>
+<h3 class="docSection1Title">17.3. UNIX Domain Sockets</h3>
+<p class="docText">UNIX domain sockets are used to communicate with processes running on the same machine. Although Internet domain sockets can be used for this same purpose, UNIX domain sockets are more efficient. UNIX domain sockets only copy data; they have no protocol processing to perform, no network headers to add or remove, no checksums to calculate, no sequence numbers to generate, and no acknowledgements to send.</P>
+<p class="docText">UNIX domain sockets provide both stream and datagram interfaces. The UNIX domain datagram service is reliable, however. Messages are neither lost nor delivered out of order. UNIX domain sockets are like a cross between sockets and pipes. You can use the network-oriented socket interfaces with them, or you can use the <tt>socketpair</tt> function to create a pair of unnamed, connected, UNIX domain sockets.</P>
+<a name="inta330"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch17lev1sec3.html#PLID0">[View full width]</a></div><pre>
+#include &lt;sys/socket.h&gt;
+
+int socketpair(int <span class="docEmphItalicAlt">domain</span>, int <span class="docEmphasis">type</span>, int <span class="docEmphItalicAlt">protocol</span>,
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> int <span class="docEmphItalicAlt">sockfd</span>[2]);</pre><BR>
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</P></td></TR></table></P><BR>
+<p class="docText"><a name="idd1e128455"></a><a name="idd1e128460"></a><a name="idd1e128463"></a><a name="idd1e128466"></a><a name="idd1e128471"></a><a name="idd1e128476"></a><a name="idd1e128481"></a><a name="idd1e128484"></a><a name="idd1e128489"></a><a name="idd1e128496"></a>Although the interface is sufficiently general to allow <tt>socketpair</tt> to be used with arbitrary domains, operating systems typically provide support only for the UNIX domain.</p>
+<a name="ch17ex03"></a>
+<H5 class="docExampleTitle">Example<tt>s_pipe</tt> Function Using UNIX Domain Sockets</H5>
+<p class="docText"><a class="docLink" href="ch17lev1sec3.html#ch17fig13">Figure 17.13</a> shows the socket-based version of the <tt>s_pipe</tt> function previously shown in <a class="docLink" href="ch17lev1sec2.html#ch17fig06">Figure 17.6</a>. The function creates a pair of connected UNIX domain stream sockets.</p>
+<blockquote>
+<p class="docText">Some BSD-based systems use UNIX domain sockets to implement pipes. But when <tt>pipe</tt> is called, the write end of the first descriptor and the read end of the second descriptor are both closed. To get a full-duplex pipe, we must call <tt>socketpair</tt> directly.</P>
+</blockquote>
+
+<a name="ch17fig13"></a>
+<H5 class="docExampleTitle">Figure 17.13. Socket version of the <tt>s_pipe</tt> function</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/socket.h&gt;
+
+/*
+ * Returns a full-duplex "stream" pipe (a UNIX domain socket)
+ * with the two file descriptors returned in fd[0] and fd[1].
+ */
+int
+s_pipe(int fd[2])
+{
+    return(socketpair(AF_UNIX, SOCK_STREAM, 0, fd));
+}
+</pre><br>
+
+
+<a name="ch17lev2sec3"></a>
+<h4 class="docSection2Title">17.3.1. Naming UNIX Domain Sockets</h4>
+<p class="docText">Although the <tt>socketpair</tt> function creates sockets that are connected to each other, the individual sockets don't have names. This means that they can't be addressed by unrelated processes.</P>
+<p class="docText">In <a class="docLink" href="ch16lev1sec3.html#ch16lev2sec4">Section 16.3.4</a>, we learned how to bind an address to an Internet domain socket. Just as with Internet domain sockets, UNIX domain sockets can be named and used to advertise services. The address format used with UNIX domain sockets differs from Internet domain sockets, however.</p>
+<p class="docText">Recall from <a class="docLink" href="ch16lev1sec3.html#ch16lev1sec3">Section 16.3</a> that socket address formats differ from one implementation to the next. An address for a UNIX domain socket is represented by a <tt>sockaddr_un</tt> structure. On Linux 2.4.22 and Solaris 9, the <tt>sockaddr_un</tt> structure is defined in the header <tt>&lt;sys/un.h&gt;</tt> as follows:</P>
+
+<pre>
+   struct sockaddr_un {
+        sa_family_t sun_family;      /* AF_UNIX */
+        char        sun_path[108];   /* pathname */
+   };
+</pre><br>
+
+<p class="docText"><a name="idd1e128606"></a><a name="idd1e128611"></a><a name="idd1e128614"></a><a name="idd1e128617"></a><a name="idd1e128622"></a>On FreeBSD 5.2.1 and Mac OS X 10.3, however, the <tt>sockaddr_un</tt> structure is defined as</P>
+
+<pre>
+   struct sockaddr_un {
+        unsigned char  sun_len;         /* length including null */
+        sa_family_t    sun_family;      /* AF_UNIX */
+        char           sun_path[104];   /* pathname */
+   };
+</pre><br>
+
+<p class="docText">The <tt>sun_path</tt> member of the <tt>sockaddr_un</tt> structure contains a pathname. When we bind an address to a UNIX domain socket, the system creates a file of type <tt>S_IFSOCK</tt> with the same name.</p>
+<p class="docText">This file exists only as a means of advertising the socket name to clients. The file can't be opened or otherwise used for communication by applications.</p>
+<p class="docText">If the file already exists when we try to bind the same address, the <tt>bind</tt> request will fail. When we close the socket, this file is not automatically removed, so we need to make sure that we unlink it before our application exits.</p>
+<a name="ch17ex04"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch17lev1sec3.html#ch17fig14">Figure 17.14</a> shows an example of binding an address to a UNIX domain socket.</p>
+<p class="docText">When we run this program, the <tt>bind</tt> request succeeds, but if we run the program a second time, we get an error, because the file already exists. The program won't succeed again until we remove the file.</p>
+
+<pre>
+$ <span class="docEmphStrong">./a.out</span>                                       <span class="docEmphItalicAlt">run the program</span>
+UNIX domain socket bound
+$ <span class="docEmphStrong">ls -l foo.socket</span>                              <span class="docEmphItalicAlt">look at the socket file</span>
+srwxrwxr-x 1 sar        0 Aug 22 12:43 foo.socket
+$ <span class="docEmphStrong">./a.out</span>                                       <span class="docEmphItalicAlt">try to run the program again</span>
+bind failed: Address already in use
+$ <span class="docEmphStrong">rm foo.socket</span>                                 <span class="docEmphItalicAlt">remove the socket file</span>
+$ ./a.out                                       <span class="docEmphItalicAlt">run the program a third time</span>
+UNIX domain socket bound                        <span class="docEmphItalicAlt">now it succeeds</span>
+</pre><br>
+
+<p class="docText"><a name="idd1e128709"></a><a name="idd1e128714"></a><a name="idd1e128719"></a><a name="idd1e128724"></a><a name="idd1e128729"></a><a name="idd1e128734"></a><a name="idd1e128741"></a><a name="idd1e128746"></a>The way we determine the size of the address to bind is to determine the offset of the <tt>sun_path</tt> member in the <tt>sockaddr_un</tt> structure and add to this the length of the pathname, not including the terminating null byte. Since implementations vary in what members precede <tt>sun_path</tt> in the <tt>sockaddr_un</tt> structure, we use the <tt>offsetof</tt> macro from <tt>&lt;stddef.h&gt;</tt> (included by <tt>apue.h</tt>) to calculate the offset of the <tt>sun_path</tt> member from the start of the structure. If you look in <tt>&lt;stddef.h&gt;</tt>, you'll see a definition similar to the following:</p>
+
+<pre>
+#define offsetof(TYPE, MEMBER) ((int)&amp;((TYPE *)0)-&gt;MEMBER)
+</pre><br>
+
+<p class="docText">The expression evaluates to an integer, which is the starting address of the member, assuming that the structure begins at address 0.</p>
+
+<a name="ch17fig14"></a>
+<h5 class="docExampleTitle">Figure 17.14. Binding an address to a UNIX domain socket</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/socket.h&gt;
+#include &lt;sys/un.h&gt;
+
+int
+main(void)
+{
+    int fd, size;
+    struct sockaddr_un un;
+
+    un.sun_family = AF_UNIX;
+    strcpy(un.sun_path, "foo.socket");
+    if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0)
+        err_sys("socket failed");
+    size = offsetof(struct sockaddr_un, sun_path) + strlen(un.sun_path);
+    if (bind(fd, (struct sockaddr *)&amp;un, size) &lt; 0)
+        err_sys("bind failed");
+    printf("UNIX domain socket bound\n");
+    exit(0);
+}
+</pre><br>
+
+
+
+<a name="ch17lev2sec4"></a>
+<h4 class="docSection2Title">17.3.2. Unique Connections</h4>
+<p class="docText">A server can arrange for unique UNIX domain connections to clients using the standard <tt>bind</tt>, <tt>listen</tt>, and <tt>accept</tt> functions. Clients use <tt>connect</tt> to contact the server; after the connect request is accepted by the server, a unique connection exists between the client and the server. This style of operation is the same that we illustrated with Internet domain sockets in <a class="docLink" href="ch16lev1sec5.html#ch16fig14">Figures 16.14</a> and <a class="docLink" href="ch16lev1sec5.html#ch16fig15">16.15</a>.</P>
+<p class="docText"><a class="docLink" href="ch17lev1sec3.html#ch17fig15">Figure 17.15</a> shows the UNIX domain socket version of the <tt>serv_listen</tt> function.</P>
+<a name="ch17fig15"></a>
+<h5 class="docExampleTitle">Figure 17.15. The <tt>serv_listen</tt> function for UNIX domain sockets</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/socket.h&gt;
+#include &lt;sys/un.h&gt;
+#include &lt;errno.h&gt;
+
+#define QLEN 10
+
+/*
+ * Create a server endpoint of a connection.
+ * Returns fd if all OK, &lt;0 on error.
+ */
+int
+serv_listen(const char *name)
+{
+    int                 fd, len, err, rval;
+    struct sockaddr_un  un;
+
+    /* create a UNIX domain stream socket */
+    if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0)
+       return(-1);
+    unlink(name);   /* in case it already exists */
+
+    /* fill in socket address structure */
+    memset(&amp;un, 0, sizeof(un));
+    un.sun_family = AF_UNIX;
+    strcpy(un.sun_path, name);
+    len = offsetof(struct sockaddr_un, sun_path) + strlen(name);
+
+    /* bind the name to the descriptor */
+    if (bind(fd, (struct sockaddr *)&amp;un, len) &lt; 0) {
+        rval = -2;
+        goto errout;
+    }
+    if (listen(fd, QLEN) &lt; 0) { /* tell kernel we're a server */
+        rval = -3;
+        goto errout;
+    }
+    return(fd);
+
+errout:
+    err = errno;
+    close(fd);
+    errno = err;
+    return(rval);
+}
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e128880"></a><a name="idd1e128885"></a><a name="idd1e128890"></a><a name="idd1e128895"></a>First, we create a single UNIX domain socket by calling <tt>socket</tt>. We then fill in a <tt>sockaddr_un</tt> structure with the well-known pathname to be assigned to the socket. This structure is the argument to <tt>bind</tt>. Note that we don't need to set the <tt>sun_len</tt> field present on some platforms, because the operating system sets this for us using the address length we pass to the <tt>bind</tt> function.</P>
+<p class="docText">Finally, we call <tt>listen</tt> (<a class="docLink" href="ch16lev1sec4.html#ch16lev1sec4">Section 16.4</a>) to tell the kernel that the process will be acting as a server awaiting connections from clients. When a connect request from a client arrives, the server calls the <tt>serv_accept</tt> function (<a class="docLink" href="ch17lev1sec3.html#ch17fig16">Figure 17.16</a>).</p>
+<a name="ch17fig16"></a>
+<H5 class="docExampleTitle">Figure 17.16. The <tt>serv_accept</tt> function for UNIX domain sockets</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/socket.h&gt;
+#include &lt;sys/un.h&gt;
+#include &lt;time.h&gt;
+#include &lt;errno.h&gt;
+
+#define STALE   30  /* client's name can't be older than this (sec) */
+
+/*
+ * Wait for a client connection to arrive, and accept it.
+ * We also obtain the client's user ID from the pathname
+ * that it must bind before calling us.
+ * Returns new fd if all OK, &lt;0 on error
+ */
+int
+serv_accept(int listenfd, uid_t *uidptr)
+{
+    int                 clifd, len, err, rval;
+    time_t              staletime;
+    struct sockaddr_un  un;
+    struct stat         statbuf;
+
+    len = sizeof(un);
+    if ((clifd = accept(listenfd, (struct sockaddr *)&amp;un, &amp;len)) &lt; 0)
+        return(-1);     /* often errno=EINTR, if signal caught */
+
+    /* obtain the client's uid from its calling address */
+    len <sup>-</sup>= offsetof(struct sockaddr_un, sun_path); /* len of pathname */
+    un.sun_path[len] = 0;           /* null terminate */
+
+    if (stat(un.sun_path, &amp;statbuf) &lt; 0) {
+        rval = -2;
+        goto errout;
+    }
+#ifdef S_ISSOCK     /* not defined for SVR4 */
+    if (S_ISSOCK(statbuf.st_mode) == 0) {
+        rval = -3;      /* not a socket */
+        goto errout;
+    }
+#endif
+    if ((statbuf.st_mode &amp; (S_IRWXG | S_IRWXO)) ||
+        (statbuf.st_mode &amp; S_IRWXU) != S_IRWXU) {
+          rval = -4;     /* is not rwx------ */
+          goto errout;
+    }
+
+    staletime = time(NULL) - STALE;
+    if (statbuf.st_atime &lt; staletime ||
+        statbuf.st_ctime &lt; staletime ||
+        statbuf.st_mtime &lt; staletime) {
+          rval = -5;    /* i-node is too old */
+          goto errout;
+    }
+    if (uidptr != NULL)
+        *uidptr = statbuf.st_uid;   /* return uid of caller */
+    unlink(un.sun_path);        /* we're done with pathname now */
+    return(clifd);
+
+errout:
+    err = errno;
+    close(clifd);
+    errno = err;
+    return(rval);
+}
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e128965"></a><a name="idd1e128970"></a><a name="idd1e128977"></a><a name="idd1e128982"></a><a name="idd1e128987"></a><a name="idd1e128992"></a><a name="idd1e128997"></a><a name="idd1e129002"></a><a name="idd1e129007"></a><a name="idd1e129012"></a><a name="idd1e129017"></a><a name="idd1e129022"></a><a name="idd1e129027"></a><a name="idd1e129032"></a><a name="idd1e129039"></a><a name="idd1e129044"></a><a name="idd1e129049"></a><a name="idd1e129052"></a><a name="idd1e129057"></a><a name="idd1e129062"></a><a name="idd1e129067"></a><a name="idd1e129072"></a><a name="idd1e129077"></a><a name="idd1e129080"></a><a name="idd1e129086"></a>The server blocks in the call to <tt>accept</tt>, waiting for a client to call <tt>cli_conn</tt>. When <tt>accept</tt> returns, its return value is a brand new descriptor that is connected to the client. (This is somewhat similar to what the <tt>connld</tt> module does with the STREAMS subsystem.) Additionally, the pathname that the client assigned to its socket (the name that contained the client's process ID) is also returned by <tt>accept</tt>, through the second argument (the pointer to the <tt>sockaddr_un</tt> structure). We null terminate this pathname and call <tt>stat</tt>. This lets us verify that the pathname is indeed a socket and that the permissions allow only user-read, user-write, and user-execute. We also verify that the three times associated with the socket are no older than 30 seconds. (Recall from <a class="docLink" href="ch06lev1sec10.html#ch06lev1sec10">Section 6.10</a> that the <tt>time</tt> function returns the current time and date in seconds past the Epoch.)</P>
+<p class="docText">If all these checks are OK, we assume that the identity of the client (its effective user ID) is the owner of the socket. Although this check isn't perfect, it's the best we can do with current systems. (It would be better if the kernel returned the effective user ID to <tt>accept</tt> as the <tt>I_RECVFD ioctl</tt> command does.)</p>
+<p class="docText">The client initiates the connection to the server by calling the <tt>cli_conn</tt> function (<a class="docLink" href="ch17lev1sec3.html#ch17fig17">Figure 17.17</a>).</P>
+<a name="ch17fig17"></a>
+<H5 class="docExampleTitle">Figure 17.17. The <tt>cli_conn</tt> function for UNIX domain sockets</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/socket.h&gt;
+#include &lt;sys/un.h&gt;
+#include &lt;errno.h&gt;
+
+#define CLI_PATH    "/var/tmp/"      /* +5 for pid = 14 chars */
+#define CLI_PERM    S_IRWXU          /* rwx for user only */
+
+/*
+ * Create a client endpoint and connect to a server.
+ * Returns fd if all OK, &lt;0 on error.
+ */
+int
+cli_conn(const char *name)
+{
+    int                fd, len, err, rval;
+    struct sockaddr_un un;
+
+    /* create a UNIX domain stream socket */
+    if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0)
+        return(-1);
+
+    /* fill socket address structure with our address */
+    memset(&amp;un, 0, sizeof(un));
+    un.sun_family = AF_UNIX;
+    sprintf(un.sun_path, "%s%05d", CLI_PATH, getpid());
+    len = offsetof(struct sockaddr_un, sun_path) + strlen(un.sun_path);
+
+    unlink(un.sun_path);        /* in case it already exists */
+    if (bind(fd, (struct sockaddr *)&amp;un, len) &lt; 0) {
+        rval = -2;
+        goto errout;
+    }
+    if (chmod(un.sun_path, CLI_PERM) &lt; 0) {
+        rval = -3;
+        goto errout;
+    }
+    /* fill socket address structure with server's address */
+    memset(&amp;un, 0, sizeof(un));
+    un.sun_family = AF_UNIX;
+    strcpy(un.sun_path, name);
+    len = offsetof(struct sockaddr_un, sun_path) + strlen(name);
+    if (connect(fd, (struct sockaddr *)&amp;un, len) &lt; 0) {
+        rval = -4;
+        goto errout;
+    }
+    return(fd);
+
+errout:
+    err = errno;
+    close(fd);
+    errno = err;
+    return(rval);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e129170"></a><a name="idd1e129175"></a><a name="idd1e129180"></a><a name="idd1e129185"></a><a name="idd1e129188"></a>We call <tt>socket</tt> to create the client's end of a UNIX domain socket. We then fill in a <tt>sockaddr_un</tt> structure with a client-specific name.</P>
+<p class="docText">We don't let the system choose a default address for us, because the server would be unable to distinguish one client from another. Instead, we bind our own address, a step we usually don't take when developing a client program that uses sockets.</P>
+<p class="docText">The last five characters of the pathname we bind are made from the process ID of the client. We call <tt>unlink</tt>, just in case the pathname already exists. We then call <tt>bind</tt> to assign a name to the client's socket. This creates a socket file in the file system with the same name as the bound pathname. We call <tt>chmod</tt> to turn off all permissions other than user-read, user-write, and user-execute. In <tt>serv_accept</tt>, the server checks these permissions and the user ID of the socket to verify the client's identity.</p>
+<p class="docText">We then have to fill in another <tt>sockaddr_un</tt> structure, this time with the well-known pathname of the server. Finally, we call the <tt>connect</tt> function to initiate the connection with the server.</P>
+
+
+<UL></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch17lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch17lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

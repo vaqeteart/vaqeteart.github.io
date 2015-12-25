@@ -1,0 +1,322 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 15.3.&nbsp; popen and pclose Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch15lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch15lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch15lev1sec3"></a>
+<h3 class="docSection1Title">15.3. <tt>popen</tt> and <tt>pclose</tt> Functions</h3>
+<p class="docText"><a name="idd1e110785"></a><a name="idd1e110790"></a><a name="idd1e110795"></a><a name="idd1e110802"></a><a name="idd1e110809"></a><a name="idd1e110816"></a><a name="idd1e110823"></a><a name="idd1e110830"></a>Since a common operation is to create a pipe to another process, to either read its output or send it input, the standard I/O library has historically provided the <tt>popen</tt> and <tt>pclose</tt> functions. These two functions handle all the dirty work that we've been doing ourselves: creating a pipe, <tt>fork</tt>ing a child, closing the unused ends of the pipe, executing a shell to run the command, and waiting for the command to terminate.</P>
+<a name="inta177"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+
+#include &lt;stdio.h&gt;
+
+FILE *popen(const char *<span class="docEmphItalicAlt">cmdstring</span>, const char *<span class="docEmphItalicAlt">type</span>);</pre><BR>
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: file pointer if OK, <tt>NULL</tt> on error</p></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+int pclose(FILE *<span class="docEmphItalicAlt">fp</span>);
+</pre><BR>
+</p></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: termination status of <span class="docEmphasis">cmdstring</span>, or 1 on error</P></td></tr></table></p><br>
+<p class="docText">The function <tt>popen</tt> does a <tt>fork</tt> and <tt>exec</tt> to execute the <span class="docEmphasis">cmdstring</span>, and returns a standard I/O file pointer. If <span class="docEmphasis">type</span> is <tt>"r"</tt>, the file pointer is connected to the standard output of <span class="docEmphasis">cmdstring</span> (<a class="docLink" href="ch15lev1sec3.html#ch15fig09">Figure 15.9</a>).</P>
+<a name="ch15fig09"></a><p><center>
+<H5 class="docFigureTitle">Figure 15.9. Result of <tt>fp = popen</tt>(<span class="docEmphasis">cmdstring</span>, <tt>"r"</tt>)</h5>
+
+<p class="docText">
+<img border="0" alt="" width="357" height="62" SRC="images/0201433079/graphics/15fig09.gif;423615"></P>
+
+</center></p><br>
+<p class="docText">If <span class="docEmphasis">type</span> is <tt>"w"</tt>, the file pointer is connected to the standard input of <span class="docEmphasis">cmdstring</span>, as shown in <a class="docLink" href="ch15lev1sec3.html#ch15fig10">Figure 15.10</a>.</p>
+<a name="ch15fig10"></a><p><center>
+<h5 class="docFigureTitle">Figure 15.10. Result of <tt>fp = popen</tt>(<span class="docEmphasis">cmdstring</span>, <tt>"w"</tt>)</h5>
+
+<p class="docText">
+<img border="0" alt="" width="358" height="61" SRC="images/0201433079/graphics/15fig10.gif;423615"></p>
+
+</center></p><br>
+<p class="docText"><a name="idd1e111031"></a><a name="idd1e111034"></a><a name="idd1e111040"></a><a name="idd1e111045"></a><a name="idd1e111050"></a><a name="idd1e111055"></a><a name="idd1e111060"></a>One way to remember the final argument to <tt>popen</tt> is to remember that, like <tt>fopen</tt>, the returned file pointer is readable if <span class="docEmphasis">type</span> is <tt>"r"</tt> or writable if <span class="docEmphasis">type</span> is <tt>"w"</tt>.</p>
+<p class="docText">The <tt>pclose</tt> function closes the standard I/O stream, waits for the command to terminate, and returns the termination status of the shell. (We described the termination status in <a class="docLink" href="ch08lev1sec6.html#ch08lev1sec6">Section 8.6</a>. The <tt>system</tt> function, described in <a class="docLink" href="ch08lev1sec13.html#ch08lev1sec13">Section 8.13</a>, also returns the termination status.) If the shell cannot be executed, the termination status returned by <tt>pclose</tt> is as if the shell had executed <tt>exit(127)</tt>.</p>
+<p class="docText">The <span class="docEmphasis">cmdstring</span> is executed by the Bourne shell, as in</p>
+
+<pre>
+sh -c <span class="docEmphItalicAlt">cmdstring</span>
+</pre><br>
+
+<p class="docText">This means that the shell expands any of its special characters in <span class="docEmphasis">cmdstring</span>. This allows us to say, for example,</p>
+
+<pre>
+   fp = popen("ls *.c", "r");
+
+or
+
+   fp = popen("cmd 2&gt;&amp;1", "r");
+</pre><br>
+
+<a name="ch15ex04"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">Let's redo the program from <a class="docLink" href="ch15lev1sec2.html#ch15fig06">Figure 15.6</a>, using <tt>popen</tt>. This is shown in <a class="docLink" href="ch15lev1sec3.html#ch15fig11">Figure 15.11</a>.</P>
+<p class="docText"><a name="idd1e111149"></a><a name="idd1e111154"></a><a name="idd1e111159"></a><a name="idd1e111164"></a><a name="idd1e111169"></a><a name="idd1e111174"></a>Using <tt>popen</tt> reduces the amount of code we have to write.</P>
+<p class="docText">The shell command <tt>${PAGER:-more}</tt> says to use the value of the shell variable <tt>PAGER</tt> if it is defined and non-null; otherwise, use the string <tt>more</tt>.</p>
+
+<a name="ch15fig11"></a>
+<H5 class="docExampleTitle">Figure 15.11. Copy file to pager program using <tt>popen</tt></H5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/wait.h&gt;
+
+#define PAGER   "${PAGER:-more}" /* environment variable, or default */
+
+int
+main(int argc, char *argv[])
+{
+    char    line[MAXLINE];
+    FILE    *fpin, *fpout;
+
+    if (argc != 2)
+        err_quit("usage: a.out &lt;pathname&gt;");
+    if ((fpin = fopen(argv[1], "r")) == NULL)
+        err_sys("can't open %s", argv[1]);
+
+    if ((fpout = popen(PAGER, "w")) == NULL)
+        err_sys("popen error");
+
+    /* copy argv[1] to pager */
+    while (fgets(line, MAXLINE, fpin) != NULL) {
+        if (fputs(line, fpout) == EOF)
+            err_sys("fputs error to pipe");
+    }
+    if (ferror(fpin))
+        err_sys("fgets error");
+    if (pclose(fpout) == -1)
+        err_sys("pclose error");
+
+    exit(0);
+}
+</pre><BR>
+
+
+<a name="ch15ex05"></a>
+<h5 class="docExampleTitle">Example<tt>popen</tt> and <tt>pclose</tt> Functions</H5>
+<p class="docText"><a class="docLink" href="ch15lev1sec3.html#ch15fig12">Figure 15.12</a> shows our version of <tt>popen</tt> and <tt>pclose</tt>.</P>
+<p class="docText"><a name="idd1e111253"></a><a name="idd1e111258"></a><a name="idd1e111263"></a><a name="idd1e111268"></a><a name="idd1e111273"></a><a name="idd1e111278"></a><a name="idd1e111285"></a><a name="idd1e111288"></a><a name="idd1e111293"></a>Although the core of <tt>popen</tt> is similar to the code we've used earlier in this chapter, there are many details that we need to take care of. First, each time <tt>popen</tt> is called, we have to remember the process ID of the child that we create and either its file descriptor or <tt>FILE</tt> pointer. We choose to save the child's process ID in the array <tt>childpid</tt>, which we index by the file descriptor. This way, when <tt>pclose</tt> is called with the <tt>FILE</tt> pointer as its argument, we call the standard I/O function <tt>fileno</tt> to get the file descriptor, and then have the child process ID for the call to <tt>waitpid</tt>. Since it's possible for a given process to call <tt>popen</tt> more than once, we dynamically allocate the <tt>childpid</tt> array (the first time <tt>popen</tt> is called), with room for as many children as there are file descriptors.</P>
+<p class="docText">Calling <tt>pipe</tt> and <tt>fork</tt> and then duplicating the appropriate descriptors for each process is similar to what we did earlier in this chapter.</p>
+<p class="docText">POSIX.1 requires that <tt>popen</tt> close any streams that are still open in the child from previous calls to <tt>popen</tt>. To do this, we go through the <tt>childpid</tt> array in the child, closing any descriptors that are still open.</P>
+<p class="docText">What happens if the caller of <tt>pclose</tt> has established a signal handler for <tt>SIGCHLD</tt>? The call to <tt>waitpid</tt> from <tt>pclose</tt> would return an error of <tt>EINTR</tt>. Since the caller is allowed to catch this signal (or any other signal that might interrupt the call to <tt>waitpid</tt>), we simply call <tt>waitpid</tt> again if it is interrupted by a caught signal.</p>
+<p class="docText"><a name="idd1e111380"></a><a name="idd1e111385"></a><a name="idd1e111390"></a><a name="idd1e111395"></a><a name="idd1e111398"></a><a name="idd1e111401"></a><a name="idd1e111406"></a><a name="idd1e111411"></a><a name="idd1e111416"></a>Note that if the application calls <tt>waitpid</tt> and obtains the exit status of the child created by <tt>popen</tt>, we will call <tt>waitpid</tt> when the application calls <tt>pclose</tt>, find that the child no longer exists, and return 1 with <tt>errno</tt> set to <tt>ECHILD</tt>. This is the behavior required by POSIX.1 in this situation.</P>
+<blockquote>
+<p class="docText">Some early versions of <tt>pclose</tt> returned an error of <tt>EINTR</tt> if a signal interrupted the <tt>wait</tt>. Also, some early versions of <tt>pclose</tt> blocked or ignored the signals <tt>SIGINT</tt>, <tt>SIGQUIT</tt>, and <tt>SIGHUP</tt> during the <tt>wait</tt>. This is not allowed by POSIX.1.</P>
+</blockquote>
+
+<a name="ch15fig12"></a>
+<H5 class="docExampleTitle">Figure 15.12. The <tt>popen</tt> and <tt>pclose</tt> functions</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;errno.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;sys/wait.h&gt;
+
+/*
+ * Pointer to array allocated at run-time.
+ */
+static pid_t    *childpid = NULL;
+
+/*
+ * From our open_max(), <a class="docLink" href="ch02lev1sec5.html#ch02fig16">Figure 2.16</a>.
+ */
+static int      maxfd;
+
+FILE *
+popen(const char *cmdstring, const char *type)
+{
+    int     i;
+    int     pfd[2];
+    pid_t   pid;
+    FILE    *fp;
+
+    /* only allow "r" or "w" */
+    if ((type[0] != 'r' &amp;&amp; type[0] != 'w') || type[1] != 0) {
+        errno = EINVAL;     /* required by POSIX */
+        return(NULL);
+    }
+
+    if (childpid == NULL) {     /* first time through */
+        /* allocate zeroed out array for child pids */
+        maxfd = open_max();
+        if ((childpid = calloc(maxfd, sizeof(pid_t))) == NULL)
+            return(NULL);
+    }
+
+    if (pipe(pfd) &lt; 0)
+        return(NULL);   /* errno set by pipe() */
+
+    if ((pid = fork()) &lt; 0) {
+        return(NULL);   /* errno set by fork() */
+    } else if (pid == 0) {                           /* child */
+        if (*type == 'r') {
+            close(pfd[0]);
+            if (pfd[1] != STDOUT_FILENO) {
+                dup2(pfd[1], STDOUT_FILENO);
+                close(pfd[1]);
+            }
+        } else {
+            close(pfd[1]);
+            if (pfd[0] != STDIN_FILENO) {
+                dup2(pfd[0], STDIN_FILENO);
+                close(pfd[0]);
+            }
+        }
+
+        /* close all descriptors in childpid[] */
+        for (i = 0; i &lt; maxfd; i++)
+            if (childpid[i] &gt; 0)
+                close(i);
+
+        execl("/bin/sh", "sh", "-c", cmdstring, (char *)0);
+        _exit(127);
+    }
+
+    /* parent continues... */
+    if (*type == 'r') {
+        close(pfd[1]);
+        if ((fp = fdopen(pfd[0], type)) == NULL)
+            return(NULL);
+    } else {
+        close(pfd[0]);
+        if ((fp = fdopen(pfd[1], type)) == NULL)
+            return(NULL);
+    }
+
+    childpid[fileno(fp)] = pid; /* remember child pid for this fd */
+    return(fp);
+}
+
+
+int
+pclose(FILE *fp)
+{
+    int     fd, stat;
+    pid_t   pid;
+
+    if (childpid == NULL) {
+        errno = EINVAL;
+        return(-1);     /* popen() has never been called */
+    }
+
+    fd = fileno(fp);
+    if ((pid = childpid[fd]) == 0) {
+        errno = EINVAL;
+        return(-1);     /* fp wasn't opened by popen() */
+    }
+
+    childpid[fd] = 0;
+    if (fclose(fp) == EOF)
+        return(-1);
+
+    while (waitpid(pid, &amp;stat, 0) &lt; 0)
+        if (errno != EINTR)
+            return(-1); /* error other than EINTR from waitpid() */
+
+    return(stat);   /* return child's termination status */
+}
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e111508"></a><a name="idd1e111513"></a><a name="idd1e111518"></a><a name="idd1e111523"></a><a name="idd1e111528"></a><a name="idd1e111533"></a><a name="idd1e111538"></a><a name="idd1e111543"></a><a name="idd1e111548"></a><a name="idd1e111553"></a><a name="idd1e111558"></a>Note that <tt>popen</tt> should never be called by a set-user-ID or set-group-ID program. When it executes the command, <tt>popen</tt> does the equivalent of</P>
+
+<pre>
+    execl("/bin/sh", "sh", "-c", <span class="docEmphItalicAlt">command</span>, NULL);
+</pre><br>
+
+<p class="docText">which executes the shell and <span class="docEmphasis">command</span> with the environment inherited by the caller. A malicious user can manipulate the environment so that the shell executes commands other than those intended, with the elevated permissions granted by the set-ID file mode.</P>
+<p class="docText">One thing that <tt>popen</tt> is especially well suited for is executing simple filters to transform the input or output of the running command. Such is the case when a command wants to build its own pipeline.</P>
+<a name="ch15ex06"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">Consider an application that writes a prompt to standard output and reads a line from standard input. With <tt>popen</tt>, we can interpose a program between the application and its input to transform the input. <a class="docLink" href="ch15lev1sec3.html#ch15fig13">Figure 15.13</a> shows the arrangement of processes.</p>
+<p class="docText">The transformation could be pathname expansion, for example, or providing a history mechanism (remembering previously entered commands).</p>
+<p class="docText"><a class="docLink" href="ch15lev1sec3.html#ch15fig14">Figure 15.14</a> shows a simple filter to demonstrate this operation. The filter copies standard input to standard output, converting any uppercase character to lowercase. The reason we're careful to <tt>fflush</tt> standard output after writing a newline is discussed in the next section when we talk about coprocesses.</P>
+<p class="docText"><a name="idd1e111617"></a><a name="idd1e111622"></a><a name="idd1e111627"></a><a name="idd1e111632"></a><a name="idd1e111637"></a><a name="idd1e111642"></a>We compile this filter into the executable file <tt>myuclc</tt>, which we then invoke from the program in <a class="docLink" href="ch15lev1sec3.html#ch15fig15">Figure 15.15</a> using <tt>popen</tt>.</p>
+<p class="docText"><a name="idd1e111661"></a><a name="idd1e111664"></a><a name="idd1e111667"></a><a name="idd1e111670"></a><a name="idd1e111673"></a><a name="idd1e111676"></a><a name="idd1e111679"></a>We need to call <tt>fflush</tt> after writing the prompt, because the standard output is normally line buffered, and the prompt does not contain a newline.</P>
+
+<a name="ch15fig13"></a><p><center>
+<H5 class="docFigureTitle">Figure 15.13. Transforming input using <tt>popen</tt></h5>
+
+<p class="docText">
+<img border="0" alt="" width="346" height="164" SRC="images/0201433079/graphics/15fig13.gif;423615"></p>
+
+</center></p><br>
+<a name="ch15fig14"></a>
+<h5 class="docExampleTitle">Figure 15.14. Filter to convert uppercase characters to lowercase</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;ctype.h&gt;
+
+int
+main(void)
+{
+    int     c;
+
+    while ((c = getchar()) != EOF) {
+        if (isupper(c))
+            c = tolower(c);
+        if (putchar(c) == EOF)
+            err_sys("output error");
+        if (c == '\n')
+            fflush(stdout);
+    }
+    exit(0);
+}
+</pre><br>
+
+
+<a name="ch15fig15"></a>
+<h5 class="docExampleTitle">Figure 15.15. Invoke uppercase/lowercase filter to read commands</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/wait.h&gt;
+
+int
+main(void)
+{
+    char    line[MAXLINE];
+    FILE    *fpin;
+
+    if ((fpin = popen("myuclc", "r")) == NULL)
+        err_sys("popen error");
+    for ( ; ; ) {
+        fputs("prompt&gt; ", stdout);
+        fflush(stdout);
+        if (fgets(line, MAXLINE, fpin) == NULL) /* read from pipe */
+            break;
+        if (fputs(line, stdout) == EOF)
+            err_sys("fputs error to pipe");
+    }
+    if (pclose(fpin) == -1)
+        err_sys("pclose error");
+    putchar('\n');
+    exit(0);
+}
+
+</pre><br>
+
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch15lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch15lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

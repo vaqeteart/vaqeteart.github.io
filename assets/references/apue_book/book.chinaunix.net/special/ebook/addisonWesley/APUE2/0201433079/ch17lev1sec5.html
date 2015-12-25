@@ -1,0 +1,297 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 17.5.&nbsp; An Open Server, Version 1</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch17lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch17lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch17lev1sec5"></a>
+<h3 class="docSection1Title">17.5. An Open Server, Version 1</h3>
+<p class="docText"><a name="idd1e130634"></a><a name="idd1e130639"></a><a name="idd1e130644"></a><a name="idd1e130649"></a><a name="idd1e130654"></a><a name="idd1e130659"></a><a name="idd1e130664"></a><a name="idd1e130667"></a><a name="idd1e130670"></a>Using file descriptor passing, we now develop an open server: a program that is executed by a process to open one or more files. But instead of sending the contents of the file back to the calling process, the server sends back an open file descriptor. This lets the server work with any type of file (such as a device or a socket) and not simply regular files. It also means that a minimum of information is exchanged using IPC: the filename and open mode from the client to the server, and the returned descriptor from the server to the client. The contents of the file are not exchanged using IPC.</P>
+<p class="docText">There are several advantages in designing the server to be a separate executable program (either one that is executed by the client, as we develop in this section, or a daemon server, which we develop in the next section).</P>
+<ul><LI><p class="docList">The server can easily be contacted by any client, similar to the client calling a library function. We are not hard coding a particular service into the application, but designing a general facility that others can reuse.</P></LI><li><p class="docList">If we need to change the server, only a single program is affected. Conversely, updating a library function can require that all programs that call the function be updated (i.e., relinked with the link editor). Shared libraries can simplify this updating (<a class="docLink" href="ch07lev1sec7.html#ch07lev1sec7">Section 7.7</a>).</P></LI><LI><p class="docList">The server can be a set-user-ID program, providing it with additional permissions that the client does not have. Note that a library function (or shared library function) can't provide this capability.</p></LI></ul>
+<p class="docText">The client process creates an s-pipe (either a STREAMS-based pipe or a UNIX domain socket pair) and then calls <tt>fork</tt> and <tt>exec</tt> to invoke the server. The client sends requests across the s-pipe, and the server sends back responses across the s-pipe.</P>
+<p class="docText">We define the following application protocol between the client and the server.</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">The client sends a request of the form &quot;<tt>open</tt> <span class="docEmphasis">&lt;pathname&gt; &lt;openmode&gt;</span>\0&quot; across the s-pipe to the server. The <span class="docEmphasis">&lt;openmode&gt;</span> is the numeric value, in ASCII decimal, of the second argument to the <tt>open</tt> function. This request string is terminated by a null byte.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">The server sends back an open descriptor or an error by calling either <tt>send_fd</tt> or <tt>send_err</tt>.</p></div></LI></ol></div>
+<p class="docText">This is an example of a process sending an open descriptor to its parent. In <a class="docLink" href="ch17lev1sec6.html#ch17lev1sec6">Section 17.6</a>, we'll modify this example to use a single daemon server, where the server sends a descriptor to a completely unrelated process.</P>
+<p class="docText">We first have the header, <tt>open.h</tt> (<a class="docLink" href="ch17lev1sec5.html#ch17fig26">Figure 17.26</a>), which includes the standard headers and defines the function prototypes.</p>
+<a name="ch17fig26"></a>
+<h5 class="docExampleTitle">Figure 17.26. The <tt>open.h</tt> header</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;errno.h&gt;
+
+#define CL_OPEN "open"        /* client's request for server */
+
+int     csopen(char *, int);
+</pre><br>
+
+
+<p class="docText"><a name="idd1e130789"></a><a name="idd1e130794"></a><a name="idd1e130801"></a><a name="idd1e130806"></a><a name="idd1e130811"></a><a name="idd1e130816"></a><a name="idd1e130821"></a><a name="idd1e130826"></a><a name="idd1e130831"></a>The <tt>main</tt> function (<a class="docLink" href="ch17lev1sec5.html#ch17fig27">Figure 17.27</a>) is a loop that reads a pathname from standard input and copies the file to standard output. The function calls <tt>csopen</tt> to contact the open server and return an open descriptor.</P>
+<a name="ch17fig27"></a>
+<h5 class="docExampleTitle">Figure 17.27. The client <tt>main</tt> function, version 1</H5>
+
+<pre>
+#include    "open.h"
+#include    &lt;fcntl.h&gt;
+
+#define BUFFSIZE    8192
+
+int
+main(int argc, char *argv[])
+{
+    int     n, fd;
+    char    buf[BUFFSIZE], line[MAXLINE];
+
+    /* read filename to cat from stdin */
+    while (fgets(line, MAXLINE, stdin) != NULL) {
+        if (line[strlen(line) - 1] == '\n')
+            line[strlen(line) - 1] = 0; /* replace newline with null */
+
+        /* open the file */
+        if ((fd = csopen(line, O_RDONLY)) &lt; 0)
+            continue;   /* csopen() prints error from server */
+
+        /* and cat to stdout */
+        while ((n = read(fd, buf, BUFFSIZE)) &gt; 0)
+            if (write(STDOUT_FILENO, buf, n) != n)
+                err_sys("write error");
+        if (n &lt; 0)
+            err_sys("read error");
+        close(fd);
+    }
+
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText">The function <tt>csopen</tt> (<a class="docLink" href="ch17lev1sec5.html#ch17fig28">Figure 17.28</a>) does the <tt>fork</tt> and <tt>exec</tt> of the server, after creating the s-pipe.</P>
+<a name="ch17fig28"></a>
+<h5 class="docExampleTitle">Figure 17.28. The <tt>csopen</tt> function, version 1</h5>
+
+<pre>
+#include    "open.h"
+#include    &lt;sys/uio.h&gt;     /* struct iovec */
+
+/*
+ * Open the file by sending the "name" and "oflag" to the
+ * connection server and reading a file descriptor back.
+ */
+int
+csopen(char *name, int oflag)
+{
+    pid_t           pid;
+    int             len;
+    char            buf[10];
+    struct iovec    iov[3];
+    static int      fd[2] = { -1, -1 };
+
+    if (fd[0] &lt; 0) {    /* fork/exec our open server first time */
+        if (s_pipe(fd) &lt; 0)
+            err_sys("s_pipe error");
+        if ((pid = fork()) &lt; 0) {
+            err_sys("fork error");
+        } else if (pid == 0) {      /* child */
+            close(fd[0]);
+            if (fd[1] != STDIN_FILENO &amp;&amp;
+              dup2(fd[1], STDIN_FILENO) != STDIN_FILENO)
+                err_sys("dup2 error to stdin");
+            if (fd[1] != STDOUT_FILENO &amp;&amp;
+              dup2(fd[1], STDOUT_FILENO) != STDOUT_FILENO)
+                err_sys("dup2 error to stdout");
+            if (execl("./opend", "opend", (char *)0) &lt; 0)
+                err_sys("execl error");
+        }
+        close(fd[1]);               /* parent */
+    }
+    sprintf(buf, " %d", oflag);     /* oflag to ascii */
+    iov[0].iov_base = CL_OPEN " ";      /* string concatenation */
+    iov[0].iov_len  = strlen(CL_OPEN) + 1;
+    iov[1].iov_base = name;
+    iov[1].iov_len  = strlen(name);
+    iov[2].iov_base = buf;
+    iov[2].iov_len  = strlen(buf) + 1;  /* +1 for null at end of buf */
+    len = iov[0].iov_len + iov[1].iov_len + iov[2].iov_len;
+    if (writev(fd[0], &amp;iov[0], 3) != len)
+        err_sys("writev error");
+
+    /* read descriptor, returned errors handled by write() */
+    return(recv_fd(fd[0], write));
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e130923"></a><a name="idd1e130928"></a><a name="idd1e130933"></a><a name="idd1e130938"></a><a name="idd1e130943"></a><a name="idd1e130948"></a><a name="idd1e130953"></a><a name="idd1e130958"></a><a name="idd1e130963"></a>The child closes one end of the pipe, and the parent closes the other. For the server that it executes, the child also duplicates its end of the pipe onto its standard input and standard output. (Another option would have been to pass the ASCII representation of the descriptor <tt>fd[1]</tt> as an argument to the server.)</p>
+<p class="docText">The parent sends to the server the request containing the pathname and open mode. Finally, the parent calls <tt>recv_fd</tt> to return either the descriptor or an error. If an error is returned by the server, <tt>write</tt> is called to output the message to standard error.</p>
+<p class="docText">Now let's look at the open server. It is the program <tt>opend</tt> that is executed by the client in <a class="docLink" href="ch17lev1sec5.html#ch17fig28">Figure 17.28</a>. First, we have the <tt>opend.h</tt> header (<a class="docLink" href="ch17lev1sec5.html#ch17fig29">Figure 17.29</a>), which includes the standard headers and declares the global variables and function prototypes.</p>
+<a name="ch17fig29"></a>
+<h5 class="docExampleTitle">Figure 17.29. The <tt>opend.h</tt> header, version 1</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;errno.h&gt;
+
+#define CL_OPEN "open"         /* client's request for server */
+
+extern char  errmsg[];  /* error message string to return to client */
+extern int   oflag;     /* open() flag: O_xxx ... */
+extern char *pathname;  /* of file to open() for client */
+
+int      cli_args(int, char **);
+void     request(char *, int, int);
+</pre><br>
+
+
+<p class="docText"><a name="idd1e131029"></a><a name="idd1e131034"></a><a name="idd1e131039"></a><a name="idd1e131044"></a><a name="idd1e131049"></a><a name="idd1e131054"></a><a name="idd1e131059"></a><a name="idd1e131066"></a><a name="idd1e131071"></a><a name="idd1e131076"></a>The <tt>main</tt> function (<a class="docLink" href="ch17lev1sec5.html#ch17fig30">Figure 17.30</a>) reads the requests from the client on the s-pipe (its standard input) and calls the function <tt>request</tt>.</p>
+<a name="ch17fig30"></a>
+<h5 class="docExampleTitle">Figure 17.30. The server <tt>main</tt> function, version 1</h5>
+
+<pre>
+#include    "opend.h"
+
+char     errmsg[MAXLINE];
+int      oflag;
+char    *pathname;
+
+int
+main(void)
+{
+    int     nread;
+    char    buf[MAXLINE];
+
+    for ( ; ; ) {   /* read arg buffer from client, process request */
+        if ((nread = read(STDIN_FILENO, buf, MAXLINE)) &lt; 0)
+            err_sys("read error on stream pipe");
+        else if (nread == 0)
+            break;      /* client has closed the stream pipe */
+        request(buf, nread, STDOUT_FILENO);
+    }
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText">The function <tt>request</tt> in <a class="docLink" href="ch17lev1sec5.html#ch17fig31">Figure 17.31</a> does all the work. It calls the function <tt>buf_args</tt> to break up the client's request into a standard <tt>argv</tt>-style argument list and calls the function <tt>cli_args</tt> to process the client's arguments. If all is OK, <tt>open</tt> is called to open the file, and then <tt>send_fd</tt> sends the descriptor back to the client across the s-pipe (its standard output). If an error is encountered, <tt>send_err</tt> is called to send back an error message, using the clientserver protocol that we described earlier.</p>
+<a name="ch17fig31"></a>
+<h5 class="docExampleTitle">Figure 17.31. The <tt>request</tt> function, version 1</h5>
+
+<pre>
+#include    "opend.h"
+#include    &lt;fcntl.h&gt;
+
+void
+request(char *buf, int nread, int fd)
+{
+    int     newfd;
+
+    if (buf[nread-1] != 0) {
+        sprintf(errmsg, "request not null terminated: %*.*s\n",
+          nread, nread, buf);
+        send_err(fd, -1, errmsg);
+        return;
+    }
+    if (buf_args(buf, cli_args) &lt; 0) {  /* parse args &amp; set options */
+        send_err(fd, -1, errmsg);
+        return;
+    }
+    if ((newfd = open(pathname, oflag)) &lt; 0) {
+        sprintf(errmsg, "can't open %s: %s\n", pathname,
+          strerror(errno));
+        send_err(fd, -1, errmsg);
+        return;
+    }
+    if (send_fd(fd, newfd) &lt; 0)     /* send the descriptor */
+        err_sys("send_fd error");
+    close(newfd);       /* we're done with descriptor */
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e131177"></a><a name="idd1e131184"></a><a name="idd1e131189"></a><a name="idd1e131194"></a><a name="idd1e131199"></a>The client's request is a null-terminated string of white-space-separated arguments. The function <tt>buf_args</tt> in <a class="docLink" href="ch17lev1sec5.html#ch17fig32">Figure 17.32</a> breaks this string into a standard <tt>argv</tt>-style argument list and calls a user function to process the arguments. We'll use the <tt>buf_args</tt> function later in this chapter. We use the ISO C function <tt>strtok</tt> to tokenize the string into separate arguments.</P>
+<a name="ch17fig32"></a>
+<H5 class="docExampleTitle">Figure 17.32. The <tt>buf_args</tt> function</h5>
+
+<pre>
+#include "apue.h"
+
+#define MAXARGC     50  /* max number of arguments in buf */
+#define WHITE   " \t\n" /* white space for tokenizing arguments */
+
+/*
+ * buf[] contains white-space-separated arguments.  We convert it to an
+ * argv-style array of pointers, and call the user's function (optfunc)
+ * to process the array.  We return -1 if there's a problem parsing buf,
+ * else we return whatever optfunc() returns.  Note that user's buf[]
+ * array is modified (nulls placed after each token).
+ */
+int
+buf_args(char *buf, int (*optfunc)(int, char **))
+{
+    char    *ptr, *argv[MAXARGC];
+    int     argc;
+
+    if (strtok(buf, WHITE) == NULL)    /* an argv[0] is required */
+        return(-1);
+    argv[argc = 0] = buf;
+    while ((ptr = strtok(NULL, WHITE)) != NULL) {
+        if (++argc &gt;= MAXARGC-1)    /* -1 for room for NULL at end */
+            return(-1);
+        argv[argc] = ptr;
+    }
+    argv[++argc] = NULL;
+
+    /*
+     * Since argv[] pointers point into the user's buf[],
+     * user's function can just copy the pointers, even
+     * though argv[] array will disappear on return.
+     */
+    return((*optfunc)(argc, argv));
+}
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e131252"></a><a name="idd1e131259"></a><a name="idd1e131264"></a><a name="idd1e131269"></a>The server's function that is called by <tt>buf_args</tt> is <tt>cli_args</tt> (<a class="docLink" href="ch17lev1sec5.html#ch17fig33">Figure 17.33</a>). It verifies that the client sent the right number of arguments and stores the pathname and open mode in global variables.</P>
+<a name="ch17fig33"></a>
+<H5 class="docExampleTitle">Figure 17.33. The <tt>cli_args</tt> function</h5>
+
+<pre>
+#include    "opend.h"
+
+/*
+ * This function is called by buf_args(), which is called by
+ * request().  buf_args() has broken up the client's buffer
+ * into an argv[]-style array, which we now process.
+ */
+int
+cli_args(int argc, char **argv)
+{
+    if (argc != 3 || strcmp(argv[0], CL_OPEN) != 0) {
+        strcpy(errmsg, "usage: &lt;pathname&gt; &lt;oflag&gt;\n");
+        return(-1);
+    }
+    pathname = argv[1];     /* save ptr to pathname to open */
+    oflag = atoi(argv[2]);
+    return(0);
+}
+</pre><BR>
+
+
+<p class="docText">This completes the open server that is invoked by a <tt>fork</tt> and <tt>exec</tt> from the client. A single s-pipe is created before the <tt>fork</tt> and is used to communicate between the client and the server. With this arrangement, we have one server per client.</P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch17lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch17lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

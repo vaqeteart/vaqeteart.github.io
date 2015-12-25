@@ -1,0 +1,80 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 3.11.&nbsp; Atomic Operations</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch03lev1sec11"></a>
+<h3 class="docSection1Title" id="454331-863">3.11. Atomic Operations</h3>
+<a name="ch03lev2sec2"></a>
+<H4 class="docSection2Title">Appending to a File</H4>
+<p class="docText"><a name="idd1e20708"></a><a name="idd1e20711"></a><a name="idd1e20716"></a><a name="idd1e20721"></a><a name="idd1e20726"></a><a name="idd1e20731"></a><a name="idd1e20734"></a><a name="idd1e20737"></a><a name="idd1e20742"></a>Consider a single process that wants to append to the end of a file. Older versions of the UNIX System didn't support the <tt>O_APPEND</tt> option to <tt>open</tt>, so the program was coded as follows:</p>
+
+<pre>
+     if (lseek(fd, 0L, 2) &lt; 0)                /* position to EOF */
+        err_sys("lseek error");
+     if (write(fd, buf, 100) != 100)          /* and write */
+        err_sys("write error");
+</pre><BR>
+
+<p class="docText">This works fine for a single process, but problems arise if multiple processes use this technique to append to the same file. (This scenario can arise if multiple instances of the same program are appending messages to a log file, for example.)</P>
+<p class="docText">Assume that two independent processes, A and B, are appending to the same file. Each has opened the file but <span class="docEmphasis">without</span> the <tt>O_APPEND</tt> flag. This gives us the same picture as <a class="docLink" href="ch03lev1sec10.html#ch03fig07">Figure 3.7</a>. Each process has its own file table entry, but they share a single v-node table entry. Assume that process A does the <tt>lseek</tt> and that this sets the current offset for the file for process A to byte offset 1,500 (the current end of file). Then the kernel switches processes, and B continues running. Process B then does the <tt>lseek</tt>, which sets the current offset for the file for process B to byte offset 1,500 also (the current end of file). Then B calls <tt>write</tt>, which increments B's current file offset for the file to 1,600. Because the file's size has been extended, the kernel also updates the current file size in the v-node to 1,600. Then the kernel switches processes and A resumes. When A calls <tt>write</tt>, the data is written starting at the current file offset for A, which is byte offset 1,500. This overwrites the data that B wrote to the file.</P>
+<p class="docText">The problem here is that our logical operation of &quot;position to the end of file and write&quot; requires two separate function calls (as we've shown it). The solution is to have the positioning to the current end of file and the write be an atomic operation with regard to other processes. Any operation that requires more than one function call cannot be atomic, as there is always the possibility that the kernel can temporarily suspend the process between the two function calls (as we assumed previously).</p>
+<p class="docText">The UNIX System provides an atomic way to do this operation if we set the <tt>O_APPEND</tt> flag when a file is opened. As we described in the previous section, this causes the kernel to position the file to its current end of file before each <tt>write</tt>. We no longer have to call <tt>lseek</tt> before each <tt>write</tt>.</P>
+
+<a name="ch03lev2sec3"></a>
+<H4 class="docSection2Title"><tt>pread</tt> and <tt>pwrite</tt> Functions</H4>
+<p class="docText">The Single UNIX Specification includes XSI extensions that allow applications to seek and perform I/O atomically. These extensions are <tt>pread</tt> and <tt>pwrite</tt>.</p>
+<a name="inta183"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e20836"></a><a name="idd1e20841"></a><a name="idd1e20846"></a><a name="idd1e20851"></a><a name="idd1e20856"></a><a name="idd1e20863"></a><a name="idd1e20870"></a>
+<a name="PLID1"></a><div class="v1"><a href="ch03lev1sec11.html#PLID1">[View full width]</a></div><pre>
+#include &lt;unistd.h&gt;
+
+ssize_t pread(int <span class="docEmphItalicAlt">filedes</span>, void *<span class="docEmphItalicAlt">buf</span>, size_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">nbytes</span>, off_t <span class="docEmphItalicAlt">offset</span>);
+</pre><BR>
+
+</P></td></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: number of bytes read, 0 if end of file, 1 on error</P></TD></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID2"></a><div class="v1"><a href="ch03lev1sec11.html#PLID2">[View full width]</a></div><pre>
+ssize_t pwrite(int <span class="docEmphItalicAlt">filedes</span>, const void *<span class="docEmphItalicAlt">buf</span>,
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> size_t <span class="docEmphItalicAlt">nbytes</span>, off_t <span class="docEmphItalicAlt">offset</span>);</pre><br>
+
+</P></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: number of bytes written if OK, 1 on error</p></td></tr></table></p><br>
+<p class="docText">Calling <tt>pread</tt> is equivalent to calling <tt>lseek</tt> followed by a call to <tt>read</tt>, with the following exceptions.</p>
+<ul><li><p class="docList">There is no way to interrupt the two operations using <tt>pread</tt>.</p></li><li><p class="docList">The file pointer is not updated.</p></li></ul>
+<p class="docText">Calling <tt>pwrite</tt> is equivalent to calling <tt>lseek</tt> followed by a call to <tt>write</tt>, with similar exceptions.</p>
+
+<a name="ch03lev2sec4"></a>
+<h4 class="docSection2Title">Creating a File</h4>
+<p class="docText">We saw another example of an atomic operation when we described the <tt>O_CREAT</tt> and <tt>O_EXCL</tt> options for the <tt>open</tt> function. When both of these options are specified, the <tt>open</tt> will fail if the file already exists. We also said that the check for the existence of the file and the creation of the file was performed as an atomic operation. If we didn't have this atomic operation, we might try</P>
+
+<pre>
+    if ((fd = open(pathname, O_WRONLY)) &lt; 0) {
+        if (errno == ENOENT) {
+            if ((fd = creat(pathname, mode)) &lt; 0)
+                 err_sys("creat error");
+        } else {
+            err_sys("open error");
+        }
+    }
+</pre><BR>
+
+<p class="docText">The problem occurs if the file is created by another process between the <tt>open</tt> and the <tt>creat</tt>. If the file is created by another process between these two function calls, and if that other process writes something to the file, that data is erased when this <tt>creat</tt> is executed. Combining the test for existence and the creation into a single atomic operation avoids this problem.</p>
+<p class="docText">In general, the term <span class="docEmphasis">atomic operation</span> refers to an operation that might be composed of multiple steps. If the operation is performed atomically, either all the steps are performed, or none are performed. It must not be possible for a subset of the steps to be performed. We'll return to the topic of atomic operations when we describe the <tt>link</tt> function (<a class="docLink" href="ch04lev1sec15.html#ch04lev1sec15">Section 4.15</a>) and record locking (<a class="docLink" href="ch14lev1sec3.html#ch14lev1sec3">Section 14.3</a>).</P>
+
+
+<UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

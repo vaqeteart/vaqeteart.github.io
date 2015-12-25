@@ -1,0 +1,94 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 14.8.&nbsp; readn and writen Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch14lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch14lev1sec8"></a>
+<h3 class="docSection1Title">14.8. <tt>readn</tt> and <tt>writen</tt> Functions</h3>
+<p class="docText">Pipes, FIFOs, and some devices, notably terminals, networks, and STREAMS devices, have the following two properties.</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">A <tt>read</tt> operation may return less than asked for, even though we have not encountered the end of file. This is not an error, and we should simply continue reading from the device.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">A <tt>write</tt> operation can also return less than we specified. This may be caused by flow control constraints by downstream modules, for example. Again, it's not an error, and we should continue writing the remainder of the data. (Normally, this short return from a <tt>write</tt> occurs only with a nonblocking descriptor or if a signal is caught.)</P></div></li></ol></div>
+<p class="docText">We'll never see this happen when reading or writing a disk file, except when the file system runs out of space or we hit our quota limit and we can't write all that we requested.</P>
+<p class="docText">Generally, when we read from or write to a pipe, network device, or terminal, we need to take these characteristics into consideration. We can use the following two functions to read or write <span class="docEmphasis">N</span> bytes of data, letting these functions handle a possible return value that's less than requested. These two functions simply call <tt>read</tt> or <tt>write</tt> as many times as required to read or write the entire <span class="docEmphasis">N</span> bytes of data.</P>
+<P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include "apue.h"
+
+ssize_t readn(int <span class="docEmphItalicAlt">filedes</span>, void *<span class="docEmphItalicAlt">buf</span>, size_t <span class="docEmphasis">nbytes</span>);
+
+ssize_t writen(int <span class="docEmphItalicAlt">filedes</span>, void *<span class="docEmphItalicAlt">buf</span>, size_t <span class="docEmphItalicAlt">nbytes</span>);</pre><br>
+</P></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: number of bytes read or written, 1 on error</P></td></TR></table></P><br>
+<blockquote>
+<p class="docText">We define these functions as a convenience for later examples, similar to the error-handling routines used in many of the examples in this text. The <tt>readn</tt> and <tt>writen</tt> functions are not part of any standard.</p>
+</blockquote>
+<p class="docText">We call <tt>writen</tt> whenever we're writing to one of the file types that we mentioned, but we call <tt>readn</tt> only when we know ahead of time that we will be receiving a certain number of bytes. <a class="docLink" href="ch14lev1sec8.html#ch14fig29">Figure 14.29</a> shows implementations of <tt>readn</tt> and <tt>writen</tt> that we will use in later examples.</p>
+<a name="ch14fig29"></a>
+<h5 class="docExampleTitle">Figure 14.29. The <tt>readn</tt> and <tt>writen</tt> functions</H5>
+
+<pre>
+#include "apue.h"
+
+ssize_t             /* Read "n" bytes from a descriptor */
+readn(int fd, void *ptr, size_t n)
+{
+    size_t       nleft;
+    ssize_t      nread;
+
+    nleft = n;
+    while (nleft &gt; 0) {
+        if ((nread = read(fd, ptr, nleft)) &lt; 0) {
+            if (nleft == n)
+                return(-1); /* error, return -1 */
+            else
+                break;      /* error, return amount read so far */
+        } else if (nread == 0) {
+            break;          /* EOF */
+        }
+        nleft -= nread;
+        ptr += nread;
+    }
+    return(n - nleft);      /* return &gt;= 0 */
+}
+
+ssize_t             /* Write "n" bytes to a descriptor */
+writen(int fd, const void *ptr, size_t n)
+{
+    size_t      nleft;
+    ssize_t     nwritten;
+
+    nleft = n;
+    while (nleft &gt; 0) {
+        if ((nwritten = write(fd, ptr, nleft)) &lt; 0) {
+            if (nleft == n)
+                return(-1); /* error, return -1 */
+            else
+                break;      /* error, return amount written so far */
+        } else if (nwritten == 0) {
+            break;
+        }
+        nleft -= nwritten;
+        ptr   += nwritten;
+    }
+    return(n - nleft);      /* return &gt;= 0 */
+}
+</pre><br>
+
+
+<p class="docText">Note that if we encounter an error and have previously read or written any data, we return the amount of data transferred instead of the error. Similarly, if we reach end of file while reading, we return the number of bytes copied to the caller's buffer if we already read some data successfully and have not yet satisfied the amount requested.</P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch14lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

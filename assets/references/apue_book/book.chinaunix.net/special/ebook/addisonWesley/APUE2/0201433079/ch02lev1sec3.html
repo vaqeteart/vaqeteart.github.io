@@ -1,0 +1,70 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 2.3.&nbsp; UNIX System Implementations</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch02lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch02lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch02lev1sec3"></a>
+<h3 class="docSection1Title">2.3. UNIX System Implementations</h3>
+<p class="docText">The previous section described ISO C, IEEE POSIX, and the Single UNIX Specification; three standards created by independent organizations. Standards, however, are interface specifications. How do these standards relate to the real world? These standards are taken by vendors and turned into actual implementations. In this book, we are interested in both these standards and their implementation.</P>
+<p class="docText"><a class="docLink" href="ch01lev1sec1.html#ch01lev1sec1">Section 1.1</a> of McKusick et al. [<a class="docLink" href="bib01.html#biblio01_042">1996</a>] gives a detailed history (and a nice picture) of the UNIX System family tree. Everything starts from the Sixth Edition (1976) and Seventh Edition (1979) of the UNIX Time-Sharing System on the PDP-11 (usually called Version 6 and Version 7). These were the first releases widely distributed outside of Bell Laboratories. Three branches of the tree evolved.</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">One at AT&amp;T that led to System III and System V, the so-called commercial versions of the UNIX System.</P></div></LI><LI><div style="font-weight:normal"><p class="docList">One at the University of California at Berkeley that led to the 4.xBSD implementations.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">The research version of the UNIX System, developed at the Computing Science Research Center of AT&amp;T Bell Laboratories, that led to the UNIX Time-Sharing System 8th Edition, 9th Edition, and ended with the 10th Edition in 1990.</P></div></li></ol></div>
+<a name="ch02lev2sec5"></a>
+<H4 class="docSection2Title">2.3.1. UNIX System V Release 4</h4>
+<p class="docText">UNIX System V Release 4 (SVR4) was a product of AT&amp;T's UNIX System Laboratories (USL, formerly AT&amp;T's UNIX Software Operation). SVR4 merged functionality from AT&amp;T UNIX System V Release 3.2 (SVR3.2), the SunOS operating system from Sun Microsystems, the 4.3BSD release from the University of California, and the Xenix system from Microsoft into one coherent operating system. (Xenix was originally <a name="idd1e9763"></a><a name="idd1e9766"></a><a name="idd1e9771"></a><a name="idd1e9776"></a><a name="idd1e9779"></a><a name="idd1e9784"></a><a name="idd1e9787"></a><a name="idd1e9790"></a><a name="idd1e9793"></a><a name="idd1e9796"></a><a name="idd1e9799"></a><a name="idd1e9802"></a><a name="idd1e9805"></a>developed from Version 7, with many features later taken from System V.) The SVR4 source code was released in late 1989, with the first end-user copies becoming available during 1990. SVR4 conformed to both the POSIX 1003.1 standard and the X/Open Portability Guide, Issue 3 (XPG3).</P>
+<p class="docText">AT&amp;T also published the System V Interface Definition (SVID) [<a class="docLink" href="bib01.html#biblio01_006">AT&amp;T 1989</a>]. Issue 3 of the SVID specified the functionality that an operating system must offer to qualify as a conforming implementation of UNIX System V Release 4. As with POSIX.1, the SVID specified an interface, not an implementation. No distinction was made in the SVID between system calls and library functions. The reference manual for an actual implementation of SVR4 must be consulted to see this distinction [<a class="docLink" href="bib01.html#biblio01_011">AT&amp;T 1990e</a>].</P>
+
+<a name="ch02lev2sec6"></a>
+<H4 class="docSection2Title">2.3.2. 4.4BSD</h4>
+<p class="docText">The Berkeley Software Distribution (BSD) releases were produced and distributed by the Computer Systems Research Group (CSRG) at the University of California at Berkeley; 4.2BSD was released in 1983 and 4.3BSD in 1986. Both of these releases ran on the VAX minicomputer. The next release, 4.3BSD Tahoe in 1988, also ran on a particular minicomputer called the Tahoe. (The book by Leffler et al. [<a class="docLink" href="bib01.html#biblio01_034">1989</a>] describes the 4.3BSD Tahoe release.) This was followed in 1990 with the 4.3BSD Reno release; 4.3BSD Reno supported many of the POSIX.1 features.</P>
+<p class="docText">The original BSD systems contained proprietary AT&amp;T source code and were covered by AT&amp;T licenses. To obtain the source code to the BSD system you had to have a UNIX source license from AT&amp;T. This changed as more and more of the AT&amp;T source code was replaced over the years with non-AT&amp;T source code and as many of the new features added to the Berkeley system were derived from non-AT&amp;T sources.</P>
+<p class="docText">In 1989, Berkeley identified much of the non-AT&amp;T source code in the 4.3BSD Tahoe release and made it publicly available as the BSD Networking Software, Release 1.0. This was followed in 1991 with Release 2.0 of the BSD Networking Software, which was derived from the 4.3BSD Reno release. The intent was that most, if not all, of the 4.4BSD system would be free of any AT&amp;T license restrictions, thus making the source code available to all.</p>
+<p class="docText">4.4BSD-Lite was intended to be the final release from the CSRG. Its introduction was delayed, however, because of legal battles with USL. Once the legal differences were resolved, 4.4BSD-Lite was released in 1994, fully unencumbered, so no UNIX source license was needed to receive it. The CSRG followed this with a bug-fix release in 1995. This release, 4.4BSD-Lite, release 2, was the final version of BSD from the CSRG. (This version of BSD is described in the book by McKusick et al. [<a class="docLink" href="bib01.html#biblio01_042">1996</a>].)</P>
+<p class="docText">The UNIX system development done at Berkeley started with PDP-11s, then moved to the VAX minicomputer, and then to other so-called workstations. During the early 1990s, support was provided to Berkeley for the popular 80386-based personal computers, leading to what is called 386BSD. This was done by Bill Jolitz and was documented in a series of monthly articles in <span class="docEmphasis">Dr. Dobb's Journal</span> throughout 1991. Much of this code appears in the BSD Networking Software, Release 2.0.</P>
+
+<a name="ch02lev2sec7"></a>
+<h4 class="docSection2Title">2.3.3. FreeBSD</h4>
+<p class="docText"><a name="idd1e9858"></a><a name="idd1e9861"></a><a name="idd1e9864"></a><a name="idd1e9867"></a><a name="idd1e9870"></a><a name="idd1e9873"></a><a name="idd1e9876"></a><a name="idd1e9879"></a><a name="idd1e9882"></a>FreeBSD is based on the 4.4BSD-Lite operating system. The FreeBSD project was formed to carry on the BSD line after the Computing Science Research Group at the University of California at Berkeley decided to end its work on the BSD versions of the UNIX operating system, and the 386BSD project seemed to be neglected for too long.</p>
+<p class="docText">All software produced by the FreeBSD project is freely available in both binary and source forms. The FreeBSD 5.2.1 operating system was one of the four used to test the examples in this book.</p>
+<blockquote>
+<p class="docText">Several other BSD-based free operating systems are available. The NetBSD project (<tt>http://www.netbsd.org</tt>) is similar to the FreeBSD project, with an emphasis on portability between hardware platforms. The OpenBSD project (<tt>http://www.openbsd.org</tt>) is similar to FreeBSD but with an emphasis on security.</P>
+</blockquote>
+
+<a name="ch02lev2sec8"></a>
+<h4 class="docSection2Title">2.3.4. Linux</H4>
+<p class="docText">Linux is an operating system that provides a rich UNIX programming environment, and is freely available under the GNU Public License. The popularity of Linux is somewhat of a phenomenon in the computer industry. Linux is distinguished by often being the first operating system to support new hardware.</p>
+<p class="docText">Linux was created in 1991 by Linus Torvalds as a replacement for MINIX. A grass-roots effort then sprang up, whereby many developers across the world volunteered their time to use and enhance it.</P>
+<p class="docText">The Mandrake 9.2 distribution of Linux was one of the operating systems used to test the examples in this book. That distribution uses the 2.4.22 version of the Linux operating system kernel.</p>
+
+<a name="ch02lev2sec9"></a>
+<h4 class="docSection2Title">2.3.5. Mac OS X</h4>
+<p class="docText">Mac OS X is based on entirely different technology than prior versions. The core operating system is called &quot;Darwin,&quot; and is based on a combination of the Mach kernel (Accetta et al. [<a class="docLink" href="bib01.html#biblio01_001">1986</a>]) and the FreeBSD operating system. Darwin is managed as an open source project, similar to FreeBSD and Linux.</p>
+<p class="docText">Mac OS X version 10.3 (Darwin 7.4.0) was used as one of the operating systems to test the examples in this book.</p>
+
+<a name="ch02lev2sec10"></a>
+<h4 class="docSection2Title">2.3.6. Solaris</h4>
+<p class="docText">Solaris is the version of the UNIX System developed by Sun Microsystems. It is based on System V Release 4, with more than ten years of enhancements from the engineers at Sun Microsystems. It is the only commercially successful SVR4 descendant, and is formally certified to be a UNIX system. (For more information on UNIX certification, see <tt>http://www.opengroup.org/certification/idx/unix.html</tt>.)</p>
+<p class="docText">The Solaris 9 UNIX system was one of the operating systems used to test the examples in this book.</p>
+
+<a name="ch02lev2sec11"></a>
+<h4 class="docSection2Title">2.3.7. Other UNIX Systems</h4>
+<p class="docText"><a name="idd1e9956"></a><a name="idd1e9959"></a><a name="idd1e9962"></a><a name="idd1e9965"></a><a name="idd1e9968"></a><a name="idd1e9971"></a><a name="idd1e9976"></a><a name="idd1e9979"></a><a name="idd1e9982"></a><a name="idd1e9987"></a><a name="idd1e9992"></a><a name="idd1e9997"></a><a name="idd1e10000"></a><a name="idd1e10003"></a><a name="idd1e10008"></a><a name="idd1e10011"></a><a name="idd1e10014"></a>Other versions of the UNIX system that have been certified in the past include</p>
+<ul><li><p class="docList">AIX, IBM's version of the UNIX System</p></li><li><p class="docList">HP-UX, Hewlett-Packard's version of the UNIX System</P></LI><li><p class="docList">IRIX, the UNIX System version shipped by Silicon Graphics</P></LI><LI><p class="docList">UnixWare, the UNIX System descended from SVR4 and currently sold by SCO</p></LI></UL>
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch02lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch02lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

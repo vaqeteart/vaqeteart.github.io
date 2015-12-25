@@ -1,0 +1,110 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 18.10.&nbsp; Canonical Mode</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch18lev1sec10"></a>
+<h3 class="docSection1Title">18.10. Canonical Mode</h3>
+<p class="docText"><a name="idd1e141863"></a><a name="idd1e141868"></a><a name="idd1e141873"></a><a name="idd1e141878"></a><a name="idd1e141883"></a><a name="idd1e141888"></a>Canonical mode is simple: we issue a read, and the terminal driver returns when a line has been entered. Several conditions cause the read to return.</P>
+<UL><li><p class="docList">The read returns when the requested number of bytes have been read. We don't have to read a complete line. If we read a partial line, no information is lost; the next read starts where the previous read stopped.</P></LI><LI><p class="docList">The read returns when a line delimiter is encountered. Recall from <a class="docLink" href="ch18lev1sec3.html#ch18lev1sec3">Section 18.3</a> that the following characters are interpreted as end of line in canonical mode: NL, EOL, EOL2, and EOF. Also, recall from <a class="docLink" href="ch18lev1sec5.html#ch18lev1sec5">Section 18.5</a> that if <tt>ICRNL</tt> is set and if <tt>IGNCR</tt> is not set, then the CR character also terminates a line, since it acts just like the NL character.</p><p class="docList">Realize that of these five line delimiters, one (EOF) is discarded by the terminal driver when it's processed. The other four are returned to the caller as the last character of the line.</P></LI><LI><p class="docList">The read also returns if a signal is caught and if the function is not automatically restarted (<a class="docLink" href="ch10lev1sec5.html#ch10lev1sec5">Section 10.5</a>).</p></LI></ul>
+<a name="ch18ex06"></a>
+<H5 class="docExampleTitle">Example<tt>getpass</tt> Function</H5>
+<p class="docText">We now show the function <tt>getpass</tt>, which reads a password of some type from the user at a terminal. This function is called by the <tt>login</tt>(1) and <tt>crypt</tt>(1) programs. To read the password, the function must turn off echoing, but it can leave the terminal in canonical mode, as whatever we type as the password forms a complete line. <a class="docLink" href="ch18lev1sec10.html#ch18fig17">Figure 18.17</a> shows a typical implementation on a UNIX system.</P>
+<p class="docText">There are several points to consider in this example.</p>
+<UL><LI><p class="docList">Instead of hardwiring <tt>/dev/tty</tt> into the program, we call the function <tt>ctermid</tt> to open the controlling terminal.</p></LI><LI><p class="docList">We read and write only to the controlling terminal and return an error if we can't open this device for reading and writing. There are other conventions to use. The BSD version of <tt>getpass</tt> reads from standard input and writes to standard error if the controlling terminal can't be opened for reading and writing. The System V version always writes to standard error but reads only from the controlling terminal.</p></li><li><p class="docList"><a name="idd1e142000"></a><a name="idd1e142005"></a><a name="idd1e142010"></a><a name="idd1e142015"></a><a name="idd1e142020"></a><a name="idd1e142025"></a><a name="idd1e142030"></a><a name="idd1e142035"></a><a name="idd1e142040"></a><a name="idd1e142045"></a><a name="idd1e142050"></a><a name="idd1e142057"></a><a name="idd1e142060"></a><a name="idd1e142065"></a><a name="idd1e142070"></a><a name="idd1e142075"></a><a name="idd1e142080"></a><a name="idd1e142085"></a><a name="idd1e142090"></a><a name="idd1e142095"></a><a name="idd1e142100"></a><a name="idd1e142105"></a><a name="idd1e142110"></a><a name="idd1e142113"></a><a name="idd1e142118"></a><a name="idd1e142123"></a><a name="idd1e142128"></a>We block the two signals <tt>SIGINT</tt> and <tt>SIGTSTP</tt>. If we didn't do this, entering the INTR character would abort the program and leave the terminal with echoing disabled. Similarly, entering the SUSP character would stop the program and return to the shell with echoing disabled. We choose to block the signals while we have echoing disabled. If they are generated while we're reading the password, they are held until we return. There are other ways to <a name="idd1e142141"></a><a name="idd1e142144"></a><a name="idd1e142149"></a><a name="idd1e142152"></a><a name="idd1e142157"></a><a name="idd1e142162"></a><a name="idd1e142167"></a><a name="idd1e142170"></a><a name="idd1e142173"></a><a name="idd1e142176"></a><a name="idd1e142181"></a><a name="idd1e142186"></a><a name="idd1e142191"></a>handle these signals. Some versions just ignore <tt>SIGINT</tt> (saving its previous action) while in <tt>getpass</tt>, resetting the action for this signal to its previous value before returning. This means that any occurrence of the signal while it's ignored is lost. Other versions catch <tt>SIGINT</tt> (saving its previous action) and if the signal is caught, send themselves the signal with the <tt>kill</tt> function after resetting the terminal state and signal action. None of the versions of <tt>getpass</tt> catch, ignore, or block <tt>SIGQUIT</tt>, so entering the QUIT character aborts the program and probably leaves the terminal with echoing disabled.</p></LI><li><p class="docList">Be aware that some shells, notably the Korn shell, turn echoing back on whenever they read interactive input. These shells are the ones that provide command-line editing and therefore manipulate the state of the terminal every time we enter an interactive command. So, if we invoke this program under one of these shells and abort it with the QUIT character, it may reenable echoing for us. Other shells that don't provide this form of command-line editing, such as the Bourne shell, will abort the program and leave the terminal in no-echo mode. If we do this to our terminal, the <tt>stty</tt> command can reenable echoing.</P></li><LI><p class="docList">We use standard I/O to read and write the controlling terminal. We specifically set the stream to be unbuffered; otherwise, there might be some interactions between the writing and reading of the stream (we would need some calls to <tt>fflush</tt>). We could have also used unbuffered I/O (<a class="docLink" href="ch03.html#ch03">Chapter 3</a>), but we would have to simulate the <tt>getc</tt> function using <tt>read</tt>.</p></li><li><p class="docList">We store only up to eight characters as the password. Any additional characters that are entered are ignored.</p></li></ul>
+<p class="docText">The program in <a class="docLink" href="ch18lev1sec10.html#ch18fig18">Figure 18.18</a> calls <tt>getpass</tt> and prints what we enter to let us verify that the ERASE and KILL characters work (as they should in canonical mode).</p>
+<p class="docText"><a name="idd1e142261"></a><a name="idd1e142266"></a><a name="idd1e142269"></a><a name="idd1e142272"></a><a name="idd1e142275"></a><a name="idd1e142278"></a><a name="idd1e142283"></a><a name="idd1e142286"></a><a name="idd1e142289"></a><a name="idd1e142292"></a><a name="idd1e142295"></a><a name="idd1e142298"></a><a name="idd1e142303"></a><a name="idd1e142308"></a><a name="idd1e142311"></a><a name="idd1e142316"></a><a name="idd1e142321"></a>Whenever a program that calls <tt>getpass</tt> is done with the cleartext password, the program should zero it out in memory, just to be safe. If the program were to generate a <tt>core</tt> file that others might be able to read or if some other process were somehow able to read our memory, they might be able to read the cleartext password. (By &quot;cleartext,&quot; we mean the password that we type at the prompt that is printed by <tt>getpass</tt>. Most UNIX system programs then modify this cleartext password into an &quot;encrypted&quot; password. The field <tt>pw_passwd</tt> in the password file, for example, contains the encrypted password, not the cleartext password.)</p>
+
+<a name="ch18fig17"></a>
+<h5 class="docExampleTitle">Figure 18.17. Implementation of <tt>getpass</tt> function</h5>
+
+<pre>
+#include &lt;signal.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;termios.h&gt;
+
+#define MAX_PASS_LEN    8      /* max #chars for user to enter */
+
+char *
+getpass(const char *prompt)
+{
+    static char     buf[MAX_PASS_LEN + 1]; /* null byte at end */
+    char            *ptr;
+    sigset_t        sig, osig;
+    struct termios  ts, ots;
+    FILE            *fp;
+    int             c;
+
+    if ((fp = fopen(ctermid(NULL), "r+")) == NULL)
+        return(NULL);
+    setbuf(fp, NULL);
+
+    sigemptyset(&amp;sig);
+    sigaddset(&amp;sig, SIGINT);        /* block SIGINT */
+    sigaddset(&amp;sig, SIGTSTP);       /* block SIGTSTP */
+    sigprocmask(SIG_BLOCK, &amp;sig, &amp;osig);    /* and save mask */
+
+    tcgetattr(fileno(fp), &amp;ts);     /* save tty state */
+    ots = ts;                       /* structure copy */
+    ts.c_lflag &amp;= ~(ECHO | ECHOE | ECHOK | ECHONL);
+    tcsetattr(fileno(fp), TCSAFLUSH, &amp;ts);
+    fputs(prompt, fp);
+
+    ptr = buf;
+    while ((c = getc(fp)) != EOF &amp;&amp; c != '\n')
+        if (ptr &lt; &amp;buf[MAX_PASS_LEN])
+            *ptr++ = c;
+    *ptr = 0;                  /* null terminate */
+    putc('\n', fp);            /* we echo a newline */
+
+    tcsetattr(fileno(fp), TCSAFLUSH, &amp;ots); /* restore TTY state */
+    sigprocmask(SIG_SETMASK, &amp;osig, NULL);  /* restore mask */
+    fclose(fp);         /* done with /dev/tty */
+    return(buf);
+}</pre><br>
+
+
+<a name="ch18fig18"></a>
+<h5 class="docExampleTitle">Figure 18.18. Call the <tt>getpass</tt> function</h5>
+
+<pre>
+#include "apue.h"
+
+char    *getpass(const char *);
+
+int
+main(void)
+{
+    char   *ptr;
+
+    if ((ptr = getpass("Enter password:")) == NULL)
+        err_sys("getpass error");
+    printf("password: %s\n", ptr);
+
+    /* now use password (probably encrypt it) ... */
+
+    while (*ptr != 0)
+        *ptr++ = 0;      /* zero it out when we're done with it */
+    exit(0);
+}
+</pre><br>
+
+
+
+<ul></ul></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

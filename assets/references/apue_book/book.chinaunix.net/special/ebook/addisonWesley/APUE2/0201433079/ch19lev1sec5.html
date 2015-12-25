@@ -1,0 +1,248 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 19.5.&nbsp; pty Program</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch19lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch19lev1sec5"></a>
+<h3 class="docSection1Title">19.5. <tt>pty</tt> Program</h3>
+<p class="docText"><a name="idd1e146314"></a><a name="idd1e146319"></a><a name="idd1e146324"></a><a name="idd1e146329"></a><a name="idd1e146334"></a><a name="idd1e146339"></a><a name="idd1e146344"></a>The goal in writing the <tt>pty</tt> program is to be able to type</P>
+
+<pre>
+    pty prog arg1 arg2
+</pre><BR>
+
+<p class="docText">instead of</p>
+
+<pre>
+    prog arg1 arg2
+</pre><BR>
+
+<p class="docText">When we use <tt>pty</tt> to execute another program, that program is executed in a session of its own, connected to a pseudo terminal.</P>
+<p class="docText">Let's look at the source code for the <tt>pty</tt> program. The first file (<a class="docLink" href="ch19lev1sec5.html#ch19fig12">Figure 19.12</a>) contains the <tt>main</tt> function. It calls the <tt>pty_fork</tt> function from the previous section.</P>
+<a name="ch19fig12"></a>
+<h5 class="docExampleTitle">Figure 19.12. The <tt>main</tt> function for the <tt>pty</tt> program</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;termios.h&gt;
+#ifndef TIOCGWINSZ
+#include &lt;sys/ioctl.h&gt;  /* for struct winsize */
+#endif
+
+#ifdef LINUX
+#define OPTSTR "+d:einv"
+#else
+#define OPTSTR "d:einv"
+#endif
+
+static void set_noecho(int);    /* at the end of this file */
+void        do_driver(char *);  /* in the file driver.c */
+void        loop(int, int);     /* in the file loop.c */
+
+int
+main(int argc, char *argv[])
+{
+    int             fdm, c, ignoreeof, interactive, noecho, verbose;
+    pid_t           pid;
+    char            *driver;
+    char            slave_name[20];
+    struct termios  orig_termios;
+    struct winsize  size;
+
+    interactive = isatty(STDIN_FILENO);
+    ignoreeof = 0;
+    noecho = 0;
+    verbose = 0;
+    driver = NULL;
+
+    opterr = 0;     /* don't want getopt() writing to stderr */
+    while ((c = getopt(argc, argv, OPTSTR)) != EOF) {
+        switch (c) {
+        case 'd':        /* driver for stdin/stdout */
+            driver = optarg;
+            break;
+        case 'e':        /* noecho for slave pty's line discipline */
+            noecho = 1;
+            break;
+
+        case 'i':       /* ignore EOF on standard input */
+            ignoreeof = 1;
+            break;
+
+        case 'n':       /* not interactive */
+            interactive = 0;
+            break;
+
+        case 'v':       /* verbose */
+            verbose = 1;
+            break;
+
+        case '?':
+            err_quit("unrecognized option: -%c", optopt);
+        }
+    }
+    if (optind &gt;= argc)
+        err_quit("usage: pty [ -d driver -einv ] program [ arg ... ]");
+
+    if (interactive) {  /* fetch current termios and window size */
+        if (tcgetattr(STDIN_FILENO, &amp;orig_termios) &lt; 0)
+            err_sys("tcgetattr error on stdin");
+        if (ioctl(STDIN_FILENO, TIOCGWINSZ, (char *) &amp;size) &lt; 0)
+            err_sys("TIOCGWINSZ error");
+        pid = pty_fork(&amp;fdm, slave_name, sizeof(slave_name),
+          &amp;orig_termios, &amp;size);
+    } else {
+        pid = pty_fork(&amp;fdm, slave_name, sizeof(slave_name),
+          NULL, NULL);
+    }
+
+    if (pid &lt; 0) {
+        err_sys("fork error");
+    } else if (pid == 0) {      /* child */
+        if (noecho)
+            set_noecho(STDIN_FILENO);   /* stdin is slave pty */
+
+        if (execvp(argv[optind], &amp;argv[optind]) &lt; 0)
+            err_sys("can't execute: %s", argv[optind]);
+    }
+
+    if (verbose) {
+        fprintf(stderr, "slave name = %s\n", slave_name);
+        if (driver != NULL)
+            fprintf(stderr, "driver = %s\n", driver);
+    }
+
+    if (interactive &amp;&amp; driver == NULL) {
+        if (tty_raw(STDIN_FILENO) &lt; 0)  /* user's tty to raw mode */
+        err_sys("tty_raw error");
+    if (atexit(tty_atexit) &lt; 0)         /* reset user's tty on exit */
+        err_sys("atexit error");
+    }
+
+    if (driver)
+        do_driver(driver);   /* changes our stdin/stdout */
+
+    loop(fdm, ignoreeof);    /* copies stdin -&gt; ptym, ptym -&gt; stdout */
+
+    exit(0);
+}
+
+static void
+set_noecho(int fd)     /* turn off echo (for slave pty) */
+{
+    struct termios stermios;
+
+    if (tcgetattr(fd, &amp;stermios) &lt; 0)
+        err_sys("tcgetattr error");
+
+    stermios.c_lflag &amp;= ~(ECHO | ECHOE | ECHOK | ECHONL);
+
+    /*
+     * Also turn off NL to CR/NL mapping on output.
+     */
+    stermios.c_oflag &amp;= ~(ONLCR);
+
+    if (tcsetattr(fd, TCSANOW, &amp;stermios) &lt; 0)
+        err_sys("tcsetattr error");
+}</pre><BR>
+
+
+<p class="docText"><a name="idd1e146422"></a><a name="idd1e146427"></a><a name="idd1e146432"></a><a name="idd1e146437"></a><a name="idd1e146442"></a><a name="idd1e146447"></a><a name="idd1e146452"></a><a name="idd1e146457"></a><a name="idd1e146462"></a><a name="idd1e146467"></a><a name="idd1e146472"></a><a name="idd1e146477"></a><a name="idd1e146482"></a><a name="idd1e146487"></a><a name="idd1e146492"></a><a name="idd1e146497"></a><a name="idd1e146502"></a><a name="idd1e146507"></a><a name="idd1e146510"></a><a name="idd1e146515"></a><a name="idd1e146520"></a><a name="idd1e146525"></a><a name="idd1e146530"></a><a name="idd1e146535"></a><a name="idd1e146540"></a>In the next section, we'll look at the various command-line options when we examine different uses of the <tt>pty</tt> program. The <tt>getopt</tt> function helps us parse command-line arguments in a consistent manner. We'll discuss <tt>getopt</tt> in more detail in <a class="docLink" href="ch21.html#ch21">Chapter 21</a>.</P>
+<p class="docText">Before calling <tt>pty_fork</tt>, we fetch the current values for the <tt>termios</tt> and <tt>winsize</tt> structures, passing these as arguments to <tt>pty_fork</tt>. This way, the PTY slave assumes the same initial state as the current terminal.</p>
+<p class="docText">After returning from <tt>pty_fork</tt>, the child optionally turns off echoing for the slave PTY and then calls <tt>execvp</tt> to execute the program specified on the command line. All remaining command-line arguments are passed as arguments to this program.</P>
+<p class="docText">The parent optionally sets the user's terminal to raw mode. In this case, the parent also sets an exit handler to reset the terminal state when <tt>exit</tt> is called. We describe the <tt>do_driver</tt> function in the next section.</p>
+<p class="docText">The parent then calls the function <tt>loop</tt> (<a class="docLink" href="ch19lev1sec5.html#ch19fig13">Figure 19.13</a>), which copies everything received from the standard input to the PTY master and everything from the PTY master to standard output. For variety, we have coded it in two processes this time, although a single process using <tt>select</tt>, <tt>poll</tt>, or multiple threads would also work.</P>
+<a name="ch19fig13"></a>
+<H5 class="docExampleTitle">Figure 19.13. The <tt>loop</tt> function</H5>
+
+<pre>
+#include "apue.h"
+
+#define BUFFSIZE    512
+
+static void sig_term(int);
+static volatile sig_atomic_t    sigcaught; /* set by signal handler */
+
+void
+loop(int ptym, int ignoreeof)
+{
+    pid_t   child;
+    int     nread;
+    char    buf[BUFFSIZE];
+
+    if ((child = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (child == 0) {    /* child copies stdin to ptym */
+        for ( ; ; ) {
+            if ((nread = read(STDIN_FILENO, buf, BUFFSIZE)) &lt; 0)
+                err_sys("read error from stdin");
+            else if (nread == 0)
+                break;      /* EOF on stdin means we're done */
+            if (writen(ptym, buf, nread) != nread)
+                err_sys("writen error to master pty");
+        }
+
+        /*
+         * We always terminate when we encounter an EOF on stdin,
+         * but we notify the parent only if ignoreeof is 0.
+         */
+        if (ignoreeof == 0)
+            kill(getppid(), SIGTERM);   /* notify parent */
+        exit(0);    /* and terminate; child can't return */
+    }
+
+    /*
+     * Parent copies ptym to stdout.
+     */
+    if (signal_intr(SIGTERM, sig_term) == SIG_ERR)
+        err_sys("signal_intr error for SIGTERM");
+
+    for ( ; ; ) {
+        if ((nread = read(ptym, buf, BUFFSIZE)) &lt;= 0)
+            break;      /* signal caught, error, or EOF */
+        if (writen(STDOUT_FILENO, buf, nread) != nread)
+            err_sys("writen error to stdout");
+    }
+
+    /*
+     * There are three ways to get here: sig_term() below caught the
+     * SIGTERM from the child, we read an EOF on the pty master (which
+     * means we have to signal the child to stop), or an error.
+     */
+    if (sigcaught == 0) /* tell child if it didn't send us the signal */
+        kill(child, SIGTERM);
+    /*
+     * Parent returns to caller.
+     */
+}
+
+/*
+ * The child sends us SIGTERM when it gets EOF on the pty slave or
+ * when read() fails.  We probably interrupted the read() of ptym.
+ */
+static void
+sig_term(int signo)
+{
+    sigcaught = 1;      /* just set flag and return */
+}</pre><br>
+
+
+<p class="docText"><a name="idd1e146629"></a><a name="idd1e146634"></a><a name="idd1e146639"></a><a name="idd1e146644"></a><a name="idd1e146651"></a><a name="idd1e146656"></a><a name="idd1e146661"></a><a name="idd1e146666"></a><a name="idd1e146671"></a><a name="idd1e146676"></a><a name="idd1e146681"></a><a name="idd1e146686"></a><a name="idd1e146703"></a><a name="idd1e146706"></a>Note that, with two processes, when one terminates, it has to notify the other. We use the <tt>SIGTERM</tt> signal for this notification.</P>
+
+<UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch19lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

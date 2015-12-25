@@ -1,0 +1,81 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 10.12.&nbsp; sigprocmask Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch10lev1sec12"></a>
+<h3 class="docSection1Title">10.12. <tt>sigprocmask</tt> Function</h3>
+<p class="docText">Recall from <a class="docLink" href="ch10lev1sec8.html#ch10lev1sec8">Section 10.8</a> that the signal mask of a process is the set of signals currently blocked from delivery to that process. A process can examine its signal mask, change its signal mask, or perform both operations in one step by calling the following function.</P>
+<a name="inta322"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;signal.h&gt;
+
+int sigprocmask(int <span class="docEmphItalicAlt">how</span>, const sigset_t *restrict <span class="docEmphItalicAlt">set</span>,
+                sigset_t *restrict <span class="docEmphItalicAlt">oset</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText"><a name="idd1e75235"></a><a name="idd1e75242"></a><a name="idd1e75247"></a><a name="idd1e75252"></a><a name="idd1e75257"></a><a name="idd1e75262"></a><a name="idd1e75267"></a>First, if <span class="docEmphasis">oset</span> is a non-null pointer, the current signal mask for the process is returned through <span class="docEmphasis">oset</span>.</P>
+<p class="docText">Second, if <span class="docEmphasis">set</span> is a non-null pointer, the <span class="docEmphasis">how</span> argument indicates how the current signal mask is modified. <a class="docLink" href="ch10lev1sec12.html#ch10fig13">Figure 10.13</a> describes the possible values for <span class="docEmphasis">how</span>. <tt>SIG_BLOCK</tt> is an inclusive-OR operation, whereas <tt>SIG_SETMASK</tt> is an assignment. Note that <tt>SIGKILL</tt> and <tt>SIGSTOP</tt> can't be blocked.</p>
+<a name="ch10fig13"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 10.13. Ways to change current signal mask using <tt>sigprocmask</tt></h5></caption><colgroup><col width="150"><col width="350"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman"><span class="docEmphasis">how</span></span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></p></th></tr></thead><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>SIG_BLOCK</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The new signal mask for the process is the union of its current signal mask and the signal set pointed to by <span class="docEmphasis">set</span>. That is, <span class="docEmphasis">set</span> contains the additional signals that we want to block.
+</p></TD></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>SIG_UNBLOCK</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The new signal mask for the process is the intersection of its current signal mask and the complement of the signal set pointed to by <span class="docEmphasis">set</span>. That is, <span class="docEmphasis">set</span> contains the signals that we want to unblock.
+</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>SIG_SETMASK</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The new signal mask for the process is replaced by the value of the signal set pointed to by <span class="docEmphasis">set</span>.</p></td></tr></table></P><BR>
+<p class="docText">If <span class="docEmphasis">set</span> is a null pointer, the signal mask of the process is not changed, and <span class="docEmphasis">how</span> is ignored.</p>
+<p class="docText">After calling <tt>sigprocmask</tt>, if any unblocked signals are pending, at least one of these signals is delivered to the process before <tt>sigprocmask</tt> returns.</P>
+<blockquote>
+<p class="docText">The <tt>sigprocmask</tt> function is defined only for single-threaded processes. A separate function is provided to manipulate a thread's signal mask in a multithreaded process. We'll discuss this in <a class="docLink" href="ch12lev1sec8.html#ch12lev1sec8">Section 12.8</a>.</P>
+</blockquote>
+<a name="ch10ex08"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText"><a class="docLink" href="ch10lev1sec12.html#ch10fig14">Figure 10.14</a> shows a function that prints the names of the signals in the signal mask of the calling process. We call this function from the programs shown in <a class="docLink" href="ch10lev1sec15.html#ch10fig20">Figure 10.20</a> and <a class="docLink" href="ch10lev1sec16.html#ch10fig22">Figure 10.22</a>.</P>
+<p class="docText"><a name="idd1e75445"></a><a name="idd1e75450"></a><a name="idd1e75455"></a><a name="idd1e75460"></a><a name="idd1e75465"></a><a name="idd1e75470"></a><a name="idd1e75475"></a><a name="idd1e75480"></a><a name="idd1e75485"></a><a name="idd1e75492"></a><a name="idd1e75497"></a>To save space, we don't test the signal mask for every signal that we listed in <a class="docLink" href="ch10lev1sec2.html#ch10fig01">Figure 10.1</a>. (See <a class="docLink" href="ch10lev1sec23.html#ch10qa1q9">Exercise 10.9</a>.)</P>
+
+<a name="ch10fig14"></a>
+<H5 class="docExampleTitle">Figure 10.14. Print the signal mask for the process</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;errno.h&gt;
+
+void
+pr_mask(const char *str)
+{
+    sigset_t    sigset;
+    int         errno_save;
+
+    errno_save = errno;     /* we can be called by signal handlers */
+    if (sigprocmask(0, NULL, &amp;sigset) &lt; 0)
+        err_sys("sigprocmask error");
+
+    printf("%s", str);
+    if (sigismember(&amp;sigset, SIGINT))   printf("SIGINT ");
+    if (sigismember(&amp;sigset, SIGQUIT))  printf("SIGQUIT ");
+    if (sigismember(&amp;sigset, SIGUSR1))  printf("SIGUSR1 ");
+    if (sigismember(&amp;sigset, SIGALRM))  printf("SIGALRM ");
+
+    /* remaining signals can go here */
+
+    printf("\n");
+    errno = errno_save;
+}
+</pre><BR>
+
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

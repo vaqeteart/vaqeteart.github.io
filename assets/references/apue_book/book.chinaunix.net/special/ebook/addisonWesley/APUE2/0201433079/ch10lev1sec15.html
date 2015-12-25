@@ -1,0 +1,132 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 10.15.&nbsp; sigsetjmp and siglongjmp Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec14.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec16.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch10lev1sec15"></a>
+<h3 class="docSection1Title">10.15. <tt>sigsetjmp</tt> and <tt>siglongjmp</tt> Functions</h3>
+<p class="docText">In <a class="docLink" href="ch07lev1sec10.html#ch07lev1sec10">Section 7.10</a>, we described the <tt>setjmp</tt> and <tt>longjmp</tt> functions, which can be used for nonlocal branching. The <tt>longjmp</tt> function is often called from a signal handler to <a name="idd1e77770"></a><a name="idd1e77773"></a><a name="idd1e77778"></a><a name="idd1e77781"></a><a name="idd1e77786"></a><a name="idd1e77791"></a><a name="idd1e77796"></a><a name="idd1e77803"></a><a name="idd1e77810"></a><a name="idd1e77815"></a>return to the main loop of a program, instead of returning from the handler. We saw this in <a class="docLink" href="ch10lev1sec10.html#ch10fig08">Figures 10.8</a> and <a class="docLink" href="ch10lev1sec10.html#ch10fig11">10.11</a>.</P>
+<p class="docText">There is a problem in calling <tt>longjmp</tt>, however. When a signal is caught, the signal-catching function is entered with the current signal automatically being added to the signal mask of the process. This prevents subsequent occurrences of that signal from interrupting the signal handler. If we <tt>longjmp</tt> out of the signal handler, what happens to the signal mask for the process?</P>
+<blockquote>
+<p class="docText">Under FreeBSD 5.2.1 and Mac OS X 10.3, <tt>setjmp</tt> and <tt>longjmp</tt> save and restore the signal mask. Linux 2.4.22 and Solaris 9, however, do not do this. FreeBSD and Mac OS X provide the functions <tt>_setjmp</tt> and <tt>_longjmp</tt>, which do not save and restore the signal mask.</p>
+</blockquote>
+<p class="docText">To allow either form of behavior, POSIX.1 does not specify the effect of <tt>setjmp</tt> and <tt>longjmp</tt> on signal masks. Instead, two new functions, <tt>sigsetjmp</tt> and <tt>siglongjmp</tt>, are defined by POSIX.1. These two functions should always be used when branching from a signal handler.</P>
+<a name="inta319"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;setjmp.h&gt;
+
+int sigsetjmp(sigjmp_buf <span class="docEmphItalicAlt">env</span>, int <span class="docEmphItalicAlt">savemask</span>);
+</pre><BR>
+
+</P></TD></tr><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if called directly, nonzero if returning from a call to <tt>siglongjmp</tt>
+</P></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>void siglongjmp(sigjmp_buf</tt> <span class="docEmphasis"><tt>env</tt></span><tt>, int</tt> <span class="docEmphasis"><tt>val</tt></span><tt>);</tt></P></td></TR></table></P><br>
+<p class="docText">The only difference between these functions and the <tt>setjmp</tt> and <tt>longjmp</tt> functions is that <tt>sigsetjmp</tt> has an additional argument. If <span class="docEmphasis">savemask</span> is nonzero, then <tt>sigsetjmp</tt> also saves the current signal mask of the process in <span class="docEmphasis">env</span>. When <tt>siglongjmp</tt> is called, if the <span class="docEmphasis">env</span> argument was saved by a call to <tt>sigsetjmp</tt> with a nonzero <span class="docEmphasis">savemask</span>, then <tt>siglongjmp</tt> restores the saved signal mask.</p>
+<a name="ch10ex12"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch10lev1sec15.html#ch10fig20">Figure 10.20</a> demonstrates how the signal mask that is installed by the system when a signal handler is invoked automatically includes the signal being caught. The program also illustrates the use of the <tt>sigsetjmp</tt> and <tt>siglongjmp</tt> functions.</P>
+<p class="docText"><a name="idd1e77980"></a><a name="idd1e77985"></a><a name="idd1e77990"></a><a name="idd1e77995"></a><a name="idd1e78000"></a>This program demonstrates another technique that should be used whenever <tt>siglongjmp</tt> is called from a signal handler. We set the variable <tt>canjump</tt> to a nonzero value only after we've called <tt>sigsetjmp</tt>. This variable is also examined in the signal handler, and <tt>siglongjmp</tt> is called only if the flag <tt>canjump</tt> is nonzero. This provides protection against the signal handler being called at some earlier or later time, when the jump buffer isn't initialized by <tt>sigsetjmp</tt>. (In this trivial program, we terminate quickly after the <tt>siglongjmp</tt>, but in larger programs, the signal handler may remain installed long after the <tt>siglongjmp</tt>.) Providing this type of protection usually isn't required with <tt>longjmp</tt> in normal C code (as opposed to a signal handler). Since a signal can occur at <span class="docEmphasis">any</span> time, however, we need the added protection in a signal handler.</p>
+<p class="docText"><a name="idd1e78039"></a><a name="idd1e78044"></a><a name="idd1e78049"></a><a name="idd1e78054"></a><a name="idd1e78059"></a>Here, we use the data type <tt>sig_atomic_t</tt>, which is defined by the ISO C standard to be the type of variable that can be written without being interrupted. By this we mean that a variable of this type should not extend across page boundaries on a system with virtual memory and can be accessed with a single machine instruction, for example. We always include the ISO type qualifier <tt>volatile</tt> for these data types too, since the variable is being accessed by two different threads of control: the <tt>main</tt> function and the asynchronously executing signal handler. <a class="docLink" href="ch10lev1sec15.html#ch10fig21">Figure 10.21</a> shows a time line for this program.</P>
+<p class="docText">We can divide <a class="docLink" href="ch10lev1sec15.html#ch10fig21">Figure 10.21</a> into three parts: the left part (corresponding to <tt>main</tt>), the center part (<tt>sig_usr1</tt>), and the right part (<tt>sig_alrm</tt>). While the process is executing in the left part, its signal mask is 0 (no signals are blocked). While executing in the center part, its signal mask is <tt>SIGUSR1</tt>. While executing in the right part, its signal mask is <tt>SIGUSR1|SIGALRM</tt>.</p>
+<p class="docText">Let's examine the output when the program in <a class="docLink" href="ch10lev1sec15.html#ch10fig20">Figure 10.20</a> is executed:</P>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out &amp;</span>                      start process in background
+   starting main:
+   [1]   531                        <span class="docEmphItalicAlt">the job-control shell prints its process ID</span>
+   $ <span class="docEmphStrong">kill -USR1 531</span>                 <span class="docEmphItalicAlt">send the process</span> SIGUSR1
+   starting sig_usr1: SIGUSR1
+   $ in sig_alrm: SIGUSR1 SIGALRM
+   finishing sig_usr1: SIGUSR1
+   ending main:
+                                    <span class="docEmphasis">just press RETURN</span>
+   [1] + Done          ./a.out &amp;
+</pre><br>
+
+<p class="docText"><a name="idd1e78126"></a><a name="idd1e78129"></a><a name="idd1e78132"></a><a name="idd1e78137"></a><a name="idd1e78140"></a><a name="idd1e78145"></a><a name="idd1e78150"></a><a name="idd1e78155"></a><a name="idd1e78160"></a><a name="idd1e78165"></a><a name="idd1e78168"></a><a name="idd1e78173"></a>The output is as we expect: when a signal handler is invoked, the signal being caught is added to the current signal mask of the process. The original mask is restored when the signal handler returns. Also, <tt>siglongjmp</tt> restores the signal mask that was saved by <tt>sigsetjmp</tt>.</p>
+<p class="docText">If we change the program in <a class="docLink" href="ch10lev1sec15.html#ch10fig20">Figure 10.20</a> so that the calls to <tt>sigsetjmp</tt> and <tt>siglongjmp</tt> are replaced with calls to <tt>setjmp</tt> and <tt>longjmp</tt> on Linux (or <tt>_setjmp</tt> and <tt>_longjmp</tt> on FreeBSD), the final line of output becomes</p>
+
+<pre>
+    ending main: SIGUSR1</pre><br>
+
+<p class="docText">This means that the <tt>main</tt> function is executing with the <tt>SIGUSR1</tt> signal blocked, after the call to <tt>setjmp</tt>. This probably isn't what we want.</p>
+
+<a name="ch10fig20"></a>
+<h5 class="docExampleTitle">Figure 10.20. Example of signal masks, <tt>sigsetjmp</tt>, and <tt>siglongjmp</tt></h5>
+
+<pre>
+#include "apue.h"
+#include &lt;setjmp.h&gt;
+#include &lt;time.h&gt;
+
+static void                         sig_usr1(int), sig_alrm(int);
+static sigjmp_buf                   jmpbuf;
+static volatile sig_atomic_t        canjump;
+
+int
+main(void)
+{
+    if (signal(SIGUSR1, sig_usr1) == SIG_ERR)
+        err_sys("signal(SIGUSR1) error");
+    if (signal(SIGALRM, sig_alrm) == SIG_ERR)
+        err_sys("signal(SIGALRM) error");
+    pr_mask("starting main: ");     /* <a class="docLink" href="ch10lev1sec12.html#ch10fig14">Figure 10.14</a> */
+
+    if (sigsetjmp(jmpbuf, 1)) {
+        pr_mask("ending main: ");
+        exit(0);
+    }
+    canjump = 1;         /* now sigsetjmp() is OK */
+
+    for ( ; ; )
+        pause();
+}
+static void
+sig_usr1(int signo)
+{
+    time_t  starttime;
+
+    if (canjump == 0)
+        return;     /* unexpected signal, ignore */
+
+    pr_mask("starting sig_usr1: ");
+    alarm(3);               /* SIGALRM in 3 seconds */
+    starttime = time(NULL);
+    for ( ; ; )             /* busy wait for 5 seconds */
+        if (time(NULL) &gt; starttime + 5)
+            break;
+    pr_mask("finishing sig_usr1: ");
+
+    canjump = 0;
+    siglongjmp(jmpbuf, 1);  /* jump back to main, don't return */
+}
+
+static void
+sig_alrm(int signo)
+{
+    pr_mask("in sig_alrm: ");
+}
+</pre><br>
+
+
+<a name="ch10fig21"></a><p><center>
+<h5 class="docFigureTitle">Figure 10.21. Time line for example program handling two signals</h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/10fig21_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" id="195131139046" width="500" height="345" SRC="images/0201433079/graphics/10fig21.gif;423615"></p>
+</center></p><br>
+
+<ul></ul></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec14.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec16.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

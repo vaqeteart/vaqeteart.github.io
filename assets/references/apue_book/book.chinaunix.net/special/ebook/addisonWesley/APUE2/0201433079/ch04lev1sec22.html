@@ -1,0 +1,128 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.22.&nbsp; chdir, fchdir, and getcwd Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec21.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec23.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec22"></a>
+<h3 class="docSection1Title">4.22. <tt>chdir</tt>, <tt>fchdir</tt>, and <tt>getcwd</tt> Functions</h3>
+<p class="docText">Every process has a current working directory. This directory is where the search for all relative pathnames starts (all pathnames that do not begin with a slash). When a user logs in to a UNIX system, the current working directory normally starts at the directory specified by the sixth field in the <tt>/etc/passwd</tt> filethe user's home directory. The current working directory is an attribute of a process; the home directory is an attribute of a login name.</P>
+<p class="docText">We can change the current working directory of the calling process by calling the <tt>chdir</tt> or <tt>fchdir</tt> functions.</P>
+<a name="inta13"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+int chdir(const char *<span class="docEmphItalicAlt">pathname</span>);
+
+int fchdir(int <span class="docEmphItalicAlt">filedes</span>);</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, 1 on error</P></td></TR></table></P><BR>
+<p class="docText">We can specify the new current working directory either as a <span class="docEmphasis">pathname</span> or through an open file descriptor.</p>
+<blockquote>
+<p class="docText">The <tt>fchdir</tt> function is not part of the base POSIX.1 specification. It is an XSI extension in the Single UNIX Specification. All four platforms discussed in this book support <tt>fchdir</tt>.</P>
+</blockquote>
+<a name="ch04ex09"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText">Because it is an attribute of a process, the current working directory cannot affect processes that invoke the process that executes the <tt>chdir</tt>. (We describe the relationship between processes in more detail in <a class="docLink" href="ch08.html#ch08">Chapter 8</a>.) This means that the program in <a class="docLink" href="ch04lev1sec22.html#ch04fig23">Figure 4.23</a> doesn't do what we might expect.</P>
+<p class="docText"><a name="idd1e32646"></a><a name="idd1e32649"></a><a name="idd1e32654"></a><a name="idd1e32661"></a><a name="idd1e32666"></a><a name="idd1e32671"></a>If we compile it and call the executable <tt>mycd</tt>, we get the following:</P>
+
+<pre>
+    $ <span class="docEmphStrong">pwd</span>
+    /usr/lib
+    $ <span class="docEmphStrong">mycd</span>
+    chdir to /tmp succeeded
+    $ <span class="docEmphStrong">pwd</span>
+    /usr/lib
+</pre><br>
+
+<p class="docText">The current working directory for the shell that executed the <tt>mycd</tt> program didn't change. This is a side effect of the way that the shell executes programs. Each program is run in a separate process, so the current working directory of the shell is unaffected by the call to <tt>chdir</tt> in the program. For this reason, the <tt>chdir</tt> function has to be called directly from the shell, so the <tt>cd</tt> command is built into the shells.</p>
+
+<a name="ch04fig23"></a>
+<h5 class="docExampleTitle">Figure 4.23. Example of <tt>chdir</tt> function</h5>
+
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+
+     if (chdir("/tmp") &lt; 0)
+         err_sys("chdir failed");
+     printf("chdir to /tmp succeeded\n");
+     exit(0);
+}
+</pre><BR>
+
+
+<p class="docText">Because the kernel must maintain knowledge of the current working directory, we should be able to fetch its current value. Unfortunately, the kernel doesn't maintain the full pathname of the directory. Instead, the kernel keeps information about the directory, such as a pointer to the directory's v-node.</p>
+<p class="docText">What we need is a function that starts at the current working directory (dot) and works its way up the directory hierarchy, using dot-dot to move up one level. At each directory, the function reads the directory entries until it finds the name that corresponds to the i-node of the directory that it just came from. Repeating this procedure until the root is encountered yields the entire absolute pathname of the current working directory. Fortunately, a function is already provided for us that does this task.</P>
+<a name="inta97"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+char *getcwd(char *<span class="docEmphItalicAlt">buf</span>, size_t <span class="docEmphItalicAlt">size</span>);</pre><br>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: <span class="docEmphasis">buf</span> if OK, <tt>NULL</tt> on error</p></td></tr></table></p><br>
+<p class="docText">We must pass to this function the address of a buffer, <span class="docEmphasis">buf</span>, and its <span class="docEmphasis">size</span> (in bytes). The buffer must be large enough to accommodate the absolute pathname plus a terminating null byte, or an error is returned. (Recall the discussion of allocating space for a maximum-sized pathname in <a class="docLink" href="ch02lev1sec5.html#ch02lev2sec16">Section 2.5.5</a>.)</p>
+<blockquote>
+<p class="docText">Some older implementations of <tt>getcwd</tt> allow the first argument <span class="docEmphasis">buf</span> to be <tt>NULL</tt>. In this case, the function calls <tt>malloc</tt> to allocate <span class="docEmphasis">size</span> number of bytes dynamically. This is not part of POSIX.1 or the Single UNIX Specification and should be avoided.</p>
+</blockquote>
+<a name="ch04ex10"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch04lev1sec22.html#ch04fig24">Figure 4.24</a> changes to a specific directory and then calls <tt>getcwd</tt> to print the working directory. If we run the program, we get</p>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+    cwd = /var/spool/uucppublic
+    $ <span class="docEmphStrong">ls -l /usr/spool</span>
+    lrwxrwxrwx 1 root 12 Jan 31 07:57 /usr/spool -&gt; ../var/spool
+</pre><BR>
+
+<p class="docText"><a name="idd1e32839"></a><a name="idd1e32844"></a><a name="idd1e32849"></a><a name="idd1e32852"></a><a name="idd1e32857"></a><a name="idd1e32862"></a><a name="idd1e32867"></a><a name="idd1e32870"></a><a name="idd1e32873"></a><a name="idd1e32878"></a><a name="idd1e32883"></a><a name="idd1e32886"></a>Note that <tt>chdir</tt> follows the symbolic linkas we expect it to, from <a class="docLink" href="ch04lev1sec16.html#ch04fig17">Figure 4.17</a>but when it goes up the directory tree, <tt>getcwd</tt> has no idea when it hits the <tt>/var/spool</tt> directory that it is pointed to by the symbolic link <tt>/usr/spool</tt>. This is a characteristic of symbolic links.</P>
+
+<a name="ch04fig24"></a>
+<h5 class="docExampleTitle">Figure 4.24. Example of <tt>getcwd</tt> function</H5>
+
+<pre>
+  #include "apue.h"
+
+  int
+  main(void)
+  {
+
+      char    *ptr;
+      int     size;
+
+      if (chdir("/usr/spool/uucppublic") &lt; 0)
+          err_sys("chdir failed");
+
+      ptr = path_alloc(&amp;size); /* our own function */
+      if (getcwd(ptr, size) == NULL)
+          err_sys("getcwd failed");
+
+      printf("cwd = %s\n", ptr);
+      exit(0);
+  }
+</pre><BR>
+
+
+<p class="docText">The <tt>getcwd</tt> function is useful when we have an application that needs to return to the location in the file system where it started out. We can save the starting location by calling <tt>getcwd</tt> before we change our working directory. After we complete our processing, we can pass the pathname obtained from <tt>getcwd</tt> to <tt>chdir</tt> to return to our starting location in the file system.</P>
+<p class="docText">The <tt>fchdir</tt> function provides us with an easy way to accomplish this task. Instead of calling <tt>getcwd</tt>, we can <tt>open</tt> the current directory and save the file descriptor before we change to a different location in the file system. When we want to return to where we started, we can simply pass the file descriptor to <tt>fchdir</tt>.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec21.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec23.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

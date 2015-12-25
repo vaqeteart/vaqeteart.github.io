@@ -1,0 +1,196 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 7.3.&nbsp; Process Termination</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch07lev1sec3"></a>
+<h3 class="docSection1Title">7.3. Process Termination</h3>
+<p class="docText"><a name="idd1e46874"></a><a name="idd1e46879"></a><a name="idd1e46884"></a><a name="idd1e46889"></a><a name="idd1e46896"></a><a name="idd1e46901"></a><a name="idd1e46906"></a><a name="idd1e46913"></a><a name="idd1e46918"></a><a name="idd1e46923"></a>There are eight ways for a process to terminate. Normal termination occurs in five ways:</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">Return from <tt>main</tt></p></div></LI><LI><div style="font-weight:normal"><p class="docList">Calling <tt>exit</tt></P></div></li><LI><div style="font-weight:normal"><p class="docList">Calling <tt>_exit</tt> or <tt>_Exit</tt></P></div></LI><li><div style="font-weight:normal"><p class="docList">Return of the last thread from its start routine (<a class="docLink" href="ch11lev1sec5.html#ch11lev1sec5">Section 11.5</a>)</P></div></li><LI><div style="font-weight:normal"><p class="docList">Calling <tt>pthread_exit</tt> (<a class="docLink" href="ch11lev1sec5.html#ch11lev1sec5">Section 11.5</a>) from the last thread</P></div></LI></ol></div>
+<p class="docText">Abnormal termination occurs in three ways:</p>
+<div style="font-weight:bold"><ol class="docList" type="1" start="6"><LI><div style="font-weight:normal"><p class="docList">Calling <tt>abort</tt> (<a class="docLink" href="ch10lev1sec17.html#ch10lev1sec17">Section 10.17</a>)</P></div></li><LI><div style="font-weight:normal"><p class="docList">Receipt of a signal (<a class="docLink" href="ch10lev1sec2.html#ch10lev1sec2">Section 10.2</a>)</P></div></li><li><div style="font-weight:normal"><p class="docList">Response of the last thread to a cancellation request (<a class="docLink" href="ch11lev1sec5.html#ch11lev1sec5">Sections 11.5</a> and <a class="docLink" href="ch12lev1sec7.html#ch12lev1sec7">12.7</a>)</p><blockquote><p><p class="docList">For now, we'll ignore the three termination methods specific to threads until we discuss threads in <a class="docLink" href="ch11.html#ch11">Chapters 11</a> and <a class="docLink" href="ch12.html#ch12">12</a>.</P></p></blockquote></div></LI></ol></div>
+<p class="docText">The start-up routine that we mentioned in the previous section is also written so that if the <tt>main</tt> function returns, the <tt>exit</tt> function is called. If the start-up routine were coded in C (it is often coded in assembler) the call to <tt>main</tt> could look like</p>
+
+<pre>
+    exit(main(argc, argv));
+</pre><BR>
+
+<a name="ch07lev2sec1"></a>
+<h4 class="docSection2Title">Exit Functions</h4>
+<p class="docText">Three functions terminate a program normally: <tt>_exit</tt> and <tt>_Exit</tt>, which return to the kernel immediately, and <tt>exit</tt>, which performs certain cleanup processing and then returns to the kernel.</p>
+<a name="inta43"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdlib.h&gt;
+
+void exit(int <span class="docEmphItalicAlt">status</span>);
+
+void _Exit(int <span class="docEmphItalicAlt">status</span>);
+
+#include &lt;unistd.h&gt;
+
+void _exit(int <span class="docEmphItalicAlt">status</span>);
+</pre><br>
+
+</p></td></tr></table></p><br>
+<p class="docText">We'll discuss the effect of these three functions on other processes, such as the children and the parent of the terminating process, in <a class="docLink" href="ch08lev1sec5.html#ch08lev1sec5">Section 8.5</a>.</p>
+<blockquote>
+<p class="docText">The reason for the different headers is that <tt>exit</tt> and <tt>_Exit</tt> are specified by ISO C, whereas <tt>_exit</tt> is specified by POSIX.1.</p>
+</blockquote>
+<p class="docText"><a name="idd1e47115"></a>Historically, the <tt>exit</tt> function has always performed a clean shutdown of the standard I/O library: the <tt>fclose</tt> function is called for all open streams. Recall from <a class="docLink" href="ch05lev1sec5.html#ch05lev1sec5">Section 5.5</a> that this causes all buffered output data to be flushed (written to the file).</p>
+<p class="docText">All three exit functions expect a single integer argument, which we call the <span class="docEmphasis">exit status</span>. Most UNIX System shells provide a way to examine the exit status of a process. If (a) any of these functions is called without an exit status, (b) <tt>main</tt> does a <tt>return</tt> without a return value, or (c) the <tt>main</tt> function is not declared to return an integer, the exit status of the process is undefined. However, if the return type of <tt>main</tt> is an integer and <tt>main</tt> &quot;falls off the end&quot; (an implicit return), the exit status of the process is 0.</p>
+<blockquote>
+<p class="docText">This behavior is new with the 1999 version of the ISO C standard. Historically, the exit status was undefined if the end of the <tt>main</tt> function was reached without an explicit <tt>return</tt> statement or call to the <tt>exit</tt> function.</p>
+</blockquote>
+<p class="docText">Returning an integer value from the <tt>main</tt> function is equivalent to calling <tt>exit</tt> with the same value. Thus</P>
+
+<pre>
+    exit(0);
+</pre><BR>
+
+<p class="docText">is the same as</p>
+
+<pre>
+    return(0);
+</pre><BR>
+
+<p class="docText">from the <tt>main</tt> function.</P>
+<a name="ch07ex01"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch07lev1sec3.html#ch07fig01">Figure 7.1</a> is the classic &quot;hello, world&quot; example.</P>
+<p class="docText">When we compile and run the program in <a class="docLink" href="ch07lev1sec3.html#ch07fig01">Figure 7.1</a>, we see that the exit code is random. If we compile the same program on different systems, we are likely to get different exit codes, depending on the contents of the stack and register contents at the time that the <tt>main</tt> function returns:</P>
+
+<pre>
+    $ <span class="docEmphStrong">cc hello.c</span>
+    $ <span class="docEmphStrong">./a.out</span>
+    hello, world
+    $ <span class="docEmphStrong">echo $?</span>                    <span class="docEmphItalicAlt">print the exit status</span>
+    13
+</pre><BR>
+
+<p class="docText"><a name="idd1e47231"></a><a name="idd1e47236"></a><a name="idd1e47243"></a><a name="idd1e47246"></a><a name="idd1e47251"></a>Now if we enable the 1999 ISO C compiler extensions, we see that the exit code changes:</p>
+
+<pre>
+    $ <span class="docEmphStrong">cc -std=c99 hello.c</span>         <span class="docEmphItalicAlt">enable gcc's 1999 ISO C extensions</span>
+    hello.c:4: warning: return type defaults to 'int'
+    $ <span class="docEmphStrong">./a.out</span>
+    hello, world
+    $ <span class="docEmphStrong">echo $?</span>                     <span class="docEmphasis"> role="italicAlt"print the exit status</span>
+    0
+</pre><BR>
+
+<blockquote>
+<p class="docText">Note the compiler warning when we enable the 1999 ISO C extensions. This warning is printed because the type of the <tt>main</tt> function is not explicitly declared to be an integer. If we were to add this declaration, the message would go away. However, if we were to enable all recommended warnings from the compiler (with the <tt>-Wall</tt> flag), then we would see a warning message something like &quot;control reaches end of nonvoid function.&quot;</p>
+<p class="docText">The declaration of <tt>main</tt> as returning an integer and the use of <tt>exit</tt> instead of <tt>return</tt> produces needless warnings from some compilers and the <tt>lint</tt>(1) program. The problem is that these compilers don't know that an <tt>exit</tt> from <tt>main</tt> is the same as a <tt>return</tt>. One way around these warnings, which become annoying after a while, is to use <tt>return</tt> instead of <tt>exit</tt> from <tt>main</tt>. But doing this prevents us from using the UNIX System's <tt>grep</tt> utility to locate all calls to <tt>exit</tt> from a program. Another solution is to declare <tt>main</tt> as returning <tt>void</tt>, instead of <tt>int</tt>, and continue calling <tt>exit</tt>. This gets rid of the compiler warning but doesn't look right (especially in a programming text), and can generate other compiler warnings, since the return type of <tt>main</tt> is supposed to be a signed integer. In this text, we show <tt>main</tt> as returning an integer, since that is the definition specified by both ISO C and POSIX.1.</P>
+<p class="docText">Different compilers vary in the verbosity of their warnings. Note that the GNU C compiler usually doesn't emit these extraneous compiler warnings unless additional warning options are used.</P>
+</blockquote>
+
+<a name="ch07fig01"></a>
+<H5 class="docExampleTitle">Figure 7.1. Classic C program</h5>
+
+<pre>
+#include &lt;stdio.h&gt;
+
+main()
+{
+    printf("hello, world\n");
+}
+</pre><BR>
+
+
+<p class="docText">In the next chapter, we'll see how any process can cause a program to be executed, wait for the process to complete, and then fetch its exit status.</P>
+
+<a name="ch07lev2sec2"></a>
+<h4 class="docSection2Title"><tt>atexit</tt> Function</H4>
+<p class="docText">With ISO C, a process can register up to 32 functions that are automatically called by <tt>exit</tt>. These are called <span class="docEmphasis">exit handlers</span> and are registered by calling the <tt>atexit</tt> function.</P>
+<a name="inta06"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdlib.h&gt;
+
+int atexit(void (*<span class="docEmphItalicAlt">func</span>)(void));
+</pre><br>
+
+</P></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, nonzero on error</p></td></tr></table></p><br>
+<p class="docText">This declaration says that we pass the address of a function as the argument to <tt>atexit</tt>. When this function is called, it is not passed any arguments and is not expected to return a value. The <tt>exit</tt> function calls these functions in reverse order of their registration. Each function is called as many times as it was registered.</p>
+<blockquote>
+<p class="docText"><a name="idd1e47440"></a><a name="idd1e47443"></a><a name="idd1e47448"></a><a name="idd1e47453"></a><a name="idd1e47458"></a><a name="idd1e47463"></a><a name="idd1e47466"></a>These exit handlers first appeared in the ANSI C Standard in 1989. Systems that predate ANSI C, such as SVR3 and 4.3BSD, did not provide these exit handlers.</p>
+<p class="docText">ISO C requires that systems support at least 32 exit handlers. The <tt>sysconf</tt> function can be used to determine the maximum number of exit handlers supported by a given platform (see <a class="docLink" href="ch02lev1sec5.html#ch02fig14">Figure 2.14</a>).</p>
+</blockquote>
+<p class="docText">With ISO C and POSIX.1, <tt>exit</tt> first calls the exit handlers and then closes (via <tt>fclose</tt>) all open streams. POSIX.1 extends the ISO C standard by specifying that any exit handlers installed will be cleared if the program calls any of the <tt>exec</tt> family of functions. <a class="docLink" href="ch07lev1sec3.html#ch07fig02">Figure 7.2</a> summarizes how a C program is started and the various ways it can terminate.</p>
+<a name="ch07fig02"></a><p><center>
+<h5 class="docFigureTitle">Figure 7.2. How a C program is started and how it terminates</h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/07fig02_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" id="195131139046" width="500" height="384" SRC="images/0201433079/graphics/07fig02.gif;423615"></p>
+</center></p><br>
+<p class="docText">Note that the only way a program is executed by the kernel is when one of the <tt>exec</tt> functions is called. The only way a process voluntarily terminates is when <tt>_exit</tt> or <tt>_Exit</tt> is called, either explicitly or implicitly (by calling <tt>exit</tt>). A process can also be involuntarily terminated by a signal (not shown in <a class="docLink" href="ch07lev1sec3.html#ch07fig02">Figure 7.2</a>).</p>
+<a name="ch07ex02"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText"><a name="idd1e47546"></a><a name="idd1e47551"></a>The program in <a class="docLink" href="ch07lev1sec3.html#ch07fig03">Figure 7.3</a> demonstrates the use of the <tt>atexit</tt> function.</P>
+<p class="docText">Executing the program in <a class="docLink" href="ch07lev1sec3.html#ch07fig03">Figure 7.3</a> yields</p>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+    main is done
+    first exit handler
+    first exit handler
+    second exit handler
+</pre><BR>
+
+<p class="docText">An exit handler is called once for each time it is registered. In <a class="docLink" href="ch07lev1sec3.html#ch07fig03">Figure 7.3</a>, the first exit handler is registered twice, so it is called two times. Note that we don't call <tt>exit</tt>; instead, we return from <tt>main</tt>.</P>
+
+<a name="ch07fig03"></a>
+<H5 class="docExampleTitle">Figure 7.3. Example of exit handlers</h5>
+
+<pre>
+#include "apue.h"
+
+static void my_exit1(void);
+static void my_exit2(void);
+
+int
+main(void)
+{
+     if (atexit(my_exit2) != 0)
+         err_sys("can't register my_exit2");
+
+     if (atexit(my_exit1) != 0)
+         err_sys("can't register my_exit1");
+
+     if (atexit(my_exit1) != 0)
+         err_sys("can't register my_exit1");
+
+     printf("main is done\n");
+     return(0);
+}
+
+static void
+my_exit1(void)
+{
+   printf("first exit handler\n");
+}
+
+static void
+my_exit2(void)
+{
+   printf("second exit handler\n");
+}
+</pre><BR>
+
+
+
+
+<UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

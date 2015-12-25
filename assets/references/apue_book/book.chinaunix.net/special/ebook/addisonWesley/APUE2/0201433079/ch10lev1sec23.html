@@ -1,0 +1,42 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Exercises</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec22.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch10lev1sec23"></a>
+<h3 class="docSection1Title">Exercises</h3>
+<P><table border="0" cellspacing="16" cellpadding="0"><TR valign="top"><td align="right" class="docText" width="50"><a name="ch10qa1q1"></a><B><a class="docLink" href="app03lev1sec10.html#ch10qa1q1a1">10.1</a></b></TD><TD><p class="docText">In <a class="docLink" href="ch10lev1sec3.html#ch10fig02">Figure 10.2</a>, remove the <tt>for (;;)</tt> statement. What happens and why?</p>
+</TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch10qa1q2"></a><B>10.2</b></td><TD><p class="docText">Implement the <tt>sig2str</tt> function described in <a class="docLink" href="ch10lev1sec21.html#ch10lev1sec21">Section 10.21</a>.</P>
+</TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch10qa1q3"></a><b><a class="docLink" href="app03lev1sec10.html#ch10qa1q3a3">10.3</a></b></TD><TD><p class="docText"><a name="idd1e81454"></a><a name="idd1e81459"></a><a name="idd1e81464"></a><a name="idd1e81469"></a><a name="idd1e81474"></a><a name="idd1e81479"></a><a name="idd1e81484"></a><a name="idd1e81489"></a><a name="idd1e81494"></a><a name="idd1e81499"></a><a name="idd1e81504"></a><a name="idd1e81507"></a><a name="idd1e81512"></a><a name="idd1e81517"></a><a name="idd1e81522"></a><a name="idd1e81527"></a><a name="idd1e81532"></a><a name="idd1e81537"></a><a name="idd1e81542"></a><a name="idd1e81547"></a><a name="idd1e81552"></a><a name="idd1e81557"></a>Draw pictures of the stack frames when we run the program from <a class="docLink" href="ch10lev1sec10.html#ch10fig09">Figure 10.9</a>.</p></td></tr><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch10qa1q4"></a><b><a class="docLink" href="app03lev1sec10.html#ch10qa1q4a4">10.4</a></b></TD><td><p class="docText">In <a class="docLink" href="ch10lev1sec10.html#ch10fig11">Figure 10.11</a>, we showed a technique that's often used to set a timeout on an I/O operation using <tt>setjmp</tt> and <tt>longjmp</tt>. The following code has also been seen:</P>
+
+<pre>
+     signal(SIGALRM, sig_alrm);
+     alarm(60);
+     if (setjmp(env_alrm) != 0) {
+         /* handle timeout */
+         ...
+     }
+     ...
+</pre><br>
+
+<p class="docText">What else is wrong with this sequence of code?</p>
+</td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch10qa1q5"></a><b><a class="docLink" href="app03lev1sec10.html#ch10qa1q5a5">10.5</a></b></td><td><p class="docText">Using only a single timer (either <tt>alarm</tt> or the higher-precision <tt>setitimer</tt>), provide a set of functions that allows a process to set any number of timers.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch10qa1q6"></a><b>10.6</b></td><td><p class="docText">Write the following program to test the parentchild synchronization functions in <a class="docLink" href="ch10lev1sec16.html#ch10fig24">Figure 10.24</a>. The process creates a file and writes the integer 0 to the file. The process then calls <tt>fork</tt>, and the parent and child alternate incrementing the counter in the file. Each time the counter is incremented, print which process (parent or child) is doing the increment.</P></TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch10qa1q7"></a><B><a class="docLink" href="app03lev1sec10.html#ch10qa1q7a7">10.7</a></b></td><TD><p class="docText">In the function shown in <a class="docLink" href="ch10lev1sec17.html#ch10fig25">Figure 10.25</a>, if the caller catches <tt>SIGABRT</tt> and returns from the signal handler, why do we go to the trouble of resetting the disposition to its default and call <tt>kill</tt> the second time, instead of simply calling <tt>_exit</tt>?</P></TD></tr><TR valign="top"><td align="right" class="docText" width="50"><a name="ch10qa1q8"></a><B><a class="docLink" href="app03lev1sec10.html#ch10qa1q8a8">10.8</a></b></TD><TD><p class="docText">Why do you think the <tt>siginfo</tt> structure (<a class="docLink" href="ch10lev1sec14.html#ch10lev1sec14">Section 10.14</a>) includes the real user ID, instead of the effective user ID, in the <tt>si_uid</tt> field?</p></TD></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch10qa1q9"></a><B>10.9</b></td><td><p class="docText">Rewrite the function in <a class="docLink" href="ch10lev1sec12.html#ch10fig14">Figure 10.14</a> to handle all the signals from <a class="docLink" href="ch10lev1sec2.html#ch10fig01">Figure 10.1</a>. The function should consist of a single loop that iterates once for every signal in the current signal mask (not once for every possible signal).</p></td></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch10qa1q10"></a><b><a class="docLink" href="app03lev1sec10.html#ch10qa1q10a10">10.10</a></b></TD><td><p class="docText">Write a program that calls <tt>sleep(60)</tt> in an infinite loop. Every five times through the loop (every 5 minutes), fetch the current time of day and print the <tt>tm_sec</tt> field. Run the program overnight and explain the results. How would a program such as the BSD <tt>cron</tt> daemon, which runs every minute on the minute, handle this?</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch10qa1q11"></a><b><a class="docLink" href="app03lev1sec10.html#ch10qa1q11a11">10.11</a></b></td><td><p class="docText">Modify <a class="docLink" href="ch03lev1sec9.html#ch03fig04">Figure 3.4</a> as follows: (a) change <tt>BUFFSIZE</tt> to 100; (b) catch the <tt>SIGXFSZ</tt> signal using the <tt>signal_intr</tt> function, printing a message when it's caught, and returning from the signal handler; and (c) print the return value from <tt>write</tt> if the requested number of bytes weren't written. Modify the soft <tt>RLIMIT_FSIZE</tt> resource limit (<a class="docLink" href="ch07lev1sec11.html#ch07lev1sec11">Section 7.11</a>) to 1,024 bytes and run your new program, copying a file that is larger than 1,024 bytes. (Try to set the soft resource limit from your shell. If you can't do this from your shell, call <tt>setrlimit</tt> directly from the program.) Run this program on the different systems that you have access to. What happens and why?</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch10qa1q12"></a><b><a class="docLink" href="app03lev1sec10.html#ch10qa1q12a12">10.12</a></b></td><td><p class="docText">Write a program that calls <tt>fwrite</tt> with a large buffer (a few hundred megabytes). Before calling <tt>fwrite</tt>, call <tt>alarm</tt> to schedule a signal in 1 second. In your signal handler, print that the signal was caught and return. Does the call to <tt>fwrite</tt> complete? What's happening?</P>
+</TD></tr></table></P>
+
+<UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec22.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

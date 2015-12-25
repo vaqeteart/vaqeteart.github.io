@@ -1,0 +1,32 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 3.2.&nbsp; File Descriptors</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch03lev1sec2"></a>
+<h3 class="docSection1Title">3.2. File Descriptors</h3>
+<p class="docText">To the kernel, all open files are referred to by file descriptors. A file descriptor is a non-negative integer. When we open an existing file or create a new file, the kernel returns a file descriptor to the process. When we want to read or write a file, we identify the file with the file descriptor that was returned by <tt>open</tt> or <tt>creat</tt> as an argument to either <tt>read</tt> or <tt>write</tt>.</P>
+<p class="docText"><a name="idd1e17595"></a><a name="idd1e17600"></a><a name="idd1e17603"></a><a name="idd1e17606"></a><a name="idd1e17609"></a><a name="idd1e17614"></a><a name="idd1e17621"></a><a name="idd1e17626"></a><a name="idd1e17631"></a><a name="idd1e17636"></a><a name="idd1e17641"></a><a name="idd1e17644"></a><a name="idd1e17649"></a><a name="idd1e17654"></a><a name="idd1e17659"></a>By convention, UNIX System shells associate file descriptor 0 with the standard input of a process, file descriptor 1 with the standard output, and file descriptor 2 with the standard error. This convention is used by the shells and many applications; it is not a feature of the UNIX kernel. Nevertheless, many applications would break if these associations weren't followed.</P>
+<p class="docText">The magic numbers 0, 1, and 2 should be replaced in POSIX-compliant applications with the symbolic constants <tt>STDIN_FILENO</tt>, <tt>STDOUT_FILENO</tt>, and <tt>STDERR_FILENO</tt>. These constants are defined in the <tt>&lt;unistd.h&gt;</tt> header.</p>
+<p class="docText">File descriptors range from 0 through <tt>OPEN_MAX</tt>. (Recall <a class="docLink" href="ch02lev1sec5.html#ch02fig10">Figure 2.10</a>.) Early historical implementations of the UNIX System had an upper limit of 19, allowing a maximum of 20 open files per process, but many systems increased this limit to 63.</P>
+<blockquote>
+<p class="docText">With FreeBSD 5.2.1, Mac OS X 10.3, and Solaris 9, the limit is essentially infinite, bounded by the amount of memory on the system, the size of an integer, and any hard and soft limits configured by the system administrator. Linux 2.4.22 places a hard limit of 1,048,576 on the number of file descriptors per process.</P>
+</blockquote>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

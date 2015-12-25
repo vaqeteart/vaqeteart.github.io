@@ -1,0 +1,177 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 8.9.&nbsp; Race Conditions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch08lev1sec9"></a>
+<h3 class="docSection1Title">8.9. Race Conditions</h3>
+<p class="docText">For our purposes, a race condition occurs when multiple processes are trying to do something with shared data and the final outcome depends on the order in which the processes run. The <tt>fork</tt> function is a lively breeding ground for race conditions, if any of the logic after the <tt>fork</tt> either explicitly or implicitly depends on whether the parent or child runs first after the <tt>fork</tt>. In general, we cannot predict which process runs first. Even if we knew which process would run first, what happens after that process starts running depends on the system load and the kernel's scheduling algorithm.</P>
+<p class="docText"><a name="idd1e56465"></a><a name="idd1e56470"></a><a name="idd1e56475"></a><a name="idd1e56480"></a><a name="idd1e56483"></a><a name="idd1e56488"></a>We saw a potential race condition in the program in <a class="docLink" href="ch08lev1sec6.html#ch08fig08">Figure 8.8</a> when the second child printed its parent process ID. If the second child runs before the first child, then its parent process will be the first child. But if the first child runs first and has enough time to <tt>exit</tt>, then the parent process of the second child is <tt>init</tt>. Even calling <tt>sleep</tt>, as we did, guarantees nothing. If the system was heavily loaded, the second child could resume after <tt>sleep</tt> returns, before the first child has a chance to run. Problems of this form can be difficult to debug because they tend to work &quot;most of the time.&quot;</P>
+<p class="docText">A process that wants to wait for a child to terminate must call one of the <tt>wait</tt> functions. If a process wants to wait for its parent to terminate, as in the program from <a class="docLink" href="ch08lev1sec6.html#ch08fig08">Figure 8.8</a>, a loop of the following form could be used:</p>
+
+<pre>
+   while (getppid() != 1)
+      sleep(1);
+</pre><BR>
+
+<p class="docText">The problem with this type of loop, called <span class="docEmphasis">polling</span>, is that it wastes CPU time, as the caller is awakened every second to test the condition.</P>
+<p class="docText">To avoid race conditions and to avoid polling, some form of signaling is required between multiple processes. Signals can be used, and we describe one way to do this in <a class="docLink" href="ch10lev1sec16.html#ch10lev1sec16">Section 10.16</a>. Various forms of interprocess communication (IPC) can also be used. We'll discuss some of these in <a class="docLink" href="ch15.html#ch15">Chapters 15</a> and <a class="docLink" href="ch17.html#ch17">17</a>.</P>
+<p class="docText">For a parent and child relationship, we often have the following scenario. After the <tt>fork</tt>, both the parent and the child have something to do. For example, the parent could update a record in a log file with the child's process ID, and the child might have to create a file for the parent. In this example, we require that each process tell the other when it has finished its initial set of operations, and that each wait for the other to complete, before heading off on its own. The following code illustrates this scenario:</p>
+
+<pre>
+#include  "apue.h"
+
+TELL_WAIT();    /* set things up for TELL_xxx &amp; WAIT_xxx */
+
+if ((pid = fork()) &lt; 0) {
+    err_sys("fork error");
+} else if (pid == 0) {            /* child */
+
+    /* child does whatever is necessary ... */
+
+    TELL_PARENT(getppid());     /* tell parent we're done */
+    WAIT_PARENT();              /* and wait for parent */
+
+    /* and the child continues on its way ... */
+
+    exit(0);
+}
+
+/* parent does whatever is necessary ... */
+
+TELL_CHILD(pid);            /* tell child we're done */
+WAIT_CHILD();               /* and wait for child */
+
+/* and the parent continues on its way ... */
+
+exit(0);
+</pre><BR>
+
+<p class="docText"><a name="idd1e56555"></a><a name="idd1e56560"></a><a name="idd1e56565"></a><a name="idd1e56570"></a><a name="idd1e56575"></a><a name="idd1e56580"></a><a name="idd1e56585"></a><a name="idd1e56590"></a><a name="idd1e56595"></a><a name="idd1e56600"></a>We assume that the header <tt>apue.h</tt> defines whatever variables are required. The five routines <tt>TELL_WAIT</tt>, <tt>TELL_PARENT</tt>, <tt>TELL_CHILD</tt>, <tt>WAIT_PARENT</tt>, and <tt>WAIT_CHILD</tt> can be either macros or functions.</P>
+<p class="docText">We'll show various ways to implement these <tt>TELL</tt> and <tt>WAIT</tt> routines in later chapters: <a class="docLink" href="ch10lev1sec16.html#ch10lev1sec16">Section 10.16</a> shows an implementation using signals; <a class="docLink" href="ch15lev1sec2.html#ch15fig07">Figure 15.7</a> shows an implementation using pipes. Let's look at an example that uses these five routines.</P>
+<a name="ch08ex05"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText">The program in <a class="docLink" href="ch08lev1sec9.html#ch08fig12">Figure 8.12</a> outputs two strings: one from the child and one from the parent. The program contains a race condition because the output depends on the order in which the processes are run by the kernel and for how long each process runs.</p>
+<p class="docText">We set the standard output unbuffered, so every character output generates a <tt>write</tt>. The goal in this example is to allow the kernel to switch between the two processes as often as possible to demonstrate the race condition. (If we didn't do this, we might never see the type of output that follows. Not seeing the erroneous output doesn't mean that the race condition doesn't exist; it simply means that we can't see it on this particular system.) The following actual output shows how the results can vary:</P>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+   ooutput from child
+   utput from parent
+   $ <span class="docEmphStrong">./a.out</span>
+   ooutput from child
+   utput from parent
+   $ <span class="docEmphStrong">./a.out</span>
+   output from child
+   output from parent
+</pre><BR>
+
+<p class="docText">We need to change the program in <a class="docLink" href="ch08lev1sec9.html#ch08fig12">Figure 8.12</a> to use the <tt>TELL</tt> and <tt>WAIT</tt> functions. The program in <a class="docLink" href="ch08lev1sec9.html#ch08fig13">Figure 8.13</a> does this. The lines preceded by a plus sign are new lines.</P>
+<p class="docText">When we run this program, the output is as we expect; there is no intermixing of output from the two processes.</p>
+<p class="docText"><a name="idd1e56696"></a><a name="idd1e56701"></a><a name="idd1e56706"></a><a name="idd1e56713"></a><a name="idd1e56718"></a><a name="idd1e56725"></a><a name="idd1e56730"></a><a name="idd1e56737"></a><a name="idd1e56742"></a><a name="idd1e56749"></a><a name="idd1e56754"></a><a name="idd1e56761"></a><a name="idd1e56766"></a><a name="idd1e56773"></a><a name="idd1e56778"></a><a name="idd1e56783"></a><a name="idd1e56788"></a><a name="idd1e56793"></a>In the program shown in <a class="docLink" href="ch08lev1sec9.html#ch08fig13">Figure 8.13</a>, the parent goes first. The child goes first if we change the lines following the <tt>fork</tt> to be</P>
+
+<pre>
+} else if (pid == 0) {
+    charatatime("output from child\n");
+    TELL_PARENT(getppid());
+} else {
+    WAIT_CHILD();        /* child goes first */
+    charatatime("output from parent\n");
+}
+</pre><BR>
+
+<p class="docText">Exercise 8.3 continues this example.</p>
+
+<a name="ch08fig12"></a>
+<H5 class="docExampleTitle">Figure 8.12. Program with a race condition</H5>
+
+<pre>
+#include "apue.h"
+
+static void charatatime(char *);
+
+int
+main(void)
+{
+    pid_t   pid;
+
+    if ((pid = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (pid == 0) {
+        charatatime("output from child\n");
+    } else {
+        charatatime("output from parent\n");
+    }
+    exit(0);
+}
+
+static void
+charatatime(char *str)
+{
+    char    *ptr;
+    int     c;
+
+    setbuf(stdout, NULL);           /* set unbuffered */
+    for (ptr = str; (c = *ptr++) != 0; )
+        putc(c, stdout);
+}
+</pre><br>
+
+
+<a name="ch08fig13"></a>
+<h5 class="docExampleTitle">Figure 8.13. Modification of <a class="docLink" href="ch08lev1sec9.html#ch08fig12">Figure 8.12</a> to avoid race condition</h5>
+
+<pre>
+   #include "apue.h"
+
+   static void charatatime(char *);
+
+   int
+   main(void)
+   {
+       pid_t   pid;
+
++      TELL_WAIT();
++
+       if ((pid = fork()) &lt; 0) {
+           err_sys("fork error");
+       } else if (pid == 0) {
++          WAIT_PARENT();      /* parent goes first */
+           charatatime("output from child\n");
+       } else {
+           charatatime("output from parent\n");
++          TELL_CHILD(pid);
+       }
+       exit(0);
+   }
+   static void
+   charatatime(char *str)
+   {
+       char    *ptr;
+       int     c;
+
+       setbuf(stdout, NULL);           /* set unbuffered */
+       for (ptr = str; (c = *ptr++) != 0; )
+           putc(c, stdout);
+   }
+</pre><br>
+
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

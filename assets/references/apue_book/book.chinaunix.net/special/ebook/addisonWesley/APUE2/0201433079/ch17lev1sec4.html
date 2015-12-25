@@ -1,0 +1,619 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 17.4.&nbsp; Passing File Descriptors</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch17lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch17lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch17lev1sec4"></a>
+<h3 class="docSection1Title">17.4. Passing File Descriptors</h3>
+<p class="docText">The ability to pass an open file descriptor between processes is powerful. It can lead to different ways of designing clientserver applications. It allows one process (typically a server) to do everything that is required to open a file (involving such details as translating a network name to a network address, dialing a modem, negotiating locks for the file, etc.) and simply pass back to the calling process a descriptor that can be used with all the I/O functions. All the details involved in opening the file or device are hidden from the client.</P>
+<p class="docText"><a name="idd1e129240"></a><a name="idd1e129245"></a>We must be more specific about what we mean by &quot;passing an open file descriptor&quot; from one process to another. Recall <a class="docLink" href="ch03lev1sec10.html#ch03fig07">Figure 3.7</a>, which showed two processes that have opened the same file. Although they share the same v-node, each process has its own file table entry.</P>
+<p class="docText">When we pass an open file descriptor from one process to another, we want the passing process and the receiving process to share the same file table entry. <a class="docLink" href="ch17lev1sec4.html#ch17fig18">Figure 17.18</a> shows the desired arrangement.</p>
+<a name="ch17fig18"></a><P><center>
+<H5 class="docFigureTitle">Figure 17.18. Passing an open file from the top process to the bottom process</H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/17fig18_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="388" SRC="images/0201433079/graphics/17fig18.gif;423615"></p>
+</center></P><BR>
+<p class="docText">Technically, we are passing a pointer to an open file table entry from one process to another. This pointer is assigned the first available descriptor in the receiving process. (Saying that we are passing an open descriptor mistakenly gives the impression that the descriptor number in the receiving process is the same as in the sending process, which usually isn't true.) Having two processes share an open file table is exactly what happens after a <tt>fork</tt> (recall <a class="docLink" href="ch08lev1sec3.html#ch08fig02">Figure 8.2</a>).</P>
+<p class="docText">What normally happens when a descriptor is passed from one process to another is that the sending process, after passing the descriptor, then closes the descriptor. Closing the descriptor by the sender doesn't really close the file or device, since the descriptor is still considered open by the receiving process (even if the receiver hasn't specifically received the descriptor yet).</p>
+<p class="docText"><a name="idd1e129294"></a><a name="idd1e129299"></a><a name="idd1e129306"></a><a name="idd1e129311"></a><a name="idd1e129318"></a><a name="idd1e129323"></a><a name="idd1e129330"></a><a name="idd1e129333"></a><a name="idd1e129338"></a><a name="idd1e129341"></a>We define the following three functions that we use in this chapter to send and receive file descriptors. Later in this section, we'll show the code for these three functions for both STREAMS and sockets.</P>
+<p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="250"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include "apue.h"
+
+int send_fd(int <span class="docEmphItalicAlt">fd</span>, int <span class="docEmphItalicAlt">fd_to_send</span>);
+int send_err(int <span class="docEmphItalicAlt">fd</span>, int <span class="docEmphItalicAlt">status</span>, const char *<span class="docEmphItalicAlt">errmsg</span>);</pre><BR>
+</p></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, 1 on error</P></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID1"></a><div class="v1"><a href="ch17lev1sec4.html#PLID1">[View full width]</a></div><pre>
+int recv_fd(int <span class="docEmphItalicAlt">fd</span>, ssize_t (*<span class="docEmphItalicAlt">userfunc</span>)(int, const
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> void *, size_t));</pre><BR>
+</p></TD></tr><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: file descriptor if OK, negative value on error</p></td></tr></table></p><br>
+<p class="docText">A process (normally a server) that wants to pass a descriptor to another process calls either <tt>send_fd</tt> or <tt>send_err</tt>. The process waiting to receive the descriptor (the client) calls <tt>recv_fd</tt>.</p>
+<p class="docText">The <tt>send_fd</tt> function sends the descriptor <span class="docEmphasis">fd_to_send</span> across using the STREAMS pipe or UNIX domain socket represented by <span class="docEmphasis">fd</span>.</p>
+<blockquote>
+<p class="docText">We'll use the term <span class="docEmphasis">s-pipe</span> to refer to a bidirectional communication channel that could be implemented as either a STREAMS pipe or a UNIX domain stream socket.</p>
+</blockquote>
+<p class="docText">The <tt>send_err</tt> function sends the <span class="docEmphasis">errmsg</span> using <span class="docEmphasis">fd</span>, followed by the <span class="docEmphasis">status</span> byte. The value of <span class="docEmphasis">status</span> must be in the range 1 through 255.</p>
+<p class="docText">Clients call <tt>recv_fd</tt> to receive a descriptor. If all is OK (the sender called <tt>send_fd</tt>), the non-negative descriptor is returned as the value of the function. Otherwise, the value returned is the <span class="docEmphasis">status</span> that was sent by <tt>send_err</tt> (a negative value in the range 1 through -255). Additionally, if an error message was sent by the server, the client's <span class="docEmphasis">userfunc</span> is called to process the message. The first argument to <span class="docEmphasis">userfunc</span> is the constant <tt>STDERR_FILENO</tt>, followed by a pointer to the error message and its length. The return value from <span class="docEmphasis">userfunc</span> is the number of bytes written or a negative number on error. Often, the client specifies the normal <tt>write</tt> function as the <span class="docEmphasis">userfunc</span>.</p>
+<p class="docText">We implement our own protocol that is used by these three functions. To send a descriptor, <tt>send_fd</tt> sends two bytes of 0, followed by the actual descriptor. To send an error, <tt>send_err</tt> sends the <span class="docEmphasis">errmsg</span>, followed by a byte of 0, followed by the absolute value of the <span class="docEmphasis">status</span> byte (1 through 255). The <tt>recv_fd</tt> function reads everything on the s-pipe until it encounters a null byte. Any characters read up to this point are passed to the caller's <span class="docEmphasis">userfunc</span>. The next byte read by <tt>recv_fd</tt> is the status byte. If the status byte is 0, a descriptor was passed; otherwise, there is no descriptor to receive.</p>
+<p class="docText">The function <tt>send_err</tt> calls the <tt>send_fd</tt> function after writing the error message to the s-pipe. This is shown in <a class="docLink" href="ch17lev1sec4.html#ch17fig19">Figure 17.19</a>.</p>
+<a name="ch17fig19"></a>
+<h5 class="docExampleTitle">Figure 17.19. The <tt>send_err</tt> function</h5>
+
+<pre>
+#include "apue.h"
+/*
+ * Used when we had planned to send an fd using send_fd(),
+ * but encountered an error instead. We send the error back
+ * using the send_fd()/recv_fd() protocol.
+ */
+int
+send_err(int fd, int errcode, const char *msg)
+{
+    int     n;
+
+    if ((n = strlen(msg)) &gt; 0)
+        if (writen(fd, msg, n) != n)    /* send the error message */
+            return(-1);
+
+    if (errcode &gt;= 0)
+        errcode = -1;   /* must be negative */
+
+    if (send_fd(fd, errcode) &lt; 0)
+        return(-1);
+
+    return(0);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e129562"></a><a name="idd1e129567"></a><a name="idd1e129572"></a><a name="idd1e129577"></a><a name="idd1e129582"></a><a name="idd1e129587"></a><a name="idd1e129592"></a>In the next two sections, we'll look at the implementation of the <tt>send_fd</tt> and <tt>recv_fd</tt> functions.</p>
+<a name="ch17lev2sec5"></a>
+<H4 class="docSection2Title">17.4.1. Passing File Descriptors over STREAMS-Based Pipes</H4>
+<p class="docText">With STREAMS pipes, file descriptors are exchanged using two <tt>ioctl</tt> commands: <tt>I_SENDFD</tt> and <tt>I_RECVFD</tt>. To send a descriptor, we set the third argument for <tt>ioctl</tt> to the actual descriptor. This is shown in <a class="docLink" href="ch17lev1sec4.html#ch17fig20">Figure 17.20</a>.</p>
+<a name="ch17fig20"></a>
+<H5 class="docExampleTitle">Figure 17.20. The <tt>send_fd</tt> function for STREAMS pipes</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;stropts.h&gt;
+
+/*
+ * Pass a file descriptor to another process.
+ * If fd&lt;0, then -fd is sent back instead as the error status.
+ */
+int
+send_fd(int fd, int fd_to_send)
+{
+    char    buf[2];     /* send_fd()/recv_fd() 2-byte protocol */
+    
+    buf[0] = 0;         /* null byte flag to recv_fd() */
+    if (fd_to_send &lt; 0) {
+        buf[1] = -fd_to_send;   /* nonzero status means error */
+        if (buf[1] == 0)
+            buf[1] = 1; /* -256, etc. would screw up protocol */
+    } else {
+        buf[1] = 0;     /* zero status means OK */
+    }
+
+    if (write(fd, buf, 2) != 2)
+        return(-1);
+    if (fd_to_send &gt;= 0)
+        if (ioctl(fd, I_SENDFD, fd_to_send) &lt; 0)
+            return(-1);
+    return(0);
+}
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e129660"></a><a name="idd1e129665"></a><a name="idd1e129670"></a><a name="idd1e129675"></a><a name="idd1e129680"></a><a name="idd1e129687"></a><a name="idd1e129692"></a><a name="idd1e129697"></a>When we receive a descriptor, the third argument for <tt>ioctl</tt> is a pointer to a <tt>strrecvfd</tt> structure:</p>
+
+<pre>
+   struct strrecvfd {
+       int    fd;       /* new descriptor */
+       uid_t  uid;      /* effective user ID of sender */
+       gid_t  gid;      /* effective group ID of sender */
+       char   fill[8];
+   };
+</pre><BR>
+
+<p class="docText">The <tt>recv_fd</tt> function reads the STREAMS pipe until the first byte of the 2-byte protocol (the null byte) is received. When we issue the <tt>I_RECVFD ioctl</tt> command, the next message on the stream head's read queue must be a descriptor from an <tt>I_SENDFD</tt> call, or we get an error. This function is shown in <a class="docLink" href="ch17lev1sec4.html#ch17fig21">Figure 17.21</a>.</P>
+<a name="ch17fig21"></a>
+<H5 class="docExampleTitle">Figure 17.21. The <tt>recv_fd</tt> function for STREAMS pipes</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;stropts.h&gt;
+
+/*
+ * Receive a file descriptor from another process (a server).
+ * In addition, any data received from the server is passed
+ * to (*userfunc)(STDERR_FILENO, buf, nbytes). We have a
+ * 2-byte protocol for receiving the fd from send_fd().
+ */
+int
+recv_fd(int fd, ssize_t (*userfunc)(int, const void *, size_t))
+{
+    int                 newfd, nread, flag, status;
+    char                *ptr;
+    char                buf[MAXLINE];
+    struct strbuf       dat;
+    struct strrecvfd    recvfd;
+
+    status = -1;
+    for ( ; ; ) {
+        dat.buf = buf;
+        dat.maxlen = MAXLINE;
+        flag = 0;
+        if (getmsg(fd, NULL, &amp;dat, &amp;flag) &lt; 0)
+            err_sys("getmsg error");
+        nread = dat.len;
+        if (nread == 0) {
+            err_ret("connection closed by server");
+            return(-1);
+        }
+        /*
+         * See if this is the final data with null &amp; status.
+         * Null must be next to last byte of buffer, status
+         * byte is last byte. Zero status means there must
+         * be a file descriptor to receive.
+         */
+        for (ptr = buf; ptr &lt; &amp;buf[nread]; ) {
+            if (*ptr++ == 0) {
+                if (ptr != &amp;buf[nread-1])
+                    err_dump("message format error");
+                 status = *ptr &amp; 0xFF;   /* prevent sign extension */
+                 if (status == 0) {
+                     if (ioctl(fd, I_RECVFD, &amp;recvfd) &lt; 0)
+                         return(-1);
+                     newfd = recvfd.fd;  /* new descriptor */
+                 } else {
+                     newfd = -status;
+                 }
+                 nread -= 2;
+            }
+        }
+        if (nread &gt; 0)
+            if ((*userfunc)(STDERR_FILENO, buf, nread) != nread)
+                 return(-1);
+
+        if (status &gt;= 0)    /* final data has arrived */
+            return(newfd);  /* descriptor, or -status */
+    }
+}
+</pre><BR>
+
+
+
+<a name="ch17lev2sec6"></a>
+<h4 class="docSection2Title">17.4.2. Passing File Descriptors over UNIX Domain Sockets</H4>
+<p class="docText"><a name="idd1e129766"></a><a name="idd1e129771"></a><a name="idd1e129776"></a><a name="idd1e129781"></a><a name="idd1e129786"></a><a name="idd1e129791"></a><a name="idd1e129796"></a>To exchange file descriptors using UNIX domain sockets, we call the <tt>sendmsg</tt>(2) and <tt>recvmsg</tt>(2) functions (<a class="docLink" href="ch16lev1sec5.html#ch16lev1sec5">Section 16.5</a>). Both functions take a pointer to a <tt>msghdr</tt> structure that contains all the information on what to send or receive. The structure on your system might look similar to the following:</P>
+
+<pre>
+    struct msghdr {
+        void         *msg_name;        /* optional address */
+        socklen_t     msg_namelen;     /* address size in bytes */
+        struct iovec *msg_iov;         /* array of I/O buffers */
+        int           msg_iovlen;      /* number of elements in array */
+        void         *msg_control;     /* ancillary data */
+        socklen_t     msg_controllen;  /* number of ancillary bytes */
+        int           msg_flags;       /* flags for received message */
+    };
+</pre><BR>
+
+<p class="docText"><a name="idd1e129821"></a><a name="idd1e129826"></a><a name="idd1e129833"></a><a name="idd1e129838"></a><a name="idd1e129845"></a><a name="idd1e129850"></a><a name="idd1e129855"></a><a name="idd1e129862"></a><a name="idd1e129867"></a><a name="idd1e129874"></a><a name="idd1e129877"></a><a name="idd1e129880"></a><a name="idd1e129885"></a><a name="idd1e129888"></a><a name="idd1e129893"></a><a name="idd1e129898"></a><a name="idd1e129901"></a><a name="idd1e129906"></a>The first two elements are normally used for sending datagrams on a network connection, where the destination address can be specified with each datagram. The next two elements allow us to specify an array of buffers (scatter read or gather write), as we described for the <tt>readv</tt> and <tt>writev</tt> functions (<a class="docLink" href="ch14lev1sec7.html#ch14lev1sec7">Section 14.7</a>). The <tt>msg_flags</tt> field contains flags describing the message received, as summarized in <a class="docLink" href="ch16lev1sec5.html#ch16fig13">Figure 16.13</a>.</p>
+<p class="docText">Two elements deal with the passing or receiving of control information. The <tt>msg_control</tt> field points to a <tt>cmsghdr</tt> (control message header) structure, and the <tt>msg_controllen</tt> field contains the number of bytes of control information.</P>
+
+<pre>
+    struct cmsghdr  {
+        socklen_t   cmsg_len;    /* data byte count, including header */
+        int         cmsg_level;  /* originating protocol */
+        int         cmsg_type;   /* protocol-specific type */
+        /* followed by the actual control message data */
+    };
+</pre><BR>
+
+<p class="docText">To send a file descriptor, we set <tt>cmsg_len</tt> to the size of the <tt>cmsghdr</tt> structure, plus the size of an integer (the descriptor). The <tt>cmsg_level</tt> field is set to <tt>SOL_SOCKET</tt>, and <tt>cmsg_type</tt> is set to <tt>SCM_RIGHTS</tt>, to indicate that we are passing access rights. (<tt>SCM</tt> stands for <span class="docEmphasis">socket-level control message</span>.) Access rights can be passed only across a UNIX domain socket. The descriptor is stored right after the <tt>cmsg_type</tt> field, using the macro <tt>CMSG_DATA</tt> to obtain the pointer to this integer.</p>
+<p class="docText">Three macros are used to access the control data, and one macro is used to help calculate the value to be used for <tt>cmsg_len</tt>.</P>
+<a name="inta20"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;sys/socket.h&gt;
+
+unsigned char *CMSG_DATA(struct cmsghdr *<span class="docEmphItalicAlt">cp</span>);
+</pre><br>
+
+</p></TD></tr><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer to data associated with <tt>cmsghdr</tt> structure</P></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+struct cmsghdr *CMSG_FIRSTHDR(struct msghdr *<span class="docEmphItalicAlt">mp</span>);
+</pre><br>
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer to first <tt>cmsghdr</tt> structure associated <br>with the <tt>msghdr</tt> structure, or <tt>NULL</tt> if none exists</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+struct cmsghdr *CMSG_NXTHDR(struct msghdr *<span class="docEmphItalicAlt">mp</span>,
+                            struct cmsghdr *<span class="docEmphItalicAlt">cp</span>);
+</pre><br>
+</P></TD></tr><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer to next <tt>cmsghdr</tt> structure associated with <BR>the <tt>msghdr</tt> structure given the current <tt>cmsghdr</tt> <br>structure, or <tt>NULL</tt> if we're at the last one</P></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+unsigned int CMSG_LEN(unsigned int <span class="docEmphItalicAlt">nbytes</span>);
+</pre><br>
+</P></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: size to allocate for data object <span class="docEmphasis">nbytes</span> large</P></td></TR></table></P><br>
+<blockquote>
+<p class="docText">The Single UNIX Specification defines the first three macros, but omits <tt>CMSG_LEN</tt>.</p>
+</blockquote>
+<p class="docText">The <tt>CMSG_LEN</tt> macro returns the number of bytes needed to store a data object of size <span class="docEmphasis">nbytes</span>, after adding the size of the <tt>cmsghdr</tt> structure, adjusting for any alignment constraints required by the processor architecture, and rounding up.</p>
+<p class="docText"><a name="idd1e130127"></a><a name="idd1e130132"></a><a name="idd1e130137"></a><a name="idd1e130142"></a><a name="idd1e130147"></a><a name="idd1e130154"></a>The program in <a class="docLink" href="ch17lev1sec4.html#ch17fig22">Figure 17.22</a> is the <tt>send_fd</tt> function for UNIX domain sockets.</p>
+<a name="ch17fig22"></a>
+<H5 class="docExampleTitle">Figure 17.22. The <tt>send_fd</tt> function for UNIX domain sockets</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/socket.h&gt;
+
+/* size of control buffer to send/recv one file descriptor */
+#define CONTROLLEN  CMSG_LEN(sizeof(int))
+
+static struct cmsghdr   *cmptr = NULL;  /* malloc'ed first time */
+
+/*
+ * Pass a file descriptor to another process.
+ * If fd&lt;0, then -fd is sent back instead as the error status.
+ */
+int
+send_fd(int fd, int fd_to_send)
+{
+    struct iovec    iov[1];
+    struct msghdr   msg;
+    char            buf[2]; /* send_fd()/recv_fd() 2-byte protocol */
+
+    iov[0].iov_base = buf;
+    iov[0].iov_len  = 2;
+    msg.msg_iov     = iov;
+    msg.msg_iovlen  = 1;
+    msg.msg_name    = NULL;
+    msg.msg_namelen = 0;
+    if (fd_to_send &lt; 0) {
+        msg.msg_control    = NULL;
+        msg.msg_controllen = 0;
+        buf[1] = -fd_to_send;   /* nonzero status means error */
+        if (buf[1] == 0)
+            buf[1] = 1; /* -256, etc. would screw up protocol */
+    } else {
+        if (cmptr == NULL &amp;&amp; (cmptr = malloc(CONTROLLEN)) == NULL)
+            return(-1);
+        cmptr-&gt;cmsg_level  = SOL_SOCKET;
+        cmptr-&gt;cmsg_type   = SCM_RIGHTS;
+        cmptr-&gt;cmsg_len    = CONTROLLEN;
+        msg.msg_control    = cmptr;
+        msg.msg_controllen = CONTROLLEN;
+        *(int *)CMSG_DATA(cmptr) = fd_to_send;     /* the fd to pass */
+        buf[1] = 0;          /* zero status means OK */
+    }
+    buf[0] = 0;              /* null byte flag to recv_fd() */
+    if (sendmsg(fd, &amp;msg, 0) != 2)
+        return(-1);
+    return(0);
+}
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e130195"></a><a name="idd1e130202"></a>In the <tt>sendmsg</tt> call, we send both the protocol data (the null and the status byte) and the descriptor.</p>
+<p class="docText">To receive a descriptor (<a class="docLink" href="ch17lev1sec4.html#ch17fig23">Figure 17.23</a>), we allocate enough room for a <tt>cmsghdr</tt> structure and a descriptor, set <tt>msg_control</tt> to point to the allocated area, and call <tt>recvmsg</tt>. We use the <tt>CMSG_LEN</tt> macro to calculate the amount of space needed.</P>
+<p class="docText">We read from the socket until we read the null byte that precedes the final status byte. Everything up to this null byte is an error message from the sender. This is shown in <a class="docLink" href="ch17lev1sec4.html#ch17fig23">Figure 17.23</a>.</p>
+<a name="ch17fig23"></a>
+<h5 class="docExampleTitle">Figure 17.23. The <tt>recv_fd</tt> function for UNIX domain sockets</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/socket.h&gt;     /* struct msghdr */
+
+/* size of control buffer to send/recv one file descriptor */
+#define CONTROLLEN  CMSG_LEN(sizeof(int))
+
+static struct cmsghdr   *cmptr = NULL;      /* malloc'ed first time */
+
+/*
+ * Receive a file descriptor from a server process.  Also, any data
+ * received is passed to (*userfunc)(STDERR_FILENO, buf, nbytes).
+ * We have a 2-byte protocol for receiving the fd from send_fd().
+ */
+int
+recv_fd(int fd, ssize_t (*userfunc)(int, const void *, size_t))
+{
+   int             newfd, nr, status;
+   char            *ptr;
+   char            buf[MAXLINE];
+   struct iovec    iov[1];
+   struct msghdr   msg;
+
+   status = -1;
+   for ( ; ; ) {
+       iov[0].iov_base = buf;
+       iov[0].iov_len  = sizeof(buf);
+       msg.msg_iov     = iov;
+       msg.msg_iovlen  = 1;
+       msg.msg_name    = NULL;
+       msg.msg_namelen = 0;
+       if (cmptr == NULL &amp;&amp; (cmptr = malloc(CONTROLLEN)) == NULL)
+           return(-1);
+       msg.msg_control    = cmptr;
+       msg.msg_controllen = CONTROLLEN;
+       if ((nr = recvmsg(fd, &amp;msg, 0)) &lt; 0) {
+           err_sys("recvmsg error");
+       } else if (nr == 0) {
+           err_ret("connection closed by server");
+           return(-1);
+       }
+       /*
+        * See if this is the final data with null &amp; status.  Null
+        * is next to last byte of buffer; status byte is last byte.
+        * Zero status means there is a file descriptor to receive.
+        */
+       for (ptr = buf; ptr &lt; &amp;buf[nr]; ) {
+           if (*ptr++ == 0) {
+               if (ptr != &amp;buf[nr-1])
+                   err_dump("message format error");
+               status = *ptr &amp; 0xFF;  /* prevent sign extension */
+               if (status == 0) {
+                   if (msg.msg_controllen != CONTROLLEN)
+                       err_dump("status = 0 but no fd");
+                   newfd = *(int *)CMSG_DATA(cmptr);
+               } else {
+                   newfd = -status;
+               }
+               nr -= 2;
+           }
+        }
+        if (nr &gt; 0 &amp;&amp; (*userfunc)(STDERR_FILENO, buf, nr) != nr)
+            return(-1);
+        if (status &gt;= 0)    /* final data has arrived */
+            return(newfd);  /* descriptor, or -status */
+   }
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e130269"></a><a name="idd1e130274"></a><a name="idd1e130279"></a><a name="idd1e130282"></a><a name="idd1e130285"></a><a name="idd1e130288"></a><a name="idd1e130291"></a><a name="idd1e130296"></a>Note that we are always prepared to receive a descriptor (we set <tt>msg_control</tt> and <tt>msg_controllen</tt> before each call to <tt>recvmsg</tt>), but only if <tt>msg_controllen</tt> is nonzero on return did we receive a descriptor.</p>
+<p class="docText">When it comes to passing file descriptors, one difference between UNIX domain sockets and STREAMS pipes is that we get the identity of the sending process with STREAMS pipes. Some versions of UNIX domain sockets provide similar functionality, but their interfaces differ.</p>
+<blockquote>
+<p class="docText">FreeBSD 5.2.1 and Linux 2.4.22 provide support for sending credentials over UNIX domain sockets, but they do it differently. Mac OS X 10.3 is derived in part from FreeBSD, but has credential passing disabled. Solaris 9 doesn't support sending credentials over UNIX domain sockets.</p>
+</blockquote>
+<p class="docText">With FreeBSD, credentials are transmitted as a <tt>cmsgcred</tt> structure:</p>
+
+<pre>
+    #define CMGROUP_MAX 16
+    struct cmsgcred {
+        pid_t cmcred_pid;                   /* sender's process ID */
+        uid_t cmcred_uid;                   /* sender's real UID */
+        uid_t cmcred_euid;                  /* sender's effective UID */
+        gid_t cmcred_gid;                   /* sender's real GID */
+        short cmcred_ngroups;               /* number of groups */
+        gid_t cmcred_groups[CMGROUP_MAX];   /* groups */
+    };
+</pre><br>
+
+<p class="docText"><a name="idd1e130333"></a><a name="idd1e130338"></a><a name="idd1e130343"></a><a name="idd1e130348"></a><a name="idd1e130353"></a><a name="idd1e130358"></a><a name="idd1e130363"></a><a name="idd1e130368"></a>When we transmit credentials, we need to reserve space only for the <tt>cmsgcred</tt> structure. The kernel will fill it in for us to prevent an application from pretending to have a different identity.</p>
+<p class="docText">On Linux, credentials are transmitted as a <tt>ucred</tt> structure:</p>
+
+<pre>
+    struct ucred {
+        uint32_t pid;   /* sender's process ID */
+        uint32_t uid;   /* sender's user ID */
+        uint32_t gid;   /* sender's group ID */
+    };
+</pre><br>
+
+<p class="docText">Unlike FreeBSD, Linux requires that we initialize this structure before transmission. The kernel will ensure that applications either use values that correspond to the caller or have the appropriate privilege to use other values.</p>
+<p class="docText"><a class="docLink" href="ch17lev1sec4.html#ch17fig24">Figure 17.24</a> shows the <tt>send_fd</tt> function updated to include the credentials of the sending process.</p>
+<a name="ch17fig24"></a>
+<h5 class="docExampleTitle">Figure 17.24. Sending credentials over UNIX domain sockets</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/socket.h&gt;
+
+#if defined(SCM_CREDS)          /* BSD interface */
+#define CREDSTRUCT      cmsgcred
+#define SCM_CREDTYPE    SCM_CREDS
+#elif defined(SCM_CREDENTIALS)  /* Linux interface */
+#define CREDSTRUCT      ucred
+#define SCM_CREDTYPE    SCM_CREDENTIALS
+#else
+#error passing credentials is unsupported!
+#endif
+
+/* size of control buffer to send/recv one file descriptor */
+#define RIGHTSLEN   CMSG_LEN(sizeof(int))
+#define CREDSLEN    CMSG_LEN(sizeof(struct CREDSTRUCT))
+#define CONTROLLEN  (RIGHTSLEN + CREDSLEN)
+
+static struct cmsghdr   *cmptr = NULL;  /* malloc'ed first time */
+
+/*
+ * Pass a file descriptor to another process.
+ * If fd&lt;0, then -fd is sent back instead as the error status.
+ */
+int
+send_fd(int fd, int fd_to_send)
+{
+    struct CREDSTRUCT   *credp;
+    struct cmsghdr      *cmp;
+    struct iovec        iov[1];
+    struct msghdr       msg;
+    char                buf[2]; /* send_fd/recv_ufd 2-byte protocol */
+
+    iov[0].iov_base = buf;
+    iov[0].iov_len =  2;
+    msg.msg_iov     = iov;
+    msg.msg_iovlen =  1;
+    msg.msg_name    = NULL;
+    msg.msg_namelen = 0;
+    msg.msg_flags = 0;
+    if (fd_to_send &lt; 0) {
+        msg.msg_control    = NULL;
+        msg.msg_controllen = 0;
+        buf[1] = -fd_to_send;   /* nonzero status means error */
+        if (buf[1] == 0)
+            buf[1] = 1; /* -256, etc. would screw up protocol */
+    } else {
+        if (cmptr == NULL &amp;&amp; (cmptr = malloc(CONTROLLEN)) == NULL)
+            return(-1);
+        msg.msg_control    = cmptr;
+        msg.msg_controllen = CONTROLLEN;
+        cmp = cmptr;
+        cmp-&gt;cmsg_level =  SOL_SOCKET;
+        cmp-&gt;cmsg_type   = SCM_RIGHTS;
+        cmp-&gt;cmsg_len    = RIGHTSLEN;
+        *(int *)CMSG_DATA(cmp) = fd_to_send;   /* the fd to pass */
+
+        cmp = CMSG_NXTHDR(&amp;msg, cmp);
+        cmp-&gt;cmsg_level =  SOL_SOCKET;
+        cmp-&gt;cmsg_type   = SCM_CREDTYPE;
+        cmp-&gt;cmsg_len    = CREDSLEN;
+        credp = (struct CREDSTRUCT *)CMSG_DATA(cmp);
+#if defined(SCM_CREDENTIALS)
+        credp-&gt;uid = geteuid();
+        credp-&gt;gid = getegid();
+        credp-&gt;pid = getpid();
+#endif
+        buf[1] = 0;     /* zero status means OK */
+    }
+    buf[0] = 0;         /* null byte flag to recv_ufd() */
+    if (sendmsg(fd, &amp;msg, 0) != 2)
+        return(-1);
+    return(0);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e130429"></a><a name="idd1e130434"></a><a name="idd1e130439"></a><a name="idd1e130444"></a><a name="idd1e130449"></a><a name="idd1e130454"></a><a name="idd1e130459"></a><a name="idd1e130464"></a><a name="idd1e130469"></a><a name="idd1e130474"></a><a name="idd1e130479"></a><a name="idd1e130484"></a>Note that we need to initialize the credentials structure only on Linux.</P>
+<p class="docText">The function in <a class="docLink" href="ch17lev1sec4.html#ch17fig25">Figure 17.25</a> is a modified version of <tt>recv_fd</tt>, called <tt>recv_ufd</tt>, that returns the user ID of the sender through a reference parameter.</P>
+<a name="ch17fig25"></a>
+<h5 class="docExampleTitle">Figure 17.25. Receiving credentials over UNIX domain sockets</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/socket.h&gt;     /* struct msghdr */
+#include &lt;sys/un.h&gt;
+
+#if defined(SCM_CREDS)          /* BSD interface */
+#define CREDSTRUCT      cmsgcred
+#define CR_UID          cmcred_uid
+#define CREDOPT         LOCAL_PEERCRED
+#define SCM_CREDTYPE    SCM_CREDS
+#elif defined(SCM_CREDENTIALS)  /* Linux interface */
+#define CREDSTRUCT      ucred
+#define CR_UID          uid
+#define CREDOPT         SO_PASSCRED
+#define SCM_CREDTYPE    SCM_CREDENTIALS
+#else
+#error passing credentials is unsupported!
+#endif
+
+/* size of control buffer to send/recv one file descriptor */
+#define RIGHTSLEN   CMSG_LEN(sizeof(int))
+#define CREDSLEN    CMSG_LEN(sizeof(struct CREDSTRUCT))
+#define CONTROLLEN  (RIGHTSLEN + CREDSLEN)
+
+static struct cmsghdr   *cmptr = NULL;      /* malloc'ed first time */
+
+/*
+ * Receive a file descriptor from a server process.  Also, any data
+ * received is passed to (*userfunc)(STDERR_FILENO, buf, nbytes).
+ * We have a 2-byte protocol for receiving the fd from send_fd().
+ */
+int
+recv_ufd(int fd, uid_t *uidptr,
+         ssize_t (*userfunc)(int, const void *, size_t))
+{
+    struct cmsghdr      *cmp;
+    struct CREDSTRUCT   *credp;
+    int                 newfd, nr, status;
+    char                *ptr;
+    char                buf[MAXLINE];
+    struct iovec        iov[1];
+    struct msghdr       msg;
+    const int           on = 1;
+
+    status = -1;
+    newfd = -1;
+    if (setsockopt(fd, SOL_SOCKET, CREDOPT, &amp;on, sizeof(int)) &lt; 0) {
+        err_ret("setsockopt failed");
+        return(-1);
+    }
+    for ( ; ; ) {
+        iov[0].iov_base = buf;
+        iov[0].iov_len  = sizeof(buf);
+        msg.msg_iov     = iov;
+        msg.msg_iovlen  = 1;
+        msg.msg_name    = NULL;
+        msg.msg_namelen = 0;
+        if (cmptr == NULL &amp;&amp; (cmptr = malloc(CONTROLLEN)) == NULL)
+            return(-1);
+        msg.msg_control    = cmptr;
+        msg.msg_controllen = CONTROLLEN;
+        if ((nr = recvmsg(fd, &amp;msg, 0)) &lt; 0) {
+            err_sys("recvmsg error");
+        } else if (nr == 0) {
+            err_ret("connection closed by server");
+            return(-1);
+        }
+        /*
+         * See if this is the final data with null &amp; status.  Null
+         * is next to last byte of buffer; status byte is last byte.
+         * Zero status means there is a file descriptor to receive.
+         */
+        for (ptr = buf; ptr &lt; &amp;buf[nr]; ) {
+            if (*ptr++ == 0) { 
+                if (ptr != &amp;buf[nr-1])
+                    err_dump("message format error");
+                status = *ptr &amp; 0xFF;   /* prevent sign extension */
+                if (status == 0) {
+                    if (msg.msg_controllen != CONTROLLEN)
+                        err_dump("status = 0 but no fd");
+  
+                    /* process the control data */
+                    for (cmp = CMSG_FIRSTHDR(&amp;msg);
+                      cmp != NULL; cmp = CMSG_NXTHDR(&amp;msg, cmp)) {
+                        if (cmp-&gt;cmsg_level != SOL_SOCKET)
+                            continue;
+                        switch (cmp-&gt;cmsg_type) {
+                        case SCM_RIGHTS:
+                            newfd = *(int *)CMSG_DATA(cmp);
+                            break;
+                        case SCM_CREDTYPE:
+                            credp = (struct CREDSTRUCT *)CMSG_DATA(cmp);
+                            *uidptr = credp-&gt;CR_UID;
+                        }
+                    }
+                } else {
+                    newfd = -status;
+                }
+                nr -= 2;
+             }
+         }
+         if (nr &gt; 0 &amp;&amp; (*userfunc)(STDERR_FILENO, buf, nr) != nr)
+             return(-1);
+         if (status &gt;= 0)    /* final data has arrived */
+             return(newfd);  /* descriptor, or -status */
+    }
+}
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e130533"></a><a name="idd1e130538"></a><a name="idd1e130543"></a><a name="idd1e130548"></a><a name="idd1e130553"></a><a name="idd1e130558"></a><a name="idd1e130565"></a><a name="idd1e130570"></a><a name="idd1e130575"></a><a name="idd1e130580"></a><a name="idd1e130585"></a><a name="idd1e130590"></a><a name="idd1e130595"></a><a name="idd1e130598"></a><a name="idd1e130601"></a><a name="idd1e130606"></a><a name="idd1e130611"></a>On FreeBSD, we specify <tt>SCM_CREDS</tt> to transmit credentials; on Linux, we use <tt>SCM_CREDENTIALS</tt>.</P>
+
+
+<ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch17lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch17lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

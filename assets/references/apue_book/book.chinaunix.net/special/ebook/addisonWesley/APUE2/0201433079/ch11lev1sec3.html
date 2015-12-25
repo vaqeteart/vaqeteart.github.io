@@ -1,0 +1,56 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 11.3.&nbsp; Thread Identification</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch11lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch11lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch11lev1sec3"></a>
+<h3 class="docSection1Title">11.3. Thread Identification</h3>
+<p class="docText">Just as every process has a process ID, every thread has a thread ID. Unlike the process ID, which is unique in the system, the thread ID has significance only within the context of the process to which it belongs.</P>
+<p class="docText">Recall that a process ID, represented by the <tt>pid_t</tt> data type, is a non-negative integer. A thread ID is represented by the <tt>pthread_t</tt> data type. Implementations are allowed to use a structure to represent the <tt>pthread_t</tt> data type, so portable implementations can't treat them as integers. Therefore, a function must be used to compare two thread IDs.</P>
+<a name="inta211"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e82154"></a><a name="idd1e82157"></a><a name="idd1e82160"></a><a name="idd1e82163"></a><a name="idd1e82168"></a><a name="idd1e82173"></a><a name="idd1e82180"></a><a name="idd1e82185"></a><a name="idd1e82192"></a><a name="idd1e82197"></a><a name="idd1e82204"></a><a name="idd1e82209"></a><a name="idd1e82212"></a>
+<pre>
+#include &lt;pthread.h&gt;
+
+int pthread_equal(pthread_t <span class="docEmphItalicAlt">tid1</span>, pthread_t <span class="docEmphItalicAlt">tid2</span>);
+</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: nonzero if equal, 0 otherwise</P></td></TR></table></P><BR>
+<blockquote>
+<p class="docText">Linux 2.4.22 uses an unsigned long integer for the <tt>pthread_t</tt> data type. Solaris 9 represents the <tt>pthread_t</tt> data type as an unsigned integer. FreeBSD 5.2.1 and Mac OS X 10.3 use a pointer to the <tt>pthread</tt> structure for the <tt>pthread_t</tt> data type.</p>
+</blockquote>
+<p class="docText">A consequence of allowing the <tt>pthread_t</tt> data type to be a structure is that there is no portable way to print its value. Sometimes, it is useful to print thread IDs during program debugging, but there is usually no need to do so otherwise. At worst, this results in nonportable debug code, so it is not much of a limitation.</P>
+<p class="docText">A thread can obtain its own thread ID by calling the <tt>pthread_self</tt> function.</P>
+<a name="inta213"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;pthread.h&gt;
+
+pthread_t pthread_self(void);
+</pre><br>
+
+</p></td></tr><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: the thread ID of the calling thread</P></td></TR></table></p><br>
+<p class="docText">This function can be used with <tt>pthread_equal</tt> when a thread needs to identify data structures that are tagged with its thread ID. For example, a master thread might place work assignments on a queue and use the thread ID to control which jobs go to each worker thread. This is illustrated in <a class="docLink" href="ch11lev1sec3.html#ch11fig01">Figure 11.1</a>. A single master thread places new jobs on a work queue. A pool of three worker threads removes jobs from the queue. Instead of allowing each thread to process whichever job is at the head of the queue, the master thread controls job assignment by placing the ID of the thread that should process the job in each job structure. Each worker thread then removes only jobs that are tagged with its own thread ID.</p>
+<a name="ch11fig01"></a><p><center>
+<h5 class="docFigureTitle">Figure 11.1. Work queue example</h5>
+
+<p class="docText">
+<img border="0" alt="" width="500" height="322" SRC="images/0201433079/graphics/11fig01.gif;423615"></p>
+
+</center></p><br>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch11lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch11lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

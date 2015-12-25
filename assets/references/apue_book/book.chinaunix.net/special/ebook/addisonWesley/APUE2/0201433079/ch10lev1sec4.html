@@ -1,0 +1,71 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 10.4.&nbsp; Unreliable Signals</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch10lev1sec4"></a>
+<h3 class="docSection1Title">10.4. Unreliable Signals</h3>
+<p class="docText">In earlier versions of the UNIX System (such as Version 7), signals were unreliable. By this we mean that signals could get lost: a signal could occur and the process would never know about it. Also, a process had little control over a signal: a process could catch the signal or ignore it. Sometimes, we would like to tell the kernel to block a signal: don't ignore it, just remember if it occurs, and tell us later when we're ready.</P>
+<blockquote>
+<p class="docText">Changes were made with 4.2BSD to provide what are called <span class="docEmphasis">reliable signals</span>. A different set of changes was then made in SVR3 to provide reliable signals under System V. POSIX.1 chose the BSD model to standardize.</P>
+</blockquote>
+<p class="docText">One problem with these early versions is that the action for a signal was reset to its default each time the signal occurred. (In the previous example, when we ran the program in <a class="docLink" href="ch10lev1sec3.html#ch10fig02">Figure 10.2</a>, we avoided this detail by catching each signal only once.) The classic example from programming books that described these earlier systems concerns how to handle the interrupt signal. The code that was described usually looked like</p>
+
+<pre>
+         int     sig_int();        /* my signal handling function */
+
+         ...
+         signal(SIGINT, sig_int);  /* establish handler */
+         ...
+
+     sig_int()
+     {
+         signal(SIGINT, sig_int);  /* reestablish handler for next time */
+         ...                       /* process the signal ... */
+     }
+</pre><BR>
+
+<p class="docText">(The reason the signal handler is declared as returning an integer is that these early systems didn't support the ISO C <tt>void</tt> data type.)</P>
+<p class="docText">The problem with this code fragment is that there is a window of timeafter the signal has occurred, but before the call to <tt>signal</tt> in the signal handlerwhen the interrupt signal could occur another time. This second signal would cause the default action to occur, which for this signal terminates the process. This is one of those conditions that works correctly most of the time, causing us to think that it is correct, when it isn't.</P>
+<p class="docText">Another problem with these earlier systems is that the process was unable to turn a signal off when it didn't want the signal to occur. All the process could do was ignore the signal. There are times when we would like to tell the system &quot;prevent the following signals from occurring, but remember if they do occur.&quot; The classic example that demonstrates this flaw is shown by a piece of code that catches a signal and sets a flag for the process that indicates that the signal occurred:</p>
+
+<pre>
+      int     sig_int_flag;         /* set nonzero when signal occurs */
+
+      main()
+      {
+          int      sig_int();       /* my signal handling function */
+          ...
+          signal(SIGINT, sig_int);  /* establish handler */
+          ...
+          while (sig_int_flag == 0)
+              pause();              /* go to sleep, waiting for signal */
+          ...
+      }
+
+      sig_int()
+      {
+          signal(SIGINT, sig_int);  /* reestablish handler for next time */
+          sig_int_flag = 1;         /* set flag for main loop to examine */
+      }
+</pre><BR>
+
+<p class="docText"><a name="idd1e70944"></a><a name="idd1e70949"></a><a name="idd1e70954"></a><a name="idd1e70957"></a><a name="idd1e70962"></a><a name="idd1e70965"></a><a name="idd1e70970"></a><a name="idd1e70975"></a>Here, the process is calling the <tt>pause</tt> function to put it to sleep until a signal is caught. When the signal is caught, the signal handler just sets the flag <tt>sig_int_flag</tt> to a nonzero value. The process is automatically awakened by the kernel after the signal handler returns, notices that the flag is nonzero, and does whatever it needs to do. But there is a window of time when things can go wrong. If the signal occurs after the test of <tt>sig_int_flag</tt>, but before the call to <tt>pause</tt>, the process could go to sleep forever (assuming that the signal is never generated again). This occurrence of the signal is lost. This is another example of some code that isn't right, yet it works most of the time. Debugging this type of problem can be difficult.</P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

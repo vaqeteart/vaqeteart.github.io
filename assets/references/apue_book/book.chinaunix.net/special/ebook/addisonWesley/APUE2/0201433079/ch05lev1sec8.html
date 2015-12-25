@@ -1,0 +1,82 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 5.8.&nbsp; Standard I/O Efficiency</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch05lev1sec8"></a>
+<h3 class="docSection1Title">5.8. Standard I/O Efficiency</h3>
+<p class="docText">Using the functions from the previous section, we can get an idea of the efficiency of the standard I/O system. The program in <a class="docLink" href="ch05lev1sec8.html#ch05fig04">Figure 5.4</a> is like the one in <a class="docLink" href="ch03lev1sec9.html#ch03fig04">Figure 3.4</a>: it simply copies standard input to standard output, using <tt>getc</tt> and <tt>putc</tt>. These two routines can be implemented as macros.</P>
+<a name="ch05fig04"></a>
+<H5 class="docExampleTitle">Figure 5.4. Copy standard input to standard output using <tt>getc</tt> and <tt>putc</tt></h5>
+
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+     int     c;
+
+     while ((c = getc(stdin)) != EOF)
+         if (putc(c, stdout) == EOF)
+             err_sys("output error");
+
+     if (ferror(stdin))
+         err_sys("input error");
+
+     exit(0);
+}
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e37620"></a><a name="idd1e37625"></a><a name="idd1e37630"></a><a name="idd1e37635"></a><a name="idd1e37640"></a><a name="idd1e37645"></a><a name="idd1e37650"></a><a name="idd1e37655"></a><a name="idd1e37660"></a>We can make another version of this program that uses <tt>fgetc</tt> and <tt>fputc</tt>, which should be functions, not macros. (We don't show this trivial change to the source code.)</P>
+<p class="docText">Finally, we have a version that reads and writes lines, shown in <a class="docLink" href="ch05lev1sec8.html#ch05fig05">Figure 5.5</a>.</P>
+<a name="ch05fig05"></a>
+<h5 class="docExampleTitle">Figure 5.5. Copy standard input to standard output using <tt>fgets</tt> and <tt>fputs</tt></H5>
+
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+    char    buf[MAXLINE];
+
+    while (fgets(buf, MAXLINE, stdin) != NULL)
+        if (fputs(buf, stdout) == EOF)
+            err_sys("output error");
+
+    if (ferror(stdin))
+        err_sys("input error");
+
+    exit(0);
+}
+</pre><BR>
+
+
+<p class="docText">Note that we do not close the standard I/O streams explicitly in <a class="docLink" href="ch05lev1sec8.html#ch05fig04">Figure 5.4</a> or <a class="docLink" href="ch05lev1sec8.html#ch05fig05">Figure 5.5</a>. Instead, we know that the <tt>exit</tt> function will flush any unwritten data and then close all open streams. (We'll discuss this in <a class="docLink" href="ch08lev1sec5.html#ch08lev1sec5">Section 8.5</a>.) It is interesting to compare the timing of these three programs with the timing data from <a class="docLink" href="ch03lev1sec9.html#ch03fig05">Figure 3.5</a>. We show this data when operating on the same file (98.5 MB with 3 million lines) in <a class="docLink" href="ch05lev1sec8.html#ch05fig06">Figure 5.6</a>.</P>
+<a name="ch05fig06"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 5.6. Timing results using standard I/O routines</h5></caption><colgroup><col width="200"><col width="70"><col width="90"><col width="90"><col width="90"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Function</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">User CPU (seconds)</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">System CPU (seconds)</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Clock time (seconds)</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Bytes of program text</span></P></th></tr></thead><TR><TD class="rightBorder" align="left" valign="top"><p class="docText">best time from <a class="docLink" href="ch03lev1sec9.html#ch03fig05">Figure 3.5</a></p></td><td class="rightBorder" align="right" valign="top"><p class="docText">0.01</p></TD><td class="rightBorder" align="right" valign="top"><p class="docText">0.18</P></td><TD class="rightBorder" align="right" valign="top"><p class="docText">6.67</p></td><td class="docTableCell" align="left" valign="top">&nbsp;</td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>fgets</tt>, <tt>fputs</tt></p></td><td class="rightBorder" align="right" valign="top"><p class="docText">2.59</p></td><td class="rightBorder" align="right" valign="top"><p class="docText">0.19</p></td><td class="rightBorder" align="right" valign="top"><p class="docText">7.15</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">139</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>getc</tt>, <tt>putc</tt></P></TD><TD class="rightBorder" align="right" valign="top"><p class="docText">10.84</p></TD><td class="rightBorder" align="right" valign="top"><p class="docText">0.27</P></TD><TD class="rightBorder" align="right" valign="top"><p class="docText">12.07</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">120</p></TD></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>fgetc</tt>, <tt>fputc</tt></p></td><TD class="rightBorder" align="right" valign="top"><p class="docText">10.44</p></TD><td class="rightBorder" align="right" valign="top"><p class="docText">0.27</P></td><td class="rightBorder" align="right" valign="top"><p class="docText">11.42</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">120</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">single byte time from <a class="docLink" href="ch03lev1sec9.html#ch03fig05">Figure 3.5</a></p></td><td class="rightBorder" align="right" valign="top"><p class="docText">124.89</p></td><td class="rightBorder" align="right" valign="top"><p class="docText">161.65</p></TD><TD class="rightBorder" align="right" valign="top"><p class="docText">288.64</p></TD><TD class="docTableCell" align="left" valign="top">&nbsp;</TD></tr></table></P><BR>
+<p class="docText">For each of the three standard I/O versions, the user CPU time is larger than the best <tt>read</tt> version from <a class="docLink" href="ch03lev1sec9.html#ch03fig05">Figure 3.5</a>, because the character-at-a-time standard I/O versions have a loop that is executed 100 million times, and the loop in the line-at-a-time version is executed 3,144,984 times. In the <tt>read</tt> version, its loop is executed only 12,611 times (for a buffer size of 8,192). This difference in clock times is from the difference in user times and the difference in the times spent waiting for I/O to complete, as the system times are comparable.</P>
+<p class="docText">The system CPU time is about the same as before, because roughly the same number of kernel requests are being made. Note that an advantage of using the standard I/O routines is that we don't have to worry about buffering or choosing the <a name="idd1e37929"></a><a name="idd1e37934"></a><a name="idd1e37939"></a><a name="idd1e37944"></a><a name="idd1e37947"></a><a name="idd1e37952"></a><a name="idd1e37957"></a><a name="idd1e37962"></a><a name="idd1e37965"></a>optimal I/O size. We do have to determine the maximum line size for the version that uses <tt>fgets</tt>, but that's easier than trying to choose the optimal I/O size.</p>
+<p class="docText">The final column in <a class="docLink" href="ch05lev1sec8.html#ch05fig06">Figure 5.6</a> is the number of bytes of text spacethe machine instructions generated by the C compilerfor each of the <tt>main</tt> functions. We can see that the version using <tt>getc</tt> and <tt>putc</tt> takes the same amount of space as the one using the <tt>fgetc</tt> and <tt>fputc</tt> functions. Usually, <tt>getc</tt> and <tt>putc</tt> are implemented as macros, but in the GNU C library implementation, the macro simply expands to a function call.</P>
+<p class="docText">The version using line-at-a-time I/O is almost twice as fast as the version using character-at-a-time I/O. If the <tt>fgets</tt> and <tt>fputs</tt> functions are implemented using <tt>getc</tt> and <tt>putc</tt> (see <a class="docLink" href="ch07lev1sec7.html#ch07lev1sec7">Section 7.7</a> of Kernighan and Ritchie [<a class="docLink" href="bib01.html#biblio01_003">1988</a>], for example), then we would expect the timing to be similar to the <tt>getc</tt> version. Actually, we might expect the line-at-a-time version to take longer, since we would be adding the overhead of 200 million extra function calls to the existing 6 million ones. What is happening with this example is that the line-at-a-time functions are implemented using <tt>memccpy</tt>(3). Often, the <tt>memccpy</tt> function is implemented in assembler instead of C, for efficiency.</p>
+<p class="docText">The last point of interest with these timing numbers is that the <tt>fgetc</tt> version is so much faster than the <tt>BUFFSIZE=1</tt> version from <a class="docLink" href="ch03lev1sec9.html#ch03fig05">Figure 3.5</a>. Both involve the same number of function callsabout 200 millionyet the <tt>fgetc</tt> version is almost 12 times faster in user CPU time and slightly more than 25 times faster in clock time. The difference is that the version using <tt>read</tt> executes 200 million function calls, which in turn execute 200 million system calls. With the <tt>fgetc</tt> version, we still execute 200 million function calls, but this ends up being only 25,222 system calls. System calls are usually much more expensive than ordinary function calls.</P>
+<p class="docText">As a disclaimer, you should be aware that these timing results are valid only on the single system they were run on. The results depend on many implementation features that aren't the same on every UNIX system. Nevertheless, having a set of numbers such as these, and explaining why the various versions differ, helps us understand the system better. From this section and <a class="docLink" href="ch03lev1sec9.html#ch03lev1sec9">Section 3.9</a>, we've learned that the standard I/O library is not much slower than calling the <tt>read</tt> and <tt>write</tt> functions directly. The approximate cost that we've seen is about 0.11 seconds of CPU time to copy a megabyte of data using <tt>getc</tt> and <tt>putc</tt>. For most nontrivial applications, the largest amount of the user CPU time is taken by the application, not by the standard I/O routines.</P>
+
+<UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

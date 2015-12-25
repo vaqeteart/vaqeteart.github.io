@@ -1,0 +1,140 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 1.6.&nbsp; Programs and Processes</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch01lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch01lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch01lev1sec6"></a>
+<h3 class="docSection1Title">1.6. Programs and Processes</h3>
+<a name="ch01lev2sec12"></a>
+<H4 class="docSection2Title">Program</H4>
+<p class="docText">A <span class="docEmphasis">program</span> is an executable file residing on disk in a directory. A program is read into memory and is executed by the kernel as a result of one of the six <tt>exec</tt> functions. We'll cover these functions in <a class="docLink" href="ch08lev1sec10.html#ch08lev1sec10">Section 8.10</a>.</p>
+
+<a name="ch01lev2sec13"></a>
+<H4 class="docSection2Title">Processes and Process ID</H4>
+<p class="docText">An executing instance of a program is called a <span class="docEmphasis">process</span>, a term used on almost every page of this text. Some operating systems use the term <span class="docEmphasis">task</span> to refer to a program that is being executed.</P>
+<p class="docText">The UNIX System guarantees that every process has a unique numeric identifier called the <span class="docEmphasis">process ID</span>. The process ID is always a non-negative integer.</p>
+<a name="ch01ex04"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText"><a name="idd1e3222"></a><a name="idd1e3227"></a><a name="idd1e3232"></a><a name="idd1e3237"></a><a name="idd1e3242"></a><a name="idd1e3247"></a><a name="idd1e3252"></a>The program in <a class="docLink" href="ch01lev1sec6.html#ch01fig06">Figure 1.6</a> prints its process ID.</P>
+<p class="docText">If we compile this program into the file <tt>a.out</tt> and execute it, we have</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+   hello world from process ID 851
+   $ <span class="docEmphStrong">./a.out</span>
+   hello world from process ID 854
+</pre><BR>
+
+<p class="docText">When this program runs, it calls the function <tt>getpid</tt> to obtain its process ID.</p>
+
+<a name="ch01fig06"></a>
+<H5 class="docExampleTitle">Figure 1.6. Print the process ID</H5>
+
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+    printf("hello world from process ID %d\n", getpid());
+    exit(0);
+}
+</pre><BR>
+
+
+
+<a name="ch01lev2sec14"></a>
+<h4 class="docSection2Title">Process Control</H4>
+<p class="docText">There are three primary functions for process control: <tt>fork</tt>, <tt>exec</tt>, and <tt>waitpid</tt>. (The <tt>exec</tt> function has six variants, but we often refer to them collectively as simply the <tt>exec</tt> function.)</P>
+<a name="ch01ex05"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText">The process control features of the UNIX System are demonstrated using a simple program (<a class="docLink" href="ch01lev1sec6.html#ch01fig07">Figure 1.7</a>) that reads commands from standard input and executes the commands. This is a bare-bones implementation of a shell-like program. There are several features to consider in this 30-line program.</P>
+<ul><li><p class="docList">We use the standard I/O function <tt>fgets</tt> to read one line at a time from the standard input. When we type the end-of-file character (which is often Control-D) as the first character of a line, <tt>fgets</tt> returns a null pointer, the loop stops, and the process terminates. In <a class="docLink" href="ch18.html#ch18">Chapter 18</a>, we describe all the special terminal charactersend of file, backspace one character, erase entire line, and so onand how to change them.</p></li><LI><p class="docList">Because each line returned by <tt>fgets</tt> is terminated with a newline character, followed by a null byte, we use the standard C function <tt>strlen</tt> to calculate the length of the string, and then replace the newline with a null byte. We do this because the <tt>execlp</tt> function wants a null-terminated argument, not a newline-terminated argument.</p></LI><li><p class="docList">We call <tt>fork</tt> to create a new process, which is a copy of the caller. We say that the caller is the parent and that the newly created process is the child. Then <tt>fork</tt> returns the non-negative process ID of the new child process to the parent, and returns 0 to the child. Because <tt>fork</tt> creates a new process, we say that it is called onceby the parentbut returns twicein the parent and in the child.</P></li><li><p class="docList">In the child, we call <tt>execlp</tt> to execute the command that was read from the standard input. This replaces the child process with the new program file. The combination of a <tt>fork</tt>, followed by an <tt>exec</tt>, is what some operating systems call spawning a new process. In the UNIX System, the two parts are separated into individual functions. We'll have a lot more to say about these functions in <a class="docLink" href="ch08.html#ch08">Chapter 8</a>.</p></li><li><p class="docList">Because the child calls <tt>execlp</tt> to execute the new program file, the parent wants to wait for the child to terminate. This is done by calling <tt>waitpid</tt>, specifying which process we want to wait for: the <tt>pid</tt> argument, which is the <a name="idd1e3422"></a><a name="idd1e3427"></a><a name="idd1e3432"></a><a name="idd1e3435"></a>process ID of the child. The <tt>waitpid</tt> function also returns the termination status of the childthe <tt>status</tt> variablebut in this simple program, we don't do anything with this value. We could examine it to determine exactly how the child terminated.</p></li><li><p class="docList">The most fundamental limitation of this program is that we can't pass arguments to the command that we execute. We can't, for example, specify the name of a directory to list. We can execute <tt>ls</tt> only on the working directory. To allow arguments would require that we parse the input line, separating the arguments by some convention, probably spaces or tabs, and then pass each argument as a separate argument to the <tt>execlp</tt> function. Nevertheless, this program is still a useful demonstration of the process control functions of the UNIX System.</p></li></ul>
+<p class="docText">If we run this program, we get the following results. Note that our program has a different promptthe percent signto distinguish it from the shell's prompt.</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+   % <span class="docEmphStrong">date</span>
+   Sun Aug 1 03:04:47 EDT 2004            <span class="docEmphItalicAlt">programmers work late</span>
+   % <span class="docEmphStrong">who</span>
+   sar     :0       Jul 26 22:54
+   sar     pts/0    Jul 26 22:54 (:0)
+   sar     pts/1    Jul 26 22:54 (:0)
+   sar     pts/2    Jul 26 22:54 (:0)
+   % <span class="docEmphStrong">pwd</span>
+   /home/sar/bk/apue/2e
+   % <span class="docEmphStrong">ls</span>
+   Makefile
+   a.out
+   shell1.c
+   % <span class="docEmphStrong">^D</span><span class="docEmphasis">                                   type the end-of-file character</span>
+   $                                      <span class="docEmphItalicAlt">the regular shell prompt</span>
+</pre><br>
+
+
+<a name="ch01fig07"></a>
+<h5 class="docExampleTitle">Figure 1.7. Read commands from standard input and execute them</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/wait.h&gt;
+
+int
+main(void)
+{
+    char    buf[MAXLINE];   /* from apue.h */
+    pid_t   pid;
+    int     status;
+
+    printf("%% ");  /* print prompt (printf requires %% to print %) */
+    while (fgets(buf, MAXLINE, stdin) != NULL) {
+        if (buf[strlen(buf) - 1] == "\n")
+            buf[strlen(buf) - 1] = 0; /* replace newline with null */
+
+        if ((pid = fork()) &lt; 0) {
+            err_sys("fork error");
+        } else if (pid == 0) {      /* child */
+            execlp(buf, buf, (char *)0);
+            err_ret("couldn't execute: %s", buf);
+            exit(127);
+        }
+
+        /* parent */
+        if ((pid = waitpid(pid, &amp;status, 0)) &lt; 0)
+            err_sys("waitpid error");
+        printf("%% ");
+    }
+    exit(0);
+}
+</pre><br>
+
+
+<blockquote>
+<p class="docText">The notation <tt>^D</tt> is used to indicate a control character. Control characters are special characters formed by holding down the control keyoften labeled <tt>Control</tt> or <tt>Ctrl</tt>on your keyboard and then pressing another key at the same time. Control-D, or <tt>^D</tt>, is the default end-of-file character. We'll see many more control characters when we discuss terminal I/O in <a class="docLink" href="ch18.html#ch18">Chapter 18</a>.</p>
+</blockquote>
+
+<a name="ch01lev2sec15"></a>
+<H4 class="docSection2Title">Threads and Thread IDs</H4>
+<p class="docText">Usually, a process has only one thread of controlone set of machine instructions executing at a time. Some problems are easier to solve when more than one thread of control can operate on different parts of the problem. Additionally, multiple threads of control can exploit the parallelism possible on multiprocessor systems.</p>
+<p class="docText"><a name="idd1e3550"></a><a name="idd1e3555"></a><a name="idd1e3560"></a><a name="idd1e3565"></a><a name="idd1e3570"></a><a name="idd1e3573"></a>All the threads within a process share the same address space, file descriptors, stacks, and process-related attributes. Because they can access the same memory, the threads need to synchronize access to shared data among themselves to avoid inconsistencies.</P>
+<p class="docText">As with processes, threads are identified by IDs. Thread IDs, however, are local to a process. A thread ID from one process has no meaning in another process. We use thread IDs to refer to specific threads as we manipulate the threads within a process.</P>
+<p class="docText">Functions to control threads parallel those used to control processes. Because threads were added to the UNIX System long after the process model was established, however, the thread model and the process model have some complicated interactions, as we shall see in <a class="docLink" href="ch12.html#ch12">Chapter 12</a>.</P>
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch01lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch01lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

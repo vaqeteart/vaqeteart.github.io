@@ -1,0 +1,198 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 8.6.&nbsp; wait and waitpid Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch08lev1sec6"></a>
+<h3 class="docSection1Title">8.6. <tt>wait</tt> and <tt>waitpid</tt> Functions</h3>
+<p class="docText">When a process terminates, either normally or abnormally, the kernel notifies the parent by sending the <tt>SIGCHLD</tt> signal to the parent. Because the termination of a child is an asynchronous eventit can happen at any time while the parent is runningthis signal is the asynchronous notification from the kernel to the parent. The parent can choose to ignore this signal, or it can provide a function that is called when the signal occurs: a signal handler. The default action for this signal is to be ignored. We describe these options in <a class="docLink" href="ch10.html#ch10">Chapter 10</a>. For now, we need to be aware that a process that calls <tt>wait</tt> or <tt>waitpid</tt> can</P>
+<UL><li><p class="docList">Block, if all of its children are still running</P></LI><LI><p class="docList">Return immediately with the termination status of a child, if a child has terminated and is waiting for its termination status to be fetched</p></LI><LI><p class="docList">Return immediately with an error, if it doesn't have any child processes</P></li></UL>
+<p class="docText">If the process is calling <tt>wait</tt> because it received the <tt>SIGCHLD</tt> signal, we expect <tt>wait</tt> to return immediately. But if we call it at any random point in time, it can block.</p>
+<a name="inta375"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;sys/wait.h&gt;
+
+pid_t wait(int *<span class="docEmphItalicAlt">statloc</span>);
+
+pid_t waitpid(pid_t <span class="docEmphItalicAlt">pid</span>, int *<span class="docEmphItalicAlt">statloc</span>, int <span class="docEmphItalicAlt">options</span>);</pre><br>
+</P></TD></tr><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: process ID if OK, 0 (see later), or 1 on error</p></td></tr></table></p><BR>
+<p class="docText">The differences between these two functions are as follows.</p>
+<UL><li><p class="docList">The <tt>wait</tt> function can block the caller until a child process terminates, whereas <tt>waitpid</tt> has an option that prevents it from blocking.</P></li><li><p class="docList">The <tt>waitpid</tt> function doesn't wait for the child that terminates first; it has a number of options that control which process it waits for.</p></li></ul>
+<p class="docText">If a child has already terminated and is a zombie, <tt>wait</tt> returns immediately with that child's status. Otherwise, it blocks the caller until a child terminates. If the caller blocks and has multiple children, <tt>wait</tt> returns when one terminates. We can always tell which child terminated, because the process ID is returned by the function.</p>
+<p class="docText"><a name="idd1e54972"></a><a name="idd1e54977"></a><a name="idd1e54982"></a><a name="idd1e54985"></a><a name="idd1e54990"></a><a name="idd1e54995"></a><a name="idd1e55000"></a><a name="idd1e55005"></a><a name="idd1e55010"></a><a name="idd1e55015"></a><a name="idd1e55020"></a><a name="idd1e55025"></a><a name="idd1e55030"></a>For both functions, the argument <span class="docEmphasis">statloc</span> is a pointer to an integer. If this argument is not a null pointer, the termination status of the terminated process is stored in the location pointed to by the argument. If we don't care about the termination status, we simply pass a null pointer as this argument.</p>
+<p class="docText">Traditionally, the integer status that these two functions return has been defined by the implementation, with certain bits indicating the exit status (for a normal return), other bits indicating the signal number (for an abnormal return), one bit to indicate whether a core file was generated, and so on. POSIX.1 specifies that the termination status is to be looked at using various macros that are defined in <tt>&lt;sys/wait.h&gt;</tt>. Four mutually exclusive macros tell us how the process terminated, and they all begin with <tt>WIF</tt>. Based on which of these four macros is true, other macros are used to obtain the exit status, signal number, and the like. The four mutually-exclusive macros are shown in <a class="docLink" href="ch08lev1sec5.html#ch08fig04">Figure 8.4</a>.</p>
+<p class="docText">We'll discuss how a process can be stopped in <a class="docLink" href="ch09lev1sec8.html#ch09lev1sec8">Section 9.8</a> when we discuss job control.</p>
+<a name="ch08ex03"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">The function <tt>pr_exit</tt> in <a class="docLink" href="ch08lev1sec6.html#ch08fig05">Figure 8.5</a> uses the macros from <a class="docLink" href="ch08lev1sec5.html#ch08fig04">Figure 8.4</a> to print a description of the termination status. We'll call this function from numerous programs in the text. Note that this function handles the <tt>WCOREDUMP</tt> macro, if it is defined.</p>
+<blockquote>
+<p class="docText"><a name="idd1e55084"></a><a name="idd1e55087"></a><a name="idd1e55090"></a><a name="idd1e55093"></a><a name="idd1e55100"></a><a name="idd1e55105"></a><a name="idd1e55110"></a>FreeBSD 5.2.1, Linux 2.4.22, Mac OS X 10.3, and Solaris 9 all support the <tt>WCOREDUMP</tt> macro.</p>
+</blockquote>
+<p class="docText">The program shown in <a class="docLink" href="ch08lev1sec6.html#ch08fig06">Figure 8.6</a> calls the <tt>pr_exit</tt> function, demonstrating the various values for the termination status. If we run the program in <a class="docLink" href="ch08lev1sec6.html#ch08fig06">Figure 8.6</a>, we get</p>
+
+<pre>
+   $ ./<span class="docEmphStrong">a.out</span>
+   normal termination, exit status = 7
+   abnormal termination, signal number = 6 (core file generated)
+   abnormal termination, signal number = 8 (core file generated)
+</pre><br>
+
+<p class="docText">Unfortunately, there is no portable way to map the signal numbers from <tt>WTERMSIG</tt> into descriptive names. (See <a class="docLink" href="ch10lev1sec21.html#ch10lev1sec21">Section 10.21</a> for one method.) We have to look at the <tt>&lt;signal.h&gt;</tt> header to verify that <tt>SIGABRT</tt> has a value of 6 and that <tt>SIGFPE</tt> has a value of 8.</p>
+
+<a name="ch08fig05"></a>
+<h5 class="docExampleTitle">Figure 8.5. Print a description of the <tt>exit</tt> status</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/wait.h&gt;
+
+void
+pr_exit(int status)
+{
+    if (WIFEXITED(status))
+        printf("normal termination, exit status = %d\n",
+                WEXITSTATUS(status));
+    else if (WIFSIGNALED(status))
+        printf("abnormal termination, signal number = %d%s\n",
+                WTERMSIG(status),
+#ifdef  WCOREDUMP
+                WCOREDUMP(status) ? " (core file generated)" : "");
+#else
+                "");
+#endif
+    else if (WIFSTOPPED(status))
+        printf("child stopped, signal number = %d\n",
+                WSTOPSIG(status));
+}
+</pre><BR>
+
+
+<a name="ch08fig06"></a>
+<h5 class="docExampleTitle">Figure 8.6. Demonstrate various <tt>exit</tt> statuses</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/wait.h&gt;
+
+int
+main(void)
+{
+    pid_t   pid;
+    int     status;
+
+    if ((pid = fork()) &lt; 0)
+        err_sys("fork error");
+    else if (pid == 0)              /* child */
+        exit(7);
+
+    if (wait(&amp;status) != pid)       /* wait for child */
+        err_sys("wait error");
+    pr_exit(status);                /* and print its status */
+
+    if ((pid = fork()) &lt; 0)
+        err_sys("fork error");
+    else if (pid == 0)              /* child */
+        abort();                    /* generates SIGABRT */
+
+    if (wait(&amp;status) != pid)       /* wait for child */
+        err_sys("wait error");
+    pr_exit(status);                /* and print its status */
+
+    if ((pid = fork()) &lt; 0)
+        err_sys("fork error");
+    else if (pid == 0)              /* child */
+        status /= 0;                /* divide by 0 generates SIGFPE */
+
+    if (wait(&amp;status) != pid)       /* wait for child */
+        err_sys("wait error");
+    pr_exit(status);                /* and print its status */
+
+    exit(0);
+}
+</pre><BR>
+
+
+<p class="docText">As we mentioned, if we have more than one child, <tt>wait</tt> returns on termination of any of the children. What if we want to wait for a specific process to terminate (assuming we know which process ID we want to wait for)? In older versions of the UNIX System, we would have to call <tt>wait</tt> and compare the returned process ID with the one we're interested in. If the terminated process wasn't the one we wanted, we would have to save the process ID and termination status and call <tt>wait</tt> again. We would need to continue doing this until the desired process terminated. The next time we wanted to wait for a specific process, we would go through the list of already terminated processes to see whether we had already waited for it, and if not, call <tt>wait</tt> <a name="idd1e55232"></a><a name="idd1e55237"></a>again. What we need is a function that waits for a specific process. This functionality (and more) is provided by the POSIX.1 <tt>waitpid</tt> function.</P>
+<p class="docText">The interpretation of the <span class="docEmphasis">pid</span> argument for <tt>waitpid</tt> depends on its value:</p>
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="100"><col width="400"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><span class="docEmphasis">pid</span> <tt>==</tt> 1</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Waits for any child process. In this respect, <tt>waitpid</tt> is equivalent to <tt>wait</tt>.</P></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><span class="docEmphasis">pid</span> <tt>&gt;</tt> 0</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">Waits for the child whose process ID equals <span class="docEmphasis">pid</span>.</P></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><span class="docEmphasis">pid</span> <tt>==</tt> 0</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">Waits for any child whose process group ID equals that of the calling process. (We discuss process groups in <a class="docLink" href="ch09lev1sec4.html#ch09lev1sec4">Section 9.4</a>.)</p></TD></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><span class="docEmphasis">pid</span> <tt>&lt;</tt> 1</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Waits for any child whose process group ID equals the absolute value of <span class="docEmphasis">pid</span>.</p></td></tr></table></p><br>
+<p class="docText"><a name="idd1e55351"></a><a name="idd1e55356"></a><a name="idd1e55361"></a><a name="idd1e55366"></a><a name="idd1e55371"></a><a name="idd1e55376"></a><a name="idd1e55381"></a><a name="idd1e55384"></a>The <tt>waitpid</tt> function returns the process ID of the child that terminated and stores the child's termination status in the memory location pointed to by <span class="docEmphasis">statloc</span>. With <tt>wait</tt>, the only real error is if the calling process has no children. (Another error return is possible, in case the function call is interrupted by a signal. We'll discuss this in <a class="docLink" href="ch10.html#ch10">Chapter 10</a>.) With <tt>waitpid</tt>, however, it's also possible to get an error if the specified process or process group does not exist or is not a child of the calling process.</p>
+<p class="docText">The <span class="docEmphasis">options</span> argument lets us further control the operation of <tt>waitpid</tt>. This argument is either 0 or is constructed from the bitwise OR of the constants in <a class="docLink" href="ch08lev1sec6.html#ch08fig07">Figure 8.7</a>.</p>
+<a name="ch08fig07"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="all" cellpadding="4"><caption><h5 class="docTableTitle">Figure 8.7. The <span class="docEmphasis">options</span> constants for <tt>waitpid</tt></h5></caption><colgroup><col width="100"><col width="400"></colgroup><thead><tr><th class="thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Constant</span></P></th><th class="thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></P></th></tr></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>WCONTINUED</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">If the implementation supports job control, the status of any child specified by <span class="docEmphasis">pid</span> that has been continued after being stopped, but whose status has not yet been reported, is returned (XSI extension to POSIX.1).</P></TD></tr><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>WNOHANG</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">The <tt>waitpid</tt> function will not block if a child specified by <span class="docEmphasis">pid</span> is not immediately available. In this case, the return value is 0.</p></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>WUNTRACED</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">If the implementation supports job control, the status of any child specified by <span class="docEmphasis">pid</span> that has stopped, and whose status has not been reported since it has stopped, is returned. The <tt>WIFSTOPPED</tt> macro determines whether the return value corresponds to a stopped child process.</p></TD></tr></table></P><br>
+<blockquote>
+<p class="docText">Solaris supports one additional, but nonstandard, <span class="docEmphasis">option</span> constant. <tt>WNOWAIT</tt> has the system keep the process whose termination status is returned by <tt>waitpid</tt> in a wait state, so that it may be waited for again.</P>
+</blockquote>
+<p class="docText">The <tt>waitpid</tt> function provides three features that aren't provided by the <tt>wait</tt> function.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">The <tt>waitpid</tt> function lets us wait for one particular process, whereas the <tt>wait</tt> function returns the status of any terminated child. We'll return to this feature when we discuss the <tt>popen</tt> function.</p></div></li><li><div style="font-weight:normal"><p class="docList">The <tt>waitpid</tt> function provides a nonblocking version of <tt>wait</tt>. There are times when we want to fetch a child's status, but we don't want to block.</p></div></li><li><div style="font-weight:normal"><p class="docList">The <tt>waitpid</tt> function provides support for job control with the <tt>WUNtrACED</tt> and <tt>WCONTINUED</tt> options.</p></div></li></ol></div>
+<a name="ch08ex04"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">Recall our discussion in <a class="docLink" href="ch08lev1sec5.html#ch08lev1sec5">Section 8.5</a> about zombie processes. If we want to write a process so that it <tt>fork</tt>s a child but we don't want to wait for the child to complete and we don't want the child to become a zombie until we terminate, the trick is to call <tt>fork</tt> twice. The program in <a class="docLink" href="ch08lev1sec6.html#ch08fig08">Figure 8.8</a> does this.</p>
+<p class="docText"><a name="idd1e55596"></a><a name="idd1e55601"></a><a name="idd1e55606"></a>We call <tt>sleep</tt> in the second child to ensure that the first child terminates before printing the parent process ID. After a <tt>fork</tt>, either the parent or the child can continue executing; we never know which will resume execution first. If we didn't put the second child to sleep, and if it resumed execution after the <tt>fork</tt> before its parent, the parent process ID that it printed would be that of its parent, not process ID 1.</p>
+<p class="docText">Executing the program in <a class="docLink" href="ch08lev1sec6.html#ch08fig08">Figure 8.8</a> gives us</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+   $ second child, parent pid = 1
+</pre><br>
+
+<p class="docText">Note that the shell prints its prompt when the original process terminates, which is before the second child prints its parent process ID.</P>
+
+<a name="ch08fig08"></a>
+<H5 class="docExampleTitle">Figure 8.8. Avoid zombie processes by calling <tt>fork</tt> twice</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/wait.h&gt;
+
+int
+main(void)
+{
+    pid_t   pid;
+
+    if ((pid = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (pid == 0) {     /* first child */
+        if ((pid = fork()) &lt; 0)
+            err_sys("fork error");
+        else if (pid &gt; 0)
+            exit(0);    /* parent from second fork == first child */
+        /*
+         * We're the second child; our parent becomes init as soon
+         * as our real parent calls exit() in the statement above.
+         * Here's where we'd continue executing, knowing that when
+         * we're done, init will reap our status.
+         */
+        sleep(2);
+        printf("second child, parent pid = %d\n", getppid());
+        exit(0);
+    }
+    
+    if (waitpid(pid, NULL, 0) != pid)  /* wait for first child */
+        err_sys("waitpid error");
+
+    /*
+     * We're the parent (the original process); we continue executing,
+     * knowing that we're not the parent of the second child.
+     */
+    exit(0);
+}
+</pre><BR>
+
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

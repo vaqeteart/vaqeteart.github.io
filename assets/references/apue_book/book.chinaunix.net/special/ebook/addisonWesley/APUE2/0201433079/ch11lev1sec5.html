@@ -1,0 +1,343 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 11.5.&nbsp; Thread Termination</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch11lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch11lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch11lev1sec5"></a>
+<h3 class="docSection1Title">11.5. Thread Termination</h3>
+<p class="docText">If any thread within a process calls <tt>exit</tt>, <tt>_Exit</tt>, or <tt>_exit</tt>, then the entire process terminates. Similarly, when the default action is to terminate the process, a signal sent to a thread will terminate the entire process (we'll talk more about the interactions between signals and threads in <a class="docLink" href="ch12lev1sec8.html#ch12lev1sec8">Section 12.8</a>).</P>
+<p class="docText">A single thread can exit in three ways, thereby stopping its flow of control, without terminating the entire process.</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList"><a name="idd1e82639"></a><a name="idd1e82644"></a><a name="idd1e82649"></a><a name="idd1e82654"></a><a name="idd1e82661"></a><a name="idd1e82666"></a>The thread can simply return from the start routine. The return value is the thread's exit code.</P></div></LI><LI><div style="font-weight:normal"><p class="docList">The thread can be canceled by another thread in the same process.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">The thread can call <tt>pthread_exit</tt>.</P></div></li></ol></div>
+<a name="inta214"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;pthread.h&gt;
+
+void pthread_exit(void *<span class="docEmphItalicAlt">rval_ptr</span>);
+</pre><BR>
+
+</P></td></TR></table></P><br>
+<p class="docText">The <span class="docEmphasis">rval_ptr</span> is a typeless pointer, similar to the single argument passed to the start routine. This pointer is available to other threads in the process by calling the <tt>pthread_join</tt> function.</P>
+<a name="inta217"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;pthread.h&gt;
+
+int pthread_join(pthread_t <span class="docEmphItalicAlt">thread</span>, void **<span class="docEmphItalicAlt">rval_ptr</span>);
+</pre><br>
+
+</p></TD></tr><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, error number on failure</P></td></tr></table></p><br>
+<p class="docText">The calling thread will block until the specified thread calls <tt>pthread_exit</tt>, returns from its start routine, or is canceled. If the thread simply returned from its start routine, <span class="docEmphasis">rval_ptr</span> will contain the return code. If the thread was canceled, the memory location specified by <span class="docEmphasis">rval_ptr</span> is set to <tt>PTHREAD_CANCELED</tt>.</p>
+<p class="docText">By calling <tt>pthread_join</tt>, we automatically place a thread in the detached state (discussed shortly) so that its resources can be recovered. If the thread was already in the detached state, calling <tt>pthread_join</tt> fails, returning <tt>EINVAL</tt>.</p>
+<p class="docText">If we're not interested in a thread's return value, we can set <span class="docEmphasis">rval_ptr</span> to <tt>NULL</tt>. In this case, calling <tt>pthread_join</tt> allows us to wait for the specified thread, but does not retrieve the thread's termination status.</p>
+<a name="ch11ex02"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText"><a class="docLink" href="ch11lev1sec5.html#ch11fig03">Figure 11.3</a> shows how to fetch the exit code from a thread that has terminated.</p>
+<p class="docText">Running the program in <a class="docLink" href="ch11lev1sec5.html#ch11fig03">Figure 11.3</a> gives us</p>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+    thread 1 returning
+    thread 2 exiting
+    thread 1 exit code 1
+    thread 2 exit code 2
+</pre><br>
+
+<p class="docText">As we can see, when a thread exits by calling <tt>pthread_exit</tt> or by simply returning from the start routine, the exit status can be obtained by another thread by calling <tt>pthread_join</tt>.</p>
+
+<a name="ch11fig03"></a>
+<h5 class="docExampleTitle">Figure 11.3. Fetching the thread exit status</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;pthread.h&gt;
+
+void *
+thr_fn1(void *arg)
+{
+    printf("thread 1 returning\n");
+    return((void *)1);
+}
+
+void *
+thr_fn2(void *arg)
+{
+    printf("thread 2 exiting\n");
+    pthread_exit((void *)2);
+}
+
+int
+main(void)
+{
+    int         err;
+    pthread_t   tid1, tid2;
+    void        *tret;
+
+    err = pthread_create(&amp;tid1, NULL, thr_fn1, NULL);
+    if (err != 0)
+        err_quit("can't create thread 1: %s\n", strerror(err));
+    err = pthread_create(&amp;tid2, NULL, thr_fn2, NULL);
+    if (err != 0)
+        err_quit("can't create thread 2: %s\n", strerror(err));
+    err = pthread_join(tid1, &amp;tret);
+    if (err != 0)
+        err_quit("can't join with thread 1: %s\n", strerror(err));
+    printf("thread 1 exit code %d\n", (int)tret);
+    err = pthread_join(tid2, &amp;tret);
+    if (err != 0)
+        err_quit("can't join with thread 2: %s\n", strerror(err));
+    printf("thread 2 exit code %d\n", (int)tret);
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e82856"></a><a name="idd1e82861"></a>The typeless pointer passed to <tt>pthread_create</tt> and <tt>pthread_exit</tt> can be used to pass more than a single value. The pointer can be used to pass the address of a structure containing more complex information. Be careful that the memory used for the structure is still valid when the caller has completed. If the structure was allocated on the caller's stack, for example, the memory contents might have changed by the time the structure is used. For example, if a thread allocates a structure on its stack and passes a pointer to this structure to <tt>pthread_exit</tt>, then the stack might be destroyed and its memory reused for something else by the time the caller of <tt>pthread_join</tt> tries to use it.</P>
+<a name="ch11ex03"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText"><a name="idd1e82887"></a><a name="idd1e82892"></a>The program in <a class="docLink" href="ch11lev1sec5.html#ch11fig04">Figure 11.4</a> shows the problem with using an automatic variable (allocated on the stack) as the argument to <tt>pthread_exit</tt>.</P>
+<p class="docText"><a name="idd1e82908"></a><a name="idd1e82911"></a><a name="idd1e82914"></a>When we run this program on Linux, we get</P>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+   thread 1:
+     structure at 0x409a2abc
+     foo.a = 1
+     foo.b = 2
+     foo.c = 3
+     foo.d = 4
+   parent starting second thread
+   thread 2: ID is 32770
+   parent:
+     structure at 0x409a2abc
+     foo.a = 0
+     foo.b = 32770
+     foo.c = 1075430560
+     foo.d = 1073937284
+</pre><BR>
+
+<p class="docText">Of course, the results vary, depending on the memory architecture, the compiler, and the implementation of the threads library. The results on FreeBSD are similar:</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+   thread 1:
+     structure at 0xbfafefc0
+     foo.a = 1
+     foo.b = 2
+     foo.c = 3
+     foo.d = 4
+   parent starting second thread
+   thread 2: ID is 134534144
+   parent:
+     structure at 0xbfafefc0
+     foo.a = 0
+     foo.b = 134534144
+     foo.c = 3
+     foo.d = 671642590
+</pre><BR>
+
+<p class="docText">As we can see, the contents of the structure (allocated on the stack of thread <span class="docEmphasis">tid1</span>) have changed by the time the main thread can access the structure. Note how the stack of the second thread (<span class="docEmphasis">tid2</span>) has overwritten the first thread's stack. To solve this problem, we can either use a global structure or allocate the structure using <tt>malloc</tt>.</P>
+
+<a name="ch11fig04"></a>
+<H5 class="docExampleTitle">Figure 11.4. Incorrect use of <tt>pthread_exit</tt> argument</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;pthread.h&gt;
+
+struct foo {
+    int a, b, c, d;
+};
+
+void
+printfoo(const char *s, const struct foo *fp)
+{
+    printf(s);
+    printf("  structure at 0x%x\n", (unsigned)fp);
+    printf("  foo.a = %d\n", fp-&gt;a);
+    printf("  foo.b = %d\n", fp-&gt;b);
+    printf("  foo.c = %d\n", fp-&gt;c);
+    printf("  foo.d = %d\n", fp-&gt;d);
+}
+
+void *
+thr_fn1(void *arg)
+{
+
+    struct foo  foo = {1, 2, 3, 4};
+
+    printfoo("thread 1:\n", &amp;foo);
+    pthread_exit((void *)&amp;foo);
+}
+
+void *
+thr_fn2(void *arg)
+{
+    printf("thread 2: ID is %d\n", pthread_self());
+    pthread_exit((void *)0);
+}
+int
+main(void)
+{
+    int         err;
+    pthread_t   tid1, tid2;
+    struct foo  *fp;
+
+    err = pthread_create(&amp;tid1, NULL, thr_fn1, NULL);
+    if (err != 0)
+        err_quit("can't create thread 1: %s\n", strerror(err));
+    err = pthread_join(tid1, (void *)&amp;fp);
+    if (err != 0)
+        err_quit("can't join with thread 1: %s\n", strerror(err));
+    sleep(1);
+    printf("parent starting second thread\n");
+    err = pthread_create(&amp;tid2, NULL, thr_fn2, NULL);
+    if (err != 0)
+        err_quit("can't create thread 2: %s\n", strerror(err));
+    sleep(1);
+    printfoo("parent:\n", fp);
+    exit(0);
+}
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e82981"></a><a name="idd1e82986"></a><a name="idd1e82991"></a><a name="idd1e82998"></a><a name="idd1e83003"></a><a name="idd1e83008"></a><a name="idd1e83015"></a><a name="idd1e83020"></a><a name="idd1e83027"></a>One thread can request that another in the same process be canceled by calling the <tt>pthread_cancel</tt> function.</p>
+<a name="inta198"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;pthread.h&gt;
+
+int pthread_cancel(pthread_t <span class="docEmphItalicAlt">tid</span>);
+</pre><br>
+
+</P></TD></tr><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, error number on failure</p></td></tr></table></p><BR>
+<p class="docText">In the default circumstances, <tt>pthread_cancel</tt> will cause the thread specified by <span class="docEmphasis">tid</span> to behave as if it had called <tt>pthread_exit</tt> with an argument of <tt>PTHREAD_CANCELED</tt>. However, a thread can elect to ignore or otherwise control how it is canceled. We will discuss this in detail in <a class="docLink" href="ch12lev1sec7.html#ch12lev1sec7">Section 12.7</a>. Note that <tt>pthread_cancel</tt> doesn't wait for the thread to terminate. It merely makes the request.</p>
+<p class="docText">A thread can arrange for functions to be called when it exits, similar to the way that the <tt>atexit</tt> function (<a class="docLink" href="ch07lev1sec3.html#ch07lev1sec3">Section 7.3</a>) can be used by a process to arrange that functions can be called when the process exits. The functions are known as <span class="docEmphasis">thread cleanup handlers</span>. More than one cleanup handler can be established for a thread. The handlers are recorded in a stack, which means that they are executed in the reverse order from that with which they were registered.</P>
+<a name="inta199"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID8"></a><div class="v1"><a href="ch11lev1sec5.html#PLID8">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+void pthread_cleanup_push(void (*<span class="docEmphItalicAlt">rtn</span>)(void *),
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> void *<span class="docEmphItalicAlt">arg</span>);
+
+void pthread_cleanup_pop(int <span class="docEmphItalicAlt">execute</span>);
+</pre><br>
+
+</p></td></tr></table></p><br>
+<p class="docText">The <tt>pthread_cleanup_push</tt> function schedules the cleanup function, <span class="docEmphasis">rtn</span>, to be called with the single argument, <span class="docEmphasis">arg</span>, when the thread performs one of the following actions:</p>
+<ul><li><p class="docList">Makes a call to <tt>pthread_exit</tt></p></li><li><p class="docList">Responds to a cancellation request</p></li><li><p class="docList">Makes a call to <tt>pthread_cleanup_pop</tt> with a nonzero <span class="docEmphasis">execute</span> argument</p></LI></UL>
+<p class="docText">If the <span class="docEmphasis">execute</span> argument is set to zero, the cleanup function is not called. In either case, <tt>pthread_cleanup_pop</tt> removes the cleanup handler established by the last call to <tt>pthread_cleanup_push</tt>.</p>
+<p class="docText">A restriction with these functions is that, because they can be implemented as macros, they must be used in matched pairs within the same scope in a thread. The macro definition of <tt>pthread_cleanup_push</tt> can include a <tt>{</tt> character, in which case the matching <tt>}</tt> character is in the <tt>pthread_cleanup_pop</tt> definition.</P>
+<a name="ch11ex04"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText"><a class="docLink" href="ch11lev1sec5.html#ch11fig05">Figure 11.5</a> shows how to use thread cleanup handlers. Although the example is somewhat contrived, it illustrates the mechanics involved. Note that although we never intend to pass a nonzero argument to the thread start-up routines, we still need to match calls to <tt>pthread_cleanup_pop</tt> with the calls to <tt>pthread_cleanup_push</tt>; otherwise, the program might not compile.</p>
+<p class="docText"><a name="idd1e83214"></a><a name="idd1e83219"></a>Running the program in <a class="docLink" href="ch11lev1sec5.html#ch11fig05">Figure 11.5</a> gives us</P>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+    thread 1 start
+    thread 1 push complete
+    thread 2 start
+    thread 2 push complete
+    cleanup: thread 2 second handler
+    cleanup: thread 2 first handler
+    thread 1 exit code 1
+    thread 2 exit code 2
+</pre><BR>
+
+<p class="docText">From the output, we can see that both threads start properly and exit, but that only the second thread's cleanup handlers are called. Thus, if the thread terminates by returning from its start routine, its cleanup handlers are not called. Also note that the cleanup handlers are called in the reverse order from which they were installed.</P>
+
+<a name="ch11fig05"></a>
+<h5 class="docExampleTitle">Figure 11.5. Thread cleanup handler</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;pthread.h&gt;
+
+void
+cleanup(void *arg)
+{
+    printf("cleanup: %s\n", (char *)arg);
+}
+
+void *
+thr_fn1(void *arg)
+{
+    printf("thread 1 start\n");
+    pthread_cleanup_push(cleanup, "thread 1 first handler");
+    pthread_cleanup_push(cleanup, "thread 1 second handler");
+    printf("thread 1 push complete\n");
+    if (arg)
+        return((void *)1);
+    pthread_cleanup_pop(0);
+    pthread_cleanup_pop(0);
+    return((void *)1);
+}
+
+void *
+thr_fn2(void *arg)
+{
+    printf("thread 2 start\n");
+    pthread_cleanup_push(cleanup, "thread 2 first handler");
+    pthread_cleanup_push(cleanup, "thread 2 second handler");
+    printf("thread 2 push complete\n");
+    if (arg)
+        pthread_exit((void *)2);
+    pthread_cleanup_pop(0);
+    pthread_cleanup_pop(0);
+    pthread_exit((void *)2);
+}
+
+int
+main(void)
+{
+    int         err;
+    pthread_t   tid1, tid2;
+    void        *tret;
+
+    err = pthread_create(&amp;tid1, NULL, thr_fn1, (void *)1);
+    if (err != 0)
+        err_quit("can't create thread 1: %s\n", strerror(err));
+    err = pthread_create(&amp;tid2, NULL, thr_fn2, (void *)1);
+    if (err != 0)
+        err_quit("can't create thread 2: %s\n", strerror(err));
+    err = pthread_join(tid1, &amp;tret);
+      if (err != 0)
+        err_quit("can't join with thread 1: %s\n", strerror(err));
+    printf("thread 1 exit code %d\n", (int)tret);
+    err = pthread_join(tid2, &amp;tret);
+    if (err != 0)
+        err_quit("can't join with thread 2: %s\n", strerror(err));
+    printf("thread 2 exit code %d\n", (int)tret);
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e83257"></a><a name="idd1e83262"></a><a name="idd1e83267"></a>By now, you should begin to see similarities between the thread functions and the process functions. <a class="docLink" href="ch11lev1sec5.html#ch11fig06">Figure 11.6</a> summarizes the similar functions.</P>
+<a name="ch11fig06"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 11.6. Comparison of process and thread primitives</h5></caption><colgroup><col width="150"><col width="150"><col width="200"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="left" valign="top"><p class="docText"><span class="docEmphRoman">Process primitive</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Thread primitive</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></P></th></TR></thead><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>fork</tt></p></td><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>pthread_create</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">create a new flow of control</P></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>exit</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>pthread_exit</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">exit from an existing flow of control</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>waitpid</tt></p></td><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>pthread_join</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">get exit status from flow of control</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>atexit</tt></P></td><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>pthread_cancel_push</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">register function to be called at exit from flow of control</P></td></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>getpid</tt></P></TD><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>pthread_self</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">get ID for flow of control</P></td></TR><tr><TD class="rightBorder bottomBorder" align="left" valign="top"><p class="docText"><tt>abort</tt></p></td><td class="rightBorder bottomBorder" align="left" valign="top"><p class="docText"><tt>pthread_cancel</tt></p></td><td class="bottomBorder" align="left" valign="top"><p class="docText">request abnormal termination of flow of control</p></td></tr></table></p><br>
+<p class="docText">By default, a thread's termination status is retained until <tt>pthread_join</tt> is called for that thread. A thread's underlying storage can be reclaimed immediately on termination if that thread has been <span class="docEmphasis">detached</span>. When a thread is detached, the <tt>pthread_join</tt> function can't be used to wait for its termination status. A call to <tt>pthread_join</tt> for a detached thread will fail, returning <tt>EINVAL</tt>. We can detach a thread by calling <tt>pthread_detach</tt>.</p>
+<a name="inta212"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e83463"></a><a name="idd1e83468"></a><a name="idd1e83475"></a>
+<pre>
+#include &lt;pthread.h&gt;
+
+int pthread_detach(pthread_t <span class="docEmphItalicAlt">tid</span>);
+</pre><br>
+
+</p></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, error number on failure</P></TD></tr></table></P><BR>
+<p class="docText">As we will see in the next chapter, we can create a thread that is already in the detached state by modifying the thread attributes we pass to <tt>pthread_create</tt>.</P>
+
+<ul></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch11lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch11lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

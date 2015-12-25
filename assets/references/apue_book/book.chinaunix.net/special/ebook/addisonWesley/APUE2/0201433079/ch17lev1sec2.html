@@ -1,0 +1,329 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 17.2.&nbsp; STREAMS-Based Pipes</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch17lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch17lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch17lev1sec2"></a>
+<h3 class="docSection1Title" id="454331-952">17.2. STREAMS-Based Pipes</h3>
+<p class="docText">A STREAMS-based pipe (&quot;STREAMS pipe,&quot; for short) is a bidirectional (full-duplex) pipe. To obtain bidirectional data flow between a parent and a child, only a single STREAMS pipe is required.</P>
+<blockquote>
+<p class="docText">Recall from <a class="docLink" href="ch15lev1sec1.html#ch15lev1sec1">Section 15.1</a> that STREAMS pipes are supported by Solaris and are available in an optional add-on package with Linux.</P>
+</blockquote>
+<p class="docText"><a class="docLink" href="ch17lev1sec2.html#ch17fig01">Figure 17.1</a> shows the two ways to view a STREAMS pipe. The only difference between this picture and <a class="docLink" href="ch15lev1sec2.html#ch15fig02">Figure 15.2</a> is that the arrows have heads on both ends; since the STREAMS pipe is full duplex, data can flow in both directions.</p>
+<a name="ch17fig01"></a><P><center>
+<H5 class="docFigureTitle">Figure 17.1. Two ways to view a STREAMS pipe</H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/17fig01_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" id="195131139046" width="500" height="207" SRC="images/0201433079/graphics/17fig01.gif;423615"></p>
+</center></P><BR>
+<p class="docText">If we look inside a STREAMS pipe (<a class="docLink" href="ch17lev1sec2.html#ch17fig02">Figure 17.2</a>), we see that it is simply two stream heads, with each write queue (WQ) pointing at the other's read queue (RQ). Data written to one end of the pipe is placed in messages on the other's read queue.</P>
+<a name="ch17fig02"></a><p><center>
+<H5 class="docFigureTitle">Figure 17.2. Inside a STREAMS pipe</h5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="408" height="176" SRC="images/0201433079/graphics/17fig02.gif;423615"></P>
+
+</center></P><BR>
+<p class="docText">Since a STREAMS pipe is a stream, we can push a STREAMS module onto either end of the pipe to process data written to the pipe (<a class="docLink" href="ch17lev1sec2.html#ch17fig03">Figure 17.3</a>). But if we push a module on one end, we can't pop it off the other end. If we want to remove it, we need to remove it from the same end on which it was pushed.</p>
+<a name="ch17fig03"></a><P><center>
+<H5 class="docFigureTitle">Figure 17.3. Inside a STREAMS pipe with a module</h5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="500" height="159" SRC="images/0201433079/graphics/17fig03.gif;423615"></P>
+
+</center></P><br>
+<p class="docText"><a name="idd1e127423"></a><a name="idd1e127428"></a><a name="idd1e127433"></a><a name="idd1e127438"></a><a name="idd1e127443"></a><a name="idd1e127448"></a><a name="idd1e127453"></a><a name="idd1e127458"></a><a name="idd1e127463"></a><a name="idd1e127468"></a><a name="idd1e127473"></a><a name="idd1e127478"></a><a name="idd1e127483"></a>Assuming that we don't do anything fancy, such as pushing modules, a STREAMS pipe behaves just like a non-STREAMS pipe, except that it supports most of the STREAMS <tt>ioctl</tt> commands described in <tt>streamio</tt>(7). In <a class="docLink" href="ch17lev1sec2.html#ch17lev2sec2">Section 17.2.2</a>, we'll see an example of pushing a module on a STREAMS pipe to provide unique connections when we give the pipe a name in the file system.</p>
+<a name="ch17ex01"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">Let's redo the coprocess example, <a class="docLink" href="ch15lev1sec4.html#ch15fig18">Figure 15.18</a>, with a single STREAMS pipe. <a class="docLink" href="ch17lev1sec2.html#ch17fig04">Figure 17.4</a> shows the new <tt>main</tt> function. The <tt>add2</tt> coprocess is the same (<a class="docLink" href="ch15lev1sec4.html#ch15fig17">Figure 15.17</a>). We call a new function, <tt>s_pipe</tt>, to create a single STREAMS pipe. (We show versions of this function for both STREAMS pipes and UNIX domain sockets shortly.)</P>
+<p class="docText">The parent uses only <tt>fd[0]</tt>, and the child uses only <tt>fd[1]</tt>. Since each end of the STREAMS pipe is full duplex, the parent reads and writes <tt>fd[0]</tt>, and the child duplicates <tt>fd[1]</tt> to both standard input and standard output. <a class="docLink" href="ch17lev1sec2.html#ch17fig05">Figure 17.5</a> shows the resulting descriptors. Note that this example also works with full-duplex pipes that are not based on STREAMS, because it doesn't make use of any STREAMS features other than the full-duplex nature of STREAMS-based pipes.</p>
+<blockquote>
+<p class="docText">Rago [<a class="docLink" href="bib01.html#biblio01_052">1993</a>] covers STREAMS-based pipes in more detail. Recall from <a class="docLink" href="ch15lev1sec1.html#ch15fig01">Figure 15.1</a> that FreeBSD supports full-duplex pipes, but these pipes are not based on the STREAMS mechanism.</P>
+</blockquote>
+
+<a name="ch17fig04"></a>
+<h5 class="docExampleTitle">Figure 17.4. Program to drive the <tt>add2</tt> filter, using a STREAMS pipe</H5>
+
+<pre>
+#include "apue.h"
+
+static void sig_pipe(int);      /* our signal handler */
+
+int
+main(void)
+{
+    int     n;
+    int     fd[2];
+    pid_t   pid;
+    char    line[MAXLINE];
+
+    if (signal(SIGPIPE, sig_pipe) == SIG_ERR)
+        err_sys("signal error");
+
+    if (s_pipe(fd) &lt; 0)         /* need only a single stream pipe */
+        err_sys("pipe error");
+    if ((pid = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (pid &gt; 0) {                           /* parent */
+        close(fd[1]);
+        while (fgets(line, MAXLINE, stdin) != NULL) {
+            n = strlen(line);
+            if (write(fd[0], line, n) != n)
+                err_sys("write error to pipe");
+            if ((n = read(fd[0], line, MAXLINE)) &lt; 0)
+                err_sys("read error from pipe");
+            if (n == 0) {
+                err_msg("child closed pipe");
+                break;
+            }
+            line[n] = 0; /* null terminate */
+            if (fputs(line, stdout) == EOF)
+                err_sys("fputs error");
+        }
+        if (ferror(stdin))
+            err_sys("fgets error on stdin");
+        exit(0);
+    } else {                                    /* child */
+        close(fd[0]);
+        if (fd[1] != STDIN_FILENO &amp;&amp;
+          dup2(fd[1], STDIN_FILENO) != STDIN_FILENO)
+            err_sys("dup2 error to stdin");
+        if (fd[1] != STDOUT_FILENO &amp;&amp;
+          dup2(fd[1], STDOUT_FILENO) != STDOUT_FILENO)
+               err_sys("dup2 error to stdout");
+        if (execl("./add2", "add2", (char *)0) &lt; 0)
+            err_sys("execl error");
+    }
+    exit(0);
+}
+static void
+sig_pipe(int signo)
+{
+    printf("SIGPIPE caught\n");
+    exit(1);
+}
+</pre><br>
+
+
+<a name="ch17fig05"></a><p><center>
+<h5 class="docFigureTitle">Figure 17.5. Arrangement of descriptors for coprocess</h5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="358" height="101" SRC="images/0201433079/graphics/17fig04.gif;423615"></p>
+
+</center></p><br>
+<p class="docText"><a name="idd1e127607"></a><a name="idd1e127612"></a><a name="idd1e127617"></a><a name="idd1e127622"></a><a name="idd1e127625"></a><a name="idd1e127630"></a><a name="idd1e127635"></a><a name="idd1e127640"></a>We define the function <tt>s_pipe</tt> to be similar to the standard <tt>pipe</tt> function. Both functions take the same argument, but the descriptors returned by <tt>s_pipe</tt> are open for reading and writing.</p>
+<a name="ch17ex02"></a>
+<h5 class="docExampleTitle">ExampleSTREAMS-Based <tt>s_pipe</tt> Function</h5>
+<p class="docText"><a name="idd1e127667"></a><a name="idd1e127672"></a><a name="idd1e127679"></a><a name="idd1e127682"></a><a class="docLink" href="ch17lev1sec2.html#ch17fig06">Figure 17.6</a> shows the STREAMS-based version of the <tt>s_pipe</tt> function. This version simply calls the standard <tt>pipe</tt> function, which creates a full-duplex pipe.</p>
+
+<a name="ch17fig06"></a>
+<h5 class="docExampleTitle">Figure 17.6. STREAMS version of the <tt>s_pipe</tt> function</h5>
+
+<pre>
+#include "apue.h"
+/*
+ * Returns a STREAMS-based pipe, with the two file descriptors
+ * returned in fd[0] and fd[1].
+ */
+int
+s_pipe(int fd[2])
+{
+    return(pipe(fd));
+}
+</pre><br>
+
+
+<a name="ch17lev2sec1"></a>
+<h4 class="docSection2Title">17.2.1. Naming STREAMS Pipes</h4>
+<p class="docText">Normally, pipes can be used only between related processes: child processes inheriting pipes from their parent processes. In <a class="docLink" href="ch15lev1sec5.html#ch15lev1sec5">Section 15.5</a>, we saw that unrelated processes can communicate using FIFOs, but this provides only a one-way communication path. The STREAMS mechanism provides a way for processes to give a pipe a name in the file system. This bypasses the problem of dealing with unidirectional FIFOs.</p>
+<p class="docText">We can use the <tt>fattach</tt> function to give a STREAMS pipe a name in the file system.</P>
+<a name="inta46"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stropts.h&gt;
+
+int fattach(int <span class="docEmphItalicAlt">filedes</span>, const char *<span class="docEmphItalicAlt">path</span>);
+</pre><BR>
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">The <span class="docEmphasis">path</span> argument must refer to an existing file, and the calling process must either own the file and have write permissions to it or be running with superuser privileges.</P>
+<p class="docText">Once a STREAMS pipe is attached to the file system namespace, the underlying file is inaccessible. Any process that opens the name will gain access to the pipe, not the underlying file. Any processes that had the underlying file open before <tt>fattach</tt> was called, however, can continue to access the underlying file. Indeed, these processes generally will be unaware that the name now refers to a different file.</p>
+<p class="docText"><a class="docLink" href="ch17lev1sec2.html#ch17fig07">Figure 17.7</a> shows a pipe attached to the pathname <tt>/tmp/pipe</tt>. Only one end of the pipe is attached to a name in the file system. The other end is used to communicate with processes that open the attached filename. Even though it can attach any kind of STREAMS file descriptor to a name in the file system, the <tt>fattach</tt> function is most commonly used to give a name to a STREAMS pipe.</P>
+<a name="ch17fig07"></a><P><center>
+<h5 class="docFigureTitle">Figure 17.7. A pipe mounted on a name in the file system</H5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="461" height="215" SRC="images/0201433079/graphics/17fig07.gif;423615"></P>
+
+</center></p><br>
+<p class="docText"><a name="idd1e127819"></a><a name="idd1e127824"></a><a name="idd1e127829"></a><a name="idd1e127836"></a><a name="idd1e127841"></a>A process can call <tt>fdetach</tt> to undo the association between a STREAMS file and the name in the file system.</p>
+<a name="inta54"></a><p><table cellspacing="0" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stropts.h&gt;
+
+int fdetach(const char *<span class="docEmphItalicAlt">path</span>);
+</pre><BR>
+</p></TD></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></td></tr></table></p><br>
+<p class="docText">After <tt>fdetach</tt> is called, any processes that had accessed the STREAMS pipe by opening the <span class="docEmphasis">path</span> will still continue to access the stream, but subsequent opens of the <span class="docEmphasis">path</span> will access the original file residing in the file system.</p>
+
+<a name="ch17lev2sec2"></a>
+<h4 class="docSection2Title">17.2.2. Unique Connections</h4>
+<p class="docText">Although we can attach one end of a STREAMS pipe to the file system namespace, we still have problems if multiple processes want to communicate with a server using the named STREAMS pipe. Data from one client will be interleaved with data from the other clients writing to the pipe. Even if we guarantee that the clients write less than <tt>PIPE_BUF</tt> bytes so that the writes are atomic, we have no way to write back to an individual client and guarantee that the intended client will read the message. With multiple clients reading from the same pipe, we cannot control which one will be scheduled and actually read what we send.</p>
+<p class="docText">The <tt>connld</tt> STREAMS module solves this problem. Before attaching a STREAMS pipe to a name in the file system, a server process can push the <tt>connld</tt> module on the end of the pipe that is to be attached. This results in the configuration shown in <a class="docLink" href="ch17lev1sec2.html#ch17fig08">Figure 17.8</a>.</p>
+<a name="ch17fig08"></a><p><center>
+<h5 class="docFigureTitle">Figure 17.8. Setting up <tt>connld</tt> for unique connections</h5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="448" height="319" SRC="images/0201433079/graphics/17fig08.gif;423615"></p>
+
+</center></P><BR>
+<p class="docText">In <a class="docLink" href="ch17lev1sec2.html#ch17fig08">Figure 17.8</a>, the server process has attached one end of its pipe to the path <tt>/tmp/pipe</tt>. We show a dotted line to indicate a client process in the middle of opening the attached STREAMS pipe. Once the open completes, we have the configuration shown in <a class="docLink" href="ch17lev1sec2.html#ch17fig09">Figure 17.9</a>.</p>
+<a name="ch17fig09"></a><P><center>
+<H5 class="docFigureTitle">Figure 17.9. Using <tt>connld</tt> to make unique connections</H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/17fig09_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" id="195131139046" width="500" height="243" SRC="images/0201433079/graphics/17fig09.gif;423615"></p>
+</center></P><BR>
+<p class="docText">The client process never receives an open file descriptor for the end of the pipe that it opened. Instead, the operating system creates a new pipe and returns one end to the client process as the result of opening <tt>/tmp/pipe</tt>. The system sends the other end of the new pipe to the server process by passing its file descriptor over the existing (attached) pipe, resulting in a unique connection between the client process and the server process. We'll see the mechanics of passing file descriptors using STREAMS pipes in <a class="docLink" href="ch17lev1sec4.html#ch17lev2sec5">Section 17.4.1</a>.</P>
+<blockquote>
+<p class="docText"><a name="idd1e127986"></a><a name="idd1e127991"></a><a name="idd1e127998"></a><a name="idd1e128003"></a><a name="idd1e128008"></a><a name="idd1e128013"></a><a name="idd1e128018"></a><a name="idd1e128023"></a><a name="idd1e128026"></a><a name="idd1e128029"></a><a name="idd1e128034"></a><a name="idd1e128041"></a><a name="idd1e128046"></a><a name="idd1e128053"></a><a name="idd1e128058"></a><a name="idd1e128063"></a><a name="idd1e128068"></a><a name="idd1e128073"></a><a name="idd1e128078"></a><a name="idd1e128083"></a><a name="idd1e128089"></a><a name="idd1e128092"></a>The <tt>fattach</tt> function is built on top of the <tt>mount</tt> system call. This facility is known as <span class="docEmphasis">mounted streams</span>. Mounted streams and the <tt>connld</tt> module were developed by Presotto and Ritchie [<a class="docLink" href="bib01.html#biblio01_051">1990</a>] for the Research UNIX system. These mechanisms were then picked up by SVR4.</p>
+</blockquote>
+<p class="docText">We will now develop three functions that can be used to create unique connections between unrelated processes. These functions mimic the connection-oriented socket functions discussed in <a class="docLink" href="ch16lev1sec4.html#ch16lev1sec4">Section 16.4</a>. We use STREAMS pipes for the underlying communication mechanism here, but we'll see alternate implementations of these functions that use UNIX domain sockets in <a class="docLink" href="ch17lev1sec3.html#ch17lev1sec3">Section 17.3</a>.</P>
+<p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include "apue.h"
+
+int serv_listen(const char *<span class="docEmphItalicAlt">name</span>);
+</pre><BR>
+</p></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: file descriptor to listen on if OK, negative value on error</P></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+int serv_accept(int <span class="docEmphItalicAlt">listenfd</span>, uid_t *<span class="docEmphasis">uidptr</span>);
+</pre><BR>
+</p></TD></tr><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: new file descriptor if OK, negative value on error</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+int cli_conn(const char *<span class="docEmphItalicAlt">name</span>);
+</pre><br>
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: file descriptor if OK, negative value on error</p></td></tr></table></p><br>
+<p class="docText">The <tt>serv_listen</tt> function (<a class="docLink" href="ch17lev1sec2.html#ch17fig10">Figure 17.10</a>) can be used by a server to announce its willingness to listen for client connect requests on a well-known name (some pathname in the file system). Clients will use this name when they want to connect to the server. The return value is the server's end of the STREAMS pipe.</P>
+<a name="ch17fig10"></a>
+<H5 class="docExampleTitle">Figure 17.10. The <tt>serv_listen</tt> function using STREAMS pipes</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+#include &lt;stropts.h&gt;
+
+/* pipe permissions: user rw, group rw, others rw */
+#define FIFO_MODE (S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH)
+
+/*
+ * Establish an endpoint to listen for connect requests.
+ * Returns fd if all OK, &lt;0 on error
+ */
+int
+serv_listen(const char *name)
+{
+   int     tempfd;
+   int     fd[2];
+
+   /*
+    * Create a file: mount point for fattach().
+    */
+   unlink(name);
+   if ((tempfd = creat(name, FIFO_MODE)) &lt; 0)
+       return(-1);
+   if (close(tempfd) &lt; 0)
+       return(-2);
+   if (pipe(fd) &lt; 0)
+       return(-3);
+   /*
+    * Push connld &amp; fattach() on fd[1].
+    */
+   if (ioctl(fd[1], I_PUSH, "connld") &lt; 0) {
+       close(fd[0]);
+       close(fd[1]);
+       return(-4);
+   }
+   if (fattach(fd[1], name) &lt; 0) {
+       close(fd[0]);
+       close(fd[1]);
+       return(-5);
+   }
+   close(fd[1]); /* fattach holds this end open */
+
+   return(fd[0]); /* fd[0] is where client connections arrive */
+}
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e128234"></a><a name="idd1e128239"></a><a name="idd1e128244"></a><a name="idd1e128249"></a><a name="idd1e128254"></a><a name="idd1e128259"></a><a name="idd1e128264"></a>The <tt>serv_accept</tt> function (<a class="docLink" href="ch17lev1sec2.html#ch17fig11">Figure 17.11</a>) is used by a server to wait for a client's connect request to arrive. When one arrives, the system automatically creates a new STREAMS pipe, and the function returns one end to the server. Additionally, the effective user ID of the client is stored in the memory to which <span class="docEmphasis">uidptr</span> points.</P>
+<a name="ch17fig11"></a>
+<H5 class="docExampleTitle">Figure 17.11. The <tt>serv_accept</tt> function using STREAMS pipes</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;stropts.h&gt;
+
+/*
+ * Wait for a client connection to arrive, and accept it.
+ * We also obtain the client's user ID.
+ * Returns new fd if all OK, &lt;0 on error.
+ */
+int
+serv_accept(int listenfd, uid_t *uidptr)
+{
+    struct strrecvfd    recvfd;
+    if (ioctl(listenfd, I_RECVFD, &amp;recvfd) &lt; 0)
+        return(-1);     /* could be EINTR if signal caught */
+    if (uidptr != NULL)
+        *uidptr = recvfd.uid;   /* effective uid of caller */
+    return(recvfd.fd);  /* return the new descriptor */
+}
+</pre><BR>
+
+
+<p class="docText">A client calls <tt>cli_conn</tt> (<a class="docLink" href="ch17lev1sec2.html#ch17fig12">Figure 17.12</a>) to connect to a server. The <span class="docEmphasis">name</span> argument specified by the client must be the same name that was advertised by the server's call to <tt>serv_listen</tt>. On return, the client gets a file descriptor connected to the server.</P>
+<a name="ch17fig12"></a>
+<H5 class="docExampleTitle">Figure 17.12. The <tt>cli_conn</tt> function using STREAMS pipes</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+#include &lt;stropts.h&gt;
+
+/*
+ * Create a client endpoint and connect to a server.
+ * Returns fd if all OK, &lt;0 on error.
+ */
+int
+cli_conn(const char *name)
+{
+    int     fd;
+
+    /* open the mounted stream */
+    if ((fd = open(name, O_RDWR)) &lt; 0)
+        return(-1);
+    if (isastream(fd) == 0) {
+        close(fd);
+        return(-2);
+    }
+    return(fd);
+}
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e128353"></a><a name="idd1e128360"></a><a name="idd1e128365"></a><a name="idd1e128370"></a><a name="idd1e128375"></a><a name="idd1e128380"></a><a name="idd1e128387"></a><a name="idd1e128390"></a>We double-check that the returned descriptor refers to a STREAMS device, in case the server has not been started but the pathname still exists in the file system. In <a class="docLink" href="ch17lev1sec6.html#ch17lev1sec6">Section 17.6</a>, we'll see how these three functions are used.</p>
+
+
+<UL></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch17lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch17lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

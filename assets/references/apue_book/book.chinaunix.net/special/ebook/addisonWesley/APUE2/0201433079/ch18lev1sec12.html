@@ -1,0 +1,96 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 18.12.&nbsp; Terminal Window Size</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch18lev1sec12"></a>
+<h3 class="docSection1Title">18.12. Terminal Window Size</h3>
+<p class="docText"><a name="idd1e143088"></a><a name="idd1e143093"></a><a name="idd1e143098"></a><a name="idd1e143103"></a><a name="idd1e143108"></a><a name="idd1e143113"></a><a name="idd1e143118"></a><a name="idd1e143123"></a><a name="idd1e143128"></a><a name="idd1e143133"></a><a name="idd1e143138"></a><a name="idd1e143143"></a><a name="idd1e143150"></a><a name="idd1e143157"></a><a name="idd1e143162"></a>Most UNIX systems provide a way to keep track of the current terminal window size and to have the kernel notify the foreground process group when the size changes. The kernel maintains a <tt>winsize</tt> structure for every terminal and pseudo terminal:</P>
+
+<pre>
+   struct winsize {
+     unsigned short ws_row;       /* rows, in characters */
+     unsigned short ws_col;       /* columns, in characters */
+     unsigned short ws_xpixel;    /* horizontal size, pixels (unused) */
+     unsigned short ws_ypixel;    /* vertical size, pixels (unused) */
+   };
+</pre><BR>
+
+<p class="docText">The rules for this structure are as follows.</p>
+<UL><LI><p class="docList">We can fetch the current value of this structure using an <tt>ioctl</tt> (<a class="docLink" href="ch03lev1sec15.html#ch03lev1sec15">Section 3.15</a>) of <tt>TIOCGWINSZ</tt>.</P></li><LI><p class="docList">We can store a new value of this structure in the kernel using an <tt>ioctl</tt> of <tt>TIOCSWINSZ</tt>. If this new value differs from the current value stored in the kernel, a <tt>SIGWINCH</tt> signal is sent to the foreground process group. (Note from <a class="docLink" href="ch10lev1sec2.html#ch10fig01">Figure 10.1</a> that the default action for this signal is to be ignored.)</P></LI><li><p class="docList"><a name="idd1e143233"></a><a name="idd1e143238"></a><a name="idd1e143243"></a><a name="idd1e143248"></a><a name="idd1e143253"></a><a name="idd1e143258"></a>Other than storing the current value of the structure and generating a signal when the value changes, the kernel does nothing else with this structure. Interpreting the structure is entirely up to the application.</P></li></UL>
+<p class="docText">The reason for providing this feature is to notify applications (such as the <tt>vi</tt> editor) when the window size changes. When it receives the signal, the application can fetch the new size and redraw the screen.</P>
+<a name="ch18ex08"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText"><a class="docLink" href="ch18lev1sec12.html#ch18fig22">Figure 18.22</a> shows a program that prints the current window size and goes to sleep. Each time the window size changes, <tt>SIGWINCH</tt> is caught and the new size is printed. We have to terminate this program with a signal.</P>
+<p class="docText"><a name="idd1e143288"></a><a name="idd1e143293"></a><a name="idd1e143298"></a><a name="idd1e143301"></a><a name="idd1e143304"></a><a name="idd1e143307"></a><a name="idd1e143310"></a><a name="idd1e143313"></a><a name="idd1e143317"></a>Running the program in <a class="docLink" href="ch18lev1sec12.html#ch18fig22">Figure 18.22</a> on a windowed terminal gives us</P>
+
+<pre>
+$ <span class="docEmphStrong">./a.out</span>
+35 rows, 80 columns       <span class="docEmphItalicAlt">initial size</span>
+SIGWINCH received         <span class="docEmphItalicAlt">change window size: signal is caught</span>
+40 rows, 123 columns
+SIGWINCH received         <span class="docEmphItalicAlt">and again</span>
+42 rows, 33 columns<span class="docEmphStrong">
+^? $</span>                      <span class="docEmphItalicAlt">type the interrupt key to terminate</span>
+</pre><br>
+
+
+<a name="ch18fig22"></a>
+<H5 class="docExampleTitle">Figure 18.22. Print window size</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;termios.h&gt;
+#ifndef TIOCGWINSZ
+#include &lt;sys/ioctl.h&gt;
+#endif
+
+static void
+pr_winsize(int fd)
+{
+    struct winsize size;
+
+    if (ioctl(fd, TIOCGWINSZ, (char *) &amp;size) &lt; 0)
+        err_sys("TIOCGWINSZ error");
+    printf("%d rows, %d columns\n", size.ws_row, size.ws_col);
+}
+
+static void
+sig_winch(int signo)
+{
+    printf("SIGWINCH received\n");
+    pr_winsize(STDIN_FILENO);
+}
+
+int
+main(void)
+{
+    if (isatty(STDIN_FILENO) == 0)
+        exit(1);
+    if (signal(SIGWINCH, sig_winch) == SIG_ERR)
+        err_sys("signal error");
+    pr_winsize(STDIN_FILENO);   /* print initial size */
+    for ( ; ; )                 /* and sleep forever */
+        pause();
+}
+</pre><br>
+
+
+
+<ul></ul></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

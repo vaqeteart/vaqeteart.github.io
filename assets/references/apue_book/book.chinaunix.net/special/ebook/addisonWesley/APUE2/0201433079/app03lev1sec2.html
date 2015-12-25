@@ -1,0 +1,81 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Chapter 2</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app03lev1sec2"></a>
+<h3 class="docSection1Title" id="454331-831">Chapter 2</h3>
+<p class="docText"></P>
+<P><table border="0" cellspacing="16" cellpadding="0"><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch02qa1q1a1"></a><B><a class="docLink" href="ch02lev1sec17.html#ch02qa1q1">2.1</a></b></TD><td><p class="docText">The following technique is used by FreeBSD. The primitive data types that can appear in multiple headers are defined in the header <tt>&lt;machine/_types.h&gt;</tt>.</P>
+<p class="docText">For example:</P>
+<pre>
+    #ifndef _MACHINE__TYPES_H_
+    #define _MACHINE__TYPES_H_
+
+    typedef int            __int32_t;
+    typedef unsigned int   __uint32_t;
+    ...
+
+    typedef __uint32_t     __size_t;
+    ...
+
+    #endif  /* _MACHINE__TYPES_H_ */
+</pre><BR>
+
+<p class="docText">In each of the headers that can define the <tt>size_t</tt> primitive system data type, we have the sequence</p>
+<pre>
+    #ifndef _SIZE_T_DECLARED
+    typedef __size_t      size_t;
+    #define _SIZE_T_DECLARED
+    #endif
+</pre><BR>
+
+<p class="docText">This way, the <tt>typedef</tt> for <tt>size_t</tt> is executed only once.</p></TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch02qa1q3a3"></a><B><a class="docLink" href="ch02lev1sec17.html#ch02qa1q3">2.3</a></b></TD><td><p class="docText">If <tt>OPEN_MAX</tt> is indeterminite or ridiculously large (i.e., equal to <tt>LONG_MAX</tt>), we can use <tt>geTRlimit</tt> to get the per process maximum for open file descriptors. Since the per process limit can be modified, we can't cache the value obtained from the previous call (it might have changed). See <a class="docLink" href="app03lev1sec2.html#app03fig01">Figure C.1</a>.</P>
+<a name="app03fig01"></a>
+<h5 class="docExampleTitle">Figure C.1. Alternate method for identifying the largest possible file descriptor</h5>
+<pre>
+#include "apue.h"
+#include &lt;limits.h&gt;
+#include &lt;sys/resource.h&gt;
+
+#define OPEN_MAX_GUESS 256
+
+long
+open_max(void)
+{
+    long openmax;
+    struct rlimit rl;
+
+    if ((openmax = sysconf(_SC_OPEN_MAX)) &lt; 0 ||
+      openmax == LONG_MAX) {
+        if (getrlimit(RLIMIT_NOFILE, &amp;rl) &lt; 0)
+            err_sys("can't get file limit");
+        if (rl.rlim_max == RLIM_INFINITY)
+            openmax = OPEN_MAX_GUESS;
+        else
+            openmax = rl.rlim_max;
+    }
+    return(openmax);
+}
+</pre><br>
+
+
+</td></TR></table></p>
+
+<UL></ul></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

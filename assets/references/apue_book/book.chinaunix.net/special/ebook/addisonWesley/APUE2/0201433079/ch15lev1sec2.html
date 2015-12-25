@@ -1,0 +1,254 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 15.2.&nbsp; Pipes</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch15lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch15lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch15lev1sec2"></a>
+<h3 class="docSection1Title">15.2. Pipes</h3>
+<p class="docText">Pipes are the oldest form of UNIX System IPC and are provided by all UNIX systems. Pipes have two limitations.</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">Historically, they have been half duplex (i.e., data flows in only one direction). Some systems now provide full-duplex pipes, but for maximum portability, we should never assume that this is the case.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">Pipes can be used only between processes that have a common ancestor. Normally, a pipe is created by a process, that process calls <tt>fork</tt>, and the pipe is used between the parent and the child.</P></div></li></ol></div>
+<p class="docText">We'll see that FIFOs (<a class="docLink" href="ch15lev1sec5.html#ch15lev1sec5">Section 15.5</a>) get around the second limitation, and that UNIX domain sockets (<a class="docLink" href="ch17lev1sec3.html#ch17lev1sec3">Section 17.3</a>) and named STREAMS-based pipes (<a class="docLink" href="ch17lev1sec2.html#ch17lev2sec2">Section 17.2.2</a>) get around both limitations.</P>
+<p class="docText">Despite these limitations, half-duplex pipes are still the most commonly used form of IPC. Every time you type a sequence of commands in a pipeline for the shell to execute, the shell creates a separate process for each command and links the standard output of one to the standard input of the next using a pipe.</P>
+<p class="docText"><a name="idd1e110068"></a><a name="idd1e110071"></a><a name="idd1e110074"></a><a name="idd1e110079"></a><a name="idd1e110084"></a><a name="idd1e110091"></a><a name="idd1e110096"></a>A pipe is created by calling the <tt>pipe</tt> function.</P>
+<a name="inta179"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+int pipe(int <span class="docEmphItalicAlt">filedes[2]</span>);
+</pre><BR>
+
+</P></TD></tr><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></TD></TR></table></p><br>
+<p class="docText">Two file descriptors are returned through the <span class="docEmphasis">filedes</span> argument: <span class="docEmphasis">filedes[0]</span> is open for reading, and <span class="docEmphasis">filedes[1]</span> is open for writing. The output of <span class="docEmphasis">filedes[1]</span> is the input for <span class="docEmphasis">filedes[0]</span>.</p>
+<blockquote>
+<p class="docText">Pipes are implemented using UNIX domain sockets in 4.3BSD, 4.4BSD, and Mac OS X 10.3. Even though UNIX domain sockets are full duplex by default, these operating systems hobble the sockets used with pipes so that they operate in half-duplex mode only.</p>
+<p class="docText">POSIX.1 allows for an implementation to support full-duplex pipes. For these implementations, <span class="docEmphasis">filedes[0]</span> and <span class="docEmphasis">filedes[1]</span> are open for both reading and writing.</P>
+</blockquote>
+<p class="docText">Two ways to picture a half-duplex pipe are shown in <a class="docLink" href="ch15lev1sec2.html#ch15fig02">Figure 15.2</a>. The left half of the figure shows the two ends of the pipe connected in a single process. The right half of the figure emphasizes that the data in the pipe flows through the kernel.</p>
+<a name="ch15fig02"></a><P><center>
+<h5 class="docFigureTitle">Figure 15.2. Two ways to view a half-duplex pipe</H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/15fig02_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="204" SRC="images/0201433079/graphics/15fig02.gif;423615"></p>
+</center></p><br>
+<p class="docText">The <tt>fstat</tt> function (<a class="docLink" href="ch04lev1sec2.html#ch04lev1sec2">Section 4.2</a>) returns a file type of FIFO for the file descriptor of either end of a pipe. We can test for a pipe with the <tt>S_ISFIFO</tt> macro.</p>
+<blockquote>
+<p class="docText">POSIX.1 states that the <tt>st_size</tt> member of the <tt>stat</tt> structure is undefined for pipes. But when the <tt>fstat</tt> function is applied to the file descriptor for the read end of the pipe, many systems store in <tt>st_size</tt> the number of bytes available for reading in the pipe. This is, however, nonportable.</p>
+</blockquote>
+<p class="docText">A pipe in a single process is next to useless. Normally, the process that calls <tt>pipe</tt> then calls <tt>fork</tt>, creating an IPC channel from the parent to the child or vice versa. <a class="docLink" href="ch15lev1sec2.html#ch15fig03">Figure 15.3</a> shows this scenario.</p>
+<a name="ch15fig03"></a><p><center>
+<h5 class="docFigureTitle">Figure 15.3. Half-duplex pipe after a <tt>fork</tt></h5>
+
+<p class="docText">
+<img border="0" alt="" width="408" height="255" SRC="images/0201433079/graphics/15fig03.gif;423615"></p>
+
+</center></p><br>
+<p class="docText"><a name="idd1e110258"></a>What happens after the <tt>fork</tt> depends on which direction of data flow we want. For a pipe from the parent to the child, the parent closes the read end of the pipe (<tt>fd[0]</tt>), and the child closes the write end (<tt>fd[1]</tt>). <a class="docLink" href="ch15lev1sec2.html#ch15fig04">Figure 15.4</a> shows the resulting arrangement of descriptors.</p>
+<a name="ch15fig04"></a><p><center>
+<h5 class="docFigureTitle">Figure 15.4. Pipe from parent to child</h5>
+
+<p class="docText">
+<img border="0" alt="" width="409" height="254" SRC="images/0201433079/graphics/15fig04.gif;423615"></p>
+
+</center></P><BR>
+<p class="docText">For a pipe from the child to the parent, the parent closes <tt>fd[1]</tt>, and the child closes <tt>fd[0]</tt>.</p>
+<p class="docText">When one end of a pipe is closed, the following two rules apply.</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">If we <tt>read</tt> from a pipe whose write end has been closed, <tt>read</tt> returns 0 to indicate an end of file after all the data has been read. (Technically, we should say that this end of file is not generated until there are no more writers for the pipe. It's possible to duplicate a pipe descriptor so that multiple processes have the pipe open for writing. Normally, however, there is a single reader and a single writer for a pipe. When we get to FIFOs in the next section, we'll see that often there are multiple writers for a single FIFO.)</P></div></li><LI><div style="font-weight:normal"><p class="docList"><a name="idd1e110321"></a><a name="idd1e110326"></a><a name="idd1e110331"></a><a name="idd1e110336"></a><a name="idd1e110341"></a><a name="idd1e110346"></a><a name="idd1e110351"></a><a name="idd1e110356"></a><a name="idd1e110361"></a><a name="idd1e110366"></a>If we <tt>write</tt> to a pipe whose read end has been closed, the signal <tt>SIGPIPE</tt> is generated. If we either ignore the signal or catch it and return from the signal handler, <tt>write</tt> returns 1 with <tt>errno</tt> set to <tt>EPIPE</tt>.</P></div></LI></ol></div>
+<p class="docText">When we're writing to a pipe (or FIFO), the constant <tt>PIPE_BUF</tt> specifies the kernel's pipe buffer size. A <tt>write</tt> of <tt>PIPE_BUF</tt> bytes or less will not be interleaved with the <tt>write</tt>s from other processes to the same pipe (or FIFO). But if multiple processes are writing to a pipe (or FIFO), and if we <tt>write</tt> more than <tt>PIPE_BUF</tt> bytes, the data might be interleaved with the data from the other writers. We can determine the value of <tt>PIPE_BUF</tt> by using <tt>pathconf</tt> or <tt>fpathconf</tt> (recall <a class="docLink" href="ch02lev1sec5.html#ch02fig11">Figure 2.11</a>).</p>
+<a name="ch15ex01"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText"><a class="docLink" href="ch15lev1sec2.html#ch15fig05">Figure 15.5</a> shows the code to create a pipe between a parent and its child and to send data down the pipe.</P>
+
+<a name="ch15fig05"></a>
+<H5 class="docExampleTitle">Figure 15.5. Send data from parent to child over a pipe</H5>
+
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+    int     n;
+    int     fd[2];
+    pid_t   pid;
+    char    line[MAXLINE];
+
+    if (pipe(fd) &lt; 0)
+        err_sys("pipe error");
+    if ((pid = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (pid &gt; 0) {       /* parent */
+        close(fd[0]);
+        write(fd[1], "hello world\n", 12);
+    } else {                /* child */
+        close(fd[1]);
+        n = read(fd[0], line, MAXLINE);
+        write(STDOUT_FILENO, line, n);
+    }
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText">In the previous example, we called <tt>read</tt> and <tt>write</tt> directly on the pipe descriptors. What is more interesting is to duplicate the pipe descriptors onto standard input or standard output. Often, the child then runs some other program, and that program can either read from its standard input (the pipe that we created) or write to its standard output (the pipe).</P>
+<a name="ch15ex02"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText"><a name="idd1e110476"></a><a name="idd1e110481"></a><a name="idd1e110486"></a><a name="idd1e110491"></a><a name="idd1e110496"></a><a name="idd1e110501"></a><a name="idd1e110506"></a>Consider a program that displays some output that it has created, one page at a time. Rather than reinvent the pagination done by several UNIX system utilities, we want to invoke the user's favorite pager. To avoid writing all the data to a temporary file and calling <tt>system</tt> to display that file, we want to pipe the output directly to the pager. To do this, we create a pipe, <tt>fork</tt> a child process, set up the child's standard input to be the read end of the pipe, and <tt>exec</tt> the user's pager program. <a class="docLink" href="ch15lev1sec2.html#ch15fig06">Figure 15.6</a> shows how to do this. (This example takes a command-line argument to specify the name of a file to display. Often, a program of this type would already have the data to display to the terminal in memory.)</P>
+<p class="docText"><a name="idd1e110528"></a><a name="idd1e110533"></a><a name="idd1e110539"></a><a name="idd1e110544"></a><a name="idd1e110549"></a><a name="idd1e110554"></a><a name="idd1e110559"></a><a name="idd1e110564"></a><a name="idd1e110569"></a><a name="idd1e110574"></a><a name="idd1e110579"></a>Before calling <tt>fork</tt>, we create a pipe. After the <tt>fork</tt>, the parent closes its read end, and the child closes its write end. The child then calls <tt>dup2</tt> to have its standard input be the read end of the pipe. When the pager program is executed, its standard input will be the read end of the pipe.</P>
+<p class="docText">When we duplicate a descriptor onto another (<tt>fd[0]</tt> onto standard input in the child), we have to be careful that the descriptor doesn't already have the desired value. If the descriptor already had the desired value and we called <tt>dup2</tt> and <tt>close</tt>, the single copy of the descriptor would be closed. (Recall the operation of <tt>dup2</tt> when its two arguments are equal, discussed in <a class="docLink" href="ch03lev1sec12.html#ch03lev1sec12">Section 3.12</a>). In this program, if standard input had not been opened by the shell, the <tt>fopen</tt> at the beginning of the program should have used descriptor 0, the lowest unused descriptor, so <tt>fd[0]</tt> should never equal standard input. Nevertheless, whenever we call <tt>dup2</tt> and <tt>close</tt> to duplicate a descriptor onto another, we'll always compare the descriptors first, as a defensive programming measure.</p>
+<p class="docText">Note how we try to use the environment variable <tt>PAGER</tt> to obtain the name of the user's pager program. If this doesn't work, we use a default. This is a common usage of environment variables.</p>
+
+<a name="ch15fig06"></a>
+<h5 class="docExampleTitle">Figure 15.6. Copy file to pager program</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/wait.h&gt;
+
+#define DEF_PAGER   "/bin/more"     /* default pager program */
+
+int
+main(int argc, char *argv[])
+{
+    int    n;
+    int    fd[2];
+    pid_t  pid;
+    char   *pager, *argv0;
+    char   line[MAXLINE];
+    FILE   *fp;
+
+    if (argc != 2)
+        err_quit("usage: a.out &lt;pathname&gt;");
+
+    if ((fp = fopen(argv[1], "r")) == NULL)
+        err_sys("can't open %s", argv[1]);
+    if (pipe(fd) &lt; 0)
+        err_sys("pipe error");
+
+    if ((pid = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (pid &gt; 0) {                              /* parent */
+        close(fd[0]);       /* close read end */
+
+        /* parent copies argv[1] to pipe */
+        while (fgets(line, MAXLINE, fp) != NULL) {
+            n = strlen(line);
+            if (write(fd[1], line, n) != n)
+                err_sys("write error to pipe");
+        }
+        if (ferror(fp))
+            err_sys("fgets error");
+
+        close(fd[1]);   /* close write end of pipe for reader */
+
+        if (waitpid(pid, NULL, 0) &lt; 0)
+            err_sys("waitpid error");
+        exit(0);
+    } else {                                        /* child */
+        close(fd[1]);   /* close write end */
+        if (fd[0] != STDIN_FILENO) {
+            if (dup2(fd[0], STDIN_FILENO) != STDIN_FILENO)
+                err_sys("dup2 error to stdin");
+            close(fd[0]);   /* don't need this after dup2 */
+        }
+
+        /* get arguments for execl() */
+        if ((pager = getenv("PAGER")) == NULL)
+            pager = DEF_PAGER;
+        if ((argv0 = strrchr(pager, '/')) != NULL)
+            argv0++;        /* step past rightmost slash */
+        else
+            argv0 = pager;  /* no slash in pager */
+
+        if (execl(pager, argv0, (char *)0) &lt; 0)
+            err_sys("execl error for %s", pager);
+    }
+    exit(0);
+}
+</pre><BR>
+
+
+<a name="ch15ex03"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText">Recall the five functions <tt>TELL_WAIT</tt>, <tt>TELL_PARENT</tt>, <tt>TELL_CHILD</tt>, <tt>WAIT_PARENT</tt>, and <tt>WAIT_CHILD</tt> from <a class="docLink" href="ch08lev1sec9.html#ch08lev1sec9">Section 8.9</a>. In <a class="docLink" href="ch10lev1sec16.html#ch10fig24">Figure 10.24</a>, we showed an implementation using signals. <a class="docLink" href="ch15lev1sec2.html#ch15fig07">Figure 15.7</a> shows an implementation using pipes.</p>
+<p class="docText"><a name="idd1e110696"></a><a name="idd1e110701"></a><a name="idd1e110706"></a><a name="idd1e110711"></a><a name="idd1e110718"></a><a name="idd1e110723"></a><a name="idd1e110730"></a><a name="idd1e110735"></a>We create two pipes before the <tt>fork</tt>, as shown in <a class="docLink" href="ch15lev1sec2.html#ch15fig08">Figure 15.8</a>. The parent writes the character &quot;p&quot; across the top pipe when <tt>TELL_CHILD</tt> is called, and the child writes the character &quot;c&quot; across the bottom pipe when <tt>TELL_PARENT</tt> is called. The corresponding <tt>WAIT_xxx</tt> functions do a blocking <tt>read</tt> for the single character.</P>
+<p class="docText">Note that each pipe has an extra reader, which doesn't matter. That is, in addition to the child reading from <tt>pfd1[0]</tt>, the parent also has this end of the top pipe open for reading. This doesn't affect us, since the parent doesn't try to read from this pipe.</p>
+
+<a name="ch15fig07"></a>
+<h5 class="docExampleTitle">Figure 15.7. Routines to let a parent and child synchronize</h5>
+
+<pre>
+
+#include "apue.h"
+
+static int  pfd1[2], pfd2[2];
+
+void
+TELL_WAIT(void)
+{
+    if (pipe(pfd1) &lt; 0 || pipe(pfd2) &lt; 0)
+        err_sys("pipe error");
+}
+
+void
+TELL_PARENT(pid_t pid)
+{
+    if (write(pfd2[1], "c", 1) != 1)
+        err_sys("write error");
+}
+
+void
+WAIT_PARENT(void)
+{
+    char    c;
+
+    if (read(pfd1[0], &amp;c, 1) != 1)
+        err_sys("read error");
+
+    if (c != 'p')
+        err_quit("WAIT_PARENT: incorrect data");
+}
+
+void
+TELL_CHILD(pid_t pid)
+{
+    if (write(pfd1[1], "p", 1) != 1)
+        err_sys("write error");
+}
+
+void
+WAIT_CHILD(void)
+{
+    char    c;
+
+    if (read(pfd2[0], &amp;c, 1) != 1)
+        err_sys("read error");
+
+    if (c != 'c')
+        err_quit("WAIT_CHILD: incorrect data");
+}
+</pre><br>
+
+
+<a name="ch15fig08"></a><p><center>
+<h5 class="docFigureTitle">Figure 15.8. Using two pipes for parentchild synchronization</h5>
+
+<p class="docText">
+<img border="0" alt="" width="356" height="100" SRC="images/0201433079/graphics/15fig08.gif;423615"></p>
+
+</center></p><br>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch15lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch15lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

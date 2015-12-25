@@ -1,0 +1,256 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 10.18.&nbsp; system Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec17.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec19.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch10lev1sec18"></a>
+<h3 class="docSection1Title">10.18. <tt>system</tt> Function</h3>
+<p class="docText">In <a class="docLink" href="ch08lev1sec13.html#ch08lev1sec13">Section 8.13</a>, we showed an implementation of the <tt>system</tt> function. That version, however, did not do any signal handling. POSIX.1 requires that <tt>system</tt> ignore <tt>SIGINT</tt> and <tt>SIGQUIT</tt> and block <tt>SIGCHLD</tt>. Before showing a version that correctly handles these signals, let's see why we need to worry about signal handling.</P>
+<a name="ch10ex17"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText">The program shown in <a class="docLink" href="ch10lev1sec18.html#ch10fig26">Figure 10.26</a> uses the version of <tt>system</tt> from <a class="docLink" href="ch08lev1sec13.html#ch08lev1sec13">Section 8.13</a> to invoke the <tt>ed</tt>(1) editor. (This editor has been part of UNIX systems for a long time. We use it here because it is an interactive program that catches the interrupt and quit signals. If we invoke <tt>ed</tt> from a shell and type the interrupt character, it catches the interrupt signal and prints a question mark. The <tt>ed</tt> program also sets the disposition of the quit signal so that it is ignored.) The program in <a class="docLink" href="ch10lev1sec18.html#ch10fig26">Figure 10.26</a> catches both <tt>SIGINT</tt> and <tt>SIGCHLD</tt>. If we invoke the program, we get</P>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+<span class="docEmphStrong">
+    a</span>                         <span class="docEmphItalicAlt">append text to the editor's buffer</span>
+<span class="docEmphStrong">
+    Here is one line of text</span>
+<span class="docEmphStrong">
+    .</span>                         <span class="docEmphItalicAlt">period on a line by itself stops append mode</span>
+<span class="docEmphStrong">
+    1,$p</span>                      <span class="docEmphItalicAlt">print first through last lines of buffer to see what's there</span>
+    Here is one line of text
+    <span class="docEmphStrong">w temp.foo</span>                <span class="docEmphItalicAlt">write the buffer to a file</span>
+    25                        <span class="docEmphItalicAlt">editor says it wrote 25 bytes</span>
+    
+    <span class="docEmphStrong">q</span>                         <span class="docEmphItalicAlt">and leave the editor</span>
+    caught SIGCHLD
+</pre><BR>
+
+<p class="docText">When the editor terminates, the system sends the <tt>SIGCHLD</tt> signal to the parent (the <tt>a.out</tt> process). We catch it and return from the signal handler. But if it is catching the <tt>SIGCHLD</tt> signal, the parent should be doing so because it has created its own children, so that it knows when its children have terminated. The delivery of this signal in the parent should be blocked while the <tt>system</tt> function is executing. Indeed, this is what POSIX.1 specifies. Otherwise, when the child created by <tt>system</tt> terminates, it would fool the caller of <tt>system</tt> into thinking that one of its own children terminated. The <a name="idd1e79538"></a><a name="idd1e79541"></a><a name="idd1e79546"></a><a name="idd1e79551"></a><a name="idd1e79556"></a>caller would then use one of the <tt>wait</tt> functions to get the termination status of the child, thus preventing the <tt>system</tt> function from being able to obtain the child's termination status for its return value.</P>
+<p class="docText">If we run the program again, this time sending the editor an interrupt signal, we get</p>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+<span class="docEmphStrong">
+    a</span>              <span class="docEmphItalicAlt">append text to the editor's buffer</span>
+<span class="docEmphStrong">
+    hello, world</span>
+<span class="docEmphStrong">
+    .</span>              <span class="docEmphItalicAlt">period on a line by itself stops append mode</span>
+<span class="docEmphStrong">
+    1,$p</span>           <span class="docEmphItalicAlt">print first through last lines to see what's there</span>
+    hello, world
+    <span class="docEmphStrong">w temp.foo</span>     <span class="docEmphItalicAlt">write the buffer to a file</span>
+    13             <span class="docEmphItalicAlt">editor says it wrote 13 bytes</span>
+<span class="docEmphStrong">
+    ^?</span>             <span class="docEmphItalicAlt">type the interrupt character</span>
+    ?              <span class="docEmphItalicAlt">editor catches signal, prints question mark</span>
+    caught SIGINT  <span class="docEmphItalicAlt">and so does the parent process</span>
+<span class="docEmphStrong">
+    q</span>              <span class="docEmphItalicAlt">leave editor</span>
+    caught SIGCHLD
+</pre><BR>
+
+<p class="docText">Recall from <a class="docLink" href="ch09lev1sec6.html#ch09lev1sec6">Section 9.6</a> that typing the interrupt character causes the interrupt signal to be sent to all the processes in the foreground process group. <a class="docLink" href="ch10lev1sec18.html#ch10fig27">Figure 10.27</a> shows the arrangement of the processes when the editor is running.</P>
+<p class="docText"><a name="idd1e79639"></a><a name="idd1e79642"></a><a name="idd1e79647"></a><a name="idd1e79652"></a><a name="idd1e79657"></a><a name="idd1e79662"></a><a name="idd1e79667"></a><a name="idd1e79672"></a><a name="idd1e79677"></a><a name="idd1e79682"></a><a name="idd1e79687"></a>In this example, <tt>SIGINT</tt> is sent to all three foreground processes. (The shell ignores it.) As we can see from the output, both the <tt>a.out</tt> process and the editor catch the signal. But when we're running another program with the <tt>system</tt> function, we shouldn't have both the parent and the child catching the two terminal-generated signals: interrupt and quit. These two signals should really be sent to the program that is running: the child. Since the command that is executed by <tt>system</tt> can be an interactive command (as is the <tt>ed</tt> program in this example) and since the caller of <tt>system</tt> gives up control while the program executes, waiting for it to finish, the caller of <tt>system</tt> should not be receiving these two terminal-generated signals. This is why POSIX.1 specifies that the <tt>system</tt> function should ignore these two signals while waiting for the command to complete.</P>
+
+<a name="ch10fig26"></a>
+<h5 class="docExampleTitle">Figure 10.26. Using <tt>system</tt> to invoke the <tt>ed</tt> editor</H5>
+
+<pre>
+#include "apue.h"
+
+static void
+sig_int(int signo)
+{
+    printf("caught SIGINT\n");
+}
+
+static void
+sig_chld(int signo)
+{
+    printf("caught SIGCHLD\n");
+}
+
+int
+main(void)
+{
+     if (signal(SIGINT, sig_int) == SIG_ERR)
+         err_sys("signal(SIGINT) error");
+     if (signal(SIGCHLD, sig_chld) == SIG_ERR)
+         err_sys("signal(SIGCHLD) error");
+     if (system("/bin/ed") &lt; 0)
+         err_sys("system() error");
+     exit(0);
+}
+</pre><br>
+
+
+<a name="ch10fig27"></a><P><center>
+<H5 class="docFigureTitle">Figure 10.27. Foreground and background process groups for <a class="docLink" href="ch10lev1sec18.html#ch10fig26">Figure 10.26</a></H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/10fig27_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="71" SRC="images/0201433079/graphics/10fig27.gif;423615"></p>
+</center></P><BR>
+<a name="ch10ex18"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText"><a class="docLink" href="ch10lev1sec18.html#ch10fig28">Figure 10.28</a> shows an implementation of the <tt>system</tt> function with the required signal handling.</P>
+<p class="docText">If we link the program in <a class="docLink" href="ch10lev1sec18.html#ch10fig26">Figure 10.26</a> with this implementation of the <tt>system</tt> function, the resulting binary differs from the last (flawed) one in the following ways.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">No signal is sent to the calling process when we type the interrupt or quit character.</p></div></li><LI><div style="font-weight:normal"><p class="docList">When the <tt>ed</tt> command exits, <tt>SIGCHLD</tt> is not sent to the calling process. Instead, it is blocked until we unblock it in the last call to <tt>sigprocmask</tt>, after the <tt>system</tt> function retrieves the child's termination status by calling <tt>waitpid</tt>.</p><blockquote>
+<p class="docText">POSIX.1 states that if <tt>wait</tt> or <tt>waitpid</tt> returns the status of a child process while <tt>SIGCHLD</tt> is pending, then <tt>SIGCHLD</tt> should not be delivered to the process unless the status of another child process is also available. None of the four implementations discussed in this book implements this semantic. Instead, <tt>SIGCHLD</tt> remains pending after the <tt>system</tt> function calls <tt>waitpid</tt>; when the signal is unblocked, it is delivered to the caller. If we called <tt>wait</tt> in the <tt>sig_chld</tt> function in <a class="docLink" href="ch10lev1sec18.html#ch10fig26">Figure 10.26</a>, it would return 1 with <tt>errno</tt> set to <tt>ECHILD</tt>, since the <tt>system</tt> function already retrieved the termination status of the child.</P>
+</blockquote></div></li></ol></div>
+<p class="docText"><a name="idd1e79873"></a><a name="idd1e79876"></a><a name="idd1e79881"></a><a name="idd1e79886"></a><a name="idd1e79891"></a>Many older texts show the ignoring of the interrupt and quit signals as follows:</P>
+
+<pre>
+    if ((pid = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (pid == 0) {
+        /* child */
+        execl(...);
+        _exit(127);
+    }
+
+    /* parent */
+    old_intr = signal(SIGINT, SIG_IGN);
+    old_quit = signal(SIGQUIT, SIG_IGN);
+    waitpid(pid, &amp;status, 0)
+    signal(SIGINT, old_intr);
+    signal(SIGQUIT, old_quit);
+</pre><br>
+
+<p class="docText">The problem with this sequence of code is that we have no guarantee after the <tt>fork</tt> whether the parent or child runs first. If the child runs first and the parent doesn't run for some time after, it's possible for an interrupt signal to be generated before the parent is able to change its disposition to be ignored. For this reason, in <a class="docLink" href="ch10lev1sec18.html#ch10fig28">Figure 10.28</a>, we change the disposition of the signals before the <tt>fork</tt>.</p>
+<p class="docText">Note that we have to reset the dispositions of these two signals in the child before the call to <tt>execl</tt>. This allows <tt>execl</tt> to change their dispositions to the default, based on the caller's dispositions, as we described in <a class="docLink" href="ch08lev1sec10.html#ch08lev1sec10">Section 8.10</a>.</p>
+
+<a name="ch10fig28"></a>
+<h5 class="docExampleTitle">Figure 10.28. Correct POSIX.1 implementation of <tt>system</tt> function</h5>
+
+<pre>
+#include      &lt;sys/wait.h&gt;
+#include      &lt;errno.h&gt;
+#include      &lt;signal.h&gt;
+#include      &lt;unistd.h&gt;
+
+int
+system(const char *cmdstring)   /* with appropriate signal handling */
+{
+    pid_t               pid;
+    int                 status;
+    struct sigaction    ignore, saveintr, savequit;
+    sigset_t            chldmask, savemask;
+
+    if (cmdstring == NULL)
+        return(1);      /* always a command processor with UNIX */
+
+    ignore.sa_handler = SIG_IGN;    /* ignore SIGINT and SIGQUIT */
+    sigemptyset(&amp;ignore.sa_mask);
+    ignore.sa_flags = 0;
+    if (sigaction(SIGINT, &amp;ignore, &amp;saveintr) &lt; 0)
+        return(-1);
+    if (sigaction(SIGQUIT, &amp;ignore, &amp;savequit) &lt; 0)
+        return(-1);
+    sigemptyset(&amp;chldmask);         /* now block SIGCHLD */
+    sigaddset(&amp;chldmask, SIGCHLD);
+    if (sigprocmask(SIG_BLOCK, &amp;chldmask, &amp;savemask) &lt; 0)
+        return(-1);
+
+    if ((pid = fork()) &lt; 0) {
+        status = -1;    /* probably out of processes */
+    } else if (pid == 0) {          /* child */
+        /* restore previous signal actions &amp; reset signal mask */
+        sigaction(SIGINT, &amp;saveintr, NULL);
+        sigaction(SIGQUIT, &amp;savequit, NULL);
+        sigprocmask(SIG_SETMASK, &amp;savemask, NULL);
+
+        execl("/bin/sh", "sh", "-c", cmdstring, (char *)0);
+        _exit(127);     /* exec error */
+    } else {                        /* parent */
+       while (waitpid(pid, &amp;status, 0) &lt; 0)
+           if (errno != EINTR) {
+               status = -1; /* error other than EINTR from waitpid() */
+               break;
+           }
+    }
+
+    /* restore previous signal actions &amp; reset signal mask */
+    if (sigaction(SIGINT, &amp;saveintr, NULL) &lt; 0)
+        return(-1);
+    if (sigaction(SIGQUIT, &amp;savequit, NULL) &lt; 0)
+        return(-1);
+    if (sigprocmask(SIG_SETMASK, &amp;savemask, NULL) &lt; 0)
+        return(-1);
+
+    return(status);
+}
+</pre><br>
+
+
+<a name="ch10lev2sec4"></a>
+<h4 class="docSection2Title">Return Value from <tt>system</tt></h4>
+<p class="docText"><a name="idd1e79968"></a><a name="idd1e79973"></a><a name="idd1e79978"></a><a name="idd1e79983"></a><a name="idd1e79988"></a><a name="idd1e79993"></a><a name="idd1e79998"></a><a name="idd1e80003"></a><a name="idd1e80008"></a><a name="idd1e80013"></a><a name="idd1e80018"></a>Beware of the return value from <tt>system</tt>. It is the termination status of the shell, which isn't always the termination status of the command string. We saw some examples in <a class="docLink" href="ch08lev1sec13.html#ch08fig23">Figure 8.23</a>, and the results were as we expected: if we execute a simple command, such as <tt>date</tt>, the termination status is 0. Executing the shell command <tt>exit 44</tt> gave us a termination status of 44. What happens with signals?</p>
+<p class="docText">Let's run the program in <a class="docLink" href="ch08lev1sec13.html#ch08fig24">Figure 8.24</a> and send some signals to the command that's executing:</p>
+
+<pre>
+   $ <span class="docEmphStrong">tsys "sleep 30"</span>
+<span class="docEmphStrong">
+   ^?</span>normal termination, exit status = 130    <span class="docEmphItalicAlt">we type the interrupt key</span>
+   $ <span class="docEmphStrong">tsys "sleep 30"</span>
+<span class="docEmphStrong">
+   ^\</span>sh: 946 Quit                             <span class="docEmphItalicAlt">we type the quit key</span>
+   normal termination, exit status = 131
+</pre><br>
+
+<p class="docText">When we terminate the <tt>sleep</tt> with the interrupt signal, the <tt>pr_exit</tt> function (<a class="docLink" href="ch08lev1sec6.html#ch08fig05">Figure 8.5</a>) thinks that it terminated normally. The same thing happens when we kill the <tt>sleep</tt> with the quit key. What is happening here is that the Bourne shell has a poorly documented feature that its termination status is 128 plus the signal number, when the command it was executing is terminated by a signal. We can see this with the shell interactively.</p>
+
+<pre>
+   $ <span class="docEmphStrong">sh</span>                             <span class="docEmphItalicAlt">make sure we're running the Bourne shell</span>
+   $ <span class="docEmphStrong">sh -c "sleep 30"</span>
+<span class="docEmphStrong">
+   ^?</span>                               <span class="docEmphItalicAlt">type the interrupt key</span>
+   $ <span class="docEmphStrong">echo $?</span>                        <span class="docEmphItalicAlt">print termination status of last command</span>
+   130
+   $ <span class="docEmphStrong">sh -c "sleep 30"</span>
+<span class="docEmphStrong">
+   ^\</span>sh: 962 Quit - core dumped     <span class="docEmphItalicAlt">type the quit key</span>
+   $ <span class="docEmphStrong">echo $?</span>                        <span class="docEmphItalicAlt">print termination status of last command</span>
+   131
+   $ <span class="docEmphStrong">exit</span>                           <span class="docEmphItalicAlt">leave Bourne shell</span>
+</pre><br>
+
+<p class="docText"><a name="idd1e80130"></a><a name="idd1e80135"></a><a name="idd1e80140"></a><a name="idd1e80145"></a><a name="idd1e80152"></a>On the system being used, <tt>SIGINT</tt> has a value of 2 and <tt>SIGQUIT</tt> has a value of 3, giving us the shell's termination statuses of 130 and 131.</p>
+<p class="docText">Let's try a similar example, but this time we'll send a signal directly to the shell and see what gets returned by <tt>system</tt>:</p>
+
+<pre>
+    $ <span class="docEmphStrong">tsys "sleep 30" &amp;</span>                 <span class="docEmphItalicAlt">start it in background this time</span>
+    9257
+    $ <span class="docEmphStrong">ps -f</span>                             <span class="docEmphItalicAlt">look at the process IDs</span>
+         UID   PID   PPID   TTY    TIME CMD
+         sar  9260    949   pts/5  0:00 ps -f
+         sar  9258   9257   pts/5  0:00 sh -c sleep 60
+         sar   949    947   pts/5  0:01 /bin/sh
+         sar  9257    949   pts/5  0:00 tsys sleep 60
+         sar  9259   9258   pts/5  0:00 sleep 60
+    $ <span class="docEmphStrong">kill -KILL 9258</span>                   <span class="docEmphItalicAlt">kill the shell itself</span>
+    abnormal termination, signal number = 9
+</pre><br>
+
+<p class="docText">Here, we can see that the return value from <tt>system</tt> reports an abnormal termination only when the shell itself abnormally terminates.</p>
+<p class="docText">When writing programs that use the <tt>system</tt> function, be sure to interpret the return value correctly. If you call <tt>fork</tt>, <tt>exec</tt>, and <tt>wait</tt> yourself, the termination status is not the same as if you call <tt>system</tt>.</P>
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec17.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec19.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

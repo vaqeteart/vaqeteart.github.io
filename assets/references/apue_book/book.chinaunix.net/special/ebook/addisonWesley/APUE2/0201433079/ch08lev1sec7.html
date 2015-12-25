@@ -1,0 +1,42 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 8.7.&nbsp; waitid Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch08lev1sec7"></a>
+<h3 class="docSection1Title" id="454331-855">8.7. <tt>waitid</tt> Function</h3>
+<p class="docText"><a name="idd1e55677"></a><a name="idd1e55682"></a><a name="idd1e55687"></a><a name="idd1e55692"></a><a name="idd1e55697"></a><a name="idd1e55700"></a><a name="idd1e55705"></a><a name="idd1e55712"></a><a name="idd1e55717"></a><a name="idd1e55722"></a><a name="idd1e55727"></a><a name="idd1e55732"></a><a name="idd1e55737"></a>The XSI extension of the Single UNIX Specification includes an additional function to retrieve the exit status of a process. The <tt>waitid</tt> function is similar to <tt>waitpid</tt>, but provides extra flexibility.</P>
+<P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch08lev1sec7.html#PLID0">[View full width]</a></div><pre>
+#include &lt;sys/wait.h&gt;
+
+int waitid(idtype_t <span class="docEmphItalicAlt">idtype</span>, id_t <span class="docEmphItalicAlt">id</span>, siginfo_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">infop</span>, int <span class="docEmphItalicAlt">options</span>);
+</pre><BR>
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">Like <tt>waitpid</tt>, <tt>waitid</tt> allows a process to specify which children to wait for. Instead of encoding this information in a single argument combined with the process ID or process group ID, two separate arguments are used. The <span class="docEmphasis">id</span> parameter is interpreted based on the value of <span class="docEmphasis">idtype</span>. The types supported are summarized in <a class="docLink" href="ch08lev1sec7.html#ch08fig09">Figure 8.9</a>.</P>
+<a name="ch08fig09"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="all" cellpadding="4"><caption><H5 class="docTableTitle">Figure 8.9. The <span class="docEmphasis">idtype</span> constants for <tt>waitid</tt></H5></caption><colgroup><col width="100"><col width="400"></colgroup><thead><tr><th class="thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Constant</span></P></th><th class="thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></P></th></tr></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>P_PID</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Wait for a particular process: <span class="docEmphasis">id</span> contains the process ID of the child to wait for.</P></td></TR><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>P_PGID</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Wait for any child process in a particular process group: <span class="docEmphasis">id</span> contains the process group ID of the children to wait for.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>P_ALL</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Wait for any child process: <span class="docEmphasis">id</span> is ignored.</p></td></tr></table></p><BR>
+<p class="docText">The <span class="docEmphasis">options</span> argument is a bitwise OR of the flags shown in <a class="docLink" href="ch08lev1sec7.html#ch08fig10">Figure 8.10</a>. These flags indicate which state changes the caller is interested in.</P>
+<a name="ch08fig10"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="all" cellpadding="4"><caption><H5 class="docTableTitle">Figure 8.10. The <span class="docEmphasis">options</span> constants for <tt>waitid</tt></H5></caption><colgroup><col width="100"><col width="400"></colgroup><thead><TR><th class="thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Constant</span></p></th><th class="thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></P></th></TR></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>WCONTINUED</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">Wait for a process that has previously stopped and has been continued, and whose status has not yet been reported.</P></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>WEXITED</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Wait for processes that have exited.</p></td></tr><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>WNOHANG</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Return immediately instead of blocking if there is no child exit status available.</P></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>WNOWAIT</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Don't destroy the child exit status. The child's exit status can be retrieved by a subsequent call to <tt>wait</tt>, <tt>waitid</tt>,or <tt>waitpid</tt>.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>WSTOPPED</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Wait for a process that has stopped and whose status has not yet been reported.</p></td></TR></table></P><br>
+<p class="docText">The <span class="docEmphasis">infop</span> argument is a pointer to a <tt>siginfo</tt> structure. This structure contains detailed information about the signal generated that caused the state change in the child process. The <tt>siginfo</tt> structure is discussed further in <a class="docLink" href="ch10lev1sec14.html#ch10lev1sec14">Section 10.14</a>.</P>
+<blockquote>
+<p class="docText">Of the four platforms covered in this book, only Solaris provides support for <tt>waitid</tt>.</P>
+</blockquote>
+
+<UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

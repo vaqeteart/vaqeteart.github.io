@@ -1,0 +1,71 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 9.4.&nbsp; Process Groups</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch09lev1sec4"></a>
+<h3 class="docSection1Title">9.4. Process Groups</h3>
+<p class="docText"><a name="idd1e64009"></a><a name="idd1e64014"></a><a name="idd1e64021"></a><a name="idd1e64026"></a><a name="idd1e64033"></a><a name="idd1e64038"></a><a name="idd1e64041"></a><a name="idd1e64046"></a><a name="idd1e64051"></a><a name="idd1e64056"></a><a name="idd1e64063"></a><a name="idd1e64068"></a><a name="idd1e64071"></a>In addition to having a process ID, each process also belongs to a process group. We'll encounter process groups again when we discuss signals in <a class="docLink" href="ch10.html#ch10">Chapter 10</a>.</P>
+<p class="docText">A process group is a collection of one or more processes, usually associated with the same job (job control is discussed in <a class="docLink" href="ch09lev1sec8.html#ch09lev1sec8">Section 9.8</a>), that can receive signals from the same terminal. Each process group has a unique process group ID. Process group IDs are similar to process IDs: they are positive integers and can be stored in a <tt>pid_t</tt> data type. The function <tt>getpgrp</tt> returns the process group ID of the calling process.</P>
+<a name="inta117"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+pid_t getpgrp(void);
+</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: process group ID of calling process</P></td></TR></table></P><BR>
+<p class="docText">In older BSD-derived systems, the <tt>getpgrp</tt> function took a <span class="docEmphasis">pid</span> argument and returned the process group for that process. The Single UNIX Specification defines the <tt>getpgid</tt> function as an XSI extension that mimics this behavior.</p>
+<a name="inta116"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+pid_t getpgid(pid_t <span class="docEmphItalicAlt">pid</span>);
+</pre><BR>
+
+</P></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: process group ID if OK, 1 on error</P></td></TR></table></p><BR>
+<p class="docText">If <span class="docEmphasis">pid</span> is 0, the process group ID of the calling process is returned. Thus,</p>
+
+<pre>
+       getpgid(0);
+</pre><br>
+
+<p class="docText">is equivalent to</p>
+
+<pre>
+       getpgrp();
+</pre><br>
+
+<p class="docText">Each process group can have a process group leader. The leader is identified by its process group ID being equal to its process ID.</p>
+<p class="docText">It is possible for a process group leader to create a process group, create processes in the group, and then terminate. The process group still exists, as long as at least one process is in the group, regardless of whether the group leader terminates. This is called the process group lifetimethe period of time that begins when the group is created and ends when the last remaining process leaves the group. The last remaining process in the process group can either terminate or enter some other process group.</p>
+<p class="docText">A process joins an existing process group or creates a new process group by calling <tt>setpgid</tt>. (In the next section, we'll see that <tt>setsid</tt> also creates a new process group.)</p>
+<a name="inta295"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+int setpgid(pid_t <span class="docEmphItalicAlt">pid</span>, pid_t <span class="docEmphItalicAlt">pgid</span>);
+</pre><br>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></TD></TR></table></p><BR>
+<p class="docText"><a name="idd1e64227"></a><a name="idd1e64232"></a><a name="idd1e64237"></a><a name="idd1e64242"></a><a name="idd1e64245"></a><a name="idd1e64248"></a>This function sets the process group ID to <span class="docEmphasis">pgid</span> in the process whose process ID equals <span class="docEmphasis">pid</span>. If the two arguments are equal, the process specified by <span class="docEmphasis">pid</span> becomes a process group leader. If <span class="docEmphasis">pid</span> is 0, the process ID of the caller is used. Also, if <span class="docEmphasis">pgid</span> is 0, the process ID specified by <span class="docEmphasis">pid</span> is used as the process group ID.</P>
+<p class="docText">A process can set the process group ID of only itself or any of its children. Furthermore, it can't change the process group ID of one of its children after that child has called one of the <tt>exec</tt> functions.</P>
+<p class="docText">In most job-control shells, this function is called after a <tt>fork</tt> to have the parent set the process group ID of the child, and to have the child set its own process group ID. One of these calls is redundant, but by doing both, we are guaranteed that the child is placed into its own process group before either process assumes that this has happened. If we didn't do this, we would have a race condition, since the child's process group membership would depend on which process executes first.</p>
+<p class="docText">When we discuss signals, we'll see how we can send a signal to either a single process (identified by its process ID) or a process group (identified by its process group ID). Similarly, the <tt>waitpid</tt> function from <a class="docLink" href="ch08lev1sec6.html#ch08lev1sec6">Section 8.6</a> lets us wait for either a single process or one process from a specified process group.</P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

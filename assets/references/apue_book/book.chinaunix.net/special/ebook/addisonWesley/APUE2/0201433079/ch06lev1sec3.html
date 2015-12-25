@@ -1,0 +1,59 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 6.3.&nbsp; Shadow Passwords</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch06lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch06lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch06lev1sec3"></a>
+<h3 class="docSection1Title">6.3. Shadow Passwords</h3>
+<p class="docText">The encrypted password is a copy of the user's password that has been put through a one-way encryption algorithm. Because this algorithm is one-way, we can't guess the original password from the encrypted version.</P>
+<p class="docText">Historically, the algorithm that was used (see Morris and Thompson [<a class="docLink" href="bib01.html#biblio01_045">1979</a>]) always generated 13 printable characters from the 64-character set <tt>[a-zA-Z0-9./]</tt>. Some newer systems use an MD5 algorithm to encrypt passwords, generating 31 characters per encrypted password. (The more characters used to store the encrypted password, the more combinations there are, and the harder it will be to guess the password by trying all possible variations.) When we place a single character in the encrypted password field, we ensure that an encrypted password will never match this value.</P>
+<p class="docText">Given an encrypted password, we can't apply an algorithm that inverts it and returns the plaintext password. (The plaintext password is what we enter at the <tt>Password:</tt> prompt.) But we could guess a password, run it through the one-way algorithm, and compare the result to the encrypted password. If user passwords were randomly chosen, this brute-force approach wouldn't be too successful. Users, however, tend to choose nonrandom passwords, such as spouse's name, street names, or pet names. A common experiment is for someone to obtain a copy of the password file and try guessing the passwords. (<a class="docLink" href="ch04.html#ch04">Chapter 4</a> of Garfinkel et al. [<a class="docLink" href="bib01.html#biblio01_021">2003</a>] contains additional details and history on passwords and the password encryption scheme used on UNIX systems.)</p>
+<p class="docText">To make it more difficult to obtain the raw materials (the encrypted passwords), systems now store the encrypted password in another file, often called the <span class="docEmphasis">shadow password file</span>. Minimally, this file has to contain the user name and the encrypted password. Other information relating to the password is also stored here (<a class="docLink" href="ch06lev1sec3.html#ch06fig03">Figure 6.3</a>).</P>
+<a name="ch06fig03"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 6.3. Fields in <tt>/etc/shadow</tt> file</h5></caption><colgroup><col width="300"><col width="200"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Description</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman"><tt>struct spwd</tt> member</span></P></th></tr></thead><TR><td class="rightBorder" align="left" valign="top"><p class="docText">user login name</P></TD><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>char *sp_namp</tt>
+</p></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText">encrypted password</P></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>char *sp_pwdp</tt>
+</p></td></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText">days since Epoch of last password change</p></TD><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int sp_lstchg</tt>
+</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">days until change allowed</p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int sp_min</tt>
+</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">days before change required</p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int sp_max</tt>
+</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText">days warning for expiration</P></td><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>int sp_warn</tt>
+</P></TD></tr><TR><td class="rightBorder" align="left" valign="top"><p class="docText">days before account inactive</P></TD><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>int sp_inact</tt>
+</p></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText">days since Epoch when account expires</P></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int sp_expire</tt>.</p></td></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText">reserved</p></TD><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>unsigned int sp_flag</tt>
+</p></td></tr></table></p><br>
+<p class="docText"><a name="idd1e42830"></a><a name="idd1e42835"></a><a name="idd1e42842"></a><a name="idd1e42847"></a><a name="idd1e42852"></a><a name="idd1e42855"></a><a name="idd1e42860"></a><a name="idd1e42867"></a><a name="idd1e42872"></a><a name="idd1e42879"></a><a name="idd1e42884"></a><a name="idd1e42891"></a><a name="idd1e42896"></a><a name="idd1e42903"></a><a name="idd1e42906"></a><a name="idd1e42911"></a><a name="idd1e42916"></a><a name="idd1e42919"></a><a name="idd1e42924"></a><a name="idd1e42927"></a><a name="idd1e42932"></a><a name="idd1e42937"></a><a name="idd1e42944"></a><a name="idd1e42947"></a>The only two mandatory fields are the user's login name and encrypted password. The other fields control how often the password is to changeknown as &quot;password aging&quot;and how long an account is allowed to remain active.</p>
+<p class="docText">The shadow password file should not be readable by the world. Only a few programs need to access encrypted passwords<tt>login</tt>(1) and <tt>passwd</tt>(1), for exampleand these programs are often set-user-ID root. With shadow passwords, the regular password file, <tt>/etc/passwd</tt>, can be left readable by the world.</p>
+<p class="docText">On Linux 2.4.22 and Solaris 9, a separate set of functions is available to access the shadow password file, similar to the set of functions used to access the password file.</p>
+<a name="inta36"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;shadow.h&gt;
+
+struct spwd *getspnam(const char *<span class="docEmphItalicAlt">name</span>);
+
+struct spwd *getspent(void);
+</pre><br>
+
+</p></td></tr><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: pointer if OK, <tt>NULL</tt> on error</P></td></TR><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+void setspent(void);
+
+void endspent(void);
+</pre><br>
+
+</P></TD></TR></table></p><BR>
+<p class="docText">On FreeBSD 5.2.1 and Mac OS X 10.3, there is no shadow password structure. The additional account information is stored in the password file (refer back to <a class="docLink" href="ch06lev1sec2.html#ch06fig01">Figure 6.1</a>).</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch06lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch06lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

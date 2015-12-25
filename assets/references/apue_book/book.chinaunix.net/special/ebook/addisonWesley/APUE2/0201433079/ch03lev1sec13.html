@@ -1,0 +1,48 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 3.13.&nbsp; sync, fsync, and fdatasync Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec14.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch03lev1sec13"></a>
+<h3 class="docSection1Title">3.13. <tt>sync</tt>, <tt>fsync</tt>, and <tt>fdatasync</tt> Functions</h3>
+<p class="docText">Traditional implementations of the UNIX System have a buffer cache or page cache in the kernel through which most disk I/O passes. When we write data to a file, the data is normally copied by the kernel into one of its buffers and queued for writing to disk at some later time. This is called <span class="docEmphasis">delayed write</span>. (<a class="docLink" href="ch03.html#ch03">Chapter 3</a> of Bach [<a class="docLink" href="bib01.html#biblio01_013">1986</a>] discusses this buffer cache in detail.)</P>
+<p class="docText">The kernel eventually writes all the delayed-write blocks to disk, normally when it needs to reuse the buffer for some other disk block. To ensure consistency of the file system on disk with the contents of the buffer cache, the <tt>sync</tt>, <tt>fsync</tt>, and <tt>fdatasync</tt> functions are provided.</P>
+<a name="inta52"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+int fsync(int <span class="docEmphItalicAlt">filedes</span>);
+
+int fdatasync(int <span class="docEmphItalicAlt">filedes</span>);</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</P></td></TR><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+    void sync(void);
+</pre><br>
+
+</P></TD></tr></table></P><BR>
+<p class="docText">The <tt>sync</tt> function simply queues all the modified block buffers for writing and returns; it does not wait for the disk writes to take place.</p>
+<p class="docText">The function <tt>sync</tt> is normally called periodically (usually every 30 seconds) from a system daemon, often called <tt>update</tt>. This guarantees regular flushing of the kernel's block buffers. The command <tt>sync</tt>(1) also calls the <tt>sync</tt> function.</p>
+<p class="docText"><a name="idd1e21490"></a><a name="idd1e21495"></a><a name="idd1e21502"></a><a name="idd1e21507"></a><a name="idd1e21512"></a><a name="idd1e21517"></a><a name="idd1e21522"></a><a name="idd1e21527"></a><a name="idd1e21530"></a><a name="idd1e21535"></a><a name="idd1e21540"></a><a name="idd1e21545"></a><a name="idd1e21550"></a><a name="idd1e21555"></a>The function <tt>fsync</tt> refers only to a single file, specified by the file descriptor <span class="docEmphasis">filedes</span>, and waits for the disk writes to complete before returning. The intended use of <tt>fsync</tt> is for an application, such as a database, that needs to be sure that the modified blocks have been written to the disk.</p>
+<p class="docText">The <tt>fdatasync</tt> function is similar to <tt>fsync</tt>, but it affects only the data portions of a file. With <tt>fsync</tt>, the file's attributes are also updated synchronously.</p>
+<blockquote>
+<p class="docText">All four of the platforms described in this book support <tt>sync</tt> and <tt>fsync</tt>. However, FreeBSD 5.2.1 and Mac OS X 10.3 do not support <tt>fdatasync</tt>.</P>
+</blockquote>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec14.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

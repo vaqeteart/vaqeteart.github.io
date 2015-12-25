@@ -1,0 +1,54 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 18.6.&nbsp; stty Command</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch18lev1sec6"></a>
+<h3 class="docSection1Title">18.6. <tt>stty</tt> Command</h3>
+<p class="docText">All the options described in the previous section can be examined and changed from within a program, with the <tt>tcgetattr</tt> and <tt>tcsetattr</tt> functions (<a class="docLink" href="ch18lev1sec4.html#ch18lev1sec4">Section 18.4</a>) or from the command line (or a shell script), with the <tt>stty</tt>(1) command. This command is simply an interface to the first six functions that we listed in <a class="docLink" href="ch18lev1sec2.html#ch18fig07">Figure 18.7</a>. If we execute this command with its <tt>-a</tt> option, it displays all the terminal options:</P>
+
+<pre>
+$ <span class="docEmphStrong">stty -a</span>
+speed 9600 baud; 25 rows; 80 columns;
+lflags: icanon isig iexten echo echoe -echok echoke -echonl echoctl
+        -echoprt -altwerase -noflsh -tostop -flusho pendin -nokerninfo
+        -extproc
+iflags: -istrip icrnl -inlcr -igncr ixon -ixoff ixany imaxbel -ignbrk
+        brkint -inpck -ignpar -parmrk
+oflags: opost onlcr -ocrnl -oxtabs -onocr -onlret
+cflags: cread cs8 -parenb -parodd hupcl -clocal -cstopb -crtscts
+        -dsrflow -dtrflow -mdmbuf
+cchars: discard = ^O; dsusp = ^Y; eof = ^D; eol = &lt;undef&gt;;
+        eol2 = &lt;undef&gt;; erase = ^H; erase2 = ^?; intr = ^C; kill = ^U;
+        lnext = ^V; min = 1; quit = ^; reprint = ^R; start = ^Q;
+        status = ^T; stop = ^S; susp = ^Z; time = 0; werase = ^W;
+</pre><BR>
+
+<p class="docText"><a name="idd1e140462"></a><a name="idd1e140467"></a><a name="idd1e140472"></a><a name="idd1e140477"></a><a name="idd1e140482"></a><a name="idd1e140487"></a><a name="idd1e140492"></a><a name="idd1e140497"></a><a name="idd1e140502"></a><a name="idd1e140507"></a><a name="idd1e140512"></a><a name="idd1e140517"></a><a name="idd1e140522"></a><a name="idd1e140527"></a><a name="idd1e140532"></a><a name="idd1e140537"></a><a name="idd1e140542"></a><a name="idd1e140547"></a><a name="idd1e140552"></a><a name="idd1e140555"></a><a name="idd1e140560"></a><a name="idd1e140567"></a><a name="idd1e140572"></a><a name="idd1e140579"></a><a name="idd1e140584"></a><a name="idd1e140591"></a><a name="idd1e140596"></a><a name="idd1e140603"></a><a name="idd1e140606"></a><a name="idd1e140611"></a>Option names preceded by a hyphen are disabled. The last four lines display the current settings for each of the terminal special characters (<a class="docLink" href="ch18lev1sec3.html#ch18lev1sec3">Section 18.3</a>). The first line displays the number of rows and columns for the current terminal window; we discuss this in <a class="docLink" href="ch18lev1sec12.html#ch18lev1sec12">Section 18.12</a>.</p>
+<blockquote>
+<p class="docText">The <tt>stty</tt> command uses its standard input to get and set the terminal option flags. Although some older implementations used standard output, POSIX.1 requires that the standard input be used. All four implementations discussed in this text provide versions of <tt>stty</tt> that operate on standard input. This means that we can type</P>
+
+<pre>
+          stty -a &lt;/dev/tty1a
+</pre><BR>
+
+<p class="docText">if we are interested in discovering the settings on the terminal named <tt>tty1a</tt>.</P>
+</blockquote>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

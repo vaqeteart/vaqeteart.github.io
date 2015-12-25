@@ -1,0 +1,149 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 16.4.&nbsp; Connection Establishment</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch16lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch16lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch16lev1sec4"></a>
+<h3 class="docSection1Title">16.4. Connection Establishment</h3>
+<p class="docText">If we're dealing with a connection-oriented network service (<tt>SOCK_STREAM</tt> or <tt>SOCK_SEQPACKET</tt>), then before we can exchange data, we need to create a connection between the socket of the process requesting the service (the client) and the process providing the service (the server). We use the <tt>connect</tt> function to create a connection.</P>
+<a name="inta133"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch16lev1sec4.html#PLID0">[View full width]</a></div><pre>
+#include &lt;sys/socket.h&gt;
+
+int connect(int <span class="docEmphItalicAlt">sockfd</span>, const struct sockaddr
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">addr</span>, socklen_t <span class="docEmphItalicAlt">len</span>);</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText"><a name="idd1e122883"></a><a name="idd1e122886"></a><a name="idd1e122893"></a><a name="idd1e122896"></a><a name="idd1e122901"></a>The address we specify with <tt>connect</tt> is the address of the server with which we wish to communicate. If <span class="docEmphasis">sockfd</span> is not bound to an address, <tt>connect</tt> will bind a default address for the caller.</P>
+<p class="docText">When we try to connect to a server, the connect request might fail for several reasons. The machine to which we are trying to connect must be up and running, the server must be bound to the address we are trying to contact, and there must be room in the server's pending connect queue (we'll learn more about this shortly). Thus, applications must be able to handle <tt>connect</tt> error returns that might be caused by transient conditions.</p>
+<a name="ch16ex02"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText"><a class="docLink" href="ch16lev1sec4.html#ch16fig09">Figure 16.9</a> shows one way to handle transient <tt>connect</tt> errors. This is likely with a server that is running on a heavily loaded system.</p>
+<p class="docText">This function shows what is known as an <span class="docEmphasis">exponential backoff</span> algorithm. If the call to <tt>connect</tt> fails, the process goes to sleep for a short time and then tries again, increasing the delay each time through the loop, up to a maximum delay of about 2 minutes.</P>
+
+<a name="ch16fig09"></a>
+<H5 class="docExampleTitle">Figure 16.9. Connect with retry</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/socket.h&gt;
+
+#define MAXSLEEP 128
+
+int
+connect_retry(int sockfd, const struct sockaddr *addr, socklen_t alen)
+{
+    int nsec;
+    
+    /*
+     * Try to connect with exponential backoff.
+     */
+    for (nsec = 1; nsec &lt;= MAXSLEEP; nsec &lt;&lt;= 1) {
+        if (connect(sockfd, addr, alen) == 0) {
+            /*
+             * Connection accepted.
+             */
+            return(0);
+        }
+
+        /*
+         * Delay before trying again.
+         */
+        if (nsec &lt;= MAXSLEEP/2)
+            sleep(nsec);
+    }
+    return(-1);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e122973"></a><a name="idd1e122978"></a><a name="idd1e122985"></a><a name="idd1e122990"></a><a name="idd1e122995"></a><a name="idd1e123000"></a><a name="idd1e123005"></a><a name="idd1e123012"></a><a name="idd1e123017"></a><a name="idd1e123022"></a><a name="idd1e123027"></a><a name="idd1e123032"></a><a name="idd1e123037"></a><a name="idd1e123042"></a><a name="idd1e123045"></a><a name="idd1e123050"></a>If the socket descriptor is in nonblocking mode, which we discuss further in <a class="docLink" href="ch16lev1sec8.html#ch16lev1sec8">Section 16.8</a>, <tt>connect</tt> will return 1 with <tt>errno</tt> set to the special error code <tt>EINPROGRESS</tt> if the connection can't be established immediately. The application can use either <tt>poll</tt> or <tt>select</tt> to determine when the file descriptor is writable. At this point, the connection is complete.</p>
+<p class="docText">The <tt>connect</tt> function can also be used with a connectionless network service (<tt>SOCK_DGRAM</tt>). This might seem like a contradiction, but it is an optimization instead. If we call <tt>connect</tt> with a <tt>SOCK_DGRAM</tt> socket, the destination address of all messages we send is set to the address we specified in the <tt>connect</tt> call, relieving us from having to provide the address every time we transmit a message. In addition, we will receive datagrams only from the address we've specified.</p>
+<p class="docText">A server announces that it is willing to accept connect requests by calling the <tt>listen</tt> function.</P>
+<a name="inta02"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;sys/socket.h&gt;
+
+int listen(int <span class="docEmphItalicAlt">sockfd</span>, int <span class="docEmphItalicAlt">backlog</span>);</pre><BR>
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></td></tr></table></p><br>
+<p class="docText">The <span class="docEmphasis">backlog</span> argument provides a hint to the system of the number of outstanding connect requests that it should enqueue on behalf of the process. The actual value is determined by the system, but the upper limit is specified as <tt>SOMAXCONN</tt> in <tt>&lt;sys/socket.h&gt;</tt>.</p>
+<blockquote>
+<p class="docText">On Solaris, the <tt>SOMAXCONN</tt> value in <tt>&lt;sys/socket.h&gt;</tt> is ignored. The particular maximum depends on the implementation of each protocol. For TCP, the default is 128.</p>
+</blockquote>
+<p class="docText">Once the queue is full, the system will reject additional connect requests, so the <span class="docEmphasis">backlog</span> value must be chosen based on the expected load of the server and the amount of processing it must do to accept a connect request and start the service.</p>
+<p class="docText">Once a server has called <tt>listen</tt>, the socket used can receive connect requests. We use the <tt>accept</tt> function to retrieve a connect request and convert that into a connection.</p>
+<a name="inta152"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;sys/socket.h&gt;
+
+int accept(int <span class="docEmphItalicAlt">sockfd</span>, struct sockaddr *restrict <span class="docEmphItalicAlt">addr</span>,
+           socklen_t *restrict <span class="docEmphItalicAlt">len</span>);
+</pre><BR>
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: file (socket) descriptor if OK, 1 on error</p></TD></TR></table></P><br>
+<p class="docText">The file descriptor returned by <tt>accept</tt> is a socket descriptor that is connected to the client that called <tt>connect</tt>. This new socket descriptor has the same socket type and address family as the original socket (<span class="docEmphasis">sockfd</span>). The original socket passed to <tt>accept</tt> is not associated with the connection, but instead remains available to receive additional connect requests.</P>
+<p class="docText">If we don't care about the client's identity, we can set the <span class="docEmphasis">addr</span> and <span class="docEmphasis">len</span> parameters to <tt>NULL</tt>. Otherwise, before calling <tt>accept</tt>, we need to set the <span class="docEmphasis">addr</span> parameter to a buffer large enough to hold the address and set the integer pointed to by <span class="docEmphasis">len</span> to the size of the <a name="idd1e123242"></a><a name="idd1e123247"></a><a name="idd1e123252"></a><a name="idd1e123257"></a><a name="idd1e123262"></a><a name="idd1e123269"></a><a name="idd1e123274"></a><a name="idd1e123279"></a><a name="idd1e123284"></a><a name="idd1e123289"></a>buffer. On return, <tt>accept</tt> will fill in the client's address in the buffer and update the integer pointed to by <span class="docEmphasis">len</span> to reflect the size of the address.</p>
+<p class="docText">If no connect requests are pending, <tt>accept</tt> will block until one arrives. If <span class="docEmphasis">sockfd</span> is in nonblocking mode, <tt>accept</tt> will return 1 and set <tt>errno</tt> to either <tt>EAGAIN</tt> or <tt>EWOULDBLOCK</tt>.</P>
+<blockquote>
+<p class="docText">All four platforms discussed in this text define <tt>EAGAIN</tt> to be the same as <tt>EWOULDBLOCK</tt>.</P>
+</blockquote>
+<p class="docText">If a server calls <tt>accept</tt> and no connect request is present, the server will block until one arrives. Alternatively, a server can use either <tt>poll</tt> or <tt>select</tt> to wait for a connect request to arrive. In this case, a socket with pending connect requests will appear to be readable.</P>
+<a name="ch16ex03"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText"><a class="docLink" href="ch16lev1sec4.html#ch16fig10">Figure 16.10</a> shows a function we can use to allocate and initialize a socket for use by a server process.</P>
+<p class="docText"><a name="idd1e123359"></a><a name="idd1e123364"></a><a name="idd1e123367"></a><a name="idd1e123372"></a><a name="idd1e123377"></a><a name="idd1e123382"></a><a name="idd1e123389"></a><a name="idd1e123392"></a>We'll see that TCP has some strange rules regarding address reuse that make this example inadequate. <a class="docLink" href="ch16lev1sec6.html#ch16fig20">Figure 16.20</a> shows a version of this function that bypasses these rules, solving the major drawback with this version.</p>
+
+<a name="ch16fig10"></a>
+<H5 class="docExampleTitle">Figure 16.10. Initialize a socket endpoint for use by a server</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;errno.h&gt;
+#include &lt;sys/socket.h&gt;
+
+int
+initserver(int type, const struct sockaddr *addr, socklen_t alen,
+  int qlen)
+{
+    int fd;
+    int err = 0;
+
+    if ((fd = socket(addr-&gt;sa_family, type, 0)) &lt; 0)
+        return(-1);
+    if (bind(fd, addr, alen) &lt; 0) {
+        err = errno;
+        goto errout;
+    }
+    if (type == SOCK_STREAM || type == SOCK_SEQPACKET) {
+        if (listen(fd, qlen) &lt; 0) {
+            err = errno;
+            goto errout;
+        }
+    }
+    return(fd);
+
+errout:
+    close(fd);
+    errno = err;
+    return(-1);
+}
+</pre><br>
+
+
+
+<ul></ul></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch16lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch16lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

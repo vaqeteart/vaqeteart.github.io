@@ -1,0 +1,105 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Chapter 16</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec15.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec17.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app03lev1sec16"></a>
+<h3 class="docSection1Title">Chapter 16</h3>
+<p class="docText"></P>
+<P><table border="0" cellspacing="16" cellpadding="0"><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch16qa1q1a1"></a><B><a class="docLink" href="ch16lev1sec10.html#ch16qa1q1">16.1</a></b></TD><td><p class="docText"><a class="docLink" href="app03lev1sec16.html#app03fig20">Figure C.20</a> shows a program that prints the system's byte order.</P>
+<a name="app03fig20"></a>
+<H5 class="docExampleTitle">Figure C.20. Determine byte order on system</H5>
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;inttypes.h&gt;
+
+int
+main(void)
+{
+    uint32_t i;
+    unsigned char *cp;
+
+    i = 0x04030201;
+    cp = (unsigned char *)&amp;i;
+    if (*cp == 1)
+        printf("little-endian\n");
+    else if (*cp == 4)
+        printf("big-endian\n");
+    else
+        printf("who knows?\n");
+    exit(0);
+}
+</pre><br>
+
+
+</TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch16qa1q3a3"></a><B><a class="docLink" href="ch16lev1sec10.html#ch16qa1q3">16.3</a></b></td><TD><p class="docText">For each endpoint we will be listening on, we need to bind the proper address and record an entry in an <tt>fd_set</tt> structure corresponding to each file descriptor.</P>
+<p class="docText"><a name="idd1e127059"></a><a name="idd1e127064"></a><a name="idd1e127069"></a><a name="idd1e127074"></a><a name="idd1e127079"></a><a name="idd1e127084"></a><a name="idd1e127089"></a><a name="idd1e127094"></a><a name="idd1e127099"></a><a name="idd1e127104"></a><a name="idd1e127109"></a>We will use <tt>select</tt> to wait for connect requests to arrive on multiple endpoints. Recall from <a class="docLink" href="ch16lev1sec4.html#ch16lev1sec4">Section 16.4</a> that a passive endpoint will appear to be readable when a connect request arrives on it. When a connect request does arrive, we will accept the request and process it as before.</p>
+</TD></TR><tr valign="top"><td align="right" class="docText" width="50"><a name="ch16qa1q5a5"></a><b><a class="docLink" href="ch16lev1sec10.html#ch16qa1q5">16.5</a></b></td><TD><p class="docText">In the <tt>main</tt> procedure, we need to arrange to catch <tt>SIGCHLD</tt> by calling our <tt>signal</tt> function (<a class="docLink" href="ch10lev1sec14.html#ch10fig18">Figure 10.18</a>), which will use <tt>sigaction</tt> to install the handler specifying the restartable system call option. Next, we need to remove the call to <tt>waitpid</tt> from our <tt>serve</tt> function. After <tt>fork</tt>ing the child to service the request, the parent closes the new file descriptor and resumes listening for additional connect requests. Finally, we need a signal handler for <tt>SIGCHLD</tt>, as follows:</p>
+<pre>
+     void
+     sigchld(int signo)
+     {
+         while (waitpid((pid_t)-1, NULL, WNOHANG) &gt; 0)
+             ;
+     }
+</pre><BR>
+
+</td></TR><tr valign="top"><td align="right" class="docText" width="50"><a name="ch16qa1q6a6"></a><b><a class="docLink" href="ch16lev1sec10.html#ch16qa1q6">16.6</a></b></td><td><p class="docText"><a name="idd1e127246"></a><a name="idd1e127251"></a><a name="idd1e127256"></a><a name="idd1e127261"></a><a name="idd1e127266"></a>To enable asynchronous socket I/O, we need to establish socket ownership using the <tt>F_SETOWN fcntl</tt> command, and then enable asynchronous signaling using the <tt>FIOASYNC ioctl</tt> command. To disable asynchronous socket I/O, we simply need to disable asynchronous signaling. The reason we mix <tt>fcntl</tt> and <tt>ioctl</tt> commands is to find the methods that are most portable. The code is shown in <a class="docLink" href="app03lev1sec16.html#app03fig21">Figure C.21</a>.</p>
+<a name="app03fig21"></a>
+<h5 class="docExampleTitle">Figure C.21. Enable and disable asynchronous socket I/O</h5>
+<pre>
+#include "apue.h"
+#include &lt;errno.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;sys/ioctl.h&gt;
+#if defined(BSD) || defined(MACOS) || defined(SOLARIS)
+#include &lt;sys/filio.h&gt;
+#endif
+
+int
+setasync(int sockfd)
+{
+    int n;
+
+    if (fcntl(sockfd, F_SETOWN, getpid()) &lt; 0)
+        return(-1);
+    n = 1;
+    if (ioctl(sockfd, FIOASYNC, &amp;n) &lt; 0)
+        return(-1);
+    return(0);
+}
+
+int
+clrasync(int sockfd)
+{
+    int n;
+
+    n = 0;
+    if (ioctl(sockfd, FIOASYNC, &amp;n) &lt; 0)
+        return(-1);
+    return(0);
+}
+</pre><br>
+
+
+</td></tr></table></p>
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec15.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec17.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

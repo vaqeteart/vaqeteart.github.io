@@ -1,0 +1,27 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 19.1.&nbsp; Introduction</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch19lev1sec2.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch19lev1sec1"></a>
+<h3 class="docSection1Title">19.1. Introduction</h3>
+<p class="docText"><a name="idd1e143809"></a><a name="idd1e143814"></a><a name="idd1e143817"></a><a name="idd1e143822"></a>In <a class="docLink" href="ch09.html#ch09">Chapter 9</a>, we saw that terminal logins come in through a terminal device, automatically providing terminal semantics. A terminal line discipline (<a class="docLink" href="ch18lev1sec2.html#ch18fig02">Figure 18.2</a>) exists between the terminal and the programs that we run, so we can set the terminal's special characters (backspace, line erase, interrupt, etc.) and the like. When a login arrives on a network connection, however, a terminal line discipline is not automatically provided between the incoming network connection and the login shell. <a class="docLink" href="ch09lev1sec3.html#ch09fig05">Figure 9.5</a> showed that a <span class="docEmphasis">pseudo-terminal</span> device driver is used to provide terminal semantics.</P>
+<p class="docText">In addition to network logins, pseudo terminals have other uses that we explore in this chapter. We start with an overview on how to use pseudo terminals, followed by a discussion of specific use cases. We then provide functions to create pseudo terminals on various platforms and then use these functions to write a program that we call <tt>pty</tt>. We'll show various uses of this program: making a transcript of all the character input and output on the terminal (the <tt>script</tt>(1) program) and running coprocesses to avoid the buffering problems we encountered in the program from <a class="docLink" href="ch15lev1sec4.html#ch15fig19">Figure 15.19</a>.</P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch19lev1sec2.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

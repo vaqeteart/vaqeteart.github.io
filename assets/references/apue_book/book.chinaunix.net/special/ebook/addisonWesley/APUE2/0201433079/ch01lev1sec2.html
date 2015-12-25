@@ -1,0 +1,36 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 1.2.&nbsp; UNIX Architecture</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch01lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch01lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch01lev1sec2"></a>
+<h3 class="docSection1Title">1.2. UNIX Architecture</h3>
+<p class="docText">In a strict sense, an operating system can be defined as the software that controls the hardware resources of the computer and provides an environment under which programs can run. Generally, we call this software the <span class="docEmphasis">kernel</span>, since it is relatively small and resides at the core of the environment. <a class="docLink" href="ch01lev1sec2.html#ch01fig01">Figure 1.1</a> shows a diagram of the UNIX System architecture.</P>
+<a name="ch01fig01"></a><P><center>
+<h5 class="docFigureTitle">Figure 1.1. Architecture of the UNIX operating system</H5>
+
+<p class="docText">
+<img border="0" alt="" width="266" height="265" SRC="images/0201433079/graphics/01fig01.gif;423615"></P>
+
+</center></P><br>
+<p class="docText">The interface to the kernel is a layer of software called the <span class="docEmphasis">system calls</span> (the shaded portion in <a class="docLink" href="ch01lev1sec2.html#ch01fig01">Figure 1.1</a>). Libraries of common functions are built on top of the system call <a name="idd1e1626"></a><a name="idd1e1631"></a><a name="idd1e1636"></a><a name="idd1e1639"></a><a name="idd1e1642"></a><a name="idd1e1645"></a>interface, but applications are free to use both. (We talk more about system calls and library functions in <a class="docLink" href="ch01lev1sec11.html#ch01lev1sec11">Section 1.11</a>.) The shell is a special application that provides an interface for running other applications.</P>
+<p class="docText">In a broad sense, an operating system is the kernel and all the other software that makes a computer useful and gives the computer its personality. This other software includes system utilities, applications, shells, libraries of common functions, and so on.</P>
+<p class="docText">For example, Linux is the kernel used by the GNU operating system. Some people refer to this as the GNU/Linux operating system, but it is more commonly referred to as simply Linux. Although this usage may not be correct in a strict sense, it is understandable, given the dual meaning of the phrase <span class="docEmphasis">operating system</span>. (It also has the advantage of being more succinct.)</P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch01lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch01lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

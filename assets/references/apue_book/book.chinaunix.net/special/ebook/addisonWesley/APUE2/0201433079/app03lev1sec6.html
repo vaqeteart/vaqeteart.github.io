@@ -1,0 +1,104 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Chapter 6</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app03lev1sec6"></a>
+<h3 class="docSection1Title">Chapter 6</h3>
+<p class="docText"></P>
+<P><table border="0" cellspacing="16" cellpadding="0"><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch06qa1q1a1"></a><B><a class="docLink" href="ch06lev1sec12.html#ch06qa1q1">6.1</a></b></TD><td><p class="docText">The functions to access the shadow password file on Linux and Solaris are discussed in <a class="docLink" href="ch06lev1sec3.html#ch06lev1sec3">Section 6.3</a>. We can't use the value returned in the <tt>pw_passwd</tt> field by the functions described in <a class="docLink" href="ch06lev1sec2.html#ch06lev1sec2">Section 6.2</a> to compare an encrypted password, since that field is not the encrypted password. Instead, we need to find the user's entry in the shadow file and use its encrypted password field.</P>
+<p class="docText">On FreeBSD and Mac OS X, the password file is shadowed automatically. In the <tt>passwd</tt> structure returned by <tt>getpwnam</tt> and <tt>getpwuid</tt>, the <tt>pw_passwd</tt> field contains the encrypted password (only if the caller's effective user ID is 0 on FreeBSD, however).</P></TD></tr><TR valign="top"><td align="right" class="docText" width="50"><a name="ch06qa1q2a2"></a><B><a class="docLink" href="ch06lev1sec12.html#ch06qa1q2">6.2</a></b></TD><TD><p class="docText">The program in <a class="docLink" href="app03lev1sec6.html#app03fig04">Figure C.4</a> prints the encrypted password on Linux and Solaris. Unless this program is run with superuser permissions, the call to <tt>getspnam</tt> fails with an error of <tt>EACCES</tt>.</p>
+<a name="app03fig04"></a>
+<H5 class="docExampleTitle">Figure C.4. Print encrypted password under Linux and Solaris</H5>
+<pre>
+#include "apue.h"
+#include &lt;shadow.h&gt;
+
+int
+main(void)       /* Linux/Solaris version */
+{
+    struct spwd *ptr;
+
+    if ((ptr = getspnam("sar")) == NULL)
+        err_sys("getspnam error");
+    printf("sp_pwdp = %s\n", ptr-&gt;sp_pwdp == NULL ||
+      ptr-&gt;sp_pwdp[0] == 0 ?  "(null)" : ptr-&gt;sp_pwdp);
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e46570"></a><a name="idd1e46575"></a><a name="idd1e46581"></a><a name="idd1e46586"></a><a name="idd1e46591"></a><a name="idd1e46596"></a><a name="idd1e46601"></a><a name="idd1e46606"></a>Under FreeBSD, the program in <a class="docLink" href="app03lev1sec6.html#app03fig05">Figure C.5</a> prints the encrypted password if the program is run with superuser permissions. Otherwise, the value returned in <tt>pw_passwd</tt> is an asterisk. On Mac OS X, the encrypted password is printed regardless of the permissions with which it is run.</P>
+<a name="app03fig05"></a>
+<H5 class="docExampleTitle">Figure C.5. Print encrypted password under FreeBSD and Mac OS X</h5>
+<pre>
+#include "apue.h"
+#include &lt;pwd.h&gt;
+
+int
+main(void)       /* FreeBSD/Mac OS X version */
+{
+     struct passwd    *ptr;
+
+     if ((ptr = getpwnam("sar")) == NULL)
+         err_sys("getpwnam error");
+     printf("pw_passwd = %s\n", ptr-&gt;pw_passwd == NULL ||
+       ptr-&gt;pw_passwd[0] == 0 ? "(null)" : ptr-&gt;pw_passwd);
+     exit(0);
+}
+</pre><br>
+
+</td></tr><TR valign="top"><td align="right" class="docText" width="50"><a name="ch06qa1q5a5"></a><B><a class="docLink" href="ch06lev1sec12.html#ch06qa1q5">6.5</a></b></td><TD><p class="docText">The program shown in <a class="docLink" href="app03lev1sec6.html#app03fig06">Figure C.6</a> prints the date in a format similar to <tt>date</tt>.</p>
+<a name="app03fig06"></a>
+<h5 class="docExampleTitle">Figure C.6. Print the time and date in a format similar to <tt>date</tt>(1)</h5>
+<pre>
+#include "apue.h"
+#include &lt;time.h&gt;
+
+int
+main(void)
+{
+    time_t      caltime;
+    struct tm   *tm;
+    char        line[MAXLINE];
+
+    if ((caltime = time(NULL)) == -1)
+        err_sys("time error");
+    if ((tm = localtime(&amp;caltime)) == NULL)
+        err_sys("localtime error");
+    if (strftime(line, MAXLINE, "%a %b %d %X %Z %Y\n", tm) == 0)
+        err_sys("strftime error");
+    fputs(line, stdout);
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText">Running this program gives us</p>
+<pre>
+      $ <span class="docEmphStrong">./a.out</span>                           <span class="docEmphItalicAlt">author's default is US/Eastern</span>
+      Sun Feb 06 16:53:57 EST 2005
+      $ <span class="docEmphStrong">TZ=US/Mountain ./a.out</span>            <span class="docEmphItalicAlt">U.S. Mountain time zone</span>
+      Sun Feb 06 14:53:57 MST 2005
+      $ <span class="docEmphStrong">TZ=Japan ./a.out</span>                  <span class="docEmphItalicAlt">Japan</span>
+      Mon Feb 07 06:53:57 JST 2005
+</pre><br>
+</td></tr></table></p>
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

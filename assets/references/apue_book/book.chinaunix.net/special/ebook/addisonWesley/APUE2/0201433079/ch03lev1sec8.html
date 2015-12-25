@@ -1,0 +1,36 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 3.8.&nbsp; write Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch03lev1sec8"></a>
+<h3 class="docSection1Title">3.8. <tt>write</tt> Function</h3>
+<p class="docText">Data is written to an open file with the <tt>write</tt> function.</P>
+<a name="inta380"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch03lev1sec8.html#PLID0">[View full width]</a></div><pre>
+#include &lt;unistd.h&gt;
+
+ssize_t write(int <span class="docEmphItalicAlt">filedes</span>, const void *<span class="docEmphItalicAlt">buf</span>, size_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">nbytes</span>);</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: number of bytes written if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">The return value is usually equal to the <span class="docEmphasis">nbytes</span> argument; otherwise, an error has occurred. A common cause for a <tt>write</tt> error is either filling up a disk or exceeding the file size limit for a given process (<a class="docLink" href="ch07lev1sec11.html#ch07lev1sec11">Section 7.11</a> and <a class="docLink" href="ch10lev1sec23.html#ch10qa1q11">Exercise 10.11</a>).</P>
+<p class="docText">For a regular file, the write starts at the file's current offset. If the <tt>O_APPEND</tt> option was specified when the file was opened, the file's offset is set to the current end of file before each write operation. After a successful write, the file's offset is incremented by the number of bytes actually written.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

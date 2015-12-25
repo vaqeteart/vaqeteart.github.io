@@ -1,0 +1,165 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 3.6.&nbsp; lseek Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch03lev1sec6"></a>
+<h3 class="docSection1Title">3.6. <tt>lseek</tt> Function</h3>
+<p class="docText">Every open file has an associated &quot;current file offset,&quot; normally a non-negative integer that measures the number of bytes from the beginning of the file. (We describe some exceptions to the &quot;non-negative&quot; qualifier later in this section.) Read and write operations normally start at the current file offset and cause the offset to be incremented by the number of bytes read or written. By default, this offset is initialized to 0 when a file is opened, unless the <tt>O_APPEND</tt> option is specified.</P>
+<p class="docText">An open file's offset can be set explicitly by calling <tt>lseek</tt>.</P>
+<a name="inta155"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+off_t lseek(int <span class="docEmphItalicAlt">filedes</span>, off_t <span class="docEmphItalicAlt">offset</span>, int <span class="docEmphItalicAlt">whence</span>);</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: new file offset if OK, 1 on error</P></td></TR></table></P><BR>
+<p class="docText"><a name="idd1e18649"></a><a name="idd1e18654"></a><a name="idd1e18659"></a><a name="idd1e18664"></a><a name="idd1e18669"></a><a name="idd1e18674"></a><a name="idd1e18679"></a><a name="idd1e18684"></a><a name="idd1e18689"></a>The interpretation of the <span class="docEmphasis">offset</span> depends on the value of the <span class="docEmphasis">whence</span> argument.</p>
+<UL><LI><p class="docList">If <span class="docEmphasis">whence</span> is <tt>SEEK_SET</tt>, the file's offset is set to <span class="docEmphasis">offset</span> bytes from the beginning of the file.</p></LI><LI><p class="docList">If <span class="docEmphasis">whence</span> is <tt>SEEK_CUR</tt>, the file's offset is set to its current value plus the <span class="docEmphasis">offset</span>. The <span class="docEmphasis">offset</span> can be positive or negative.</p></li><li><p class="docList">If <span class="docEmphasis">whence</span> is <tt>SEEK_END</tt>, the file's offset is set to the size of the file plus the <span class="docEmphasis">offset</span>. The <span class="docEmphasis">offset</span> can be positive or negative.</p></LI></ul>
+<p class="docText">Because a successful call to <tt>lseek</tt> returns the new file offset, we can seek zero bytes from the current position to determine the current offset:</P>
+
+<pre>
+    off_t    currpos;
+
+    currpos = lseek(fd, 0, SEEK_CUR);
+</pre><br>
+
+<p class="docText">This technique can also be used to determine if a file is capable of seeking. If the file descriptor refers to a pipe, FIFO, or socket, <tt>lseek</tt> sets <tt>errno</tt> to <tt>ESPIPE</tt> and returns 1.</P>
+<blockquote>
+<p class="docText">The three symbolic constants<tt>SEEK_SET</tt>, <tt>SEEK_CUR</tt>, and <tt>SEEK_END</tt>were introduced with System V. Prior to this, <span class="docEmphasis">whence</span> was specified as 0 (absolute), 1 (relative to current offset), or 2 (relative to end of file). Much software still exists with these numbers hard coded.</p>
+<p class="docText">The character <tt>l</tt> in the name <tt>lseek</tt> means &quot;long integer.&quot; Before the introduction of the <tt>off_t</tt> data type, the <span class="docEmphasis">offset</span> argument and the return value were long integers. <tt>lseek</tt> was introduced with Version 7 when long integers were added to C. (Similar functionality was provided in Version 6 by the functions <tt>seek</tt> and <tt>tell</tt>.)</p>
+</blockquote>
+<a name="ch03ex01"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch03lev1sec6.html#ch03fig01">Figure 3.1</a> tests its standard input to see whether it is capable of seeking.</p>
+<p class="docText">If we invoke this program interactively, we get</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out &lt; /etc/motd</span>
+   seek OK
+   $ <span class="docEmphStrong">cat &lt; /etc/motd | ./a.out</span>
+   cannot seek
+   $ <span class="docEmphStrong">./a.out &lt; /var/spool/cron/FIFO</span>
+   cannot seek
+</pre><br>
+
+
+<a name="ch03fig01"></a>
+<h5 class="docExampleTitle">Figure 3.1. Test whether standard input is capable of seeking</h5>
+
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+    if (lseek(STDIN_FILENO, 0, SEEK_CUR) == -1)
+       printf("cannot seek\n");
+    else
+       printf("seek OK\n");
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e18870"></a><a name="idd1e18875"></a><a name="idd1e18880"></a><a name="idd1e18885"></a><a name="idd1e18888"></a><a name="idd1e18891"></a>Normally, a file's current offset must be a non-negative integer. It is possible, however, that certain devices could allow negative offsets. But for regular files, the offset must be non-negative. Because negative offsets are possible, we should be careful to compare the return value from <tt>lseek</tt> as being equal to or not equal to 1 and not test if it's less than 0.</p>
+<blockquote>
+<p class="docText">The <tt>/dev/kmem</tt> device on FreeBSD for the Intel x86 processor supports negative offsets.</p>
+<p class="docText">Because the offset (<tt>off_t</tt>) is a signed data type (<a class="docLink" href="ch02lev1sec8.html#ch02fig20">Figure 2.20</a>), we lose a factor of 2 in the maximum file size. If <tt>off_t</tt> is a 32-bit integer, the maximum file size is 2<sup>31</sup>-1 bytes.</p>
+</blockquote>
+<p class="docText"><tt>lseek</tt> only records the current file offset within the kernelit does not cause any I/O to take place. This offset is then used by the next read or write operation.</p>
+<p class="docText">The file's offset can be greater than the file's current size, in which case the next <tt>write</tt> to the file will extend the file. This is referred to as creating a hole in a file and is allowed. Any bytes in a file that have not been written are read back as 0.</p>
+<p class="docText">A hole in a file isn't required to have storage backing it on disk. Depending on the file system implementation, when you write after seeking past the end of the file, new disk blocks might be allocated to store the data, but there is no need to allocate disk blocks for the data between the old end of file and the location where you start writing.</p>
+<a name="ch03ex02"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText">The program shown in <a class="docLink" href="ch03lev1sec6.html#ch03fig02">Figure 3.2</a> creates a file with a hole in it.</P>
+<p class="docText"><a name="idd1e18953"></a><a name="idd1e18958"></a><a name="idd1e18961"></a>Running this program gives us</p>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+    $ <span class="docEmphStrong">ls -l file.hole</span><span class="docEmphItalicAlt">                  check its size</span>
+    -rw-r--r-- 1 sar          16394 Nov 25 01:01 file.hole
+    $ <span class="docEmphStrong">od -c file.hole</span><span class="docEmphItalicAlt">                  let's look at the actual contents</span>
+    0000000   a  b  c  d  e  f  g  h  i  j \0 \0 \0 \0 \0 \0
+    0000020  \0 \0 \0 \0 \0 \0 \0 \0 \0 \0 \0 \0 \0 \0 \0 \0
+    *
+    0040000   A  B  C  D  E  F  G  H  I  J
+    0040012
+</pre><BR>
+
+<p class="docText">We use the <tt>od</tt>(1) command to look at the contents of the file. The <tt>-c</tt> flag tells it to print the contents as characters. We can see that the unwritten bytes in the middle are read back as zero. The seven-digit number at the beginning of each line is the byte offset in octal.</P>
+<p class="docText">To prove that there is really a hole in the file, let's compare the file we've just created with a file of the same size, but without holes:</P>
+
+<pre>
+    $ <span class="docEmphStrong">ls -ls file.hole file.nohole</span><span class="docEmphItalicAlt">    compare sizes</span>
+      8 -rw-r--r-- 1 sar        16394 Nov 25 01:01 file.hole
+     20 -rw-r--r-- 1 sar        16394 Nov 25 01:03 file.nohole
+</pre><br>
+
+<p class="docText">Although both files are the same size, the file without holes consumes 20 disk blocks, whereas the file with holes consumes only 8 blocks.</P>
+<p class="docText">In this example, we call the <tt>write</tt> function (<a class="docLink" href="ch03lev1sec8.html#ch03lev1sec8">Section 3.8</a>). We'll have more to say about files with holes in <a class="docLink" href="ch04lev1sec12.html#ch04lev1sec12">Section 4.12</a>.</P>
+
+<a name="ch03fig02"></a>
+<H5 class="docExampleTitle">Figure 3.2. Create a file with a hole in it</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+
+char    buf1[] = "abcdefghij";
+char    buf2[] = "ABCDEFGHIJ";
+
+int
+main(void)
+{
+    int     fd;
+
+    if ((fd = creat("file.hole", FILE_MODE)) &lt; 0)
+        err_sys("creat error");
+
+    if (write(fd, buf1, 10) != 10)
+        err_sys("buf1 write error");
+    /* offset now = 10 */
+
+    if (lseek(fd, 16384, SEEK_SET) == -1)
+        err_sys("lseek error");
+    /* offset now = 16384 */
+
+    if (write(fd, buf2, 10) != 10)
+        err_sys("buf2 write error");
+    /* offset now = 16394 */
+
+    exit(0);
+}
+</pre><BR>
+
+
+<p class="docText">Because the offset address that <tt>lseek</tt> uses is represented by an <tt>off_t</tt>, implementations are allowed to support whatever size is appropriate on their particular platform. Most platforms today provide two sets of interfaces to manipulate file offsets: one set that uses 32-bit file offsets and another set that uses 64-bit file offsets.</p>
+<p class="docText">The Single UNIX Specification provides a way for applications to determine which environments are supported through the <tt>sysconf</tt> function (<a class="docLink" href="ch02lev1sec5.html#ch02lev2sec15">Section 2.5.4</a>.). <a class="docLink" href="ch03lev1sec6.html#ch03fig03">Figure 3.3</a> summarizes the <tt>sysconf</tt> constants that are defined.</P>
+<a name="ch03fig03"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 3.3. Data size options and <span class="docEmphasis">name</span> arguments to <tt>sysconf</tt></h5></caption><colgroup><col width="150"><col width="200"><col width="150"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Name of option</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman"><span class="docEmphasis">name</span> argument</span></P></th></TR></thead><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>_POSIX_V6_ILP32_OFF32</tt></p></td><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt>, <tt>long</tt>, pointer, and <tt>off_t</tt> types are 32 bits.</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>_SC_V6_ILP32_OFF32</tt>
+</P></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>_POSIX_V6_ILP32_OFFBIG</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int, long</tt>, and pointer types are 32 bits; <tt>off_t</tt> types are at least 64 bits.</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>_SC_V6_ILP32_OFFBIG</tt></p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>_POSIX_V6_LP64_OFF64</tt></p></td><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt> types are 32 bits; <tt>long</tt>, pointer, and <tt>off_t</tt> types are 64 bits.</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>_SC_V6_LP64_OFF64</tt></P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>_POSIX_V6_LP64_OFFBIG</tt></P></td><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt> types are 32 bits; <tt>long</tt>, pointer, and <tt>off_t</tt> types are at least 64 bits.</p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>_SC_V6_LP64_OFFBIG</tt>
+</P></td></TR></table></P><br>
+<p class="docText"><a name="idd1e19220"></a><a name="idd1e19225"></a><a name="idd1e19230"></a><a name="idd1e19235"></a><a name="idd1e19240"></a><a name="idd1e19245"></a><a name="idd1e19250"></a><a name="idd1e19255"></a><a name="idd1e19260"></a><a name="idd1e19267"></a><a name="idd1e19272"></a><a name="idd1e19277"></a><a name="idd1e19282"></a>The <tt>c99</tt> compiler requires that we use the <tt>getconf</tt>(1) command to map the desired data size model to the flags necessary to compile and link our programs. Different flags and libraries might be needed, depending on the environments supported by each platform.</P>
+<blockquote>
+<p class="docText">Unfortunately, this is one area in which implementations haven't caught up to the standards. Confusing things further is the name changes that were made between Version 2 and Version 3 of the Single UNIX Specification.</P>
+<p class="docText">To get around this, applications can set the <tt>_FILE_OFFSET_BITS</tt> constant to 64 to enable 64-bit offsets. Doing so changes the definition of <tt>off_t</tt> to be a 64-bit signed integer. Setting <tt>_FILE_OFFSET_BITS</tt> to 32 enables 32-bit file offsets. Be aware, however, that although all four platforms discussed in this text support both 32-bit and 64-bit file offsets by setting the <tt>_FILE_OFFSET_BITS</tt> constant to the desired value, this is not guaranteed to be portable.</p>
+</blockquote>
+<p class="docText">Note that even though you might enable 64-bit file offsets, your ability to create a file larger than 2 TB (2<sup>31</sup>-1 bytes) depends on the underlying file system type.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

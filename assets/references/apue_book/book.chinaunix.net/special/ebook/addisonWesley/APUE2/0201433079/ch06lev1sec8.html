@@ -1,0 +1,41 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 6.8.&nbsp; Login Accounting</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch06lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch06lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch06lev1sec8"></a>
+<h3 class="docSection1Title">6.8. Login Accounting</h3>
+<p class="docText">Two data files that have been provided with most UNIX systems are the <tt>utmp</tt> file, which keeps track of all the users currently logged in, and the <tt>wtmp</tt> file, which keeps <a name="idd1e44440"></a><a name="idd1e44443"></a><a name="idd1e44446"></a><a name="idd1e44451"></a><a name="idd1e44456"></a><a name="idd1e44459"></a><a name="idd1e44462"></a><a name="idd1e44467"></a><a name="idd1e44470"></a><a name="idd1e44473"></a><a name="idd1e44476"></a><a name="idd1e44479"></a><a name="idd1e44484"></a><a name="idd1e44491"></a><a name="idd1e44496"></a><a name="idd1e44501"></a><a name="idd1e44506"></a><a name="idd1e44511"></a>track of all logins and logouts. With Version 7, one type of record was written to both files, a binary record consisting of the following structure:</P>
+
+<pre>
+   struct utmp {
+     char  ut_line[8]; /* tty line: "ttyh0", "ttyd0", "ttyp0", ... */
+     char  ut_name[8]; /* login name */
+     long  ut_time;    /* seconds since Epoch */
+   };
+</pre><BR>
+
+<p class="docText">On login, one of these structures was filled in and written to the <tt>utmp</tt> file by the <tt>login</tt> program, and the same structure was appended to the <tt>wtmp</tt> file. On logout, the entry in the <tt>utmp</tt> file was erasedfilled with null bytesby the <tt>init</tt> process, and a new entry was appended to the <tt>wtmp</tt> file. This logout entry in the <tt>wtmp</tt> file had the <tt>ut_name</tt> field zeroed out. Special entries were appended to the <tt>wtmp</tt> file to indicate when the system was rebooted and right before and after the system's time and date was changed. The <tt>who</tt>(1) program read the <tt>utmp</tt> file and printed its contents in a readable form. Later versions of the UNIX System provided the <tt>last</tt>(1) command, which read through the <tt>wtmp</tt> file and printed selected entries.</p>
+<p class="docText">Most versions of the UNIX System still provide the <tt>utmp</tt> and <tt>wtmp</tt> files, but as expected, the amount of information in these files has grown. The 20-byte structure that was written by Version 7 grew to 36 bytes with SVR2, and the extended <tt>utmp</tt> structure with SVR4 takes over 350 bytes!</P>
+<blockquote>
+<p class="docText">The detailed format of these records in Solaris is given in the <tt>utmpx</tt>(4) manual page. With Solaris 9, both files are in the <tt>/var/adm</tt> directory. Solaris provides numerous functions described in <tt>getutx</tt>(3) to read and write these two files.</P>
+<p class="docText">On FreeBSD 5.2.1, Linux 2.4.22, and Mac OS X 10.3, the <tt>utmp</tt>(5) manual page gives the format of their versions of these login records. The pathnames of these two files are <tt>/var/run/utmp</tt> and <tt>/var/log/wtmp</tt>.</P>
+</blockquote>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch06lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch06lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

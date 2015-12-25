@@ -1,0 +1,137 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Chapter 4</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app03lev1sec4"></a>
+<h3 class="docSection1Title">Chapter 4</h3>
+<p class="docText"></P>
+<P><table border="0" cellspacing="16" cellpadding="0"><tr valign="top"><TD align="right" class="docText" width="50"><a name="app03qa1q14a14"></a><B><a class="docLink" href="ch04lev1sec26.html#ch04qa1q1">4.1</a></b></TD><td><p class="docText">If <tt>stat</tt> is called, it always tries to follow a symbolic link (<a class="docLink" href="ch04lev1sec16.html#ch04fig17">Figure 4.17</a>), so the program will never print a file type of &quot;symbolic link.&quot; For the example shown in the text, where <tt>/dev/cdrom</tt> is a symbolic link to <tt>cdroms/cdrom0</tt> (which itself is a symbolic link to <tt>../scsi/host0/bus0/target0/lun0/cd</tt>), <tt>stat</tt> reports that <tt>/dev/cdrom</tt> is a block special file, not a symbolic link. If the symbolic link points to a nonexistent file, <tt>stat</tt> returns an error.</P></TD></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="app03qa1q15a15"></a><b><a class="docLink" href="ch04lev1sec26.html#ch04qa1q2">4.2</a></b></TD><TD><p class="docText"><a name="idd1e33922"></a><a name="idd1e33927"></a><a name="idd1e33932"></a><a name="idd1e33937"></a><a name="idd1e33942"></a>All permissions are turned off:</P>
+<pre>
+     $ <span class="docEmphStrong">umask 777</span>
+     $ <span class="docEmphStrong">date &gt; temp.foo</span>
+     $ <span class="docEmphStrong">ls -l temp.foo</span>
+     ----------  1 sar           0 Feb 5 14:06 temp.foo
+</pre><br>
+
+</TD></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="app03qa1q16a16"></a><B><a class="docLink" href="ch04lev1sec26.html#ch04qa1q3">4.3</a></b></td><td><p class="docText">The following shows what happens when user-read permission is turned off:</p>
+<pre>
+     $ <span class="docEmphStrong">date &gt; foo</span>
+     $ <span class="docEmphStrong">chmod u-r foo</span>                    <span class="docEmphItalicAlt">turn off user-read permission</span>
+     $ <span class="docEmphStrong">ls -l foo</span>                        <span class="docEmphItalicAlt">verify the file's permissions</span>
+     --w-r--r--  1 sar          29 Feb   5 14:21 foo
+     $ <span class="docEmphStrong">cat foo</span><span class="docEmphItalicAlt">                          and try to read it</span>
+     cat: foo: Permission denied
+</pre><br>
+</TD></tr><TR valign="top"><td align="right" class="docText" width="50"><a name="app03qa1q17a17"></a><B><a class="docLink" href="ch04lev1sec26.html#ch04qa1q4">4.4</a></b></td><td><p class="docText">If we try, using either <tt>open</tt> or <tt>creat</tt>, to create a file that already exists, the file's access permission bits are not changed. We can verify this by running the program from <a class="docLink" href="ch04lev1sec8.html#ch04fig09">Figure 4.9</a>:</p>
+<pre>
+     $ <span class="docEmphStrong">rm foo bar</span>               <span class="docEmphItalicAlt">delete the files in case they already exist</span>
+     $ <span class="docEmphStrong">date &gt; foo</span>               <span class="docEmphItalicAlt">create them with some data</span>
+     $ <span class="docEmphStrong">date &gt; bar</span>
+     $ <span class="docEmphStrong">chmod a-r foo bar</span>             <span class="docEmphItalicAlt">turn off all read permissions</span>
+     $ <span class="docEmphStrong">ls -l foo bar</span>                 <span class="docEmphItalicAlt">verify their permissions</span>
+     --w-------   1 sar     29 Feb 5 14:25 bar
+     --w-------   1 sar     29 Feb 5 14:25 foo
+     $ <span class="docEmphStrong">./a.out</span>                       <span class="docEmphItalicAlt">run program from <a class="docLink" href="ch04lev1sec8.html#ch04fig09">Figure 4.9</a></span>
+     $ <span class="docEmphStrong">ls -l foo bar</span>                 <span class="docEmphItalicAlt">check permissions and sizes</span>
+     --w-------   1 sar     0 Feb   5 14:26 bar
+     --w-------   1 sar     0 Feb   5 14:26 foo
+</pre><br>
+
+<p class="docText">Note that the permissions didn't change but that the files were truncated.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="app03qa1q18a18"></a><b><a class="docLink" href="ch04lev1sec26.html#ch04qa1q5">4.5</a></b></td><td><p class="docText">The size of a directory should never be 0, since there should always be entries for dot and dot-dot. The size of a symbolic link is the number of characters in the pathname contained in the symbolic link, and this pathname must always contain at least one character.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="app03qa1q19a19"></a><B><a class="docLink" href="ch04lev1sec26.html#ch04qa1q7">4.7</a></b></TD><td><p class="docText">The kernel has a default setting for the file access permission bits when it creates a new <tt>core</tt> file. In this example, it was <tt>rw-r--r--</tt>. This default value may or may not be modified by the <tt>umask</tt> value. The shell also has a default setting for the file access permission bits when it creates a new file for redirection. In this example, it was <tt>rw-rw-rw-</tt>, and this value is always modified by our current <tt>umask</tt>. In this example, our <tt>umask</tt> was 02.</P></TD></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="app03qa1q20a20"></a><B><a class="docLink" href="ch04lev1sec26.html#ch04qa1q8">4.8</a></b></TD><td><p class="docText">We can't use <tt>du</tt>, because it requires either the name of the file, as in</P>
+<pre>
+     du tempfile
+</pre><br>
+
+<p class="docText">or a directory name, as in</P>
+<pre>
+     du .
+</pre><BR>
+
+<p class="docText">But when the <tt>unlink</tt> function returns, the directory entry for <tt>tempfile</tt> is gone. <a name="idd1e34223"></a><a name="idd1e34228"></a><a name="idd1e34233"></a><a name="idd1e34238"></a><a name="idd1e34243"></a><a name="idd1e34248"></a><a name="idd1e34253"></a><a name="idd1e34258"></a><a name="idd1e34261"></a><a name="idd1e34266"></a><a name="idd1e34271"></a><a name="idd1e34276"></a><a name="idd1e34279"></a><a name="idd1e34284"></a><a name="idd1e34289"></a>The <tt>du .</tt> command just shown would not account for the space still taken by <tt>tempfile</tt>. We have to use the <tt>df</tt> command in this example to see the actual amount of free space on the file system.</P></td></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="app03qa1q21a21"></a><B><a class="docLink" href="ch04lev1sec26.html#ch04qa1q9">4.9</a></b></TD><td><p class="docText">If the link being removed is not the last link to the file, the file is not removed. In this case, the changed-status time of the file is updated. But if the link being removed is the last link to the file, it makes no sense to update this time, because all the information about the file (the i-node) is removed with the file.</p></td></tr><TR valign="top"><td align="right" class="docText" width="50"><a name="app03qa1q22a22"></a><B><a class="docLink" href="ch04lev1sec26.html#ch04qa1q10">4.10</a></b></td><TD><p class="docText">We recursively call our function <tt>dopath</tt> after opening a directory with <tt>opendir</tt>. Assuming that <tt>opendir</tt> uses a single file descriptor, this means that each time we descend one level, we use another descriptor. (We assume that the descriptor isn't closed until we're finished with a directory and call <tt>closedir</tt>.) This limits the depth of the file system tree that we can traverse to the maximum number of open descriptors for the process. Note that the <tt>ftw</tt> function as specified in the XSI extensions of the Single UNIX Specification allows the caller to specify the number of descriptors to use, implying that it can close and reuse descriptors.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="app03qa1q23a23"></a><b><a class="docLink" href="ch04lev1sec26.html#ch04qa1q12">4.12</a></b></td><td><p class="docText">The <tt>chroot</tt> function is used by the Internet File Transfer Program (FTP) to aid in security. Users without accounts on a system (termed <span class="docEmphasis">anonymous FTP</span>) are placed in a separate directory, and a <tt>chroot</tt> is done to that directory. This prevents the user from accessing any file outside this new root directory.</p>
+<p class="docText">In addition, <tt>chroot</tt> can be used to build a copy of a file system hierarchy at a new location and then modify this new copy without changing the original file system. This could be used, for example, to test the installation of new software packages.</p>
+<p class="docText">Only the superuser can execute <tt>chroot</tt>, and once you change the root of a process, it (and all its descendants) can never get back to the original root.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="app03qa1q24a24"></a><b><a class="docLink" href="ch04lev1sec26.html#ch04qa1q13">4.13</a></b></td><TD><p class="docText">First, call <tt>stat</tt> to fetch the three times for the file; then call <tt>utime</tt> to set the desired value. The value that we don't want to change in the call to <tt>utime</tt> should be the corresponding value from <tt>stat</tt>.</P></td></TR><TR valign="top"><TD align="right" class="docText" width="50"><a name="app03qa1q25a25"></a><b><a class="docLink" href="ch04lev1sec26.html#ch04qa1q14">4.14</a></b></TD><TD><p class="docText">The <tt>finger</tt>(1) command calls <tt>stat</tt> on the mailbox. The last-modification time is the time that mail was last received, and the last-access time is when the mail was last read.</P></td></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="app03qa1q26a26"></a><B><a class="docLink" href="ch04lev1sec26.html#ch04qa1q15">4.15</a></b></TD><td><p class="docText">Both <tt>cpio</tt> and <tt>tar</tt> store only the modification time (<tt>st_mtime</tt>) on the archive. The access time isn't stored, because its value corresponds to the time the archive was created, since the file has to be read to be archived. The <tt>-a</tt> option to <tt>cpio</tt> has it reset the access time of each input file after the file has been read. This way, the creation of the archive doesn't change the access time. (Resetting the access time, however, does modify the changed-status time.) The changed-status time isn't stored on the archive, because we can't set this value on extraction even if it was archived. (The <tt>utime</tt> function can change only the access time and the modification time.)</P>
+<p class="docText">When the archive is read back (extracted), <tt>tar</tt>, by default, restores the modification time to the value on the archive. The <tt>m</tt> option to <tt>tar</tt> tells it to not <a name="idd1e34547"></a><a name="idd1e34550"></a><a name="idd1e34555"></a><a name="idd1e34560"></a><a name="idd1e34565"></a><a name="idd1e34570"></a><a name="idd1e34575"></a><a name="idd1e34580"></a><a name="idd1e34585"></a><a name="idd1e34590"></a>restore the modification time from the archive; instead, the modification time is set to the time of extraction. In all cases with <tt>tar</tt>, the access time after extraction will be the time of extraction.</P>
+<p class="docText">On the other hand, <tt>cpio</tt> sets the access time and the modification time to the time of extraction. By default, it doesn't try to set the modification time to the value on the archive. The <tt>-m</tt> option to <tt>cpio</tt> has it set both the access time and the modification time to the value that was archived.</p></TD></TR><tr valign="top"><td align="right" class="docText" width="50"><a name="app03qa1q27a27"></a><b><a class="docLink" href="ch04lev1sec26.html#ch04qa1q16">4.16</a></b></td><TD><p class="docText">The kernel has no inherent limit on the depth of a directory tree. But many commands will fail on pathnames that exceed <tt>PATH_MAX</tt>. The program shown in <a class="docLink" href="app03lev1sec4.html#app03fig03">Figure C.3</a> creates a directory tree that is 100 levels deep, with each level being a 45-character name. We are able to create this structure on all platforms; however, we cannot obtain the absolute pathname of the directory at the 100th level using <tt>getcwd</tt> on all platforms. On Linux 2.4.22 and Solaris 9, we can never get <tt>getcwd</tt> to succeed while in the directory at the end of this long path. The program is able to retrieve the pathname on FreeBSD 5.2.1 and Mac OS X 10.3, but we have to call <tt>realloc</tt> numerous times to obtain a buffer that is large enough. Running this program on FreeBSD 5.2.1 gives us</p>
+<a name="app03fig03"></a>
+<H5 class="docExampleTitle">Figure C.3. Create a deep directory tree</h5>
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+
+#define DEPTH    100           /* directory depth */
+#define MYHOME   "/home/sar"
+#define NAME     "alonglonglonglonglonglonglonglonglonglongname"
+#define MAXSZ    8192
+
+int
+main(void)
+{
+    int      i, size;
+    char     *path;
+
+    if (chdir(MYHOME) &lt; 0)
+        err_sys("chdir error");
+
+    for (i = 0; i &lt; DEPTH; i++) {
+        if (mkdir(NAME, DIR_MODE) &lt; 0)
+            err_sys("mkdir failed, i = %d", i);
+        if (chdir(NAME) &lt; 0)
+            err_sys("chdir failed, i = %d", i);
+    }
+    if (creat("afile", FILE_MODE) &lt; 0)
+        err_sys("creat error");
+
+    /*
+     * The deep directory is created, with a file at the leaf.
+     * Now let's try to obtain its pathname.
+     */
+    path = path_alloc(&amp;size);
+    for ( ; ; ) {
+        if (getcwd(path, size) != NULL) {
+            break;
+        } else {
+            err_ret("getcwd failed, size = %d", size);
+            size += 100;
+            if (size &gt; MAXSZ)
+                err_quit("giving up");
+            if ((path = realloc(path, size)) == NULL)
+                err_sys("realloc error");
+        }
+    }
+    printf("length = %d\n%s\n", strlen(path), path);
+
+    exit(0);
+}
+</pre><BR>
+
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+    getcwd failed, size = 1025: Result too large
+    getcwd failed, size = 1125: Result too large
+    ...                        <span class="docEmphItalicAlt">33 more lines</span>
+    getcwd failed, size = 4525: Result too large
+    length = 4610
+                           <span class="docEmphItalicAlt">the 4,610-byte pathname is printed here</span>
+</pre><br>
+
+<p class="docText"><a name="idd1e34696"></a><a name="idd1e34701"></a><a name="idd1e34706"></a><a name="idd1e34711"></a><a name="idd1e34716"></a><a name="idd1e34721"></a>We are not able to archive this directory, however, using either <tt>tar</tt> or <tt>cpio</tt>. Both complain of a filename that is too long.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="app03qa1q28a28"></a><b><a class="docLink" href="ch04lev1sec26.html#ch04qa1q17">4.17</a></b></td><td><p class="docText">The <tt>/dev</tt> directory has all write permissions turned off to prevent a normal user from removing the filenames in the directory. This means that the <tt>unlink</tt> fails.</p></td></tr></table></p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

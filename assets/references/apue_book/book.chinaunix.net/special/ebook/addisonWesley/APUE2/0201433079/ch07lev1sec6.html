@@ -1,0 +1,55 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 7.6.&nbsp; Memory Layout of a C Program</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch07lev1sec6"></a>
+<h3 class="docSection1Title">7.6. Memory Layout of a C Program</h3>
+<p class="docText">Historically, a C program has been composed of the following pieces:</P>
+<UL><li><p class="docList">Text segment, the machine instructions that the CPU executes. Usually, the text segment is sharable so that only a single copy needs to be in memory for frequently executed programs, such as text editors, the C compiler, the shells, and so on. Also, the text segment is often read-only, to prevent a program from accidentally modifying its instructions.</P></LI><LI><p class="docList"><a name="idd1e47881"></a><a name="idd1e47884"></a><a name="idd1e47887"></a><a name="idd1e47892"></a><a name="idd1e47897"></a><a name="idd1e47900"></a><a name="idd1e47903"></a><a name="idd1e47906"></a><a name="idd1e47909"></a><a name="idd1e47912"></a>Initialized data segment, usually called simply the data segment, containing variables that are specifically initialized in the program. For example, the C declaration</p><pre>
+    int   maxcount = 99;
+</pre><BR>
+<p class="docList">appearing outside any function causes this variable to be stored in the initialized data segment with its initial value.</P></LI><li><p class="docList">Uninitialized data segment, often called the &quot;bss&quot; segment, named after an ancient assembler operator that stood for &quot;block started by symbol.&quot; Data in this segment is initialized by the kernel to arithmetic 0 or null pointers before the program starts executing. The C declaration</P><pre>
+    long  sum[1000];
+</pre><br>
+<p class="docList">appearing outside any function causes this variable to be stored in the uninitialized data segment.</P></LI><LI><p class="docList">Stack, where automatic variables are stored, along with information that is saved each time a function is called. Each time a function is called, the address of where to return to and certain information about the caller's environment, such as some of the machine registers, are saved on the stack. The newly called function then allocates room on the stack for its automatic and temporary variables. This is how recursive functions in C can work. Each time a recursive function calls itself, a new stack frame is used, so one set of variables doesn't interfere with the variables from another instance of the function.</p></LI><LI><p class="docList">Heap, where dynamic memory allocation usually takes place. Historically, the heap has been located between the uninitialized data and the stack.</p></LI></UL>
+<p class="docText"><a class="docLink" href="ch07lev1sec6.html#ch07fig06">Figure 7.6</a> shows the typical arrangement of these segments. This is a logical picture of how a program looks; there is no requirement that a given implementation arrange its memory in this fashion. Nevertheless, this gives us a typical arrangement to describe. With Linux on an Intel x86 processor, the text segment starts at location <tt>0x08048000</tt>, and the bottom of the stack starts just below <tt>0xC0000000</tt>. (The stack grows from higher-numbered addresses to lower-numbered addresses on this particular architecture.) The unused virtual address space between the top of the heap and the top of the stack is large.</p>
+<a name="ch07fig06"></a><p><center>
+<h5 class="docFigureTitle">Figure 7.6. Typical memory arrangement</h5>
+
+<p class="docText">
+<img border="0" alt="" width="420" height="357" SRC="images/0201433079/graphics/07fig06.gif;423615"></P>
+
+</center></p><BR>
+<blockquote>
+<p class="docText">Several more segment types exist in an <tt>a.out</tt>, containing the symbol table, debugging information, linkage tables for dynamic shared libraries, and the like. These additional sections don't get loaded as part of the program's image executed by a process.</p>
+</blockquote>
+<p class="docText">Note from <a class="docLink" href="ch07lev1sec6.html#ch07fig06">Figure 7.6</a> that the contents of the uninitialized data segment are not stored in the program file on disk. This is because the kernel sets it to 0 before the program starts running. The only portions of the program that need to be saved in the program file are the text segment and the initialized data.</P>
+<p class="docText"><a name="idd1e47993"></a><a name="idd1e47996"></a><a name="idd1e47999"></a><a name="idd1e48002"></a><a name="idd1e48005"></a><a name="idd1e48008"></a><a name="idd1e48013"></a><a name="idd1e48018"></a><a name="idd1e48021"></a>The <tt>size</tt>(1) command reports the sizes (in bytes) of the text, data, and bss segments. For example:</p>
+
+<pre>
+    $ <span class="docEmphStrong">size /usr/bin/cc /bin/sh</span>
+       text     data   bss     dec     hex   filename
+      79606     1536   916   82058   1408a   /usr/bin/cc
+     619234    21120 18260  658614   a0cb6   /bin/sh
+</pre><br>
+
+<p class="docText">The fourth and fifth columns are the total of the three sizes, displayed in decimal and hexadecimal, respectively.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

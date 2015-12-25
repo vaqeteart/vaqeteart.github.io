@@ -1,0 +1,80 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 13.5.&nbsp; Single-Instance Daemons</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch13lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch13lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch13lev1sec5"></a>
+<h3 class="docSection1Title">13.5. Single-Instance Daemons</h3>
+<p class="docText">Some daemons are implemented so that only a single copy of the daemon should be running at a time for proper operation. The daemon might need exclusive access to a device, for example. In the case of the <tt>cron</tt> daemon, if multiple instances were running, each copy might try to start a single scheduled operation, resulting in duplicate operations and probably an error.</P>
+<p class="docText">If the daemon needs to access a device, the device driver will sometimes prevent multiple opens of the corresponding device node in <tt>/dev</tt>. This restricts us to one copy of the daemon running at a time. If no such device is available, however, we need to do the work ourselves.</P>
+<p class="docText"><a name="idd1e97282"></a><a name="idd1e97287"></a><a name="idd1e97292"></a><a name="idd1e97297"></a><a name="idd1e97302"></a><a name="idd1e97307"></a><a name="idd1e97312"></a><a name="idd1e97317"></a><a name="idd1e97322"></a><a name="idd1e97327"></a><a name="idd1e97332"></a><a name="idd1e97337"></a><a name="idd1e97342"></a><a name="idd1e97347"></a><a name="idd1e97352"></a>The file- and record-locking mechanism provides the basis for one way to ensure that only one copy of a daemon is running. (We discuss file and record locking in <a class="docLink" href="ch14lev1sec3.html#ch14lev1sec3">Section 14.3</a>.) If each daemon creates a file and places a write lock on the entire file, only one such write lock will be allowed to be created. Successive attempts to create write locks will fail, serving as an indication to successive copies of the daemon that another instance is already running.</p>
+<p class="docText">File and record locking provides a convenient mutual-exclusion mechanism. If the daemon obtains a write-lock on an entire file, the lock will be removed automatically if the daemon exits. This simplifies recovery, removing the need for us to clean up from the previous instance of the daemon.</P>
+<a name="ch13ex03"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText">The function shown in <a class="docLink" href="ch13lev1sec5.html#ch13fig06">Figure 13.6</a> illustrates the use of file and record locking to ensure that only one copy of a daemon is running.</p>
+<p class="docText">Each copy of the daemon will try to create a file and write its process ID in it. This will allow administrators to identify the process easily. If the file is already locked, the <tt>lockfile</tt> function will fail with <tt>errno</tt> set to <tt>EACCES</tt> or <tt>EAGAIN</tt>, so we return 1, indicating that the daemon is already running. Otherwise, we truncate the file, write our process ID to it, and return 0.</P>
+<p class="docText">We need to truncate the file, because the previous instance of the daemon might have had a process ID larger than ours, with a larger string length. For example, if the previous instance of the daemon was process ID 12345, and the new instance is process ID 9999, when we write the process ID to the file, we will be left with 99995 in the file. Truncating the file prevents data from the previous daemon appearing as if it applies to the current daemon.</P>
+
+<a name="ch13fig06"></a>
+<H5 class="docExampleTitle">Figure 13.6. Ensure that only one copy of a daemon is running</h5>
+
+<pre>
+#include &lt;unistd.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;syslog.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+
+#define LOCKFILE "/var/run/daemon.pid"
+#define LOCKMODE (S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)
+
+extern int lockfile(int);
+
+int
+already_running(void)
+{
+    int     fd;
+    char    buf[16];
+
+    fd = open(LOCKFILE, O_RDWR|O_CREAT, LOCKMODE);
+    if (fd &lt; 0) {
+        syslog(LOG_ERR, "can't open %s: %s", LOCKFILE, strerror(errno));
+        exit(1);
+    }
+    if (lockfile(fd) &lt; 0) {
+        if (errno == EACCES || errno == EAGAIN) {
+            close(fd);
+            return(1);
+        }
+        syslog(LOG_ERR, "can't lock %s: %s", LOCKFILE, strerror(errno));
+        exit(1);
+    }
+    ftruncate(fd, 0);
+    sprintf(buf, "%ld", (long)getpid());
+    write(fd, buf, strlen(buf)+1);
+    return(0);
+}
+</pre><BR>
+
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch13lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch13lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

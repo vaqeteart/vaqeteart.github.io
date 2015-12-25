@@ -1,0 +1,126 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 11.4.&nbsp; Thread Creation</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch11lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch11lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch11lev1sec4"></a>
+<h3 class="docSection1Title">11.4. Thread Creation</h3>
+<p class="docText">The traditional UNIX process model supports only one thread of control per process. Conceptually, this is the same as a threads-based model whereby each process is made up of only one thread. With pthreads, when a program runs, it also starts out as a single process with a single thread of control. As the program runs, its behavior should be indistinguishable from the traditional process, until it creates more threads of control. Additional threads can be created by calling the <tt>pthread_create</tt> function.</P>
+<a name="inta244"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch11lev1sec4.html#PLID0">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_create(pthread_t *restrict <span class="docEmphItalicAlt">tidp</span>,
+                   const pthread_attr_t *restrict
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">attr</span>,
+                   void *(*<span class="docEmphItalicAlt">start_rtn</span>)(void), void
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">arg</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, error number on failure</p></TD></tr></table></P><BR>
+<p class="docText"><a name="idd1e82373"></a>The memory location pointed to by <span class="docEmphasis">tidp</span> is set to the thread ID of the newly created thread when <tt>pthread_create</tt> returns successfully. The <span class="docEmphasis">attr</span> argument is used to customize various thread attributes. We'll cover thread attributes in <a class="docLink" href="ch12lev1sec3.html#ch12lev1sec3">Section 12.3</a>, but for now, we'll set this to <tt>NULL</tt> to create a thread with the default attributes.</P>
+<p class="docText">The newly created thread starts running at the address of the <span class="docEmphasis">start_rtn</span> function. This function takes a single argument, <span class="docEmphasis">arg</span>, which is a typeless pointer. If you need to pass more than one argument to the <span class="docEmphasis">start_rtn</span> function, then you need to store them in a structure and pass the address of the structure in <span class="docEmphasis">arg</span>.</p>
+<p class="docText">When a thread is created, there is no guarantee which runs first: the newly created thread or the calling thread. The newly created thread has access to the process address space and inherits the calling thread's floating-point environment and signal mask; however, the set of pending signals for the thread is cleared.</P>
+<p class="docText">Note that the pthread functions usually return an error code when they fail. They don't set <tt>errno</tt> like the other POSIX functions. The per thread copy of <tt>errno</tt> is provided only for compatibility with existing functions that use it. With threads, it is cleaner to return the error code from the function, thereby restricting the scope of the error to the function that caused it, instead of relying on some global state that is changed as a side effect of the function.</P>
+<a name="ch11ex01"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText">Although there is no portable way to print the thread ID, we can write a small test program that does, to gain some insight into how threads work. The program in <a name="idd1e82430"></a><a name="idd1e82435"></a><a name="idd1e82440"></a><a name="idd1e82445"></a><a class="docLink" href="ch11lev1sec4.html#ch11fig02">Figure 11.2</a> creates one thread and prints the process and thread IDs of the new thread and the initial thread.</P>
+<p class="docText">This example has two oddities, necessary to handle races between the main thread and the new thread. (We'll learn better ways to deal with these later in this chapter.) The first is the need to sleep in the main thread. If it doesn't sleep, the main thread might exit, thereby terminating the entire process before the new thread gets a chance to run. This behavior is dependent on the operating system's threads implementation and scheduling algorithms.</p>
+<p class="docText">The second oddity is that the new thread obtains its thread ID by calling <tt>pthread_self</tt> instead of reading it out of shared memory or receiving it as an argument to its thread-start routine. Recall that <tt>pthread_create</tt> will return the thread ID of the newly created thread through the first parameter (<span class="docEmphasis">tidp</span>). In our <a name="idd1e82470"></a><a name="idd1e82475"></a><a name="idd1e82480"></a><a name="idd1e82485"></a><a name="idd1e82490"></a><a name="idd1e82493"></a><a name="idd1e82496"></a><a name="idd1e82499"></a><a name="idd1e82502"></a>example, the main thread stores this in <tt>ntid</tt>, but the new thread can't safely use it. If the new thread runs before the main thread returns from calling <tt>pthread_create</tt>, then the new thread will see the uninitialized contents of <tt>ntid</tt> instead of the thread ID.</p>
+<p class="docText">Running the program in <a class="docLink" href="ch11lev1sec4.html#ch11fig02">Figure 11.2</a> on Solaris gives us</p>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+    main thread: pid 7225 tid 1 (0x1)
+    new thread:  pid 7225 tid 4 (0x4)
+</pre><br>
+
+<p class="docText">As we expect, both threads have the same process ID, but different thread IDs. Running the program in <a class="docLink" href="ch11lev1sec4.html#ch11fig02">Figure 11.2</a> on FreeBSD gives us</P>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+    main thread: pid 14954 tid 134529024 (0x804c000)
+    new thread:  pid 14954 tid 134530048 (0x804c400)
+</pre><br>
+
+<p class="docText">As we expect, both threads have the same process ID. If we look at the thread IDs as decimal integers, the values look strange, but if we look at them in hexadecimal, they make more sense. As we noted earlier, FreeBSD uses a pointer to the thread data structure for its thread ID.</P>
+<p class="docText">We would expect Mac OS X to be similar to FreeBSD; however, the thread ID for the main thread is from a different address range than the thread IDs for threads created with <tt>pthread_create</tt>:</p>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+    main thread: pid 779 tid 2684396012 (0xa000a1ec)
+    new thread:  pid 779 tid 25166336 (0x1800200)
+</pre><BR>
+
+<p class="docText">Running the same program on Linux gives us slightly different results:</p>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+    new thread:  pid 6628 tid 1026 (0x402)
+    main thread: pid 6626 tid 1024 (0x400)
+</pre><br>
+
+<p class="docText">The Linux thread IDs look more reasonable, but the process IDs don't match. This is an artifact of the Linux threads implementation, where the <tt>clone</tt> system call is used to implement <tt>pthread_create</tt>. The <tt>clone</tt> system call creates a child process that can share a configurable amount of its parent's execution context, such as file descriptors and memory.</p>
+<p class="docText">Note also that the output from the main thread appears before the output from the thread we create, except on Linux. This illustrates that we can't make any assumptions about how threads will be scheduled.</p>
+
+<a name="ch11fig02"></a>
+<h5 class="docExampleTitle">Figure 11.2. Printing thread IDs</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;pthread.h&gt;
+
+pthread_t ntid;
+
+void
+printids(const char *s)
+{
+    pid_t      pid;
+    pthread_t  tid;
+
+    pid = getpid();
+    tid = pthread_self();
+    printf("%s pid %u tid %u (0x%x)\n", s, (unsigned int)pid,
+      (unsigned int)tid, (unsigned int)tid);
+}
+
+void *
+thr_fn(void *arg)
+{
+    printids("new thread: ");
+    return((void *)0);
+}
+
+int
+main(void)
+{
+    int     err;
+
+    err = pthread_create(&amp;ntid, NULL, thr_fn, NULL);
+    if (err != 0)
+        err_quit("can't create thread: %s\n", strerror(err));
+    printids("main thread:");
+    sleep(1);
+    exit(0);
+}
+</pre><br>
+
+
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch11lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch11lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

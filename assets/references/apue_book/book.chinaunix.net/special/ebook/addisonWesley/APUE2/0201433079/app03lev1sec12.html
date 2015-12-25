@@ -1,0 +1,59 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Chapter 12</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app03lev1sec12"></a>
+<h3 class="docSection1Title">Chapter 12</h3>
+<p class="docText"></P>
+<P><table border="0" cellspacing="16" cellpadding="0"><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch12qa1q1a1"></a><B><a class="docLink" href="ch12lev1sec12.html#ch12qa1q1">12.1</a></b></TD><td><p class="docText">This is not a multithreading problem, as one might first guess. The standard I/O routines are indeed thread-safe. When we call <tt>fork</tt>, each process gets a copy of the standard I/O data structures. When we run the program with standard output attached to a terminal, the output is line buffered, so every time we print a line, the standard I/O library writes it to our terminal. However, if we redirect the standard output to a file, then the standard output is fully buffered. The output is written when the buffer fills or the process closes the stream. When we <tt>fork</tt> in this example, the buffer contains several printed lines not yet written, so when the parent and the child finally flush their copies of the buffer, the initial duplicate contents are written to the file.</P></TD></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch12qa1q3a3"></a><b><a class="docLink" href="ch12lev1sec12.html#ch12qa1q3">12.3</a></b></TD><TD><p class="docText">Theoretically, if we arrange for all signals to be blocked when the signal handler runs, we should be able to make a function async-signal-safe. The problem is that we don't know whether any of the functions we call might unmask a signal that we've blocked, thereby making it possible for the function to be reentered through another signal handler.</P></td></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch12qa1q4a4"></a><B><a class="docLink" href="ch12lev1sec12.html#ch12qa1q4">12.4</a></b></TD><td><p class="docText">On FreeBSD 5.2.1, we get a continuous spray of error messages, and after a while, the program drops core. With <tt>gdb</tt>, we are able to see that the program was stuck in an infinite loop during initialization. The program initialization calls thread initialization functions, which call <tt>malloc</tt>. The <tt>malloc</tt> function, in turn, calls <tt>getenv</tt> to find the value of the <tt>MALLOC_OPTIONS</tt> environment variable. Our implementation of <tt>getenv</tt> calls pthread functions, which then try to call the thread initialization functions. Eventually, we hit an error and get stuck in a similar infinite loop after <tt>abort</tt> is called. After half a million or so stack frames, the process exits, generating a core dump.</p></td></tr><TR valign="top"><td align="right" class="docText" width="50"><a name="ch12qa1q5a5"></a><B><a class="docLink" href="ch12lev1sec12.html#ch12qa1q5">12.5</a></b></td><TD><p class="docText">We still need <tt>fork</tt> if we want to run a program from within another program (i.e., before calling <tt>exec</tt>).</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch12qa1q6a6"></a><b><a class="docLink" href="ch12lev1sec12.html#ch12qa1q6">12.6</a></b></td><td><p class="docText"><a class="docLink" href="app03lev1sec12.html#app03fig12">Figure C.12</a> shows a thread-safe <tt>sleep</tt> implementation that uses <tt>select</tt> to delay for the specified amount of time. It is thread-safe because it doesn't use any unprotected global or static data and calls only other thread-safe functions.</p>
+<a name="app03fig12"></a>
+<h5 class="docExampleTitle">Figure C.12. A thread-safe implementation of <tt>sleep</tt></h5>
+<pre>
+#include &lt;unistd.h&gt;
+#include &lt;time.h&gt;
+#include &lt;sys/select.h&gt;
+
+unsigned
+sleep(unsigned nsec)
+{
+    int n;
+    unsigned slept;
+    time_t start, end;
+    struct timeval tv;
+
+    tv.tv_sec = nsec;
+    tv.tv_usec = 0;
+    time(&amp;start);
+    n = select(0, NULL, NULL, NULL, &amp;tv);
+    if (n == 0)
+        return(0);
+    time(&amp;end);
+    slept = end - start;
+    if (slept &gt;= nsec)
+        return(0);
+    return(nsec - slept);
+}
+</pre><br>
+
+
+</td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch12qa1q7a7"></a><b><a class="docLink" href="ch12lev1sec12.html#ch12qa1q7">12.7</a></b></TD><TD><p class="docText">The implementation of a condition variable most likely uses a mutex to protect its internal structure. Because this is an implementation detail and therefore hidden, there is no portable way for us to acquire and release the lock in the fork handlers. Since we can't determine the state of the internal lock in a condition variable after calling <tt>fork</tt>, it is unsafe for us to use the condition variable in the child process.</p>
+</TD></TR></table></P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

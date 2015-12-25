@@ -1,0 +1,55 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Chapter 13</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec14.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app03lev1sec13"></a>
+<h3 class="docSection1Title">Chapter 13</h3>
+<p class="docText"></P>
+<P><table border="0" cellspacing="16" cellpadding="0"><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch13qa1q1a1"></a><B><a class="docLink" href="ch13lev1sec9.html#ch13qa1q1">13.1</a></b></TD><td><p class="docText"><a name="idd1e97985"></a><a name="idd1e97990"></a><a name="idd1e97995"></a><a name="idd1e98000"></a><a name="idd1e98005"></a><a name="idd1e98010"></a><a name="idd1e98015"></a><a name="idd1e98018"></a><a name="idd1e98023"></a><a name="idd1e98028"></a><a name="idd1e98035"></a><a name="idd1e98040"></a><a name="idd1e98045"></a><a name="idd1e98050"></a>If it calls <tt>chroot</tt>, the process will not be able to open <tt>/dev/log</tt>. The solution is for the daemon to call <tt>openlog</tt> with an <span class="docEmphasis">option</span> of <tt>LOG_NDELAY</tt>, before calling <tt>chroot</tt>. This opens the special device file (the UNIX domain datagram socket), yielding a descriptor that is still valid, even after a call to <tt>chroot</tt>. This scenario is encountered in daemons, such as <tt>ftpd</tt> (the File Transfer Protocol daemon), that specifically call <tt>chroot</tt> for security reasons but still need to call <tt>syslog</tt> to log error conditions.</P></TD></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch13qa1q3a3"></a><b><a class="docLink" href="ch13lev1sec9.html#ch13qa1q3">13.3</a></b></TD><TD><p class="docText"><a class="docLink" href="app03lev1sec13.html#app03fig13">Figure C.13</a> shows a solution. The results depend on the platform. Recall that <tt>daemonize</tt> closes all open file descriptors and then reopens the first three to <tt>/dev/null</tt>. This means that the process won't have a controlling terminal, so <tt>getlogin</tt> won't be able to look in the <tt>utmp</tt> file for the process's login entry. Thus, on Linux 2.4.22 and Solaris 9, we find that a daemon has no login name.</P>
+<a name="app03fig13"></a>
+<h5 class="docExampleTitle">Figure C.13. Call <tt>daemonize</tt> and then obtain login name</H5>
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+
+    FILE *fp;
+    char *p;
+
+    daemonize("getlog");
+    p = getlogin();
+    fp = fopen("/tmp/getlog.out", "w");
+    if (fp != NULL) {
+        if (p == NULL)
+            fprintf(fp, "no login name\n");
+        else
+            fprintf(fp, "login name: %s\n", p);
+    }
+    exit(0);
+}
+</pre><BR>
+
+
+<p class="docText">Under FreeBSD 5.2.1 and Mac OS X 10.3, however, the login name is maintained in the process table and copied across a <tt>fork</tt>. This means that the process can always get the login name, unless the parent didn't have one to start out (such as <tt>init</tt> when the system is bootstrapped).</p>
+</TD></TR></table></p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec14.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

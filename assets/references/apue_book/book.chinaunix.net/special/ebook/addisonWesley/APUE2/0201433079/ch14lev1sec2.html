@@ -1,0 +1,116 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 14.2.&nbsp; Nonblocking I/O</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch14lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch14lev1sec2"></a>
+<h3 class="docSection1Title">14.2. Nonblocking I/O</h3>
+<p class="docText">In <a class="docLink" href="ch10lev1sec5.html#ch10lev1sec5">Section 10.5</a>, we said that the system calls are divided into two categories: the &quot;slow&quot; ones and all the others. The slow system calls are those that can block forever. They include</P>
+<UL><li><p class="docList">Reads that can block the caller forever if data isn't present with certain file types (pipes, terminal devices, and network devices)</P></LI><LI><p class="docList">Writes that can block the caller forever if the data can't be accepted immediately by these same file types (no room in the pipe, network flow control, etc.)</p></LI><LI><p class="docList">Opens that block until some condition occurs on certain file types (such as an open of a terminal device that waits until an attached modem answers the phone, or an open of a FIFO for writing-only when no other process has the FIFO open for reading)</P></li><LI><p class="docList">Reads and writes of files that have mandatory record locking enabled</p></LI><LI><p class="docList"><a name="idd1e98311"></a><a name="idd1e98314"></a><a name="idd1e98317"></a><a name="idd1e98322"></a><a name="idd1e98327"></a><a name="idd1e98332"></a><a name="idd1e98337"></a><a name="idd1e98342"></a><a name="idd1e98347"></a><a name="idd1e98352"></a><a name="idd1e98357"></a><a name="idd1e98362"></a><a name="idd1e98367"></a><a name="idd1e98372"></a><a name="idd1e98377"></a>Certain <tt>ioctl</tt> operations</P></li><LI><p class="docList">Some of the interprocess communication functions (<a class="docLink" href="ch15.html#ch15">Chapter 15</a>)</P></li></UL>
+<p class="docText">We also said that system calls related to disk I/O are not considered slow, even though the read or write of a disk file can block the caller temporarily.</P>
+<p class="docText">Nonblocking I/O lets us issue an I/O operation, such as an <tt>open</tt>, <tt>read</tt>, or <tt>write</tt>, and not have it block forever. If the operation cannot be completed, the call returns immediately with an error noting that the operation would have blocked.</p>
+<p class="docText">There are two ways to specify nonblocking I/O for a given descriptor.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">If we call <tt>open</tt> to get the descriptor, we can specify the <tt>O_NONBLOCK</tt> flag (<a class="docLink" href="ch03lev1sec3.html#ch03lev1sec3">Section 3.3</a>).</p></div></LI><li><div style="font-weight:normal"><p class="docList">For a descriptor that is already open, we call <tt>fcntl</tt> to turn on the <tt>O_NONBLOCK</tt> file status flag (<a class="docLink" href="ch03lev1sec14.html#ch03lev1sec14">Section 3.14</a>). <a class="docLink" href="ch03lev1sec14.html#ch03fig11">Figure 3.11</a> shows a function that we can call to turn on any of the file status flags for a descriptor.</P><blockquote>
+<p class="docText">Earlier versions of System V used the flag <tt>O_NDELAY</tt> to specify nonblocking mode. These versions of System V returned a value of 0 from the <tt>read</tt> function if there wasn't any data to be read. Since this use of a return value of 0 overlapped with the normal UNIX System convention of 0 meaning the end of file, POSIX.1 chose to provide a nonblocking flag with a different name and different semantics. Indeed, with these older versions of System V, when we get a return of 0 from <tt>read</tt>, we don't know whether the call would have blocked or whether the end of file was encountered. We'll see that POSIX.1 requires that <tt>read</tt> return 1 with <tt>errno</tt> set to <tt>EAGAIN</tt> if there is no data to read from a nonblocking descriptor. Some platforms derived from System V support both the older <tt>O_NDELAY</tt> and the POSIX.1 <tt>O_NONBLOCK</tt>, but in this text, we'll use only the POSIX.1 feature. The older <tt>O_NDELAY</tt> is for backward compatibility and should not be used in new applications.</p>
+<p class="docText">4.3BSD provided the <tt>FNDELAY</tt> flag for <tt>fcntl</tt>, and its semantics were slightly different. Instead of affecting only the file status flags for the descriptor, the flags for either the terminal device or the socket were also changed to be nonblocking, affecting all users of the terminal or socket, not only the users sharing the same file table entry (4.3BSD nonblocking I/O worked only on terminals and sockets). Also, 4.3BSD returned <tt>EWOULDBLOCK</tt> if an operation on a nonblocking descriptor could not complete without blocking. Today, BSD-based systems provide the POSIX.1 <tt>O_NONBLOCK</tt> flag and define <tt>EWOULDBLOCK</tt> to be the same as <tt>EAGAIN</tt>. These systems provide nonblocking semantics consistent with other POSIX-compatible systems: changes in file status flags affect all users of the same file table entry, but are independent of accesses to the same device through other file table entries. (Refer to <a class="docLink" href="ch03lev1sec10.html#ch03fig06">Figures 3.6</a> and <a class="docLink" href="ch03lev1sec12.html#ch03fig08">3.8</a>.)</P>
+</blockquote></div></li></ol></div>
+<a name="ch14ex01"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">Let's look at an example of nonblocking I/O. The program in <a class="docLink" href="ch14lev1sec2.html#ch14fig01">Figure 14.1</a> reads up to 500,000 bytes from the standard input and attempts to write it to the standard output. The standard output is first set nonblocking. The output is in a loop, with the results of each <tt>write</tt> being printed on the standard error. The function <tt>clr_fl</tt> is similar to the function <tt>set_fl</tt> that we showed in <a class="docLink" href="ch03lev1sec14.html#ch03fig11">Figure 3.11</a>. This new function simply clears one or more of the flag bits.</p>
+<p class="docText"><a name="idd1e98540"></a><a name="idd1e98545"></a><a name="idd1e98550"></a>If the standard output is a regular file, we expect the <tt>write</tt> to be executed once:</p>
+
+<pre>
+$ <span class="docEmphStrong">ls -l /etc/termcap</span>                           <span class="docEmphItalicAlt">print file size</span>
+-rw-r--r-- 1 root      702559 Feb 23  2002 /etc/termcap
+$ <span class="docEmphStrong">./a.out &lt; /etc/termcap &gt; temp.file</span>           <span class="docEmphItalicAlt">try a regular file first</span>
+read 500000 bytes
+nwrite = 500000, errno = 0                     <span class="docEmphItalicAlt">a single write</span>
+$ <span class="docEmphStrong">ls -l temp.file</span>                              <span class="docEmphItalicAlt">verify size of output file</span>
+-rw-rw-r-- 1 sar       500000 Jul   8 04:19 temp.file
+</pre><br>
+
+<p class="docText">But if the standard output is a terminal, we expect the <tt>write</tt> to return a partial count sometimes and an error at other times. This is what we see:</p>
+
+<pre>
+$ <span class="docEmphStrong">./a.out &lt; /etc/termcap 2&gt;stderr.out</span>              <span class="docEmphItalicAlt">output to terminal</span>
+                                                   <span class="docEmphItalicAlt">lots of output to terminal ...</span>
+$ <span class="docEmphStrong">cat stderr.out</span>
+read 500000 bytes
+nwrite = 216041, errno = 0
+nwrite = -1, errno = 11                            <span class="docEmphItalicAlt">1,497 of these errors</span>
+...
+nwrite = 16015, errno = 0
+nwrite = -1, errno = 11                            <span class="docEmphItalicAlt">1,856 of these errors</span>
+...
+nwrite = 32081, errno = 0
+nwrite = -1, errno = 11                            <span class="docEmphasis">1,654 of these errors</span>
+...
+nwrite = 48002, errno = 0
+nwrite = -1, errno = 11                            <span class="docEmphasis">1,460 of these errors</span>
+...
+                                                   <span class="docEmphasis">and so on ...</span>
+nwrite = 7949, errno = 0
+</pre><br>
+
+<p class="docText"><a name="idd1e98623"></a><a name="idd1e98628"></a><a name="idd1e98633"></a><a name="idd1e98636"></a>On this system, the <tt>errno</tt> of 11 is <tt>EAGAIN</tt>. The amount of data accepted by the terminal driver varies from system to system. The results will also vary depending on how you are logged in to the system: on the system console, on a hardwired terminal, on network connection using a pseudo terminal. If you are running a windowing system on your terminal, you are also going through a pseudo-terminal device.</p>
+
+<a name="ch14fig01"></a>
+<h5 class="docExampleTitle">Figure 14.1. Large nonblocking <tt>write</tt></h5>
+
+<pre>
+#include "apue.h"
+#include &lt;errno.h&gt;
+#include &lt;fcntl.h&gt;
+
+char    buf[500000];
+
+int
+main(void)
+{
+    int     ntowrite, nwrite;
+    char    *ptr;
+
+    ntowrite = read(STDIN_FILENO, buf, sizeof(buf));
+    fprintf(stderr, "read %d bytes\n", ntowrite);
+
+    set_fl(STDOUT_FILENO, O_NONBLOCK); /* set nonblocking */
+
+    ptr = buf;
+    while (ntowrite &gt; 0) {
+        errno = 0;
+        nwrite = write(STDOUT_FILENO, ptr, ntowrite);
+        fprintf(stderr, "nwrite = %d, errno = %d\n", nwrite, errno);
+
+        if (nwrite &gt; 0) {
+            ptr += nwrite;
+            ntowrite -= nwrite;
+        }
+    }
+
+    clr_fl(STDOUT_FILENO, O_NONBLOCK); /* clear nonblocking */
+
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText">In this example, the program issues thousands of <tt>write</tt> calls, even though only between 10 and 20 are needed to output the data. The rest just return an error. This type of loop, called <span class="docEmphasis">polling</span>, is a waste of CPU time on a multiuser system. In <a class="docLink" href="ch14lev1sec5.html#ch14lev1sec5">Section 14.5</a>, we'll see that I/O multiplexing with a nonblocking descriptor is a more efficient way to do this.</p>
+<p class="docText">Sometimes, we can avoid using nonblocking I/O by designing our applications to use multiple threads (see <a class="docLink" href="ch11.html#ch11">Chapter 11</a>). We can allow individual threads to block in I/O calls if we can continue to make progress in other threads. This can sometimes simplify the design, as we shall see in <a class="docLink" href="ch21.html#ch21">Chapter 21</a>; sometimes, however, the overhead of synchronization can add more complexity than is saved from using threads.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch14lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

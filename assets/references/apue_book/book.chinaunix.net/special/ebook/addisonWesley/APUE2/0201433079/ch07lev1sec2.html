@@ -1,0 +1,33 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 7.2.&nbsp; main Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch07lev1sec2"></a>
+<h3 class="docSection1Title">7.2. <tt>main</tt> Function</h3>
+<p class="docText">A C program starts execution with a function called <tt>main</tt>. The prototype for the <tt>main</tt> function is</P>
+
+<pre>
+    int main(int <span class="docEmphItalicAlt">argc</span>, char *<span class="docEmphItalicAlt">argv</span>[]);
+</pre><BR>
+
+<p class="docText">where <span class="docEmphasis">argc</span> is the number of command-line arguments, and <span class="docEmphasis">argv</span> is an array of pointers to the arguments. We describe these arguments in <a class="docLink" href="ch07lev1sec4.html#ch07lev1sec4">Section 7.4</a>.</p>
+<p class="docText">When a C program is executed by the kernelby one of the <tt>exec</tt> functions, which we describe in <a class="docLink" href="ch08lev1sec10.html#ch08lev1sec10">Section 8.10</a>a special start-up routine is called before the <tt>main</tt> function is called. The executable program file specifies this routine as the starting address for the program; this is set up by the link editor when it is invoked by the C compiler. This start-up routine takes values from the kernelthe command-line arguments and the environmentand sets things up so that the <tt>main</tt> function is called as shown earlier.</P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

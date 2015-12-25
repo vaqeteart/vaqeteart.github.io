@@ -1,0 +1,60 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 6.4.&nbsp; Group File</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch06lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch06lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch06lev1sec4"></a>
+<h3 class="docSection1Title">6.4. Group File</h3>
+<p class="docText">The UNIX System's group file, called the group database by POSIX.1, contains the fields shown in <a class="docLink" href="ch06lev1sec4.html#ch06fig04">Figure 6.4</a>. These fields are contained in a <tt>group</tt> structure that is defined in <tt>&lt;grp.h&gt;</tt>.</P>
+<a name="ch06fig04"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 6.4. Fields in <tt>/etc/group</tt> file</H5></caption><colgroup><col width="150"><col width="150"><col width="40"><col width="40"><col width="40"><col width="40"><col width="40"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Description</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman"><tt>struct group</tt> member</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">POSIX.1</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">FreeBSD 5.2.1</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Linux 2.4.22</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Mac OS X 10.3</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Solaris 9</span></P></th></tr></thead><TR><TD class="rightBorder" align="left" valign="top"><p class="docText">group name</P></td><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>char *gr_name</tt></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">encrypted password</p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>char *gr_passwd</tt></p></td><td class="rightBorder" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText">numerical group ID</p></TD><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>int gr_gid</tt></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">array of pointers to individual user names</p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>char **gr_mem</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td></TR></table></P><BR>
+<p class="docText">The field <tt>gr_mem</tt> is an array of pointers to the user names that belong to this group. This array is terminated by a null pointer.</p>
+<p class="docText">We can look up either a group name or a numerical group ID with the following two functions, which are defined by POSIX.1.</P>
+<a name="inta103"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;grp.h&gt;
+
+struct group *getgrgid(gid_t <span class="docEmphItalicAlt">gid</span>);
+
+struct group *getgrnam(const char *<span class="docEmphItalicAlt">name</span>);
+</pre><BR>
+
+</p></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: pointer if OK, <tt>NULL</tt> on error</P></td></tr></table></p><br>
+<p class="docText"><a name="idd1e43275"></a><a name="idd1e43278"></a><a name="idd1e43283"></a><a name="idd1e43288"></a><a name="idd1e43295"></a><a name="idd1e43300"></a><a name="idd1e43307"></a><a name="idd1e43312"></a><a name="idd1e43317"></a><a name="idd1e43322"></a><a name="idd1e43327"></a><a name="idd1e43332"></a><a name="idd1e43337"></a><a name="idd1e43342"></a><a name="idd1e43349"></a><a name="idd1e43352"></a><a name="idd1e43355"></a>As with the password file functions, both of these functions normally return pointers to a <tt>static</tt> variable, which is overwritten on each call.</P>
+<p class="docText">If we want to search the entire group file, we need some additional functions. The following three functions are like their counterparts for the password file.</p>
+<a name="inta30"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;grp.h&gt;
+
+struct group *getgrent(void);
+</pre><br>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer if OK, <tt>NULL</tt> on error or end of file</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+void setgrent(void);
+
+void endgrent(void);
+</pre><br>
+
+</p></td></tr></table></p><br>
+<blockquote>
+<p class="docText">These three functions are not part of the base POSIX.1 standard. They are defined as XSI extensions in the Single UNIX Specification. All UNIX Systems provide them.</P>
+</blockquote>
+<p class="docText">The <tt>setgrent</tt> function opens the group file, if it's not already open, and rewinds it. The <tt>getgrent</tt> function reads the next entry from the group file, opening the file first, if it's not already open. The <tt>endgrent</tt> function closes the group file.</P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch06lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch06lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

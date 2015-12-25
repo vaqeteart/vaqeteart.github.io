@@ -1,0 +1,306 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 18.11.&nbsp; Noncanonical Mode</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch18lev1sec11"></a>
+<h3 class="docSection1Title">18.11. Noncanonical Mode</h3>
+<p class="docText">Noncanonical mode is specified by turning off the <tt>ICANON</tt> flag in the <tt>c_lflag</tt> field of the <tt>termios</tt> structure. In noncanonical mode, the input data is not assembled into lines. The following special characters (<a class="docLink" href="ch18lev1sec3.html#ch18lev1sec3">Section 18.3</a>) are not processed: ERASE, KILL, EOF, NL, EOL, EOL2, CR, REPRINT, STATUS, and WERASE.</P>
+<p class="docText">As we said, canonical mode is easy: the system returns up to one line at a time. But with noncanonical mode, how does the system know when to return data to us? If it returned one byte at a time, overhead would be excessive. (Recall <a class="docLink" href="ch03lev1sec9.html#ch03fig05">Figure 3.5</a>, which showed the overhead in reading one byte at a time. Each time we doubled the amount of data returned, we halved the system call overhead.) The system can't always return multiple bytes at a time, since sometimes we don't know how much data to read until we start reading it.</P>
+<p class="docText">The solution is to tell the system to return when either a specified amount of data has been read or after a given amount of time has passed. This technique uses two variables in the <tt>c_cc</tt> array in the <tt>termios</tt> structure: MIN and TIME. These two elements of the array are indexed by the names <tt>VMIN</tt> and <tt>VTIME</tt>.</p>
+<p class="docText">MIN specifies the minimum number of bytes before a <tt>read</tt> returns. TIME specifies the number of tenths of a second to wait for data to arrive. There are four cases.</P>
+<p class="docText">Case A: MIN &gt; 0, TIME &gt; 0</P>
+<blockquote>
+<p class="docText">TIME specifies an interbyte timer that is started only when the first byte is received. If MIN bytes are received before the timer expires, <tt>read</tt> returns MIN bytes. If the timer expires before MIN bytes are received, <tt>read</tt> returns the bytes received. (At least one byte is returned if the timer expires, because the timer is not started until the first byte is received.) In this case, the caller blocks until the first byte is received. If data is already available when <tt>read</tt> is called, it is as if the data had been received immediately after the <tt>read</tt>.</P>
+</blockquote>
+<p class="docText">Case B: MIN &gt; 0, TIME == 0</p>
+<blockquote>
+<p class="docText">The <tt>read</tt> does not return until MIN bytes have been received. This can cause a <tt>read</tt> to block indefinitely.</P>
+</blockquote>
+<p class="docText"><a name="idd1e142484"></a><a name="idd1e142487"></a><a name="idd1e142490"></a><a name="idd1e142493"></a><a name="idd1e142498"></a><a name="idd1e142503"></a><a name="idd1e142508"></a><a name="idd1e142513"></a><a name="idd1e142518"></a><a name="idd1e142523"></a>Case C: MIN == 0, TIME &gt; 0</P>
+<blockquote>
+<p class="docText">TIME specifies a read timer that is started when <tt>read</tt> is called. (Compare this to case A, in which a nonzero TIME represented an interbyte timer that was not started until the first byte was received.) The <tt>read</tt> returns when a single byte is received or when the timer expires. If the timer expires, <tt>read</tt> returns 0.</P>
+</blockquote>
+<p class="docText">Case D: MIN == 0, TIME == 0</p>
+<blockquote>
+<p class="docText">If some data is available, <tt>read</tt> returns up to the number of bytes requested. If no data is available, <tt>read</tt> returns 0 immediately.</P>
+</blockquote>
+<p class="docText">Realize in all these cases that MIN is only a minimum. If the program requests more than MIN bytes of data, it's possible to receive up to the requested amount. This also applies to cases C and D, in which MIN is 0.</p>
+<p class="docText"><a class="docLink" href="ch18lev1sec11.html#ch18fig19">Figure 18.19</a> summarizes the four cases for noncanonical input. In this figure, <span class="docEmphasis">nbytes</span> is the third argument to <tt>read</tt> (the maximum number of bytes to return).</P>
+<a name="ch18fig19"></a><P><center>
+<H5 class="docFigureTitle">Figure 18.19. Four cases for noncanonical input</h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/18fig19_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="182" SRC="images/0201433079/graphics/18fig19.gif;423615"></P>
+</center></P><br>
+<blockquote>
+<p class="docText">Be aware that POSIX.1 allows the subscripts <tt>VMIN</tt> and <tt>VTIME</tt> to have the same values as <tt>VEOF</tt> and <tt>VEOL</tt>, respectively. Indeed, Solaris does this for backward compatibility with older versions of System V. This creates a portability problem, however. In going from noncanonical to canonical mode, we must now restore <tt>VEOF</tt> and <tt>VEOL</tt> also. If <tt>VMIN</tt> equals <tt>VEOF</tt> and we don't restore their values, when we set <tt>VMIN</tt> to its typical value of 1, the end-of-file character becomes Control-A. The easiest way around this problem is to save the entire <tt>termios</tt> structure when going into noncanonical mode and restore it when going back to canonical mode.</P>
+</blockquote>
+<a name="ch18ex07"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch18lev1sec11.html#ch18fig20">Figure 18.20</a> defines the <tt>tty_cbreak</tt> and <tt>tty_raw</tt> functions that set the terminal in <span class="docEmphasis">cbreak mode</span> and <span class="docEmphasis">raw mode</span>. (The terms <span class="docEmphasis">cbreak</span> and <span class="docEmphasis">raw</span> come from the Version 7 terminal driver.) We can reset the terminal to its original state (the state before either of these functions was called) by calling the function <tt>tty_reset</tt>.</p>
+<p class="docText">If we've called <tt>tty_cbreak</tt>, we need to call <tt>tty_reset</tt> before calling <tt>tty_raw</tt>. The same goes for calling <tt>tty_cbreak</tt> after calling <tt>tty_raw</tt>. This improves the chances that the terminal will be left in a usable state if we encounter any errors.</p>
+<p class="docText"><a name="idd1e142678"></a><a name="idd1e142683"></a><a name="idd1e142688"></a><a name="idd1e142693"></a><a name="idd1e142698"></a><a name="idd1e142703"></a><a name="idd1e142708"></a><a name="idd1e142713"></a><a name="idd1e142718"></a><a name="idd1e142725"></a>Two additional functions are also provided: <tt>tty_atexit</tt> can be established as an exit handler to ensure that the terminal mode is reset by <tt>exit</tt>, and <tt>tty_termios</tt> returns a pointer to the original canonical mode <tt>termios</tt> structure.</p>
+<p class="docText"><a name="idd1e142746"></a><a name="idd1e142749"></a><a name="idd1e142752"></a><a name="idd1e142755"></a><a name="idd1e142758"></a><a name="idd1e142763"></a><a name="idd1e142768"></a><a name="idd1e142773"></a><a name="idd1e142778"></a><a name="idd1e142781"></a><a name="idd1e142788"></a>Our definition of cbreak mode is the following:</P>
+<ul><LI><p class="docList">Noncanonical mode. As we mentioned at the beginning of this section, this mode turns off some input character processing. It does not turn off signal handling, so the user can always type one of the terminal-generated signals. Be aware that the caller should catch these signals, or there's a chance that the signal will terminate the program, and the terminal will be left in cbreak mode.</p><p class="docList">As a general rule, whenever we write a program that changes the terminal mode, we should catch most signals. This allows us to reset the terminal mode before terminating.</P></li><li><p class="docList">Echo off.</p></li><li><p class="docList">One byte at a time input. To do this, we set MIN to 1 and TIME to 0. This is case B from <a class="docLink" href="ch18lev1sec11.html#ch18fig19">Figure 18.19</a>. A <tt>read</tt> won't return until at least one byte is available.</p></li></ul>
+<p class="docText">We define raw mode as follows:</p>
+<ul><li><p class="docList">Noncanonical mode. We also turn off processing of the signal-generating characters (<tt>ISIG</tt>) and the extended input character processing (<tt>IEXTEN</tt>). Additionally, we disable a BREAK character from generating a signal, by turning off <tt>BRKINT</tt>.</p></li><li><p class="docList">Echo off.</p></li><li><p class="docList">We disable the CR-to-NL mapping on input (<tt>ICRNL</tt>), input parity detection (<tt>INPCK</tt>), the stripping of the eighth bit on input (<tt>ISTRIP</tt>), and output flow control (<tt>IXON</tt>).</P></LI><li><p class="docList">Eight-bit characters (<tt>CS8</tt>), and parity checking is disabled (<tt>PARENB</tt>).</P></LI><LI><p class="docList">All output processing is disabled (<tt>OPOST</tt>).</p></LI><LI><p class="docList">One byte at a time input (MIN = 1, TIME = 0).</P></li></UL>
+<p class="docText">The program in <a class="docLink" href="ch18lev1sec11.html#ch18fig21">Figure 18.21</a> tests raw and cbreak modes.</p>
+<p class="docText"><a name="idd1e142900"></a><a name="idd1e142905"></a><a name="idd1e142910"></a><a name="idd1e142915"></a><a name="idd1e142920"></a><a name="idd1e142925"></a><a name="idd1e142930"></a><a name="idd1e142935"></a><a name="idd1e142940"></a><a name="idd1e142945"></a><a name="idd1e142948"></a><a name="idd1e142953"></a><a name="idd1e142958"></a><a name="idd1e142963"></a><a name="idd1e142968"></a><a name="idd1e142973"></a><a name="idd1e142978"></a><a name="idd1e142983"></a><a name="idd1e142988"></a>Running the program in <a class="docLink" href="ch18lev1sec11.html#ch18fig21">Figure 18.21</a>, we can see what happens with these two terminal modes:</P>
+
+<pre>
+$ <span class="docEmphStrong">./a.out</span>
+Enter raw mode characters, terminate with DELETE
+                                                 4
+                                                   33
+                                                     133
+                                                        61
+                                                          70
+                                                            176
+                          <span class="docEmphItalicAlt">type DELETE</span>
+Enter cbreak mode characters, terminate with SIGINT
+1                         <span class="docEmphItalicAlt">type Control-A</span>
+10                        <span class="docEmphItalicAlt">type backspace</span>
+signal caught             <span class="docEmphItalicAlt">type interrupt key</span>
+</pre><BR>
+
+<p class="docText">In raw mode, the characters entered were Control-D (04) and the special function key F7. On the terminal being used, this function key generated five characters: <span class="docEmphasis">ESC</span> (033), <span class="docEmphasis">[</span> (0133), <span class="docEmphasis">1</span> (061), <span class="docEmphasis">8</span> (070), and <sup><span class="docEmphasis">~</span></sup> (0176). Note that with the output processing turned off in raw mode (<tt>~OPOST</tt>), we do not get a carriage return output after each character. Also note that special-character processing is disabled in cbreak mode (so, for example, Control-D, the end-of-file character, and backspace aren't handled specially), whereas the terminal-generated signals are still processed.</P>
+
+<a name="ch18fig20"></a>
+<h5 class="docExampleTitle">Figure 18.20. Set terminal mode to cbreak or raw</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;termios.h&gt;
+#include &lt;errno.h&gt;
+
+static struct termios       save_termios;
+static int                  ttysavefd = -1;
+static enum { RESET, RAW, CBREAK } ttystate = RESET;
+
+int
+tty_cbreak(int fd) /* put terminal into a cbreak mode */
+{
+    int              err;
+    struct termios   buf;
+
+    if (ttystate != RESET) {
+        errno = EINVAL;
+        return(-1);
+    }
+    if (tcgetattr(fd, &amp;buf) &lt; 0)
+        return(-1);
+    save_termios = buf; /* structure copy */
+
+    /*
+     * Echo off, canonical mode off.
+     */
+    buf.c_lflag &amp;= ~(ECHO | ICANON);
+
+    /*
+     * Case B: 1 byte at a time, no timer.
+     */
+    buf.c_cc[VMIN] = 1;
+    buf.c_cc[VTIME] = 0;
+    if (tcsetattr(fd, TCSAFLUSH, &amp;buf) &lt; 0)
+        return(-1);
+
+    /*
+     * Verify that the changes stuck. tcsetattr can return 0 on
+     * partial success.
+     */
+    if (tcgetattr(fd, &amp;buf) &lt; 0) {
+        err = errno;
+        tcsetattr(fd, TCSAFLUSH, &amp;save_termios);
+        errno = err;
+        return(-1);
+    }
+    if ((buf.c_lflag &amp; (ECHO | ICANON)) || buf.c_cc[VMIN] != 1 ||
+      buf.c_cc[VTIME] != 0) {
+        /*
+         * Only some of the changes were made. Restore the
+         * original settings.
+         */
+        tcsetattr(fd, TCSAFLUSH, &amp;save_termios);
+        errno = EINVAL;
+        return(-1);
+    }
+
+    ttystate = CBREAK;
+    ttysavefd = fd;
+    return(0);
+}
+
+int
+tty_raw(int fd)     /* put terminal into a raw mode */
+{
+    int             err;
+    struct termios  buf;
+
+    if (ttystate != RESET) {
+        errno = EINVAL;
+        return(-1);
+    }
+    if (tcgetattr(fd, &amp;buf) &lt; 0)
+        return(-1);
+    save_termios = buf; /* structure copy */
+
+    /*
+     * Echo off, canonical mode off, extended input
+     * processing off, signal chars off.
+     */
+    buf.c_lflag &amp;= ~(ECHO | ICANON | IEXTEN | ISIG);
+
+    /*
+     * No SIGINT on BREAK, CR-to-NL off, input parity
+     * check off, don't strip 8th bit on input, output
+     * flow control off.
+     */
+    buf.c_iflag &amp;= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
+
+    /*
+     * Clear size bits, parity checking off.
+     */
+    buf.c_cflag &amp;= ~(CSIZE | PARENB);
+
+    /*
+     * Set 8 bits/char.
+     */
+    buf.c_cflag |= CS8;
+
+    /*
+     * Output processing off.
+     */
+    buf.c_oflag &amp;= ~(OPOST);
+
+    /*
+     * Case B: 1 byte at a time, no timer.
+     */
+    buf.c_cc[VMIN] = 1;
+    buf.c_cc[VTIME] = 0;
+    if (tcsetattr(fd, TCSAFLUSH, &amp;buf) &lt; 0)
+        return(-1);
+
+    /*
+     * Verify that the changes stuck. tcsetattr can return 0 on
+     * partial success.
+     */
+    if (tcgetattr(fd, &amp;buf) &lt; 0) {
+        err = errno;
+        tcsetattr(fd, TCSAFLUSH, &amp;save_termios);
+        errno = err;
+        return(-1);
+    }
+    if ((buf.c_lflag &amp; (ECHO | ICANON | IEXTEN | ISIG)) ||
+      (buf.c_iflag &amp; (BRKINT | ICRNL | INPCK | ISTRIP | IXON)) ||
+      (buf.c_cflag &amp; (CSIZE | PARENB | CS8)) != CS8 ||
+      (buf.c_oflag &amp; OPOST) || buf.c_cc[VMIN] != 1 ||
+      buf.c_cc[VTIME] != 0) {
+        /*
+         * Only some of the changes were made. Restore the
+         * original settings.
+         */
+        tcsetattr(fd, TCSAFLUSH, &amp;save_termios);
+        errno = EINVAL;
+        return(-1);
+    }
+
+    ttystate = RAW;
+    ttysavefd = fd;
+    return(0);
+}
+
+int
+tty_reset(int fd)      /* restore terminal's mode */
+{
+    if (ttystate == RESET)
+        return(0);
+    if (tcsetattr(fd, TCSAFLUSH, &amp;save_termios) &lt; 0)
+        return(-1);
+    ttystate = RESET;
+    return(0);
+}
+void
+tty_atexit(void)        /* can be set up by atexit(tty_atexit) */
+{
+    if (ttysavefd &gt;= 0)
+        tty_reset(ttysavefd);
+}
+
+struct termios *
+tty_termios(void)       /* let caller see original tty state */
+{
+    return(&amp;save_termios);
+}</pre><BR>
+
+
+<a name="ch18fig21"></a>
+<h5 class="docExampleTitle">Figure 18.21. Test raw and cbreak terminal modes</H5>
+
+<pre>
+#include "apue.h"
+
+static void
+sig_catch(int signo)
+{
+    printf("signal caught\n");
+    tty_reset(STDIN_FILENO);
+    exit(0);
+}
+
+int
+main(void)
+{
+    int    i;
+    char   c;
+
+    if (signal(SIGINT, sig_catch) == SIG_ERR)   /* catch signals */
+        err_sys("signal(SIGINT) error");
+    if (signal(SIGQUIT, sig_catch) == SIG_ERR)
+        err_sys("signal(SIGQUIT) error");
+    if (signal(SIGTERM, sig_catch) == SIG_ERR)
+        err_sys("signal(SIGTERM) error");
+
+    if (tty_raw(STDIN_FILENO) &lt; 0)
+        err_sys("tty_raw error");
+    printf("Enter raw mode characters, terminate with DELETE\n");
+    while ((i = read(STDIN_FILENO, &amp;c, 1)) == 1) {
+        if ((c &amp;= 255) == 0177)     /* 0177 = ASCII DELETE */
+            break;
+        printf("%o\n", c);
+    }
+    if (tty_reset(STDIN_FILENO) &lt; 0)
+        err_sys("tty_reset error");
+    if (i &lt;= 0)
+        err_sys("read error");
+    if (tty_cbreak(STDIN_FILENO) &lt; 0)
+        err_sys("tty_cbreak error");
+    printf("\nEnter cbreak mode characters, terminate with SIGINT\n");
+    while ((i = read(STDIN_FILENO, &amp;c, 1)) == 1) {
+        c &amp;= 255;
+        printf("%o\n", c);
+    }
+    if (tty_reset(STDIN_FILENO) &lt; 0)
+        err_sys("tty_reset error");
+    if (i &lt;= 0)
+        err_sys("read error");
+    exit(0);
+}</pre><BR>
+
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,205 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 9.9.&nbsp; Shell Execution of Programs</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch09lev1sec9"></a>
+<h3 class="docSection1Title">9.9. Shell Execution of Programs</h3>
+<p class="docText">Let's examine how the shells execute programs and how this relates to the concepts of process groups, controlling terminals, and sessions. To do this, we'll use the <tt>ps</tt> command again.</P>
+<p class="docText">First, we'll use a shell that doesn't support job controlthe classic Bourne shell running on Solaris. If we execute</P>
+
+<pre>
+   ps -o pid,ppid,pgid,sid,comm
+</pre><br>
+
+<p class="docText">the output is</P>
+
+<pre>
+     PID  PPID  PGID  SID  COMMAND
+     949   947   949  949  sh
+    1774   949   949  949  ps
+</pre><BR>
+
+<p class="docText">The parent of the <tt>ps</tt> command is the shell, which we would expect. Both the shell and the <tt>ps</tt> command are in the same session and foreground process group (949). We say that 949 is the foreground process group because that is what you get when you execute a command with a shell that doesn't support job control.</P>
+<blockquote>
+<p class="docText">Some platforms support an option to have the <tt>ps</tt>(1) command print the process group ID associated with the session's controlling terminal. This value would be shown under the TPGID column. Unfortunately, the output of the <tt>ps</tt> command often differs among versions of the UNIX System. For example, Solaris 9 doesn't support this option. Under FreeBSD 5.2.1 and Mac OS X 10.3, the command</p>
+
+<pre>
+    ps -o pid,ppid,pgid,sess,tpgid,command
+</pre><BR>
+
+<p class="docText">and under Linux 2.4.22, the command</P>
+
+<pre>
+    ps -o pid,ppid,pgrp,session,tpgid,comm
+</pre><BR>
+
+<p class="docText">print exactly the information we want.</p>
+<p class="docText">Note that it is a misnomer to associate a process with a terminal process group ID (the TPGID column). A process does not have a terminal process control group. A process belongs to a process group, and the process group belongs to a session. The session may or may not have a controlling terminal. If the session does have a controlling terminal, then the terminal device knows the process group ID of the foreground process. This value can be set in the terminal driver with the <tt>tcsetpgrp</tt> function, as we show in <a class="docLink" href="ch09lev1sec8.html#ch09fig08">Figure 9.8</a>. The foreground process group ID is an attribute of the terminal, not the process. This value from the terminal device driver is what <tt>ps</tt> prints as the TPGID. If it finds that the session doesn't have a controlling terminal, <tt>ps</tt> prints 1.</P>
+</blockquote>
+<p class="docText">If we execute the command in the background,</p>
+
+<pre>
+   ps -o pid,ppid,pgid,sid,comm &amp;
+</pre><BR>
+
+<p class="docText">the only value that changes is the process ID of the command:</P>
+
+<pre>
+        PID  PPID  PGID  SID COMMAND
+        949   947   949  949 sh
+       1812   949   949  949 ps
+</pre><BR>
+
+<p class="docText"><a name="idd1e65548"></a><a name="idd1e65551"></a><a name="idd1e65556"></a><a name="idd1e65561"></a><a name="idd1e65566"></a><a name="idd1e65571"></a><a name="idd1e65576"></a><a name="idd1e65581"></a><a name="idd1e65586"></a><a name="idd1e65591"></a>This shell doesn't know about job control, so the background job is not put into its own process group and the controlling terminal isn't taken away from the background job.</p>
+<p class="docText">Let's now look at how the Bourne shell handles a pipeline. When we execute</P>
+
+<pre>
+   ps -o pid,ppid,pgid,sid,comm | cat1
+</pre><BR>
+
+<p class="docText">the output is</p>
+
+<pre>
+    PID  PPID  PGID  SID COMMAND
+    949   947   949  949 sh
+   1823   949   949  949 cat1
+   1824  1823   949  949 ps
+</pre><BR>
+
+<p class="docText">(The program <tt>cat1</tt> is just a copy of the standard <tt>cat</tt> program, with a different name. We have another copy of <tt>cat</tt> with the name <tt>cat2</tt>, which we'll use later in this section. When we have two copies of <tt>cat</tt> in a pipeline, the different names let us differentiate between the two programs.) Note that the last process in the pipeline is the child of the shell and that the first process in the pipeline is a child of the last process. It appears that the shell <tt>fork</tt>s a copy of itself and that this copy then <tt>fork</tt>s to make each of the previous processes in the pipeline.</P>
+<p class="docText">If we execute the pipeline in the background,</p>
+
+<pre>
+   ps -o pid,ppid,pgid,sid,comm | cat1 &amp;
+</pre><br>
+
+<p class="docText">only the process IDs change. Since the shell doesn't handle job control, the process group ID of the background processes remains 949, as does the process group ID of the session.</p>
+<p class="docText">What happens in this case if a background process tries to read from its controlling terminal? For example, suppose that we execute</p>
+
+<pre>
+   cat &gt; temp.foo &amp;
+</pre><BR>
+
+<p class="docText">With job control, this is handled by placing the background job into a background process group, which causes the signal <tt>SIGTTIN</tt> to be generated if the background job tries to read from the controlling terminal. The way this is handled without job control is that the shell automatically redirects the standard input of a background process to <tt>/dev/null</tt>, if the process doesn't redirect standard input itself. A read from <tt>/dev/null</tt> generates an end of file. This means that our background <tt>cat</tt> process immediately reads an end of file and terminates normally.</p>
+<p class="docText">The previous paragraph adequately handles the case of a background process accessing the controlling terminal through its standard input, but what happens if a background process specifically opens <tt>/dev/tty</tt> and reads from the controlling terminal? The answer is &quot;it depends,&quot; but it's probably not what we want. For example,</P>
+
+<pre>
+   crypt &lt; salaries | lpr &amp;
+</pre><br>
+
+<p class="docText">is such a pipeline. We run it in the background, but the <tt>crypt</tt> program opens <tt>/dev/tty</tt>, changes the terminal characteristics (to disable echoing), reads from the <a name="idd1e65682"></a><a name="idd1e65687"></a><a name="idd1e65690"></a><a name="idd1e65695"></a><a name="idd1e65698"></a><a name="idd1e65703"></a><a name="idd1e65708"></a><a name="idd1e65713"></a>device, and resets the terminal characteristics. When we execute this background pipeline, the prompt <tt>Password:</tt> from <tt>crypt</tt> is printed on the terminal, but what we enter (the encryption password) is read by the shell, which tries to execute a command of that name. The next line we enter to the shell is taken as the password, and the file is not encrypted correctly, sending junk to the printer. Here we have two processes trying to read from the same device at the same time, and the result depends on the system. Job control, as we described earlier, handles this multiplexing of a single terminal between multiple processes in a better fashion.</P>
+<p class="docText">Returning to our Bourne shell example, if we execute three processes in the pipeline, we can examine the process control used by this shell:</p>
+
+<pre>
+   ps -o pid,ppid,pgid,sid,comm | cat1 | cat2
+</pre><br>
+
+<p class="docText">generates the following output</p>
+
+<pre>
+     PID  PPID  PGID  SID COMMAND
+     949   947   949  949 sh
+    1988   949   949  949 cat2
+    1989  1988   949  949 ps
+    1990  1988   949  949 cat1
+</pre><br>
+
+<blockquote>
+<p class="docText">Don't be alarmed if the output on your system doesn't show the proper command names. Sometimes you might get results such as</p>
+
+<pre>
+        PID  PPID  PGID  SID COMMAND
+        949   947   949  949 sh
+       1831   949   949  949 sh
+       1832  1831   949  949 ps
+       1833  1831   949  949 sh
+</pre><br>
+
+<p class="docText">What's happening here is that the <tt>ps</tt> process is racing with the shell, which is forking and executing the <tt>cat</tt> commands. In this case, the shell hasn't yet completed the call to <tt>exec</tt> when <tt>ps</tt> has obtained the list of processes to print.</p>
+</blockquote>
+<p class="docText">Again, the last process in the pipeline is the child of the shell, and all previous processes in the pipeline are children of the last process. <a class="docLink" href="ch09lev1sec9.html#ch09fig09">Figure 9.9</a> shows what is happening. Since the last process in the pipeline is the child of the login shell, the shell is notified when that process (<tt>cat2</tt>) terminates.</p>
+<a name="ch09fig09"></a><p><center>
+<h5 class="docFigureTitle">Figure 9.9. Processes in the pipeline <tt>ps | cat1 | cat2</tt> when invoked by Bourne shell</h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/09fig09_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="299" SRC="images/0201433079/graphics/09fig09.gif;423615"></p>
+</center></p><br>
+<p class="docText">Now let's examine the same examples using a job-control shell running on Linux. This shows the way these shells handle background jobs. We'll use the Bourne-again shell in this example; the results with other job-control shells are almost identical.</p>
+
+<pre>
+   ps -o pid,ppid,pgrp,session,tpgid,comm
+</pre><br>
+
+<p class="docText">gives us</p>
+
+<pre>
+     PID  PPID  PGRP  SESS  TPGID COMMAND
+    2837  2818  2837  2837   5796 bash
+    <span class="docEmphStrong">5796</span>  2837  <span class="docEmphStrong">5796</span>  2837   5796 ps
+</pre><BR>
+
+<p class="docText">(Starting with this example, we show the foreground process group in a <span class="docEmphStrong"><tt>bolder font</tt></span>.) We immediately have a difference from our Bourne shell example. The Bourne-again shell places the foreground job (<tt>ps</tt>) into its own process group (5796). The <tt>ps</tt> command is the process group leader and the only process in this process group.</P>
+<p class="docText"><a name="idd1e65825"></a><a name="idd1e65828"></a><a name="idd1e65833"></a><a name="idd1e65838"></a>Furthermore, this process group is the foreground process group, since it has the controlling terminal. Our login shell is a background process group while the <tt>ps</tt> command executes. Note, however, that both process groups, 2837 and 5796, are members of the same session. Indeed, we'll see that the session never changes through our examples in this section.</p>
+<p class="docText">Executing this process in the background,</P>
+
+<pre>
+   ps -o pid,ppid,pgrp,session,tpgid,comm &amp;
+</pre><BR>
+
+<p class="docText">gives us</P>
+
+<pre>
+     PID  PPID  PGRP  SESS  TPGID COMMAND
+    <span class="docEmphStrong">2837</span>  2818  <span class="docEmphStrong">2837</span>  2837   2837 bash
+    5797  2837  5797  2837   2837 ps
+</pre><br>
+
+<p class="docText">Again, the <tt>ps</tt> command is placed into its own process group, but this time the process group (5797) is no longer the foreground process group. It is a background process group. The TPGID of 2837 indicates that the foreground process group is our login shell.</P>
+<p class="docText">Executing two processes in a pipeline, as in</P>
+
+<pre>
+   ps -o pid,ppid,pgrp,session,tpgid,comm | cat1
+</pre><BR>
+
+<p class="docText">gives us</p>
+
+<pre>
+     PID  PPID  PGRP  SESS  TPGID COMMAND
+    2837  2818  2837  2837   5799 bash
+    <span class="docEmphStrong">5799</span>  2837  <span class="docEmphStrong">5799</span>  2837   5799 ps
+    <span class="docEmphStrong">5800</span>  2837  <span class="docEmphStrong">5799</span>  2837   5799 cat1
+</pre><BR>
+
+<p class="docText">Both processes, <tt>ps</tt> and <tt>cat1</tt>, are placed into a new process group (5799), and this is the foreground process group. We can also see another difference between this example and the similar Bourne shell example. The Bourne shell created the last process in the <a name="idd1e65905"></a><a name="idd1e65910"></a><a name="idd1e65915"></a><a name="idd1e65918"></a>pipeline first, and this final process was the parent of the first process. Here, the Bourne-again shell is the parent of both processes. If we execute this pipeline in the background,</p>
+
+<pre>
+   ps -o pid,ppid,pgrp,session,tpgid,comm | cat1 &amp;
+</pre><BR>
+
+<p class="docText">the results are similar, but now <tt>ps</tt> and <tt>cat1</tt> are placed in the same background process group:</P>
+
+<pre>
+     PID  PPID  PGRP  SESS  TPGID COMMAND
+    <span class="docEmphStrong">2837</span>  2818  <span class="docEmphStrong">2837</span>  2837   2837 bash
+    5801  2837  5801  2837   2837 ps
+    5802  2837  5801  2837   2837 cat1
+</pre><BR>
+
+<p class="docText">Note that the order in which a shell creates processes can differ depending on the particular shell in use.</p>
+
+<UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

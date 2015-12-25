@@ -1,0 +1,95 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.16.&nbsp; Symbolic Links</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec15.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec17.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec16"></a>
+<h3 class="docSection1Title">4.16. Symbolic Links</h3>
+<p class="docText">A symbolic link is an indirect pointer to a file, unlike the hard links from the previous section, which pointed directly to the i-node of the file. Symbolic links were introduced to get around the limitations of hard links.</P>
+<UL><li><p class="docList">Hard links normally require that the link and the file reside in the same file system</P></LI><LI><p class="docList">Only the superuser can create a hard link to a directory</p></LI></UL>
+<p class="docText">There are no file system limitations on a symbolic link and what it points to, and anyone can create a symbolic link to a directory. Symbolic links are typically used to move a file or an entire directory hierarchy to another location on a system.</P>
+<blockquote>
+<p class="docText">Symbolic links were introduced with 4.2BSD and subsequently supported by SVR4.</p>
+</blockquote>
+<p class="docText">When using functions that refer to a file by name, we always need to know whether the function follows a symbolic link. If the function follows a symbolic link, a pathname argument to the function refers to the file pointed to by the symbolic link. Otherwise, a pathname argument refers to the link itself, not the file pointed to by the link. <a class="docLink" href="ch04lev1sec16.html#ch04fig17">Figure 4.17</a> summarizes whether the functions described in this chapter follow a symbolic link. The functions <tt>mkdir</tt>, <tt>mkfifo</tt>, <tt>mknod</tt>, and <tt>rmdir</tt> are not in this figure, as they return an error when the pathname is a symbolic link. Also, the functions that take a file descriptor argument, such as <tt>fstat</tt> and <tt>fchmod</tt>, are not listed, as the handling of a symbolic link is done by the function that returns the file descriptor (usually <tt>open</tt>). Whether or not <tt>chown</tt> follows a symbolic link depends on the implementation.</P>
+<blockquote>
+<p class="docText">In older versions of Linux (those before version 2.1.81), <tt>chown</tt> didn't follow symbolic links. From version 2.1.81 onward, <tt>chown</tt> follows symbolic links. With FreeBSD 5.2.1 and Mac OS X 10.3, <tt>chown</tt> follows symbolic links. (Prior to 4.4BSD, <tt>chown</tt> didn't follow symbolic links, but this was changed in 4.4BSD.) In Solaris 9, <tt>chown</tt> also follows symbolic links. All of these platforms provide implementations of <tt>lchown</tt> to change the ownership of symbolic links themselves.</p>
+</blockquote>
+<p class="docText">One exception to <a class="docLink" href="ch04lev1sec16.html#ch04fig17">Figure 4.17</a> is when the <tt>open</tt> function is called with both <tt>O_CREAT</tt> and <tt>O_EXCL</tt> set. In this case, if the pathname refers to a symbolic link, <tt>open</tt> will fail with <tt>errno</tt> set to <tt>EEXIST</tt>. This behavior is intended to close a security hole so that privileged processes can't be fooled into writing to the wrong files.</P>
+<a name="ch04fig17"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 4.17. Treatment of symbolic links by various functions</h5></caption><colgroup><col width="100"><col width="100"><col width="130"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Function</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Does not follow symbolic link</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Follows symbolic link</span></P></th></TR></thead><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>access</tt></p></td><TD class="rightBorder" align="left" valign="top">&nbsp;</td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>chdir</tt></p></td><td class="rightBorder" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>chmod</tt></p></td><td class="rightBorder" align="left" valign="top">&nbsp;</td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td></TR><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>chown</tt></p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>creat</tt></P></TD><td class="rightBorder" align="left" valign="top">&nbsp;</TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></tr><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>exec</tt></p></TD><td class="rightBorder" align="left" valign="top">&nbsp;</TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>lchown</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="left" valign="top">&nbsp;</td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>link</tt></p></TD><TD class="rightBorder" align="left" valign="top">&nbsp;</td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>lstat</tt></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></TD><TD class="docTableCell" align="left" valign="top">&nbsp;</TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>open</tt></p></TD><TD class="rightBorder" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>opendir</tt></p></TD><td class="rightBorder" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>pathconf</tt></p></td><td class="rightBorder" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></tr><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>readlink</tt></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="docTableCell" align="left" valign="top">&nbsp;</TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>remove</tt></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="docTableCell" align="left" valign="top">&nbsp;</TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>rename</tt></P></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><TD class="docTableCell" align="left" valign="top">&nbsp;</td></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>stat</tt></p></td><td class="rightBorder" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>truncate</tt></p></td><td class="rightBorder" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>unlink</tt></P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><TD class="docTableCell" align="left" valign="top">&nbsp;</td></TR></table></p><BR>
+<a name="ch04ex06"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText"><a name="idd1e29673"></a><a name="idd1e29678"></a><a name="idd1e29683"></a><a name="idd1e29688"></a><a name="idd1e29693"></a><a name="idd1e29698"></a><a name="idd1e29703"></a><a name="idd1e29708"></a><a name="idd1e29713"></a><a name="idd1e29718"></a><a name="idd1e29723"></a><a name="idd1e29728"></a><a name="idd1e29733"></a>It is possible to introduce loops into the file system by using symbolic links. Most functions that look up a pathname return an <tt>errno</tt> of <tt>ELOOP</tt> when this occurs. Consider the following commands:</p>
+
+<pre>
+     $ <span class="docEmphStrong">mkdir foo</span><span class="docEmphItalicAlt">                   make a new directory</span>
+     $ <span class="docEmphStrong">touch foo/a</span><span class="docEmphItalicAlt">                 create a 0-length file</span>
+     $ <span class="docEmphStrong">ln -s ../foo foo/testdir</span><span class="docEmphItalicAlt">    create a symbolic link</span>
+     $ <span class="docEmphStrong">ls -l foo</span>
+     total 0
+     -rw-r----- 1 sar            0 Jan 22 00:16 a
+     lrwxrwxrwx 1 sar            6 Jan 22 00:16 testdir -&gt; ../foo
+</pre><BR>
+
+<p class="docText">This creates a directory <tt>foo</tt> that contains the file <tt>a</tt> and a symbolic link that points to <tt>foo</tt>. We show this arrangement in <a class="docLink" href="ch04lev1sec16.html#ch04fig18">Figure 4.18</a>, drawing a directory as a circle and a file as a square. If we write a simple program that uses the standard function <tt>ftw</tt>(3) on Solaris to descend through a file hierarchy, printing each pathname encountered, the output is</P>
+
+<pre>
+    foo
+    foo/a
+    foo/testdir
+    foo/testdir/a
+    foo/testdir/testdir
+    foo/testdir/testdir/a
+    foo/testdir/testdir/testdir
+    foo/testdir/testdir/testdir/a
+</pre><br>
+
+<p class="docText">(many more lines until we encounter an <tt>ELOOP</tt> error)</P>
+<p class="docText"><a name="idd1e29797"></a><a name="idd1e29802"></a><a name="idd1e29807"></a><a name="idd1e29812"></a><a name="idd1e29817"></a><a name="idd1e29820"></a><a name="idd1e29823"></a><a name="idd1e29826"></a>In <a class="docLink" href="ch04lev1sec21.html#ch04lev1sec21">Section 4.21</a>, we provide our own version of the <tt>ftw</tt> function that uses <tt>lstat</tt> instead of <tt>stat</tt>, to prevent it from following symbolic links.</P>
+<blockquote>
+<p class="docText">Note that on Linux, the <tt>ftw</tt> function uses <tt>lstat</tt>, so it doesn't display this behavior.</p>
+</blockquote>
+<p class="docText">A loop of this form is easy to remove. We are able to <tt>unlink</tt> the file <tt>foo/testdir</tt>, as <tt>unlink</tt> does not follow a symbolic link. But if we create a hard link that forms a loop of this type, its removal is much more difficult. This is why the <tt>link</tt> function will not form a hard link to a directory unless the process has superuser privileges.</p>
+<blockquote>
+<p class="docText">Indeed, Rich Stevens did this on his own system as an experiment while writing the original version of this section. The file system got corrupted and the normal <tt>fsck</tt>(1) utility couldn't fix things. The deprecated tools <tt>clri</tt>(8) and <tt>dcheck</tt>(8) were needed to repair the file system.</p>
+<p class="docText">The need for hard links to directories has long since passed. With symbolic links and the <tt>mkdir</tt> function, there is no longer any need for users to create hard links to directories.</p>
+</blockquote>
+<p class="docText">When we open a file, if the pathname passed to <tt>open</tt> specifies a symbolic link, <tt>open</tt> follows the link to the specified file. If the file pointed to by the symbolic link doesn't exist, <tt>open</tt> returns an error saying that it can't open the file. This can confuse users who aren't familiar with symbolic links. For example,</P>
+
+<pre>
+     $ <span class="docEmphStrong">ln -s /no/such/file myfile</span><span class="docEmphItalicAlt">            create a symbolic link</span>
+     $ <span class="docEmphStrong">ls myfile</span>
+     myfile                                  ls <span class="docEmphItalicAlt">says it's there</span>
+     $ <span class="docEmphStrong">cat myfile</span><span class="docEmphItalicAlt">                            so we try to look at it</span>
+     cat: myfile: No such file or directory
+     $ <span class="docEmphStrong">ls -l myfile</span><span class="docEmphItalicAlt">                          try</span> -l <span class="docEmphItalicAlt">option</span>
+     lrwxrwxrwx 1 sar        13 Jan 22 00:26 myfile -&gt; /no/such/file
+</pre><br>
+
+<p class="docText">The file <tt>myfile</tt> does exist, yet <tt>cat</tt> says there is no such file, because <tt>myfile</tt> is a symbolic link and the file pointed to by the symbolic link doesn't exist. The <tt>-l</tt> option to <tt>ls</tt> gives us two hints: the first character is an <tt>l</tt>, which means a symbolic link, and the sequence <tt>-&gt;</tt> also indicates a symbolic link. The <tt>ls</tt> command has another option (<tt>-F</tt>) that appends an at-sign to filenames that are symbolic links, which can help spot symbolic links in a directory listing without the <tt>-l</tt> option.</P>
+
+<a name="ch04fig18"></a><p><center>
+<H5 class="docFigureTitle">Figure 4.18. Symbolic link <tt>testdir</tt> that creates a loop</h5>
+
+<p class="docText">
+<img border="0" alt="" width="265" height="168" SRC="images/0201433079/graphics/04fig18.gif;423615"></p>
+
+</center></p><br>
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec15.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec17.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

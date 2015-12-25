@@ -1,0 +1,432 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 19.3.&nbsp; Opening Pseudo-Terminal Devices</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch19lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch19lev1sec3"></a>
+<h3 class="docSection1Title">19.3. Opening Pseudo-Terminal Devices</h3>
+<p class="docText"><a name="idd1e144515"></a><a name="idd1e144520"></a><a name="idd1e144525"></a><a name="idd1e144530"></a><a name="idd1e144535"></a><a name="idd1e144542"></a><a name="idd1e144545"></a><a name="idd1e144548"></a><a name="idd1e144551"></a>The way we open a pseudo-terminal device differs among platforms. The Single UNIX Specification includes several functions as XSI extensions in an attempt to unify the methods. These extensions are based on the functions originally provided to manage STREAMS-based pseudo terminals in System V Release 4.</P>
+<p class="docText">The <tt>posix_openpt</tt> function is provided as a portable way to open an available pseudo-terminal master device.</P>
+<a name="inta182"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdlib.h&gt;
+#include &lt;fcntl.h&gt;
+
+int posix_openpt(int <span class="docEmphItalicAlt">oflag</span>);</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: file descriptor of next available PTY master if OK, 1 on error</P></td></TR></table></P><BR>
+<p class="docText">The <span class="docEmphasis">oflag</span> argument is a bitmask that specifies how the master device is to be opened, similar to the same argument used with <tt>open</tt>(2). Not all open flags are supported, however. With <tt>posix_openpt</tt>, we can specify <tt>O_RDWR</tt> to open the master device for reading and writing, and we can specify <tt>O_NOCTTY</tt> to prevent the master device from becoming a controlling terminal for the caller. All other open flags result in unspecified behavior.</p>
+<p class="docText"><a name="idd1e144612"></a><a name="idd1e144617"></a><a name="idd1e144622"></a><a name="idd1e144625"></a><a name="idd1e144630"></a><a name="idd1e144637"></a><a name="idd1e144642"></a><a name="idd1e144649"></a><a name="idd1e144654"></a><a name="idd1e144657"></a><a name="idd1e144662"></a>Before a slave pseudo-terminal device can be used, its permissions need to be set so that it is accessible to applications. The <tt>grantpt</tt> function does just this. It sets the user ID of the slave's device node to be the caller's real user ID and sets the node's group ID to an unspecified value, usually some group that has access to terminal devices. The permissions are set to allow read and write access to individual owners and write access to group owners (0620).</P>
+<a name="inta140"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdlib.h&gt;
+
+int grantpt(int <span class="docEmphItalicAlt">filedes</span>);
+
+int unlockpt(int <span class="docEmphItalicAlt">filedes</span>);</pre><BR>
+
+</p></td></tr><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 on success, 1 on error</p></TD></tr></table></P><br>
+<p class="docText">To change permission on the slave device node, <tt>grantpt</tt> might need to <tt>fork</tt> and <tt>exec</tt> a set-user-ID program (<tt>/usr/lib/pt_chmod</tt> on Solaris, for example). Thus, the behavior is unspecified if the caller is catching <tt>SIGCHLD</tt>.</p>
+<p class="docText">The <tt>unlockpt</tt> function is used to grant access to the slave pseudo-terminal device, thereby allowing applications to open the device. By preventing others from opening the slave device, applications setting up the devices have an opportunity to initialize the slave and master devices properly before they can be used.</p>
+<p class="docText">Note that in both <tt>grantpt</tt> and <tt>unlockpt</tt>, the file descriptor argument is the file descriptor associated with the master pseudo-terminal device.</p>
+<p class="docText">The <tt>ptsname</tt> function is used to find the pathname of the slave pseudo-terminal device, given the file descriptor of the master. This allows applications to identify the slave independent of any particular conventions that might be followed by a given platform. Note that the name returned might be stored in static memory, so it can be overwritten on successive calls.</p>
+<a name="inta251"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdlib.h&gt;
+
+char *ptsname(int <span class="docEmphItalicAlt">filedes</span>);</pre><br>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer to name of PTY slave if OK, <tt>NULL</tt> on error</p></td></tr></table></P><BR>
+<p class="docText"><a class="docLink" href="ch19lev1sec3.html#ch19fig07">Figure 19.7</a> summarizes the pseudo-terminal functions in the Single UNIX Specification and indicates which functions are supported by the platforms discussed in this text.</p>
+<a name="ch19fig07"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 19.7. XSI pseudo-terminal functions</H5></caption><colgroup><col width="50"><col width="250"><col width="30"><col width="20"><col width="20"><col width="110"><col width="20"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Function</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Description</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">XSI</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">FreeBSD 5.2.1</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Linux 2.4.22</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Mac OS X 10.3</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Solaris 9</span></P></th></TR></thead><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>grantpt</tt></P></TD><td class="rightBorder" align="left" valign="top"><p class="docText">Change permissions of slave PTY device.</P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD><td class="docTableCell" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>posix_openpt</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">Open a master PTY device.</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="docTableCell" align="left" valign="top">&nbsp;</TD><TD class="docTableCell" align="left" valign="top">&nbsp;</TD><td class="docTableCell" align="left" valign="top">&nbsp;</TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>ptsname</tt></P></td><TD class="rightBorder" align="left" valign="top"><p class="docText">Return name of slave PTY device.</P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="left" valign="top">&nbsp;</TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>unlockpt</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">Allow slave PTY device to be opened.</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="left" valign="top">&nbsp;</TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD></TR></table></P><br>
+<blockquote>
+<p class="docText">On FreeBSD, <tt>unlockpt</tt> does nothing; the <tt>O_NOCTTY</tt> flag is defined only for compatibility with applications that call <tt>posix_openpt</tt>. FreeBSD does not allocate a controlling terminal as a side effect of opening a terminal device, so the <tt>O_NOCTTY</tt> flag has no effect.</P>
+</blockquote>
+<p class="docText"><a name="idd1e144983"></a><a name="idd1e144986"></a><a name="idd1e144989"></a><a name="idd1e144994"></a><a name="idd1e144997"></a><a name="idd1e145002"></a><a name="idd1e145005"></a><a name="idd1e145008"></a><a name="idd1e145013"></a><a name="idd1e145018"></a><a name="idd1e145025"></a><a name="idd1e145030"></a><a name="idd1e145037"></a><a name="idd1e145042"></a><a name="idd1e145045"></a><a name="idd1e145050"></a><a name="idd1e145053"></a><a name="idd1e145058"></a>Even though the Single UNIX Specification has tried to improve portability in this area, implementations are still catching up, as illustrated by <a class="docLink" href="ch19lev1sec3.html#ch19fig07">Figure 19.7</a>. Thus, we provide two functions that handle all the details: <tt>ptym_open</tt> to open the next available PTY master device and <tt>ptys_open</tt> to open the corresponding slave device.</P>
+<P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include "apue.h"
+
+int ptym_open(char *<span class="docEmphItalicAlt">pts_name</span>, int <span class="docEmphasis">pts_namesz</span>);
+</pre><br>
+
+</P></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: file descriptor of PTY master if OK, 1 on error
+</P></td></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+int ptys_open(char *<span class="docEmphItalicAlt">pts_name</span>);</pre><br>
+
+</p></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: file descriptor of PTY slave if OK, 1 on error</p></TD></tr></table></p><br>
+<p class="docText">Normally, we don't call these two functions directly; the function <tt>pty_fork</tt> (<a class="docLink" href="ch19lev1sec4.html#ch19lev1sec4">Section 19.4</a>) calls them and also <tt>fork</tt>s a child process.</p>
+<p class="docText">The <tt>ptym_open</tt> function determines the next available PTY master and opens the device. The caller must allocate an array to hold the name of either the master or the slave; if the call succeeds, the name of the corresponding slave is returned through <span class="docEmphasis">pts_name</span>. This name is then passed to <tt>ptys_open</tt>, which opens the slave device. The length of the buffer in bytes is passed in <span class="docEmphasis">pts_namesz</span> so that the <tt>ptym_open</tt> function doesn't copy a string that is longer than the buffer.</p>
+<p class="docText">The reason for providing two functions to open the two devices will become obvious when we show the <tt>pty_fork</tt> function. Normally, a process calls <tt>ptym_open</tt> to open the master and obtain the name of the slave. The process then <tt>fork</tt>s, and the child calls <tt>ptys_open</tt> to open the slave after calling <tt>setsid</tt> to establish a new session. This is how the slave becomes the controlling terminal for the child.</p>
+<a name="ch19lev2sec6"></a>
+<h4 class="docSection2Title">19.3.1. STREAMS-Based Pseudo Terminals</h4>
+<p class="docText">The details of the STREAMS implementation of pseudo terminals under Solaris are covered in <a class="docLink" href="app03.html#app03">Appendix C</a> of Sun Microsystems [<a class="docLink" href="bib01.html#biblio01_063">2002</a>]. The next available PTY master device is accessed through a STREAMS <span class="docEmphasis">clone device</span>. A clone device is a special device that returns an unused device when it is opened. (STREAMS clone opens are discussed in detail in Rago [<a class="docLink" href="bib01.html#biblio01_052">1993</a>].)</p>
+<p class="docText">The STREAMS-based PTY master clone device is <tt>/dev/ptmx</tt>. When we open it, the clone open routine automatically determines the first unused PTY master device and opens that unused device. (We'll see in the next section that, under BSD-based systems, we have to find the first unused PTY master ourselves.)</p>
+<a name="ch19fig08"></a>
+<h5 class="docExampleTitle">Figure 19.8. STREAMS-based pseudo-terminal open functions</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;errno.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stropts.h&gt;
+
+int
+ptym_open(char *pts_name, int pts_namesz)
+{
+    char    *ptr;
+    int     fdm;
+
+    /*
+     * Return the name of the master device so that on failure
+     * the caller can print an error message.  Null terminate
+     * to handle case where strlen("/dev/ptmx") &gt; pts_namesz.
+     */
+    strncpy(pts_name, "/dev/ptmx", pts_namesz);
+    pts_name[pts_namesz - 1] = '\0';
+    if ((fdm = open(pts_name, O_RDWR)) &lt; 0)
+        return(-1);
+    if (grantpt(fdm) &lt; 0) {     /* grant access to slave */
+        close(fdm);
+        return(-2);
+    }
+    if (unlockpt(fdm) &lt; 0) {    /* clear slave's lock flag */
+        close(fdm);
+        return(-3);
+    }
+    if ((ptr = ptsname(fdm)) == NULL) { /* get slave's name */
+        close(fdm);
+        return(-4);
+    }
+
+    /*
+     * Return name of slave.  Null terminate to handle
+     * case where strlen(ptr) &gt; pts_namesz.
+     */
+    strncpy(pts_name, ptr, pts_namesz);
+    pts_name[pts_namesz - 1] = '\0';
+    return(fdm);            /* return fd of master */
+}
+
+int
+ptys_open(char *pts_name)
+{
+    int     fds, setup;
+
+    /*
+     * The following open should allocate a controlling terminal.
+     */
+    if ((fds = open(pts_name, O_RDWR)) &lt; 0)
+        return(-5);
+
+    /*
+     * Check if stream is already set up by autopush facility.
+     */
+    if ((setup = ioctl(fds, I_FIND, "ldterm")) &lt; 0) {
+        close(fds);
+        return(-6);
+    }
+    if (setup == 0) {
+        if (ioctl(fds, I_PUSH, "ptem") &lt; 0) {
+            close(fds);
+            return(-7);
+        }
+        if (ioctl(fds, I_PUSH, "ldterm") &lt; 0) {
+            close(fds);
+            return(-8);
+        }
+        if (ioctl(fds, I_PUSH, "ttcompat") &lt; 0) {
+            close(fds);
+            return(-9);
+        }
+    }
+    return(fds);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e145232"></a><a name="idd1e145237"></a><a name="idd1e145242"></a><a name="idd1e145247"></a><a name="idd1e145252"></a><a name="idd1e145257"></a><a name="idd1e145260"></a><a name="idd1e145265"></a><a name="idd1e145270"></a><a name="idd1e145275"></a><a name="idd1e145280"></a><a name="idd1e145285"></a><a name="idd1e145290"></a><a name="idd1e145295"></a><a name="idd1e145300"></a><a name="idd1e145303"></a><a name="idd1e145306"></a><a name="idd1e145309"></a><a name="idd1e145312"></a><a name="idd1e145318"></a><a name="idd1e145324"></a><a name="idd1e145330"></a><a name="idd1e145333"></a><a name="idd1e145338"></a><a name="idd1e145343"></a><a name="idd1e145348"></a><a name="idd1e145353"></a><a name="idd1e145358"></a><a name="idd1e145363"></a>We first <tt>open</tt> the clone device <tt>/dev/ptmx</tt> to get a file descriptor for the PTY master. Opening this master device automatically locks out the corresponding slave device.</p>
+<p class="docText">We then call <tt>grantpt</tt> to change permissions of the slave device. On Solaris, it changes the ownership of the slave to the real user ID, changes the group ownership to the group <tt>tty</tt>, and changes the permissions to allow only user-read, user-write, and group-write. The reason for setting the group ownership to <tt>tty</tt> and enabling group-write permission is that the programs <tt>wall</tt>(1) and <tt>write</tt>(1) are set-group-ID to the group <tt>tty</tt>. Calling <tt>grantpt</tt> executes the program <tt>/usr/lib/pt_chmod</tt>, which is set-user-ID to root so that it can modify the ownership and permissions of the slave.</p>
+<p class="docText">The function <tt>unlockpt</tt> is called to clear an internal lock on the slave device. We have to do this before we can open the slave. Additionally, we must call <tt>ptsname</tt> to obtain the name of the slave device. This name is of the form <tt>/dev/pts/</tt><span class="docEmphasis">NNN</span>.</p>
+<p class="docText">The next function in the file is <tt>ptys_open</tt>, which does the actual open of the slave device. Solaris follows the historical System V behavior: if the caller is a session leader that does not already have a controlling terminal, this call to <tt>open</tt> allocates the PTY slave as the controlling terminal. If we didn't want this to happen, we could specify the <tt>O_NOCTTY</tt> flag for <tt>open</tt>.</p>
+<p class="docText">After opening the slave device, we might need to push three STREAMS modules onto the slave's stream. Together, the pseudo terminal emulation module (<tt>ptem</tt>) and the terminal line discipline module (<tt>ldterm</tt>) act like a real terminal. The <tt>ttcompat</tt> module provides compatibility for older V7, 4BSD, and Xenix <tt>ioctl</tt> calls. It's an optional module, but since it's automatically pushed for console logins and network logins (see the output from the program shown in <a class="docLink" href="ch14lev1sec4.html#ch14fig18">Figure 14.18</a>), we push it onto the slave's stream.</P>
+<p class="docText">The reason that we might not need to push these three modules is that they might be there already. The STREAMS system supports a facility known as <span class="docEmphasis">autopush</span>, which allows an administrator to configure a list of modules to be pushed onto a stream whenever a particular device is opened (see Rago [<a class="docLink" href="bib01.html#biblio01_052">1993</a>] for more details). We use the <tt>I_FIND ioctl</tt> command to see whether <tt>ldterm</tt> is already on the stream. If so, we <a name="idd1e145464"></a><a name="idd1e145469"></a><a name="idd1e145474"></a><a name="idd1e145479"></a><a name="idd1e145482"></a><a name="idd1e145487"></a><a name="idd1e145494"></a><a name="idd1e145499"></a>assume that the stream has been configured by the autopush mechanism and avoid pushing the modules a second time.</P>
+<p class="docText">The result of calling <tt>ptym_open</tt> and <tt>ptys_open</tt> is two file descriptors open in the calling process: one for the master and one for the slave.</p>
+
+<a name="ch19lev2sec7"></a>
+<H4 class="docSection2Title">19.3.2. BSD-Based Pseudo Terminals</H4>
+<p class="docText">Under BSD-based systems and Linux-based systems, we provide our own versions of the XSI functions, which we can optionally include in our library, depending on which functions (if any) are provided by the underlying platform.</P>
+<p class="docText">In our version of <tt>posix_openpt</tt>, we have to determine the first available PTY master device. To do this, we start at <tt>/dev/ptyp0</tt> and keep trying until we successfully open a PTY master or until we run out of devices. We can get two different errors from <tt>open</tt>: <tt>EIO</tt> means that the device is already in use; <tt>ENOENT</tt> means that the device doesn't exist. In the latter case, we can terminate the search, as all pseudo terminals are in use. Once we are able to open a PTY master, say <tt>/dev/pty</tt><span class="docEmphasis">MN</span>, the name of the corresponding slave is <tt>/dev/tty</tt><span class="docEmphasis">MN</span>. On Linux, if the name of the PTY master is <tt>/dev/pty/m</tt><span class="docEmphasis">XX</span>, then the name of the corresponding PTY slave is <tt>/dev/pty/s</tt><span class="docEmphasis">XX</span>.</p>
+<p class="docText"><a name="idd1e145562"></a><a name="idd1e145565"></a><a name="idd1e145570"></a><a name="idd1e145575"></a><a name="idd1e145580"></a><a name="idd1e145585"></a><a name="idd1e145590"></a><a name="idd1e145595"></a><a name="idd1e145598"></a><a name="idd1e145605"></a><a name="idd1e145612"></a><a name="idd1e145617"></a><a name="idd1e145620"></a><a name="idd1e145625"></a><a name="idd1e145628"></a><a name="idd1e145631"></a><a name="idd1e145636"></a>In our version of <tt>grantpt</tt>, we call <tt>chown</tt> and <tt>chmod</tt> but realize that these two functions won't work unless the calling process has superuser permissions. If it is important that the ownership and protection be changed, these two function calls need to be placed into a set-user-ID root executable, similar to the way Solaris implements it.</P>
+<p class="docText">The function <tt>ptys_open</tt> in <a class="docLink" href="ch19lev1sec3.html#ch19fig09">Figure 19.9</a> simply opens the slave device. No other initialization is necessary. The <tt>open</tt> of the slave PTY under BSD-based systems does not have the side effect of allocating the device as the controlling terminal. In <a class="docLink" href="ch19lev1sec4.html#ch19lev1sec4">Section 19.4</a>, we'll see how to allocate the controlling terminal under BSD-based systems.</P>
+<a name="ch19fig09"></a>
+<H5 class="docExampleTitle">Figure 19.9. Pseudo-terminal open functions for BSD and Linux</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;errno.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;grp.h&gt;
+
+#ifndef _HAS_OPENPT
+int
+posix_openpt(int oflag)
+{
+    int     fdm;
+    char    *ptr1, *ptr2;
+    char    ptm_name[16];
+
+    strcpy(ptm_name, "/dev/ptyXY");
+    /* array index:   0123456789   (for references in following code) */
+    for (ptr1 = "pqrstuvwxyzPQRST"; *ptr1 != 0; ptr1++) {
+        ptm_name[8] = *ptr1;
+        for (ptr2 = "0123456789abcdef"; *ptr2 != 0; ptr2++) {
+            ptm_name[9] = *ptr2;
+
+            /*
+             * Try to open the master.
+             */
+            if ((fdm = open(ptm_name, oflag)) &lt; 0) {
+                if (errno == ENOENT)    /* different from EIO */
+                    return(-1);         /* out of pty devices */
+                else
+                    continue;           /* try next pty device */
+            }
+            return(fdm);        /* got it, return fd of master */
+            }
+    }
+    errno = EAGAIN;
+    return(-1);     /* out of pty devices */
+}
+#endif
+
+#ifndef _HAS_PTSNAME
+char *
+ptsname(int fdm)
+{
+    static char pts_name[16];
+    char        *ptm_name;
+
+    ptm_name = ttyname(fdm);
+    if (ptm_name == NULL)
+        return(NULL);
+    strncpy(pts_name, ptm_name, sizeof(pts_name));
+    pts_name[sizeof(pts_name) - 1] = '\0';
+    if (strncmp(pts_name, "/dev/pty/", 9) == 0)
+        pts_name[9] = 's';  /* change /dev/pty/mXX to /dev/pty/sXX */
+    else
+        pts_name[5] = 't';  /* change "pty" to "tty" */
+    return(pts_name);
+}
+#endif
+
+#ifndef _HAS_GRANTPT
+int
+grantpt(int fdm)
+{
+    struct group    *grptr;
+    int             gid;
+    char            *pts_name;
+
+    pts_name = ptsname(fdm);
+    if ((grptr = getgrnam("tty")) != NULL)
+        gid = grptr-&gt;gr_gid;
+    else
+        gid = -1;       /* group tty is not in the group file */
+
+    /*
+     * The following two calls won't work unless we're the superuser.
+     */
+    if (chown(pts_name, getuid(), gid) &lt; 0)
+        return(-1);
+    return(chmod(pts_name, S_IRUSR | S_IWUSR | S_IWGRP));
+}
+#endif
+
+#ifndef _HAS_UNLOCKPT
+int
+unlockpt(int fdm)
+{
+
+    return(0); /* nothing to do */
+}
+#endif
+
+int
+ptym_open(char *pts_name, int pts_namesz)
+{
+    char    *ptr;
+    int     fdm;
+
+    /*
+     * Return the name of the master device so that on failure
+     * the caller can print an error message.  Null terminate
+     * to handle case where string length &gt; pts_namesz.
+     */
+    strncpy(pts_name, "/dev/ptyXX", pts_namesz);
+    pts_name[pts_namesz - 1] = '\0';
+    if ((fdm = posix_openpt(O_RDWR)) &lt; 0)
+        return(-1);
+    if (grantpt(fdm) &lt; 0) {     /* grant access to slave */
+        close(fdm);
+        return(-2);
+    }
+    if (unlockpt(fdm) &lt; 0) {    /* clear slave's lock flag */
+        close(fdm);
+        return(-3);
+    }
+    if ((ptr = ptsname(fdm)) == NULL) { /* get slave's name */
+        close(fdm);
+        return(-4);
+    }
+
+    /*
+     * Return name of slave.  Null terminate to handle
+     * case where strlen(ptr) &gt; pts_namesz.
+     */
+    strncpy(pts_name, ptr, pts_namesz);
+    pts_name[pts_namesz - 1] = '\0';
+    return(fdm);            /* return fd of master */
+}
+
+int
+ptys_open(char *pts_name)
+{
+    int fds;
+
+    if ((fds = open(pts_name, O_RDWR)) &lt; 0)
+        return(-5);
+    return(fds);
+}</pre><BR>
+
+
+<blockquote>
+<p class="docText"><a name="idd1e145701"></a><a name="idd1e145706"></a><a name="idd1e145711"></a><a name="idd1e145716"></a><a name="idd1e145721"></a><a name="idd1e145726"></a><a name="idd1e145733"></a><a name="idd1e145738"></a><a name="idd1e145743"></a><a name="idd1e145750"></a><a name="idd1e145755"></a><a name="idd1e145760"></a><a name="idd1e145765"></a><a name="idd1e145770"></a><a name="idd1e145777"></a><a name="idd1e145782"></a><a name="idd1e145787"></a><a name="idd1e145792"></a><a name="idd1e145797"></a><a name="idd1e145802"></a><a name="idd1e145809"></a><a name="idd1e145816"></a>Our version of <tt>posix_openpt</tt> tries 16 different groups of 16 PTY master devices: <tt>/dev/ptyp0</tt> tHRough <tt>/dev/ptyTf</tt>. The actual number of PTY devices available depends on two factors: (a) the number configured into the kernel, and (b) the number of special device files that have been created in the <tt>/dev</tt> directory. The number available to any program is the lesser of (a) or (b).</P>
+</blockquote>
+
+<a name="ch19lev2sec8"></a>
+<H4 class="docSection2Title">19.3.3. Linux-Based Pseudo Terminals</h4>
+<p class="docText">Linux supports the BSD method for accessing pseudo terminals, so the same functions shown in <a class="docLink" href="ch19lev1sec3.html#ch19fig09">Figure 19.9</a> will also work on Linux. However, Linux also supports a clone-style interface to pseudo terminals using <tt>/dev/ptmx</tt> (but this is not a STREAMS device). The clone interface requires extra steps to identify and unlock a slave device. The functions we can use to access these pseudo terminals on Linux are shown in <a class="docLink" href="ch19lev1sec3.html#ch19fig10">Figure 19.10</a>.</P>
+<a name="ch19fig10"></a>
+<H5 class="docExampleTitle">Figure 19.10. Pseudo-terminal open functions for Linux</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+
+#ifndef _HAS_OPENPT
+int
+posix_openpt(int oflag)
+{
+    int     fdm;
+
+    fdm = open("/dev/ptmx", oflag);
+    return(fdm);
+}
+#endif
+
+#ifndef _HAS_PTSNAME
+char *
+ptsname(int fdm)
+{
+    int         sminor;
+    static char pts_name[16];
+
+    if (ioctl(fdm, TIOCGPTN, &amp;sminor) &lt; 0)
+        return(NULL);
+    snprintf(pts_name, sizeof(pts_name), "/dev/pts/%d", sminor);
+    return(pts_name);
+}
+#endif
+
+#ifndef _HAS_GRANTPT
+int
+grantpt(int fdm)
+{
+    char            *pts_name;
+
+    pts_name = ptsname(fdm);
+    return(chmod(pts_name, S_IRUSR | S_IWUSR | S_IWGRP));
+}
+#endif
+
+#ifndef _HAS_UNLOCKPT
+int
+unlockpt(int fdm)
+{
+    int lock = 0;
+
+    return(ioctl(fdm, TIOCSPTLCK, &amp;lock));
+}
+#endif
+
+int
+ptym_open(char *pts_name, int pts_namesz)
+{
+    char    *ptr;
+    int     fdm;
+
+    /*
+     * Return the name of the master device so that on failure
+     * the caller can print an error message.  Null terminate
+     * to handle case where string length &gt; pts_namesz.
+     */
+    strncpy(pts_name, "/dev/ptmx", pts_namesz);
+    pts_name[pts_namesz - 1] = '\0';
+
+    fdm = posix_openpt(O_RDWR);
+    if (fdm &lt; 0)
+        return(-1);
+    if (grantpt(fdm) &lt; 0) {     /* grant access to slave */
+        close(fdm);
+        return(-2);
+    }
+    if (unlockpt(fdm) &lt; 0) {    /* clear slave's lock flag */
+        close(fdm);
+        return(-3);
+    }
+    if ((ptr = ptsname(fdm)) == NULL) { /* get slave's name */
+        close(fdm);
+        return(-4);
+    }
+    /*
+     * Return name of slave.  Null terminate to handle case
+     * where strlen(ptr) &gt; pts_namesz.
+     */
+    strncpy(pts_name, ptr, pts_namesz);
+    pts_name[pts_namesz - 1] = '\0';
+    return(fdm);            /* return fd of master */
+}
+
+int
+ptys_open(char *pts_name)
+{
+    int fds;
+
+    if ((fds = open(pts_name, O_RDWR)) &lt; 0)
+        return(-5);
+    return(fds);
+}</pre><BR>
+
+
+<p class="docText"><a name="idd1e145887"></a><a name="idd1e145892"></a><a name="idd1e145899"></a><a name="idd1e145904"></a><a name="idd1e145909"></a><a name="idd1e145916"></a><a name="idd1e145921"></a><a name="idd1e145926"></a><a name="idd1e145931"></a><a name="idd1e145936"></a><a name="idd1e145941"></a><a name="idd1e145948"></a><a name="idd1e145951"></a><a name="idd1e145956"></a><a name="idd1e145961"></a><a name="idd1e145964"></a><a name="idd1e145969"></a><a name="idd1e145974"></a><a name="idd1e145981"></a><a name="idd1e145986"></a><a name="idd1e145991"></a><a name="idd1e145998"></a><a name="idd1e146003"></a><a name="idd1e146008"></a><a name="idd1e146013"></a><a name="idd1e146018"></a><a name="idd1e146023"></a>On Linux, the PTY slave device is already owned by group <tt>tty</tt>, so all we need to do in <tt>grantpt</tt> is ensure that the permissions are correct.</P>
+
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch19lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

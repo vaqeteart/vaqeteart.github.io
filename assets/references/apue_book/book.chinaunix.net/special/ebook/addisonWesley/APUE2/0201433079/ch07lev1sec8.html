@@ -1,0 +1,84 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 7.8.&nbsp; Memory Allocation</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch07lev1sec8"></a>
+<h3 class="docSection1Title">7.8. Memory Allocation</h3>
+<p class="docText">ISO C specifies three functions for memory allocation:</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList"><tt>malloc</tt>, which allocates a specified number of bytes of memory. The initial value of the memory is indeterminate.</p></div></LI><LI><div style="font-weight:normal"><p class="docList"><tt>calloc</tt>, which allocates space for a specified number of objects of a specified size. The space is initialized to all 0 bits.</P></div></li><LI><div style="font-weight:normal"><p class="docList"><tt>realloc</tt>, which increases or decreases the size of a previously allocated area. When the size increases, it may involve moving the previously allocated area somewhere else, to provide the additional room at the end. Also, when the size increases, the initial value of the space between the old contents and the end of the new area is indeterminate.</P></div></LI></ol></div>
+<a name="inta08"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdlib.h&gt;
+
+void *malloc(size_t <span class="docEmphItalicAlt">size</span>);
+
+void *calloc(size_t <span class="docEmphItalicAlt">nobj</span>, size_t <span class="docEmphItalicAlt">size</span>);
+
+void *realloc(void *<span class="docEmphItalicAlt">ptr</span>, size_t <span class="docEmphItalicAlt">newsize</span>);
+</pre><BR>
+
+</P></TD></tr><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">All three return: non-null pointer if OK, <tt>NULL</tt> on error</p></TD></TR><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+void free(void *<span class="docEmphItalicAlt">ptr</span>);
+</pre><br>
+
+</p></TD></tr></table></P><br>
+<p class="docText"><a name="idd1e48251"></a><a name="idd1e48254"></a><a name="idd1e48259"></a><a name="idd1e48262"></a><a name="idd1e48265"></a><a name="idd1e48268"></a><a name="idd1e48273"></a><a name="idd1e48276"></a>The pointer returned by the three allocation functions is guaranteed to be suitably aligned so that it can be used for any data object. For example, if the most restrictive alignment requirement on a particular system requires that <tt>double</tt>s must start at memory locations that are multiples of 8, then all pointers returned by these three functions would be so aligned.</P>
+<p class="docText">Because the three <tt>alloc</tt> functions return a generic <tt>void *</tt> pointer, if we <tt>#include &lt;stdlib.h&gt;</tt> (to obtain the function prototypes), we do not explicitly have to cast the pointer returned by these functions when we assign it to a pointer of a different type.</p>
+<p class="docText">The function <tt>free</tt> causes the space pointed to by <span class="docEmphasis">ptr</span> to be deallocated. This freed space is usually put into a pool of available memory and can be allocated in a later call to one of the three <tt>alloc</tt> functions.</p>
+<p class="docText">The <tt>realloc</tt> function lets us increase or decrease the size of a previously allocated area. (The most common usage is to increase an area.) For example, if we allocate room for 512 elements in an array that we fill in at runtime but find that we need room for more than 512 elements, we can call <tt>realloc</tt>. If there is room beyond the end of the existing region for the requested space, then <tt>realloc</tt> doesn't have to move anything; it simply allocates the additional area at the end and returns the same pointer that we passed it. But if there isn't room at the end of the existing region, <tt>realloc</tt> allocates another area that is large enough, copies the existing 512-element array to the new area, frees the old area, and returns the pointer to the new area. Because the area may move, we shouldn't have any pointers into this area. <a class="docLink" href="ch04lev1sec26.html#ch04qa1q16">Exercise 4.16</a> shows the use of <tt>realloc</tt> with <tt>getcwd</tt> to handle any length pathname. <a class="docLink" href="ch17lev1sec6.html#ch17fig36">Figure 17.36</a> shows an example that uses <tt>realloc</tt> to avoid arrays with fixed, compile-time sizes.</p>
+<p class="docText">Note that the final argument to <tt>realloc</tt> is the new size of the region, not the difference between the old and new sizes. As a special case, if <span class="docEmphasis">ptr</span> is a null pointer, <tt>realloc</tt> behaves like <tt>malloc</tt> and allocates a region of the specified <span class="docEmphasis">newsize</span>.</p>
+<blockquote>
+<p class="docText">Older versions of these routines allowed us to <tt>realloc</tt> a block that we had <tt>free</tt>d since the last call to <tt>malloc</tt>, <tt>realloc</tt>, or <tt>calloc</tt>. This trick dates back to Version 7 and exploited the search strategy of <tt>malloc</tt> to perform storage compaction. Solaris still supports this feature, but many other platforms do not. This feature is deprecated and should not be used.</p>
+</blockquote>
+<p class="docText">The allocation routines are usually implemented with the <tt>sbrk</tt>(2) system call. This system call expands (or contracts) the heap of the process. (Refer to <a class="docLink" href="ch07lev1sec6.html#ch07fig06">Figure 7.6</a>.) A sample implementation of <tt>malloc</tt> and <tt>free</tt> is given in <a class="docLink" href="ch08lev1sec7.html#ch08lev1sec7">Section 8.7</a> of Kernighan and Ritchie [<a class="docLink" href="bib01.html#biblio01_003">1988</a>].</p>
+<p class="docText">Although <tt>sbrk</tt> can expand or contract the memory of a process, most versions of <tt>malloc</tt> and <tt>free</tt> never decrease their memory size. The space that we free is available for a later allocation, but the freed space is not usually returned to the kernel; that space is kept in the <tt>malloc</tt> pool.</p>
+<p class="docText">It is important to realize that most implementations allocate a little more space than is requested and use the additional space for record keepingthe size of the allocated block, a pointer to the next allocated block, and the like. This means that writing past the end of an allocated area could overwrite this record-keeping information in a later block. These types of errors are often catastrophic, but difficult to find, because the <a name="idd1e48424"></a><a name="idd1e48427"></a><a name="idd1e48430"></a><a name="idd1e48433"></a><a name="idd1e48436"></a><a name="idd1e48441"></a><a name="idd1e48446"></a><a name="idd1e48451"></a>error may not show up until much later. Also, it is possible to overwrite this record keeping by writing before the start of the allocated area.</p>
+<p class="docText">Writing past the end or before the beginning of a dynamically-allocated buffer can corrupt more than internal record-keeping information. The memory before and after a dynamically-allocated buffer can potentially be used for other dynamically-allocated objects. These objects can be unrelated to the code corrupting them, making it even more difficult to find the source of the corruption.</p>
+<p class="docText">Other possible errors that can be fatal are freeing a block that was already freed and calling <tt>free</tt> with a pointer that was not obtained from one of the three <tt>alloc</tt> functions. If a process calls <tt>malloc</tt>, but forgets to call <tt>free</tt>, its memory usage continually increases; this is called leakage. By not calling <tt>free</tt> to return unused space, the size of a process's address space slowly increases until no free space is left. During this time, performance can degrade from excess paging overhead.</p>
+<p class="docText">Because memory allocation errors are difficult to track down, some systems provide versions of these functions that do additional error checking every time one of the three <tt>alloc</tt> functions or <tt>free</tt> is called. These versions of the functions are often specified by including a special library for the link editor. There are also publicly available sources that you can compile with special flags to enable additional runtime checking.</p>
+<blockquote>
+<p class="docText">FreeBSD, Mac OS X, and Linux support additional debugging through the setting of environment variables. In addition, options can be passed to the FreeBSD library through the symbolic link <tt>/etc/malloc.conf</tt>.</p>
+</blockquote>
+<a name="ch07lev2sec3"></a>
+<h4 class="docSection2Title">Alternate Memory Allocators</h4>
+<p class="docText">Many replacements for <tt>malloc</tt> and <tt>free</tt> are available. Some systems already include libraries providing alternate memory allocator implementations. Other systems provide only the standard allocator, leaving it up to software developers to download alternatives, if desired. We discuss some of the alternatives here.</p>
+
+<a name="ch07lev2sec4"></a>
+<h4 class="docSection2Title"><tt>libmalloc</tt></h4>
+<p class="docText">SVR4-based systems, such as Solaris, include the <tt>libmalloc</tt> library, which provides a set of interfaces matching the ISO C memory allocation functions. The <tt>libmalloc</tt> library includes <tt>mallopt</tt>, a function that allows a process to set certain variables that control the operation of the storage allocator. A function called <tt>mallinfo</tt> is also available to provide statistics on the memory allocator.</P>
+
+<a name="ch07lev2sec5"></a>
+<H4 class="docSection2Title"><tt>vmalloc</tt></h4>
+<p class="docText">Vo [<a class="docLink" href="bib01.html#biblio01_065">1996</a>] describes a memory allocator that allows processes to allocate memory using different techniques for different regions of memory. In addition to the functions specific to <tt>vmalloc</tt>, the library also provides emulations of the ISO C memory allocation functions.</P>
+
+<a name="ch07lev2sec6"></a>
+<H4 class="docSection2Title"><tt>quick-fit</tt></H4>
+<p class="docText"><a name="idd1e48557"></a><a name="idd1e48562"></a><a name="idd1e48565"></a><a name="idd1e48568"></a><a name="idd1e48571"></a><a name="idd1e48577"></a><a name="idd1e48583"></a><a name="idd1e48589"></a><a name="idd1e48594"></a><a name="idd1e48601"></a><a name="idd1e48606"></a><a name="idd1e48609"></a><a name="idd1e48614"></a>Historically, the standard <tt>malloc</tt> algorithm used either a best-fit or a first-fit memory allocation strategy. Quick-fit is faster than either, but tends to use more memory. Weinstock and Wulf [<a class="docLink" href="bib01.html#biblio01_067">1988</a>] describe the algorithm, which is based on splitting up memory into buffers of various sizes and maintaining unused buffers on different free lists, depending on the size of the buffers. Free implementations of <tt>malloc</tt> and <tt>free</tt> based on quick-fit are readily available from several FTP sites.</p>
+
+<a name="ch07lev2sec7"></a>
+<H4 class="docSection2Title"><tt>alloca</tt> Function</H4>
+<p class="docText">One additional function is also worth mentioning. The function <tt>alloca</tt> has the same calling sequence as <tt>malloc</tt>; however, instead of allocating memory from the heap, the memory is allocated from the stack frame of the current function. The advantage is that we don't have to free the space; it goes away automatically when the function returns. The <tt>alloca</tt> function increases the size of the stack frame. The disadvantage is that some systems can't support <tt>alloca</tt>, if it's impossible to increase the size of the stack frame after the function has been called. Nevertheless, many software packages use it, and implementations exist for a wide variety of systems.</P>
+<blockquote>
+<p class="docText">All four platforms discussed in this text provide the <tt>alloca</tt> function.</p>
+</blockquote>
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,45 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 19.7.&nbsp; Advanced Features</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch19lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch19lev1sec7"></a>
+<h3 class="docSection1Title">19.7. Advanced Features</h3>
+<p class="docText">Pseudo terminals have some additional capabilities that we briefly mention here. These capabilities are further documented in Sun Microsystems [<a class="docLink" href="bib01.html#biblio01_063">2002</a>] and the BSD <tt>pty</tt>(4) manual page.</P>
+<a name="ch19lev2sec15"></a>
+<H4 class="docSection2Title">Packet Mode</h4>
+<p class="docText">Packet mode lets the PTY master learn of state changes in the PTY slave. On Solaris, this mode is enabled by pushing the STREAMS module <tt>pckt</tt> onto the PTY master side. We showed this optional module in <a class="docLink" href="ch19lev1sec2.html#ch19fig02">Figure 19.2</a>. On FreeBSD, Linux, and Mac OS X, this mode is enabled with the <tt>TIOCPKT ioctl</tt> command.</P>
+<p class="docText">The details of packet mode differ between Solaris and the other platforms. Under Solaris, the process reading the PTY master has to call <tt>getmsg</tt> to fetch the messages from the stream head, because the <tt>pckt</tt> module converts certain events into nondata STREAMS messages. With the other platforms, each <tt>read</tt> from the PTY master returns a status byte followed by optional data.</P>
+<p class="docText">Regardless of the implementation details, the purpose of packet mode is to inform the process reading the PTY master when the following events occur at the line discipline module above the PTY slave: when the read queue is flushed, when the write queue is flushed, whenever output is stopped (e.g., Control-S), whenever output is restarted, whenever XON/XOFF flow control is enabled after being disabled, and whenever XON/XOFF flow control is disabled after being enabled. These events are used, for example, by the <tt>rlogin</tt> client and <tt>rlogind</tt> server.</P>
+
+<a name="ch19lev2sec16"></a>
+<h4 class="docSection2Title">Remote Mode</H4>
+<p class="docText"><a name="idd1e147793"></a><a name="idd1e147796"></a><a name="idd1e147799"></a><a name="idd1e147804"></a><a name="idd1e147809"></a><a name="idd1e147814"></a><a name="idd1e147819"></a><a name="idd1e147824"></a><a name="idd1e147827"></a><a name="idd1e147832"></a><a name="idd1e147837"></a><a name="idd1e147842"></a><a name="idd1e147847"></a><a name="idd1e147852"></a><a name="idd1e147857"></a><a name="idd1e147862"></a><a name="idd1e147867"></a><a name="idd1e147872"></a><a name="idd1e147877"></a><a name="idd1e147882"></a>A PTY master can set the PTY slave into remote mode by issuing an <tt>ioctl</tt> of <tt>TIOCREMOTE</tt>. Although FreeBSD 5.2.1, Mac OS X 10.3, and Solaris 9 use the same command to enable and disable this feature, under Solaris the third argument to <tt>ioctl</tt> is an integer, whereas with FreeBSD and Mac OS X, it is a pointer to an integer. (Linux 2.4.22 doesn't support this command.)</P>
+<p class="docText">When it sets this mode, the PTY master is telling the PTY slave's line discipline module not to perform any processing of the data that it receives from the PTY master, regardless of the canonical/noncanonical flag in the slave's <tt>termios</tt> structure. Remote mode is intended for an application, such as a window manager, that does its own line editing.</P>
+
+<a name="ch19lev2sec17"></a>
+<h4 class="docSection2Title">Window Size Changes</H4>
+<p class="docText">The process above the PTY master can issue the <tt>ioctl</tt> of <tt>TIOCSWINSZ</tt> to set the window size of the slave. If the new size differs from the current size, a <tt>SIGWINCH</tt> signal is sent to the foreground process group of the PTY slave.</p>
+
+<a name="ch19lev2sec18"></a>
+<H4 class="docSection2Title">Signal Generation</H4>
+<p class="docText">The process reading and writing the PTY master can send signals to the process group of the PTY slave. Under Solaris 9, this is done with an <tt>ioctl</tt> of <tt>TIOCSIGNAL</tt>, with the third argument set to the signal number. With FreeBSD 5.2.1 and Mac OS X 10.3, the <tt>ioctl</tt> is <tt>TIOCSIG</tt>, and the third argument is a pointer to the integer signal number. (Linux 2.4.22 doesn't support this <tt>ioctl</tt> command either.)</P>
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch19lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

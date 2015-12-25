@@ -1,0 +1,97 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 15.5.&nbsp; FIFOs</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch15lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch15lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch15lev1sec5"></a>
+<h3 class="docSection1Title" id="454331-866">15.5. FIFOs</h3>
+<p class="docText">FIFOs are sometimes called named pipes. Pipes can be used only between related processes when a common ancestor has created the pipe. (An exception to this is mounted STREAMS-based pipes, which we discuss in <a class="docLink" href="ch17lev1sec2.html#ch17lev2sec2">Section 17.2.2</a>.) With FIFOs, however, unrelated processes can exchange data.</P>
+<p class="docText">We saw in <a class="docLink" href="ch04.html#ch04">Chapter 4</a> that a FIFO is a type of file. One of the encodings of the <tt>st_mode</tt> member of the <tt>stat</tt> structure (<a class="docLink" href="ch04lev1sec2.html#ch04lev1sec2">Section 4.2</a>) indicates that a file is a FIFO. We can test for this with the <tt>S_ISFIFO</tt> macro.</P>
+<p class="docText">Creating a FIFO is similar to creating a file. Indeed, the <span class="docEmphasis">pathname</span> for a FIFO exists in the file system.</p>
+<a name="inta159"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;sys/stat.h&gt;
+
+int mkfifo(const char *<span class="docEmphItalicAlt">pathname</span>, mode_t <span class="docEmphItalicAlt">mode</span>);
+
+</pre><br>
+
+</P></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error
+</p></TD></TR></table></P><br>
+<p class="docText">The specification of the <span class="docEmphasis">mode</span> argument for the <tt>mkfifo</tt> function is the same as for the <tt>open</tt> function (<a class="docLink" href="ch03lev1sec3.html#ch03lev1sec3">Section 3.3</a>). The rules for the user and group ownership of the new FIFO are the same as we described in <a class="docLink" href="ch04lev1sec6.html#ch04lev1sec6">Section 4.6</a>.</P>
+<p class="docText"><a name="idd1e112356"></a><a name="idd1e112359"></a><a name="idd1e112364"></a><a name="idd1e112369"></a><a name="idd1e112374"></a><a name="idd1e112379"></a><a name="idd1e112384"></a><a name="idd1e112389"></a><a name="idd1e112394"></a><a name="idd1e112397"></a><a name="idd1e112402"></a><a name="idd1e112407"></a><a name="idd1e112412"></a><a name="idd1e112417"></a>Once we have used <tt>mkfifo</tt> to create a FIFO, we open it using <tt>open</tt>. Indeed, the normal file I/O functions (<tt>close</tt>, <tt>read</tt>, <tt>write</tt>, <tt>unlink</tt>, etc.) all work with FIFOs.</P>
+<blockquote>
+<p class="docText">Applications can create FIFOs with the <tt>mknod</tt> function. Because POSIX.1 originally didn't include <tt>mknod</tt>, the <tt>mkfifo</tt> function was invented specifically for POSIX.1. The <tt>mknod</tt> function is now included as an XSI extension. On most systems, the <tt>mkfifo</tt> function calls <tt>mknod</tt> to create the FIFO.</p>
+<p class="docText">POSIX.1 also includes support for the <tt>mkfifo</tt>(1) command. All four platforms discussed in this text provide this command. This allows a FIFO to be created using a shell command and then accessed with the normal shell I/O redirection.</P>
+</blockquote>
+<p class="docText">When we <tt>open</tt> a FIFO, the nonblocking flag (<tt>O_NONBLOCK</tt>) affects what happens.</P>
+<ul><li><p class="docList">In the normal case (<tt>O_NONBLOCK</tt> not specified), an <tt>open</tt> for read-only blocks until some other process opens the FIFO for writing. Similarly, an <tt>open</tt> for write-only blocks until some other process opens the FIFO for reading.</p></li><LI><p class="docList">If <tt>O_NONBLOCK</tt> is specified, an <tt>open</tt> for read-only returns immediately. But an <tt>open</tt> for write-only returns 1 with <tt>errno</tt> set to <tt>ENXIO</tt> if no process has the FIFO open for reading.</p></LI></ul>
+<p class="docText">As with a pipe, if we <tt>write</tt> to a FIFO that no process has open for reading, the signal <tt>SIGPIPE</tt> is generated. When the last writer for a FIFO closes the FIFO, an end of file is generated for the reader of the FIFO.</P>
+<p class="docText">It is common to have multiple writers for a given FIFO. This means that we have to worry about atomic writes if we don't want the writes from multiple processes to be interleaved. (We'll see a way around this problem in <a class="docLink" href="ch17lev1sec2.html#ch17lev2sec2">Section 17.2.2</a>.) As with pipes, the constant <tt>PIPE_BUF</tt> specifies the maximum amount of data that can be written atomically to a FIFO.</p>
+<p class="docText">There are two uses for FIFOs.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">FIFOs are used by shell commands to pass data from one shell pipeline to another without creating intermediate temporary files.</p></div></li><li><div style="font-weight:normal"><p class="docList">FIFOs are used as rendezvous points in clientserver applications to pass data between the clients and the servers.</p></div></li></ol></div>
+<p class="docText">We discuss each of these uses with an example.</p>
+<a name="ch15ex09"></a>
+<h5 class="docExampleTitle">ExampleUsing FIFOs to Duplicate Output Streams</h5>
+<p class="docText">FIFOs can be used to duplicate an output stream in a series of shell commands. This prevents writing the data to an intermediate disk file (similar to using pipes to avoid intermediate disk files). But whereas pipes can be used only for linear connections between processes, a FIFO has a name, so it can be used for nonlinear connections.</p>
+<p class="docText">Consider a procedure that needs to process a filtered input stream twice. <a class="docLink" href="ch15lev1sec5.html#ch15fig20">Figure 15.20</a> shows this arrangement.</p>
+<p class="docText"><a name="idd1e112571"></a>With a FIFO and the UNIX program <tt>tee</tt>(1), we can accomplish this procedure without using a temporary file. (The <tt>tee</tt> program copies its standard input to both its standard output and to the file named on its command line.)</p>
+
+<pre>
+   mkfifo fifo1
+   prog3 &lt; fifo1 &amp;
+   prog1 &lt; infile | tee fifo1 | prog2
+</pre><br>
+
+<p class="docText">We create the FIFO and then start <tt>prog3</tt> in the background, reading from the FIFO. We then start <tt>prog1</tt> and use <tt>tee</tt> to send its input to both the FIFO and <tt>prog2</tt>. <a class="docLink" href="ch15lev1sec5.html#ch15fig21">Figure 15.21</a> shows the process arrangement.</p>
+
+<a name="ch15fig20"></a><p><center>
+<H5 class="docFigureTitle">Figure 15.20. Procedure that processes a filtered input stream twice</H5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="361" height="187" SRC="images/0201433079/graphics/15fig20.gif;423615"></p>
+
+</center></P><BR>
+<a name="ch15fig21"></a><P><center>
+<h5 class="docFigureTitle">Figure 15.21. Using a FIFO and <tt>tee</tt> to send a stream to two different processes</H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/15fig21_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" id="195131139046" width="500" height="136" SRC="images/0201433079/graphics/15fig21.gif;423615"></P>
+</center></P><br>
+<a name="ch15ex10"></a>
+<H5 class="docExampleTitle">ExampleClientServer Communication Using a FIFO</h5>
+<p class="docText">Another use for FIFOs is to send data between a client and a server. If we have a server that is contacted by numerous clients, each client can write its request to a well-known FIFO that the server creates. (By &quot;well-known&quot; we mean that the pathname of the FIFO is known to all the clients that need to contact the server.) <a class="docLink" href="ch15lev1sec5.html#ch15fig22">Figure 15.22</a> shows this arrangement. Since there are multiple writers for the FIFO, the requests sent by the clients to the server need to be less than <tt>PIPE_BUF</tt> bytes in size. This prevents any interleaving of the client <tt>write</tt>s.</P>
+<p class="docText">The problem in using FIFOs for this type of clientserver communication is how to send replies back from the server to each client. A single FIFO can't be used, as the clients would never know when to read their response versus responses for other clients. One solution is for each client to send its process ID with the request. The server then creates a unique FIFO for each client, using a pathname based on the client's process ID. For example, the server can create a FIFO with the name <tt>/tmp/serv1.XXXXX</tt>, where <tt>XXXXX</tt> is replaced with the client's process ID. <a class="docLink" href="ch15lev1sec5.html#ch15fig23">Figure 15.23</a> shows this arrangement.</P>
+<p class="docText"><a name="idd1e112678"></a><a name="idd1e112683"></a><a name="idd1e112688"></a><a name="idd1e112693"></a><a name="idd1e112698"></a><a name="idd1e112703"></a><a name="idd1e112706"></a><a name="idd1e112711"></a><a name="idd1e112714"></a><a name="idd1e112719"></a><a name="idd1e112724"></a><a name="idd1e112729"></a><a name="idd1e112734"></a><a name="idd1e112739"></a><a name="idd1e112744"></a><a name="idd1e112749"></a><a name="idd1e112752"></a><a name="idd1e112758"></a><a name="idd1e112763"></a><a name="idd1e112766"></a><a name="idd1e112771"></a>This arrangement works, although it is impossible for the server to tell whether a client crashes. This causes the client-specific FIFOs to be left in the file system. The server also must catch <tt>SIGPIPE</tt>, since it's possible for a client to send a request and terminate before reading the response, leaving the client-specific FIFO with one writer (the server) and no reader. We'll see a more elegant approach to this problem when we discuss mounted STREAMS-based pipes and <tt>connld</tt> in <a class="docLink" href="ch17lev1sec2.html#ch17lev2sec2">Section 17.2.2</a>.</P>
+<p class="docText">With the arrangement shown in <a class="docLink" href="ch15lev1sec5.html#ch15fig23">Figure 15.23</a>, if the server opens its well-known FIFO read-only (since it only <tt>read</tt>s from it) each time the number of clients goes from 1 to 0, the server will <tt>read</tt> an end of file on the FIFO. To prevent the server from having to handle this case, a common trick is just to have the server <tt>open</tt> its well-known FIFO for readwrite. (See <a class="docLink" href="ch15lev1sec12.html#ch15qa1q10">Exercise 15.10</a>.)</p>
+
+<a name="ch15fig22"></a><P><center>
+<H5 class="docFigureTitle">Figure 15.22. Clients sending requests to a server using a FIFO</h5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="346" height="306" SRC="images/0201433079/graphics/15fig22.gif;423615"></P>
+
+</center></P><br>
+<a name="ch15fig23"></a><p><center>
+<h5 class="docFigureTitle">Figure 15.23. Clientserver communication using FIFOs</h5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="485" height="305" SRC="images/0201433079/graphics/15fig23.gif;423615"></P>
+
+</center></p><BR>
+
+<ul></UL></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch15lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch15lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

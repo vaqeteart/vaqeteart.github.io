@@ -1,0 +1,160 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 12.8.&nbsp; Threads and Signals</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch12lev1sec8"></a>
+<h3 class="docSection1Title">12.8. Threads and Signals</h3>
+<p class="docText"><a name="idd1e93146"></a><a name="idd1e93151"></a><a name="idd1e93156"></a><a name="idd1e93163"></a><a name="idd1e93168"></a><a name="idd1e93173"></a><a name="idd1e93178"></a>Dealing with signals can be complicated even with a process-based paradigm. Introducing threads into the picture makes things even more complicated.</P>
+<p class="docText">Each thread has its own signal mask, but the signal disposition is shared by all threads in the process. This means that individual threads can block signals, but when a thread modifies the action associated with a given signal, all threads share the action. Thus, if one thread chooses to ignore a given signal, another thread can undo that choice by restoring the default disposition or installing a signal handler for the signal.</P>
+<p class="docText">Signals are delivered to a single thread in the process. If the signal is related to a hardware fault or expiring timer, the signal is sent to the thread whose action caused the event. Other signals, on the other hand, are delivered to an arbitrary thread.</p>
+<p class="docText">In <a class="docLink" href="ch10lev1sec12.html#ch10lev1sec12">Section 10.12</a>, we discussed how processes can use <tt>sigprocmask</tt> to block signals from delivery. The behavior of <tt>sigprocmask</tt> is undefined in a multithreaded process. Threads have to use <tt>pthread_sigmask</tt> instead.</P>
+<a name="inta249"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch12lev1sec8.html#PLID0">[View full width]</a></div><pre>
+#include &lt;signal.h&gt;
+
+int pthread_sigmask(int <span class="docEmphItalicAlt">how</span>, const sigset_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">set</span>,
+                    sigset_t *restrict <span class="docEmphItalicAlt">oset</span>);
+</pre><BR>
+
+</P></TD></tr><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, error number on failure</P></TD></TR></table></p><BR>
+<p class="docText">The <tt>pthread_sigmask</tt> function is identical to <tt>sigprocmask</tt>, except that <tt>pthread_sigmask</tt> works with threads and returns an error code on failure instead of setting <tt>errno</tt> and returning -1.</P>
+<p class="docText">A thread can wait for one or more signals to occur by calling <tt>sigwait</tt>.</p>
+<a name="inta325"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID1"></a><div class="v1"><a href="ch12lev1sec8.html#PLID1">[View full width]</a></div><pre>
+#include &lt;signal.h&gt;
+
+int sigwait(const sigset_t *restrict <span class="docEmphItalicAlt">set</span>, int
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">signop</span>);
+</pre><br>
+
+</p></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, error number on failure</p></TD></tr></table></p><br>
+<p class="docText">The <span class="docEmphasis">set</span> argument specifies the set of signals for which the thread is waiting. On return, the integer to which <span class="docEmphasis">signop</span> points will contain the number of the signal that was delivered.</p>
+<p class="docText">If one of the signals specified in the set is pending at the time <tt>sigwait</tt> is called, then <tt>sigwait</tt> will return without blocking. Before returning, <tt>sigwait</tt> removes the signal from the set of signals pending for the process. To avoid erroneous behavior, a thread must block the signals it is waiting for before calling <tt>sigwait</tt>. The <tt>sigwait</tt> function will atomically unblock the signals and wait until one is delivered. Before returning, <tt>sigwait</tt> will restore the thread's signal mask. If the signals are not blocked at the time that <tt>sigwait</tt> is called, then a timing window is opened up where one of the signals can be delivered to the thread before it completes its call to <tt>sigwait</tt>.</p>
+<p class="docText">The advantage to using <tt>sigwait</tt> is that it can simplify signal handling by allowing us to treat asynchronously-generated signals in a synchronous manner. We can prevent the signals from interrupting the threads by adding them to each thread's signal mask. Then we can dedicate specific threads to handling the signals. These dedicated threads <a name="idd1e93341"></a><a name="idd1e93346"></a><a name="idd1e93351"></a><a name="idd1e93356"></a><a name="idd1e93361"></a><a name="idd1e93368"></a><a name="idd1e93373"></a><a name="idd1e93378"></a><a name="idd1e93383"></a>can make function calls without having to worry about which functions are safe to call from a signal handler, because they are being called from normal thread context, not from a traditional signal handler interrupting a normal thread's execution.</p>
+<p class="docText">If multiple threads are blocked in calls to <tt>sigwait</tt> for the same signal, only one of the threads will return from <tt>sigwait</tt> when the signal is delivered. If a signal is being caught (the process has established a signal handler by using <tt>sigaction</tt>, for example) and a thread is waiting for the same signal in a call to <tt>sigwait</tt>, it is left up to the implementation to decide which way to deliver the signal. In this case, the implementation could either allow <tt>sigwait</tt> to return or invoke the signal handler, but not both.</p>
+<p class="docText">To send a signal to a process, we call <tt>kill</tt> (<a class="docLink" href="ch10lev1sec9.html#ch10lev1sec9">Section 10.9</a>). To send a signal to a thread, we call <tt>pthread_kill</tt>.</p>
+<a name="inta220"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;signal.h&gt;
+
+int pthread_kill(pthread_t <span class="docEmphItalicAlt">thread</span>, int <span class="docEmphItalicAlt">signo</span>);
+</pre><br>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, error number on failure</P></TD></tr></table></P><BR>
+<p class="docText">We can pass a <span class="docEmphasis">signo</span> value of 0 to check for existence of the thread. If the default action for a signal is to terminate the process, then sending the signal to a thread will still kill the entire process.</P>
+<p class="docText">Note that alarm timers are a process resource, and all threads share the same set of alarms. Thus, it is not possible for multiple threads in a process to use alarm timers without interfering (or cooperating) with one another (this is the subject of <a class="docLink" href="ch12lev1sec12.html#ch12qa1q6">Exercise 12.6</a>).</p>
+<a name="ch12ex06"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText">Recall that in <a class="docLink" href="ch10lev1sec16.html#ch10fig23">Figure 10.23</a>, we waited for the signal handler to set a flag indicating that the main program should exit. The only threads of control that could run were the main thread and the signal handler, so blocking the signals was sufficient to avoid missing a change to the flag. With threads, we need to use a mutex to protect the flag, as we show in the program in <a class="docLink" href="ch12lev1sec8.html#ch12fig16">Figure 12.16</a>.</P>
+<p class="docText"><a name="idd1e93483"></a><a name="idd1e93488"></a><a name="idd1e93493"></a><a name="idd1e93498"></a>Instead of relying on a signal handler that interrupts the main thread of control, we dedicate a separate thread of control to handle the signals. We change the value of <tt>quitflag</tt> under the protection of a mutex so that the main thread of control can't miss the wake-up call made when we call <tt>pthread_cond_signal</tt>. We use the same mutex in the main thread of control to check the value of the flag, and atomically release the mutex and wait for the condition.</p>
+<p class="docText">Note that we block <tt>SIGINT</tt> and <tt>SIGQUIT</tt> in the beginning of the main thread. When we create the thread to handle signals, the thread inherits the current signal mask. Since <tt>sigwait</tt> will unblock the signals, only one thread is available to receive signals. This enables us to code the main thread without having to worry about interrupts from these signals.</P>
+<p class="docText">If we run this program, we get output similar to that from <a class="docLink" href="ch10lev1sec16.html#ch10fig23">Figure 10.23</a>:</p>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+    <span class="docEmphStrong">^?</span>                 <span class="docEmphItalicAlt">type the interrupt character</span>
+    interrupt
+    <span class="docEmphStrong">^?</span>                 <span class="docEmphItalicAlt">type the interrupt character again</span>
+    interrupt
+    <span class="docEmphStrong">^?</span>                 <span class="docEmphItalicAlt">and again</span>
+    interrupt
+    <span class="docEmphStrong">^\</span> $               <span class="docEmphItalicAlt">now terminate with quit character</span>
+</pre><BR>
+
+
+<a name="ch12fig16"></a>
+<H5 class="docExampleTitle">Figure 12.16. Synchronous signal handling</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;pthread.h&gt;
+
+int         quitflag;   /* set nonzero by thread */
+sigset_t    mask;
+
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t wait = PTHREAD_COND_INITIALIZER;
+
+void *
+thr_fn(void *arg)
+{
+    int err, signo;
+
+    for (;;) {
+        err = sigwait(&amp;mask, &amp;signo);
+        if (err != 0)
+            err_exit(err, "sigwait failed");
+        switch (signo) {
+        case SIGINT:
+            printf("\ninterrupt\n");
+            break;
+
+        case SIGQUIT:
+            pthread_mutex_lock(&amp;lock);
+            quitflag = 1;
+            pthread_mutex_unlock(&amp;lock);
+            pthread_cond_signal(&amp;wait);
+            return(0);
+
+        default:
+            printf("unexpected signal %d\n", signo);
+            exit(1);
+        }
+    }
+}
+int
+main(void)
+{
+    int         err;
+    sigset_t    oldmask;
+    pthread_t   tid;
+
+    sigemptyset(&amp;mask);
+    sigaddset(&amp;mask, SIGINT);
+    sigaddset(&amp;mask, SIGQUIT);
+    if ((err = pthread_sigmask(SIG_BLOCK, &amp;mask, &amp;oldmask)) != 0)
+        err_exit(err, "SIG_BLOCK error");
+
+    err = pthread_create(&amp;tid, NULL, thr_fn, 0);
+    if (err != 0)
+        err_exit(err, "can't create thread");
+
+    pthread_mutex_lock(&amp;lock);
+    while (quitflag == 0)
+        pthread_cond_wait(&amp;wait, &amp;lock);
+    pthread_mutex_unlock(&amp;lock);
+
+    /* SIGQUIT has been caught and is now blocked; do whatever */
+    quitflag = 0;
+
+    /* reset signal mask which unblocks SIGQUIT */
+    if (sigprocmask(SIG_SETMASK, &amp;oldmask, NULL) &lt; 0)
+        err_sys("SIG_SETMASK error");
+    exit(0);
+}
+</pre><br>
+
+
+<blockquote>
+<p class="docText"><a name="idd1e93591"></a><a name="idd1e93596"></a><a name="idd1e93601"></a><a name="idd1e93606"></a><a name="idd1e93611"></a><a name="idd1e93616"></a><a name="idd1e93621"></a><a name="idd1e93626"></a><a name="idd1e93631"></a><a name="idd1e93636"></a><a name="idd1e93641"></a><a name="idd1e93646"></a><a name="idd1e93651"></a>Linux implements threads as separate processes, sharing resources using <tt>clone</tt>(2). Because of this, the behavior of threads on Linux differs from that on other implementations when it comes to signals. In the POSIX.1 thread model, asynchronous signals are sent to a process, and then an individual thread within the process is selected to receive the signal, based on which threads are not currently blocking the signal. On Linux, an asynchronous signal is sent to a particular thread, and since each thread executes as a separate process, the system is unable to select a thread that isn't currently blocking the signal. The result is that the thread may not notice the signal. Thus, programs like the one in <a class="docLink" href="ch12lev1sec8.html#ch12fig16">Figure 12.16</a> work when the signal is generated from the terminal driver, which signals the process group, but when you try to send a signal to the process using <tt>kill</tt>, it doesn't work as expected on Linux.</P>
+</blockquote>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

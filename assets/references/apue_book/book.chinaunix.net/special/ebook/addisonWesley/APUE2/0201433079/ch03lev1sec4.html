@@ -1,0 +1,49 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 3.4.&nbsp; creat Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch03lev1sec4"></a>
+<h3 class="docSection1Title">3.4. <tt>creat</tt> Function</h3>
+<p class="docText">A new file can also be created by calling the <tt>creat</tt> function.</P>
+<a name="inta25"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;fcntl.h&gt;
+
+int creat(const char *<span class="docEmphItalicAlt">pathname</span>, mode_t <span class="docEmphItalicAlt">mode</span>);</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: file descriptor opened for write-only if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText"><a name="idd1e18411"></a><a name="idd1e18416"></a><a name="idd1e18423"></a><a name="idd1e18428"></a><a name="idd1e18433"></a><a name="idd1e18440"></a><a name="idd1e18445"></a><a name="idd1e18450"></a>Note that this function is equivalent to</P>
+
+<pre>
+    open (<span class="docEmphItalicAlt">pathname</span>, O_WRONLY | O_CREAT | O_TRUNC, <span class="docEmphItalicAlt">mode</span>);
+</pre><br>
+
+<blockquote>
+<p class="docText">Historically, in early versions of the UNIX System, the second argument to <tt>open</tt> could be only 0, 1, or 2. There was no way to <tt>open</tt> a file that didn't already exist. Therefore, a separate system call, <tt>creat</tt>, was needed to create new files. With the <tt>O_CREAT</tt> and <tt>O_TRUNC</tt> options now provided by <tt>open</tt>, a separate <tt>creat</tt> function is no longer needed.</P>
+</blockquote>
+<p class="docText">We'll show how to specify <span class="docEmphasis">mode</span> in <a class="docLink" href="ch04lev1sec5.html#ch04lev1sec5">Section 4.5</a> when we describe a file's access permissions in detail.</P>
+<p class="docText">One deficiency with <tt>creat</tt> is that the file is opened only for writing. Before the new version of <tt>open</tt> was provided, if we were creating a temporary file that we wanted to write and then read back, we had to call <tt>creat</tt>, <tt>close</tt>, and then <tt>open</tt>. A better way is to use the <tt>open</tt> function, as in</p>
+
+<pre>
+    open (<span class="docEmphItalicAlt">pathname</span>, O_RDWR | O_CREAT | O_TRUNC, <span class="docEmphItalicAlt">mode</span>);
+</pre><BR>
+
+
+<UL></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

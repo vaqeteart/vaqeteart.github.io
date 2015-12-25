@@ -1,0 +1,211 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 8.14.&nbsp; Process Accounting</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec13.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec15.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch08lev1sec14"></a>
+<h3 class="docSection1Title" id="454331-872">8.14. Process Accounting</h3>
+<p class="docText">Most UNIX systems provide an option to do process accounting. When enabled, the kernel writes an accounting record each time a process terminates. These accounting records are typically a small amount of binary data with the name of the command, the amount of CPU time used, the user ID and group ID, the starting time, and so on. We'll take a closer look at these accounting records in this section, as it gives us a chance to look at processes again and to use the <tt>fread</tt> function from <a class="docLink" href="ch05lev1sec9.html#ch05lev1sec9">Section 5.9</a>.</P>
+<blockquote>
+<p class="docText">Process accounting is not specified by any of the standards. Thus, all the implementations have annoying differences. For example, the I/O counts maintained on Solaris 9 are in units of bytes, whereas FreeBSD 5.2.1 and Mac OS X 10.3 maintain units of blocks, although there is no distinction between different block sizes, making the counter effectively useless. Linux 2.4.22, on the other hand, doesn't try to maintain I/O statistics at all.</P>
+<p class="docText">Each implementation also has its own set of administrative commands to process raw accounting data. For example, Solaris provides <tt>runacct</tt>(1m) and <tt>acctcom</tt>(1), whereas FreeBSD provides the <tt>sa</tt>(8) command to process and summarize the raw accounting data.</p>
+</blockquote>
+<p class="docText">A function we haven't described (<tt>acct</tt>) enables and disables process accounting. The only use of this function is from the <tt>accton</tt>(8) command (which happens to be one <a name="idd1e60666"></a><a name="idd1e60671"></a><a name="idd1e60676"></a><a name="idd1e60681"></a><a name="idd1e60686"></a><a name="idd1e60691"></a><a name="idd1e60696"></a><a name="idd1e60701"></a><a name="idd1e60704"></a><a name="idd1e60707"></a><a name="idd1e60712"></a><a name="idd1e60717"></a><a name="idd1e60722"></a><a name="idd1e60727"></a><a name="idd1e60732"></a><a name="idd1e60737"></a><a name="idd1e60740"></a><a name="idd1e60745"></a><a name="idd1e60750"></a><a name="idd1e60755"></a>of the few similarities among platforms). A superuser executes <tt>accton</tt> with a pathname argument to enable accounting. The accounting records are written to the specified file, which is usually <tt>/var/account/acct</tt> on FreeBSD and Mac OS X, <tt>/var/account/pacct</tt> on Linux, and <tt>/var/adm/pacct</tt> on Solaris. Accounting is turned off by executing <tt>accton</tt> without any arguments.</P>
+<p class="docText">The structure of the accounting records is defined in the header <tt>&lt;sys/acct.h&gt;</tt> and looks something like</P>
+
+<pre>
+typedef  u_short comp_t;   /* 3-bit base 8 exponent; 13-bit fraction */
+
+struct  acct
+{
+  char   ac_flag;     /* flag (see <a class="docLink" href="ch08lev1sec14.html#ch08fig26">Figure 8.26</a>) */
+  char   ac_stat;     /* termination status (signal &amp; core flag only) */
+                      /* (Solaris only) */
+  uid_t  ac_uid;      /* real user ID */
+  gid_t  ac_gid;      /* real group ID */
+  dev_t  ac_tty;      /* controlling terminal */
+  time_t ac_btime;    /* starting calendar time */
+  comp_t ac_utime;    /* user CPU time (clock ticks) */
+  comp_t ac_stime;    /* system CPU time (clock ticks) */
+  comp_t ac_etime;    /* elapsed time (clock ticks) */
+  comp_t ac_mem;      /* average memory usage */
+  comp_t ac_io;       /* bytes transferred (by read and write) */
+                      /* "blocks" on BSD systems */
+  comp_t ac_rw;       /* blocks read or written */
+                      /* (not present on BSD systems) */
+  char   ac_comm[8];  /* command name: [8] for Solaris, */
+                      /* [10] for Mac OS X, [16] for FreeBSD, and */
+                      /* [17] for Linux */
+};
+</pre><BR>
+
+<p class="docText">The <tt>ac_flag</tt> member records certain events during the execution of the process. These events are described in <a class="docLink" href="ch08lev1sec14.html#ch08fig26">Figure 8.26</a>.</p>
+<a name="ch08fig26"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 8.26. Values for <tt>ac_flag</tt> from accounting record</H5></caption><colgroup><col width="75"><col width="200"><col width="57"><col width="56"><col width="56"><col width="56"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman"><tt>ac_flag</tt></span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Description</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">FreeBSD 5.2.1</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Linux 2.4.22</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Mac OS X 10.3</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Solaris 9</span></p></th></TR></thead><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>AFORK</tt></P></TD><td class="rightBorder" align="left" valign="top"><p class="docText">process is the result of <tt>fork</tt>, but never called <tt>exec</tt></p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>ASU</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">process used superuser privileges</p></td><td class="docTableCell" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>ACOMPAT</tt></P></td><TD class="rightBorder" align="left" valign="top"><p class="docText">process used compatibility mode</P></TD><td class="docTableCell" align="left" valign="top">&nbsp;</TD><TD class="docTableCell" align="left" valign="top">&nbsp;</td><TD class="docTableCell" align="left" valign="top">&nbsp;</TD><td class="docTableCell" align="left" valign="top">&nbsp;</td></tr><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>ACORE</tt></p></TD><td class="rightBorder" align="left" valign="top"><p class="docText">process dumped core</P></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="left" valign="top">&nbsp;</td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>AXSIG</tt></p></td><TD class="rightBorder" align="left" valign="top"><p class="docText">process was killed by a signal</P></td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD><td class="docTableCell" align="left" valign="top">&nbsp;</TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>AEXPND</tt></P></TD><td class="rightBorder" align="left" valign="top"><p class="docText">expanded accounting entry</P></TD><td class="docTableCell" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="left" valign="top">&nbsp;</td><TD class="docTableCell" align="left" valign="top">&nbsp;</td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD></tr></table></p><br>
+<p class="docText">The data required for the accounting record, such as CPU times and number of characters transferred, is kept by the kernel in the process table and initialized whenever a new process is created, as in the child after a <tt>fork</tt>. Each accounting record <a name="idd1e61015"></a><a name="idd1e61020"></a>is written when the process terminates. This means that the order of the records in the accounting file corresponds to the termination order of the processes, not the order in which they were started. To know the starting order, we would have to go through the accounting file and sort by the starting calendar time. But this isn't perfect, since calendar times are in units of seconds (<a class="docLink" href="ch01lev1sec10.html#ch01lev1sec10">Section 1.10</a>), and it's possible for many processes to be started in any given second. Alternatively, the elapsed time is given in clock ticks, which are usually between 60 and 128 ticks per second. But we don't know the ending time of a process; all we know is its starting time and ending order. This means that even though the elapsed time is more accurate than the starting time, we still can't reconstruct the exact starting order of various processes, given the data in the accounting file.</p>
+<p class="docText">The accounting records correspond to processes, not programs. A new record is initialized by the kernel for the child after a <tt>fork</tt>, not when a new program is executed. Although <tt>exec</tt> doesn't create a new accounting record, the command name changes, and the <tt>AFORK</tt> flag is cleared. This means that if we have a chain of three programsA <tt>exec</tt>s B, then B <tt>exec</tt>s C, and C <tt>exit</tt>sonly a single accounting record is written. The command name in the record corresponds to program C, but the CPU times, for example, are the sum for programs A, B, and C.</p>
+<a name="ch08ex10"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">To have some accounting data to examine, we'll create a test program to implement the diagram shown in <a class="docLink" href="ch08lev1sec14.html#ch08fig27">Figure 8.27</a>.</p>
+<p class="docText">The source for the test program is shown in <a class="docLink" href="ch08lev1sec14.html#ch08fig28">Figure 8.28</a>. It calls <tt>fork</tt> four times. Each child does something different and then terminates.</p>
+<p class="docText"><a name="idd1e61076"></a><a name="idd1e61081"></a><a name="idd1e61086"></a><a name="idd1e61091"></a><a name="idd1e61096"></a><a name="idd1e61101"></a>We'll run the test program on Solaris and then use the program in <a class="docLink" href="ch08lev1sec14.html#ch08fig29">Figure 8.29</a> to print out selected fields from the accounting records.</p>
+<p class="docText"><a name="idd1e61114"></a><a name="idd1e61119"></a><a name="idd1e61124"></a><a name="idd1e61129"></a><a name="idd1e61134"></a><a name="idd1e61137"></a>BSD-derived platforms don't support the <tt>ac_flag</tt> member, so we define the <tt>HAS_SA_STAT</tt> constant on the platforms that do support this member. Basing the defined symbol on the feature instead of on the platform reads better and allows us to modify the program simply by adding the additional definition to our compilation command. The alternative would be to use</p>
+
+<pre>
+#if defined(BSD) || defined(MACOS)
+</pre><br>
+
+<p class="docText">which becomes unwieldy as we port our application to additional platforms.</p>
+<p class="docText">We define similar constants to determine whether the platform supports the <tt>ACORE</tt> and <tt>AXSIG</tt> accounting flags. We can't use the flag symbols themselves, because on Linux, they are defined as <tt>enum</tt> values, which we can't use in a <tt>#ifdef</tt> expression.</p>
+<p class="docText">To perform our test, we do the following:</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">Become superuser and enable accounting, with the <tt>accton</tt> command. Note that when this command terminates, accounting should be on; therefore, the first record in the accounting file should be from this command.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">Exit the superuser shell and run the program in <a class="docLink" href="ch08lev1sec14.html#ch08fig28">Figure 8.28</a>. This should append six records to the accounting file: one for the superuser shell, one for the test parent, and one for each of the four test children.</p><p class="docList">A new process is not created by the <tt>execl</tt> in the second child. There is only a single accounting record for the second child.</P></div></LI><LI><div style="font-weight:normal"><p class="docList">Become superuser and turn accounting off. Since accounting is off when this <tt>accton</tt> command terminates, it should not appear in the accounting file.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">Run the program in <a class="docLink" href="ch08lev1sec14.html#ch08fig29">Figure 8.29</a> to print the selected fields from the accounting file.</P></div></li></ol></div>
+<p class="docText">The output from step 4 follows. We have appended to each line the description of the process in italics, for the discussion later.</P>
+
+<pre>
+   accton    e =      6, chars =       0, stat =   0:       S
+   sh        e =   2106, chars =   15632, stat =   0:       S
+   dd        e =      8, chars =  273344, stat =   0:           <span class="docEmphItalicAlt">second child</span>
+   a.out     e =    202, chars =     921, stat =   0:           <span class="docEmphItalicAlt">parent</span>
+   a.out     e =    407, chars =       0, stat = 134:     F     <span class="docEmphItalicAlt">first child</span>
+   a.out     e =    600, chars =       0, stat =   9:     F     <span class="docEmphItalicAlt">fourth child</span>
+   a.out     e =    801, chars =       0, stat =   0:     F     <span class="docEmphItalicAlt">third child</span>
+</pre><br>
+
+<p class="docText">The elapsed time values are measured in units of clock ticks per second. From <a class="docLink" href="ch02lev1sec5.html#ch02fig14">Figure 2.14</a>, the value on this system is 100. For example, the <tt>sleep(2)</tt> in the parent corresponds to the elapsed time of 202 clock ticks. For the first child, the <tt>sleep(4)</tt> becomes 407 clock ticks. Note that the amount of time a process sleeps is not exact. (We'll return to the <tt>sleep</tt> function in <a class="docLink" href="ch10.html#ch10">Chapter 10</a>.) Also, the calls to <tt>fork</tt> and <tt>exit</tt> take some amount of time.</P>
+<p class="docText">Note that the <tt>ac_stat</tt> member is not the true termination status of the process, but corresponds to a portion of the termination status that we discussed in <a class="docLink" href="ch08lev1sec6.html#ch08lev1sec6">Section 8.6</a>. The only information in this byte is a core-flag bit (usually the high-order bit) and the signal <a name="idd1e61274"></a><a name="idd1e61279"></a><a name="idd1e61284"></a><a name="idd1e61289"></a><a name="idd1e61294"></a><a name="idd1e61299"></a><a name="idd1e61306"></a><a name="idd1e61311"></a><a name="idd1e61316"></a><a name="idd1e61321"></a><a name="idd1e61324"></a><a name="idd1e61329"></a>number (usually the seven low-order bits), if the process terminated abnormally. If the process terminated normally, we are not able to obtain the <tt>exit</tt> status from the accounting file. For the first child, this value is 128 + 6. The 128 is the core flag bit, and 6 happens to be the value on this system for <tt>SIGABRT</tt>, which is generated by the call to <tt>abort</tt>. The value 9 for the fourth child corresponds to the value of <tt>SIGKILL</tt>. We can't tell from the accounting data that the parent's argument to <tt>exit</tt> was 2 and that the third child's argument to <tt>exit</tt> was 0.</P>
+<p class="docText">The size of the file <tt>/etc/termcap</tt> that the <tt>dd</tt> process copies in the second child is 136,663 bytes. The number of characters of I/O is just over twice this value. It is twice the value, as 136,663 bytes are read in, then 136,663 bytes are written out. Even though the output goes to the null device, the bytes are still accounted for.</P>
+<p class="docText">The <tt>ac_flag</tt> values are as we expect. The <tt>F</tt> flag is set for all the child processes except the second child, which does the <tt>execl</tt>. The <tt>F</tt> flag is not set for the parent, because the interactive shell that executed the parent did a <tt>fork</tt> and then an <tt>exec</tt> of the <tt>a.out</tt> file. The first child process calls <tt>abort</tt>, which generates a <tt>SIGABRT</tt> signal to generate the core dump. Note that neither the <tt>X</tt> flag nor the <tt>D</tt> flag is on, as they are not supported on Solaris; the information they represent can be derived from the <tt>ac_stat</tt> field. The fourth child also terminates because of a signal, but the <tt>SIGKILL</tt> signal does not generate a core dump; it only terminates the process.</p>
+<p class="docText">As a final note, the first child has a 0 count for the number of characters of I/O, yet this process generated a <tt>core</tt> file. It appears that the I/O required to write the <tt>core</tt> file is not charged to the process.</P>
+
+<a name="ch08fig27"></a><P><center>
+<h5 class="docFigureTitle">Figure 8.27. Process structure for accounting example</H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/08fig27_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" id="195131139046" width="500" height="223" SRC="images/0201433079/graphics/08fig27.gif;423615"></P>
+</center></p><br>
+<a name="ch08fig28"></a>
+<h5 class="docExampleTitle">Figure 8.28. Program to generate accounting data</h5>
+
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+
+    pid_t   pid;
+
+    if ((pid = fork()) &lt; 0)
+        err_sys("fork error");
+    else if (pid != 0) {       /* parent */
+        sleep(2);
+        exit(2);               /* terminate with exit status 2 */
+    }
+
+                               /* first child */
+    if ((pid = fork()) &lt; 0)
+        err_sys("fork error");
+    else if (pid != 0) {
+        sleep(4);
+        abort();               /* terminate with core dump */
+    }
+
+                               /* second child */
+   if ((pid = fork()) &lt; 0)
+       err_sys("fork error");
+   else if (pid != 0) {
+       execl("/bin/dd", "dd", "if=/etc/termcap", "of=/dev/null", NULL);
+       exit(7);                /* shouldn't get here */
+   }
+
+                               /* third child */
+   if ((pid = fork()) &lt; 0)
+       err_sys("fork error");
+   else if (pid != 0) {
+       sleep(8);
+       exit(0);                /* normal exit */
+   }
+
+                               /* fourth child */
+   sleep(6);
+   kill(getpid(), SIGKILL);    /* terminate w/signal, no core dump */
+   exit(6);                    /* shouldn't get here */
+}
+</pre><BR>
+
+
+<a name="ch08fig29"></a>
+<h5 class="docExampleTitle">Figure 8.29. Print selected fields from system's accounting file</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/acct.h&gt;
+
+#ifdef HAS_SA_STAT
+#define FMT "%-*.*s  e = %6ld, chars = %7ld, stat = %3u: %c %c %c %c\n"
+#else
+#define FMT "%-*.*s  e = %6ld, chars = %7ld, %c %c %c %c\n"
+#endif
+#ifndef HAS_ACORE
+#define ACORE 0
+#endif
+#ifndef HAS_AXSIG
+#define AXSIG 0
+#endif
+
+static unsigned long
+compt2ulong(comp_t comptime)    /* convert comp_t to unsigned long */
+{
+    unsigned long   val;
+    int             exp;
+
+    val = comptime &amp; 0x1fff;    /* 13-bit fraction */
+    exp = (comptime &gt;&gt; 13) &amp; 7; /* 3-bit exponent (0-7) */
+    while (exp-- &gt; 0)
+        val *= 8;
+    return(val);
+}
+int
+main(int argc, char *argv[])
+{
+    struct acct     acdata;
+    FILE            *fp;
+
+    if (argc != 2)
+        err_quit("usage: pracct filename");
+    if ((fp = fopen(argv[1], "r")) == NULL)
+        err_sys("can't open %s", argv[1]);
+    while (fread(&amp;acdata, sizeof(acdata), 1, fp) == 1) {
+        printf(FMT, (int)sizeof(acdata.ac_comm),
+            (int)sizeof(acdata.ac_comm), acdata.ac_comm,
+            compt2ulong(acdata.ac_etime), compt2ulong(acdata.ac_io),
+#ifdef HAS_SA_STAT
+            (unsigned char) acdata.ac_stat,
+#endif
+            acdata.ac_flag &amp; ACORE ? 'D' : ' ',
+            acdata.ac_flag &amp; AXSIG ? 'X' : ' ',
+            acdata.ac_flag &amp; AFORK ? 'F' : ' ',
+            acdata.ac_flag &amp; ASU   ? 'S' : ' ');
+    }
+    if (ferror(fp))
+        err_sys("read error");
+    exit(0);
+}
+</pre><br>
+
+
+
+<UL></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec13.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec15.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

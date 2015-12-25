@@ -1,0 +1,1775 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 21.5.&nbsp; Source Code</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch21lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch21lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch21lev1sec5"></a>
+<h3 class="docSection1Title">21.5. Source Code</h3>
+<p class="docText">The source code for this chapter comprises five files, not including some of the common library routines we've used in earlier chapters:</P>
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="100"><col width="400"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>ipp.h</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Header file containing IPP definitions</P></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>print.h</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Header containing common constants, data structure definitions, and utility routine declarations</P></td></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>util.c</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Utility routines used by the two programs</p></td></tr><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>print.c</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The C source file for the command used to print a file</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>printd.c</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The C source file for the printer spooling daemon</p></td></tr></table></p><br>
+<p class="docText">We will study each file in the order listed.</p>
+<p class="docText">We start with the <tt>ipp.h</tt> header file.</p>
+
+<pre>
+  1   #ifndef _IPP_H
+  2   #define _IPP_H
+
+  3   /*
+  4    * Defines parts of the IPP protocol between the scheduler
+  5    * and the printer. Based on RFC2911 and RFC2910.
+  6    */
+  7   /*
+  8    * Status code classes.
+  9    */
+ 10   #define STATCLASS_OK(x)    ((x)  &gt;= 0x0000 &amp;&amp; (x) &lt;= 0x00ff)
+ 11   #define STATCLASS_INFO(x)  ((x)  &gt;= 0x0100 &amp;&amp; (x) &lt;= 0x01ff)
+ 12   #define STATCLASS_REDIR(x) ((x)  &gt;= 0x0200 &amp;&amp; (x) &lt;= 0x02ff)
+ 13   #define STATCLASS_CLIERR(x)((x)  &gt;= 0x0400 &amp;&amp; (x) &lt;= 0x04ff)
+ 14   #define STATCLASS_SRVERR(x)((x)  &gt;= 0x0500 &amp;&amp; (x) &lt;= 0x05ff)
+
+ 15   /*
+ 16    * Status codes.
+ 17    */
+ 18   #define STAT_OK            0x0000  /* success */
+ 19   #define STAT_OK_ATTRIGN    0x0001  /* OK; some attrs ignored */
+ 20   #define STAT_OK_ATTRCON    0x0002  /* OK; some attrs conflicted */
+
+ 21   #define STAT_CLI_BADREQ    0x0400  /* invalid client request */
+ 22   #define STAT_CLI_FORBID    0x0401  /* request is forbidden */
+ 23   #define STAT_CLI_NOAUTH    0x0402  /* authentication required */
+ 24   #define STAT_CLI_NOPERM    0x0403  /* client not authorized */
+ 25   #define STAT_CLI_NOTPOS    0x0404  /* request not possible */
+ 26   #define STAT_CLI_TIMOUT    0x0405  /* client too slow */
+ 27   #define STAT_CLI_NOTFND    0x0406  /* no object found for URI */
+ 28   #define STAT_CLI_OBJGONE   0x0407  /* object no longer available */
+ 29   #define STAT_CLI_TOOBIG    0x0408  /* requested entity too big */
+ 30   #define STAT_CLI_TOOLNG    0x0409  /* attribute value too large */
+ 31   #define STAT_CLI_BADFMT    0x040a  /* unsupported doc format */
+ 32   #define STAT_CLI_NOTSUP    0x040b  /* attributes not supported */
+ 33   #define STAT_CLI_NOSCHM    0x040c  /* URI scheme not supported */
+ 34   #define STAT_CLI_NOCHAR    0x040d  /* charset not supported */
+ 35   #define STAT_CLI_ATTRCON   0x040e  /* attributes conflicted */
+ 36   #define STAT_CLI_NOCOMP    0x040f  /* compression not supported */
+ 37   #define STAT_CLI_COMPERR   0x0410  /* data can't be decompressed */
+ 38   #define STAT_CLI_FMTERR    0x0411  /* document format error */
+ 39   #define STAT_CLI_ACCERR    0x0412  /* error accessing data */
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[114]</p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">We start the <tt>ipp.h</tt> header with the standard <tt>#ifdef</tt> to prevent errors when it is included twice in the same file. Then we define the classes of IPP status codes (see Section 13 in RFC 2911).</P></td></TR><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[1539]</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">We define specific status codes based on RFC 2911. We don't use these codes in the program shown here; their use is left as an exercise (See <a class="docLink" href="ch21lev1sec7.html#ch21lev1sec7">Exercise 21.1</a>).</P></TD></TR></table></p><BR>
+
+<pre>
+ 40  #define STAT_SRV_INTERN    0x0500  /* unexpected internal error */
+ 41  #define STAT_SRV_NOTSUP    0x0501  /* operation not supported */
+ 42  #define STAT_SRV_UNAVAIL   0x0502  /* service unavailable */
+ 43  #define STAT_SRV_BADVER    0x0503  /* version not supported */
+ 44  #define STAT_SRV_DEVERR    0x0504  /* device error */
+ 45  #define STAT_SRV_TMPERR    0x0505  /* temporary error */
+ 46  #define STAT_SRV_REJECT    0x0506  /* server not accepting jobs */
+ 47  #define STAT_SRV_TOOBUSY   0x0507  /* server too busy */
+ 48  #define STAT_SRV_CANCEL    0x0508  /* job has been canceled */
+ 49  #define STAT_SRV_NOMULTI   0x0509  /* multi-doc jobs unsupported */
+
+ 50  /*
+ 51   * Operation IDs
+ 52   */
+ 53  #define OP_PRINT_JOB           0x02
+ 54  #define OP_PRINT_URI           0x03
+ 55  #define OP_VALIDATE_JOB        0x04
+ 56  #define OP_CREATE_JOB          0x05
+ 57  #define OP_SEND_DOC            0x06
+ 58  #define OP_SEND_URI            0x07
+ 59  #define OP_CANCEL_JOB          0x08
+ 60  #define OP_GET_JOB_ATTR        0x09
+ 61  #define OP_GET_JOBS            0x0a
+ 62  #define OP_GET_PRINTER_ATTR    0x0b
+ 63  #define OP_HOLD_JOB            0x0c
+ 64  #define OP_RELEASE_JOB         0x0d
+ 65  #define OP_RESTART_JOB         0x0e
+ 66  #define OP_PAUSE_PRINTER       0x10
+ 67  #define OP_RESUME_PRINTER      0x11
+ 68  #define OP_PURGE_JOBS          0x12
+
+ 69  /*
+ 70   * Attribute Tags.
+ 71   */
+ 72  #define TAG_OPERATION_ATTR     0x01  /* operation attributes tag */
+ 73  #define TAG_JOB_ATTR           0x02  /* job attributes tag */
+ 74  #define TAG_END_OF_ATTR        0x03  /* end of attributes tag */
+ 75  #define TAG_PRINTER_ATTR       0x04  /* printer attributes tag */
+ 76  #define TAG_UNSUPP_ATTR        0x05  /* unsupported attributes tag */
+</pre><BR>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[4049]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">We continue to define status codes. The ones in the range <tt>0x500</tt> to <tt>0x5ff</tt> are server error codes. All codes are described in Sections 13.1.1 through 13.1.5 in RFC 2911.</p></TD></tr><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[5068]</P></td><td class="docTableCell" align="left" valign="top"><p class="docText">We define the various operation IDs next. There is one ID for each task defined by IPP (see Section 4.4.15 in RFC 2911). In our example, we will use only the print-job operation.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[6976]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The attribute tags delimit the attribute groups in the IPP request and response messages. The tag values are defined in Section 3.5.1 of RFC 2910.</p></td></tr></table></p><br>
+
+<pre>
+ 77  /*
+ 78   * Value Tags.
+ 79   */
+ 80  #define TAG_UNSUPPORTED        0x10  /* unsupported value */
+ 81  #define TAG_UNKNOWN            0x12  /* unknown value */
+ 82  #define TAG_NONE               0x13  /* no value */
+ 83  #define TAG_INTEGER            0x21  /* integer */
+ 84  #define TAG_BOOLEAN            0x22  /* boolean */
+ 85  #define TAG_ENUM               0x23  /* enumeration */
+ 86  #define TAG_OCTSTR             0x30  /* octetString */
+ 87  #define TAG_DATETIME           0x31  /* dateTime */
+ 88  #define TAG_RESOLUTION         0x32  /* resolution */
+ 89  #define TAG_INTRANGE           0x33  /* rangeOfInteger */
+ 90  #define TAG_TEXTWLANG          0x35  /* textWithLanguage */
+ 91  #define TAG_NAMEWLANG          0x36  /* nameWithLanguage */
+ 92  #define TAG_TEXTWOLANG         0x41  /* textWithoutLanguage */
+ 93  #define TAG_NAMEWOLANG         0x42  /* nameWithoutLanguage */
+ 94  #define TAG_KEYWORD            0x44  /* keyword */
+ 95  #define TAG_URI                0x45  /* URI */
+ 96  #define TAG_URISCHEME          0x46  /* uriScheme */
+ 97  #define TAG_CHARSET            0x47  /* charset */
+ 98  #define TAG_NATULANG           0x48  /* naturalLanguage */
+ 99  #define TAG_MIMETYPE           0x49  /* mimeMediaType */
+
+100  struct ipp_hdr {
+101    int8_t  major_version;  /* always 1 */
+102    int8_t  minor_version;  /* always 1 */
+103    union {
+104        int16_t op; /* operation ID */
+105        int16_t st; /* status */
+106    } u;
+107    int32_t request_id;     /* request ID */
+108    char    attr_group[1];  /* start of optional attributes group */
+109    /* optional data follows */
+110  };
+
+111  #define operation u.op
+112  #define status u.st
+
+113  #endif /* _IPP_H */
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[7799]</p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">The value tags indicate the format of individual attributes and parameters. They are defined in Section 3.5.2 of RFC 2910.</P></td></TR><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[100113]</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">We define the structure of an IPP header. Request messages start with the same header as response messages, except that the operation ID in the request is replaced by a status code in the response.</P></TD></TR><tr><TD class="docTableCell" align="left" valign="top">&nbsp;</TD><td class="docTableCell" align="left" valign="top"><p class="docText">We end the header file with a <tt>#endif</tt> to match the <tt>#ifdef</tt> at the start of the file.</P></TD></tr></table></p><br>
+<p class="docText"><a name="idd1e155275"></a><a name="idd1e155280"></a>The next file is the <tt>print.h</tt> header.</p>
+
+<pre>
+ 1   #ifndef _PRINT_H
+ 2   #define _PRINT_H
+ 3   /*
+ 4    * Print server header file.
+ 5    */
+ 6   #include &lt;sys/socket.h&gt;
+ 7   #include &lt;arpa/inet.h&gt;
+ 8   #if defined(BSD) || defined(MACOS)
+ 9   #include &lt;netinet/in.h&gt;
+10   #endif
+11   #include &lt;netdb.h&gt;
+12   #include &lt;errno.h&gt;
+
+13   #define CONFIG_FILE    "/etc/printer.conf"
+14   #define SPOOLDIR       "/var/spool/printer"
+15   #define JOBFILE        "jobno"
+16   #define DATADIR        "data"
+17   #define REQDIR         "reqs"
+
+18   #define FILENMSZ        64
+19   #define FILEPERM        (S_IRUSR|S_IWUSR)
+20   #define USERNM_MAX      64
+21   #define JOBNM_MAX       256
+22   #define MSGLEN_MAX      512
+
+23   #ifndef HOST_NAME_MAX
+24   #define HOST_NAME_MAX   256
+25   #endif
+
+26   #define IPP_PORT        631
+27   #define QLEN            10
+28   #define IBUFSZ          512    /* IPP header buffer size */
+29   #define HBUFSZ          512    /* HTTP header buffer size */
+30   #define IOBUFSZ         8192   /* data buffer size */
+</pre><BR>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[112]</P></td><td class="docTableCell" align="left" valign="top"><p class="docText">We include all header files that an application might need if it included this header. This makes it easy for applications to include <tt>print.h</tt> without having to track down all the header dependencies.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[1317]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">We define the files and directories for the implementation. Copies of the files to be printed will be stored in the directory <tt>/var/spool/printer/data</tt>; control information for each request will be stored in the directory <tt>/var/spool/printer/reqs</tt>. The file containing the next job number is <tt>/var/spool/printer/jobno</tt>.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[1830]</p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">Next, we define limits and constants. <tt>FILEPERM</tt> is the permissions used when creating copies of files submitted to be printed. The permissions are restrictive because we don't want ordinary users to be able to read one another's files while they are waiting to be printed. IPP is defined to use port 631. The <tt>QLEN</tt> is the backlog parameter we pass to <tt>listen</tt> (see <a class="docLink" href="ch16lev1sec4.html#ch16lev1sec4">Section 16.4</a> for details).</P></td></TR></table></P><BR>
+
+<pre>
+31   #ifndef ETIME
+32   #define ETIME ETIMEDOUT
+33   #endif
+
+34   extern int getaddrlist(const char *, const char *,
+35     struct addrinfo **);
+36   extern char *get_printserver(void);
+37   extern struct addrinfo *get_printaddr(void);
+38   extern ssize_t tread(int, void *, size_t, unsigned int);
+39   extern ssize_t treadn(int, void *, size_t, unsigned int);
+40   extern int connect_retry(int, const struct sockaddr *, socklen_t);
+41   extern int initserver(int, struct sockaddr *, socklen_t, int);
+
+42   /*
+43    * Structure describing a print request.
+44    */
+45   struct printreq {
+46      long size;                  /* size in bytes */
+47      long flags;                 /* see below */
+48      char usernm[USERNM_MAX];    /* user's name */
+49      char jobnm[JOBNM_MAX];      /* job's name */
+50   };
+
+51   /*
+52    * Request flags.
+53    */
+54   #define PR_TEXT        0x01    /* treat file as plain text */
+
+55   /*
+56    * The response from the spooling daemon to the print command.
+57    */
+58   struct printresp {
+59      long retcode;               /* 0=success, !0=error code */
+60      long jobid;                 /* job ID */
+61      char msg[MSGLEN_MAX];       /* error message */
+62   };
+
+63   #endif /* _PRINT_H */
+</pre><br>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e155383"></a><a name="idd1e155388"></a><a name="idd1e155393"></a><a name="idd1e155398"></a><a name="idd1e155403"></a><a name="idd1e155408"></a>[3133]</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Some platforms don't define the error <tt>ETIME</tt>, so we define it to an alternate error code that makes sense for these systems.</P></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">[3441]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">Next, we declare all the public routines contained in <tt>util.c</tt> (we'll look at these next). Note that the <tt>connect_retry</tt> function, from <a class="docLink" href="ch16lev1sec4.html#ch16fig09">Figure 16.9</a>, and the <tt>initserver</tt> function, from <a class="docLink" href="ch16lev1sec6.html#ch16fig20">Figure 16.20</a>, are not included in <tt>util.c</tt>.</P></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[4263]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The <tt>printreq</tt> and <tt>printresp</tt> structures define the protocol between the print command and the printer spooling daemon. The <tt>print</tt> command sends the <tt>printreq</tt> structure defining the user name, job name, and file size to the printer spooling daemon. The spooling daemon responds with a <tt>printresp</tt> structure consisting of a return code, a job ID, and an error message if the request failed.</p></TD></tr></table></p><br>
+<p class="docText"><a name="idd1e155485"></a><a name="idd1e155490"></a><a name="idd1e155495"></a>The next file we will look at is <tt>util.c</tt>, the file containing utility routines.</p>
+
+<pre>
+  1  #include "apue.h"
+  2  #include "print.h"
+  3  #include &lt;ctype.h&gt;
+  4  #include &lt;sys/select.h&gt;
+
+  5  #define MAXCFGLINE 512
+  6  #define MAXKWLEN   16
+  7  #define MAXFMTLEN  16
+
+  8  /*
+  9   * Get the address list for the given host and service and
+ 10   * return through ailistpp. Returns 0 on success or an error
+ 11   * code on failure. Note that we do not set errno if we
+ 12   * encounter an error.
+ 13   *
+ 14   * LOCKING: none.
+ 15   */
+ 16  int
+ 17  getaddrlist(const char *host, const char *service,
+ 18    struct addrinfo **ailistpp)
+ 19  {
+ 20     int             err;
+ 21     struct addrinfo hint;
+
+ 22     hint.ai_flags = AI_CANONNAME;
+ 23     hint.ai_family = AF_INET;
+ 24     hint.ai_socktype = SOCK_STREAM;
+ 25     hint.ai_protocol = 0;
+ 26     hint.ai_addrlen = 0;
+ 27     hint.ai_canonname = NULL;
+ 28     hint.ai_addr = NULL;
+ 29     hint.ai_next = NULL;
+ 30     err = getaddrinfo(host, service, &amp;hint, ailistpp);
+ 31     return(err);
+ 32  }
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[17]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">We first define the limits needed by the functions in this file. <tt>MAXCFGLINE</tt> is the maximum size of a line in the printer configuration file, <tt>MAXKWLEN</tt> is the maximum size of a keyword in the configuration file, and <tt>MAXFMTLEN</tt> is the maximum size of the format string we pass to <tt>sscanf</tt>.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[832]</p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">The first function is <tt>getaddrlist</tt>. It is a wrapper for <tt>getaddrinfo</tt> (<a class="docLink" href="ch16lev1sec3.html#ch16lev2sec3">Section 16.3.3</a>), since we always call <tt>getaddrinfo</tt> with the same hint structure. Note that we need no mutex locking in this function. The <tt>LOCKING</tt> comment at the beginning of each function is intended only for documenting multithreaded locking. This comment lists the assumptions, if any, that are made regarding the locking, tells which locks the function might acquire or release, and tells which locks must be held to call the function.</p></TD></TR></table></P><br>
+
+<pre>
+ 33  /*
+ 34   * Given a keyword, scan the configuration file for a match
+ 35   * and return the string value corresponding to the keyword.
+ 36   *
+ 37   * LOCKING: none.
+ 38   */
+ 39  static char *
+ 40  scan_configfile(char *keyword)
+ 41  {
+ 42     int             n, match;
+ 43     FILE            *fp;
+ 44     char            keybuf[MAXKWLEN], pattern[MAXFMTLEN];
+ 45     char            line[MAXCFGLINE];
+ 46     static char     valbuf[MAXCFGLINE];
+
+ 47     if ((fp = fopen(CONFIG_FILE, "r")) == NULL)
+ 48         log_sys("can't open %s", CONFIG_FILE);
+ 49     sprintf(pattern, "%%%ds %%%ds", MAXKWLEN-1, MAXCFGLINE-1);
+ 50     match = 0;
+ 51     while (fgets(line, MAXCFGLINE, fp) != NULL) {
+ 52         n = sscanf(line, pattern, keybuf, valbuf);
+ 53         if (n == 2 &amp;&amp; strcmp(keyword, keybuf) == 0) {
+ 54             match = 1;
+ 55             break;
+ 56         }
+ 57     }
+ 58     fclose(fp);
+ 59     if (match != 0)
+ 60         return(valbuf);
+ 61     else
+ 62         return(NULL);
+ 63  }
+</pre><BR>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e155590"></a>[3346]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The <tt>scan_configfile</tt> function searches through the printer configuration file for the specified keyword.</P></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[4763]</p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">We open the configuration file for reading and build the format string corresponding to the search pattern. The notation <tt>%%%ds</tt> builds a format specifier that limits the string size so we don't overrun the buffers used to store the strings on the stack. We read the file one line at a time and scan for two strings separated by white space; if we find them, we compare the first string with the keyword. If we find a match or we reach the end of the file, the loop ends and we close the file. If the keyword matches, we return a pointer to the buffer containing the string after the keyword; otherwise, we return <tt>NULL</tt>.</p></td></tr><tr><TD class="docTableCell" align="left" valign="top">&nbsp;</td><TD class="docTableCell" align="left" valign="top"><p class="docText">The string returned is stored in a static buffer (<tt>valbuf</tt>), which can be overwritten on successive calls. Thus, <tt>scan_configfile</tt> can't be called by a multithreaded application unless we take care to avoid calling it from multiple threads at the same time.</p></TD></tr></table></p><br>
+
+<pre>
+ 64  /*
+ 65   * Return the host name running the print server or NULL on error.
+ 66   *
+ 67   * LOCKING: none.
+ 68   */
+ 69  char *
+ 70  get_printserver(void)
+ 71  {
+ 72     return(scan_configfile("printserver"));
+ 73  }
+
+ 74  /*
+ 75   * Return the address of the network printer or NULL on error.
+ 76   *
+ 77   * LOCKING: none.
+ 78   */
+ 79  struct addrinfo *
+ 80  get_printaddr(void)
+ 81  {
+ 82     int             err;
+ 83     char            *p;
+ 84     struct addrinfo *ailist;
+
+ 85     if ((p = scan_configfile("printer")) != NULL) {
+ 86         if ((err = getaddrlist(p, "ipp", &amp;ailist)) != 0) {
+ 87             log_msg("no address information for %s", p);
+ 88             return(NULL);
+ 89         }
+ 90         return(ailist);
+ 91     }
+ 92     log_msg("no printer address specified");
+ 93     return(NULL);
+ 94  }
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e155659"></a><a name="idd1e155664"></a><a name="idd1e155669"></a>[6473]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The <tt>get_printserver</tt> function is simply a wrapper function that calls <tt>scan_configfile</tt> to find the name of the computer system where the printer spooling daemon is running.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[7494]</p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">We use the <tt>get_printaddr</tt> function to get the address of the network printer. It is similar to the previous function except that when we find the name of the printer in the configuration file, we use the name to find the corresponding network address.</P></td></TR><TR><TD class="docTableCell" align="left" valign="top">&nbsp;</td><TD class="docTableCell" align="left" valign="top"><p class="docText">Both <tt>get_printserver</tt> and <tt>get_printaddr</tt> call <tt>scan_configfile</tt>. If it can't open the printer configuration file, <tt>scan_configfile</tt> calls <tt>log_sys</tt> to print an error message and exit. Although <tt>get_printserver</tt> is meant to be called from a client command and <tt>get_printaddr</tt> is meant to be called from the daemon, having both call <tt>log_sys</tt> is OK, because we can arrange for the log functions to print to the standard error instead of to the log file by setting a global variable.</P></TD></tr></table></P><br>
+
+<pre>
+ 95  /*
+ 96   * "Timed" read - timout specifies the # of seconds to wait before
+ 97   * giving up (5th argument to select controls how long to wait for
+ 98   * data to be readable).  Returns # of bytes read or -1 on error.
+ 99   *
+100   * LOCKING: none.
+101   */
+102  ssize_t
+103  tread(int fd, void *buf, size_t nbytes, unsigned int timout)
+104  {
+105    int             nfds;
+106    fd_set          readfds;
+107    struct timeval  tv;
+
+108    tv.tv_sec = timout;
+109    tv.tv_usec = 0;
+110    FD_ZERO(&amp;readfds);
+111    FD_SET(fd, &amp;readfds);
+112    nfds = select(fd+1, &amp;readfds, NULL, NULL, &amp;tv);
+113    if (nfds &lt;= 0) {
+114        if (nfds == 0)
+115            errno = ETIME;
+116        return(-1);
+117    }
+118    return(read(fd, buf, nbytes));
+119  }
+</pre><BR>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e155756"></a><a name="idd1e155761"></a><a name="idd1e155766"></a><a name="idd1e155771"></a>[95107]</P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">We provide a function called <tt>TRead</tt> to read a specified number of bytes, but block for at most <span class="docEmphasis">timout</span> seconds before giving up. This function is useful when reading from a socket or a pipe. If we don't receive data before the specified time limit, we return 1 with <tt>errno</tt> set to <tt>ETIME</tt>. If data is available within the time limit, we return at most <span class="docEmphasis">nbytes</span> bytes of data, but we can return less than requested if all the data doesn't arrive in time.</P></td></tr><tr><td class="docTableCell" align="left" valign="top">&nbsp;</TD><td class="docTableCell" align="left" valign="top"><p class="docText">We will use <tt>TRead</tt> to prevent denial-of-service attacks on the printer spooling daemon. A malicious user might repeatedly try to connect to the daemon without sending it data, just to prevent other users from being able to submit print jobs. By giving up after a reasonable amount of time, we prevent this from happening. The tricky part is selecting a suitable timeout value that is large enough to prevent premature failures when the system is under load and tasks are taking longer to complete. If we choose a value too large, however, we might enable denial-of-service attacks by allowing the daemon to consume too many resources to process the pending requests.</p></TD></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[108119]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">We use <tt>select</tt> to wait for the specified file descriptor to be readable. If the time limit expires before data is available to be read, <tt>select</tt> returns 0, so we set <tt>errno</tt> to <tt>ETIME</tt> in this case. If <tt>select</tt> fails or times out, we return 1. Otherwise, we return whatever data is available.</p></td></tr></table></p><br>
+
+<pre>
+120  /*
+121   * "Timed" read - timout specifies the number of seconds to wait
+122   * per read call before giving up, but read exactly nbytes bytes.
+123   * Returns number of bytes read or -1 on error.
+124   *
+125   * LOCKING: none.
+126   */
+127  ssize_t
+128  treadn(int fd, void *buf, size_t nbytes, unsigned int timout)
+129  {
+130    size_t nleft;
+131    ssize_t nread;
+
+132    nleft = nbytes;
+133    while (nleft &gt; 0) {
+134        if ((nread = tread(fd, buf, nleft, timout)) &lt; 0) {
+135            if (nleft == nbytes)
+136                return(-1); /* error, return -1 */
+137            else
+138                break;      /* error, return amount read so far */
+139        } else if (nread == 0) {
+140            break;          /* EOF */
+141        }
+142        nleft -= nread;
+143        buf += nread;
+144    }
+145    return(nbytes - nleft);      /* return &gt;= 0 */
+146  }
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e155858"></a><a name="idd1e155863"></a><a name="idd1e155868"></a><a name="idd1e155873"></a>[120146]</p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">We also provide a variation of <tt>TRead</tt>, called <tt>treadn</tt>, that reads exactly the number of bytes requested. This is similar to the <tt>readn</tt> function described in <a class="docLink" href="ch14lev1sec8.html#ch14lev1sec8">Section 14.8</a>, but with the addition of the timeout parameter.</P></TD></TR><tr><TD class="docTableCell" align="left" valign="top">&nbsp;</TD><TD class="docTableCell" align="left" valign="top"><p class="docText">To read exactly <span class="docEmphasis">nbytes</span> bytes, we have to be prepared to make multiple calls to <tt>read</tt>. The difficult part is trying to apply a single timeout value to multiple calls to <tt>read</tt>. We don't want to use an alarm, because signals can be messy to deal with in multithreaded applications. We can't rely on the system updating the <tt>timeval</tt> structure on return from <tt>select</tt> to indicate the amount of time left, because many platforms do not support this (<a class="docLink" href="ch14lev1sec5.html#ch14lev2sec14">Section 14.5.1</a>). Thus, we compromise and define the timeout value in this case to apply to an individual <tt>read</tt> call. Instead of limiting the total amount of time we wait, it limits the amount of time we'll wait in every iteration of the loop. The maximum time we can wait is bounded by (<span class="docEmphasis">nbytes</span> x <span class="docEmphasis">timout</span>) seconds (worst case, we'll receive only 1 byte at a time).</p></TD></tr><TR><TD class="docTableCell" align="left" valign="top">&nbsp;</TD><td class="docTableCell" align="left" valign="top"><p class="docText">We use <tt>nleft</tt> to record the number of bytes remaining to be read. If <tt>TRead</tt> fails and we have received data in a previous iteration, we break out of the <tt>while</tt> loop and return the number of bytes read; otherwise, we return 1.</P></td></TR></table></P><br>
+<p class="docText">The command used to submit a print job is shown next. The C source file is <tt>print.c</tt>.</p>
+
+<pre>
+  1  /*
+  2   * The client command for printing documents. Opens the file
+  3   * and sends it to the printer spooling daemon. Usage:
+  4   *     print [-t] filename
+  5   */
+  6  #include "apue.h"
+  7  #include "print.h"
+  8  #include &lt;fcntl.h&gt;
+  9  #include &lt;pwd.h&gt;
+
+ 10  /*
+ 11   * Needed for logging funtions.
+ 12   */
+ 13  int log_to_stderr = 1;
+
+ 14  void submit_file(int, int, const char *, size_t, int);
+
+ 15  int
+ 16  main(int argc, char *argv[])
+ 17  {
+ 18     int             fd, sockfd, err, text, c;
+ 19     struct stat     sbuf;
+ 20     char            *host;
+ 21     struct addrinfo *ailist, *aip;
+
+ 22     err = 0;
+ 23     text = 0;
+ 24     while ((c = getopt(argc, argv, "t")) != -1) {
+ 25         switch (c) {
+ 26         case 't':
+ 27             text = 1;
+ 28             break;
+
+ 29         case '?':
+ 30             err = 1;
+ 31             break;
+ 32         }
+ 33     }
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[114]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">We need to define an integer called <tt>log_to_stderr</tt> to be able to use the log functions in our library. If set to a nonzero value, error messages will be sent to the standard error stream instead of to a log file. Although we don't use any logging functions in <tt>print.c</tt>, we do link <tt>util.o</tt> with <tt>print.o</tt> to build the executable <tt>print</tt> command, and <tt>util.c</tt> contains functions for both user commands and daemons.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[1533]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">We support one option, <tt>-t</tt>, to force the file to be printed as text (instead of as a PostScript program, for example). We use the <tt>getopt</tt>(3) function to process the command options.</p></td></tr></table></p><br>
+
+<pre>
+ 34     if (err || (optind != argc - 1))
+ 35         err_quit("usage: print [-t] filename");
+ 36     if ((fd = open(argv[optind], O_RDONLY)) &lt; 0)
+ 37         err_sys("print: can't open %s", argv[1]);
+ 38     if (fstat(fd, &amp;sbuf) &lt; 0)
+ 39         err_sys("print: can't stat %s", argv[1]);
+ 40     if (!S_ISREG(sbuf.st_mode))
+ 41         err_quit("print: %s must be a regular file\n", argv[1]);
+
+ 42     /*
+ 43      * Get the hostname of the host acting as the print server.
+ 44      */
+ 45     if ((host = get_printserver()) == NULL)
+ 46         err_quit("print: no print server defined");
+ 47     if ((err = getaddrlist(host, "print", &amp;ailist)) != 0)
+ 48         err_quit("print: getaddrinfo error: %s", gai_strerror(err));
+
+ 49     for (aip = ailist; aip != NULL; aip = aip-&gt;ai_next) {
+ 50         if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) &lt; 0) {
+ 51             err = errno;
+ 52         } else if (connect_retry(sockfd, aip-&gt;ai_addr,
+ 53           aip-&gt;ai_addrlen) &lt; 0) {
+ 54             err = errno;
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e156044"></a><a name="idd1e156049"></a><a name="idd1e156054"></a><a name="idd1e156059"></a><a name="idd1e156064"></a>[3441]</P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">When <tt>getopt</tt> completes processing the command options, it leaves the variable <tt>optind</tt> set to the index of the first nonoptional argument. If this is any value other than the index of the last argument, then the wrong number of arguments was specified (we support only one nonoptional argument). Our error processing includes checks to ensure that we can open the file to be printed and that it is a regular file (as opposed to a directory or other type of file).</P></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">[4248]</P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">We get the name of the printer spooling daemon by calling the <tt>get_printserver</tt> function from <tt>util.c</tt> and then translate the host name into a network address by calling <tt>getaddrlist</tt> (also from <tt>util.c</tt>).</P></td></TR><TR><TD class="docTableCell" align="left" valign="top">&nbsp;</td><TD class="docTableCell" align="left" valign="top"><p class="docText">Note that we specify the service as &quot;print.&quot; As part of installing the printer spooling daemon on a system, we need to make sure that <tt>/etc/services</tt> (or the equivalent database) has an entry for the printer service. When we select a port number for the daemon, it would be a good idea to select one that is privileged, to prevent malicious users from writing applications that pretend to be a printer spooling daemon but instead steal copies of the files we try to print. This means that the port number should be less than 1,024 (recall <a class="docLink" href="ch16lev1sec3.html#ch16lev2sec4">Section 16.3.4</a>) and that our daemon will have to run with superuser privileges to allow it to bind to a reserved port.</P></td></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[4954]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">We try to connect to the daemon using one address at a time from the list returned by <tt>getaddrinfo</tt>. We will try to send the file to the daemon using the first address to which we can connect.</P></td></TR></table></p><BR>
+
+<pre>
+ 55         } else {
+ 56             submit_file(fd, sockfd, argv[1], sbuf.st_size, text);
+ 57             exit(0);
+ 58         }
+ 59     }
+ 60     errno = err;
+ 61     err_ret("print: can't contact %s", host);
+ 62     exit(1);
+ 63  }
+
+ 64  /*
+ 65   * Send a file to the printer daemon.
+ 66   */
+ 67  void
+ 68  submit_file(int fd, int sockfd, const char *fname, size_t nbytes,
+ 69              int text)
+ 70  {
+ 71     int                 nr, nw, len;
+ 72     struct passwd       *pwd;
+ 73     struct printreq     req;
+ 74     struct printresp    res;
+ 75     char                buf[IOBUFSZ];
+
+ 76     /*
+ 77      * First build the header.
+ 78      */
+ 79     if ((pwd = getpwuid(geteuid())) == NULL)
+ 80         strcpy(req.usernm, "unknown");
+ 81     else
+ 82         strcpy(req.usernm, pwd-&gt;pw_name);
+ 83     req.size = htonl(nbytes);
+ 84     if (text)
+ 85         req.flags = htonl(PR_TEXT);
+ 86     else
+ 87         req.flags = 0;
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e156157"></a><a name="idd1e156162"></a><a name="idd1e156167"></a><a name="idd1e156172"></a><a name="idd1e156177"></a><a name="idd1e156182"></a><a name="idd1e156187"></a><a name="idd1e156192"></a><a name="idd1e156197"></a><a name="idd1e156202"></a><a name="idd1e156207"></a>[5563]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">If we can make a connection, we call <tt>submit_file</tt> to transmit the file to the printer spooling daemon. If we can't connect to any of the addresses, we print an error message and exit. We use <tt>err_ret</tt> and <tt>exit</tt> instead of making a single call to <tt>err_sys</tt> to avoid a compiler warning, because the last line in <tt>main</tt> wouldn't be a <tt>return</tt> statement or a call to <tt>exit</tt>.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[6487]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>submit_file</tt> sends a print request to the daemon and reads the response.First, we build the <tt>printreq</tt> request header. We use <tt>geteuid</tt> to get the caller's effective user ID and pass this to <tt>getpwuid</tt> to look for the user in the system's password file. We copy the user's name to the request header or use the string <tt>unknown</tt> if we can't identify the user. We store the size of the file to be printed in the header after converting it to network byte order. Then we do the same with the <tt>PR_TEXT</tt> flag if the file is to be printed as plaintext.</p></td></TR></table></P><br>
+
+<pre>
+ 88     if ((len = strlen(fname)) &gt;= JOBNM_MAX) {
+ 89         /*
+ 90          * Truncate the filename (+-5 accounts for the leading
+ 91          * four characters and the terminating null).
+ 92          */
+ 93         strcpy(req.jobnm, "... ");
+ 94         strncat(req.jobnm, &amp;fname[len-JOBNM_MAX+5], JOBNM_MAX-5);
+ 95     } else {
+ 96         strcpy(req.jobnm, fname);
+ 97     }
+
+ 98     /*
+ 99      * Send the header to the server.
+100      */
+101     nw = writen(sockfd, &amp;req, sizeof(struct printreq));
+102     if (nw != sizeof(struct printreq)) {
+103         if (nw &lt; 0)
+104             err_sys("can't write to print server");
+105         else
+106             err_quit("short write (%d/%d) to print server",
+107               nw, sizeof(struct printreq));
+108     }
+
+109     /*
+110      * Now send the file.
+111      */
+112     while ((nr = read(fd, buf, IOBUFSZ)) != 0) {
+113         nw = writen(sockfd, buf, nr);
+114         if (nw != nr) {
+115             if (nw &lt; 0)
+116                 err_sys("can't write to print server");
+117             else
+118                 err_quit("short write (%d/%d) to print server",
+119                   nw, nr);
+120         }
+121     }
+</pre><BR>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e156290"></a>[88108]</P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">We set the job name to the name of the file being printed. If the name is longer than will fit in the message, we truncate the beginning portion of the name and prepend an ellipsis to indicate that there were more characters than would fit in the field. Then we send the request header to the daemon using <tt>writen</tt>. If the write fails or if we transmit less than we expect, we print an error message and exit.</p></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[109121]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">After sending the header to the daemon, we send the file to be printed. We read the file <tt>IOBUFSZ</tt> bytes at a time and use <tt>writen</tt> to send the data to the daemon. As with the header, if the write fails or we write less than we expect, we print an error message and exit.</P></td></TR></table></P><br>
+
+<pre>
+122     /*
+123      * Read the response.
+124      */
+125     if ((nr = readn(sockfd, &amp;res, sizeof(struct printresp))) !=
+126       sizeof(struct printresp))
+127         err_sys("can't read response from server");
+128     if (res.retcode != 0) {
+129         printf("rejected: %s\n", res.msg);
+130         exit(1);
+131     } else {
+132         printf("job ID %ld\n", ntohl(res.jobid));
+133     }
+134     exit(0);
+135   }
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e156344"></a><a name="idd1e156349"></a><a name="idd1e156354"></a>[122135]</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">After we send the file to be printed to the daemon, we read the daemon's response. If the request failed, the return code (<tt>retcode</tt>) will be nonzero, so we print the textual error message included in the response. If the request succeeded, we print the job ID so that the user knows how to refer to the request in the future. (Writing a command to cancel the print request is left as an exercise; the job ID can be used in the cancellation request to identify the job to be removed from the print queue.)</P></td></tr><tr><td class="docTableCell" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="left" valign="top"><p class="docText">Note that a successful response from the daemon does not mean that the printer was able to print the file. It merely means that the daemon successfully added the print job to the queue.</p></td></tr></table></p><br>
+<p class="docText">Most of what we have seen in <tt>print.c</tt> was discussed in earlier chapters. The only topic that we haven't covered is the <tt>getopt</tt> function, although we saw it earlier in the <tt>pty</tt> program from <a class="docLink" href="ch19.html#ch19">Chapter 19</a>.</p>
+<p class="docText">It is important that all commands on a system follow the same conventions, because this makes them easier to use. If someone is familiar with the way command-line options are formed with one command, it would create more chances for mistakes if another command followed different conventions.</p>
+<p class="docText">This problem is sometimes visible when dealing with white space on the command line. Some commands require that an option be separated from its argument by white space, but other commands require the argument to follow immediate after its option, without any intervening spaces. Without a consistent set of rules to follow, users either have to memorize the syntax of all commands or resort to a trial-and-error process when invoking them.</p>
+<p class="docText">The Single UNIX Specification includes a set of conventions and guidelines that promote consistent command-line syntax. They include such suggestions as &quot;Restrict each command-line option to a single alphanumeric character&quot; and &quot;All options should be preceded by a - character.&quot;</p>
+<p class="docText">Luckily, the <tt>getopt</tt> function exists to help command developers process command-line options in a consistent manner.</p>
+<a name="inta114"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e156424"></a><a name="idd1e156429"></a><a name="idd1e156436"></a><a name="idd1e156441"></a><a name="idd1e156446"></a><a name="idd1e156451"></a><a name="idd1e156456"></a>
+<a name="PLID15"></a><div class="v1"><a href="ch21lev1sec5.html#PLID15">[View full width]</a></div><pre>
+#include &lt;fcntl.h&gt;
+
+int getopt(int <span class="docEmphItalicAlt">argc</span>, const * const <span class="docEmphItalicAlt">argv[]</span>, const
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> char *<span class="docEmphItalicAlt">options</span>);
+
+extern int optind, opterr, optopt;
+extern char *optarg;
+
+</pre><br>
+
+</P></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: the next option character, or <BR>1 when all options have been processed</P></td></TR></table></p><BR>
+<p class="docText">The <span class="docEmphasis">argc</span> and <span class="docEmphasis">argv</span> arguments are the same ones passed to the <tt>main</tt> function of the program. The <span class="docEmphasis">options</span> argument is a string containing the option characters supported by the command. If an option character is followed by a colon, then the option takes an argument. Otherwise, the option exists by itself. For example, if the usage statement for a command was</P>
+
+<pre>
+    command [-i] [-u username] [-z] filename
+</pre><BR>
+
+<p class="docText">we would pass <tt>"iu:z"</tt> as the <span class="docEmphasis">options</span> string to <tt>getopt</tt>.</p>
+<p class="docText">The normal use of <tt>getopt</tt> is in a loop that terminates when <tt>getopt</tt> returns 1. During each iteration of the loop, <tt>getopt</tt> will return the next option processed. It is up to the application to sort out any conflict in options, however; <tt>getopt</tt> simply parses the options and enforces a standard format.</P>
+<p class="docText">When it encounters an invalid option, <tt>getopt</tt> returns a question mark instead of the character. If an option's argument is missing, <tt>getopt</tt> will also return a question mark, but if the first character in the options string is a colon, <tt>getopt</tt> returns a colon instead. The special pattern <tt>--</tt> will cause <tt>getopt</tt> to stop processing options and return 1. This allows users to provide command arguments that start with a minus sign but aren't options. For example, if you have a file named <tt>-bar</tt>, you can't remove it by typing</P>
+
+<pre>
+    rm -bar
+</pre><br>
+
+<p class="docText">because <tt>rm</tt> will try to interpret <tt>-bar</tt> as options. The way to remove the file is to type</P>
+
+<pre>
+    rm -- -bar
+</pre><BR>
+
+<p class="docText">The <tt>getopt</tt> function supports four external variables.</p>
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>optarg</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">If an option takes an argument, <tt>getopt</tt> sets <tt>optarg</tt> to point to the option's argument string when an option is processed.</p></TD></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>opterr</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">If an option error is encountered, <tt>getopt</tt> will print an error message by default. To disable this behavior, applications can set <tt>opterr</tt> to 0.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>optind</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The index in the <tt>argv</tt> array of the next string to be processed. It starts out at 1 and is incremented for each argument processed by <tt>getopt</tt>.</p></td></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>optopt</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">If an error is encountered during options processing, <tt>getopt</tt> will set <tt>optopt</tt> to point to the option string that caused the error.</P></td></TR></table></P><BR>
+<p class="docText">The last file we will look at is the C source file for the printer spooling daemon.</p>
+
+<pre>
+  1  /*
+  2   * Print server daemon.
+  3   */
+  4  #include "apue.h"
+  5  #include "print.h"
+  6  #include "ipp.h"
+  7  #include &lt;fcntl.h&gt;
+  8  #include &lt;dirent.h&gt;
+  9  #include &lt;ctype.h&gt;
+ 10  #include &lt;pwd.h&gt;
+ 11  #include &lt;pthread.h&gt;
+ 12  #include &lt;strings.h&gt;
+ 13  #include &lt;sys/select.h&gt;
+ 14  #include &lt;sys/uio.h&gt;
+
+ 15  /*
+ 16   * These are for the HTTP response from the printer.
+ 17   */
+ 18  #define HTTP_INFO(x)   ((x) &gt;= 100 &amp;&amp; (x) &lt;= 199)
+ 19  #define HTTP_SUCCESS(x) ((x) &gt;= 200 &amp;&amp; (x) &lt;= 299)
+
+ 20  /*
+ 21   * Describes a print job.
+ 22   */
+ 23  struct job {
+ 24     struct job      *next;       /* next in list */
+ 25     struct job      *prev;       /* previous in list */
+ 26     long             jobid;      /* job ID */
+ 27     struct printreq  req;        /* copy of print request */
+ 28  };
+
+ 29  /*
+ 30   * Describes a thread processing a client request.
+ 31   */
+ 32  struct worker_thread {
+ 33     struct worker_thread  *next;     /* next in list */
+ 34     struct worker_thread  *prev;     /* previous in list */
+ 35     pthread_t              tid;      /* thread ID */
+ 36     int                    sockfd;   /* socket */
+ 37  };
+</pre><BR>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[119]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The printer spooling daemon includes the IPP header file that we saw earlier, because the daemon needs to communicate with the printer using this protocol. The <tt>HTTP_INFO</tt> and <tt>HTTP_SUCCESS</tt> macros define the status of the HTTP request (recall that IPP is built on top of HTTP).</P></td></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[2037]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The <tt>job</tt> and <tt>worker_thread</tt> structures are used by the spooling daemon to keep track of print jobs and threads accepting print requests, respectively.</P></td></TR></table></p><BR>
+
+<pre>
+ 38  /*
+ 39   * Needed for logging.
+ 40   */
+ 41  int                    log_to_stderr = 0;
+
+ 42  /*
+ 43   * Printer-related stuff.
+ 44   */
+ 45  struct addrinfo        *printer;
+ 46  char                   *printer_name;
+ 47  pthread_mutex_t        configlock = PTHREAD_MUTEX_INITIALIZER;
+ 48  int                    reread;
+
+ 49  /*
+ 50   * Thread-related stuff.
+ 51   */
+ 52  struct worker_thread   *workers;
+ 53  pthread_mutex_t        workerlock = PTHREAD_MUTEX_INITIALIZER;
+ 54  sigset_t               mask;
+
+ 55  /*
+ 56   * Job-related stuff.
+ 57   */
+ 58  struct job             *jobhead, *jobtail;
+ 59  int                    jobfd;
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e156732"></a>[3841]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Our logging functions require that we define the <tt>log_to_stderr</tt> variable and set it to 0 to force log messages to be sent to the system log instead of to the standard error. In <tt>print.c</tt>, we defined <tt>log_to_stderr</tt> and set it to 1, even though we don't use the log functions in the user command. We could have avoided this by splitting the utility functions into two separate files: one for the server and one for the client commands.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[4248]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">We use the global variable <tt>printer</tt> to hold the network address of the printer.We store the host name of the printer in <tt>printer_name</tt>. The <tt>configlock</tt> mutex protects access to the <tt>reread</tt> variable, which is used to indicate that the daemon needs to reread the configuration file, presumably because an administrator changed the printer or its network address.</p></td></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[4954]</P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Next, we define the thread-related variables. We use <tt>workers</tt> as the head of a doubly-linked list of threads that are receiving files from clients. This list is protected by the mutex <tt>workerlock</tt>. The signal mask used by the threads is held in the variable <tt>mask</tt>.</p></TD></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[5559]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">For the list of pending jobs, we define <tt>jobhead</tt> to be the start of the list and <tt>jobtail</tt> to be the tail of the list. This list is also doubly linked, but we need to add jobs to the end of the list, so we need to remember a pointer to the list tail. With the list of worker threads, the order doesn't matter, so we can add them to the head of the list and don't need to remember the tail pointer. <tt>jobfd</tt> is the file descriptor for the job file.</P></TD></tr></table></P><BR>
+
+<pre>
+ 60  long                   nextjob;
+ 61  pthread_mutex_t        joblock = PTHREAD_MUTEX_INITIALIZER;
+ 62  pthread_cond_t         jobwait = PTHREAD_COND_INITIALIZER;
+
+ 63  /*
+ 64   * Function prototypes.
+ 65   */
+ 66  void       init_request(void);
+ 67  void       init_printer(void);
+ 68  void       update_jobno(void);
+ 69  long       get_newjobno(void);
+ 70  void       add_job(struct printreq *, long);
+ 71  void       replace_job(struct job *);
+ 72  void       remove_job(struct job *);
+ 73  void       build_qonstart(void);
+ 74  void       *client_thread(void *);
+ 75  void       *printer_thread(void *);
+ 76  void       *signal_thread(void *);
+ 77  ssize_t    readmore(int, char **, int, int *);
+ 78  int        printer_status(int, struct job *);
+ 79  void       add_worker(pthread_t, int);
+ 80  void       kill_workers(void);
+ 81  void       client_cleanup(void *);
+
+ 82  /*
+ 83   * Main print server thread.  Accepts connect requests from
+ 84   * clients and spawns additional threads to service requests.
+ 85   *
+ 86   * LOCKING: none.
+ 87   */
+ 88  int
+ 89  main(int argc, char *argv[])
+ 90  {
+ 91     pthread_t           tid;
+ 92     struct addrinfo     *ailist, *aip;
+ 93     int                 sockfd, err, i, n, maxfd;
+ 94     char                *host;
+ 95     fd_set              rendezvous, rset;
+ 96     struct sigaction    sa;
+ 97     struct passwd       *pwdp;
+</pre><br>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e156838"></a>[6062]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>nextjob</tt> is the ID of the next print job to be received. The <tt>joblock</tt> mutex protects the linked list of jobs, as well as the condition represented by the <tt>jobwait</tt> condition variable.</P></td></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">[6381]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">We declare the function prototypes for the remaining functions in this file. Doing this up front allows us to place the functions in the file without worrying about the order in which each is called.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[8297]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The <tt>main</tt> function for the printer spooling daemon has two tasks to perform: initialize the daemon and then process connect requests from clients.</p></td></tr></table></p><br>
+
+<pre>
+ 98     if (argc != 1)
+ 99         err_quit("usage: printd");
+100     daemonize("printd");
+
+101     sigemptyset(&amp;sa.sa_mask);
+102     sa.sa_flags = 0;
+103     sa.sa_handler = SIG_IGN;
+104     if (sigaction(SIGPIPE, &amp;sa, NULL) &lt; 0)
+105         log_sys("sigaction failed");
+106     sigemptyset(&amp;mask);
+107     sigaddset(&amp;mask, SIGHUP);
+108     sigaddset(&amp;mask, SIGTERM);
+109     if ((err = pthread_sigmask(SIG_BLOCK, &amp;mask, NULL)) != 0)
+110         log_sys("pthread_sigmask failed");
+111     init_request();
+112     init_printer();
+
+113  #ifdef _SC_HOST_NAME_MAX
+114    n = sysconf(_SC_HOST_NAME_MAX);
+115    if (n &lt; 0)  /* best guess */
+116  #endif
+117        n = HOST_NAME_MAX;
+
+118    if ((host = malloc(n)) == NULL)
+119        log_sys("malloc error");
+120    if (gethostname(host, n) &lt; 0)
+121        log_sys("gethostname error");
+</pre><br>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e156905"></a><a name="idd1e156910"></a><a name="idd1e156915"></a><a name="idd1e156920"></a><a name="idd1e156925"></a><a name="idd1e156930"></a><a name="idd1e156935"></a><a name="idd1e156940"></a><a name="idd1e156945"></a><a name="idd1e156950"></a><a name="idd1e156955"></a><a name="idd1e156960"></a>[98100]</P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">The daemon doesn't have any options, so if <tt>argc</tt> is not 1, we call <tt>err_quit</tt> to print an error message and exit. We call the <tt>daemonize</tt> function from <a class="docLink" href="ch13lev1sec3.html#ch13fig01">Figure 13.1</a> to become a daemon. After this point, we can't print error messages to standard error; we need to log them instead.</p></TD></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[101112]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">We arrange to ignore <tt>SIGPIPE</tt>. We will be writing to socket file descriptors, and we don't want a write error to trigger <tt>SIGPIPE</tt>, because the default action is to kill the process. Next, we set the signal mask of the thread to include <tt>SIGHUP</tt> and <tt>SIGTERM</tt>. All threads we create will inherit this signal mask. We'll use <tt>SIGHUP</tt> to tell the daemon to reread the configuration file and <tt>SIGTERM</tt> to tell the daemon to clean up and exit gracefully. We call <tt>init_request</tt> to initialize the job requests and ensure that only one copy of the daemon is running, and we call <tt>init_printer</tt> to initialize the printer information (we'll see both of these functions shortly).</P></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[113121]</p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">If the platform defines the <tt>_SC_HOST_NAME_MAX</tt> symbol, we call <tt>sysconf</tt> to get the maximum size of a host name. If <tt>sysconf</tt> fails or the limit is undefined, we use <tt>HOST_NAME_MAX</tt> as a best guess. Sometimes, this is defined for us by the platform, but if it isn't, we chose our own value in <tt>print.h</tt>. We allocate memory to hold the host name and call <tt>gethostname</tt> to retrieve it.</p></td></tr></table></p><BR>
+
+<pre>
+122    if ((err = getaddrlist(host, "print", &amp;ailist)) != 0) {
+123        log_quit("getaddrinfo error: %s", gai_strerror(err));
+124        exit(1);
+125    }
+126    FD_ZERO(&amp;rendezvous);
+127    maxfd = -1;
+128    for (aip = ailist; aip != NULL; aip = aip-&gt;ai_next) {
+129        if ((sockfd = initserver(SOCK_STREAM, aip-&gt;ai_addr,
+130          aip-&gt;ai_addrlen, QLEN)) &gt;= 0) {
+131            FD_SET(sockfd, &amp;rendezvous);
+132            if (sockfd &gt; maxfd)
+133                maxfd = sockfd;
+134        }
+135    }
+136    if (maxfd == -1)
+137        log_quit("service not enabled");
+
+138    pwdp = getpwnam("lp");
+139    if (pwdp == NULL)
+140        log_sys("can't find user lp");
+141    if (pwdp-&gt;pw_uid == 0)
+142        log_quit("user lp is privileged");
+143    if (setuid(pwdp-&gt;pw_uid) &lt; 0)
+144        log_sys("can't change IDs to user lp");
+</pre><br>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e157071"></a><a name="idd1e157076"></a><a name="idd1e157081"></a><a name="idd1e157086"></a><a name="idd1e157091"></a><a name="idd1e157094"></a><a name="idd1e157097"></a><a name="idd1e157102"></a>[122135]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Next, we try to find the network address that the daemon is supposed to use to provide printer spooling service. We clear the <tt>rendezvous fd_set</tt> variable that we will use with <tt>select</tt> to wait for client connect requests. We initialize the maximum file descriptor to 1 so that the first file descriptor we allocate is sure to be greater than <tt>maxfd</tt>. For each network address on which we need to provide service, we call <tt>initserver</tt> (from <a class="docLink" href="ch16lev1sec6.html#ch16fig20">Figure 16.20</a>) to allocate and initialize a socket. If <tt>initserver</tt> succeeds, we add the file descriptor to the <tt>fd_set</tt>; if it is greater than the maximum, we set <tt>maxfd</tt> equal to the socket file descriptor.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[136137]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">If <tt>maxfd</tt> is still 1 after stepping through the list of <tt>addrinfo</tt> structures, we can't enable the printer spooling service, so we log a message and exit.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[138144]</p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Our daemon needs superuser privileges to bind a socket to a reserved port number. Now that this is done, we can lower its privileges by changing its user ID to the one associated with user <tt>lp</tt> (recall the security discussion in <a class="docLink" href="ch21lev1sec4.html#ch21lev1sec4">Section 21.4</a>). We want to follow the principles of least privilege to avoid exposing the system to any potential vulnerabilities in the daemon. We call <tt>getpwnam</tt> to find the password entry associated with user <tt>lp</tt>. If no such user account exists, or if it exists with the same user ID as the superuser, we log a message and exit. Otherwise, we call <tt>setuid</tt> to change both the real and effective user IDs to the user ID for <tt>lp</tt>. To avoid exposing our system, we choose to provide no service at all if we can't reduce our privileges.</p></TD></TR></table></P><br>
+
+<pre>
+145    pthread_create(&amp;tid, NULL, printer_thread, NULL);
+146    pthread_create(&amp;tid, NULL, signal_thread, NULL);
+147    build_qonstart();
+
+148    log_msg("daemon initialized");
+
+149    for (;;) {
+150        rset = rendezvous;
+151        if (select(maxfd+1, &amp;rset, NULL, NULL, NULL) &lt; 0)
+152            log_sys("select failed");
+153        for (i = 0; i &lt;= maxfd; i++) {
+154            if (FD_ISSET(i, &amp;rset)) {
+
+155                /*
+156                 * Accept the connection and handle
+157                 * the request.
+158                 */
+159                sockfd = accept(i, NULL, NULL);
+160                if (sockfd &lt; 0)
+161                    log_ret("accept failed");
+162                pthread_create(&amp;tid, NULL, client_thread,
+163                  (void *)sockfd);
+164            }
+165        }
+166    }
+167    exit(1);
+168  }
+</pre><BR>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e157208"></a><a name="idd1e157213"></a><a name="idd1e157218"></a><a name="idd1e157223"></a><a name="idd1e157228"></a>[145148]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">We call <tt>pthread_create</tt> twice to create one thread to handle signals and one thread to communicate with the printer. (By restricting printer communication to one thread, we can simplify the locking of the printer-related data structures.) Then we call <tt>build_qonstart</tt> to search the directories in <tt>/var/spool/printer</tt> for any pending jobs. For each job that we find on disk, we will create a structure to let the printer thread know that it should send the file to the printer. At this point, we are done setting up the daemon, so we log a message to indicate that the daemon has initialized successfully.</P></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[149168]</p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">We copy the <tt>rendezvous fd_set</tt> structure to <tt>rset</tt> and call <tt>select</tt> to wait for one of the file descriptors to become readable. We have to copy <tt>rendezvous</tt>, because <tt>select</tt> will modify the <tt>fd_set</tt> structure that we pass to it to include only those file descriptors that satisfy the event. Since the sockets have been initialized for use by a server, a readable file descriptor means that a connect request is pending. After <tt>select</tt> returns, we check <tt>rset</tt> for a readable file descriptor. If we find one, we call <tt>accept</tt> to accept the connection. If this fails, we log a message and continue checking for more readable file descriptors. Otherwise, we create a thread to handle the client connection. The <tt>main</tt> thread loops, farming requests out to other threads for processing, and should never reach the <tt>exit</tt> statement.</p></td></tr></table></P><br>
+
+<pre>
+169  /*
+170   * Initialize the job ID file. Use a record lock to prevent
+171   * more than one printer daemon from running at a time.
+172   *
+173   * LOCKING: none, except for record-lock on job ID file.
+174   */
+175  void
+176  init_request(void)
+177  {
+178    int     n;
+179    char    name[FILENMSZ];
+
+180    sprintf(name, "%s/%s", SPOOLDIR, JOBFILE);
+181    jobfd = open(name, O_CREAT|O_RDWR, S_IRUSR|S_IWUSR);
+182    if (write_lock(jobfd, 0, SEEK_SET, 0) &lt; 0)
+183        log_quit("daemon already running");
+
+184    /*
+185     * Reuse the name buffer for the job counter.
+186     */
+187    if ((n = read(jobfd, name, FILENMSZ)) &lt; 0)
+188        log_sys("can't read job file");
+189    if (n == 0)
+190        nextjob = 1;
+191    else
+192        nextjob = atol(name);
+193  }
+</pre><BR>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e157315"></a><a name="idd1e157320"></a><a name="idd1e157325"></a>[169183]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The <tt>init_request</tt> function does two things: it places a record lock on the job file, <tt>/var/spool/printer/jobno</tt>, and it reads the file to determine the next job number to assign. We place a write lock on the entire file to indicate that the daemon is running. If someone tries to start additional copies of the printer spooling daemon while one is already running, these additional daemons will fail to obtain the write lock and will exit. Thus, only one copy of the daemon can be running at a time. (Recall that we used this technique in <a class="docLink" href="ch13lev1sec5.html#ch13fig06">Figure 13.6</a>; we discussed the <tt>write_lock</tt> macro in <a class="docLink" href="ch14lev1sec3.html#ch14lev1sec3">Section 14.3</a>.)</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[184193]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The job file contains an ASCII integer string representing the next job number. If the file was just created and therefore is empty, we set <tt>nextjob</tt> to 1. Otherwise, we use <tt>atol</tt> to convert the string to an integer and use this as the next job number. We leave <tt>jobfd</tt> open to the job file so that we can update the job number as jobs are created. We can't close the file, because this would release the write lock that we've placed on it.</p></td></tr><tr><td class="docTableCell" align="left" valign="top">&nbsp;</TD><TD class="docTableCell" align="left" valign="top"><p class="docText">On a system where a long integer is 64 bits wide, we need a buffer at least 21 bytes in size to fit a string representing the largest possible long integer. We are safe reusing the filename buffer, because <tt>FILENMSZ</tt> is defined to be 64 in <tt>print.h</tt>.</p></TD></TR></table></P><br>
+
+<pre>
+194  /*
+195   * Initialize printer information.
+196   *
+197   * LOCKING: none.
+198   */
+199  void
+200  init_printer(void)
+201  {
+202    printer = get_printaddr();
+203    if (printer == NULL) {
+204        log_msg("no printer device registered");
+205        exit(1);
+206    }
+207    printer_name = printer-&gt;ai_canonname;
+208    if (printer_name == NULL)
+209        printer_name = "printer";
+210    log_msg("printer is %s", printer_name);
+211   }
+
+212   /*
+213    * Update the job ID file with the next job number.
+214    *
+215    * LOCKING: none.
+216    */
+217   void
+218   update_jobno(void)
+219   {
+220     char    buf[32];
+
+221     lseek(jobfd, 0, SEEK_SET);
+222     sprintf(buf, "%ld", nextjob);
+223     if (write(jobfd, buf, strlen(buf)) &lt; 0)
+224         log_sys("can't update job file");
+225   }
+</pre><BR>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e157411"></a><a name="idd1e157416"></a><a name="idd1e157421"></a><a name="idd1e157426"></a><a name="idd1e157431"></a><a name="idd1e157436"></a>[194211]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The <tt>init_printer</tt> function is used to set the printer name and address. We get the printer address by calling <tt>get_printaddr</tt> (from <tt>util.c</tt>). If this fails, we log a message and exit. We can't do this by calling <tt>log_sys</tt>, because <tt>get_printaddr</tt> can fail without setting <tt>errno</tt>. When it fails and does set <tt>errno</tt>, however, <tt>get_printaddr</tt> logs its own error message. We set the printer name to the <tt>ai_canonname</tt> field in the <tt>addrinfo</tt> structure. If this field is null, we set the printer name to a default value of <tt>printer</tt>. Note that we log the name of the printer we are using to aid administrators in diagnosing problems with the spooling system.</P></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[212225]</p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">The <tt>update_jobno</tt> function is used to write the next job number to the job file, <tt>/var/spool/printer/jobno</tt>. First, we seek to the beginning of the file. Then we convert the integer job number into a string and write it to the file. If the write fails, we log an error message and exit.</p></td></tr></table></p><BR>
+
+<pre>
+226  /*
+227   * Get the next job number.
+228   *
+229   * LOCKING: acquires and releases joblock.
+230   */
+231  long
+232  get_newjobno(void)
+233  {
+234    long    jobid;
+
+235    pthread_mutex_lock(&amp;joblock);
+236    jobid = nextjob++;
+237    if (nextjob &lt;= 0)
+238        nextjob = 1;
+239    pthread_mutex_unlock(&amp;joblock);
+240    return(jobid);
+241  }
+
+242  /*
+243   * Add a new job to the list of pending jobs. Then signal
+244   * the printer thread that a job is pending.
+245   *
+246   * LOCKING: acquires and releases joblock.
+247   */
+248  void
+249  add_job(struct printreq *reqp, long jobid)
+250  {
+251    struct job *jp;
+
+252    if ((jp = malloc(sizeof(struct job))) == NULL)
+253        log_sys("malloc failed");
+254    memcpy(&amp;jp-&gt;req, reqp, sizeof(struct printreq));
+</pre><br>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e157520"></a><a name="idd1e157525"></a><a name="idd1e157530"></a><a name="idd1e157535"></a><a name="idd1e157540"></a>[226241]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The <tt>get_newjobno</tt> function is used to get the next job number. We first lock the <tt>joblock</tt> mutex. We increment the <tt>nextjob</tt> variable and handle the case where it wraps around. Then we unlock the mutex and return the value <tt>nextjob</tt> had before we incremented it. Multiple threads can call <tt>get_newjobno</tt> at the same time; we need to serialize access to the next job number so that each thread gets a unique job number. (Refer to <a class="docLink" href="ch11lev1sec6.html#ch11fig09">Figure 11.9</a> to see what could happen if we don't serialize the threads in this case.)</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[242254]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The <tt>add_job</tt> function is used to add a new print request to the end of the list of pending print jobs. We start by allocating space for the <tt>job</tt> structure. If this fails, we log a message and exit. At this point, the print request is stored safely on disk; when the printer spooling daemon is restarted, it will pick the request up. After we allocate memory for the new job, we copy the request structure from the client into the job structure. Recall from <tt>print.h</tt> that a <tt>job</tt> structure consists of a pair of list pointers, a job ID, and a copy of the <tt>printreq</tt> structure sent to us by the client <tt>print</tt> command.</p></td></tr></table></p><br>
+
+<pre>
+255    jp-&gt;jobid = jobid;
+256    jp-&gt;next = NULL;
+257    pthread_mutex_lock(&amp;joblock);
+258    jp-&gt;prev = jobtail;
+259    if (jobtail == NULL)
+260        jobhead = jp;
+261    else
+262        jobtail-&gt;next = jp;
+263    jobtail = jp;
+264    pthread_mutex_unlock(&amp;joblock);
+265    pthread_cond_signal(&amp;jobwait);
+266  }
+
+267  /*
+268   * Replace a job back on the head of the list.
+269   *
+270   * LOCKING: acquires and releases joblock.
+271   */
+272  void
+273  replace_job(struct job *jp)
+274  {
+275    pthread_mutex_lock(&amp;joblock);
+276    jp-&gt;prev = NULL;
+277    jp-&gt;next = jobhead;
+278    if (jobhead == NULL)
+279        jobtail = jp;
+280    else
+281        jobhead-&gt;prev = jp;
+282    jobhead = jp;
+283    pthread_mutex_unlock(&amp;joblock);
+284  }
+</pre><br>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e157622"></a>[255266]</P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">We save the job ID and lock the <tt>joblock</tt> mutex to gain exclusive access to the linked list of print jobs. We are about to add the new job structure to the end of the list. We set the new structure's previous pointer to the last job on the list. If the list is empty, we set <tt>jobhead</tt> to point to the new structure. Otherwise, we set the next pointer in the last entry on the list to point to the new structure. Then we set <tt>jobtail</tt> to point to the new structure. We unlock the mutex and signal the printer thread that another job is available.</p></TD></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[267284]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The <tt>replace_job</tt> function is used to insert a job at the head of the pending job list. We acquire the <tt>joblock</tt> mutex, set the previous pointer in the <tt>job</tt> structure to null, and set the next pointer in the <tt>job</tt> structure to point to the head of the list. If the list is empty, we set <tt>jobtail</tt> to point to the <tt>job</tt> structure we are replacing. Otherwise, we set the previous pointer in the first <tt>job</tt> structure on the list to point to the <tt>job</tt> structure we are replacing. Then we set the <tt>jobhead</tt> pointer to the <tt>job</tt> structure we are replacing. Finally, we release the <tt>joblock</tt> mutex.</P></TD></tr></table></P><BR>
+
+<pre>
+285  /*
+286   * Remove a job from the list of pending jobs.
+287   *
+288   * LOCKING: caller must hold joblock.
+289   */
+290  void
+291  remove_job(struct job *target)
+292  {
+293    if (target-&gt;next != NULL)
+294        target-&gt;next-&gt;prev = target-&gt;prev;
+295    else
+296        jobtail = target-&gt;prev;
+297    if (target-&gt;prev != NULL)
+298        target-&gt;prev-&gt;next = target-&gt;next;
+299    else
+300        jobhead = target-&gt;next;
+301  }
+
+302  /*
+303   * Check the spool directory for pending jobs on start-up.
+304   *
+305   * LOCKING: none.
+306   */
+307  void
+308  build_qonstart(void)
+309  {
+310    int             fd, err, nr;
+311    long            jobid;
+312    DIR             *dirp;
+313    struct dirent   *entp;
+314    struct printreq req;
+315    char            dname[FILENMSZ], fname[FILENMSZ];
+
+316    sprintf(dname, "%s/%s", SPOOLDIR, REQDIR);
+317    if ((dirp = opendir(dname)) == NULL)
+318        return;
+</pre><br>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e157709"></a><a name="idd1e157714"></a>[285301]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>remove_job</tt> removes a job from the list of pending jobs given a pointer to the job to be removed. The caller must already hold the <tt>joblock</tt> mutex. If the next pointer is non-null, we set the next entry's previous pointer to the target's previous pointer. Otherwise, the entry is the last one on the list, so we set <tt>jobtail</tt> to the target's previous pointer. If the target's previous pointer is non-null, we set the previous entry's next pointer equal to the target's next pointer. Otherwise, this is the first entry in the list, so we set <tt>jobhead</tt> to point to the next entry in the list after the target.</P></td></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">[302318]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">When the daemon starts, it calls <tt>build_qonstart</tt> to build an in-memory list of print jobs from the disk files stored in <tt>/var/spool/printer/reqs</tt>. If we can't open the directory, no print jobs are pending, so we return.</p></td></tr></table></p><br>
+
+<pre>
+319    while ((entp = readdir(dirp)) != NULL) {
+320        /*
+321         * Skip "." and ".."
+322         */
+323        if (strcmp(entp-&gt;d_name, ".") == 0 ||
+324          strcmp(entp-&gt;d_name, "..") == 0)
+325            continue;
+
+326        /*
+327         * Read the request structure.
+328         */
+329        sprintf(fname, "%s/%s/%s", SPOOLDIR, REQDIR, entp-&gt;d_name);
+330        if ((fd = open(fname, O_RDONLY)) &lt; 0)
+331            continue;
+332        nr = read(fd, &amp;req, sizeof(struct printreq));
+333        if (nr != sizeof(struct printreq)) {
+334            if (nr &lt; 0)
+335                err = errno;
+336            else
+337                err = EIO;
+338            close(fd);
+339            log_msg("build_qonstart: can't read %s: %s",
+340              fname, strerror(err));
+341            unlink(fname);
+342            sprintf(fname, "%s/%s/%s", SPOOLDIR, DATADIR,
+343              entp-&gt;d_name);
+344            unlink(fname);
+345            continue;
+346        }
+347        jobid = atol(entp-&gt;d_name);
+348        log_msg("adding job %ld to queue", jobid);
+349        add_job(&amp;req, jobid);
+350    }
+351    closedir(dirp);
+352  }
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e157776"></a><a name="idd1e157781"></a><a name="idd1e157786"></a><a name="idd1e157791"></a>[319325]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">We read each entry in the directory, one at a time. We skip the entries for dot and dot-dot.</p></td></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[326346]</P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">For each entry, we create the full pathname of the file and open it for reading. If the <tt>open</tt> call fails, we just skip the file. Otherwise, we read the <tt>printreq</tt> structure stored in it. If we don't read the entire structure, we close the file, log a message, and unlink the file. Then we create the full pathname of the corresponding data file and unlink it, too.</p></TD></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[347352]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">If we were able to read a complete <tt>printreq</tt> structure, we convert the filename into a job ID (the name of the file is its job ID), log a message, and then add the request to the list of pending print jobs. When we are done reading the directory, <tt>readdir</tt> will return <tt>NULL</tt>, and we close the directory and return.</P></TD></tr></table></P><BR>
+
+<pre>
+353  /*
+354   * Accept a print job from a client.
+355   *
+356   * LOCKING: none.
+357   */
+358  void *
+359  client_thread(void *arg)
+360  {
+361    int                 n, fd, sockfd, nr, nw, first;
+362    long                jobid;
+363    pthread_t           tid;
+364    struct printreq     req;
+365    struct printresp    res;
+366    char                name[FILENMSZ];
+367    char                buf[IOBUFSZ];
+
+368    tid = pthread_self();
+369    pthread_cleanup_push(client_cleanup, (void *)tid);
+370    sockfd = (int)arg;
+371    add_worker(tid, sockfd);
+
+372    /*
+373     * Read the request header.
+374     */
+375    if ((n = treadn(sockfd, &amp;req, sizeof(struct printreq), 10)) !=
+376      sizeof(struct printreq)) {
+377        res.jobid = 0;
+378        if (n &lt; 0)
+379            res.retcode = htonl(errno);
+380        else
+381            res.retcode = htonl(EIO);
+382        strncpy(res.msg, strerror(res.retcode), MSGLEN_MAX);
+383        writen(sockfd, &amp;res, sizeof(struct printresp));
+384        pthread_exit((void *)1);
+385    }
+</pre><br>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e157862"></a><a name="idd1e157867"></a><a name="idd1e157872"></a><a name="idd1e157877"></a><a name="idd1e157882"></a><a name="idd1e157887"></a>[353371]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The <tt>client_thread</tt> is spawned from the <tt>main</tt> tHRead when a connect request is accepted. Its job is to receive the file to be printed from the client <tt>print</tt> command. We create a separate thread for each client print request.</p></TD></tr><TR><td class="docTableCell" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="left" valign="top"><p class="docText">The first thing we do is install a thread cleanup handler (see <a class="docLink" href="ch11lev1sec5.html#ch11lev1sec5">Section 11.5</a> for a discussion of thread cleanup handlers). The cleanup handler is <tt>client_cleanup</tt>, which we will see later. It takes a single argument: our thread ID. Then we call <tt>add_worker</tt> to create a <tt>worker_thread</tt> structure and add it to the list of active client threads.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[372385]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">At this point, we are done with the thread's initialization tasks, so we read the request header from the client. If the client sends less than we expect or we encounter an error, we respond with a message indicating the reason for the error and call <tt>pthread_exit</tt> to terminate the thread.</p></td></tr></table></p><br>
+
+<pre>
+386    req.size = ntohl(req.size);
+387    req.flags = ntohl(req.flags);
+
+388    /*
+389     * Create the data file.
+390     */
+391    jobid = get_newjobno();
+392    sprintf(name, "%s/%s/%ld", SPOOLDIR, DATADIR, jobid);
+393    if ((fd = creat(name, FILEPERM)) &lt; 0) {
+394        res.jobid = 0;
+395        if (n &lt; 0)
+396            res.retcode = htonl(errno);
+397        else
+398            res.retcode = htonl(EIO);
+399        log_msg("client_thread: can't create %s: %s", name,
+400          strerror(res.retcode));
+401        strncpy(res.msg, strerror(res.retcode), MSGLEN_MAX);
+402        writen(sockfd, &amp;res, sizeof(struct printresp));
+403        pthread_exit((void *)1);
+404    }
+
+405    /*
+406     * Read the file and store it in the spool directory.
+407     */
+408    first = 1;
+409    while ((nr = tread(sockfd, buf, IOBUFSZ, 20)) &gt; 0) {
+410        if (first) {
+411            first = 0;
+412            if (strncmp(buf, "%!PS", 4) != 0)
+413                req.flags |= PR_TEXT;
+414        }
+</pre><br>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e157966"></a><a name="idd1e157971"></a><a name="idd1e157976"></a><a name="idd1e157981"></a>[386404]</P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">We convert the integer fields in the request header to host byte order and call <tt>get_newjobno</tt> to reserve the next job ID for this print request. We create the job data file, named <tt>/var/spool/printer/data/</tt><span class="docEmphasis">jobid</span>, where <span class="docEmphasis">jobid</span> is the request's job ID. We use permissions that prevent others from being able read the files (<tt>FILEPERM</tt> is defined as <tt>S_IRUSR|S_IWUSR</tt> in <tt>print.h</tt>). If we can't create the file, we log an error message, send a failure response back to the client, and terminate the thread by calling <tt>pthread_exit</tt>.</p></TD></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[405414]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">We read the file contents from the client, with the intent of writing the contents out to our private copy of the data file. But before we write anything, we need to check if this is a PostScript file the first time through the loop. If the file doesn't begin with the pattern <tt>%!PS</tt>, we can assume that the file is plaintext, so we set the <tt>PR_TEXT</tt> flag in the request header in this case. (Recall that the client can also set this flag if the <tt>-t</tt> flag is included when the <tt>print</tt> command is executed.) Although PostScript programs are not required to start with the pattern <tt>%!PS</tt>, the document formatting guidelines (Adobe Systems [<a class="docLink" href="bib01.html#biblio01_002">1999</a>]) strongly recommends that they do.</P></TD></tr></table></P><BR>
+
+<pre>
+415        nw = write(fd, buf, nr);
+416        if (nw != nr) {
+417            if (nw &lt; 0)
+418                res.retcode = htonl(errno);
+419            else
+420                res.retcode = htonl(EIO);
+421            log_msg("client_thread: can't write %s: %s", name,
+422              strerror(res.retcode));
+423            close(fd);
+424            strncpy(res.msg, strerror(res.retcode), MSGLEN_MAX);
+425            writen(sockfd, &amp;res, sizeof(struct printresp));
+426            unlink(name);
+427            pthread_exit((void *)1);
+428        }
+429    }
+430    close(fd);
+
+431    /*
+432     * Create the control file.
+433     */
+434    sprintf(name, "%s/%s/%ld", SPOOLDIR, REQDIR, jobid);
+435    fd = creat(name, FILEPERM);
+436    if (fd &lt; 0) {
+437        res.jobid = 0;
+438        if (n &lt; 0)
+439            res.retcode = htonl(errno);
+440        else
+441            res.retcode = htonl(EIO);
+442        log_msg("client_thread: can't create %s: %s", name,
+443          strerror(res.retcode));
+444        strncpy(res.msg, strerror(res.retcode), MSGLEN_MAX);
+445        writen(sockfd, &amp;res, sizeof(struct printresp));
+446        sprintf(name, "%s/%s/%ld", SPOOLDIR, DATADIR, jobid);
+447        unlink(name);
+448        pthread_exit((void *)1);
+449    }
+</pre><br>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e158067"></a>[415430]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">We write the data that we read from the client to the data file. If <tt>write</tt> fails, we log an error message, close the file descriptor for the data file, send an error message back to the client, delete the data file, and terminate the thread by calling <tt>pthread_exit</tt>. Note that we do not explicitly close the socket file descriptor. This is done for us by our thread cleanup handler as part of the processing that occurs when we call <tt>pthread_exit</tt>.</P></td></TR><tr><TD class="docTableCell" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="left" valign="top"><p class="docText">When we receive all the data to be printed, we close the file descriptor for the data file.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[431449]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Next, we create a file, <tt>/var/spool/printer/reqs/</tt><span class="docEmphasis">jobid</span>, to remember the print request. If this fails, we log an error message, send an error response to the client, remove the data file, and terminate the thread.</p></td></tr></table></p><br>
+
+<pre>
+450    nw = write(fd, &amp;req, sizeof(struct printreq));
+451    if (nw != sizeof(struct printreq)) {
+452        res.jobid = 0;
+453        if (nw &lt; 0)
+454            res.retcode = htonl(errno);
+455        else
+456            res.retcode = htonl(EIO);
+457        log_msg("client_thread: can't write %s: %s", name,
+458          strerror(res.retcode));
+459        close(fd);
+460        strncpy(res.msg, strerror(res.retcode), MSGLEN_MAX);
+461        writen(sockfd, &amp;res, sizeof(struct printresp));
+462        unlink(name);
+463        sprintf(name, "%s/%s/%ld", SPOOLDIR, DATADIR, jobid);
+464        unlink(name);
+465        pthread_exit((void *)1);
+466    }
+467    close(fd);
+
+468    /*
+469     * Send response to client.
+470     */
+471    res.retcode = 0;
+472    res.jobid = htonl(jobid);
+473    sprintf(res.msg, "request ID %ld", jobid);
+474    writen(sockfd, &amp;res, sizeof(struct printresp));
+
+475    /*
+476     * Notify the printer thread, clean up, and exit.
+477     */
+478    log_msg("adding job %ld to queue", jobid);
+479    add_job(&amp;req, jobid);
+480    pthread_cleanup_pop(1);
+481    return((void *)0);
+482  }
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e158135"></a><a name="idd1e158140"></a><a name="idd1e158145"></a>[450466]</p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">We write the <tt>printreq</tt> structure to the control file. On error, we log a message, close the descriptor for the control file, send a failure response back to the client, remove the data and control files, and terminate the thread.</P></td></TR><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[467474]</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">We close the file descriptor for the control file and send a message containing the job ID and a successful status (<tt>retcode</tt> set to 0) back to the client.</P></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">[475482]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">We call <tt>add_job</tt> to add the received job to the list of pending print jobs and call <tt>pthread_cleanup_pop</tt> to complete the cleanup processing. The thread terminates when we return.</P></td></tr><tr><td class="docTableCell" align="left" valign="top">&nbsp;</TD><td class="docTableCell" align="left" valign="top"><p class="docText">Note that before the thread exits, we must close any file descriptors we no longer need. Unlike process termination, file descriptors are not closed automatically when a thread ends if other threads exist in the process. If we didn't close unneeded file descriptors, we'd eventually run out of resources.</P></td></TR></table></p><br>
+
+<pre>
+483    /*
+484    * Add a worker to the list of worker threads.
+485    *
+486    * LOCKING: acquires and releases workerlock.
+487    */
+488   void
+489   add_worker(pthread_t tid, int sockfd)
+490   {
+491     struct worker_thread    *wtp;
+
+492     if ((wtp = malloc(sizeof(struct worker_thread))) == NULL) {
+493         log_ret("add_worker: can't malloc");
+494         pthread_exit((void *)1);
+495     }
+496     wtp-&gt;tid = tid;
+497     wtp-&gt;sockfd = sockfd;
+498     pthread_mutex_lock(&amp;workerlock);
+499     wtp-&gt;prev = NULL;
+500     wtp-&gt;next = workers;
+501     if (workers == NULL)
+502         workers = wtp;
+503     else
+504         workers-&gt;prev = wtp;
+505     pthread_mutex_unlock(&amp;workerlock);
+506   }
+
+507   /*
+508    * Cancel (kill) all outstanding workers.
+509    *
+510    * LOCKING: acquires and releases workerlock.
+511    */
+512   void
+513   kill_workers(void)
+514   {
+515     struct worker_thread    *wtp;
+
+516     pthread_mutex_lock(&amp;workerlock);
+517     for (wtp = workers; wtp != NULL; wtp = wtp-&gt;next)
+518         pthread_cancel(wtp-&gt;tid);
+519     pthread_mutex_unlock(&amp;workerlock);
+520   }
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e158222"></a><a name="idd1e158227"></a><a name="idd1e158232"></a>[483506]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>add_worker</tt> adds a <tt>worker_thread</tt> structure to the list of active threads. We allocate memory for the structure, initialize it, lock the <tt>workerlock</tt> mutex, add the structure to the head of the list, and unlock the mutex.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[507520]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The <tt>kill_workers</tt> function walks the list of worker threads and cancels each one. We hold the <tt>workerlock</tt> mutex while we walk the list. Recall that <tt>pthread_cancel</tt> merely schedules a thread for cancellation; actual cancellation happens when each thread reaches the next cancellation point.</P></TD></tr></table></P><BR>
+
+<pre>
+521   /*
+522    * Cancellation routine for the worker thread.
+523    *
+524    * LOCKING: acquires and releases workerlock.
+525    */
+526   void
+527   client_cleanup(void *arg)
+528   {
+529     struct worker_thread    *wtp;
+530     pthread_t               tid;
+
+531     tid = (pthread_t)arg;
+532     pthread_mutex_lock(&amp;workerlock);
+533     for (wtp = workers; wtp != NULL; wtp = wtp-&gt;next) {
+534         if (wtp-&gt;tid == tid) {
+535             if (wtp-&gt;next != NULL)
+536                 wtp-&gt;next-&gt;prev = wtp-&gt;prev;
+537             if (wtp-&gt;prev != NULL)
+538                 wtp-&gt;prev-&gt;next = wtp-&gt;next;
+539             else
+540                 workers = wtp-&gt;next;
+541             break;
+542         }
+543     }
+544     pthread_mutex_unlock(&amp;workerlock);
+545     if (wtp != NULL) {
+546         close(wtp-&gt;sockfd);
+547         free(wtp);
+548     }
+549   }
+</pre><BR>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e158294"></a><a name="idd1e158299"></a><a name="idd1e158304"></a>[521543]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The <tt>client_cleanup</tt> function is the thread cleanup handler for the worker threads that communicate with client commands. This function is called when the thread calls <tt>pthread_exit</tt>, calls <tt>pthread_cleanup_pop</tt> with a nonzero argument, or responds to a cancellation request. The argument is the thread ID of the thread terminating.</p></TD></TR><TR><td class="docTableCell" align="left" valign="top">&nbsp;</TD><TD class="docTableCell" align="left" valign="top"><p class="docText">We lock the <tt>workerlock</tt> mutex and search the list of worker threads until we find a matching thread ID. When we find a match, we remove the worker thread structure from the list and stop the search.</p></TD></TR><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[544549]</p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">We unlock the <tt>workerlock</tt> mutex, close the socket file descriptor used by the thread to communicate with the client, and free the memory backing the <tt>worker_thread</tt> structure.</p></TD></tr><TR><td class="docTableCell" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="left" valign="top"><p class="docText">Since we try to acquire the <tt>workerlock</tt> mutex, if a thread reaches a cancellation point while the <tt>kill_workers</tt> function is still walking the list, we will have to wait until <tt>kill_workers</tt> releases the mutex before we can proceed.</p></td></tr></table></p><br>
+
+<pre>
+550   /*
+551    * Deal with signals.
+552    *
+553    * LOCKING: acquires and releases configlock.
+554    */
+555   void *
+556   signal_thread(void *arg)
+557   {
+558     int     err, signo;
+
+559     for (;;) {
+560         err = sigwait(&amp;mask, &amp;signo);
+561         if (err != 0)
+562             log_quit("sigwait failed: %s", strerror(err));
+563         switch (signo) {
+564         case SIGHUP:
+565             /*
+566              * Schedule to re-read the configuration file.
+567              */
+568             pthread_mutex_lock(&amp;configlock);
+569             reread = 1;
+570             pthread_mutex_unlock(&amp;configlock);
+571             break;
+
+572         case SIGTERM:
+573             kill_workers();
+574             log_msg("terminate with signal %s", strsignal(signo));
+575             exit(0);
+
+576         default:
+577             kill_workers();
+578             log_quit("unexpected signal %d", signo);
+579         }
+580     }
+581   }
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e158394"></a><a name="idd1e158399"></a><a name="idd1e158404"></a><a name="idd1e158409"></a><a name="idd1e158414"></a><a name="idd1e158419"></a><a name="idd1e158424"></a>[550563]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The <tt>signal_thread</tt> function is run by the thread that is responsible for handling signals. In the <tt>main</tt> function, we initialized the signal mask to include <tt>SIGHUP</tt> and <tt>SIGTERM</tt>. Here, we call <tt>sigwait</tt> to wait for one of these signals to occur. If <tt>sigwait</tt> fails, we log an error message and exit.</p></td></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[564571]</P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">If we receive <tt>SIGHUP</tt>, we acquire the <tt>configlock</tt> mutex, set the <tt>reread</tt> variable to 1, and release the mutex. This tells the printer daemon to reread the configuration file on the next iteration in its processing loop.</p></TD></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[572575]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">If we receive <tt>SIGTERM</tt>, we call <tt>kill_workers</tt> to kill all the worker threads, log a message, and call <tt>exit</tt> to terminate the process.</P></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[576581]</p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">If we receive a signal we are not expecting, we kill the worker threads and call <tt>log_quit</tt> to log a message and exit.</p></td></tr></table></p><BR>
+
+<pre>
+582   /*
+583    * Add an option to the IPP header.
+584    *
+585    * LOCKING: none.
+586    */
+587   char *
+588   add_option(char *cp, int tag, char *optname, char *optval)
+589   {
+590     int     n;
+591     union {
+592         int16_t s;
+593         char c[2];
+594     }       u;
+
+595     *cp++ = tag;
+596     n = strlen(optname);
+597     u.s = htons(n);
+598     *cp++ = u.c[0];
+599     *cp++ = u.c[1];
+600     strcpy(cp, optname);
+601     cp += n;
+602     n = strlen(optval);
+603     u.s = htons(n);
+604     *cp++ = u.c[0];
+605     *cp++ = u.c[1];
+606     strcpy(cp, optval);
+607     return(cp + n);
+608   }
+</pre><br>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e158530"></a><a name="idd1e158535"></a>[582594]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The <tt>add_option</tt> function is used to add an option to the IPP header that we build to send to the printer. Recall from <a class="docLink" href="ch21lev1sec2.html#ch21fig03">Figure 21.3</a> that the format of an attribute is a 1-byte tag describing the type of the attribute, followed by the length of the attribute name stored in binary as a 2-byte integer, followed by the name, the size of the attribute value, and finally the value itself.</p></td></tr><tr><td class="docTableCell" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="left" valign="top"><p class="docText">IPP makes no attempt to control the alignment of the binary integers embedded in the header. Some processor architectures, such as the SPARC, can't load an integer from an arbitrary address. This means that we can't store the integers in the header by casting a pointer to an <tt>int16_t</tt> to the address in the header where the integer is to be stored. Instead, we need to copy the integer 1 byte at a time. This is why we define the <tt>union</tt> containing a 16-bit integer and 2 bytes.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[595608]</p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">We store the tag in the header and convert the length of the attribute name to network byte order. We copy the length 1 byte at a time to the header. Then we copy the attribute name. We repeat this process for the attribute value and return the address in the header where the next part of the header should begin.</P></td></TR></table></P><BR>
+
+<pre>
+609   /*
+610    * Single thread to communicate with the printer.
+611    *
+612    * LOCKING: acquires and releases joblock and configlock.
+613    */
+614   void *
+615   printer_thread(void *arg)
+616   {
+617     struct job      *jp;
+618     int             hlen, ilen, sockfd, fd, nr, nw;
+619     char            *icp, *hcp;
+620     struct ipp_hdr  *hp;
+621     struct stat     sbuf;
+622     struct iovec    iov[2];
+623     char            name[FILENMSZ];
+624     char            hbuf[HBUFSZ];
+625     char            ibuf[IBUFSZ];
+626     char            buf[IOBUFSZ];
+627     char            str[64];
+
+628     for (;;) {
+629         /*
+630          * Get a job to print.
+631          */
+632         pthread_mutex_lock(&amp;joblock);
+633         while (jobhead == NULL) {
+634             log_msg("printer_thread: waiting...");
+635             pthread_cond_wait(&amp;jobwait, &amp;joblock);
+636         }
+637         remove_job(jp = jobhead);
+638         log_msg("printer_thread: picked up job %ld", jp-&gt;jobid);
+639         pthread_mutex_unlock(&amp;joblock);
+
+640         update_jobno();
+</pre><br>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e158602"></a><a name="idd1e158607"></a><a name="idd1e158612"></a><a name="idd1e158617"></a><a name="idd1e158622"></a>[609627]</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">The <tt>printer_thread</tt> function is run by the thread that communicates with the network printer. We'll use <tt>icp</tt> and <tt>ibuf</tt> to build the IPP header. We'll use <tt>hcp</tt> and <tt>hbuf</tt> to build the HTTP header. We need to build the headers in separate buffers. The HTTP header includes a length field in ASCII, and we won't know how much space to reserve for it until we assemble the IPP header. We'll use <tt>writev</tt> to write these two headers in one call.</P></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">[628640]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The printer thread runs in an infinite loop that waits for jobs to transmit to the printer. We use the <tt>joblock</tt> mutex to protect the list of jobs. If a job is not pending, we use <tt>pthread_cond_wait</tt> to wait for one to arrive. When a job is ready, we remove it from the list by calling <tt>remove_job</tt>. We still hold the mutex at this point, so we release it and call <tt>update_jobno</tt> to write the next job number to <tt>/var/spool/printer/jobno</tt>.</P></td></tr></table></p><br>
+
+<pre>
+641         /*
+642          * Check for a change in the config file.
+643          */
+644         pthread_mutex_lock(&amp;configlock);
+645         if (reread) {
+646             freeaddrinfo(printer);
+647             printer = NULL;
+648             printer_name = NULL;
+649             reread = 0;
+650             pthread_mutex_unlock(&amp;configlock);
+651             init_printer();
+652         } else {
+653             pthread_mutex_unlock(&amp;configlock);
+654         }
+
+655         /*
+656          * Send job to printer.
+657          */
+658         sprintf(name, "%s/%s/%ld", SPOOLDIR, DATADIR, jp-&gt;jobid);
+659         if ((fd = open(name, O_RDONLY)) &lt; 0) {
+660             log_msg("job %ld canceled - can't open %s: %s",
+661               jp-&gt;jobid, name, strerror(errno));
+662             free(jp);
+663             continue;
+664         }
+665         if (fstat(fd, &amp;sbuf) &lt; 0) {
+666             log_msg("job %ld canceled - can't fstat %s: %s",
+667               jp-&gt;jobid, name, strerror(errno));
+668             free(jp);
+669             close(fd);
+670             continue;
+671         }
+</pre><BR>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e158700"></a><a name="idd1e158705"></a><a name="idd1e158710"></a><a name="idd1e158715"></a>[641654]</P></td><td class="docTableCell" align="left" valign="top"><p class="docText">Now that we have a job to print, we check for a change in the configuration file. We lock the <tt>configlock</tt> mutex and check the <tt>reread</tt> variable. If it is nonzero, then we free the old printer <tt>addrinfo</tt> list, clear the pointers, unlock the mutex, and call <tt>init_printer</tt> to reinitialize the printer information. Since only this context looks at and potentially changes the printer information after the <tt>main</tt> thread initialized it, we don't need any synchronization other than using the <tt>configlock</tt> mutex to protect the state of the <tt>reread</tt> flag.</p></td></tr><tr><td class="docTableCell" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="left" valign="top"><p class="docText">Note that although we acquire and release two different mutex locks in this function, we never hold both at the same time, so we don't need to establish a lock hierarchy (<a class="docLink" href="ch11lev1sec6.html#ch11lev1sec6">Section 11.6</a>).</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[655671]</p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">If we can't open the data file, we log a message, free the <tt>job</tt> structure, and continue. After opening the file, we call <tt>fstat</tt> to find the size of the file. If this fails, we log a message, clean up, and continue.</P></td></TR></table></P><BR>
+
+<pre>
+672         if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) &lt; 0) {
+673             log_msg("job %ld deferred - can't create socket: %s",
+674               jp-&gt;jobid, strerror(errno));
+675             goto defer;
+676         }
+677         if (connect_retry(sockfd, printer-&gt;ai_addr,
+678           printer-&gt;ai_addrlen) &lt; 0) {
+679             log_msg("job %ld deferred - can't contact printer: %s",
+680               jp-&gt;jobid, strerror(errno));
+681             goto defer;
+682         }
+
+683         /*
+684          * Set up the IPP header.
+685          */
+686         icp = ibuf;
+687         hp = (struct ipp_hdr *)icp;
+688         hp-&gt;major_version = 1;
+689         hp-&gt;minor_version = 1;
+690         hp-&gt;operation = htons(OP_PRINT_JOB);
+691         hp-&gt;request_id = htonl(jp-&gt;jobid);
+692         icp += offsetof(struct ipp_hdr, attr_group);
+693         *icp++ = TAG_OPERATION_ATTR;
+694         icp = add_option(icp, TAG_CHARSET, "attributes-charset",
+695           "utf-8");
+696         icp = add_option(icp, TAG_NATULANG,
+697           "attributes-natural-language", "en-us");
+698         sprintf(str, "http://%s:%d", printer_name, IPP_PORT);
+699         icp = add_option(icp, TAG_URI, "printer-uri", str);
+</pre><br>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e158800"></a><a name="idd1e158805"></a><a name="idd1e158810"></a><a name="idd1e158815"></a><a name="idd1e158820"></a>[672682]</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">We open a stream socket to communicate with the printer. If the <tt>socket</tt> call fails, we jump down to <tt>defer</tt>, where we will clean up, delay, and try again later. If we can create a socket, we call <tt>connect_retry</tt> to connect to the printer.</P></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">[683699]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">Next, we set up the IPP header. The operation is a print-job request. We use <tt>htons</tt> to convert the 2-byte operation ID from host to network byte order and <tt>htonl</tt> to convert the 4-byte job ID from host to network byte order. After the initial portion of the header, we set the tag value to indicate that operation attributes follow. We call <tt>add_option</tt> to add attributes to the message. <a class="docLink" href="ch21lev1sec2.html#ch21fig04">Figure 21.4</a> lists the required and optional attributes for print-job requests. The first three are required. We specify the character set to be UTF-8, which the printer must support. We specify the language as <tt>en-us</tt>, which represents U.S. English. Another required attribute is the printer Universal Resource Identifier (URI). We set it to <tt>http://</tt><span class="docEmphasis">printer_name</span><tt>:631</tt>. (We really should ask the printer for a list of supported URIs and select one from that list, but that would complicate this example without adding much value.)</P></td></tr></table></p><br>
+
+<pre>
+700         icp = add_option(icp, TAG_NAMEWOLANG,
+701           "requesting-user-name", jp-&gt;req.usernm);
+702         icp = add_option(icp, TAG_NAMEWOLANG, "job-name",
+703           jp-&gt;req.jobnm);
+704         if (jp-&gt;req.flags &amp; PR_TEXT) {
+705             icp = add_option(icp, TAG_MIMETYPE, "document-format",
+706               "text/plain");
+707         } else {
+708             icp = add_option(icp, TAG_MIMETYPE, "document-format",
+709               "application/postscript");
+710         }
+711         *icp++ = TAG_END_OF_ATTR;
+712         ilen = icp - ibuf;
+
+713         /*
+714          * Set up the HTTP header.
+715          */
+716         hcp = hbuf;
+717         sprintf(hcp, "POST /%s/ipp HTTP/1.1\r\n", printer_name);
+718         hcp += strlen(hcp);
+719         sprintf(hcp, "Content-Length: %ld\r\n",
+720           (long)sbuf.st_size + ilen);
+721         hcp += strlen(hcp);
+722         strcpy(hcp, "Content-Type: application/ipp\r\n");
+723         hcp += strlen(hcp);
+724         sprintf(hcp, "Host: %s:%d\r\n", printer_name, IPP_PORT);
+725         hcp += strlen(hcp);
+726         *hcp++ = '\r';
+727         *hcp++ = '\n';
+728         hlen = hcp - hbuf;
+</pre><BR>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e158897"></a><a name="idd1e158900"></a><a name="idd1e158905"></a>[700712]</P></td><td class="docTableCell" align="left" valign="top"><p class="docText">The <tt>requesting-user-name</tt> attribute is recommended, but not required. The <tt>job-name</tt> attribute is optional. Recall that the <tt>print</tt> command sends the name of the file being printed as the job name, which can help users distinguish among multiple pending jobs. The last attribute we supply is the <tt>document-format</tt>. If we omit it, the printer will assume that the file conforms to the printer's default format. For a PostScript printer, this is probably PostScript, but some printers can autosense the format and choose between PostScript and text or PostScript and PCL (HP's Printer Command Language). If the <tt>PR_TEXT</tt> flag is set, we specify the document format as <tt>text/plain</tt>. Otherwise, we set it to <tt>application/postscript</tt>. Then we delimit the end of the attributes portion of the header with an end-of-attributes tag and calculate the size of the IPP header.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[713728]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Now that we know the IPP header size, we can set up the HTTP header. We set the <tt>Context-Length</tt> to the size in bytes of the IPP header plus the size of the file to be printed. The <tt>Content-Type</tt> is <tt>application/ipp</tt>. We mark the end of the HTTP header with a carriage return and a line feed.</p></td></tr></table></p><br>
+
+<pre>
+729         /*
+730          * Write the headers first. Then send the file.
+731          */
+732         iov[0].iov_base = hbuf;
+733         iov[0].iov_len = hlen;
+734         iov[1].iov_base = ibuf;
+735         iov[1].iov_len = ilen;
+736         if ((nw = writev(sockfd, iov, 2)) != hlen + ilen) {
+737             log_ret("can't write to printer");
+738             goto defer;
+739         }
+740         while ((nr = read(fd, buf, IOBUFSZ)) &gt; 0) {
+741             if ((nw = write(sockfd, buf, nr)) != nr) {
+742                 if (nw &lt; 0)
+743                   log_ret("can't write to printer");
+744                 else
+745                   log_msg("short write (%d/%d) to printer", nw, nr);
+746                 goto defer;
+747             }
+748         }
+749         if (nr &lt; 0) {
+750             log_ret("can't read %s", name);
+751             goto defer;
+752         }
+
+753         /*
+754          * Read the response from the printer.
+755          */
+756         if (printer_status(sockfd, jp)) {
+757             unlink(name);
+758             sprintf(name, "%s/%s/%ld", SPOOLDIR, REQDIR, jp-&gt;jobid);
+759             unlink(name);
+760             free(jp);
+761             jp = NULL;
+762         }
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e158980"></a><a name="idd1e158985"></a><a name="idd1e158990"></a><a name="idd1e158995"></a><a name="idd1e159000"></a><a name="idd1e159005"></a>[729739]</p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">We set the first element of the <tt>iovec</tt> array to refer to the HTTP header and the second element to refer to the IPP header. Then we use <tt>writev</tt> to send both headers to the printer. If the write fails, we log a message and jump to <tt>defer</tt>, where we will clean up and delay before trying again.</P></td></TR><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[740752]</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Next, we send the data file to the printer. We read the data file in <tt>IOBUFSZ</tt> chunks and write it to the socket connected to the printer. If either <tt>read</tt> or <tt>write</tt> fails, we log a message and jump to <tt>defer</tt>.</P></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">[753762]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">After sending the entire file to be printed, we call <tt>printer_status</tt> to receive the printer's response to our print request. If <tt>printer_status</tt> succeeds, it returns a positive value, and we delete the data and control files. Then we free the <tt>job</tt> structure, set its pointer to <tt>NULL</tt>, and fall through to the <tt>defer</tt> label.</P></td></tr></table></p><br>
+
+<pre>
+763   defer:
+764         close(fd);
+765         if (sockfd &gt;= 0)
+766             close(sockfd);
+767         if (jp != NULL) {
+768             replace_job(jp);
+769             sleep(60);
+770         }
+771     }
+772   }
+
+773   /*
+774    * Read data from the printer, possibly increasing the buffer.
+775    * Returns offset of end of data in buffer or -1 on failure.
+776    *
+777    * LOCKING: none.
+778    */
+779   ssize_t
+780   readmore(int sockfd, char **bpp, int off, int *bszp)
+781   {
+782     ssize_t nr;
+783     char    *bp = *bpp;
+784     int     bsz = *bszp;
+
+785     if (off &gt;= bsz) {
+786         bsz += IOBUFSZ;
+787         if ((bp = realloc(*bpp, bsz)) == NULL)
+788             log_sys("readmore: can't allocate bigger read buffer");
+789         *bszp = bsz;
+790         *bpp = bp;
+791     }
+792     if ((nr = tread(sockfd, &amp;bp[off], bsz-off, 1)) &gt; 0)
+793         return(off+nr);
+794     else
+795         return(-1);
+796   }
+</pre><BR>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e159097"></a>[763772]</P></td><td class="docTableCell" align="left" valign="top"><p class="docText">At the <tt>defer</tt> label, we close the file descriptor for the open data file. If the socket descriptor is valid, we close it. On error, we place the job back on the head of the pending job list and delay for 1 minute. On success, <tt>jp</tt> is <tt>NULL</tt>, so we simply go back to the top of the loop to get the next job to print.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[773796]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The <tt>readmore</tt> function is used to read part of the response message from the printer. If we're at the end of the buffer, we reallocate a bigger buffer and return the new starting buffer address and buffer size through the <tt>bpp</tt> and <tt>bszp</tt> parameters, respectively. In either case, we read as much as the buffer will hold, starting at the end of the data already in the buffer. We return the new offset in the buffer corresponding to the end of the data read. If the <tt>read</tt> fails or the timeout expires, we return 1.</p></td></tr></table></p><br>
+
+<pre>
+797   /*
+798    * Read and parse the response from the printer. Return 1
+799    * if the request was successful, and 0 otherwise.
+800    *
+801    * LOCKING: none.
+802    */
+803   int
+804   printer_status(int sockfd, struct job *jp)
+805   {
+806     int             i, success, code, len, found, bufsz;
+807     long            jobid;
+808     ssize_t         nr;
+809     char            *statcode, *reason, *cp, *contentlen;
+810     struct ipp_hdr  *hp;
+811     char            *bp;
+
+812     /*
+813      * Read the HTTP header followed by the IPP response header.
+814      * They can be returned in multiple read attempts. Use the
+815      * Content-Length specifier to determine how much to read.
+816      */
+817     success = 0;
+818     bufsz = IOBUFSZ;
+819     if ((bp = malloc(IOBUFSZ)) == NULL)
+820         log_sys("printer_status: can't allocate read buffer");
+
+821     while ((nr = tread(sockfd, bp, IOBUFSZ, 5)) &gt; 0) {
+822         /*
+823          * Find the status. Response starts with "HTTP/x.y"
+824          * so we can skip the first 8 characters.
+825          */
+826         cp = bp + 8;
+827         while (isspace((int)*cp))
+828             cp++;
+829         statcode = cp;
+830         while (isdigit((int)*cp))
+831             cp++;
+832         if (cp == statcode) { /* Bad format; log it and move on */
+833             log_msg(bp);
+</pre><br>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e159163"></a>[797811]</p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">The <tt>printer_status</tt> function reads the printer's response to a print-job request. We don't know how the printer will respond; it might send a response in multiple messages, send the complete response in one message, or include intermediate acknowledgements, such as HTTP <tt>100 Continue</tt> messages. We need to handle all these possibilities.</P></td></TR><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[812833]</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">We allocate a buffer and read from the printer, expecting a response to be available within about 5 seconds. We skip the <tt>HTTP/1.1</tt> and any white space that starts the message. The numeric status code should follow. If it doesn't, we log the contents of the message.</P></TD></TR></table></p><BR>
+
+<pre>
+834         } else {
+835             *cp++ = '\0';
+836             reason = cp;
+837             while (*cp != '\r' &amp;&amp; *cp != '\n')
+838                 cp++;
+839             *cp = '\0';
+840             code = atoi(statcode);
+841             if (HTTP_INFO(code))
+842                 continue;
+843             if (!HTTP_SUCCESS(code)) { /* probable error: log it */
+844                 bp[nr] = '\0';
+845                 log_msg("error: %s", reason);
+846                 break;
+847             }
+
+848             /*
+849              * The HTTP request was okay, but we still
+850              * need to check the IPP status. First
+851              * search for the Content-Length specifier.
+852              */
+853             i = cp - bp;
+854             for (;;) {
+855                 while (*cp != 'C' &amp;&amp; *cp != 'c' &amp;&amp; i &lt; nr) {
+856                     cp++;
+857                     i++;
+858                 }
+859                 if (i &gt;= nr &amp;&amp; /* get more header */
+860                   ((nr = readmore(sockfd, &amp;bp, i, &amp;bufsz)) &lt; 0))
+861                     goto out;
+862                 cp = &amp;bp[i];
+</pre><BR>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e159217"></a><a name="idd1e159222"></a>[834839]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">If we have found a numeric status code in the response, we convert the first nondigit character to a null byte. The reason string (a text message) should follow. We search for the terminating carriage return or line feed, also terminating the text string with a null byte.</p></TD></tr><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[840847]</P></td><td class="docTableCell" align="left" valign="top"><p class="docText">We convert the code to an integer. If this is an informational message only, we ignore it and continue the loop so we end up reading more. We expect to see either a success message or an error message. If we get an error message, we log the error and break out of the loop.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[848862]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">If the HTTP request was successful, we need to check the IPP status. We search through the message until we find the <tt>Content-Length</tt> attribute, so we look for a <tt>C</tt> or <tt>c</tt>. HTTP header keywords are case-insensitive, so we need to check both lowercase and uppercase characters.</p></td></tr><tr><td class="docTableCell" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="left" valign="top"><p class="docText">If we run out of buffer space, we read some more. Since <tt>readmore</tt> calls <tt>realloc</tt>, which might change the address of the buffer, we need to reset <tt>cp</tt> to point to the correct place in the buffer.</P></TD></tr></table></P><BR>
+
+<pre>
+863                 if (strncasecmp(cp, "Content-Length:", 15) == 0) {
+864                     cp += 15;
+865                     while (isspace((int)*cp))
+866                         cp++;
+867                     contentlen = cp;
+868                     while (isdigit((int)*cp))
+869                         cp++;
+870                     *cp++ = '\0';
+871                     i = cp - bp;
+872                     len = atoi(contentlen);
+873                     break;
+874                 } else {
+875                     cp++;
+876                     i++;
+877                 }
+878             }
+879             if (i &gt;= nr &amp;&amp; /* get more header */
+880               ((nr = readmore(sockfd, &amp;bp, i, &amp;bufsz)) &lt; 0))
+881                 goto out;
+882             cp = &amp;bp[i];
+
+883             found = 0;
+884             while (!found) {     /* look for end of HTTP header */
+885                 while (i &lt; nr - 2) {
+886                     if (*cp == '\n' &amp;&amp; *(cp + 1) == '\r' &amp;&amp;
+887                       *(cp + 2) == '\n') {
+888                         found = 1;
+889                         cp += 3;
+890                         i += 3;
+891                         break;
+892                     }
+893                     cp++;
+894                     i++;
+895                 }
+896                 if (i &gt;= nr &amp;&amp; /* get more header */
+897                   ((nr = readmore(sockfd, &amp;bp, i, &amp;bufsz)) &lt; 0))
+898                     goto out;
+899                 cp = &amp;bp[i];
+900             }
+</pre><BR>
+
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">[863882]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">If we find the <tt>Content-Length</tt> attribute string, we search for its value. We convert this numeric string into an integer, break out of the <tt>for</tt> loop, and read more from the printer if we've exhausted the contents of the buffer. If we reach the end of the buffer without finding the <tt>Content-Length</tt> attribute, we continue in the loop and read some more from the printer.</p></TD></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText">[883900]</P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Once we get the length of the message as specified by the <tt>Content-Length</tt> attribute, we search for the end of the HTTP header (a blank line). If we find it, we set the <tt>found</tt> flag and skip past the blank line in the message.</P></TD></tr></table></p><br>
+
+<pre>
+901             if (nr - i &lt; len &amp;&amp; /* get more header */
+902               ((nr = readmore(sockfd, &amp;bp, i, &amp;bufsz)) &lt; 0))
+903                 goto out;
+904             cp = &amp;bp[i];
+
+905             hp = (struct ipp_hdr *)cp;
+906             i = ntohs(hp-&gt;status);
+907             jobid = ntohl(hp-&gt;request_id);
+908             if (jobid != jp-&gt;jobid) {
+909                 /*
+910                  * Different jobs. Ignore it.
+911                  */
+912                 log_msg("jobid %ld status code %d", jobid, i);
+913                 break;
+914             }
+
+915             if (STATCLASS_OK(i))
+916                 success = 1;
+917             break;
+918         }
+919      }
+
+920    out:
+921      free(bp);
+922      if (nr &lt; 0) {
+923          log_msg("jobid %ld: error reading printer response: %s",
+924            jobid, strerror(errno));
+925      }
+926      return(success);
+927   }
+</pre><br>
+
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e159360"></a><a name="idd1e159365"></a>[901904]</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">We continue searching for the end of the HTTP header. If we run out of space in the buffer, we read more. When we find the end of the HTTP header, we calculate the number of bytes that the HTTP header consumed. If the amount we've read minus the size of the HTTP header is not equal to the amount of data in the IPP message (the value we calculated from the content length), then we read some more.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">[905927]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">We get the status and job ID from the IPP header in the message. Both are stored as integers in network byte order, so we need to convert them to the host byte order by calling <tt>ntohs</tt> and <tt>ntohl</tt>. If the job IDs don't match, then this is not our response, so we log a message and break out of the outer <tt>while</tt> loop. If the IPP status indicates success, then we save the return value and break out of the loop. We return 1 if the print request was successful and 0 if it failed.</p></td></tr></table></p><br>
+<p class="docText">This concludes our look at the extended example in this chapter. The programs in this chapter were tested with a Xerox Phaser 860 network-attached PostScript printer. Unfortunately, this printer doesn't recognize the <tt>text/plain</tt> document format, but it <a name="idd1e159406"></a><a name="idd1e159411"></a><a name="idd1e159416"></a><a name="idd1e159421"></a><a name="idd1e159426"></a>does support the ability to autosense between plaintext and PostScript. Therefore, with this printer, we can print PostScript files and text files, but we cannot print the source to a PostScript program as plaintext unless we use some other utility, such as <tt>a2ps</tt>(1) to encapsulate the PostScript program.</p>
+
+<ul></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch21lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch21lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

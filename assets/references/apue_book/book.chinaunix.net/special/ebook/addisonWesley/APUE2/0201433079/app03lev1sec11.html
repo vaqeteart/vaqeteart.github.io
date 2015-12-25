@@ -1,0 +1,83 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Chapter 11</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app03lev1sec11"></a>
+<h3 class="docSection1Title">Chapter 11</h3>
+<p class="docText"></P>
+<P><table border="0" cellspacing="16" cellpadding="0"><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch11qa1q1a1"></a><B><a class="docLink" href="ch11lev1sec8.html#ch11qa1q1">11.1</a></b></TD><td><p class="docText">A version of the program that allocates the memory dynamically instead of using an automatic variable is shown in <a class="docLink" href="app03lev1sec11.html#app03fig11">Figure C.11</a>.</P>
+<a name="app03fig11"></a>
+<H5 class="docExampleTitle">Figure C.11. Correct use of thread return value</H5>
+<pre>
+#include "apue.h"
+#include &lt;pthread.h&gt;
+
+struct foo {
+    int a, b, c, d;
+};
+
+void
+printfoo(const char *s, const struct foo *fp)
+{
+    printf(s);
+    printf("  structure at 0x%x\n", (unsigned)fp);
+    printf("  foo.a = %d\n", fp-&gt;a);
+    printf("  foo.b = %d\n", fp-&gt;b);
+    printf("  foo.c = %d\n", fp-&gt;c);
+    printf("  foo.d = %d\n", fp-&gt;d);
+}
+
+void *
+thr_fn1(void *arg)
+{
+    struct foo *fp;
+
+    if ((fp = malloc(sizeof(struct foo))) == NULL)
+        err_sys("can't allocate memory");
+    fp-&gt;a = 1;
+    fp-&gt;b = 2;
+    fp-&gt;c = 3;
+    fp-&gt;d = 4;
+    printfoo("thread:\n", fp);
+    return((void *)fp);
+}
+
+int
+main(void)
+{
+    int err;
+    pthread_t tid1;
+    struct foo *fp;
+
+    err = pthread_create(&amp;tid1, NULL, thr_fn1, NULL);
+    if (err != 0)
+        err_exit(err, "can't create thread 1");
+    err = pthread_join(tid1, (void *)&amp;fp);
+    if (err != 0)
+        err_exit(err, "can't join with thread 1");
+    printfoo("parent:\n", fp);
+    exit(0);
+}
+</pre><br>
+
+
+</TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch11qa1q2a2"></a><B><a class="docLink" href="ch11lev1sec8.html#ch11qa1q2">11.2</a></b></td><TD><p class="docText">To change the thread ID of a pending job, the readerwriter lock must be held in write mode to prevent anyone from searching the list while the ID is being changed. The problem with the way the interfaces are currently defined is that the ID of a job can change between the time that the job is found with <tt>job_find</tt> and the job is removed from the list by calling <tt>job_remove</tt>. This problem can be solved by embedding a reference count and a mutex inside the <tt>job</tt> structure and having <tt>job_find</tt> increment the reference count. The code that changes the ID can then avoid any job in the list that has a nonzero reference count.</P></td></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch11qa1q3a3"></a><b><a class="docLink" href="ch11lev1sec8.html#ch11qa1q3">11.3</a></b></td><td><p class="docText">First of all, the list is protected by a readerwriter lock, but the condition variable needs a mutex to protect the condition. Second, the condition each thread should wait to be satisfied is that there is a job for it to process, so we need to create a per thread data structure to represent this condition. Alternatively, we can embed the mutex and condition variable in the <tt>queue</tt> structure, but this means that all worker threads will wait on the same condition. If there are many worker threads, we can run into a <span class="docEmphasis">thundering herd</span> problem, whereby many threads are awakened without work to do, resulting in a waste of CPU resources and increased lock contention.</P></td></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch11qa1q4a4"></a><b><a class="docLink" href="ch11lev1sec8.html#ch11qa1q4">11.4</a></b></td><td><p class="docText">It depends on the circumstances. In general, both can be correct, but each alternative has drawbacks. In the first sequence, the waiting threads will be scheduled to run after we call <tt>pthread_cond_broadcast</tt>. If the program is running on a multiprocessor, some threads will run and immediately block because we are still holding the mutex (recall that <tt>pthread_cond_wait</tt> returns <a name="idd1e85308"></a><a name="idd1e85313"></a><a name="idd1e85316"></a><a name="idd1e85322"></a><a name="idd1e85327"></a><a name="idd1e85332"></a><a name="idd1e85337"></a><a name="idd1e85342"></a><a name="idd1e85347"></a><a name="idd1e85352"></a><a name="idd1e85357"></a>with the mutex held). In the second sequence, a running thread can acquire the mutex between steps 3 and 4, invalidate the condition, and release the mutex. Then, when we call <tt>pthread_cond_broadcast</tt>, the condition will no longer be true, and the threads will run needlessly. This is why the awakened threads must recheck the condition and not assume that it is true merely because <tt>pthread_cond_wait</tt> returned.</p></td></tr></table></p>
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

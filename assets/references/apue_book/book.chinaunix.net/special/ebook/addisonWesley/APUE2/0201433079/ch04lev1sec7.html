@@ -1,0 +1,93 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.7.&nbsp; access Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec7"></a>
+<h3 class="docSection1Title">4.7. <tt>access</tt> Function</h3>
+<p class="docText">As we described earlier, when we open a file, the kernel performs its access tests based on the effective user and group IDs. There are times when a process wants to test accessibility based on the real user and group IDs. This is useful when a process is running as someone else, using either the set-user-ID or the set-group-ID feature. Even though a process might be set-user-ID to root, it could still want to verify that the real user can access a given file. The <tt>access</tt> function bases its tests on the real user and group IDs. (Replace <span class="docEmphasis">effective</span> with <span class="docEmphasis">real</span> in the four steps at the end of <a class="docLink" href="ch04lev1sec5.html#ch04lev1sec5">Section 4.5</a>.)</P>
+<a name="inta03"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+int access(const char *<span class="docEmphItalicAlt">pathname</span>, int <span class="docEmphItalicAlt">mode</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText"><a name="idd1e25996"></a><a name="idd1e26001"></a><a name="idd1e26006"></a><a name="idd1e26011"></a><a name="idd1e26016"></a>The <span class="docEmphasis">mode</span> is the bitwise OR of any of the constants shown in <a class="docLink" href="ch04lev1sec7.html#ch04fig07">Figure 4.7</a>.</P>
+<a name="ch04fig07"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 4.7. The <span class="docEmphasis">mode</span> constants for <tt>access</tt> function, from <tt>&lt;unistd.h&gt;</tt></H5></caption><colgroup><col width="50"><col width="200"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman"><span class="docEmphasis">mode</span></span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></P></th></tr></thead><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>R_OK</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">test for read permission</P></td></TR><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>W_OK</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">test for write permission</p></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>X_OK</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">test for execute permission</p></td></tr><tr><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>F_OK</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">test for existence of file</P></TD></tr></table></P><BR>
+<a name="ch04ex02"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText"><a class="docLink" href="ch04lev1sec7.html#ch04fig08">Figure 4.8</a> shows the use of the <tt>access</tt> function.</P>
+<p class="docText">Here is a sample session with this program:</p>
+
+<pre>
+         $ <span class="docEmphStrong">ls -l a.out</span>
+         -rwxrwxr-x 1 sar         15945 Nov 30 12:10 a.out
+         $ <span class="docEmphStrong">./a.out a.out</span>
+         read access OK
+         open for reading OK
+         $ <span class="docEmphStrong">ls -l /etc/shadow</span>
+         -r-------- 1 root         1315 Jul 17 2002 /etc/shadow
+         $ <span class="docEmphStrong">./a.out /etc/shadow</span>
+         access error for /etc/shadow: Permission denied
+         open error for /etc/shadow: Permission denied
+         $ <span class="docEmphStrong">su</span>                        <span class="docEmphItalicAlt">become superuser</span>
+         Password:                  <span class="docEmphItalicAlt">enter superuser password</span>
+         # <span class="docEmphStrong">chown root a.out</span>         <span class="docEmphItalicAlt">change file's user ID to root</span>
+         # <span class="docEmphStrong">chmod u+s a.out</span>          <span class="docEmphItalicAlt">and turn on set-user-ID bit</span>
+         # <span class="docEmphStrong">ls -l a.out</span>              <span class="docEmphItalicAlt">check owner and SUID bit</span>
+         -rwsrwxr-x 1 root     15945 Nov 30 12:10 a.out
+         # <span class="docEmphStrong">exit</span>                     <span class="docEmphItalicAlt">go back to normal user</span>
+         $ <span class="docEmphStrong">./a.out /etc/shadow</span>
+         access error for /etc/shadow: Permission denied
+         open for reading OK
+</pre><BR>
+
+<p class="docText"><a name="idd1e26190"></a><a name="idd1e26195"></a><a name="idd1e26198"></a><a name="idd1e26203"></a><a name="idd1e26206"></a><a name="idd1e26211"></a><a name="idd1e26216"></a><a name="idd1e26221"></a><a name="idd1e26226"></a><a name="idd1e26231"></a><a name="idd1e26236"></a><a name="idd1e26241"></a>In this example, the set-user-ID program can determine that the real user cannot normally read the file, even though the <tt>open</tt> function will succeed.</P>
+
+<a name="ch04fig08"></a>
+<H5 class="docExampleTitle">Figure 4.8. Example of <tt>access</tt> function</h5>
+
+<pre>#include "apue.h"
+#include &lt;fcntl.h&gt;
+
+int
+main(int argc, char *argv[])
+{
+    if (argc != 2)
+        err_quit("usage: a.out &lt;pathname&gt;");
+    if (access(argv[1], R_OK) &lt; 0)
+        err_ret("access error for %s", argv[1]);
+    else
+        printf("read access OK\n");
+    if (open(argv[1], O_RDONLY) &lt; 0)
+        err_ret("open error for %s", argv[1]);
+    else
+        printf("open for reading OK\n");
+    exit(0);
+}
+</pre><BR>
+
+
+<blockquote>
+<p class="docText">In the preceding example and in <a class="docLink" href="ch08.html#ch08">Chapter 8</a>, we'll sometimes switch to become the superuser, to demonstrate how something works. If you're on a multiuser system and do not have superuser permission, you won't be able to duplicate these examples completely.</P>
+</blockquote>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

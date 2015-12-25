@@ -1,0 +1,45 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Exercises</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch07lev1sec13"></a>
+<h3 class="docSection1Title">Exercises</h3>
+<P><table border="0" cellspacing="16" cellpadding="0"><TR valign="top"><td align="right" class="docText" width="50"><a name="ch07qa1q1"></a><B><a class="docLink" href="app03lev1sec7.html#ch07qa1q1a2">7.1</a></b></TD><TD><p class="docText"><a name="idd1e52273"></a><a name="idd1e52278"></a><a name="idd1e52281"></a><a name="idd1e52286"></a><a name="idd1e52291"></a><a name="idd1e52294"></a><a name="idd1e52297"></a><a name="idd1e52302"></a><a name="idd1e52307"></a><a name="idd1e52312"></a><a name="idd1e52317"></a>On an Intel x86 system under both FreeBSD and Linux, if we execute the program that prints &quot;hello, world&quot; and do not call <tt>exit</tt> or <tt>return</tt>, the termination status of the program, which we can examine with the shell, is 13. Why?</p></TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch07qa1q2"></a><B><a class="docLink" href="app03lev1sec7.html#ch07qa1q2a2">7.2</a></b></td><TD><p class="docText">When is the output from the <tt>printf</tt>s in <a class="docLink" href="ch07lev1sec3.html#ch07fig03">Figure 7.3</a> actually output?</P></TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch07qa1q3"></a><b><a class="docLink" href="app03lev1sec7.html#ch07qa1q3a3">7.3</a></b></TD><TD><p class="docText">Is there any way for a function that is called by <tt>main</tt> to examine the command-line arguments without (a) passing <tt>argc</tt> and <tt>argv</tt> as arguments from <tt>main</tt> to the function or (b) having <tt>main</tt> copy <tt>argc</tt> and <tt>argv</tt> into global variables?</p></td></tr><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch07qa1q4"></a><b><a class="docLink" href="app03lev1sec7.html#ch07qa1q4a4">7.4</a></b></TD><td><p class="docText">Some UNIX system implementations purposely arrange that, when a program is executed, location 0 in the data segment is not accessible. Why?</P></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch07qa1q5"></a><b><a class="docLink" href="app03lev1sec7.html#ch07qa1q5a5">7.5</a></b></td><td><p class="docText">Use the <tt>typedef</tt> facility of C to define a new data type <tt>Exitfunc</tt> for an exit handler. Redo the prototype for <tt>atexit</tt> using this data type.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch07qa1q6"></a><b><a class="docLink" href="app03lev1sec7.html#ch07qa1q6a6">7.6</a></b></td><td><p class="docText">If we allocate an array of <tt>long</tt>s using <tt>calloc</tt>, is the array initialized to 0? If we allocate an array of pointers using <tt>calloc</tt>, is the array initialized to null pointers?</p></td></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch07qa1q7"></a><B><a class="docLink" href="app03lev1sec7.html#ch07qa1q7a7">7.7</a></b></TD><TD><p class="docText">In the output from the <tt>size</tt> command at the end of <a class="docLink" href="ch07lev1sec6.html#ch07lev1sec6">Section 7.6</a>, why aren't any sizes given for the heap and the stack?</p></TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch07qa1q8"></a><B><a class="docLink" href="app03lev1sec7.html#ch07qa1q8a8">7.8</a></b></td><TD><p class="docText">In <a class="docLink" href="ch07lev1sec7.html#ch07lev1sec7">Section 7.7</a>, the two file sizes (475570 and 11410) don't equal the sums of their respective text and data sizes. Why?</P></TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch07qa1q9"></a><b><a class="docLink" href="app03lev1sec7.html#ch07qa1q9a9">7.9</a></b></TD><TD><p class="docText">In <a class="docLink" href="ch07lev1sec7.html#ch07lev1sec7">Section 7.7</a>, why is there such a difference in the size of the executable file when using shared libraries for such a trivial program?</p></td></tr><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch07qa1q10"></a><b><a class="docLink" href="app03lev1sec7.html#ch07qa1q10a10">7.10</a></b></TD><td><p class="docText">At the end of <a class="docLink" href="ch07lev1sec10.html#ch07lev1sec10">Section 7.10</a>, we showed how a function can't return a pointer to an automatic variable. Is the following code correct?</P>
+<p><table cellspacing="0" FRAME="hsides" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+int
+f1(int val)
+{
+    int     *ptr;
+
+    if (val == 0) {
+        int     val;
+
+        val = 5;
+        ptr = &amp;val;
+    }
+    return(*ptr + 1);
+}
+</pre><br>
+
+</p></td></tr></table></p><br>
+</td></tr></table></p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,65 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 2.7.&nbsp; Feature Test Macros</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch02lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch02lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch02lev1sec7"></a>
+<h3 class="docSection1Title">2.7. Feature Test Macros</h3>
+<p class="docText">The headers define numerous POSIX.1 and XSI symbols, as we've described. But most implementations can add their own definitions to these headers, in addition to the POSIX.1 and XSI definitions. If we want to compile a program so that it depends only on the POSIX definitions and doesn't use any implementation-defined limits, we need to define the constant <tt>_POSIX_C_SOURCE</tt>. All the POSIX.1 headers use this constant to exclude any implementation-defined definitions when <tt>_POSIX_C_SOURCE</tt> is defined.</P>
+<blockquote>
+<p class="docText">Previous versions of the POSIX.1 standard defined the <tt>_POSIX_SOURCE</tt> constant. This has been superseded by the <tt>_POSIX_C_SOURCE</tt> constant in the 2001 version of POSIX.1.</P>
+</blockquote>
+<p class="docText">The constants <tt>_POSIX_C_SOURCE</tt> and <tt>_XOPEN_SOURCE</tt> are called <span class="docEmphasis">feature test macros</span>. All feature test macros begin with an underscore. When used, they are typically defined in the <tt>cc</tt> command, as in</p>
+
+<pre>
+   cc -D_POSIX_C_SOURCE=200112 file.c
+</pre><BR>
+
+<p class="docText">This causes the feature test macro to be defined before any header files are included by the C program. If we want to use only the POSIX.1 definitions, we can also set the first line of a source file to</P>
+
+<pre>
+   #define _POSIX_C_SOURCE 200112
+</pre><BR>
+
+<p class="docText">To make the functionality of Version 3 of the Single UNIX Specification available to applications, we need to define the constant <tt>_XOPEN_SOURCE</tt> to be 600. This has the same effect as defining <tt>_POSIX_C_SOURCE</tt> to be 200112L as far as POSIX.1 functionality is concerned.</p>
+<p class="docText"><a name="idd1e16508"></a><a name="idd1e16513"></a><a name="idd1e16516"></a><a name="idd1e16521"></a><a name="idd1e16526"></a><a name="idd1e16531"></a><a name="idd1e16534"></a><a name="idd1e16537"></a><a name="idd1e16540"></a><a name="idd1e16545"></a><a name="idd1e16550"></a><a name="idd1e16553"></a>The Single UNIX Specification defines the <tt>c99</tt> utility as the interface to the C compilation environment. With it we can compile a file as follows:</P>
+
+<pre>
+   c99 -D_XOPEN_SOURCE=600 file.c -o file
+</pre><BR>
+
+<p class="docText">To enable the 1999 ISO C extensions in the <tt>gcc</tt> C compiler, we use the <tt>-std=c99</tt> option, as in</P>
+
+<pre>
+   gcc -D_XOPEN_SOURCE=600 -std=c99 file.c -o file
+</pre><br>
+
+<p class="docText">Another feature test macro is <tt>_ _STDC_ _</tt>, which is automatically defined by the C compiler if the compiler conforms to the ISO C standard. This allows us to write C programs that compile under both ISO C compilers and non-ISO C compilers. For example, to take advantage of the ISO C prototype feature, if supported, a header could contain</P>
+
+<pre>
+   #ifdef _ _STDC_ _
+   void  *myfunc(const char *, int);
+   #else
+   void  *myfunc();
+   #endif
+</pre><br>
+
+<p class="docText">Although most C compilers these days support the ISO C standard, this use of the <tt>_ _STDC_ _</tt> feature test macro can still be found in many header files.</P>
+
+<UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch02lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch02lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

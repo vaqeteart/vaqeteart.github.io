@@ -1,0 +1,37 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Exercises</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch15.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch14lev1sec11"></a>
+<h3 class="docSection1Title" id="454331-933">Exercises</h3>
+<P><table border="0" cellspacing="16" cellpadding="0"><TR valign="top"><td align="right" class="docText" width="50"><a name="ch14qa1q1"></a><B><a class="docLink" href="app03lev1sec14.html#ch14qa1q1a1">14.1</a></b></TD><TD><p class="docText">Write a test program that illustrates your system's behavior when a process is blocked trying to write-lock a range of a file and additional read-lock requests are made. Is the process requesting a write lock starved by the processes read-locking the file?</p>
+</TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch14qa1q2"></a><B><a class="docLink" href="app03lev1sec14.html#ch14qa1q2a1">14.2</a></b></td><TD><p class="docText">Take a look at your system's headers and examine the implementation of <tt>select</tt> and the four <tt>FD_</tt> macros.</P>
+</TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch14qa1q3"></a><b><a class="docLink" href="app03lev1sec14.html#ch14qa1q3a1">14.3</a></b></TD><TD><p class="docText">The system headers usually have a built-in limit on the maximum number of descriptors that the <tt>fd_set</tt> data type can handle. Assume that we need to increase this limit to handle up to 2,048 descriptors. How can we do this?</p>
+</td></tr><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch14qa1q4"></a><b><a class="docLink" href="app03lev1sec14.html#ch14qa1q4a1">14.4</a></b></TD><td><p class="docText">Compare the functions provided for signal sets (<a class="docLink" href="ch10lev1sec11.html#ch10lev1sec11">Section 10.11</a>) and the <tt>fd_set</tt> descriptor sets. Also compare the implementation of the two on your system.</P>
+</td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch14qa1q5"></a><b><a class="docLink" href="app03lev1sec14.html#ch14qa1q5a1">14.5</a></b></td><td><p class="docText">How many types of information does <tt>getmsg</tt> return?</p>
+</td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch14qa1q6"></a><b><a class="docLink" href="app03lev1sec14.html#ch14qa1q6a1">14.6</a></b></td><td><p class="docText">Implement the function <tt>sleep_us</tt>, which is similar to <tt>sleep</tt>, but waits for a specified number of microseconds. Use either <tt>select</tt> or <tt>poll</tt>. Compare this function to the BSD <tt>usleep</tt> function.</p>
+</td></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch14qa1q7"></a><B><a class="docLink" href="app03lev1sec14.html#ch14qa1q7a1">14.7</a></b></TD><TD><p class="docText">Can you implement the functions <tt>TELL_WAIT</tt>, <tt>TELL_PARENT</tt>, <tt>TELL_CHILD</tt>, <tt>WAIT_PARENT</tt>, and <tt>WAIT_CHILD</tt> from <a class="docLink" href="ch10lev1sec16.html#ch10fig24">Figure 10.24</a> using advisory record locking instead of signals? If so, code and test your implementation.</p>
+</TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch14qa1q8"></a><B><a class="docLink" href="app03lev1sec14.html#ch14qa1q8a1">14.8</a></b></td><TD><p class="docText">Determine the capacity of a pipe using nonblocking writes. Compare this value with the value of <tt>PIPE_BUF</tt> from <a class="docLink" href="ch02.html#ch02">Chapter 2</a>.</P>
+</TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch14qa1q9"></a><b>14.9</b></TD><TD><p class="docText">Recall <a class="docLink" href="ch14lev1sec7.html#ch14fig28">Figure 14.28</a>. Determine the break-even point on your system where using <tt>writev</tt> is faster than copying the data yourself and using a single <tt>write</tt>.</p>
+</td></tr><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch14qa1q10"></a><b><a class="docLink" href="app03lev1sec14.html#ch14qa1q10a1">14.10</a></b></TD><td><p class="docText">Run the program in <a class="docLink" href="ch14lev1sec9.html#ch14fig32">Figure 14.32</a> to copy a file and determine whether the last-access time for the input file is updated.</P>
+</td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch14qa1q11"></a><b>14.11</b></td><td><p class="docText">In the program from <a class="docLink" href="ch14lev1sec9.html#ch14fig32">Figure 14.32</a>, <tt>close</tt> the input file after calling <tt>mmap</tt> to verify that closing the descriptor does not invalidate the memory-mapped I/O.</p>
+</td></tr></table></p>
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch15.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

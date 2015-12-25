@@ -1,0 +1,106 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.3.&nbsp; File Types</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec3"></a>
+<h3 class="docSection1Title">4.3. File Types</h3>
+<p class="docText">We've talked about two different types of files so far: regular files and directories. Most files on a UNIX system are either regular files or directories, but there are additional types of files. The types are:</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">Regular file. The most common type of file, which contains data of some form. There is no distinction to the UNIX kernel whether this data is text or binary. Any interpretation of the contents of a regular file is left to the application processing the file.</p><blockquote>
+<p class="docText">One notable exception to this is with binary executable files. To execute a program, the kernel must understand its format. All binary executable files conform to a format that allows the kernel to identify where to load a program's text and data.</P>
+</blockquote></div></LI><LI><div style="font-weight:normal"><p class="docList">Directory file. A file that contains the names of other files and pointers to information on these files. Any process that has read permission for a directory file can read the contents of the directory, but only the kernel can write directly <a name="idd1e24296"></a><a name="idd1e24299"></a><a name="idd1e24302"></a><a name="idd1e24305"></a><a name="idd1e24310"></a><a name="idd1e24315"></a><a name="idd1e24320"></a><a name="idd1e24325"></a><a name="idd1e24330"></a><a name="idd1e24335"></a><a name="idd1e24340"></a><a name="idd1e24345"></a><a name="idd1e24350"></a><a name="idd1e24355"></a><a name="idd1e24360"></a><a name="idd1e24365"></a>to a directory file. Processes must use the functions described in this chapter to make changes to a directory.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">Block special file. A type of file providing buffered I/O access in fixed-size units to devices such as disk drives.</P></div></li><LI><div style="font-weight:normal"><p class="docList">Character special file. A type of file providing unbuffered I/O access in variable-sized units to devices. All devices on a system are either block special files or character special files.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">FIFO. A type of file used for communication between processes. It's sometimes called a named pipe. We describe FIFOs in <a class="docLink" href="ch15lev1sec5.html#ch15lev1sec5">Section 15.5</a>.</P></div></li><LI><div style="font-weight:normal"><p class="docList">Socket. A type of file used for network communication between processes. A socket can also be used for non-network communication between processes on a single host. We use sockets for interprocess communication in <a class="docLink" href="ch16.html#ch16">Chapter 16</a>.</P></div></li><LI><div style="font-weight:normal"><p class="docList">Symbolic link. A type of file that points to another file. We talk more about symbolic links in <a class="docLink" href="ch04lev1sec16.html#ch04lev1sec16">Section 4.16</a>.</P></div></li></ol></div>
+<p class="docText">The type of a file is encoded in the <tt>st_mode</tt> member of the <tt>stat</tt> structure. We can determine the file type with the macros shown in <a class="docLink" href="ch04lev1sec3.html#ch04fig01">Figure 4.1</a>. The argument to each of these macros is the <tt>st_mode</tt> member from the <tt>stat</tt> structure.</p>
+<a name="ch04fig01"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 4.1. File type macros in <tt>&lt;sys/stat.h&gt;</tt></H5></caption><colgroup><col width="100"><col width="150"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Macro</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Type of file</span></p></th></TR></thead><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_ISREG()</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">regular file</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_ISDIR()</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">directory file</p></td></tr><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_ISCHR()</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">character special file</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_ISBLK()</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">block special file</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_ISFIFO()</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">pipe or FIFO</P></TD></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_ISLNK()</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">symbolic link</P></td></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_ISSOCK()</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">socket</p></td></tr></table></p><br>
+<p class="docText">POSIX.1 allows implementations to represent interprocess communication (IPC) objects, such as message queues and semaphores, as files. The macros shown in <a class="docLink" href="ch04lev1sec3.html#ch04fig02">Figure 4.2</a> allow us to determine the type of IPC object from the <tt>stat</tt> structure. Instead of taking the <tt>st_mode</tt> member as an argument, these macros differ from those in <a class="docLink" href="ch04lev1sec3.html#ch04fig01">Figure 4.1</a> in that their argument is a pointer to the <tt>stat</tt> structure.</p>
+<a name="ch04fig02"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 4.2. IPC type macros in <tt>&lt;sys/stat.h&gt;</tt></h5></caption><colgroup><col width="125"><col width="150"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Macro</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Type of object</span></p></th></TR></thead><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_TYPEISMQ()</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">message queue</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_TYPEISSEM()</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">semaphore</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_TYPEISSHM()</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">shared memory object</p></td></tr></table></p><BR>
+<p class="docText">Message queues, semaphores, and shared memory objects are discussed in <a class="docLink" href="ch15.html#ch15">Chapter 15</a>. However, none of the various implementations of the UNIX System discussed in this book represent these objects as files.</p>
+<a name="ch04ex01"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText"><a name="idd1e24652"></a>The program in <a class="docLink" href="ch04lev1sec3.html#ch04fig03">Figure 4.3</a> prints the type of file for each command-line argument.</P>
+<p class="docText">Sample output from <a class="docLink" href="ch04lev1sec3.html#ch04fig03">Figure 4.3</a> is</p>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out /etc/passwd /etc /dev/initctl /dev/log /dev/tty \</span>
+    &gt; <span class="docEmphStrong">/dev/scsi/host0/bus0/target0/lun0/cd /dev/cdrom</span>
+    /etc/passwd: regular
+    /etc: directory
+    /dev/initctl: fifo
+    /dev/log: socket
+    /dev/tty: character special
+    /dev/scsi/host0/bus0/target0/lun0/cd: block special
+    /dev/cdrom: symbolic link
+</pre><br>
+
+<p class="docText"><a name="idd1e24681"></a><a name="idd1e24686"></a><a name="idd1e24691"></a><a name="idd1e24696"></a><a name="idd1e24701"></a><a name="idd1e24706"></a><a name="idd1e24711"></a><a name="idd1e24714"></a><a name="idd1e24719"></a><a name="idd1e24724"></a><a name="idd1e24729"></a><a name="idd1e24734"></a><a name="idd1e24737"></a><a name="idd1e24742"></a><a name="idd1e24745"></a><a name="idd1e24750"></a><a name="idd1e24755"></a><a name="idd1e24760"></a><a name="idd1e24765"></a><a name="idd1e24770"></a><a name="idd1e24773"></a><a name="idd1e24778"></a><a name="idd1e24783"></a>(Here, we have explicitly entered a backslash at the end of the first command line, telling the shell that we want to continue entering the command on another line. The shell then prompts us with its secondary prompt, <tt>&gt;</tt>, on the next line.) We have specifically used the <tt>lstat</tt> function instead of the <tt>stat</tt> function to detect symbolic links. If we used the <tt>stat</tt> function, we would never see symbolic links.</p>
+<p class="docText">To compile this program on a Linux system, we must define <tt>_GNU_SOURCE</tt> to include the definition of the <tt>S_ISSOCK</tt> macro.</p>
+
+<a name="ch04fig03"></a>
+<h5 class="docExampleTitle">Figure 4.3. Print type of file for each command-line argument</h5>
+
+<pre>
+#include "apue.h"
+
+int
+main(int argc, char *argv[])
+{
+
+    int         i;
+    struct stat buf;
+    char        *ptr;
+
+    for (i = 1; i &lt; argc; i++) {
+        printf("%s: ", argv[i]);
+        if (lstat(argv[i], &amp;buf) &lt; 0) {
+            err_ret("lstat error");
+            continue;
+
+         }
+         if (S_ISREG(buf.st_mode))
+            ptr = "regular";
+         else if (S_ISDIR(buf.st_mode))
+            ptr = "directory";
+         else if (S_ISCHR(buf.st_mode))
+            ptr = "character special";
+         else if (S_ISBLK(buf.st_mode))
+            ptr = "block special";
+         else if (S_ISFIFO(buf.st_mode))
+            ptr = "fifo";
+         else if (S_ISLNK(buf.st_mode))
+            ptr = "symbolic link";
+         else if (S_ISSOCK(buf.st_mode))
+            ptr = "socket";
+         else
+            ptr = "** unknown mode **";
+         printf("%s\n", ptr);
+  }
+   exit(0);
+}
+</pre><br>
+
+
+<p class="docText">Historically, early versions of the UNIX System didn't provide the <tt>S_ISxxx</tt> macros. Instead, we had to logically AND the <tt>st_mode</tt> value with the mask <tt>S_IFMT</tt> and then compare the result with the constants whose names are <tt>S_IFxxx</tt>. Most systems define this mask and the related constants in the file <tt>&lt;sys/stat.h&gt;</tt>. If we examine this file, we'll find the <tt>S_ISDIR</tt> macro defined something like</p>
+
+<pre>
+    #define S_ISDIR(mode) (((mode) &amp; S_IFMT) == S_IFDIR)
+</pre><br>
+
+<p class="docText">We've said that regular files are predominant, but it is interesting to see what percentage of the files on a given system are of each file type. <a class="docLink" href="ch04lev1sec3.html#ch04fig04">Figure 4.4</a> shows the counts and percentages for a Linux system that is used as a single-user workstation. This data was obtained from the program that we show in <a class="docLink" href="ch04lev1sec21.html#ch04lev1sec21">Section 4.21</a>.</p>
+<a name="ch04fig04"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 4.4. Counts and percentages of different file types</h5></caption><colgroup><col width="100"><col width="80"><col width="90"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">File type</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Count</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Percentage</span></p></th></TR></thead><TR><td class="rightBorder" align="left" valign="top"><p class="docText">regular file</P></TD><TD class="rightBorder" align="right" valign="top"><p class="docText">226,856</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">88.22 %</P></td></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText">directory</P></TD><td class="rightBorder" align="right" valign="top"><p class="docText">23,017</P></TD><td class="docTableCell" align="center" valign="top"><p class="docText">8.95</P></TD></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">symbolic link</p></TD><td class="rightBorder" align="right" valign="top"><p class="docText">6,442</P></td><TD class="docTableCell" align="center" valign="top"><p class="docText">2.51</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">character special</p></td><td class="rightBorder" align="right" valign="top"><p class="docText">447</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">0.17</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">block special</p></TD><TD class="rightBorder" align="right" valign="top"><p class="docText">312</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">0.12</P></td></TR><TR><TD class="rightBorder" align="left" valign="top"><p class="docText">socket</p></TD><td class="rightBorder" align="right" valign="top"><p class="docText">69</P></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">0.03</p></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText">FIFO</P></td><td class="rightBorder" align="right" valign="top"><p class="docText">1</p></td><TD class="docTableCell" align="center" valign="top"><p class="docText">0.00</p></TD></tr></table></P><br>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

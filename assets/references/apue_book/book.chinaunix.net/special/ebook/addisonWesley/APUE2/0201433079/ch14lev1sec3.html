@@ -1,0 +1,460 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 14.3.&nbsp; Record Locking</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch14lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch14lev1sec3"></a>
+<h3 class="docSection1Title">14.3. Record Locking</h3>
+<p class="docText">What happens when two people edit the same file at the same time? In most UNIX systems, the final state of the file corresponds to the last process that wrote the file. In some applications, however, such as a database system, a process needs to be certain that it alone is writing to a file. To provide this capability for processes that need it, commercial UNIX systems provide record locking. (In <a class="docLink" href="ch20.html#ch20">Chapter 20</a>, we develop a database library that uses record locking.)</P>
+<p class="docText"><span class="docEmphasis">Record locking</span> is the term normally used to describe the ability of a process to prevent other processes from modifying a region of a file while the first process is reading or modifying that portion of the file. Under the UNIX System, the adjective <a name="idd1e98717"></a><a name="idd1e98720"></a><a name="idd1e98725"></a><a name="idd1e98730"></a><a name="idd1e98733"></a><a name="idd1e98736"></a><a name="idd1e98741"></a><a name="idd1e98746"></a><a name="idd1e98749"></a><a name="idd1e98752"></a><a name="idd1e98755"></a><a name="idd1e98758"></a><a name="idd1e98761"></a><a name="idd1e98764"></a>&quot;record&quot; is a misnomer, since the UNIX kernel does not have a notion of records in a file. A better term is <span class="docEmphasis">byte-range locking</span>, since it is a range of a file (possibly the entire file) that is locked.</P>
+<a name="ch14lev2sec1"></a>
+<h4 class="docSection2Title">History</H4>
+<p class="docText">One of the criticisms of early UNIX systems was that they couldn't be used to run database systems, because there was no support for locking portions of files. As UNIX systems found their way into business computing environments, various groups added support record locking (differently, of course).</P>
+<p class="docText">Early Berkeley releases supported only the <tt>flock</tt> function. This function locks only entire files, not regions of a file.</P>
+<p class="docText">Record locking was added to System V Release 3 through the <tt>fcntl</tt> function. The <tt>lockf</tt> function was built on top of this, providing a simplified interface. These functions allowed callers to lock arbitrary byte ranges in a file, from the entire file down to a single byte within the file.</p>
+<p class="docText">POSIX.1 chose to standardize on the <tt>fcntl</tt> approach. <a class="docLink" href="ch14lev1sec3.html#ch14fig02">Figure 14.2</a> shows the forms of record locking provided by various systems. Note that the Single UNIX Specification includes <tt>lockf</tt> in the XSI extension.</P>
+<a name="ch14fig02"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 14.2. Forms of record locking supported by various UNIX systems</h5></caption><colgroup><col width="100"><col width="75"><col width="100"><col width="75"><col width="75"><col width="75"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">System</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Advisory</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Mandatory</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman"><tt>fcntl</tt></span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman"><tt>lockf</tt></span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman"><tt>flock</tt></span></P></th></TR></thead><tr><TD class="rightBorder bottomBorder" align="left" valign="top"><p class="docText">SUS</P></td><td class="rightBorder bottomBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><TD class="rightBorder bottomBorder" align="left" valign="top">&nbsp;</td><TD class="rightBorder bottomBorder" align="center" valign="top"><p class="docText">&#8226;</p></TD><td class="rightBorder bottomBorder" align="center" valign="top"><p class="docText">XSI</p></td><td class="bottomBorder" align="left" valign="top">&nbsp;</td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">FreeBSD 5.2.1</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="rightBorder" align="left" valign="top">&nbsp;</td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td></TR><TR><TD class="rightBorder" align="left" valign="top"><p class="docText">Linux 2.4.22</p></TD><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD></tr><TR><td class="rightBorder" align="left" valign="top"><p class="docText">Mac OS X 10.3</P></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="rightBorder" align="left" valign="top">&nbsp;</td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></tr><tr><TD class="rightBorder" align="left" valign="top"><p class="docText">Solaris 9</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></TD><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD></TR></table></p><BR>
+<p class="docText">We describe the difference between advisory locking and mandatory locking later in this section. In this text, we describe only the POSIX.1 <tt>fcntl</tt> locking.</P>
+<blockquote>
+<p class="docText">Record locking was originally added to Version 7 in 1980 by John Bass. The system call entry into the kernel was a function named <tt>locking</tt>. This function provided mandatory record locking and propagated through many versions of System III. Xenix systems picked up this function, and some Intel-based System V derivatives, such as OpenServer 5, still support it in a Xenix-compatibility library.</p>
+</blockquote>
+
+<a name="ch14lev2sec2"></a>
+<h4 class="docSection2Title"><tt>fcntl</tt> Record Locking</h4>
+<p class="docText">Let's repeat the prototype for the <tt>fcntl</tt> function from <a class="docLink" href="ch03lev1sec14.html#ch03lev1sec14">Section 3.14</a>.</p>
+<P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch14lev1sec3.html#PLID0">[View full width]</a></div><pre>
+#include &lt;fcntl.h&gt;
+
+int fcntl(int <span class="docEmphItalicAlt">filedes</span>, int <span class="docEmphItalicAlt">cmd</span>, ... /* struct
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> flock *<span class="docEmphItalicAlt">flockptr</span> */ );
+</pre><br>
+
+</P>
+</td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: depends on <span class="docEmphasis">cmd</span> if OK (see following), 1 on error</p>
+</td></tr></table></p><br>
+<p class="docText"><a name="idd1e99076"></a><a name="idd1e99081"></a><a name="idd1e99086"></a><a name="idd1e99091"></a><a name="idd1e99096"></a><a name="idd1e99101"></a><a name="idd1e99106"></a><a name="idd1e99111"></a><a name="idd1e99116"></a><a name="idd1e99121"></a><a name="idd1e99126"></a>For record locking, <span class="docEmphasis">cmd</span> is <tt>F_GETLK</tt>, <tt>F_SETLK</tt>, or <tt>F_SETLKW</tt>. The third argument (which we'll call <span class="docEmphasis">flockptr</span>) is a pointer to an <tt>flock</tt> structure.</p>
+
+<pre>
+   struct flock {
+     short l_type;   /* F_RDLCK, F_WRLCK, or F_UNLCK */
+     off_t l_start;  /* offset in bytes, relative to l_whence */
+     short l_whence; /* SEEK_SET, SEEK_CUR, or SEEK_END */
+     off_t l_len;    /* length, in bytes; 0 means lock to EOF */
+     pid_t l_pid;    /* returned with F_GETLK */
+   };
+</pre><br>
+
+<p class="docText">This structure describes</p>
+<ul><li><p class="docList">The type of lock desired: <tt>F_RDLCK</tt> (a shared read lock), <tt>F_WRLCK</tt> (an exclusive write lock), or <tt>F_UNLCK</tt> (unlocking a region)</p></li><li><p class="docList">The starting byte offset of the region being locked or unlocked (<tt>l_start</tt> and <tt>l_whence</tt>)</P></LI><li><p class="docList">The size of the region in bytes (<tt>l_len</tt>)</P></LI><LI><p class="docList">The ID (<tt>l_pid</tt>) of the process holding the lock that can block the current process (returned by <tt>F_GETLK</tt> only)</p></LI></UL>
+<p class="docText">There are numerous rules about the specification of the region to be locked or unlocked.</P>
+<ul><LI><p class="docList">The two elements that specify the starting offset of the region are similar to the last two arguments of the <tt>lseek</tt> function (<a class="docLink" href="ch03lev1sec6.html#ch03lev1sec6">Section 3.6</a>). Indeed, the <tt>l_whence</tt> member is specified as <tt>SEEK_SET</tt>, <tt>SEEK_CUR</tt>, or <tt>SEEK_END</tt>.</p></LI><LI><p class="docList">Locks can start and extend beyond the current end of file, but cannot start or extend before the beginning of the file.</P></li><LI><p class="docList">If <tt>l_len</tt> is 0, it means that the lock extends to the largest possible offset of the file. This allows us to lock a region starting anywhere in the file, up through and including any data that is appended to the file. (We don't have to try to guess how many bytes might be appended to the file.)</P></li><LI><p class="docList">To lock the entire file, we set <tt>l_start</tt> and <tt>l_whence</tt> to point to the beginning of the file and specify a length (<tt>l_len</tt>) of 0. (There are several ways to specify the beginning of the file, but most applications specify <tt>l_start</tt> as 0 and <tt>l_whence</tt> as <tt>SEEK_SET</tt>.)</P></li></ul>
+<p class="docText">We mentioned two types of locks: a shared read lock (<tt>l_type</tt> of <tt>F_RDLCK</tt>) and an exclusive write lock (<tt>F_WRLCK</tt>). The basic rule is that any number of processes can have a shared read lock on a given byte, but only one process can have an exclusive write lock on a given byte. Furthermore, if there are one or more read locks on a byte, there can't be any write locks on that byte; if there is an exclusive write lock on a byte, there can't be any read locks on that byte. We show this compatibility rule in <a class="docLink" href="ch14lev1sec3.html#ch14fig03">Figure 14.3</a>.</p>
+<a name="ch14fig03"></a><p><center>
+<H5 class="docFigureTitle">Figure 14.3. Compatibility between different lock types</h5>
+
+<p class="docText">
+<img border="0" alt="" width="417" height="168" SRC="images/0201433079/graphics/14fig03.gif;423615"></P>
+
+</center></p><BR>
+<p class="docText"><a name="idd1e99303"></a><a name="idd1e99308"></a><a name="idd1e99313"></a><a name="idd1e99318"></a>The compatibility rule applies to lock requests made from different processes, not to multiple lock requests made by a single process. If a process has an existing lock on a range of a file, a subsequent attempt to place a lock on the same range by the same process will replace the existing lock with the new one. Thus, if a process has a write lock on bytes 1632 of a file and then tries to place a read lock on bytes 1632, the request will succeed (assuming that we're not racing with any other processes trying to lock the same portion of the file), and the write lock will be replaced by a read lock.</p>
+<p class="docText">To obtain a read lock, the descriptor must be open for reading; to obtain a write lock, the descriptor must be open for writing.</p>
+<p class="docText">We can now describe the three commands for the <tt>fcntl</tt> function.</p>
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="100"><col width="400"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>F_GETLK</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Determine whether the lock described by <span class="docEmphasis">flockptr</span> is blocked by some other lock. If a lock exists that would prevent ours from being created, the information on that existing lock overwrites the information pointed to by <span class="docEmphasis">flockptr</span>. If no lock exists that would prevent ours from being created, the structure pointed to by <span class="docEmphasis">flockptr</span> is left unchanged except for the <tt>l_type</tt> member, which is set to <tt>F_UNLCK</tt>.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>F_SETLK</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Set the lock described by <span class="docEmphasis">flockptr</span>. If we are trying to obtain a read lock (<tt>l_type</tt> of <tt>F_RDLCK</tt>) or a write lock (<tt>l_type</tt> of <tt>F_WRLCK</tt>) and the compatibility rule prevents the system from giving us the lock (<a class="docLink" href="ch14lev1sec3.html#ch14fig03">Figure 14.3</a>), <tt>fcntl</tt> returns immediately with <tt>errno</tt> set to either <tt>EACCES</tt> or <tt>EAGAIN</tt>.</P>
+<blockquote><P><p class="docList">Although POSIX allows an implementation to return either error code, all four implementations described in this text return <tt>EAGAIN</tt> if the locking request cannot be satisfied.</p></P></blockquote>
+<p class="docText">This command is also used to clear the lock described by <span class="docEmphasis">flockptr</span> (<tt>l_type</tt> of <tt>F_UNLCK</tt>).</P>
+</TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>F_SETLKW</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">This command is a blocking version of <tt>F_SETLK</tt>. (The <tt>W</tt> in the command name means <span class="docEmphasis">wait</span>.) If the requested read lock or write lock cannot be granted because another process currently has some part of the requested region locked, the calling process is put to sleep. The process wakes up either when the lock becomes available or when interrupted by a signal.</p></TD></TR></table></P><br>
+<p class="docText"><a name="idd1e99462"></a><a name="idd1e99465"></a><a name="idd1e99470"></a>Be aware that testing for a lock with <tt>F_GETLK</tt> and then trying to obtain that lock with <tt>F_SETLK</tt> or <tt>F_SETLKW</tt> is not an atomic operation. We have no guarantee that, between the two <tt>fcntl</tt> calls, some other process won't come in and obtain the same lock. If we don't want to block while waiting for a lock to become available to us, we must handle the possible error returns from <tt>F_SETLK</tt>.</P>
+<blockquote>
+<p class="docText">Note that POSIX.1 doesn't specify what happens when one process read-locks a range of a file, a second process blocks while trying to get a write lock on the same range, and a third processes then attempts to get another read lock on the range. If the third process is allowed to place a read lock on the range just because the range is already read-locked, then the implementation might starve processes with pending write locks. This means that as additional requests to read lock the same range arrive, the time that the process with the pending write-lock request has to wait is extended. If the read-lock requests arrive quickly enough without a lull in the arrival rate, then the writer could wait for a long time.</P>
+</blockquote>
+<p class="docText">When setting or releasing a lock on a file, the system combines or splits adjacent areas as required. For example, if we lock bytes 100 through 199 and then unlock byte 150, the kernel still maintains the locks on bytes 100 through 149 and bytes 151 through 199. <a class="docLink" href="ch14lev1sec3.html#ch14fig04">Figure 14.4</a> illustrates the byte-range locks in this situation.</p>
+<a name="ch14fig04"></a><P><center>
+<H5 class="docFigureTitle">Figure 14.4. File byte-range lock diagram</h5>
+
+<p class="docText">
+<img border="0" alt="" width="318" height="324" SRC="images/0201433079/graphics/14fig04.gif;423615"></p>
+
+</center></p><br>
+<p class="docText">If we were to lock byte 150, the system would coalesce the adjacent locked regions into a single region from byte 100 through 199. The resulting picture would be the first diagram in <a class="docLink" href="ch14lev1sec3.html#ch14fig04">Figure 14.4</a>, the same as when we started.</P>
+<a name="ch14ex02"></a>
+<h5 class="docExampleTitle">ExampleRequesting and Releasing a Lock</H5>
+<p class="docText">To save ourselves from having to allocate an <tt>flock</tt> structure and fill in all the elements each time, the function <tt>lock_reg</tt> in <a class="docLink" href="ch14lev1sec3.html#ch14fig05">Figure 14.5</a> handles all these details.</p>
+<p class="docText"><a name="idd1e99547"></a><a name="idd1e99552"></a><a name="idd1e99557"></a><a name="idd1e99562"></a><a name="idd1e99567"></a><a name="idd1e99574"></a><a name="idd1e99579"></a><a name="idd1e99586"></a><a name="idd1e99591"></a><a name="idd1e99596"></a><a name="idd1e99601"></a><a name="idd1e99606"></a><a name="idd1e99611"></a>Since most locking calls are to lock or unlock a region (the command <tt>F_GETLK</tt> is rarely used), we normally use one of the following five macros, which are defined in <tt>apue.h</tt> (<a class="docLink" href="app02.html#app02">Appendix B</a>).</P>
+
+<pre>
+#define read_lock(fd, offset, whence, len) \
+            lock_reg((fd), F_SETLK, F_RDLCK, (offset), (whence), (len))
+#define readw_lock(fd, offset, whence, len) \
+            lock_reg((fd), F_SETLKW, F_RDLCK, (offset), (whence), (len))
+#define write_lock(fd, offset, whence, len) \
+            lock_reg((fd), F_SETLK, F_WRLCK, (offset), (whence), (len))
+#define writew_lock(fd, offset, whence, len) \
+            lock_reg((fd), F_SETLKW, F_WRLCK, (offset), (whence), (len))
+#define un_lock(fd, offset, whence, len) \
+            lock_reg((fd), F_SETLK, F_UNLCK, (offset), (whence), (len))
+</pre><br>
+
+<p class="docText">We have purposely defined the first three arguments to these macros in the same order as the <tt>lseek</tt> function.</p>
+
+<a name="ch14fig05"></a>
+<h5 class="docExampleTitle">Figure 14.5. Function to lock or unlock a region of a file</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+
+int
+lock_reg(int fd, int cmd, int type, off_t offset, int whence, off_t len)
+{
+    struct flock lock;
+
+    lock.l_type = type;     /* F_RDLCK, F_WRLCK, F_UNLCK */
+    lock.l_start = offset;  /* byte offset, relative to l_whence */
+    lock.l_whence = whence; /* SEEK_SET, SEEK_CUR, SEEK_END */
+    lock.l_len = len;       /* #bytes (0 means to EOF) */
+
+    return(fcntl(fd, cmd, &amp;lock));
+}
+</pre><br>
+
+
+<a name="ch14ex03"></a>
+<h5 class="docExampleTitle">ExampleTesting for a Lock</h5>
+<p class="docText"><a class="docLink" href="ch14lev1sec3.html#ch14fig06">Figure 14.6</a> defines the function <tt>lock_test</tt> that we'll use to test for a lock.</p>
+<p class="docText">If a lock exists that would block the request specified by the arguments, this function returns the process ID of the process holding the lock. Otherwise, the function returns 0 (false). We normally call this function from the following two macros (defined in <tt>apue.h</tt>):</p>
+
+<pre>
+#define is_read_lockable(fd, offset, whence, len) \
+          (lock_test((fd), F_RDLCK, (offset), (whence), (len)) == 0)
+#define is_write_lockable(fd, offset, whence, len) \
+          (lock_test((fd), F_WRLCK, (offset), (whence), (len)) == 0)
+</pre><br>
+
+<p class="docText">Note that the <tt>lock_test</tt> function can't be used by a process to see whether it is currently holding a portion of a file locked. The definition of the <tt>F_GETLK</tt> command states that the information returned applies to an existing lock that would prevent us from creating our own lock. Since the <tt>F_SETLK</tt> and <tt>F_SETLKW</tt> commands always replace a process's existing lock if it exists, we can never block on our own lock; thus, the <tt>F_GETLK</tt> command will never report our own lock.</p>
+
+<a name="ch14fig06"></a>
+<h5 class="docExampleTitle">Figure 14.6. Function to test for a locking condition</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+
+pid_t
+lock_test(int fd, int type, off_t offset, int whence, off_t len)
+{
+    struct flock lock;
+    lock.l_type = type;     /* F_RDLCK or F_WRLCK */
+    lock.l_start = offset;  /* byte offset, relative to l_whence */
+    lock.l_whence = whence; /* SEEK_SET, SEEK_CUR, SEEK_END */
+    lock.l_len = len;       /* #bytes (0 means to EOF) */
+
+    if (fcntl(fd, F_GETLK, &amp;lock) &lt; 0)
+        err_sys("fcntl error");
+
+    if (lock.l_type == F_UNLCK)
+        return(0);      /* false, region isn't locked by another proc */
+    return(lock.l_pid); /* true, return pid of lock owner */
+}
+</pre><br>
+
+
+<a name="ch14ex04"></a>
+<h5 class="docExampleTitle">ExampleDeadlock</h5>
+<p class="docText"><a name="idd1e99738"></a><a name="idd1e99741"></a><a name="idd1e99746"></a><a name="idd1e99751"></a><a name="idd1e99756"></a><a name="idd1e99761"></a><a name="idd1e99766"></a>Deadlock occurs when two processes are each waiting for a resource that the other has locked. The potential for deadlock exists if a process that controls a locked region is put to sleep when it tries to lock another region that is controlled by a different process.</p>
+<p class="docText"><a class="docLink" href="ch14lev1sec3.html#ch14fig07">Figure 14.7</a> shows an example of deadlock. The child locks byte 0 and the parent locks byte 1. Then each tries to lock the other's already locked byte. We use the parentchild synchronization routines from <a class="docLink" href="ch08lev1sec9.html#ch08lev1sec9">Section 8.9</a> (<tt>TELL_xxx</tt> and <tt>WAIT_xxx</tt>) so that each process can wait for the other to obtain its lock. Running the program in <a class="docLink" href="ch14lev1sec3.html#ch14fig07">Figure 14.7</a> gives us</P>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+   parent: got the lock, byte 1
+   child: got the lock, byte 0
+   child: writew_lock error: Resource deadlock avoided
+   parent: got the lock, byte 0
+</pre><BR>
+
+<p class="docText"><a name="idd1e99801"></a><a name="idd1e99806"></a><a name="idd1e99811"></a><a name="idd1e99816"></a><a name="idd1e99821"></a><a name="idd1e99826"></a><a name="idd1e99831"></a><a name="idd1e99836"></a><a name="idd1e99841"></a><a name="idd1e99846"></a>When a deadlock is detected, the kernel has to choose one process to receive the error return. In this example, the child was chosen, but this is an implementation detail. On some systems, the child always receives the error. On other systems, the parent always gets the error. On some systems, you might even see the errors split between the child and the parent as multiple lock attempts are made.</p>
+
+<a name="ch14fig07"></a>
+<H5 class="docExampleTitle">Figure 14.7. Example of deadlock detection</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+
+static void
+lockabyte(const char *name, int fd, off_t offset)
+{
+    if (writew_lock(fd, offset, SEEK_SET, 1) &lt; 0)
+        err_sys("%s: writew_lock error", name);
+    printf("%s: got the lock, byte %ld\n", name, offset);
+}
+
+int
+main(void)
+{
+    int      fd;
+    pid_t    pid;
+
+    /*
+     * Create a file and write two bytes to it.
+     */
+    if ((fd = creat("templock", FILE_MODE)) &lt; 0)
+        err_sys("creat error");
+    if (write(fd, "ab", 2) != 2)
+        err_sys("write error");
+
+    TELL_WAIT();
+    if ((pid = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (pid == 0) {         /* child */
+        lockabyte("child", fd, 0);
+        TELL_PARENT(getppid());
+        WAIT_PARENT();
+        lockabyte("child", fd, 1);
+    } else {                       /* parent */
+        lockabyte("parent", fd, 1);
+        TELL_CHILD(pid);
+        WAIT_CHILD();
+        lockabyte("parent", fd, 0);
+    }
+    exit(0);
+}
+</pre><BR>
+
+
+
+<a name="ch14lev2sec3"></a>
+<h4 class="docSection2Title">Implied Inheritance and Release of Locks</H4>
+<p class="docText"><a name="idd1e99888"></a><a name="idd1e99893"></a><a name="idd1e99896"></a><a name="idd1e99901"></a><a name="idd1e99906"></a><a name="idd1e99911"></a><a name="idd1e99914"></a>Three rules govern the automatic inheritance and release of record locks.</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">Locks are associated with a process and a file. This has two implications. The first is obvious: when a process terminates, all its locks are released. The second is far from obvious: whenever a descriptor is closed, any locks on the file referenced by that descriptor for that process are released. This means that if we do</p><pre>
+    fd1 = open(pathname, ...);
+    read_lock(fd1, ...);
+    fd2 = dup(fd1);
+    close(fd2);
+</pre><BR>
+<p class="docList">after the <tt>close(fd2)</tt>, the lock that was obtained on <tt>fd1</tt> is released. The same thing would happen if we replaced the <tt>dup</tt> with <tt>open</tt>, as in</p><pre>
+    fd1 = open(pathname, ...);
+    read_lock(fd1, ...);
+    fd2 = open(pathname, ...)
+    close(fd2);
+</pre><BR>
+<p class="docList">to open the same file on another descriptor.</P></div></LI><li><div style="font-weight:normal"><p class="docList">Locks are never inherited by the child across a <tt>fork</tt>. This means that if a process obtains a lock and then calls <tt>fork</tt>, the child is considered another process with regard to the lock that was obtained by the parent. The child has to call <tt>fcntl</tt> to obtain its own locks on any descriptors that were inherited across the <tt>fork</tt>. This makes sense because locks are meant to prevent multiple processes from writing to the same file at the same time. If the child inherited locks across a <tt>fork</tt>, both the parent and the child could write to the same file at the same time.</P></div></LI><li><div style="font-weight:normal"><p class="docList">Locks are inherited by a new program across an <tt>exec</tt>. Note, however, that if the close-on-exec flag is set for a file descriptor, all locks for the underlying file are released when the descriptor is closed as part of an <tt>exec</tt>.</P></div></LI></ol></div>
+
+<a name="ch14lev2sec4"></a>
+<h4 class="docSection2Title">FreeBSD Implementation</h4>
+<p class="docText">Let's take a brief look at the data structures used in the FreeBSD implementation. This should help clarify rule 1, that locks are associated with a process and a file.</p>
+<p class="docText">Consider a process that executes the following statements (ignoring error returns):</p>
+
+<pre>
+   fd1 = open(pathname, ...);
+   write_lock(fd1, 0, SEEK_SET, 1);    /* parent write locks byte 0 */
+   if ((pid = fork()) &gt; 0) {           /* parent */
+       fd2 = dup(fd1);
+       fd3 = open(pathname, ...);
+   } else if (pid == 0) {
+       read_lock(fd1, 1, SEEK_SET, 1); /* child read locks byte 1 */
+   }
+   pause();
+</pre><BR>
+
+<p class="docText"><a name="idd1e100001"></a><a name="idd1e100004"></a><a name="idd1e100009"></a><a name="idd1e100014"></a><a class="docLink" href="ch14lev1sec3.html#ch14fig08">Figure 14.8</a> shows the resulting data structures after both the parent and the child have paused.</p>
+<a name="ch14fig08"></a><P><center>
+<h5 class="docFigureTitle">Figure 14.8. The FreeBSD data structures for record locking</H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/14fig08_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="335" SRC="images/0201433079/graphics/14fig08.gif;423615"></p>
+</center></p><br>
+<p class="docText">We've shown the data structures that result from the <tt>open</tt>, <tt>fork</tt>, and <tt>dup</tt> earlier (<a class="docLink" href="ch03lev1sec12.html#ch03fig08">Figures 3.8</a> and <a class="docLink" href="ch08lev1sec3.html#ch08fig02">8.2</a>). What is new are the <tt>lockf</tt> structures that are linked together from the i-node structure. Note that each <tt>lockf</tt> structure describes one locked region (defined by an offset and length) for a given process. We show two of these structures: one for the parent's call to <tt>write_lock</tt> and one for the child's call to <tt>read_lock</tt>. Each structure contains the corresponding process ID.</p>
+<p class="docText">In the parent, closing any one of <tt>fd1</tt>, <tt>fd2</tt>, or <tt>fd3</tt> causes the parent's lock to be released. When any one of these three file descriptors is closed, the kernel goes through the linked list of locks for the corresponding i-node and releases the locks held by the calling process. The kernel can't tell (and doesn't care) which descriptor of the three was used by the parent to obtain the lock.</p>
+<a name="ch14ex05"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">In the program in <a class="docLink" href="ch13lev1sec5.html#ch13fig06">Figure 13.6</a>, we saw how a daemon can use a lock on a file to ensure that only one copy of the daemon is running. <a class="docLink" href="ch14lev1sec3.html#ch14fig09">Figure 14.9</a> shows the implementation of the <tt>lockfile</tt> function used by the daemon to place a write lock on a file.</p>
+<p class="docText"><a name="idd1e100106"></a><a name="idd1e100111"></a><a name="idd1e100116"></a><a name="idd1e100121"></a><a name="idd1e100126"></a><a name="idd1e100131"></a><a name="idd1e100138"></a><a name="idd1e100143"></a><a name="idd1e100148"></a><a name="idd1e100153"></a><a name="idd1e100158"></a>Alternatively, we could define the <tt>lockfile</tt> function in terms of the <tt>write_lock</tt> function:</p>
+
+<pre>
+   #define lockfile(fd) write_lock((fd), 0, SEEK_SET, 0)
+</pre><br>
+
+
+<a name="ch14fig09"></a>
+<h5 class="docExampleTitle">Figure 14.9. Place a write lock on an entire file</h5>
+
+<pre>
+#include &lt;unistd.h&gt;
+#include &lt;fcntl.h&gt;
+
+int
+lockfile(int fd)
+{
+    struct flock fl;
+
+    fl.l_type = F_WRLCK;
+    fl.l_start = 0;
+    fl.l_whence = SEEK_SET;
+    fl.l_len = 0;
+    return(fcntl(fd, F_SETLK, &amp;fl));
+}
+</pre><br>
+
+
+
+<a name="ch14lev2sec5"></a>
+<h4 class="docSection2Title">Locks at End of File</h4>
+<p class="docText">Use caution when locking or unlocking relative to the end of file. Most implementations convert an <tt>l_whence</tt> value of <tt>SEEK_CUR</tt> or <tt>SEEK_END</tt> into an absolute file offset, using <tt>l_start</tt> and the file's current position or current length. Often, however, we need to specify a lock relative to the file's current position or current length, because we can't call <tt>lseek</tt> to obtain the current file offset, since we don't have a lock on the file. (There's a chance that another process could change the file's length between the call to <tt>lseek</tt> and the lock call.)</p>
+<p class="docText">Consider the following sequence of steps:</p>
+
+<pre>
+   writew_lock(fd, 0, SEEK_END, 0);
+   write(fd, buf, 1);
+   un_lock(fd, 0, SEEK_END);
+   write(fd, buf, 1);
+</pre><BR>
+
+<p class="docText">This sequence of code might not do what you expect. It obtains a write lock from the current end of the file onward, covering any future data we might append to the file. Assuming that we are at end of file when we perform the first <tt>write</tt>, that will extend the file by one byte, and that byte will be locked. The unlock that follows has the effect of removing the locks for future writes that append data to the file, but it leaves a lock on the last byte in the file. When the second write occurs, the end of file is extended by one byte, but this byte is not locked. The state of the file locks for this sequence of steps is shown in <a class="docLink" href="ch14lev1sec3.html#ch14fig10">Figure 14.10</a></P>
+<a name="ch14fig10"></a><p><center>
+<H5 class="docFigureTitle">Figure 14.10. File range lock diagram</H5>
+
+<p class="docText">
+<img border="0" alt="" width="500" height="271" SRC="images/0201433079/graphics/14fig10.gif;423615"></P>
+
+</center></p><BR>
+<p class="docText"><a name="idd1e100259"></a><a name="idd1e100262"></a><a name="idd1e100265"></a><a name="idd1e100268"></a><a name="idd1e100271"></a><a name="idd1e100276"></a><a name="idd1e100281"></a><a name="idd1e100284"></a><a name="idd1e100289"></a><a name="idd1e100294"></a><a name="idd1e100299"></a><a name="idd1e100302"></a>When a portion of a file is locked, the kernel converts the offset specified into an absolute file offset. In addition to specifying an absolute file offset (<tt>SEEK_SET</tt>), <tt>fcntl</tt> allows us to specify this offset relative to a point in the file: current (<tt>SEEK_CUR</tt>) or end of file (<tt>SEEK_END</tt>). The kernel needs to remember the locks independent of the current file offset or end of file, because the current offset and end of file can change, and changes to these attributes shouldn't affect the state of existing locks.</P>
+<p class="docText">If we intended to remove the lock covering the byte we wrote in the first write, we could have specified the length as -1. Negative-length values represent the bytes before the specified offset.</P>
+
+<a name="ch14lev2sec6"></a>
+<h4 class="docSection2Title">Advisory versus Mandatory Locking</H4>
+<p class="docText">Consider a library of database access routines. If all the functions in the library handle record locking in a consistent way, then we say that any set of processes using these functions to access a database are <span class="docEmphasis">cooperating processes</span>. It is feasible for these database access functions to use advisory locking if they are the only ones being used to access the database. But advisory locking doesn't prevent some other process that has write permission for the database file from writing whatever it wants to the database file. This rogue process would be an uncooperating process, since it's not using the accepted method (the library of database functions) to access the database.</p>
+<p class="docText">Mandatory locking causes the kernel to check every <tt>open</tt>, <tt>read</tt>, and <tt>write</tt> to verify that the calling process isn't violating a lock on the file being accessed. Mandatory locking is sometimes called <span class="docEmphasis">enforcement-mode locking</span>.</P>
+<blockquote>
+<p class="docText">We saw in <a class="docLink" href="ch14lev1sec3.html#ch14fig02">Figure 14.2</a> that Linux 2.4.22 and Solaris 9 provide mandatory record locking, but FreeBSD 5.2.1 and Mac OS X 10.3 do not. Mandatory record locking is not part of the Single UNIX Specification. On Linux, if you want mandatory locking, you need to enable it on a per file system basis by using the <tt>-o mand</tt> option to the <tt>mount</tt> command.</P>
+</blockquote>
+<p class="docText"><a name="idd1e100367"></a><a name="idd1e100372"></a><a name="idd1e100377"></a><a name="idd1e100382"></a><a name="idd1e100387"></a><a name="idd1e100392"></a><a name="idd1e100395"></a><a name="idd1e100398"></a>Mandatory locking is enabled for a particular file by turning on the set-group-ID bit and turning off the group-execute bit. (Recall <a class="docLink" href="ch04lev1sec9.html#ch04fig12">Figure 4.12</a>.) Since the set-group-ID bit makes no sense when the group-execute bit is off, the designers of SVR3 chose this way to specify that the locking for a file is to be mandatory locking and not advisory locking.</P>
+<p class="docText">What happens to a process that tries to <tt>read</tt> or <tt>write</tt> a file that has mandatory locking enabled and the specified part of the file is currently read-locked or write-locked by another process? The answer depends on the type of operation (<tt>read</tt> or <tt>write</tt>), the type of lock held by the other process (read lock or write lock), and whether the descriptor for the <tt>read</tt> or <tt>write</tt> is nonblocking. <a class="docLink" href="ch14lev1sec3.html#ch14fig11">Figure 14.11</a> shows the eight possibilities.</p>
+<a name="ch14fig11"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="cols" cellpadding="5"><caption><H5 class="docTableTitle">Figure 14.11. Effect of mandatory locking on <tt>read</tt>s and <tt>write</tt>s by other processes</h5></caption><colgroup><col width="120"><col width="65"><col width="65"><col width="75"><col width="75"></colgroup><thead></thead><TR><TD class="bottomBorder" align="center" valign="bottom" rowspan="2"><p class="docText">Type of existing lock on region held by other process</p></td><td class="bottomBorder" align="center" valign="top" colspan="2"><p class="docText">Blocking descriptor, tries to</p></TD><td class="bottomBorder" align="center" valign="top" colspan="2"><p class="docText">Nonblocking descriptor, tries to</P></td></TR><tr><td class="bottomBorder" align="center" valign="top"><p class="docText"><tt>read</tt></p></td><td class="bottomBorder" align="center" valign="top"><p class="docText"><tt>write</tt></p></td><td class="bottomBorder" align="center" valign="top"><p class="docText"><tt>read</tt></p></td><td class="bottomBorder" align="center" valign="top"><p class="docText"><tt>write</tt>
+</p></td></tr><tr><td class="docTableCell" align="center" valign="top"><p class="docText">read lock</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">OK</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">blocks</P></td><TD class="docTableCell" align="center" valign="top"><p class="docText">OK</P></TD><td class="docTableCell" align="center" valign="top"><p class="docText"><tt>EAGAIN</tt>
+</P></td></TR><TR><TD class="docTableCell" align="center" valign="top"><p class="docText">write lock</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">blocks</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">blocks</p></td><td class="docTableCell" align="center" valign="top"><p class="docText"><tt>EAGAIN</tt></p></TD><td class="docTableCell" align="center" valign="top"><p class="docText"><tt>EAGAIN</tt></P></td></TR></table></p><br>
+<p class="docText">In addition to the <tt>read</tt> and <tt>write</tt> functions in <a class="docLink" href="ch14lev1sec3.html#ch14fig11">Figure 14.11</a>, the <tt>open</tt> function can also be affected by mandatory record locks held by another process. Normally, <tt>open</tt> succeeds, even if the file being opened has outstanding mandatory record locks. The next <tt>read</tt> or <tt>write</tt> follows the rules listed in <a class="docLink" href="ch14lev1sec3.html#ch14fig11">Figure 14.11</a>. But if the file being opened has outstanding mandatory record locks (either read locks or write locks), and if the flags in the call to <tt>open</tt> specify either <tt>O_TRUNC</tt> or <tt>O_CREAT</tt>, then <tt>open</tt> returns an error of <tt>EAGAIN</tt> immediately, regardless of whether <tt>O_NONBLOCK</tt> is specified.</p>
+<blockquote>
+<p class="docText">Only Solaris treats the <tt>O_CREAT</tt> flag as an error case. Linux allows the <tt>O_CREAT</tt> flag to be specified when opening a file with an outstanding mandatory lock. Generating the <tt>open</tt> error for <tt>O_TRUNC</tt> makes sense, because the file cannot be truncated if it is read-locked or write-locked by another process. Generating the error for <tt>O_CREAT</tt>, however, makes little sense; this flag says to create the file only if it doesn't already exist, but it has to exist to be record-locked by another process.</p>
+</blockquote>
+<p class="docText">This handling of locking conflicts with <tt>open</tt> can lead to surprising results. While developing the exercises in this section, a test program was run that opened a file (whose mode specified mandatory locking), established a read lock on an entire file, and then went to sleep for a while. (Recall from <a class="docLink" href="ch14lev1sec3.html#ch14fig11">Figure 14.11</a> that a read lock should prevent writing to the file by other processes.) During this sleep period, the following behavior was seen in other typical UNIX System programs.</p>
+<ul><li><p class="docList">The same file could be edited with the <tt>ed</tt> editor, and the results written back to disk! The mandatory record locking had no effect at all. Using the system call trace feature provided by some versions of the UNIX System, it was seen that <tt>ed</tt> wrote the new contents to a temporary file, removed the original file, and then renamed the temporary file to be the original file. The mandatory record locking has no effect on the <tt>unlink</tt> function, which allowed this to happen.</p><blockquote>
+<p class="docText"><a name="idd1e100654"></a><a name="idd1e100657"></a><a name="idd1e100660"></a><a name="idd1e100665"></a><a name="idd1e100668"></a><a name="idd1e100673"></a><a name="idd1e100676"></a><a name="idd1e100681"></a><a name="idd1e100686"></a><a name="idd1e100691"></a><a name="idd1e100696"></a><a name="idd1e100699"></a><a name="idd1e100706"></a>Under Solaris, the system call trace of a process is obtained by the <tt>truss</tt>(1) command. FreeBSD and Mac OS X use the <tt>ktrace</tt>(1) and <tt>kdump</tt>(1) commands. Linux provides the <tt>strace</tt>(1) command for tracing the system calls made by a process.</p>
+</blockquote></li><li><p class="docList">The <tt>vi</tt> editor was never able to edit the file. It could read the file's contents, but whenever we tried to write new data to the file, <tt>EAGAIN</tt> was returned. If we tried to append new data to the file, the <tt>write</tt> blocked. This behavior from <tt>vi</tt> is what we expect.</p></li><li><p class="docList">Using the Korn shell's <tt>&gt;</tt> and <tt>&gt;&gt;</tt> operators to overwrite or append to the file resulted in the error &quot;cannot create.&quot;</p></LI><LI><p class="docList">Using the same two operators with the Bourne shell resulted in an error for <tt>&gt;</tt>, but the <tt>&gt;&gt;</tt> operator just blocked until the mandatory lock was removed, and then proceeded. (The difference in the handling of the append operator is because the Korn shell <tt>open</tt>s the file with <tt>O_CREAT</tt> and <tt>O_APPEND</tt>, and we mentioned earlier that specifying <tt>O_CREAT</tt> generates an error. The Bourne shell, however, doesn't specify <tt>O_CREAT</tt> if the file already exists, so the <tt>open</tt> succeeds but the next <tt>write</tt> blocks.)</p></LI></UL>
+<p class="docText">Results will vary, depending on the version of the operating system you are using. The bottom line with this exercise is to be wary of mandatory record locking. As seen with the <tt>ed</tt> example, it can be circumvented.</P>
+<p class="docText">Mandatory record locking can also be used by a malicious user to hold a read lock on a file that is publicly readable. This can prevent anyone from writing to the file. (Of course, the file has to have mandatory record locking enabled for this to occur, which may require the user be able to change the permission bits of the file.) Consider a database file that is world readable and has mandatory record locking enabled. If a malicious user were to hold a read lock on the entire file, the file could not be written to by other processes.</p>
+<a name="ch14ex06"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText">The program in <a class="docLink" href="ch14lev1sec3.html#ch14fig12">Figure 14.12</a> determines whether mandatory locking is supported by a system.</P>
+<p class="docText"><a name="idd1e100810"></a><a name="idd1e100815"></a><a name="idd1e100820"></a><a name="idd1e100825"></a><a name="idd1e100828"></a><a name="idd1e100831"></a><a name="idd1e100836"></a>This program creates a file and enables mandatory locking for the file. The program then splits into parent and child, with the parent obtaining a write lock on the entire file. The child first sets its descriptor nonblocking and then attempts to obtain a read lock on the file, expecting to get an error. This lets us see whether the system returns <tt>EACCES</tt> or <tt>EAGAIN</tt>. Next, the child rewinds the file and tries to <tt>read</tt> from the file. If mandatory locking is provided, the <tt>read</tt> should return <tt>EACCES</tt> or <tt>EAGAIN</tt> (since the descriptor is nonblocking). Otherwise, the <tt>read</tt> returns the data that it read. Running this program under Solaris 9 (which supports mandatory locking) gives us</p>
+
+<pre>
+$ <span class="docEmphStrong">./a.out temp.lock</span>
+read_lock of already-locked region returns 11
+read failed (mandatory locking works): Resource temporarily unavailable
+</pre><BR>
+
+<p class="docText">If we look at either the system's headers or the <tt>intro</tt>(2) manual page, we see that an <tt>errno</tt> of 11 corresponds to <tt>EAGAIN</tt>. Under FreeBSD 5.2.1, we get</p>
+
+<pre>
+$ <span class="docEmphStrong">./a.out temp.lock</span>
+read_lock of already-locked region returns 35
+read OK (no mandatory locking), buf = ab
+</pre><BR>
+
+<p class="docText">Here, an <tt>errno</tt> of 35 corresponds to <tt>EAGAIN</tt>. Mandatory locking is not supported.</P>
+
+<a name="ch14fig12"></a>
+<H5 class="docExampleTitle">Figure 14.12. Determine whether mandatory locking is supported</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;errno.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;sys/wait.h&gt;
+
+int
+main(int argc, char *argv[])
+{
+    int             fd;
+    pid_t           pid;
+    char            buf[5];
+    struct stat     statbuf;
+    if (argc != 2) {
+        fprintf(stderr, "usage: %s filename\n", argv[0]);
+        exit(1);
+    }
+    if ((fd = open(argv[1], O_RDWR | O_CREAT | O_TRUNC, FILE_MODE)) &lt; 0)
+        err_sys("open error");
+    if (write(fd, "abcdef", 6) != 6)
+        err_sys("write error");
+
+    /* turn on set-group-ID and turn off group-execute */
+    if (fstat(fd, &amp;statbuf) &lt; 0)
+        err_sys("fstat error");
+    if (fchmod(fd, (statbuf.st_mode &amp; <sup>~</sup>S_IXGRP) | S_ISGID) &lt; 0)
+        err_sys("fchmod error");
+
+    TELL_WAIT();
+
+    if ((pid = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (pid &gt; 0) {   /* parent */
+        /* write lock entire file */
+        if (write_lock(fd, 0, SEEK_SET, 0) &lt; 0)
+            err_sys("write_lock error");
+
+        TELL_CHILD(pid);
+
+        if (waitpid(pid, NULL, 0) &lt; 0)
+            err_sys("waitpid error");
+    } else {                /* child */
+        WAIT_PARENT();      /* wait for parent to set lock */
+
+        set_fl(fd, O_NONBLOCK);
+
+       /* first let's see what error we get if region is locked */
+       if (read_lock(fd, 0, SEEK_SET, 0) != -1)    /* no wait */
+           err_sys("child: read_lock succeeded");
+       printf("read_lock of already-locked region returns %d\n",
+         errno);
+
+       /* now try to read the mandatory locked file */
+       if (lseek(fd, 0, SEEK_SET) == -1)
+           err_sys("lseek error");
+       if (read(fd, buf, 2) &lt; 0)
+           err_ret("read failed (mandatory locking works)");
+       else
+           printf("read OK (no mandatory locking), buf = %2.2s\n",
+            buf);
+    }
+    exit(0);
+}
+</pre><BR>
+
+
+<a name="ch14ex07"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText"><a name="idd1e100933"></a><a name="idd1e100938"></a><a name="idd1e100943"></a><a name="idd1e100948"></a><a name="idd1e100953"></a><a name="idd1e100958"></a><a name="idd1e100963"></a><a name="idd1e100968"></a><a name="idd1e100973"></a><a name="idd1e100978"></a><a name="idd1e100983"></a><a name="idd1e100988"></a><a name="idd1e100993"></a><a name="idd1e100998"></a><a name="idd1e101003"></a><a name="idd1e101008"></a><a name="idd1e101013"></a><a name="idd1e101018"></a>Let's return to the first question of this section: what happens when two people edit the same file at the same time? The normal UNIX System text editors do not use record locking, so the answer is still that the final result of the file corresponds to the last process that wrote the file.</P>
+<p class="docText">Some versions of the <tt>vi</tt> editor use advisory record locking. Even if we were using one of these versions of <tt>vi</tt>, it still doesn't prevent users from running another editor that doesn't use advisory record locking.</P>
+<p class="docText">If the system provides mandatory record locking, we could modify our favorite editor to use it (if we have the sources). Not having the source code to the editor, we might try the following. We write our own program that is a front end to <tt>vi</tt>. This program immediately calls <tt>fork</tt>, and the parent just waits for the child to complete. The child opens the file specified on the command line, enables mandatory locking, obtains a write lock on the entire file, and then executes <tt>vi</tt>. While <tt>vi</tt> is running, the file is write-locked, so other users can't modify it. When <tt>vi</tt> terminates, the parent's <tt>wait</tt> returns, and our front end terminates.</p>
+<p class="docText">A small front-end program of this type can be written, but it doesn't work. The problem is that it is common for most editors to read their input file and then close it. A lock is released on a file whenever a descriptor that references that file is closed. This means that when the editor closes the file after reading its contents, the lock is gone. There is no way to prevent this in the front-end program.</p>
+
+<p class="docText">We'll use record locking in <a class="docLink" href="ch20.html#ch20">Chapter 20</a> in our database library to provide concurrent access to multiple processes. We'll also provide some timing measurements to see what effect record locking has on a process.</p>
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch14lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

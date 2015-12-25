@@ -1,0 +1,99 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 10.11.&nbsp; Signal Sets</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch10lev1sec11"></a>
+<h3 class="docSection1Title">10.11. Signal Sets</h3>
+<p class="docText">We need a data type to represent multiple signalsa <span class="docEmphasis">signal set</span>. We'll use this with such functions as <tt>sigprocmask</tt> (in the next section) to tell the kernel not to allow any of the signals in the set to occur. As we mentioned earlier, the number of different signals can <a name="idd1e74894"></a><a name="idd1e74899"></a><a name="idd1e74906"></a><a name="idd1e74911"></a><a name="idd1e74918"></a><a name="idd1e74923"></a><a name="idd1e74930"></a><a name="idd1e74935"></a><a name="idd1e74942"></a><a name="idd1e74947"></a><a name="idd1e74954"></a><a name="idd1e74959"></a>exceed the number of bits in an integer, so in general, we can't use an integer to represent the set with one bit per signal. POSIX.1 defines the data type <tt>sigset_t</tt> to contain a signal set and the following five functions to manipulate signal sets.</P>
+<a name="inta314"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;signal.h&gt;
+
+int sigemptyset(sigset_t *<span class="docEmphItalicAlt">set</span>);
+
+int sigfillset(sigset_t *<span class="docEmphItalicAlt">set</span>);
+
+int sigaddset(sigset_t *<span class="docEmphItalicAlt">set</span>, int <span class="docEmphItalicAlt">signo</span>);
+
+int sigdelset(sigset_t *<span class="docEmphItalicAlt">set</span>, int <span class="docEmphItalicAlt">signo</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">All four return: 0 if OK, 1 on error
+</p></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+int sigismember(const sigset_t *<span class="docEmphItalicAlt">set</span>, int <span class="docEmphItalicAlt">signo</span>);
+</pre><BR>
+
+</p></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 1 if true, 0 if false, 1 on error</P></td></tr></table></p><br>
+<p class="docText">The function <tt>sigemptyset</tt> initializes the signal set pointed to by <span class="docEmphasis">set</span> so that all signals are excluded. The function <tt>sigfillset</tt> initializes the signal set so that all signals are included. All applications have to call either <tt>sigemptyset</tt> or <tt>sigfillset</tt> once for each signal set, before using the signal set, because we cannot assume that the C initialization for external and static variables (0) corresponds to the implementation of signal sets on a given system.</P>
+<p class="docText">Once we have initialized a signal set, we can add and delete specific signals in the set. The function <tt>sigaddset</tt> adds a single signal to an existing set, and <tt>sigdelset</tt> removes a single signal from a set. In all the functions that take a signal set as an argument, we always pass the address of the signal set as the argument.</p>
+<a name="ch10lev2sec3"></a>
+<H4 class="docSection2Title">Implementation</h4>
+<p class="docText">If the implementation has fewer signals than bits in an integer, a signal set can be implemented using one bit per signal. For the remainder of this section, assume that an implementation has 31 signals and 32-bit integers. The <tt>sigemptyset</tt> function zeros the integer, and the <tt>sigfillset</tt> function turns on all the bits in the integer. These two functions can be implemented as macros in the <tt>&lt;signal.h&gt;</tt> header:</P>
+
+<pre>
+   #define sigemptyset(ptr)   (*(ptr) = 0)
+   #define sigfillset(ptr)    (*(ptr) = <sup>~</sup>(sigset_t)0, 0)
+</pre><br>
+
+<p class="docText">Note that <tt>sigfillset</tt> must return 0, in addition to setting all the bits on in the signal set, so we use C's comma operator, which returns the value after the comma as the value of the expression.</p>
+<p class="docText">Using this implementation, <tt>sigaddset</tt> turns on a single bit and <tt>sigdelset</tt> turns off a single bit; <tt>sigismember</tt> tests a certain bit. Since no signal is ever numbered 0, we subtract 1 from the signal number to obtain the bit to manipulate. <a class="docLink" href="ch10lev1sec11.html#ch10fig12">Figure 10.12</a> shows implementations of these functions.</p>
+<a name="ch10fig12"></a>
+<h5 class="docExampleTitle">Figure 10.12. An implementation of <tt>sigaddset</tt>, <tt>sigdelset</tt>, and <tt>sigismember</tt></h5>
+
+<pre>
+#include     &lt;signal.h&gt;
+#include     &lt;errno.h&gt;
+
+/* &lt;signal.h&gt; usually defines NSIG to include signal number 0 */
+#define SIGBAD(signo)   ((signo) &lt;= 0 || (signo) &gt;= NSIG)
+
+int
+sigaddset(sigset_t *set, int signo)
+{
+    if (SIGBAD(signo)) { errno = EINVAL; return(-1); }
+
+    *set |= 1 &lt;&lt; (signo - 1);       /* turn bit on */
+    return(0);
+}
+
+int
+sigdelset(sigset_t *set, int signo)
+{
+    if (SIGBAD(signo)) { errno = EINVAL; return(-1); }
+
+    *set &amp;= <sup>~</sup>(1 &lt;&lt; (signo - 1));    /* turn bit off */
+    return(0);
+}
+
+int
+sigismember(const sigset_t *set, int signo)
+{
+     if (SIGBAD(signo)) { errno = EINVAL; return(-1); }
+
+     return((*set &amp; (1 &lt;&lt; (signo - 1))) != 0);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e75146"></a><a name="idd1e75151"></a><a name="idd1e75156"></a><a name="idd1e75161"></a><a name="idd1e75166"></a>We might be tempted to implement these three functions as one-line macros in the <tt>&lt;signal.h&gt;</tt> header, but POSIX.1 requires us to check the signal number argument for validity and to set <tt>errno</tt> if it is invalid. This is more difficult to do in a macro than in a function.</p>
+
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

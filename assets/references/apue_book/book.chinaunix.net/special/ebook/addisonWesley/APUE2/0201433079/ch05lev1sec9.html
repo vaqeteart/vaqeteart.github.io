@@ -1,0 +1,64 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 5.9.&nbsp; Binary I/O</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch05lev1sec9"></a>
+<h3 class="docSection1Title">5.9. Binary I/O</h3>
+<p class="docText">The functions from <a class="docLink" href="ch05lev1sec6.html#ch05lev1sec6">Section 5.6</a> operated with one character at a time, and the functions from <a class="docLink" href="ch05lev1sec7.html#ch05lev1sec7">Section 5.7</a> operated with one line at a time. If we're doing binary I/O, we often would like to read or write an entire structure at a time. To do this using <tt>getc</tt> or <tt>putc</tt>, we have to loop through the entire structure, one byte at a time, reading or writing each byte. We can't use the line-at-a-time functions, since <tt>fputs</tt> stops writing when it hits a null byte, and there might be null bytes within the structure. Similarly, <tt>fgets</tt> won't work right on input if any of the data bytes are nulls or newlines. Therefore, the following two functions are provided for binary I/O.</P>
+<a name="inta73"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e38118"></a><a name="idd1e38123"></a><a name="idd1e38128"></a><a name="idd1e38135"></a><a name="idd1e38142"></a>
+<a name="PLID0"></a><div class="v1"><a href="ch05lev1sec9.html#PLID0">[View full width]</a></div><pre>
+#include &lt;stdio.h&gt;
+
+size_t fread(void *restrict <span class="docEmphItalicAlt">ptr</span>, size_t <span class="docEmphItalicAlt">size</span>,
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> size_t <span class="docEmphItalicAlt">nobj</span>,
+             FILE *restrict <span class="docEmphItalicAlt">fp</span>);
+
+size_t fwrite(const void *restrict <span class="docEmphItalicAlt">ptr</span>, size_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">size</span>, size_t <span class="docEmphItalicAlt">nobj</span>,
+              FILE *restrict <span class="docEmphItalicAlt">fp</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: number of objects read or written</p></TD></tr></table></P><BR>
+<p class="docText">These functions have two common uses:</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">Read or write a binary array. For example, to write elements 2 through 5 of a floating-point array, we could write</P><pre>
+    float data[10];
+
+    if (fwrite(&amp;data[2], sizeof(float), 4, fp) != 4)
+        err_sys("fwrite error");
+</pre><BR>
+<p class="docList">Here, we specify <span class="docEmphasis">size</span> as the size of each element of the array and <span class="docEmphasis">nobj</span> as the number of elements.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">Read or write a structure. For example, we could write</p><pre>
+    struct {
+      short   count;
+      long    total;
+      char    name[NAMESIZE];
+    } item;
+
+    if (fwrite(&amp;item, sizeof(item), 1, fp) != 1)
+        err_sys("fwrite error");
+</pre><br>
+<p class="docList">Here, we specify <span class="docEmphasis">size</span> as the size of structure and <span class="docEmphasis">nobj</span> as one (the number of objects to write).</p></div></li></ol></div>
+<p class="docText">The obvious generalization of these two cases is to read or write an array of structures. To do this, <span class="docEmphasis">size</span> would be the <tt>sizeof</tt> the structure, and <span class="docEmphasis">nobj</span> would be the number of elements in the array.</P>
+<p class="docText">Both <tt>fread</tt> and <tt>fwrite</tt> return the number of objects read or written. For the read case, this number can be less than <span class="docEmphasis">nobj</span> if an error occurs or if the end of file is encountered. In this case <tt>ferror</tt> or <tt>feof</tt> must be called. For the write case, if the return value is less than the requested <span class="docEmphasis">nobj</span>, an error has occurred.</p>
+<p class="docText">A fundamental problem with binary I/O is that it can be used to read only data that has been written on the same system. This was OK many years ago, when all the UNIX systems were PDP-11s, but the norm today is to have heterogeneous systems connected together with networks. It is common to want to write data on one system and process it on another. These two functions won't work, for two reasons.</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList"><a name="idd1e38267"></a><a name="idd1e38270"></a><a name="idd1e38275"></a><a name="idd1e38280"></a><a name="idd1e38285"></a><a name="idd1e38292"></a><a name="idd1e38297"></a><a name="idd1e38302"></a><a name="idd1e38307"></a><a name="idd1e38314"></a><a name="idd1e38319"></a><a name="idd1e38324"></a><a name="idd1e38327"></a><a name="idd1e38332"></a><a name="idd1e38339"></a><a name="idd1e38342"></a><a name="idd1e38345"></a>The offset of a member within a structure can differ between compilers and systems, because of different alignment requirements. Indeed, some compilers have an option allowing structures to be packed tightly, to save space with a possible runtime performance penalty, or aligned accurately, to optimize runtime access of each member. This means that even on a single system, the binary layout of a structure can differ, depending on compiler options.</P></div></li><li><div style="font-weight:normal"><p class="docList">The binary formats used to store multibyte integers and floating-point values differ among machine architectures.</p></div></li></ol></div>
+<p class="docText">We'll touch on some of these issues when we discuss sockets in <a class="docLink" href="ch16.html#ch16">Chapter 16</a>. The real solution for exchanging binary data among different systems is to use a higher-level protocol. Refer to <a class="docLink" href="ch08lev1sec2.html#ch08lev1sec2">Section 8.2</a> of Rago [<a class="docLink" href="bib01.html#biblio01_052">1993</a>] or Section 5.18 of Stevens, Fenner, &amp; Rudoff [<a class="docLink" href="bib01.html#biblio01_059">2004</a>] for a description of some techniques various network protocols use to exchange binary data.</p>
+<p class="docText">We'll return to the <tt>fread</tt> function in <a class="docLink" href="ch08lev1sec14.html#ch08lev1sec14">Section 8.14</a> when we'll use it to read a binary structure, the UNIX process accounting records.</p>
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

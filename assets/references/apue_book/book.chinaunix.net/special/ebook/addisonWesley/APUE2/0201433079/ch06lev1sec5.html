@@ -1,0 +1,63 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 6.5.&nbsp; Supplementary Group IDs</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch06lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch06lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch06lev1sec5"></a>
+<h3 class="docSection1Title">6.5. Supplementary Group IDs</h3>
+<p class="docText">The use of groups in the UNIX System has changed over time. With Version 7, each user belonged to a single group at any point in time. When we logged in, we were assigned the real group ID corresponding to the numerical group ID in our password file entry. We could change this at any point by executing <tt>newgrp</tt>(1). If the <tt>newgrp</tt> command succeeded (refer to the manual page for the permission rules), our real group ID was changed to the new group's ID, and this was used for all subsequent file access permission checks. We could always go back to our original group by executing <tt>newgrp</tt> without any arguments.</P>
+<p class="docText">This form of group membership persisted until it was changed in 4.2BSD (circa 1983). With 4.2BSD, the concept of supplementary group IDs was introduced. Not only did we belong to the group corresponding to the group ID in our password file entry, but we also could belong to up to 16 additional groups. The file access permission checks were modified so that not only was the effective group ID compared to the file's group ID, but also all the supplementary group IDs were compared to the file's group ID.</P>
+<blockquote>
+<p class="docText">Supplementary group IDs are a required feature of POSIX.1. (In older versions of POSIX.1, they were optional.) The constant <tt>NGROUPS_MAX</tt> (<a class="docLink" href="ch02lev1sec5.html#ch02fig10">Figure 2.10</a>) specifies the number of supplementary group IDs. A common value is 16 (<a class="docLink" href="ch02lev1sec5.html#ch02fig14">Figure 2.14</a>).</p>
+</blockquote>
+<p class="docText">The advantage in using supplementary group IDs is that we no longer have to change groups explicitly. It is not uncommon to belong to multiple groups (i.e., participate in multiple projects) at the same time.</P>
+<p class="docText"><a name="idd1e43466"></a><a name="idd1e43471"></a><a name="idd1e43478"></a><a name="idd1e43483"></a><a name="idd1e43490"></a><a name="idd1e43495"></a><a name="idd1e43498"></a><a name="idd1e43503"></a>Three functions are provided to fetch and set the supplementary group IDs.</P>
+<a name="inta105"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+int getgroups(int <span class="docEmphItalicAlt">gidsetsize</span>, gid_t <span class="docEmphItalicAlt">grouplist</span>[]);
+</pre><BR>
+
+</P></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: number of supplementary group IDs if OK, 1 on error</P></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID1"></a><div class="v1"><a href="ch06lev1sec5.html#PLID1">[View full width]</a></div><pre>
+#include &lt;grp.h&gt;     /* on Linux */
+#include &lt;unistd.h&gt;  /* on FreeBSD, Mac OS X, and
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> Solaris */
+
+int setgroups(int <span class="docEmphItalicAlt">ngroups</span>, const gid_t <span class="docEmphItalicAlt">grouplist</span>[]);
+
+#include &lt;grp.h&gt;     /* on Linux and Solaris */
+#include &lt;unistd.h&gt;  /* on FreeBSD and Mac OS X */
+
+int initgroups(const char *<span class="docEmphItalicAlt">username</span>, gid_t <span class="docEmphItalicAlt">basegid</span>);
+</pre><br>
+
+</P></TD></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, 1 on error</p></TD></tr></table></P><br>
+<blockquote>
+<p class="docText">Of these three functions, only <tt>getgroups</tt> is specified by POSIX.1. Because <tt>setgroups</tt> and <tt>initgroups</tt> are privileged operations, they are not part of POSIX.1. All four platforms covered in this book, however, support all three functions.</P>
+<p class="docText">On Mac OS X 10.3, <span class="docEmphasis">basegid</span> is declared to be of type <tt>int</tt>.</p>
+</blockquote>
+<p class="docText">The <tt>getgroups</tt> function fills in the array <span class="docEmphasis">grouplist</span> with the supplementary group IDs. Up to <span class="docEmphasis">gidsetsize</span> elements are stored in the array. The number of supplementary group IDs stored in the array is returned by the function.</p>
+<p class="docText">As a special case, if <span class="docEmphasis">gidsetsize</span> is 0, the function returns only the number of supplementary group IDs. The array <span class="docEmphasis">grouplist</span> is not modified. (This allows the caller to determine the size of the <span class="docEmphasis">grouplist</span> array to allocate.)</p>
+<p class="docText">The <tt>setgroups</tt> function can be called by the superuser to set the supplementary group ID list for the calling process: <span class="docEmphasis">grouplist</span> contains the array of group IDs, and <span class="docEmphasis">ngroups</span> specifies the number of elements in the array. The value of <span class="docEmphasis">ngroups</span> cannot be larger than <tt>NGROUPS_MAX</tt>.</p>
+<p class="docText">The only use of <tt>setgroups</tt> is usually from the <tt>initgroups</tt> function, which reads the entire group filewith the functions <tt>getgrent</tt>, <tt>setgrent</tt>, and <tt>endgrent</tt>, which we described earlierand determines the group membership for <span class="docEmphasis">username</span>. It then calls <tt>setgroups</tt> to initialize the supplementary group ID list for the user. One must be superuser to call <tt>initgroups</tt>, since it calls <tt>setgroups</tt>. In addition to finding all the groups that <span class="docEmphasis">username</span> is a member of in the group file, <tt>initgroups</tt> also includes <span class="docEmphasis">basegid</span> in the supplementary group ID list; <span class="docEmphasis">basegid</span> is the group ID from the password file for <span class="docEmphasis">username</span>.</p>
+<p class="docText">The <tt>initgroups</tt> function is called by only a few programs: the <tt>login</tt>(1) program, for example, calls it when we log in.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch06lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch06lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,99 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 20.4.&nbsp; Implementation Overview</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch20lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch20lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch20lev1sec4"></a>
+<h3 class="docSection1Title" id="454331-914">20.4. Implementation Overview</h3>
+<p class="docText">Database access libraries often use two files to store the information: an index file and a data file. The index file contains the actual index value (the key) and a pointer to the corresponding data record in the data file. Numerous techniques can be used to organize the index file so that it can be searched quickly and efficiently for any key: hashing and B+ trees are popular. We have chosen to use a fixed-size hash table with chaining for the index file. We mentioned in the description of <tt>db_open</tt> that we create two files: one with a suffix of <tt>.idx</tt> and one with a suffix of <tt>.dat</tt>.</P>
+<p class="docText">We store the key and the index as null-terminated character strings; they cannot contain arbitrary binary data. Some database systems store numerical data in a binary format (1, 2, or 4 bytes for an integer, for example) to save storage space. This complicates the functions and requires more work to make the database files portable between different systems. For example, if a network has two systems that use different formats for storing binary integers, we need to handle this if we want both systems to access the database. (It is not at all uncommon today to have systems with different architectures sharing files on a network.) Storing all the records, both keys and data, as character strings simplifies everything. It does require additional disk space, but that is a small cost for portability.</P>
+<p class="docText">With <tt>db_store</tt>, only one record for each key is allowed. Some database systems allow a key to have multiple records and then provide a way to access all the records associated with a given key. Additionally, we have only a single index file, meaning that each data record can have only a single key (we don't support secondary keys). <a name="idd1e149257"></a><a name="idd1e149262"></a>Some database systems allow each record to have multiple keys and often use one index file per key. Each time a new record is inserted or deleted, all index files must be updated accordingly. (An example of a file with multiple indexes is an employee file. We could have one index whose key is the employee ID and another whose key is the employee's Social Security number. Having an index whose key is the employee name could be a problem, as names need not be unique.)</p>
+<p class="docText"><a class="docLink" href="ch20lev1sec4.html#ch20fig02">Figure 20.2</a> shows a general picture of the database implementation.</P>
+<a name="ch20fig02"></a><P><center>
+<H5 class="docFigureTitle">Figure 20.2. Arrangement of index file and data file</h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/20fig02_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" id="195131139046" width="500" height="457" SRC="images/0201433079/graphics/20fig02.gif;423615"></P>
+</center></P><BR>
+<p class="docText">The index file consists of three portions: the free-list pointer, the hash table, and the index records. In <a class="docLink" href="ch20lev1sec4.html#ch20fig02">Figure 20.2</a>, all the fields called <span class="docEmphasis">ptr</span> are simply file offsets stored as an ASCII number.</p>
+<p class="docText">To find a record in the database, given its key, <tt>db_fetch</tt> calculates the hash value of the key, which leads to one hash chain in the hash table. (The <span class="docEmphasis">chain ptr</span> field could be 0, indicating an empty chain.) We then follow this hash chain, which is a linked list of <a name="idd1e149313"></a><a name="idd1e149318"></a><a name="idd1e149323"></a>all the index records with this hash value. When we encounter a <span class="docEmphasis">chain ptr</span> value of 0, we've hit the end of the hash chain.</P>
+<p class="docText">Let's look at an actual database file. The program in <a class="docLink" href="ch20lev1sec4.html#ch20fig03">Figure 20.3</a> creates a new database and writes three records to it. Since we store all the fields in the database as ASCII characters, we can look at the actual index file and data file using any of the standard UNIX System tools:</p>
+
+<pre>
+   $ <span class="docEmphStrong">ls -l db4.*</span>
+   -rw-r--r--  1 sar       28 Oct 19 21:33 db4.dat
+   -rw-r--r--  1 sar       72 Oct 19 21:33 db4.idx
+   $ <span class="docEmphStrong">cat db4.idx</span>
+      0  53  35   0
+      0  10Alpha:0:6
+      0  10beta:6:14
+     17  11gamma:20:8
+   $ <span class="docEmphStrong">cat db4.dat</span>
+   data1
+   Data for beta
+   record3
+</pre><BR>
+
+<a name="ch20fig03"></a>
+<H5 class="docExampleTitle">Figure 20.3. Create a database and write three records to it</H5>
+
+<pre>
+#include "apue.h"
+#include "apue_db.h"
+#include &lt;fcntl.h&gt;
+
+int
+main(void)
+{
+    DBHANDLE    db;
+
+    if ((db = db_open("db4", O_RDWR | O_CREAT | O_TRUNC,
+      FILE_MODE)) == NULL)
+        err_sys("db_open error");
+
+    if (db_store(db, "Alpha", "data1", DB_INSERT) != 0)
+        err_quit("db_store error for alpha");
+    if (db_store(db, "beta", "Data for beta", DB_INSERT) != 0)
+        err_quit("db_store error for beta");
+    if (db_store(db, "gamma", "record3", DB_INSERT) != 0)
+        err_quit("db_store error for gamma");
+
+    db_close(db);
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText">To keep this example small, we have set the size of each <span class="docEmphasis">ptr</span> field to four ASCII characters; the number of hash chains is three. Since each <span class="docEmphasis">ptr</span> is a file offset, a four-character field limits the total size of the index file and data file to 10,000 bytes. When we do some performance measurements of the database system in <a class="docLink" href="ch20lev1sec9.html#ch20lev1sec9">Section 20.9</a>, we set the size of each <span class="docEmphasis">ptr</span> field to six characters (allowing file sizes up to 1 million bytes), and the number of hash chains to more than 100.</P>
+<p class="docText">The first line in the index file</P>
+
+<pre>
+    0 53 35 0
+</pre><br>
+
+<p class="docText">is the free-list pointer (0, the free list is empty) and the three hash chain pointers: 53, 35, and 0. The next line</P>
+
+<pre>
+   0 10Alpha:0:6
+</pre><BR>
+
+<p class="docText">shows the format of each index record. The first field (0) is the four-character chain pointer. This record is the end of its hash chain. The next field (10) is the four-character <span class="docEmphasis">idx len</span>, the length of the remainder of this index record. We read each index record using two <tt>read</tt>s: one to read the two fixed-size fields (the <span class="docEmphasis">chain ptr</span> and <span class="docEmphasis">idx len</span>) and another to read the remaining (variable-length) portion. The remaining three fields<span class="docEmphasis">key</span>, <span class="docEmphasis">dat off</span>, and <span class="docEmphasis">dat len</span>are delimited by a separator character (a colon in this case). We need the separator character, since each of these three fields is variable length. The separator character can't appear in the key. Finally, a newline terminates the index record. The newline isn't required, since <span class="docEmphasis">idx len</span> contains the length of the record. We store the newline to separate each index record so we can use the normal UNIX System tools, such as <tt>cat</tt> and <tt>more</tt>, with the index file. The <span class="docEmphasis">key</span> is the value that we specified when we wrote the record to the database. The data offset (0) and data length (6) refer to the data file. We can see that the data record does start at offset 0 in the data file and has a length of 6 bytes. (As with the index file, we automatically append a newline to <a name="idd1e149439"></a><a name="idd1e149444"></a><a name="idd1e149449"></a><a name="idd1e149454"></a><a name="idd1e149459"></a><a name="idd1e149464"></a><a name="idd1e149469"></a><a name="idd1e149474"></a><a name="idd1e149477"></a><a name="idd1e149480"></a><a name="idd1e149483"></a><a name="idd1e149488"></a><a name="idd1e149493"></a><a name="idd1e149498"></a><a name="idd1e149501"></a>each data record, so we can use the normal UNIX System tools with the file. This newline at the end is not returned to the caller by <tt>db_fetch</tt>.)</p>
+<p class="docText">If we follow the three hash chains in this example, we see that the first record on the first hash chain is at offset 53 (<tt>gamma</tt>). The next record on this chain is at offset 17 (<tt>alpha</tt>), and this is the last record on the chain. The first record on the second hash chain is at offset 35 (<tt>beta</tt>), and it's the last record on the chain. The third hash chain is empty.</p>
+<p class="docText">Note that the order of the keys in the index file and the order of their corresponding records in the data file is the same as the order of the calls to <tt>db_store</tt> in <a class="docLink" href="ch20lev1sec4.html#ch20fig03">Figure 20.3</a>. Since the <tt>O_TRUNC</tt> flag was specified for <tt>db_open</tt>, the index file and the data file were both truncated and the database initialized from scratch. In this case, <tt>db_store</tt> just appends the new index records and data records to the end of the corresponding file. We'll see later that <tt>db_store</tt> can also reuse portions of these two files that correspond to deleted records.</p>
+<p class="docText">The choice of a fixed-size hash table for the index is a compromise. It allows fast access as long as each hash chain isn't too long. We want to be able to search for any key quickly, but we don't want to complicate the data structures by using either a B-tree or dynamic hashing. Dynamic hashing has the advantage that any data record can be located with only two disk accesses (see Litwin [<a class="docLink" href="bib01.html#biblio01_041">1980</a>] or Fagin et al. [<a class="docLink" href="bib01.html#biblio01_018">1979</a>] for details). B-trees have the advantage of traversing the database in (sorted) key order (something that we can't do with the <tt>db_nextrec</tt> function using a hash table.)</p>
+
+<UL></ul></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch20lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch20lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,27 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Chapter 20</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec19.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec21.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app03lev1sec20"></a>
+<h3 class="docSection1Title">Chapter 20</h3>
+<p class="docText"></P>
+<P><table border="0" cellspacing="16" cellpadding="0"><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch20qa1q1a1"></a><B><a class="docLink" href="ch20lev1sec11.html#ch20qa1q1">20.1</a></b></TD><td><p class="docText">Our conservative locking in <tt>_db_dodelete</tt> is to avoid race conditions with <tt>db_nextrec</tt>. If the call to <tt>_db_writedat</tt> were not protected with a write lock, it would be possible to erase the data record while <tt>db_nextrec</tt> was reading that data record: <tt>db_nextrec</tt> would read an index record, determine that it was not blank, and then read the data record, which could be erased by <tt>_db_dodelete</tt> between the calls to <tt>_db_readidx</tt> and <tt>_db_readdat</tt> in <tt>db_nextrec</tt>.</P></TD></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch20qa1q2a2"></a><b><a class="docLink" href="ch20lev1sec11.html#ch20qa1q2">20.2</a></b></TD><TD><p class="docText">Assume that <tt>db_nextrec</tt> calls <tt>_db_readidx</tt>, which reads the key into the index buffer for the process. This process is then stopped by the kernel, and another process runs. This other process calls <tt>db_delete</tt>, and the record being read by the other process is deleted. Both its key and its data are rewritten in the two files as all blanks. The first process resumes and calls <tt>_db_readdat</tt> (from <tt>db_nextrec</tt>) and reads the all-blank data record. The read lock by <tt>db_nextrec</tt> allows it to do the read of the index record, followed by the read of the data record, as an atomic operation (with regard to other cooperating processes using the same database).</P></td></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch20qa1q3a3"></a><B><a class="docLink" href="ch20lev1sec11.html#ch20qa1q3">20.3</a></b></TD><td><p class="docText">With mandatory locking, other readers and writers are affected. Other reads and writes are blocked by the kernel until the locks placed by <tt>_db_writeidx</tt> and <tt>_db_writedat</tt> are removed.</p></td></tr><TR valign="top"><td align="right" class="docText" width="50"><a name="ch20qa1q5a5"></a><B><a class="docLink" href="ch20lev1sec11.html#ch20qa1q5">20.5</a></b></td><TD><p class="docText">By writing the data record before the index record, we protect ourselves from generating a corrupt record if the process should be killed in between the two writes. If the process were to write the index record first, but be killed before writing the data record, then we'd have a valid index record that pointed to invalid data.</p></td></tr></table></p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec19.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec21.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

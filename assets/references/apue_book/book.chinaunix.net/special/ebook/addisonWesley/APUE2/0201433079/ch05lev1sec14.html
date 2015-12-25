@@ -1,0 +1,30 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 5.14.&nbsp; Alternatives to Standard I/O</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec13.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec15.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch05lev1sec14"></a>
+<h3 class="docSection1Title">5.14. Alternatives to Standard I/O</h3>
+<p class="docText"><a name="idd1e41133"></a><a name="idd1e41136"></a><a name="idd1e41141"></a><a name="idd1e41146"></a><a name="idd1e41151"></a><a name="idd1e41156"></a><a name="idd1e41159"></a><a name="idd1e41162"></a><a name="idd1e41165"></a><a name="idd1e41170"></a><a name="idd1e41175"></a><a name="idd1e41180"></a><a name="idd1e41185"></a><a name="idd1e41190"></a><a name="idd1e41195"></a><a name="idd1e41200"></a><a name="idd1e41203"></a><a name="idd1e41206"></a><a name="idd1e41209"></a>The standard I/O library is not perfect. Korn and Vo [<a class="docLink" href="bib01.html#biblio01_032">1991</a>] list numerous defects: some in the basic design, but most in the various implementations.</P>
+<p class="docText">One inefficiency inherent in the standard I/O library is the amount of data copying that takes place. When we use the line-at-a-time functions, <tt>fgets</tt> and <tt>fputs</tt>, the data is usually copied twice: once between the kernel and the standard I/O buffer (when the corresponding <tt>read</tt> or <tt>write</tt> is issued) and again between the standard I/O buffer and our line buffer. The Fast I/O library [<tt>fio</tt>(3) in AT&amp;T <a class="docLink" href="bib01.html#biblio01_007">1990a</a>] gets around this by having the function that reads a line return a pointer to the line instead of copying the line into another buffer. Hume [<a class="docLink" href="bib01.html#biblio01_025">1988</a>] reports a threefold increase in the speed of a version of the <tt>grep</tt>(1) utility, simply by making this change.</P>
+<p class="docText">Korn and Vo [<a class="docLink" href="bib01.html#biblio01_032">1991</a>] describe another replacement for the standard I/O library: <span class="docEmphasis">sfio</span>. This package is similar in speed to the <span class="docEmphasis">fio</span> library and normally faster than the standard I/O library. The <span class="docEmphasis">sfio</span> package also provides some new features that aren't in the others: I/O streams generalized to represent both files and regions of memory, processing modules that can be written and stacked on an I/O stream to change the operation of a stream, and better exception handling.</p>
+<p class="docText">Krieger, Stumm, and Unrau [<a class="docLink" href="bib01.html#biblio01_033">1992</a>] describe another alternative that uses mapped filesthe <tt>mmap</tt> function that we describe in <a class="docLink" href="ch14lev1sec9.html#ch14lev1sec9">Section 14.9</a>. This new package is called ASI, the Alloc Stream Interface. The programming interface resembles the UNIX System memory allocation functions (<tt>malloc</tt>, <tt>realloc</tt>, and <tt>free</tt>, described in <a class="docLink" href="ch07lev1sec8.html#ch07lev1sec8">Section 7.8</a>). As with the <span class="docEmphasis">sfio</span> package, ASI attempts to minimize the amount of data copying by using pointers.</P>
+<p class="docText">Several implementations of the standard I/O library are available in C libraries that were designed for systems with small memory footprints, such as embedded systems. These implementations emphasize modest memory requirements over portability, speed, or functionality. Two such implementations are the uClibc C library (see <a class="docLink" target="_blank" href="http://www.uclibc.org">http://www.uclibc.org</a> for more information) and the newlibc C library (<a class="docLink" target="_blank" href="http://sources.redhat.com/newlib">http://sources.redhat.com/newlib</a>).</P>
+
+<UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec13.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec15.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

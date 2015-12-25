@@ -1,0 +1,28 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 2.9.&nbsp; Conflicts Between Standards</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch02lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch02lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch02lev1sec9"></a>
+<h3 class="docSection1Title">2.9. Conflicts Between Standards</h3>
+<p class="docText">All in all, these various standards fit together nicely. Our main concern is any differences between the ISO C standard and POSIX.1, since SUSv3 is a superset of POSIX.1. There are some differences.</P>
+<p class="docText"><a name="idd1e16999"></a><a name="idd1e17002"></a><a name="idd1e17007"></a><a name="idd1e17010"></a><a name="idd1e17015"></a><a name="idd1e17018"></a><a name="idd1e17023"></a><a name="idd1e17028"></a><a name="idd1e17033"></a><a name="idd1e17038"></a><a name="idd1e17043"></a><a name="idd1e17048"></a><a name="idd1e17053"></a><a name="idd1e17056"></a><a name="idd1e17061"></a><a name="idd1e17064"></a><a name="idd1e17069"></a><a name="idd1e17074"></a><a name="idd1e17079"></a><a name="idd1e17084"></a><a name="idd1e17089"></a><a name="idd1e17094"></a><a name="idd1e17099"></a><a name="idd1e17104"></a><a name="idd1e17109"></a><a name="idd1e17114"></a><a name="idd1e17119"></a><a name="idd1e17124"></a><a name="idd1e17129"></a><a name="idd1e17134"></a><a name="idd1e17139"></a><a name="idd1e17144"></a><a name="idd1e17149"></a><a name="idd1e17152"></a><a name="idd1e17157"></a><a name="idd1e17162"></a><a name="idd1e17167"></a><a name="idd1e17172"></a><a name="idd1e17177"></a><a name="idd1e17182"></a><a name="idd1e17187"></a>ISO C defines the function <tt>clock</tt> to return the amount of CPU time used by a process. The value returned is a <tt>clock_t</tt> value. To convert this value to seconds, we divide it by <tt>CLOCKS_PER_SEC</tt>, which is defined in the <tt>&lt;time.h&gt;</tt> header. POSIX.1 defines the function <tt>times</tt> that returns both the CPU time (for the caller and all its terminated children) and the clock time. All these time values are <tt>clock_t</tt> values. The <tt>sysconf</tt> function is used to obtain the number of clock ticks per second for use with the return values from the <tt>times</tt> function. What we have is the same term, clock ticks per second, defined differently by ISO C and POSIX.1. Both standards also use the same data type (<tt>clock_t</tt>) to hold these different values. The difference can be seen in Solaris, where <tt>clock</tt> returns microseconds (hence <tt>CLOCKS_PER_SEC</tt> is 1 million), whereas <tt>sysyconf</tt> returns the value 100 for clock ticks per second.</P>
+<p class="docText">Another area of potential conflict is when the ISO C standard specifies a function, but doesn't specify it as strongly as POSIX.1 does. This is the case for functions that require a different implementation in a POSIX environment (with multiple processes) than in an ISO C environment (where very little can be assumed about the host operating system). Nevertheless, many POSIX-compliant systems implement the ISO C function, for compatibility. The <tt>signal</tt> function is an example. If we unknowingly use the <tt>signal</tt> function provided by Solaris (hoping to write portable code that can be run in ISO C environments and under older UNIX systems), it'll provide semantics different from the POSIX.1 <tt>sigaction</tt> function. We'll have more to say about the <tt>signal</tt> function in <a class="docLink" href="ch10.html#ch10">Chapter 10</a>.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch02lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch02lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

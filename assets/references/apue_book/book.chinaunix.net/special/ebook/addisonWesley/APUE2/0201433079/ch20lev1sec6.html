@@ -1,0 +1,38 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 20.6.&nbsp; Concurrency</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch20lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch20lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch20lev1sec6"></a>
+<h3 class="docSection1Title">20.6. Concurrency</h3>
+<p class="docText"><a name="idd1e149656"></a><a name="idd1e149659"></a><a name="idd1e149664"></a><a name="idd1e149669"></a><a name="idd1e149674"></a><a name="idd1e149679"></a><a name="idd1e149684"></a><a name="idd1e149689"></a><a name="idd1e149694"></a><a name="idd1e149699"></a><a name="idd1e149704"></a><a name="idd1e149709"></a><a name="idd1e149714"></a><a name="idd1e149719"></a><a name="idd1e149724"></a><a name="idd1e149729"></a><a name="idd1e149734"></a>We purposely chose a two-file implementation (an index file and a data file) because that is a common implementation technique. It requires us to handle the locking interactions of both files. But there are numerous ways to handle the locking of these two files.</P>
+<a name="ch20lev2sec1"></a>
+<H4 class="docSection2Title">Coarse-Grained Locking</h4>
+<p class="docText">The simplest form of locking is to use one of the two files as a lock for the entire database and to require the caller to obtain this lock before operating on the database. We call this <span class="docEmphasis">coarse-grained locking</span>. For example, we can say that the process with a read lock on byte 0 of the index file has read access to the entire database. A process with a write lock on byte 0 of the index file has write access to the entire database. We can use the normal UNIX System byte-range locking semantics to allow any number of readers at one time, but only one writer at a time. (Recall <a class="docLink" href="ch14lev1sec3.html#ch14fig03">Figure 14.3</a>.) The functions <tt>db_fetch</tt> and <tt>db_nextrec</tt> require a read lock, and <tt>db_delete</tt>, <tt>db_store</tt>, and <tt>db_open</tt> all require a write lock. (The reason <tt>db_open</tt> requires a write lock is that if the file is being created, it has to write the empty free list and hash chains at the front of the index file.)</P>
+<p class="docText">The problem with coarse-grained locking is that it doesn't allow the maximum amount of concurrency. If a process is adding a record to one hash chain, another process should be able to read a record on a different hash chain.</P>
+
+<a name="ch20lev2sec2"></a>
+<H4 class="docSection2Title">Fine-Grained Locking</h4>
+<p class="docText">We enhance coarse-grained locking to allow more concurrency and call this <span class="docEmphasis">fine-grained locking</span>. We first require a reader or a writer to obtain a read lock or a write lock on the hash chain for a given record. We allow any number of readers at one time on any hash chain but only a single writer on a hash chain. Next, a writer needing to access the free list (either <tt>db_delete</tt> or <tt>db_store</tt>) must obtain a write lock on the free list. Finally, whenever it appends a new record to the end of either the index file or the data file, <tt>db_store</tt> has to obtain a write lock on that portion of the file.</P>
+<p class="docText">We expect fine-grained locking to provide more concurrency than coarse-grained locking. In <a class="docLink" href="ch20lev1sec9.html#ch20lev1sec9">Section 20.9</a>, we'll show some actual measurements. In <a class="docLink" href="ch20lev1sec8.html#ch20lev1sec8">Section 20.8</a>, we show the source code to our implementation of fine-grained locking and discuss the details of implementing locking. (Coarse-grained locking is merely a simplification of the locking that we show.)</P>
+<p class="docText">In the source code, we call <tt>read</tt>, <tt>readv</tt>, <tt>write</tt>, and <tt>writev</tt> directly. We do not use the standard I/O library. Although it is possible to use byte-range locking with the standard I/O library, careful handling of buffering is required. We don't want an <tt>fgets</tt>, for example, to return data that was read into a standard I/O buffer 10 minutes ago if the data was modified by another process 5 minutes ago.</P>
+<p class="docText"><a name="idd1e149829"></a><a name="idd1e149834"></a><a name="idd1e149839"></a><a name="idd1e149842"></a><a name="idd1e149848"></a><a name="idd1e149851"></a><a name="idd1e149856"></a><a name="idd1e149859"></a><a name="idd1e149862"></a><a name="idd1e149867"></a>Our discussion of concurrency is predicated on the simple needs of the database library. Commercial systems often have additional requirements. See <a class="docLink" href="ch16.html#ch16">Chapter 16</a> of Date [<a class="docLink" href="bib01.html#biblio01_017">2004</a>] for additional details on concurrency.</p>
+
+
+<UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch20lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch20lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

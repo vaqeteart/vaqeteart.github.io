@@ -1,0 +1,28 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 13.7.&nbsp; ClientServer Model</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch13lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch13lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch13lev1sec7"></a>
+<h3 class="docSection1Title" id="454331-803">13.7. ClientServer Model</h3>
+<p class="docText"><a name="idd1e97862"></a><a name="idd1e97867"></a><a name="idd1e97872"></a><a name="idd1e97877"></a><a name="idd1e97882"></a><a name="idd1e97887"></a>A common use for a daemon process is as a server process. Indeed, in <a class="docLink" href="ch13lev1sec4.html#ch13fig02">Figure 13.2</a>, we can call the <tt>syslogd</tt> process a server that has messages sent to it by user processes (clients) using a UNIX domain datagram socket.</P>
+<p class="docText">In general, a <span class="docEmphasis">server</span> is a process that waits for a <span class="docEmphasis">client</span> to contact it, requesting some type of service. In <a class="docLink" href="ch13lev1sec4.html#ch13fig02">Figure 13.2</a>, the service being provided by the <tt>syslogd</tt> server is the logging of an error message.</P>
+<p class="docText">In <a class="docLink" href="ch13lev1sec4.html#ch13fig02">Figure 13.2</a>, the communication between the client and the server is one-way. The client sends its service request to the server; the server sends nothing back to the client. In the upcoming chapters, we'll see numerous examples of two-way communication between a client and a server. The client sends a request to the server, and the server sends a reply back to the client.</p>
+
+<UL></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch13lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch13lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

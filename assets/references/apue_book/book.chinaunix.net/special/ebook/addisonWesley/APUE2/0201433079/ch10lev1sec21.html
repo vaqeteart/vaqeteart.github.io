@@ -1,0 +1,80 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 10.21.&nbsp; Additional Features</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec20.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec22.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch10lev1sec21"></a>
+<h3 class="docSection1Title" id="454331-969">10.21. Additional Features</h3>
+<p class="docText"><a name="idd1e80945"></a><a name="idd1e80950"></a><a name="idd1e80955"></a><a name="idd1e80960"></a><a name="idd1e80965"></a><a name="idd1e80970"></a><a name="idd1e80975"></a><a name="idd1e80980"></a><a name="idd1e80985"></a><a name="idd1e80990"></a><a name="idd1e80995"></a><a name="idd1e81000"></a>In this section, we describe some additional implementation-dependent features of signals.</P>
+<a name="ch10lev2sec5"></a>
+<H4 class="docSection2Title">Signal Names</h4>
+<p class="docText">Some systems provide the array</P>
+
+<pre>
+    extern char *sys_siglist[];
+</pre><BR>
+
+<p class="docText">The array index is the signal number, giving a pointer to the character string name of the signal.</P>
+<blockquote>
+<p class="docText">FreeBSD 5.2.1, Linux 2.4.22, and Mac OS X 10.3 all provide this array of signal names. Solaris 9 does, too, but it uses the name <tt>_sys_siglist</tt> instead.</p>
+</blockquote>
+<p class="docText">These systems normally provide the function <tt>psignal</tt> also.</P>
+<a name="inta186"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;signal.h&gt;
+
+void psignal(int <span class="docEmphItalicAlt">signo</span>, const char *<span class="docEmphItalicAlt">msg</span>);
+</pre><BR>
+
+</p></TD></TR></table></P><br>
+<p class="docText">The string <span class="docEmphasis">msg</span> (which is normally the name of the program) is output to the standard error, followed by a colon and a space, followed by a description of the signal, followed by a newline. This function is similar to <tt>perror</tt> (<a class="docLink" href="ch01lev1sec7.html#ch01lev1sec7">Section 1.7</a>).</P>
+<p class="docText">Another common function is <tt>strsignal</tt>. This function is similar to <tt>strerror</tt> (also described in <a class="docLink" href="ch01lev1sec7.html#ch01lev1sec7">Section 1.7</a>).</P>
+<a name="inta337"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;string.h&gt;
+
+char *strsignal(int <span class="docEmphItalicAlt">signo</span>);
+</pre><br>
+
+</p></td></tr><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: a pointer to a string describing the signal</P></td></TR></table></p><br>
+<p class="docText">Given a signal number, <tt>strsignal</tt> will return a string that describes the signal. This string can be used by applications to print error messages about signals received.</p>
+<blockquote>
+<p class="docText">All the platforms discussed in this book provide the <tt>psignal</tt> and <tt>strsignal</tt> functions, but differences do occur. On Solaris 9, <tt>strsignal</tt> will return a null pointer if the signal number is invalid, whereas FreeBSD 5.2.1, Linux 2.4.22, and Mac OS X 10.3 return a string indicating that the signal number is unrecognized. Also, to get the function prototype for <tt>psignal</tt> on Solaris, you need to include <tt>&lt;siginfo.h&gt;</tt>.</p>
+</blockquote>
+
+<a name="ch10lev2sec6"></a>
+<h4 class="docSection2Title">Signal Mappings</h4>
+<p class="docText"><a name="idd1e81169"></a><a name="idd1e81174"></a><a name="idd1e81179"></a><a name="idd1e81184"></a><a name="idd1e81191"></a><a name="idd1e81196"></a><a name="idd1e81201"></a><a name="idd1e81206"></a><a name="idd1e81211"></a><a name="idd1e81216"></a><a name="idd1e81223"></a>Solaris provides a couple of functions to map a signal number to a signal name and vice versa.</p>
+<a name="inta312"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;signal.h&gt;
+
+int sig2str(int <span class="docEmphItalicAlt">signo</span>, char *<span class="docEmphItalicAlt">str</span>);
+
+int str2sig(const char *<span class="docEmphItalicAlt">str</span>, int *<span class="docEmphItalicAlt">signop</span>);
+</pre><br>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, 1 on error</p></TD></TR></table></p><BR>
+<p class="docText">These functions are useful when writing interactive programs that need to accept and print signal names and numbers.</P>
+<p class="docText">The <tt>sig2str</tt> function translates the given signal number into a string and stores the result in the memory pointed to by <span class="docEmphasis">str</span>. The caller must ensure that the memory is large enough to hold the longest string, including the terminating null byte. Solaris provides the constant <tt>SIG2STR_MAX</tt> in <tt>&lt;signal.h&gt;</tt> to define the maximum string length. The string consists of the signal name without the &quot;SIG&quot; prefix. For example, translating <tt>SIGKILL</tt> would result in the string &quot;KILL&quot; being stored in the <span class="docEmphasis">str</span> memory buffer.</P>
+<p class="docText">The <tt>str2sig</tt> function translates the given name into a signal number. The signal number is stored in the integer pointed to by <span class="docEmphasis">signop</span>. The name can be either the signal name without the &quot;SIG&quot; prefix or a string representation of the decimal signal number (i.e., &quot;9&quot;).</p>
+<p class="docText">Note that <tt>sig2str</tt> and <tt>str2sig</tt> depart from common practice and don't set <tt>errno</tt> when they fail.</P>
+
+
+<UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec20.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec22.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

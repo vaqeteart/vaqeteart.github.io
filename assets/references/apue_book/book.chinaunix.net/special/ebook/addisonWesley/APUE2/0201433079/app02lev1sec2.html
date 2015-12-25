@@ -1,0 +1,289 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>B.2 Standard Error Routines</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app02lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app02lev1sec2"></a>
+<h3 class="docSection1Title">B.2 Standard Error Routines</h3>
+<p class="docText">Two sets of error functions are used in most of the examples throughout the text to handle error conditions. One set begins with <tt>err_</tt> and outputs an error message to standard error. The other set begins with <tt>log_</tt> and is for daemon processes (<a class="docLink" href="ch13.html#ch13">Chapter 13</a>) that probably have no controlling terminal.</P>
+<p class="docText">The reason for our own error functions is to let us write our error handling with a single line of C code, as in</P>
+
+<pre>
+    if (<span class="docEmphasis">error condition</span>)
+              err_dump(<span class="docEmphasis">printf format with any number of arguments</span>);
+</pre><br>
+
+<p class="docText">instead of</P>
+
+<pre>
+    if (<span class="docEmphasis">error condition</span>){
+              char buf[200];
+              sprintf(buf, <span class="docEmphasis">printf format with any number of arguments</span>);
+              perror(buf);
+              abort();
+    }
+</pre><BR>
+
+<p class="docText">Our error functions use the variable-length argument list facility from ISO C. See <a class="docLink" href="ch07lev1sec3.html#ch07lev1sec3">Section 7.3</a> of Kernighan and Ritchie [<a class="docLink" href="bib01.html#biblio01_029">1988</a>] for additional details. Be aware that this ISO C facility differs from the <tt>varargs</tt> facility provided by earlier systems (such as SVR3 and 4.3BSD). The names of the macros are the same, but the arguments to some of the macros have changed.</P>
+<p class="docText"><a class="docLink" href="app02lev1sec2.html#app02fig02">Figure B.2</a> summarizes the differences between the various error functions.</p>
+<a name="app02fig02"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure B.2. Our standard error functions</H5></caption><colgroup><col width="50"><col width="200"><col width="150"><col width="100"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Function</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Adds string from <tt>strerror</tt> ?</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Parameter to <tt>strerror</tt></span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Terminate ?</span></P></th></TR></thead><tr><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>err_dump</tt></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">yes</P></td><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>errno</tt></p></td><TD class="docTableCell" align="center" valign="top"><p class="docText"><tt>abort();</tt></p></TD></tr><TR><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>err_exit</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">yes</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">explicit parameter</p></td><td class="docTableCell" align="center" valign="top"><p class="docText"><tt>exit(1);</tt>
+</p></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>err_msg</tt></p></td><TD class="rightBorder" align="center" valign="top"><p class="docText">no</P></td><TD class="rightBorder" align="center" valign="top">&nbsp;</TD><TD class="docTableCell" align="center" valign="top"><p class="docText"><tt>return;</tt>
+</p></TD></TR><TR><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>err_quit</tt></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">no</P></TD><td class="rightBorder" align="center" valign="top">&nbsp;</TD><TD class="docTableCell" align="center" valign="top"><p class="docText"><tt>exit(1);</tt>
+</p></TD></TR><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>err_ret</tt></p></td><TD class="rightBorder" align="center" valign="top"><p class="docText">yes</p></TD><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>errno</tt></P></td><td class="docTableCell" align="center" valign="top"><p class="docText"><tt>return;</tt>
+</p></td></tr><tr><td class="rightBorder bottomBorder" align="center" valign="top"><p class="docText"><tt>err_sys</tt></p></td><td class="rightBorder bottomBorder" align="center" valign="top"><p class="docText">yes</p></td><td class="rightBorder bottomBorder" align="center" valign="top"><p class="docText"><tt>errno</tt></p></td><td class="bottomBorder" align="center" valign="top"><p class="docText"><tt>exit(1);</tt></p></TD></TR><tr><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>log_msg</tt></P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">no</P></TD><TD class="rightBorder" align="center" valign="top">&nbsp;</td><TD class="docTableCell" align="center" valign="top"><p class="docText"><tt>return;</tt>
+</p></TD></TR><TR><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>log_quit</tt></P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">no</P></TD><td class="rightBorder" align="center" valign="top">&nbsp;</td><td class="docTableCell" align="center" valign="top"><p class="docText"><tt>exit(2);</tt></p></TD></tr><TR><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>log_ret</tt></P></td><td class="rightBorder" align="center" valign="top"><p class="docText">yes</p></td><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>errno</tt></p></td><td class="docTableCell" align="center" valign="top"><p class="docText"><tt>return;</tt></p></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>log_sys</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">yes</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>errno</tt></p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText"><tt>exit(2);</tt></P></td></TR></table></P><BR>
+<p class="docText"><a class="docLink" href="app02lev1sec2.html#app02fig03">Figure B.3</a> shows the error functions that output to standard error.</p>
+<a name="app02fig03"></a>
+<H5 class="docExampleTitle">Figure B.3. Error functions that output to standard error</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;errno.h&gt;      /* for definition of errno */
+#include &lt;stdarg.h&gt;     /* ISO C variable aruments */
+
+static void err_doit(int, int, const char *, va_list);
+
+/*
+ * Nonfatal error related to a system call.
+ * Print a message and return.
+ */
+void
+err_ret(const char *fmt, ...)
+{
+    va_list     ap;
+
+    va_start(ap, fmt);
+    err_doit(1, errno, fmt, ap);
+    va_end(ap);
+}
+
+/*
+ * Fatal error related to a system call.
+ * Print a message and terminate.
+ */
+void
+err_sys(const char *fmt, ...)
+{
+    va_list     ap;
+
+    va_start(ap, fmt);
+    err_doit(1, errno, fmt, ap);
+    va_end(ap);
+    exit(1);
+}
+
+/*
+ * Fatal error unrelated to a system call.
+ * Error code passed as explict parameter.
+ * Print a message and terminate.
+ */
+void
+err_exit(int error, const char *fmt, ...)
+{
+    va_list     ap;
+
+    va_start(ap, fmt);
+    err_doit(1, error, fmt, ap);
+    va_end(ap);
+    exit(1);
+}
+
+/*
+ * Fatal error related to a system call.
+ * Print a message, dump core, and terminate.
+ */
+void
+err_dump(const char *fmt, ...)
+{
+    va_list     ap;
+
+    va_start(ap, fmt);
+    err_doit(1, errno, fmt, ap);
+    va_end(ap);
+    abort();        /* dump core and terminate */
+    exit(1);        /* shouldn't get here */
+}
+
+/*
+ * Nonfatal error unrelated to a system call.
+ * Print a message and return.
+ */
+void
+err_msg(const char *fmt, ...)
+{
+    va_list     ap;
+
+    va_start(ap, fmt);
+    err_doit(0, 0, fmt, ap);
+    va_end(ap);
+}
+
+/*
+ * Fatal error unrelated to a system call.
+ * Print a message and terminate.
+ */
+void
+err_quit(const char *fmt, ...)
+{
+    va_list     ap;
+
+    va_start(ap, fmt);
+    err_doit(0, 0, fmt, ap);
+    va_end(ap);
+    exit(1);
+}
+
+/*
+ * Print a message and return to caller.
+ * Caller specifies "errnoflag".
+ */
+static void
+err_doit(int errnoflag, int error, const char *fmt, va_list ap)
+{
+    char    buf[MAXLINE];
+   vsnprintf(buf, MAXLINE, fmt, ap);
+   if (errnoflag)
+       snprintf(buf+strlen(buf), MAXLINE-strlen(buf), ": %s",
+         strerror(error));
+   strcat(buf, "\n");
+   fflush(stdout);     /* in case stdout and stderr are the same */
+   fputs(buf, stderr);
+   fflush(NULL);       /* flushes all stdio output streams */
+}
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e176945"></a><a name="idd1e176948"></a><a name="idd1e176953"></a><a name="idd1e176958"></a><a name="idd1e176963"></a><a name="idd1e176968"></a><a name="idd1e176973"></a><a name="idd1e176980"></a><a name="idd1e176985"></a><a name="idd1e176990"></a><a name="idd1e176995"></a><a name="idd1e177000"></a><a name="idd1e177005"></a><a name="idd1e177010"></a><a name="idd1e177013"></a><a name="idd1e177018"></a><a name="idd1e177023"></a><a name="idd1e177028"></a><a name="idd1e177033"></a><a name="idd1e177038"></a><a name="idd1e177041"></a><a name="idd1e177046"></a><a name="idd1e177051"></a><a name="idd1e177056"></a><a name="idd1e177059"></a><a name="idd1e177064"></a><a name="idd1e177069"></a><a name="idd1e177074"></a><a name="idd1e177077"></a><a name="idd1e177080"></a><a name="idd1e177085"></a><a name="idd1e177090"></a><a name="idd1e177093"></a><a name="idd1e177098"></a><a name="idd1e177103"></a><a name="idd1e177108"></a><a name="idd1e177113"></a><a name="idd1e177118"></a><a name="idd1e177123"></a><a name="idd1e177128"></a><a name="idd1e177133"></a><a name="idd1e177138"></a><a name="idd1e177143"></a><a name="idd1e177148"></a><a name="idd1e177153"></a><a name="idd1e177158"></a><a name="idd1e177163"></a><a name="idd1e177168"></a><a name="idd1e177173"></a><a name="idd1e177178"></a><a name="idd1e177183"></a><a name="idd1e177188"></a><a name="idd1e177193"></a><a name="idd1e177198"></a><a name="idd1e177203"></a><a name="idd1e177208"></a><a name="idd1e177213"></a><a name="idd1e177218"></a><a name="idd1e177223"></a><a name="idd1e177228"></a><a name="idd1e177233"></a><a name="idd1e176745"></a><a name="idd1e176750"></a><a name="idd1e176757"></a><a name="idd1e176764"></a><a name="idd1e176771"></a><a name="idd1e176776"></a><a name="idd1e176781"></a><a name="idd1e176786"></a><a name="idd1e176793"></a><a name="idd1e176800"></a><a name="idd1e176807"></a><a name="idd1e176814"></a><a name="idd1e176821"></a><a name="idd1e176828"></a><a name="idd1e176833"></a><a name="idd1e176838"></a><a name="idd1e176843"></a><a name="idd1e176848"></a><a name="idd1e176853"></a><a name="idd1e176860"></a><a name="idd1e176867"></a><a name="idd1e176872"></a><a name="idd1e176877"></a><a name="idd1e176882"></a><a name="idd1e176887"></a><a name="idd1e176892"></a><a name="idd1e176897"></a><a name="idd1e176902"></a><a class="docLink" href="app02lev1sec2.html#app02fig04">Figure B.4</a> shows the <tt>log_XXX</tt> error functions. These require the caller to define the variable <tt>log_to_stderr</tt> and set it nonzero if the process is not running as a daemon. In this case, the error messages are sent to standard error. If the <tt>log_to_stderr</tt> flag is 0, the <tt>syslog</tt> facility (<a class="docLink" href="ch13lev1sec4.html#ch13lev1sec4">Section 13.4</a>) is used.</P>
+<a name="app02fig04"></a>
+<H5 class="docExampleTitle">Figure B.4. Error functions for daemons</h5>
+
+<pre>
+/*
+ * Error routines for programs that can run as a daemon.
+ */
+
+#include "apue.h"
+#include &lt;errno.h&gt;      /* for definition of errno */
+#include &lt;stdarg.h&gt;     /* ISO C variable arguments */
+#include &lt;syslog.h&gt;
+
+static void log_doit(int, int, const char *, va_list ap);
+
+/*
+ * Caller must define and set this: nonzero if
+ * interactive, zero if daemon
+ */
+extern int log_to_stderr;
+
+/*
+ * Initialize syslog(), if running as daemon.
+ */
+void
+log_open(const char *ident, int option, int facility)
+{
+    if (log_to_stderr == 0)
+        openlog(ident, option, facility);
+}
+
+/*
+ * Nonfatal error related to a system call.
+ * Print a message with the system's errno value and return.
+ */
+void
+log_ret(const char *fmt, ...)
+{
+    va_list     ap;
+    va_start(ap, fmt);
+    log_doit(1, LOG_ERR, fmt, ap);
+    va_end(ap);
+}
+
+/*
+ * Fatal error related to a system call.
+ * Print a message and terminate.
+ */
+void
+log_sys(const char *fmt, ...)
+{
+    va_list     ap;
+
+    va_start(ap, fmt);
+    log_doit(1, LOG_ERR, fmt, ap);
+    va_end(ap);
+    exit(2);
+}
+
+/*
+ * Nonfatal error unrelated to a system call.
+ * Print a message and return.
+ */
+void
+log_msg(const char *fmt, ...)
+{
+    va_list ap;
+
+    va_start(ap, fmt);
+    log_doit(0, LOG_ERR, fmt, ap);
+    va_end(ap);
+}
+
+/*
+ * Fatal error unrelated to a system call.
+ * Print a message and terminate.
+ */
+void
+log_quit(const char *fmt, ...)
+{
+    va_list     ap;
+
+    va_start(ap, fmt);
+    log_doit(0, LOG_ERR, fmt, ap);
+    va_end(ap);
+    exit(2);
+}
+
+/*
+ * Print a message and return to caller.
+ * Caller specifies "errnoflag" and "priority".
+ */
+static void
+log_doit(int errnoflag, int priority, const char *fmt, va_list ap)
+{
+    int     errno_save;
+    char    buf[MAXLINE];
+
+    errno_save = errno;     /* value caller might want printed */
+    vsnprintf(buf, MAXLINE, fmt, ap);
+    if (errnoflag)
+        snprintf(buf+strlen(buf), MAXLINE-strlen(buf), ": %s",
+          strerror(errno_save));
+    strcat(buf, "\n");
+    if (log_to_stderr) {
+        fflush(stdout);
+        fputs(buf, stderr);
+        fflush(stderr);
+    } else {
+        syslog(priority, buf);
+    }
+}
+</pre><BR>
+
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app02lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

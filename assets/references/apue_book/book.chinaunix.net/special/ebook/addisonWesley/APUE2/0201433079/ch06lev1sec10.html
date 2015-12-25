@@ -1,0 +1,183 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 6.10.&nbsp; Time and Date Routines</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch06lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch06lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch06lev1sec10"></a>
+<h3 class="docSection1Title">6.10. Time and Date Routines</h3>
+<p class="docText">The basic time service provided by the UNIX kernel counts the number of seconds that have passed since the Epoch: 00:00:00 January 1, 1970, Coordinated Universal Time (UTC). In <a class="docLink" href="ch01lev1sec10.html#ch01lev1sec10">Section 1.10</a>, we said that these seconds are represented in a <tt>time_t</tt> data type, and we call them <span class="docEmphasis">calendar times</span>. These calendar times represent both the time and the date. The UNIX System has always differed from other operating systems in (a) keeping time in UTC instead of the local time, (b) automatically handling conversions, such as daylight saving time, and (c) keeping the time and date as a single quantity.</P>
+<p class="docText">The <tt>time</tt> function returns the current time and date.</P>
+<a name="inta137"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;time.h&gt;
+
+time_t time(time_t *<span class="docEmphItalicAlt">calptr</span>);
+</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: value of time if OK, 1 on error</P></td></TR></table></P><BR>
+<p class="docText">The time value is always returned as the value of the function. If the argument is non- null, the time value is also stored at the location pointed to by <span class="docEmphasis">calptr</span>.</p>
+<blockquote>
+<p class="docText">We haven't said how the kernel's notion of the current time is initialized. Historically, on implementations derived from System V, the <tt>stime</tt>(2) function was called, whereas BSD-derived systems used <tt>settimeofday</tt>(2).</P>
+<p class="docText">The Single UNIX Specification doesn't specify how a system sets its current time.</P>
+</blockquote>
+<p class="docText">The <tt>gettimeofday</tt> function provides greater resolution (up to a microsecond) than the <tt>time</tt> function. This is important for some applications.</p>
+<a name="inta354"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID1"></a><div class="v1"><a href="ch06lev1sec10.html#PLID1">[View full width]</a></div><pre>
+#include &lt;sys/time.h&gt;
+
+int gettimeofday(struct timeval *restrict <span class="docEmphItalicAlt">tp</span>, void
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">tzp</span>);
+</pre><br>
+
+</p></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 always</p></TD></tr></table></p><br>
+<p class="docText">This function is defined as an XSI extension in the Single UNIX Specification. The only legal value for <span class="docEmphasis">tzp</span> is <tt>NULL</tt>; other values result in unspecified behavior. Some platforms support the specification of a time zone through the use of <span class="docEmphasis">tzp</span>, but this is implementation-specific and not defined by the Single UNIX Specification.</p>
+<p class="docText">The <tt>gettimeofday</tt> function stores the current time as measured from the Epoch in the memory pointed to by <span class="docEmphasis">tp</span>. This time is represented as a <tt>timeval</tt> structure, which stores seconds and microseconds:</p>
+
+<pre>
+   struct timeval {
+           time_t tv_sec;    /* seconds */
+           long   tv_usec;   /* microseconds */
+   };
+</pre><br>
+
+<p class="docText"><a name="idd1e45163"></a><a name="idd1e45168"></a><a name="idd1e45174"></a><a name="idd1e45179"></a><a name="idd1e45184"></a><a name="idd1e45189"></a><a name="idd1e45194"></a><a name="idd1e45199"></a>Once we have the integer value that counts the number of seconds since the Epoch, we normally call one of the other time functions to convert it to a human-readable time and date. <a class="docLink" href="ch06lev1sec10.html#ch06fig08">Figure 6.8</a> shows the relationships between the various time functions.</p>
+<a name="ch06fig08"></a><p><center>
+<h5 class="docFigureTitle">Figure 6.8. Relationship of the various time functions</h5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="338" height="334" SRC="images/0201433079/graphics/06fig08.gif;423615"></p>
+
+</center></p><br>
+<p class="docText">(The four functions in this figure that are shown with dashed lines<tt>localtime</tt>, <tt>mktime</tt>, <tt>ctime</tt>, and <tt>strftime</tt>are all affected by the <tt>TZ</tt> environment variable, which we describe later in this section.)</p>
+<p class="docText">The two functions <tt>localtime</tt> and <tt>gmtime</tt> convert a calendar time into what's called a broken-down time, a <tt>tm</tt> structure.</p>
+
+<pre>
+   struct tm {        /* a broken-down time */
+     int  tm_sec;     /* seconds after the minute: [0 - 60] */
+     int  tm_min;     /* minutes after the hour: [0 - 59] */
+     int  tm_hour;    /* hours after midnight: [0 - 23] */
+     int  tm_mday;    /* day of the month: [1 - 31] */
+     int  tm_mon;     /* months since January: [0 - 11] */
+     int  tm_year;    /* years since 1900 */
+     int  tm_wday;    /* days since Sunday: [0 - 6] */
+     int  tm_yday;    /* days since January 1: [0 - 365] */
+     int  tm_isdst;   /* daylight saving time flag: &lt;0, 0, &gt;0 */
+   };
+</pre><br>
+
+<p class="docText"><a name="idd1e45260"></a><a name="idd1e45265"></a><a name="idd1e45272"></a><a name="idd1e45279"></a><a name="idd1e45284"></a><a name="idd1e45291"></a><a name="idd1e45298"></a><a name="idd1e45305"></a><a name="idd1e45310"></a><a name="idd1e45313"></a><a name="idd1e45318"></a>The reason that the seconds can be greater than 59 is to allow for a leap second. Note that all the fields except the day of the month are 0-based. The daylight saving time flag is positive if daylight saving time is in effect, 0 if it's not in effect, and negative if the information isn't available.</p>
+<blockquote>
+<p class="docText">In previous versions of the Single UNIX Specification, double leap seconds were allowed. Thus, the valid range of values for the <tt>tm_sec</tt> member was 061. The formal definition of UTC doesn't allow for double leap seconds, so the valid range for seconds is now defined to be 060.</P>
+</blockquote>
+<a name="inta139"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;time.h&gt;
+
+struct tm *gmtime(const time_t *<span class="docEmphItalicAlt">calptr</span>);
+
+struct tm *localtime(const time_t *<span class="docEmphItalicAlt">calptr</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: pointer to broken-down time</p></TD></tr></table></P><BR>
+<p class="docText">The difference between <tt>localtime</tt> and <tt>gmtime</tt> is that the first converts the calendar time to the local time, taking into account the local time zone and daylight saving time flag, whereas the latter converts the calendar time into a broken-down time expressed as UTC.</P>
+<p class="docText">The function <tt>mktime</tt> takes a broken-down time, expressed as a local time, and converts it into a <tt>time_t</tt> value.</p>
+<a name="inta161"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;time.h&gt;
+
+time_t mktime(struct tm *<span class="docEmphItalicAlt">tmptr</span>);
+</pre><BR>
+
+</P></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: calendar time if OK, 1 on error</P></td></TR></table></p><BR>
+<p class="docText">The <tt>asctime</tt> and <tt>ctime</tt> functions produce the familiar 26-byte string that is similar to the default output of the <tt>date</tt>(1) command:</p>
+
+<pre>
+    Tue Feb 10 18:27:38 2004\n\0
+</pre><br>
+
+<a name="inta05"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;time.h&gt;
+
+char *asctime(const struct tm *<span class="docEmphItalicAlt">tmptr</span>);
+
+char *ctime(const time_t *<span class="docEmphItalicAlt">calptr</span>);
+</pre><br>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: pointer to null-terminated string</p></td></tr></table></p><br>
+<p class="docText">The argument to <tt>asctime</tt> is a pointer to a broken-down string, whereas the argument to <tt>ctime</tt> is a pointer to a calendar time.</p>
+<p class="docText">The final time function, <tt>strftime</tt>, is the most complicated. It is a <tt>printf</tt>-like function for time values.</P>
+<a name="inta336"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e45493"></a><a name="idd1e45499"></a><a name="idd1e45502"></a><a name="idd1e45507"></a><a name="idd1e45510"></a><a name="idd1e45513"></a><a name="idd1e45518"></a><a name="idd1e45521"></a><a name="idd1e45528"></a><a name="idd1e45531"></a>
+<pre>
+#include &lt;time.h&gt;
+
+size_t strftime(char *restrict <span class="docEmphItalicAlt">buf</span>, size_t <span class="docEmphItalicAlt">maxsize</span>,
+                const char *restrict <span class="docEmphItalicAlt">format</span>,
+                const struct tm *restrict <span class="docEmphItalicAlt">tmptr</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: number of characters stored in array if room, 0 otherwise</p></TD></tr></table></P><BR>
+<p class="docText">The final argument is the time value to format, specified by a pointer to a broken-down time value. The formatted result is stored in the array <span class="docEmphasis">buf</span> whose size is <span class="docEmphasis">maxsize</span> characters. If the size of the result, including the terminating null, fits in the buffer, the function returns the number of characters stored in <span class="docEmphasis">buf</span>, excluding the terminating null. Otherwise, the function returns 0.</P>
+<p class="docText">The <span class="docEmphasis">format</span> argument controls the formatting of the time value. Like the <tt>printf</tt> functions, conversion specifiers are given as a percent followed by a special character. All other characters in the <span class="docEmphasis">format</span> string are copied to the output. Two percents in a row generate a single percent in the output. Unlike the <tt>printf</tt> functions, each conversion specified generates a different fixed-size output stringthere are no field widths in the <span class="docEmphasis">format</span> string. <a class="docLink" href="ch06lev1sec10.html#ch06fig09">Figure 6.9</a> describes the 37 ISO C conversion specifiers. The third column of this figure is from the output of <tt>strftime</tt> under Linux, corresponding to the time and date <tt>Tue Feb 10 18:27:38 EST 2004</tt>.</p>
+<a name="ch06fig09"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 6.9. Conversion specifiers for <tt>strftime</tt></h5></caption><colgroup><col width="50"><col width="250"><col width="200"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Format</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Example</span></p></th></tr></thead><tr><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>%a</tt></p></TD><td class="rightBorder" align="left" valign="top"><p class="docText">abbreviated weekday name</P></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>Tue</tt>
+</p></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%A</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">full weekday name</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>Tuesday</tt>
+</p></td></tr><tr><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>%b</tt></P></td><TD class="rightBorder" align="left" valign="top"><p class="docText">abbreviated month name</P></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>Feb</tt>
+</P></TD></TR><tr><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>%B</tt></p></TD><TD class="rightBorder" align="left" valign="top"><p class="docText">full month name</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>February</tt>
+</P></td></TR><TR><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%c</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">date and time</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>Tue Feb 10 18:27:38 2004</tt>
+</p></TD></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%C</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">year/100: [0099]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>20</tt>
+</p></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%d</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">day of the month: [0131]</P></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>10</tt>
+</P></TD></TR><tr><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>%D</tt></P></TD><td class="rightBorder" align="left" valign="top"><p class="docText">date [MM/DD/YY]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>02/10/04</tt>
+</P></TD></tr><TR><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>%e</tt></p></TD><TD class="rightBorder" align="left" valign="top"><p class="docText">day of month (single digit preceded by space) [131]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>10</tt>
+</p></TD></tr><TR><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%F</tt></P></td><td class="rightBorder" align="left" valign="top"><p class="docText">ISO 8601 date format [YYYYMMDD]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>2004-02-10</tt>
+</p></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%g</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">last two digits of ISO 8601 week-based year [0099]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>04</tt>
+</p></TD></TR><tr><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>%G</tt></P></TD><td class="rightBorder" align="left" valign="top"><p class="docText">ISO 8601 week-based year</P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>2004</tt>
+</p></TD></tr><TR><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>%h</tt></P></td><TD class="rightBorder" align="left" valign="top"><p class="docText">same as %b</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>Feb</tt>
+</P></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%H</tt></P></td><TD class="rightBorder" align="left" valign="top"><p class="docText">hour of the day (24-hour format): [0023]</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>18</tt>
+</p></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%I</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">hour of the day (12-hour format): [0112]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>06</tt>
+</p></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%j</tt></P></TD><td class="rightBorder" align="left" valign="top"><p class="docText">day of the year: [001366]</P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>041</tt>
+</p></TD></TR><TR><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%m</tt></P></td><TD class="rightBorder" align="left" valign="top"><p class="docText">month: [0112]</P></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>02</tt>
+</P></TD></tr><TR><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>%M</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">minute: [0059]</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>27</tt>
+</P></td></TR><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%n</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">newline character</p></td><td class="docTableCell" align="left" valign="top">&nbsp;</td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%p</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">AM/PM</p></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>PM</tt></P></td></TR><TR><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>%r</tt></p></TD><TD class="rightBorder" align="left" valign="top"><p class="docText">locale's time (12-hour format)</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>06:27:38 PM</tt>
+</p></TD></TR><TR><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%R</tt></P></TD><td class="rightBorder" align="left" valign="top"><p class="docText">same as &quot;%H:%M&quot;</P></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>18:27</tt>
+</p></td></tr><TR><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%S</tt></P></td><TD class="rightBorder" align="left" valign="top"><p class="docText">second: [0060]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>38</tt>
+</p></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%t</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">horizontal tab character</p></td><td class="docTableCell" align="left" valign="top">&nbsp;</td></tr><tr><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>%T</tt></P></td><TD class="rightBorder" align="left" valign="top"><p class="docText">same as &quot;%H:%M:%S&quot;</P></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>18:27:38</tt>
+</P></TD></TR><tr><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>%u</tt></p></TD><TD class="rightBorder" align="left" valign="top"><p class="docText">ISO 8601 weekday [Monday=1, 17]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>2</tt>
+</P></td></TR><TR><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%U</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">Sunday week number: [0053]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>06</tt>
+</p></TD></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%V</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">ISO 8601 week number: [0153]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>07</tt>
+</p></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%w</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">weekday: [0=Sunday, 06]</P></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>2</tt>
+</P></TD></TR><tr><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>%W</tt></P></TD><td class="rightBorder" align="left" valign="top"><p class="docText">Monday week number: [0053]</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>06</tt>
+</P></TD></tr><TR><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>%x</tt></p></TD><TD class="rightBorder" align="left" valign="top"><p class="docText">date</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>02/10/04</tt>
+</p></TD></tr><TR><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%X</tt></P></td><td class="rightBorder" align="left" valign="top"><p class="docText">time</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>18:27:38</tt>
+</p></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%y</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">last two digits of year: [0099]</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>04</tt>
+</p></TD></TR><tr><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>%Y</tt></P></TD><td class="rightBorder" align="left" valign="top"><p class="docText">year</P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>2004</tt>
+</p></TD></tr><TR><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>%z</tt></P></td><TD class="rightBorder" align="left" valign="top"><p class="docText">offset from UTC in ISO 8601 format</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>-0500</tt>
+</P></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%Z</tt></P></td><TD class="rightBorder" align="left" valign="top"><p class="docText">time zone name</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>EST</tt>
+</p></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>%%</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">translates to a percent sign</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>%</tt>
+</p></td></tr></table></p><br>
+<p class="docText">The only specifiers that are not self-evident are <tt>%U</tt>, <tt>%V</tt>, and <tt>%W</tt>. The <tt>%U</tt> specifier represents the week number of the year, where the week containing the first Sunday is week 1. The <tt>%W</tt> specifier represents the week number of the year, where the week containing the first Monday is week 1. The <tt>%V</tt> specifier is different. If the week containing the first day in January has four or more days in the new year, then this is treated as week 1. Otherwise, it is treated as the last week of the previous year. In both cases, Monday is treated as the first day of the week.</P>
+<p class="docText">As with <tt>printf</tt>, <tt>strftime</tt> supports modifiers for some of the conversion specifiers. The <tt>E</tt> and <tt>O</tt> modifiers can be used to generate an alternate format if supported by the locale.</P>
+<blockquote>
+<p class="docText">Some systems support additional, nonstandard extensions to the <span class="docEmphasis">format</span> string for <tt>strftime</tt>.</p>
+</blockquote>
+<p class="docText">We mentioned that the four functions in <a class="docLink" href="ch06lev1sec10.html#ch06fig08">Figure 6.8</a> with dashed lines were affected by the <tt>TZ</tt> environment variable: <tt>localtime</tt>, <tt>mktime</tt>, <tt>ctime</tt>, and <tt>strftime</tt>. If defined, the value of this environment variable is used by these functions instead of the default time zone. If the variable is defined to be a null string, such as <tt>TZ=</tt>, then UTC is normally used. The value of this environment variable is often something like <tt>TZ=EST5EDT</tt>, but POSIX.1 allows a much more detailed specification. Refer to the Environment Variables chapter of the Single UNIX Specification [Open Group 2004] for all the details on the <tt>TZ</tt> variable.</P>
+<blockquote>
+<p class="docText">All the time and date functions described in this section, except <tt>gettimeofday</tt>, are defined by the ISO C standard. POSIX.1, however, added the <tt>TZ</tt> environment variable. On FreeBSD 5.2.1, Linux 2.4.22, and Mac OS X 10.3, more information on the <tt>TZ</tt> variable can be found in the <tt>tzset</tt>(3) manual page. On Solaris 9, this information is in the <tt>environ</tt>(5) manual page.</P>
+</blockquote>
+
+<UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch06lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch06lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,45 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.17.&nbsp; symlink and readlink Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec16.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec18.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec17"></a>
+<h3 class="docSection1Title" id="454331-942">4.17. <tt>symlink</tt> and <tt>readlink</tt> Functions</h3>
+<p class="docText"><a name="idd1e29999"></a><a name="idd1e30004"></a><a name="idd1e30009"></a><a name="idd1e30012"></a><a name="idd1e30017"></a><a name="idd1e30022"></a><a name="idd1e30029"></a><a name="idd1e30034"></a><a name="idd1e30039"></a><a name="idd1e30046"></a>A symbolic link is created with the <tt>symlink</tt> function.</P>
+<a name="inta264"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch04lev1sec17.html#PLID0">[View full width]</a></div><pre>#include &lt;unistd.h&gt;
+
+int symlink(const char *<span class="docEmphItalicAlt">actualpath</span>, const char
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">sympath</span>);</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">A new directory entry, <span class="docEmphasis">sympath</span>, is created that points to <span class="docEmphasis">actualpath</span>. It is not required that <span class="docEmphasis">actualpath</span> exist when the symbolic link is created. (We saw this in the example at the end of the previous section.) Also, <span class="docEmphasis">actualpath</span> and <span class="docEmphasis">sympath</span> need not reside in the same file system.</P>
+<p class="docText">Because the <tt>open</tt> function follows a symbolic link, we need a way to open the link itself and read the name in the link. The <tt>readlink</tt> function does this.</p>
+<a name="inta338"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID1"></a><div class="v1"><a href="ch04lev1sec17.html#PLID1">[View full width]</a></div><pre>#include &lt;unistd.h&gt;
+
+ssize_t readlink(const char* restrict <span class="docEmphItalicAlt">pathname</span>,
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> char *restrict <span class="docEmphItalicAlt">buf</span>,
+                 size_t <span class="docEmphItalicAlt">bufsize</span>);
+</pre><BR>
+
+</P></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: number of bytes read if OK, 1 on error</P></td></TR></table></p><BR>
+<p class="docText">This function combines the actions of <tt>open</tt>, <tt>read</tt>, and <tt>close</tt>. If the function is successful, it returns the number of bytes placed into <span class="docEmphasis">buf</span>. The contents of the symbolic link that are returned in <span class="docEmphasis">buf</span> are not null terminated.</p>
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec16.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec18.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

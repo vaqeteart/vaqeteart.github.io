@@ -1,0 +1,143 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 8.16.&nbsp; Process Times</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec15.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec17.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch08lev1sec16"></a>
+<h3 class="docSection1Title">8.16. Process Times</h3>
+<p class="docText">In <a class="docLink" href="ch01lev1sec10.html#ch01lev1sec10">Section 1.10</a>, we described three times that we can measure: wall clock time, user CPU time, and system CPU time. Any process can call the <tt>times</tt> function to obtain these values for itself and any terminated children.</P>
+<a name="inta355"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;sys/times.h&gt;
+
+clock_t times(struct tms *<span class="docEmphItalicAlt">buf</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: elapsed wall clock time in clock ticks if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">This function fills in the <tt>tms</tt> structure pointed to by <span class="docEmphasis">buf</span>:</P>
+
+<pre>
+   struct tms {
+     clock_t  tms_utime;  /* user CPU time */
+     clock_t  tms_stime;  /* system CPU time */
+     clock_t  tms_cutime; /* user CPU time, terminated children */
+     clock_t  tms_cstime; /* system CPU time, terminated children */
+   };
+</pre><br>
+
+<p class="docText">Note that the structure does not contain any measurement for the wall clock time. Instead, the function returns the wall clock time as the value of the function, each time it's called. This value is measured from some arbitrary point in the past, so we can't use its absolute value; instead, we use its relative value. For example, we call <tt>times</tt> and save the return value. At some later time, we call <tt>times</tt> again and subtract the earlier return value from the new return value. The difference is the wall clock time. (It is possible, though unlikely, for a long-running process to overflow the wall clock time; see <a class="docLink" href="ch01lev1sec20.html#ch01qa1q6">Exercise 1.6.</a>)</P>
+<p class="docText">The two structure fields for child processes contain values only for children that we have waited for with <tt>wait</tt>, <tt>waitid</tt>, or <tt>waitpid</tt>.</P>
+<p class="docText">All the <tt>clock_t</tt> values returned by this function are converted to seconds using the number of clock ticks per secondthe <tt>_SC_CLK_TCK</tt> value returned by <tt>sysconf</tt> (<a class="docLink" href="ch02lev1sec5.html#ch02lev2sec15">Section 2.5.4</a>).</p>
+<blockquote>
+<p class="docText"><a name="idd1e61870"></a><a name="idd1e61875"></a><a name="idd1e61880"></a>Most implementations provide the <tt>geTRusage</tt>(2) function. This function returns the CPU times and 14 other values indicating resource usage. Historically, this function originated with the BSD operating system, so BSD-derived implementations generally support more of the fields than do other implementations.</P>
+</blockquote>
+<a name="ch08ex11"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch08lev1sec16.html#ch08fig30">Figure 8.30</a> executes each command-line argument as a shell command string, timing the command and printing the values from the <tt>tms</tt> structure.</p>
+<p class="docText"><a name="idd1e61908"></a><a name="idd1e61913"></a><a name="idd1e61918"></a><a name="idd1e61923"></a><a name="idd1e61928"></a>If we run this program, we get</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out "sleep 5" "date"</span>
+
+   command: sleep 5
+     real:     5.02
+     user:     0.00
+     sys:      0.00
+     child user:     0.01
+     child sys:      0.00
+   normal termination, exit status = 0
+
+   command: date
+   Mon Mar 22 00:43:58 EST 2004
+     real:     0.01
+     user:     0.00
+     sys:      0.00
+     child user:     0.01
+     child sys:      0.00
+   normal termination, exit status = 0
+</pre><BR>
+
+<p class="docText">In these two examples, all the CPU time appears in the child process, which is where the shell and the command execute.</p>
+
+<a name="ch08fig30"></a>
+<H5 class="docExampleTitle">Figure 8.30. Time and execute all command-line arguments</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/times.h&gt;
+
+static void pr_times(clock_t, struct tms *, struct tms *);
+static void do_cmd(char *);
+
+int
+main(int argc, char *argv[])
+{
+
+    int     i;
+
+    setbuf(stdout, NULL);
+    for (i = 1; i &lt; argc; i++)
+        do_cmd(argv[i]);    /* once for each command-line arg */
+    exit(0);
+}
+
+static void
+do_cmd(char *cmd)        /* execute and time the "cmd" */
+{
+     struct tms  tmsstart, tmsend;
+     clock_t     start, end;
+     int         status;
+
+     printf("\ncommand: %s\n", cmd);
+
+     if ((start = times(&amp;tmsstart)) == -1)    /* starting values */
+         err_sys("times error");
+
+     if ((status = system(cmd)) &lt; 0)     /* execute command */
+         err_sys("system() error");
+
+     if ((end = times(&amp;tmsend)) == -1)       /* ending values */
+         err_sys("times error");
+
+     pr_times(end-start, &amp;tmsstart, &amp;tmsend);
+     pr_exit(status);
+}
+static void
+pr_times(clock_t real, struct tms *tmsstart, struct tms *tmsend)
+{
+    static long     clktck = 0;
+
+    if (clktck == 0)    /* fetch clock ticks per second first time */
+        if ((clktck = sysconf(_SC_CLK_TCK)) &lt; 0)
+            err_sys("sysconf error");
+     printf(" real:  %7.2f\n", real / (double) clktck);
+     printf(" user:  %7.2f\n",
+       (tmsend-&gt;tms_utime - tmsstart-&gt;tms_utime) / (double) clktck);
+     printf(" sys:   %7.2f\n",
+       (tmsend-&gt;tms_stime - tmsstart-&gt;tms_stime) / (double) clktck);
+     printf(" child user:   %7.2f\n",
+       (tmsend-&gt;tms_cutime - tmsstart-&gt;tms_cutime) / (double) clktck);
+     printf(" child sys:    %7.2f\n",
+       (tmsend-&gt;tms_cstime - tmsstart-&gt;tms_cstime) / (double) clktck);
+}
+</pre><BR>
+
+
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec15.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec17.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

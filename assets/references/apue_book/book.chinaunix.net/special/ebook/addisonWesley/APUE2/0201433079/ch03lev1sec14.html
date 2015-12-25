@@ -1,0 +1,166 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 3.14.&nbsp; fcntl Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec13.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec15.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch03lev1sec14"></a>
+<h3 class="docSection1Title">3.14. <tt>fcntl</tt> Function</h3>
+<p class="docText">The <tt>fcntl</tt> function can change the properties of a file that is already open.</P>
+<a name="inta51"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;fcntl.h&gt;
+
+int fcntl(int <span class="docEmphItalicAlt">filedes</span>, int <span class="docEmphItalicAlt">cmd</span>, ... /* int <span class="docEmphItalicAlt">arg</span> */ );</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: depends on <span class="docEmphasis">cmd</span> if OK (see following), 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">In the examples in this section, the third argument is always an integer, corresponding to the comment in the function prototype just shown. But when we describe record locking in <a class="docLink" href="ch14lev1sec3.html#ch14lev1sec3">Section 14.3</a>, the third argument becomes a pointer to a structure.</P>
+<p class="docText">The <tt>fcntl</tt> function is used for five different purposes.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">Duplicate an existing descriptor (<span class="docEmphasis">cmd</span> = <tt>F_DUPFD</tt>)</P></div></li><LI><div style="font-weight:normal"><p class="docList">Get/set file descriptor flags (<span class="docEmphasis">cmd</span> = <tt>F_GETFD</tt> or <tt>F_SETFD</tt>)</P></div></li><li><div style="font-weight:normal"><p class="docList">Get/set file status flags (<span class="docEmphasis">cmd</span> = <tt>F_GETFL</tt> or <tt>F_SETFL</tt>)</p></div></li><LI><div style="font-weight:normal"><p class="docList">Get/set asynchronous I/O ownership (<span class="docEmphasis">cmd</span> = <tt>F_GETOWN</tt> or <tt>F_SETOWN</tt>)</p></div></LI><li><div style="font-weight:normal"><p class="docList">Get/set record locks (<span class="docEmphasis">cmd</span> = <tt>F_GETLK</tt>, <tt>F_SETLK</tt>, or <tt>F_SETLKW</tt>)</P></div></li></ol></div>
+<p class="docText">We'll now describe the first seven of these ten <span class="docEmphasis">cmd</span> values. (We'll wait until <a class="docLink" href="ch14lev1sec3.html#ch14lev1sec3">Section 14.3</a> to describe the last three, which deal with record locking.) Refer to <a class="docLink" href="ch03lev1sec10.html#ch03fig06">Figure 3.6</a>, since we'll be referring to both the file descriptor flags associated with each file descriptor in the process table entry and the file status flags associated with each file table entry.</p>
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="100"><col width="400"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>F_DUPFD</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Duplicate the file descriptor <span class="docEmphasis">filedes</span>. The new file descriptor is returned as the value of the function. It is the lowest-numbered descriptor that is not already open, that is greater than or equal to the third argument (taken as an integer). The new descriptor shares the same file table entry as <span class="docEmphasis">filedes</span>. (Refer to <a class="docLink" href="ch03lev1sec12.html#ch03fig08">Figure 3.8</a>.) But the new descriptor has its own set of file descriptor flags, and its <tt>FD_CLOEXEC</tt> file descriptor flag is cleared. (This means that the descriptor is left open across an <tt>exec</tt>, which we discuss in <a class="docLink" href="ch08.html#ch08">Chapter 8</a>.)</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>F_GETFD</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Return the file descriptor flags for <span class="docEmphasis">filedes</span> as the value of the function. Currently, only one file descriptor flag is defined: the <tt>FD_CLOEXEC</tt> flag.</p></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e21814"></a><a name="idd1e21817"></a><a name="idd1e21822"></a><a name="idd1e21827"></a><a name="idd1e21832"></a><a name="idd1e21837"></a><a name="idd1e21842"></a><a name="idd1e21847"></a><a name="idd1e21852"></a><a name="idd1e21857"></a><a name="idd1e21862"></a><a name="idd1e21867"></a><a name="idd1e21872"></a><a name="idd1e21877"></a><a name="idd1e21882"></a><tt>F_SETFD</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Set the file descriptor flags for <span class="docEmphasis">filedes</span>. The new flag value is set from the third argument (taken as an integer).<blockquote>
+<p class="docText">Be aware that some existing programs that deal with the file descriptor flags don't use the constant <tt>FD_CLOEXEC</tt>. Instead, the programs set the flag to either 0 (don't close-on-exec, the default) or 1 (do close-on-exec).</P>
+</blockquote>
+</P></TD></tr><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>F_GETFL</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Return the file status flags for <span class="docEmphasis">filedes</span> as the value of the function. We described the file status flags when we described the <tt>open</tt> function. They are listed in <a class="docLink" href="ch03lev1sec14.html#ch03fig09">Figure 3.9</a>.</p></TD></TR></table></p><BR>
+<a name="ch03fig09"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 3.9. File status flags for <tt>fcntl</tt></h5></caption><colgroup><col width="150"><col width="350"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="left" valign="top"><p class="docText"><span class="docEmphRoman">File status flag</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></P></th></tr></thead><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>O_RDONLY</tt></P></td><td class="docTableCell" align="left" valign="top"><p class="docText">open for reading only</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>O_WRONLY</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">open for writing only</p></td></tr><tr><td class="rightBorder bottomBorder" align="left" valign="top"><p class="docText"><tt>O_RDWR</tt></p></td><TD class="bottomBorder" align="left" valign="top"><p class="docText">open for reading and writing</P></td></TR><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>O_APPEND</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">append on each write</P></td></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>O_NONBLOCK</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">nonblocking mode</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>O_SYNC</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">wait for writes to complete (data and attributes)</p></TD></tr><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>O_DSYNC</tt></P></td><td class="docTableCell" align="left" valign="top"><p class="docText">wait for writes to complete (data only)</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>O_RSYNC</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">synchronize reads and writes</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>O_FSYNC</tt></p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">wait for writes to complete (FreeBSD and Mac OS X only)</P></td></TR><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>O_ASYNC</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">asynchronous I/O (FreeBSD and Mac OS X only)</P></td></TR></table></p><BR>
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="100"><col width="400"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top">&nbsp;</TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Unfortunately, the three access-mode flags<tt>O_RDONLY</tt>, <tt>O_WRONLY</tt>, and <tt>O_RDWR</tt>are not separate bits that can be tested. (As we mentioned earlier, these three often have the values 0, 1, and 2, respectively, for historical reasons. Also, these three values are mutually exclusive; a file can have only one of the three enabled.) Therefore, we must first use the <tt>O_ACCMODE</tt> mask to obtain the access-mode bits and then compare the result against any of the three values.</p></TD></TR><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>F_SETFL</tt></p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">Set the file status flags to the value of the third argument (taken as an integer). The only flags that can be changed are <tt>O_APPEND</tt>, <tt>O_NONBLOCK</tt>, <tt>O_SYNC</tt>, <tt>O_DSYNC</tt>, <tt>O_RSYNC</tt>, <tt>O_FSYNC</tt>, and <tt>O_ASYNC</tt>.</p></TD></tr><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>F_GETOWN</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Get the process ID or process group ID currently receiving the <tt>SIGIO</tt> and <tt>SIGURG</tt> signals. We describe these asynchronous I/O signals in <a class="docLink" href="ch14lev1sec6.html#ch14lev2sec18">Section 14.6.2</a>.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>F_SETOWN</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Set the process ID or process group ID to receive the <tt>SIGIO</tt> and <tt>SIGURG</tt> signals. A positive <span class="docEmphasis">arg</span> specifies a process ID. A negative <span class="docEmphasis">arg</span> implies a process group ID equal to the absolute value of <span class="docEmphasis">arg</span>.</p></td></tr></table></p><br>
+<p class="docText">The return value from <tt>fcntl</tt> depends on the command. All commands return 1 on an error or some other value if OK. The following four commands have special return values: <tt>F_DUPFD</tt>, <tt>F_GETFD</tt>, <tt>F_GETFL</tt>, and <tt>F_GETOWN</tt>. The first returns the new file descriptor, the next two return the corresponding flags, and the final one returns a positive process ID or a negative process group ID.</P>
+<a name="ch03ex03"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch03lev1sec14.html#ch03fig10">Figure 3.10</a> takes a single command-line argument that specifies a file descriptor and prints a description of selected file flags for that descriptor.</P>
+<p class="docText"><a name="idd1e22235"></a><a name="idd1e22240"></a><a name="idd1e22243"></a><a name="idd1e22248"></a><a name="idd1e22251"></a><a name="idd1e22256"></a><a name="idd1e22261"></a><a name="idd1e22264"></a><a name="idd1e22269"></a>Note that we use the feature test macro <tt>_POSIX_C_SOURCE</tt> and conditionally compile the file access flags that are not part of POSIX.1. The following script shows the operation of the program, when invoked from <tt>bash</tt> (the Bourne-again shell). Results vary, depending on which shell you use.</P>
+
+<pre>
+     $ <span class="docEmphStrong">./a.out 0 &lt; /dev/tty</span>
+     read only
+     $ <span class="docEmphStrong">./a.out 1 &gt; temp.foo</span>
+     $ <span class="docEmphStrong">cat temp.foo</span>
+     write only
+     $ <span class="docEmphStrong">./a.out 2 2&gt;&gt;temp.foo</span>
+     write only, append
+     $ <span class="docEmphStrong">./a.out 5 5&lt;&gt;temp.foo</span>
+     read write
+</pre><BR>
+
+<p class="docText">The clause <tt>5&lt;&gt;temp.foo</tt> opens the file <tt>temp.foo</tt> for reading and writing on file descriptor 5.</p>
+
+<a name="ch03fig10"></a>
+<H5 class="docExampleTitle">Figure 3.10. Print file flags for specified descriptor</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+int
+main(int argc, char *argv[])
+{
+
+    int       val;
+
+    if (argc != 2)
+        err_quit("usage: a.out &lt;descriptor#&gt;");
+
+    if ((val = fcntl(atoi(argv[1]), F_GETFL, 0)) &lt; 0)
+        err_sys("fcntl error for fd %d", atoi(argv[1]));
+
+    switch (val &amp; O_ACCMODE) {
+    case O_RDONLY:
+        printf("read only");
+        break;
+
+    case O_WRONLY:
+        printf("write only");
+        break;
+
+    case O_RDWR:
+        printf("read write");
+        break;
+
+    default:
+        err_dump("unknown access mode");
+    }
+
+    if (val &amp; O_APPEND)
+        printf(", append");
+    if (val &amp; O_NONBLOCK)
+        printf(", nonblocking");
+#if defined(O_SYNC)
+    if (val &amp; O_SYNC)
+        printf(", synchronous writes");
+#endif
+#if !defined(_POSIX_C_SOURCE) &amp;&amp; defined(O_FSYNC)
+    if (val &amp; O_FSYNC)
+        printf(", synchronous writes");
+#endif
+    putchar('\n');
+    exit(0);
+}
+</pre><BR>
+
+
+<a name="ch03ex04"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText">When we modify either the file descriptor flags or the file status flags, we must be careful to fetch the existing flag value, modify it as desired, and then set the new flag value. We can't simply do an <tt>F_SETFD</tt> or an <tt>F_SETFL</tt>, as this could turn off flag bits that were previously set.</p>
+<p class="docText"><a class="docLink" href="ch03lev1sec14.html#ch03fig11">Figure 3.11</a> shows a function that sets one or more of the file status flags for a descriptor.</P>
+<p class="docText">If we change the middle statement to</P>
+
+<pre>
+   val &amp;= <sup>~</sup>flags;          /* turn flags off */
+</pre><BR>
+
+<p class="docText">we have a function named <tt>clr_fl</tt>, which we'll use in some later examples. This statement logically ANDs the one's complement of <tt>flags</tt> with the current <tt>val</tt>.</p>
+<p class="docText"><a name="idd1e22376"></a><a name="idd1e22381"></a><a name="idd1e22386"></a><a name="idd1e22391"></a><a name="idd1e22397"></a><a name="idd1e22402"></a><a name="idd1e22405"></a><a name="idd1e22408"></a><a name="idd1e22413"></a><a name="idd1e22418"></a><a name="idd1e22421"></a><a name="idd1e22424"></a><a name="idd1e22429"></a><a name="idd1e22434"></a>If we call <tt>set_fl</tt> from <a class="docLink" href="ch03lev1sec9.html#ch03fig04">Figure 3.4</a> by adding the line</P>
+
+<pre>
+    set_fl(STDOUT_FILENO, O_SYNC);
+</pre><BR>
+
+<p class="docText">at the beginning of the program, we'll turn on the synchronous-write flag. This causes each <tt>write</tt> to wait for the data to be written to disk before returning. Normally in the UNIX System, a <tt>write</tt> only queues the data for writing; the actual disk write operation can take place sometime later. A database system is a likely candidate for using <tt>O_SYNC</tt>, so that it knows on return from a <tt>write</tt> that the data is actually on the disk, in case of an abnormal system failure.</p>
+<p class="docText">We expect the <tt>O_SYNC</tt> flag to increase the clock time when the program runs. To test this, we can run the program in <a class="docLink" href="ch03lev1sec9.html#ch03fig04">Figure 3.4</a>, copying 98.5 MB of data from one file on disk to another and compare this with a version that does the same thing with the <tt>O_SYNC</tt> flag set. The results from a Linux system using the <tt>ext2</tt> file system are shown in <a class="docLink" href="ch03lev1sec14.html#ch03fig12">Figure 3.12</a>.</P>
+<p class="docText">The six rows in <a class="docLink" href="ch03lev1sec14.html#ch03fig12">Figure 3.12</a> were all measured with a <tt>BUFFSIZE</tt> of 4,096. The results in <a class="docLink" href="ch03lev1sec9.html#ch03fig05">Figure 3.5</a> were measured reading a disk file and writing to <tt>/dev/null</tt>, so there was no disk output. The second row in <a class="docLink" href="ch03lev1sec14.html#ch03fig12">Figure 3.12</a> corresponds to reading a disk file and writing to another disk file. This is why the first and second rows in <a class="docLink" href="ch03lev1sec14.html#ch03fig12">Figure 3.12</a> are different. The system time increases when we write to a disk file, because the kernel now copies the data from our process and queues the data for writing by the disk driver. We expect the clock time to increase also when we write to a disk file, but it doesn't increase significantly for this test, which indicates that our writes go to the system cache, and we don't measure the cost to actually write the data to disk.</P>
+<p class="docText">When we enable synchronous writes, the system time and the clock time should increase significantly. As the third row shows, the time for writing synchronously is about the same as when we used delayed writes. This implies that the Linux <tt>ext2</tt> file system isn't honoring the <tt>O_SYNC</tt> flag. This suspicion is supported by the sixth line, which shows that the time to do synchronous writes followed by a call to <tt>fsync</tt> is just as large as calling <tt>fsync</tt> after writing the file without synchronous writes (line 5). After writing a file synchronously, we expect that a call to <tt>fsync</tt> will have no effect.</p>
+<p class="docText"><a class="docLink" href="ch03lev1sec14.html#ch03fig13">Figure 3.13</a> shows timing results for the same tests on Mac OS X 10.3. Note that the times match our expectations: synchronous writes are far more expensive than delayed writes, and using <tt>fsync</tt> with synchronous writes makes no measurable difference. Note also that adding a call to <tt>fsync</tt> at the end of the delayed writes makes no <a name="idd1e22541"></a><a name="idd1e22544"></a><a name="idd1e22549"></a><a name="idd1e22556"></a><a name="idd1e22559"></a><a name="idd1e22562"></a><a name="idd1e22565"></a>measurable difference. It is likely that the operating system flushed previously written data to disk as we were writing new data to the file, so by the time that we called <tt>fsync</tt>, very little work was left to be done.</p>
+<p class="docText">Compare <tt>fsync</tt> and <tt>fdatasync</tt>, which update a file's contents when we say so, with the <tt>O_SYNC</tt> flag, which updates a file's contents every time we write to the file.</p>
+
+<a name="ch03fig11"></a>
+<h5 class="docExampleTitle">Figure 3.11. Turn on one or more of the file status flags for a descriptor</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+
+void
+set_fl(int fd, int flags) /* flags are file status flags to turn on */
+{
+    int     val;
+
+    if ((val = fcntl(fd, F_GETFL, 0)) &lt; 0)
+        err_sys("fcntl F_GETFL error");
+
+    val |= flags;       /* turn on flags */
+
+    if (fcntl(fd, F_SETFL, val) &lt; 0)
+        err_sys("fcntl F_SETFL error");
+}
+</pre><br>
+
+
+<a name="ch03fig12"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 3.12. Linux <tt>ext2</tt> timing results using various synchronization mechanisms</H5></caption><colgroup><col width="230"><col width="80"><col width="110"><col width="80"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Operation</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">User CPU (seconds)</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">System CPU (seconds)</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Clock time (seconds)</span></p></th></tr></thead><tr><td class="rightBorder" align="left" valign="top"><p class="docText">read time from <a class="docLink" href="ch03lev1sec9.html#ch03fig05">Figure 3.5</a> for <tt>BUFFSIZE</tt> = 4,096</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">0.03</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">0.16</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">6.86</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText">normal <tt>write</tt> to disk file</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">0.02</P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">0.30</P></td><TD class="docTableCell" align="center" valign="top"><p class="docText">6.87</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>write</tt> to disk file with <tt>O_SYNC</tt> set</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">0.03</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">0.30</p></TD><td class="docTableCell" align="center" valign="top"><p class="docText">6.83</P></td></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>write</tt> to disk followed by <tt>fdatasync</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">0.03</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">0.42</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">18.28</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>write</tt> to disk followed by <tt>fsync</tt></p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">0.03</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">0.37</P></td><TD class="docTableCell" align="center" valign="top"><p class="docText">17.95</P></TD></tr><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>write</tt> to disk with <tt>O_SYNC</tt> set followed by <tt>fsync</tt></P></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">0.05</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">0.44</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">17.95</p></td></tr></table></p><BR>
+<a name="ch03fig13"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 3.13. Mac OS X timing results using various synchronization mechanisms</h5></caption><colgroup><col width="230"><col width="80"><col width="110"><col width="80"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Operation</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">User CPU (seconds)</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">System CPU (seconds)</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Clock time (seconds)</span></p></th></tr></thead><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>write</tt> to <tt>/dev/null</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">0.06</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">0.79</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">4.33</p></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText">normal <tt>write</tt> to disk file</P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">0.05</P></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">3.56</p></TD><td class="docTableCell" align="center" valign="top"><p class="docText">14.40</P></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>write</tt> to disk file with <tt>O_FSYNC</tt> set</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">0.13</P></td><td class="rightBorder" align="center" valign="top"><p class="docText">9.53</p></td><TD class="docTableCell" align="center" valign="top"><p class="docText">22.48</p></TD></tr><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>write</tt> to disk followed by <tt>fsync</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">0.11</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">3.31</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">14.12</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>write</tt> to disk with <tt>O_FSYNC</tt> set followed by <tt>fsync</tt></p></td><TD class="rightBorder" align="center" valign="top"><p class="docText">0.17</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">9.14</P></TD><td class="docTableCell" align="center" valign="top"><p class="docText">22.12</P></TD></TR></table></p><BR>
+<p class="docText">With this example, we see the need for <tt>fcntl</tt>. Our program operates on a descriptor (standard output), never knowing the name of the file that was opened by the shell on that descriptor. We can't set the <tt>O_SYNC</tt> flag when the file is opened, since the shell opened the file. With <tt>fcntl</tt>, we can modify the properties of a descriptor, knowing only the descriptor for the open file. We'll see another need for <tt>fcntl</tt> when we describe nonblocking pipes (<a class="docLink" href="ch15lev1sec2.html#ch15lev1sec2">Section 15.2</a>), since all we have with a pipe is a descriptor.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec13.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec15.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,46 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 3.15.&nbsp; ioctl Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec14.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec16.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch03lev1sec15"></a>
+<h3 class="docSection1Title" id="454331-896">3.15. <tt>ioctl</tt> Function</h3>
+<p class="docText">The <tt>ioctl</tt> function has always been the catchall for I/O operations. Anything that couldn't be expressed using one of the other functions in this chapter usually ended up being specified with an <tt>ioctl</tt>. Terminal I/O was the biggest user of this function. (When we get to <a class="docLink" href="ch18.html#ch18">Chapter 18</a>, we'll see that POSIX.1 has replaced the terminal I/O operations with separate functions.)</P>
+<a name="inta146"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;        /* System V */
+#include &lt;sys/ioctl.h&gt;     /* BSD and Linux */
+#include &lt;stropts.h&gt;       /* XSI STREAMS */
+
+int ioctl(int <span class="docEmphItalicAlt">filedes</span>, int <span class="docEmphItalicAlt">request</span>, ...);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 1 on error, something else if OK</p></TD></tr></table></P><BR>
+<blockquote>
+<p class="docText">The <tt>ioctl</tt> function is included in the Single UNIX Specification only as an extension for dealing with STREAMS devices [<a class="docLink" href="bib01.html#biblio01_052">Rago 1993</a>]. UNIX System implementations, however, use it for many miscellaneous device operations. Some implementations have even extended it for use with regular files.</P>
+</blockquote>
+<p class="docText"><a name="idd1e23051"></a><a name="idd1e23056"></a><a name="idd1e23059"></a><a name="idd1e23062"></a><a name="idd1e23067"></a><a name="idd1e23070"></a><a name="idd1e23073"></a><a name="idd1e23078"></a><a name="idd1e23081"></a><a name="idd1e23086"></a><a name="idd1e23091"></a><a name="idd1e23096"></a><a name="idd1e23101"></a><a name="idd1e23106"></a>The prototype that we show corresponds to POSIX.1. FreeBSD 5.2.1 and Mac OS X 10.3 declare the second argument as an <tt>unsigned long</tt>. This detail doesn't matter, since the second argument is always a <tt>#define</tt>d name from a header.</p>
+<p class="docText">For the ISO C prototype, an ellipsis is used for the remaining arguments. Normally, however, there is only one more argument, and it's usually a pointer to a variable or a structure.</P>
+<p class="docText">In this prototype, we show only the headers required for the function itself. Normally, additional device-specific headers are required. For example, the <tt>ioctl</tt> commands for terminal I/O, beyond the basic operations specified by POSIX.1, all require the <tt>&lt;termios.h&gt;</tt> header.</P>
+<p class="docText">Each device driver can define its own set of <tt>ioctl</tt> commands. The system, however, provides generic <tt>ioctl</tt> commands for different classes of devices. Examples of some of the categories for these generic <tt>ioctl</tt> commands supported in FreeBSD are summarized in <a class="docLink" href="ch03lev1sec15.html#ch03fig14">Figure 3.14</a>.</p>
+<a name="ch03fig14"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 3.14. Common FreeBSD <tt>ioctl</tt> operations</h5></caption><colgroup><col width="125"><col width="100"><col width="150"><col width="100"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Category</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Constant names</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Header</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Number of <tt>ioctl</tt>s</span></p></th></TR></thead><tr><TD class="rightBorder" align="left" valign="top"><p class="docText">disk labels</p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>DIOxxx</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>&lt;sys/disklabel.h&gt;</tt></p></td><td class="docTableCell" align="center" valign="top"><p class="docText">6</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">file I/O</p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>FIOxxx</tt></P></TD><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>&lt;sys/filio.h&gt;</tt></P></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">9</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText">mag tape I/O</P></td><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>MTIOxxx</tt></P></TD><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>&lt;sys/mtio.h&gt;</tt></P></TD><td class="docTableCell" align="center" valign="top"><p class="docText">11</P></TD></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">socket I/O</p></TD><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>SIOxxx</tt></P></td><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>&lt;sys/sockio.h&gt;</tt></p></td><td class="docTableCell" align="center" valign="top"><p class="docText">60</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">terminal I/O</p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>TIOxxx</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>&lt;sys/ttycom.h&gt;</tt></p></td><td class="docTableCell" align="center" valign="top"><p class="docText">44</P></TD></tr></table></P><BR>
+<p class="docText">The mag tape operations allow us to write end-of-file marks on a tape, rewind a tape, space forward over a specified number of files or records, and the like. None of these operations is easily expressed in terms of the other functions in the chapter (<tt>read</tt>, <tt>write</tt>, <tt>lseek</tt>, and so on), so the easiest way to handle these devices has always been to access their operations using <tt>ioctl</tt>.</P>
+<p class="docText">We use the <tt>ioctl</tt> function in <a class="docLink" href="ch14lev1sec4.html#ch14lev1sec4">Section 14.4</a> when we describe the STREAMS system, in <a class="docLink" href="ch18lev1sec12.html#ch18lev1sec12">Section 18.12</a> to fetch and set the size of a terminal's window, and in <a class="docLink" href="ch19lev1sec7.html#ch19lev1sec7">Section 19.7</a> when we access the advanced features of pseudo terminals.</p>
+
+<UL></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec14.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec16.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,69 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 9.3.&nbsp; Network Logins</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch09lev1sec3"></a>
+<h3 class="docSection1Title">9.3. Network Logins</h3>
+<p class="docText">The main (physical) difference between logging in to a system through a serial terminal and logging in to a system through a network is that the connection between the terminal and the computer isn't point-to-point. In this case, <tt>login</tt> is simply a service available, just like any other network service, such as FTP or SMTP.</P>
+<p class="docText">With the terminal logins that we described in the previous section, <tt>init</tt> knows which terminal devices are enabled for logins and spawns a <tt>getty</tt> process for each device. In the case of network logins, however, all the logins come through the kernel's network interface drivers (e.g., the Ethernet driver), and we don't know ahead of time how many of these will occur. Instead of having a process waiting for each possible login, we now have to wait for a network connection request to arrive.</P>
+<p class="docText">To allow the same software to process logins over both terminal logins and network logins, a software driver called a <span class="docEmphasis">pseudo terminal</span> is used to emulate the behavior of a serial terminal and map terminal operations to network operations, and vice versa. (In <a class="docLink" href="ch19.html#ch19">Chapter 19</a>, we'll talk about pseudo terminals in detail.)</p>
+<a name="ch09lev2sec5"></a>
+<H4 class="docSection2Title">BSD Network Logins</H4>
+<p class="docText">In BSD, a single process waits for most network connections: the <tt>inetd</tt> process, sometimes called the <span class="docEmphasis">Internet superserver</span>. In this section, we'll look at the sequence of processes involved in network logins for a BSD system. We are not interested in the detailed network programming aspects of these processes; refer to Stevens, Fenner, and Rudoff [<a class="docLink" href="bib01.html#biblio01_059">2004</a>] for all the details.</P>
+<p class="docText">As part of the system start-up, <tt>init</tt> invokes a shell that executes the shell script <tt>/etc/rc</tt>. One of the daemons that is started by this shell script is <tt>inetd</tt>. Once the shell script terminates, the parent process of <tt>inetd</tt> becomes <tt>init</tt>; <tt>inetd</tt> waits for <a name="idd1e63779"></a><a name="idd1e63784"></a><a name="idd1e63787"></a>TCP/IP connection requests to arrive at the host. When a connection request arrives for it to handle, <tt>inetd</tt> does a <tt>fork</tt> and <tt>exec</tt> of the appropriate program.</p>
+<p class="docText">Let's assume that a TCP connection request arrives for the TELNET server. TELNET is a remote login application that uses the TCP protocol. A user on another host (that is connected to the server's host through a network of some form) or on the same host initiates the login by starting the TELNET client:</P>
+
+<pre>
+   telnet <span class="docEmphItalicAlt">hostname</span>
+</pre><BR>
+
+<p class="docText">The client opens a TCP connection to <span class="docEmphasis">hostname</span>, and the program that's started on <span class="docEmphasis">hostname</span> is called the TELNET server. The client and the server then exchange data across the TCP connection using the TELNET application protocol. What has happened is that the user who started the client program is now logged in to the server's host. (This assumes, of course, that the user has a valid account on the server's host.) <a class="docLink" href="ch09lev1sec3.html#ch09fig04">Figure 9.4</a> shows the sequence of processes involved in executing the TELNET server, called <tt>telnetd</tt>.</P>
+<a name="ch09fig04"></a><p><center>
+<H5 class="docFigureTitle">Figure 9.4. Sequence of processes involved in executing TELNET server</h5>
+
+<p class="docText">
+<img border="0" alt="" width="500" height="302" SRC="images/0201433079/graphics/09fig04.gif;423615"></P>
+
+</center></P><BR>
+<p class="docText">The <tt>telnetd</tt> process then opens a pseudo-terminal device and splits into two processes using <tt>fork</tt>. The parent handles the communication across the network connection, and the child does an <tt>exec</tt> of the <tt>login</tt> program. The parent and the child are connected through the pseudo terminal. Before doing the <tt>exec</tt>, the child sets up file descriptors 0, 1, and 2 to the pseudo terminal. If we log in correctly, <tt>login</tt> performs the same steps we described in <a class="docLink" href="ch09lev1sec2.html#ch09lev1sec2">Section 9.2</a>: it changes to our home directory and sets our group IDs, user ID, and our initial environment. Then <tt>login</tt> replaces itself with our login shell by calling <tt>exec</tt>. <a class="docLink" href="ch09lev1sec3.html#ch09fig05">Figure 9.5</a> shows the arrangement of the processes at this point.</p>
+<a name="ch09fig05"></a><P><center>
+<H5 class="docFigureTitle">Figure 9.5. Arrangement of processes after everything is set for a network login</h5>
+
+<p class="docText">
+<img border="0" alt="" width="372" height="335" SRC="images/0201433079/graphics/09fig05.gif;423615"></P>
+
+</center></P><br>
+<p class="docText">Obviously, a lot is going on between the pseudo-terminal device driver and the actual user at the terminal. We'll show all the processes involved in this type of arrangement in <a class="docLink" href="ch19.html#ch19">Chapter 19</a> when we talk about pseudo terminals in more detail.</p>
+<p class="docText"><a name="idd1e63902"></a><a name="idd1e63905"></a><a name="idd1e63910"></a><a name="idd1e63913"></a><a name="idd1e63918"></a><a name="idd1e63921"></a><a name="idd1e63924"></a><a name="idd1e63927"></a><a name="idd1e63932"></a>The important thing to understand is that whether we log in through a terminal (<a class="docLink" href="ch09lev1sec2.html#ch09fig03">Figure 9.3</a>) or a network (<a class="docLink" href="ch09lev1sec3.html#ch09fig05">Figure 9.5</a>), we have a login shell with its standard input, standard output, and standard error connected to either a terminal device or a pseudo-terminal device. We'll see in the coming sections that this login shell is the start of a POSIX.1 session, and that the terminal or pseudo terminal is the controlling terminal for the session.</p>
+
+<a name="ch09lev2sec6"></a>
+<h4 class="docSection2Title">Mac OS X Network Logins</H4>
+<p class="docText">Logging in to a Mac OS X system over a network is identical to a BSD system, because Mac OS X is based partially on FreeBSD.</p>
+
+<a name="ch09lev2sec7"></a>
+<H4 class="docSection2Title">Linux Network Logins</h4>
+<p class="docText">Network logins under Linux are the same as under BSD, except that an alternate <tt>inetd</tt> process is used, called the extended Internet services daemon, <tt>xinetd</tt>. The <tt>xinetd</tt> process provides a finer level of control over services it starts than does <tt>inetd</tt>.</P>
+
+<a name="ch09lev2sec8"></a>
+<h4 class="docSection2Title">Solaris Network Logins</h4>
+<p class="docText">The scenario for network logins under Solaris is almost identical to the steps under BSD and Linux. An <tt>inetd</tt> server is used similar to the BSD version. The Solaris version has the additional ability to run under the service access facility framework, although it is not configured to do so. Instead, the <tt>inetd</tt> server is started by <tt>init</tt>. Either way, we end up with the same overall picture as in <a class="docLink" href="ch09lev1sec3.html#ch09fig05">Figure 9.5</a>.</p>
+
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

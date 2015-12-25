@@ -1,0 +1,56 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.14.&nbsp; File Systems</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec13.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec15.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec14"></a>
+<h3 class="docSection1Title">4.14. File Systems</h3>
+<p class="docText">To appreciate the concept of links to a file, we need a conceptual understanding of the structure of the UNIX file system. Understanding the difference between an i-node and a directory entry that points to an i-node is also useful.</P>
+<p class="docText">Various implementations of the UNIX file system are in use today. Solaris, for example, supports several different types of disk file systems: the traditional BSD-derived UNIX file system (called UFS), a file system (called PCFS) to read and write DOS-formatted diskettes, and a file system (called HSFS) to read CD file systems. We saw one difference between file system types in <a class="docLink" href="ch02lev1sec6.html#ch02fig19">Figure 2.19</a>. UFS is based on the Berkeley fast file system, which we describe in this section.</P>
+<p class="docText">We can think of a disk drive being divided into one or more partitions. Each partition can contain a file system, as shown in <a class="docLink" href="ch04lev1sec14.html#ch04fig13">Figure 4.13</a>.</p>
+<a name="ch04fig13"></a><P><center>
+<H5 class="docFigureTitle">Figure 4.13. Disk drive, partitions, and a file system</H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/04fig13_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="238" SRC="images/0201433079/graphics/04fig13.gif;423615"></p>
+</center></P><BR>
+<p class="docText">The i-nodes are fixed-length entries that contain most of the information about a file.</P>
+<p class="docText">If we examine the i-node and data block portion of a cylinder group in more detail, we could have what is shown in <a class="docLink" href="ch04lev1sec14.html#ch04fig14">Figure 4.14</a>.</p>
+<a name="ch04fig14"></a><P><center>
+<h5 class="docFigureTitle">Figure 4.14. Cylinder group's i-nodes and data blocks in more detail</H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/04fig14_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="206" SRC="images/0201433079/graphics/04fig14.gif;423615"></P>
+</center></P><br>
+<p class="docText"><a name="idd1e28291"></a><a name="idd1e28296"></a><a name="idd1e28299"></a><a name="idd1e28302"></a><a name="idd1e28307"></a><a name="idd1e28310"></a><a name="idd1e28315"></a><a name="idd1e28318"></a><a name="idd1e28323"></a><a name="idd1e28328"></a><a name="idd1e28333"></a><a name="idd1e28338"></a><a name="idd1e28343"></a><a name="idd1e28348"></a><a name="idd1e28353"></a><a name="idd1e28356"></a><a name="idd1e28361"></a>Note the following points from <a class="docLink" href="ch04lev1sec14.html#ch04fig14">Figure 4.14</a>.</P>
+<UL><li><p class="docList">We show two directory entries that point to the same i-node entry. Every i-node has a link count that contains the number of directory entries that point to the i-node. Only when the link count goes to 0 can the file be deleted (i.e., can the data blocks associated with the file be released). This is why the operation of &quot;unlinking a file&quot; does not always mean &quot;deleting the blocks associated with the file.&quot; This is why the function that removes a directory entry is called <tt>unlink</tt>, not delete. In the <tt>stat</tt> structure, the link count is contained in the <tt>st_nlink</tt> member. Its primitive system data type is <tt>nlink_t</tt>. These types of links are called hard links. Recall from <a class="docLink" href="ch02lev1sec5.html#ch02lev2sec13">Section 2.5.2</a> that the POSIX.1 constant <tt>LINK_MAX</tt> specifies the maximum value for a file's link count.</P></LI><li><p class="docList">The other type of link is called a <span class="docEmphasis">symbolic link</span>. With a symbolic link, the actual contents of the filethe data blocksstore the name of the file that the symbolic link points to. In the following example, the filename in the directory entry is the three-character string <tt>lib</tt> and the 7 bytes of data in the file are <tt>usr/lib</tt>:</p><pre>
+    lrwxrwxrwx 1 root         7 Sep 25 07:14 lib -&gt; usr/lib
+</pre><br>
+<p class="docList">The file type in the i-node would be <tt>S_IFLNK</tt> so that the system knows that this is a symbolic link.</p></LI><li><p class="docList">The i-node contains all the information about the file: the file type, the file's access permission bits, the size of the file, pointers to the file's data blocks, and so on. Most of the information in the <tt>stat</tt> structure is obtained from the i-node. Only two items of interest are stored in the directory entry: the filename and the i-node number; the other itemsthe length of the filename and the length of the directory recordare not of interest to this discussion. The data type for the i-node number is <tt>ino_t</tt>.</P></li><LI><p class="docList">Because the i-node number in the directory entry points to an i-node in the same file system, we cannot have a directory entry point to an i-node in a different file system. This is why the <tt>ln</tt>(1) command (make a new directory entry that points to an existing file) can't cross file systems. We describe the <tt>link</tt> function in the next section.</p></li><li><p class="docList">When renaming a file without changing file systems, the actual contents of the file need not be movedall that needs to be done is to add a new directory entry that points to the existing i-node, and then unlink the old directory entry. The link count will remain the same. For example, to rename the file <tt>/usr/lib/foo</tt> to <tt>/usr/foo</tt>, the contents of the file <tt>foo</tt> need not be moved if the directories <tt>/usr/lib</tt> and <tt>/usr</tt> are on the same file system. This is how the <tt>mv</tt>(1) command usually operates.</p></li></ul>
+<p class="docText">We've talked about the concept of a link count for a regular file, but what about the link count field for a directory? Assume that we make a new directory in the working directory, as in</p>
+
+<pre>
+   $ <span class="docEmphStrong">mkdir testdir</span>
+</pre><br>
+
+<p class="docText"><a class="docLink" href="ch04lev1sec14.html#ch04fig15">Figure 4.15</a> shows the result. Note that in this figure, we explicitly show the entries for dot and dot-dot.</p>
+<a name="ch04fig15"></a><p><center>
+<h5 class="docFigureTitle">Figure 4.15. Sample cylinder group after creating the directory <tt>testdir</tt></h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/04fig15_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="305" SRC="images/0201433079/graphics/04fig15.gif;423615"></p>
+</center></p><br>
+<p class="docText"><a name="idd1e28503"></a><a name="idd1e28506"></a><a name="idd1e28509"></a><a name="idd1e28514"></a><a name="idd1e28517"></a><a name="idd1e28520"></a><a name="idd1e28523"></a><a name="idd1e28526"></a><a name="idd1e28529"></a><a name="idd1e28532"></a><a name="idd1e28537"></a><a name="idd1e28542"></a>The i-node whose number is 2549 has a type field of &quot;directory&quot; and a link count equal to 2. Any leaf directory (a directory that does not contain any other directories) always has a link count of 2. The value of 2 is from the directory entry that names the directory (<tt>testdir</tt>) and from the entry for dot in that directory. The i-node whose number is 1267 has a type field of &quot;directory&quot; and a link count that is greater than or equal to 3. The reason we know that the link count is greater than or equal to 3 is that minimally, it is pointed to from the directory entry that names it (which we don't show in <a class="docLink" href="ch04lev1sec14.html#ch04fig15">Figure 4.15</a>), from dot, and from dot-dot in the <tt>testdir</tt> directory. Note that every subdirectory in a parent directory causes the parent directory's link count to be increased by 1.</p>
+<p class="docText">This format is similar to the classic format of the UNIX file system, which is described in detail in <a class="docLink" href="ch04.html#ch04">Chapter 4</a> of Bach [<a class="docLink" href="bib01.html#biblio01_013">1986</a>]. Refer to <a class="docLink" href="ch07.html#ch07">Chapter 7</a> of McKusick et al. [<a class="docLink" href="bib01.html#biblio01_042">1996</a>] or <a class="docLink" href="ch08.html#ch08">Chapter 8</a> of McKusick and Neville-Neil [<a class="docLink" href="bib01.html#biblio01_043">2005</a>] for additional information on the changes made with the Berkeley fast file system. See <a class="docLink" href="ch14.html#ch14">Chapter 14</a> of Mauro and McDougall [<a class="docLink" href="bib01.html#biblio01_044">2001</a>] for details on UFS, the Solaris version of the Berkeley fast file system.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec13.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec15.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

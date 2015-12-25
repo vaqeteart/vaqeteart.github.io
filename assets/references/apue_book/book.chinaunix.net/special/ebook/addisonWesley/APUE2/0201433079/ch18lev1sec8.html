@@ -1,0 +1,44 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 18.8.&nbsp; Line Control Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch18lev1sec8"></a>
+<h3 class="docSection1Title">18.8. Line Control Functions</h3>
+<p class="docText">The following four functions provide line control capability for terminal devices. All four require that <span class="docEmphasis">filedes</span> refer to a terminal device; otherwise, an error is returned with <tt>errno</tt> set to <tt>ENOTTY</tt>.</P>
+<a name="inta343"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;termios.h&gt;
+
+int tcdrain(int <span class="docEmphItalicAlt">filedes</span>);
+
+int tcflow(int <span class="docEmphItalicAlt">filedes</span>, int <span class="docEmphItalicAlt">action</span>);
+
+int tcflush(int <span class="docEmphItalicAlt">filedes</span>, int <span class="docEmphItalicAlt">queue</span>);
+
+int tcsendbreak(int <span class="docEmphItalicAlt">filedes</span>, int <span class="docEmphItalicAlt">duration</span>);</pre><BR>
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">All four return: 0 if OK, 1 on error
+</p></TD></tr></table></P><BR>
+<p class="docText">The <tt>tcdrain</tt> function waits for all output to be transmitted. The <tt>tcflow</tt> function gives us control over both input and output flow control. The <span class="docEmphasis">action</span> argument must be one of the following four values:</P>
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="100"><col width="400"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>TCOOFF</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Output is suspended.</p></td></tr><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>TCOON</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Output that was previously suspended is restarted.</P></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>TCIOFF</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The system transmits a STOP character, which should cause the terminal device to stop sending data.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>TCION</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The system transmits a START character, which should cause the terminal device to resume sending data.</p></td></TR></table></P><br>
+<p class="docText">The <tt>tcflush</tt> function lets us flush (throw away) either the input buffer (data that has been received by the terminal driver, which we have not read) or the output buffer (data that we have written, which has not yet been transmitted). The <span class="docEmphasis">queue</span> argument must be one of the following three constants:</P>
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="150"><col width="350"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>TCIFLUSH</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">The input queue is flushed.</p></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>TCOFLUSH</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The output queue is flushed.</P></td></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>TCIOFLUSH</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Both the input and the output queues are flushed.</P></td></TR></table></p><BR>
+<p class="docText"><a name="idd1e141153"></a><a name="idd1e141156"></a><a name="idd1e141161"></a><a name="idd1e141166"></a><a name="idd1e141173"></a><a name="idd1e141178"></a><a name="idd1e141183"></a><a name="idd1e141188"></a><a name="idd1e141193"></a>The <tt>tcsendbreak</tt> function transmits a continuous stream of zero bits for a specified duration. If the <span class="docEmphasis">duration</span> argument is 0, the transmission lasts between 0.25 seconds and 0.5 seconds. POSIX.1 specifies that if <span class="docEmphasis">duration</span> is nonzero, the transmission time is implementation dependent.</p>
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

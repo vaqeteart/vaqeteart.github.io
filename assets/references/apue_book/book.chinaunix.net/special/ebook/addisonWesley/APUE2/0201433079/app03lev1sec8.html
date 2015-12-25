@@ -1,0 +1,143 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Chapter 8</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app03lev1sec8"></a>
+<h3 class="docSection1Title">Chapter 8</h3>
+<p class="docText"></P>
+<P><table border="0" cellspacing="16" cellpadding="0"><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch08qa1q1a1"></a><B><a class="docLink" href="ch08lev1sec18.html#ch08qa1q1">8.1</a></b></TD><td><p class="docText">To simulate the behavior of the child closing the standard output when it exits, add the following line before calling <tt>exit</tt> in the child:</P>
+<pre>
+      fclose(stdout);
+</pre><BR>
+
+<p class="docText">To see the effects of doing this, replace the call to <tt>printf</tt> with the lines</P>
+<pre>
+      i = printf("pid = %d, glob = %d, var = %d\n",
+          getpid(), glob, var);
+      sprintf(buf, "%d\n", i);
+      write(STDOUT_FILENO, buf, strlen(buf));
+</pre><br>
+
+<p class="docText"><a name="idd1e62146"></a><a name="idd1e62151"></a><a name="idd1e62156"></a><a name="idd1e62161"></a><a name="idd1e62166"></a><a name="idd1e62171"></a>You need to define the variables <tt>i</tt> and <tt>buf</tt> also.</P>
+<p class="docText">This assumes that the standard I/O stream <tt>stdout</tt> is closed when the child calls <tt>exit</tt>, not the file descriptor <tt>STDOUT_FILENO</tt>. Some versions of the standard I/O library close the file descriptor associated with standard output, which would cause the <tt>write</tt> to standard output to also fail. In this case, <tt>dup</tt> standard output to another descriptor, and use this new descriptor for the <tt>write</tt>.</p></TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch08qa1q2a2"></a><B><a class="docLink" href="ch08lev1sec18.html#ch08qa1q2">8.2</a></b></TD><td><p class="docText">Consider <a class="docLink" href="app03lev1sec8.html#app03fig07">Figure C.7</a>.</P>
+<a name="app03fig07"></a>
+<H5 class="docExampleTitle">Figure C.7. Incorrect use of <tt>vfork</tt></h5>
+<pre>
+#include "apue.h"
+
+static void f1(void), f2(void);
+
+int
+main(void)
+{
+    f1();
+    f2();
+    _exit(0);
+}
+
+static void
+f1(void)
+{
+    pid_t   pid;
+
+    if ((pid = vfork()) &lt; 0)
+        err_sys("vfork error");
+    /* child and parent both return */
+}
+
+static void
+f2(void)
+{
+    char    buf[1000];       /* automatic variables */
+    int     i;
+
+    for (i = 0; i &lt; sizeof(buf); i++)
+        buf[i] = 0;
+}
+</pre><br>
+
+
+<p class="docText">When <tt>vfork</tt> is called, the parent's stack pointer points to the stack frame for the <tt>f1</tt> function that calls <tt>vfork</tt>. <a class="docLink" href="app03lev1sec8.html#app03fig08">Figure C.8</a> shows this.</p>
+<a name="app03fig08"></a><p><center>
+<H5 class="docFigureTitle">Figure C.8. Stack frames when <tt>vfork</tt> is called</h5>
+
+<p class="docText">
+<img border="0" alt="" width="299" height="161" SRC="images/0201433079/graphics/xcfig08.gif;423615"></P>
+
+</center></p><BR>
+<p class="docText"><tt>vfork</tt> causes the child to execute first, and the child returns from <tt>f1</tt>. The child then calls <tt>f2</tt>, and its stack frame overwrites the previous stack frame for <tt>f1</tt>. The child then zeros out the automatic variable <tt>buf</tt>, setting 1,000 bytes of the stack frame to 0. The child returns from <tt>f2</tt> and then calls <tt>_exit</tt>, but the contents of <a name="idd1e62326"></a><a name="idd1e62331"></a><a name="idd1e62336"></a><a name="idd1e62341"></a><a name="idd1e62346"></a><a name="idd1e62351"></a><a name="idd1e62356"></a>the stack beneath the stack frame for <tt>main</tt> have been changed. The parent then resumes after the call to <tt>vfork</tt> and does a return from <tt>f1</tt>. The return information is often stored in the stack frame, and that information has probably been modified by the child. After the parent resumes, what happens with this example depends on many implementation features of your UNIX system (where in the stack frame the return information is stored, what information in the stack frame is wiped out when the automatic variables are modified, and so on). The normal result is a <tt>core</tt> file, but your results may differ.</p>
+</td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch08qa1q3a3"></a><b><a class="docLink" href="ch08lev1sec18.html#ch08qa1q3">8.3</a></b></td><td><p class="docText">In <a class="docLink" href="ch08lev1sec9.html#ch08fig13">Figure 8.13</a>, we have the parent output first. When the parent is done, the child writes its output, but we let the parent terminate. Whether the parent terminates or whether the child finishes its output first depends on the kernel's scheduling of the two processes (another race condition). When the parent terminates, the shell starts up the next program, and this next program can interfere with the output from the previous child.</p>
+<p class="docText">We can prevent this from happening by not letting the parent terminate until the child has also finished its output. Replace the code following the <tt>fork</tt> with the following:</p>
+<pre>
+     else if (pid == 0) {
+         WAIT_PARENT();          /* parent goes first */
+         charatatime("output from child\n");
+         TELL_PARENT(getppid()); /* tell parent we're done */
+     } else {
+         charatatime("output from parent\n");
+         TELL_CHILD(pid);        /* tell child we're done */
+         WAIT_CHILD();           /* wait for child to finish */
+     }
+</pre><br>
+
+<p class="docText">We won't see this happen if we let the child go first, since the shell doesn't start the next program until the parent terminates.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch08qa1q4a4"></a><b><a class="docLink" href="ch08lev1sec18.html#ch08qa1q4">8.4</a></b></TD><TD><p class="docText">The same value (<tt>/home/sar/bin/testinterp</tt>) is printed for <tt>argv[2]</tt>. The reason is that <tt>execlp</tt> ends up calling <tt>execve</tt> with the same <span class="docEmphasis">pathname</span> as when we call <tt>execl</tt> directly. Recall <a class="docLink" href="ch08lev1sec10.html#ch08fig15">Figure 8.15</a>.</p></TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch08qa1q5a5"></a><B><a class="docLink" href="ch08lev1sec18.html#ch08qa1q5">8.5</a></b></TD><TD><p class="docText"><a name="idd1e62508"></a><a name="idd1e62513"></a><a name="idd1e62518"></a><a name="idd1e62523"></a><a name="idd1e62528"></a><a name="idd1e62533"></a><a name="idd1e62538"></a><a name="idd1e62543"></a><a name="idd1e62548"></a><a name="idd1e62553"></a><a name="idd1e62558"></a><a name="idd1e62563"></a><a name="idd1e62568"></a>A function is not provided to return the saved set-user-ID. Instead, we must save the effective user ID when the process is started.</p></TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch08qa1q6a6"></a><B><a class="docLink" href="ch08lev1sec18.html#ch08qa1q6">8.6</a></b></td><TD><p class="docText">The program in <a class="docLink" href="app03lev1sec8.html#app03fig09">Figure C.9</a> creates a zombie.</P>
+<a name="app03fig09"></a>
+<h5 class="docExampleTitle">Figure C.9. Create a zombie and look at its status with <tt>ps</tt></H5>
+<pre>
+#include "apue.h"
+
+#ifdef SOLARIS
+#define PSCMD     "ps -a -o pid,ppid,s,tty,comm"
+#else
+#define PSCMD     "ps -o pid,ppid,state,tty,command"
+#endif
+
+int
+main(void)
+{
+    pid_t    pid;
+
+    if ((pid = fork()) &lt; 0)
+        err_sys("fork error");
+    else if (pid == 0)      /* child */
+         exit(0);
+
+     /* parent */
+     sleep(4);
+     system(PSCMD);
+
+     exit(0);
+}
+</pre><BR>
+
+
+<p class="docText">Zombies are usually designated by <tt>ps</tt>(1) with a status of <tt>Z</tt>:</p>
+<pre>
+     $ <span class="docEmphStrong">./a.out</span>
+        PID  PPID S TT         COMMAND
+       3395  3264 S pts/3      bash
+      29520 3395  S pts/3      ./a.out
+      29521 29520 Z pts/3      [a.out] &lt;defunct&gt;
+      29522 29520 R pts/3      ps -o pid,ppid,state,tty,command
+</pre><br>
+
+</td></tr></table></P>
+
+<ul></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

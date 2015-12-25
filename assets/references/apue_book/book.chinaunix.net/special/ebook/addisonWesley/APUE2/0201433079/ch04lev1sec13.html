@@ -1,0 +1,41 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.13.&nbsp; File Truncation</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec14.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec13"></a>
+<h3 class="docSection1Title">4.13. File Truncation</h3>
+<p class="docText">There are times when we would like to truncate a file by chopping off data at the end of the file. Emptying a file, which we can do with the <tt>O_TRUNC</tt> flag to <tt>open</tt>, is a special case of truncation.</P>
+<a name="inta86"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>#include &lt;unistd.h&gt;
+
+int truncate(const char *<span class="docEmphItalicAlt">pathname</span>, off_t <span class="docEmphItalicAlt">length</span>);
+
+int ftruncate(int <span class="docEmphItalicAlt">filedes</span>, off_t <span class="docEmphItalicAlt">length</span>);</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">These two functions truncate an existing file to <span class="docEmphasis">length</span> bytes. If the previous size of the file was greater than <span class="docEmphasis">length</span>, the data beyond <span class="docEmphasis">length</span> is no longer accessible. If the previous size was less than <span class="docEmphasis">length</span>, the effect is system dependent, but XSI-conforming systems will increase the file size. If the implementation does extend a file, data between the old end of file and the new end of file will read as 0 (i.e., a hole is probably created in the file).</P>
+<blockquote>
+<p class="docText">The <tt>ftruncate</tt> function is part of POSIX.1. The <tt>truncate</tt> function is an XSI extension to the POSIX.1 functionality defined in the Single UNIX Specification.</P>
+<p class="docText">BSD releases prior to 4.4BSD could only make a file smaller with <tt>TRuncate</tt>.</p>
+<p class="docText">Solaris also includes an extension to <tt>fcntl</tt> (<tt>F_FREESP</tt>) that allows us to free any part of a file, not just a chunk at the end of the file.</P>
+</blockquote>
+<p class="docText">We use <tt>ftruncate</tt> in the program shown in <a class="docLink" href="ch13lev1sec5.html#ch13fig06">Figure 13.6</a> when we need to empty a file after obtaining a lock on the file.</P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec14.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

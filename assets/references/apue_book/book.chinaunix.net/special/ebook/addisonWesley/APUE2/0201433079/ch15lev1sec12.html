@@ -1,0 +1,55 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Exercises</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch15lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch16.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch15lev1sec12"></a>
+<h3 class="docSection1Title">Exercises</h3>
+<P><table border="0" cellspacing="16" cellpadding="0"><TR valign="top"><td align="right" class="docText" width="50"><a name="ch15qa1q1"></a><B><a class="docLink" href="app03lev1sec15.html#ch15qa1q1a1"><span class="docEmphStrong">15.1</span></a></b></TD><TD><p class="docText">In the program shown in <a class="docLink" href="ch15lev1sec2.html#ch15fig06">Figure 15.6</a>, remove the <tt>close</tt> right before the <tt>waitpid</tt> at the end of the parent code. Explain what happens.</p>
+</TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch15qa1q2"></a><B><a class="docLink" href="app03lev1sec15.html#ch15qa1q2a2"><span class="docEmphStrong">15.2</span></a></b></td><TD><p class="docText">In the program in <a class="docLink" href="ch15lev1sec2.html#ch15fig06">Figure 15.6</a>, remove the <tt>waitpid</tt> at the end of the parent code. Explain what happens.</P>
+</TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch15qa1q3"></a><b><a class="docLink" href="app03lev1sec15.html#ch15qa1q3a3"><span class="docEmphStrong">15.3</span></a></b></TD><TD><p class="docText">What happens if the argument to <tt>popen</tt> is a nonexistent command? Write a small program to test this.</p>
+</td></tr><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch15qa1q4"></a><b><a class="docLink" href="app03lev1sec15.html#ch15qa1q4a4"><span class="docEmphStrong">15.4</span></a></b></TD><td><p class="docText">In the program shown in <a class="docLink" href="ch15lev1sec4.html#ch15fig18">Figure 15.18</a>, remove the signal handler, execute the program, and then terminate the child. After entering a line of input, how can you tell that the parent was terminated by <tt>SIGPIPE</tt>?</P>
+</td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch15qa1q5"></a><b><a class="docLink" href="app03lev1sec15.html#ch15qa1q5a5"><span class="docEmphStrong">15.5</span></a></b></td><td><p class="docText">In the program in <a class="docLink" href="ch15lev1sec4.html#ch15fig18">Figure 15.18</a>, use the standard I/O library for reading and writing the pipes instead of <tt>read</tt> and <tt>write</tt>.</p>
+</td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch15qa1q6"></a><b><a class="docLink" href="app03lev1sec15.html#ch15qa1q6a6"><span class="docEmphStrong">15.6</span></a></b></td><td><p class="docText"><a name="idd1e118440"></a><a name="idd1e118445"></a><a name="idd1e118450"></a><a name="idd1e118455"></a><a name="idd1e118460"></a><a name="idd1e118465"></a><a name="idd1e118470"></a>The Rationale for POSIX.1 gives as one of the reasons for adding the <tt>waitpid</tt> function that most pre-POSIX.1 systems can't handle the following:</p>
+
+<pre>
+if ((fp = popen("/bin/true", "r")) == NULL)
+    ...
+if ((rc = system("sleep 100")) == -1)
+    ...
+if (pclose(fp) == -1)
+    ...
+</pre><br>
+
+<p class="docText">What happens in this code if <tt>waitpid</tt> isn't available and <tt>wait</tt> is used instead?</P>
+</TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch15qa1q7"></a><B><a class="docLink" href="app03lev1sec15.html#ch15qa1q7a7"><span class="docEmphStrong">15.7</span></a></b></td><TD><p class="docText">Explain how <tt>select</tt> and <tt>poll</tt> handle an input descriptor that is a pipe, when the pipe is closed by the writer. To determine the answer, write two small test programs: one using <tt>select</tt> and one using <tt>poll</tt>.</P>
+<p class="docText">Redo this exercise, looking at an output descriptor that is a pipe, when the read end is closed.</P>
+</td></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch15qa1q8"></a><B><a class="docLink" href="app03lev1sec15.html#ch15qa1q8a8"><span class="docEmphStrong">15.8</span></a></b></TD><td><p class="docText">What happens if the <span class="docEmphasis">cmdstring</span> executed by <tt>popen</tt> with a <span class="docEmphasis">type</span> of <tt>"r"</tt> writes to its standard error?</P>
+</TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch15qa1q9"></a><b><a class="docLink" href="app03lev1sec15.html#ch15qa1q9a9"><span class="docEmphStrong">15.9</span></a></b></td><td><p class="docText">Since <tt>popen</tt> invokes a shell to execute its <span class="docEmphasis">cmdstring</span> argument, what happens when <tt>cmdstring</tt> terminates? (Hint: draw all the processes involved.)</p>
+</TD></tr><TR valign="top"><td align="right" class="docText" width="50"><a name="ch15qa1q10"></a><B><a class="docLink" href="app03lev1sec15.html#ch15qa1q10a10"><span class="docEmphStrong">15.10</span></a></b></td><td><p class="docText">POSIX.1 specifically states that <tt>open</tt>ing a FIFO for readwrite is undefined. Although most UNIX systems allow this, show another method for opening a FIFO for both reading and writing, without blocking.</p>
+</td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch15qa1q11"></a><b><a class="docLink" href="app03lev1sec15.html#ch15qa1q11a11"><span class="docEmphStrong">15.11</span></a></b></td><td><p class="docText"><a name="idd1e118853"></a><a name="idd1e118858"></a><a name="idd1e118863"></a>Unless a file contains sensitive or confidential data, allowing other users to read the file causes no harm. (It is usually considered antisocial, however, to go snooping around in other people's files.) But what happens if a malicious process reads a message from a message queue that is being used by a server and several clients? What information does the malicious process need to know to read the message queue?</p>
+</td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch15qa1q12"></a><b><span class="docEmphStrong">15.12</span></b></td><TD><p class="docText">Write a program that does the following. Execute a loop five times: create a message queue, print the queue identifier, delete the message queue. Then execute the next loop five times: create a message queue with a key of <tt>IPC_PRIVATE</tt>, and place a message on the queue. After the program terminates, look at the message queues using <tt>ipcs</tt>(1). Explain what is happening with the queue identifiers.</P>
+</td></TR><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch15qa1q13"></a><b><a class="docLink" href="app03lev1sec15.html#ch15qa1q13a13"><span class="docEmphStrong">15.13</span></a></b></TD><TD><p class="docText">Describe how to build a linked list of data objects in a shared memory segment. What would you store as the list pointers?</P>
+</td></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch15qa1q14"></a><B><a class="docLink" href="app03lev1sec15.html#ch15qa1q14a14"><span class="docEmphStrong">15.14</span></a></b></TD><td><p class="docText">Draw a time line of the program in <a class="docLink" href="ch15lev1sec9.html#ch15fig33">Figure 15.33</a> showing the value of the variable <tt>i</tt> in both the parent and child, the value of the long integer in the shared memory region, and the value returned by the <tt>update</tt> function. Assume that the child runs first after the <tt>fork</tt>.</P>
+</TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch15qa1q15"></a><b><span class="docEmphStrong">15.15</span></b></td><td><p class="docText">Redo the program in <a class="docLink" href="ch15lev1sec9.html#ch15fig33">Figure 15.33</a> using the XSI shared memory functions from <a class="docLink" href="ch15lev1sec9.html#ch15lev1sec9">Section 15.9</a> instead of the shared memory-mapped region.</p>
+</TD></tr><TR valign="top"><td align="right" class="docText" width="50"><a name="ch15qa1q16"></a><B><span class="docEmphStrong">15.16</span></b></td><td><p class="docText">Redo the program in <a class="docLink" href="ch15lev1sec9.html#ch15fig33">Figure 15.33</a> using the XSI semaphore functions from <a class="docLink" href="ch15lev1sec8.html#ch15lev1sec8">Section 15.8</a> to alternate between the parent and the child.</p>
+</td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch15qa1q17"></a><b><span class="docEmphStrong">15.17</span></b></td><td><p class="docText">Redo the program in <a class="docLink" href="ch15lev1sec9.html#ch15fig33">Figure 15.33</a> using advisory record locking to alternate between the parent and the child.</p>
+</td></tr></table></p>
+
+<ul></ul></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch15lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch16.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

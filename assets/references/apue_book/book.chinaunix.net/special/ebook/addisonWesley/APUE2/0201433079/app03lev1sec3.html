@@ -1,0 +1,42 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Chapter 3</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app03lev1sec3"></a>
+<h3 class="docSection1Title">Chapter 3</h3>
+<p class="docText"></P>
+<P><table border="0" cellspacing="16" cellpadding="0"><tr valign="top"><TD align="right" class="docText" width="50"><a name="app03qa1q9a9"></a><B><a class="docLink" href="ch03lev1sec18.html#ch03qa1q1">3.1</a></b></TD><td><p class="docText">All disk I/O goes through the kernel's block buffers (also called the kernel's buffer cache). The exception to this is I/O on a raw disk device, which we aren't considering. <a class="docLink" href="ch03.html#ch03">Chapter 3</a> of Bach [<a class="docLink" href="bib01.html#biblio01_013">1986</a>] describes the operation of this buffer cache. Since the data that we <tt>read</tt> or <tt>write</tt> is buffered by the kernel, the term <span class="docEmphasis">unbuffered I/O</span> refers to the lack of automatic buffering in the user process with these two functions. Each <tt>read</tt> or <tt>write</tt> invokes a single system call.</P></TD></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="app03qa1q10a10"></a><b><a class="docLink" href="ch03lev1sec18.html#ch03qa1q3">3.3</a></b></TD><TD><p class="docText">Each call to <tt>open</tt> gives us a new file table entry. But since both <tt>open</tt>s reference the same file, both file table entries point to the same v-node table entry. The call to <tt>dup</tt> references the existing file table entry. We show this in <a class="docLink" href="app03lev1sec3.html#app03fig02">Figure C.2</a>. An <tt>F_SETFD</tt> on <tt>fd1</tt> affects only the file descriptor flags for <tt>fd1</tt>. But an <tt>F_SETFL</tt> on <tt>fd1</tt> affects the file table entry that both <tt>fd1</tt> and <tt>fd2</tt> point to.</P>
+<a name="app03fig02"></a><p><center>
+<H5 class="docFigureTitle">Figure C.2. Result of <tt>dup</tt> and <tt>open</tt></H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/xcfig02_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" id="195131139046" width="500" height="234" SRC="images/0201433079/graphics/xcfig02.gif;423615"></p>
+</center></P><BR></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="app03qa1q11a11"></a><B><a class="docLink" href="ch03lev1sec18.html#ch03qa1q4">3.4</a></b></td><TD><p class="docText">If <tt>fd</tt> is 1, then the <tt>dup2(fd, 1)</tt> returns 1 without closing descriptor 1. (Remember our discussion of this in <a class="docLink" href="ch03lev1sec12.html#ch03lev1sec12">Section 3.12</a>.) After the three calls to <tt>dup2</tt>, all three descriptors point to the same file table entry. Nothing needs to be closed.</p>
+<p class="docText">If <tt>fd</tt> is 3, however, after the three calls to <tt>dup2</tt>, four descriptors are pointing to the same file table entry. In this case, we need to close descriptor 3.</P></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="app03qa1q12a12"></a><b><a class="docLink" href="ch03lev1sec18.html#ch03qa1q5">3.5</a></b></td><td><p class="docText"><a name="idd1e23924"></a><a name="idd1e23929"></a><a name="idd1e23934"></a><a name="idd1e23939"></a><a name="idd1e23944"></a>Since the shells process their command line from left to right, the command</p>
+<pre>
+    ./a.out &gt; outfile 2&gt;&amp;1
+</pre><br>
+
+<p class="docText">first sets standard output to <tt>outfile</tt> and then <tt>dup</tt>s standard output onto descriptor 2 (standard error). The result is that standard output and standard error are set to the same file. Descriptors 1 and 2 both point to the same file table entry. With</p>
+<pre>
+    ./a.out 2&gt;&amp;1 &gt; outfile
+</pre><br>
+
+<p class="docText">however, the <tt>dup</tt> is executed first, causing descriptor 2 to be the terminal (assuming that the command is run interactively). Then standard output is redirected to the file <tt>outfile</tt>. The result is that descriptor 1 points to the file table entry for <tt>outfile</tt>, and descriptor 2 points to the file table entry for the terminal.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="app03qa1q13a13"></a><b><a class="docLink" href="ch03lev1sec18.html#ch03qa1q6">3.6</a></b></TD><TD><p class="docText">You can still <tt>lseek</tt> and <tt>read</tt> anywhere in the file, but a <tt>write</tt> automatically resets the file offset to the end of file before the data is written. This makes it impossible to <tt>write</tt> anywhere other than at the end of file.</p></TD></TR></table></P>
+
+<ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

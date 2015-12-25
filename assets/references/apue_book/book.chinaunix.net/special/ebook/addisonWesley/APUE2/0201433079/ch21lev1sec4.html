@@ -1,0 +1,50 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 21.4.&nbsp; Printer Spooling</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch21lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch21lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch21lev1sec4"></a>
+<h3 class="docSection1Title">21.4. Printer Spooling</h3>
+<p class="docText"><a name="idd1e154816"></a><a name="idd1e154821"></a><a name="idd1e154826"></a><a name="idd1e154831"></a><a name="idd1e154836"></a><a name="idd1e154841"></a><a name="idd1e154846"></a><a name="idd1e154849"></a><a name="idd1e154852"></a>The programs that we develop in this chapter form the basis of a simple printer spooler. A simple user command sends a file to the printer spooler; the spooler saves it to disk, queues the request, and ultimately sends the file to the printer.</P>
+<p class="docText">All UNIX Systems provide at least one print spooling system. FreeBSD ships LPD, the BSD print spooling system (see <tt>lpd</tt>(8) and <a class="docLink" href="ch13.html#ch13">Chapter 13</a> of Stevens [<a class="docLink" href="bib01.html#biblio01_058">1990</a>]). Linux and Mac OS X include CUPS, the Common UNIX Printing System (see <tt>cupsd</tt>(8)). Solaris ships with the standard System V printer spooler (see <tt>lp</tt>(1) and <tt>lpsched</tt>(1M)). In this chapter, our interest is not in these spooling systems per se, but in communicating with a network printer. We need to develop a spooling system to solve the problem of multiuser access to a single resource (the printer).</P>
+<p class="docText">We use a simple command that reads a file and sends it to the printer spooler daemon. The command has one option to force the file to be treated as plaintext (the default assumes that the file is PostScript). We call this command <tt>print</tt>.</p>
+<p class="docText">In our printer spooler daemon, <tt>printd</tt>, we use multiple threads to divide up the work that the daemon needs to accomplish.</P>
+<UL><LI><p class="docList">One thread listens on a socket for new print requests arriving from clients running the <tt>print</tt> command.</p></LI><LI><p class="docList">A separate thread is spawned for each client to copy the file to be printed to a spooling area.</P></li><LI><p class="docList">One thread communicates with the printer, sending it queued jobs one at a time.</p></LI><LI><p class="docList">One thread handles signals.</P></li></UL>
+<p class="docText"><a class="docLink" href="ch21lev1sec4.html#ch21fig06">Figure 21.6</a> shows how these components fit together.</P>
+<a name="ch21fig06"></a><p><center>
+<H5 class="docFigureTitle">Figure 21.6. Printer spooling components</H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/21fig06_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="211" SRC="images/0201433079/graphics/21fig06.gif;423615"></p>
+</center></p><br>
+<p class="docText">The print configuration file is <tt>/etc/printer.conf</tt>. It identifies the host name of the server running the printer spooling daemon and the host name of the network printer. The spooling daemon is identified by a line starting with the <tt>printserver</tt> keyword, followed by white space and the host name of the server. The printer is <a name="idd1e154951"></a><a name="idd1e154954"></a><a name="idd1e154959"></a>identified by a line starting with the <tt>printer</tt> keyword, followed by white space and the host name of the printer.</p>
+<p class="docText">A sample printer configuration file might contain the following lines:</P>
+
+<pre>
+         printserver  blade
+         printer      phaser860
+</pre><br>
+
+<p class="docText">where <tt>blade</tt> is the host name of the computer system running the printer spooling daemon, and <tt>phaser860</tt> is the host name of the network printer.</P>
+<a name="ch21lev2sec1"></a>
+<h4 class="docSection2Title">Security</H4>
+<p class="docText">Programs that run with superuser privileges have the potential to open a computer system up to attack. Such programs usually aren't more vulnerable than any other program, but when compromised can lead to attackers obtaining full access to your system.</p>
+<p class="docText">The printer spooling daemon in this chapter starts out with superuser privileges in this example to be able to bind a socket to a privileged TCP port number. To make the daemon less vulnerable to attack, we can</p>
+<ul><li><p class="docList">Design the daemon to conform to the principles of least privilege (<a class="docLink" href="ch08lev1sec11.html#ch08lev1sec11">Section 8.11</a>). After we obtain a socket bound to a privileged port address, we can change the user and group IDs of the daemon to something other that <tt>root</tt> (<tt>lp</tt>, for example). All the files and directories used to store queued print jobs should be owned by this nonprivileged user. This way, the daemon, if compromised, will provide the attacker with access only to the printing subsystem. This is still a concern, but it is far less serious than an attacker getting full access to your system.</p></li><li><p class="docList">Audit the daemon's source code for all known potential vulnerabilities, such as buffer overruns.</p></li><li><p class="docList">Log unexpected or suspicious behavior so that an administrator can take note and investigate further.</p></li></ul>
+
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch21lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch21lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

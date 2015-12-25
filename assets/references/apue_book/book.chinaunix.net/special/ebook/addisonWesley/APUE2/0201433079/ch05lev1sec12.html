@@ -1,0 +1,119 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 5.12.&nbsp; Implementation Details</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch05lev1sec12"></a>
+<h3 class="docSection1Title">5.12. Implementation Details</h3>
+<p class="docText">As we've mentioned, under the UNIX System, the standard I/O library ends up calling the I/O routines that we described in <a class="docLink" href="ch03.html#ch03">Chapter 3</a>. Each standard I/O stream has an associated file descriptor, and we can obtain the descriptor for a stream by calling <tt>fileno</tt>.</P>
+<blockquote>
+<p class="docText">Note that <tt>fileno</tt> is not part of the ISO C standard, but an extension supported by POSIX.1.</P>
+</blockquote>
+<p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdio.h&gt;
+
+int fileno(FILE *<span class="docEmphItalicAlt">fp</span>);
+</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: the file descriptor associated with the stream</P></td></TR></table></P><BR>
+<p class="docText">We need this function if we want to call the <tt>dup</tt> or <tt>fcntl</tt> functions, for example.</p>
+<p class="docText">To look at the implementation of the standard I/O library on your system, start with the header <tt>&lt;stdio.h&gt;</tt>. This will show how the <tt>FILE</tt> object is defined, the definitions of the per-stream flags, and any standard I/O routines, such as <tt>getc</tt>, that are defined as macros. <a class="docLink" href="ch08lev1sec5.html#ch08lev1sec5">Section 8.5</a> of Kernighan and Ritchie [<a class="docLink" href="bib01.html#biblio01_003">1988</a>] has a sample implementation that shows the flavor of many implementations on UNIX systems. <a class="docLink" href="ch12.html#ch12">Chapter 12</a> of Plauger [<a class="docLink" href="bib01.html#biblio01_050">1992</a>] provides the complete source code for an implementation of the standard I/O library. The implementation of the GNU standard I/O library is also publicly available.</P>
+<a name="ch05ex01"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch05lev1sec12.html#ch05fig11">Figure 5.11</a> prints the buffering for the three standard streams and for a stream that is associated with a regular file.</P>
+<p class="docText"><a name="idd1e40342"></a><a name="idd1e40347"></a><a name="idd1e40352"></a><a name="idd1e40357"></a><a name="idd1e40362"></a><a name="idd1e40367"></a><a name="idd1e40372"></a>Note that we perform I/O on each stream before printing its buffering status, since the first I/O operation usually causes the buffers to be allocated for a stream. The structure members <tt>_IO_file_flags</tt>, <tt>_IO_buf_base</tt>, and <tt>_IO_buf_end</tt> and the constants <tt>_IO_UNBUFFERED</tt> and <tt>_IO_LINE_BUFFERED</tt> are defined by the GNU standard I/O library used on Linux. Be aware that other UNIX systems may have different implementations of the standard I/O library.</P>
+<p class="docText"><a name="idd1e40394"></a><a name="idd1e40399"></a><a name="idd1e40404"></a><a name="idd1e40409"></a><a name="idd1e40414"></a><a name="idd1e40419"></a><a name="idd1e40426"></a><a name="idd1e40431"></a><a name="idd1e40436"></a><a name="idd1e40443"></a>If we run the program in <a class="docLink" href="ch05lev1sec12.html#ch05fig11">Figure 5.11</a> twice, once with the three standard streams connected to the terminal and once with the three standard streams redirected to files, we get the following result:</p>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>                       <span class="docEmphItalicAlt">stdin, stdout, and stderr connected to terminal</span>
+    enter any character
+                                    <span class="docEmphItalicAlt">we type a newline</span>
+    one line to standard error
+    stream = stdin, line buffered, buffer size = 1024
+    stream = stdout, line buffered, buffer size = 1024
+    stream = stderr, unbuffered, buffer size = 1
+    stream = /etc/motd, fully buffered, buffer size = 4096
+    $ <span class="docEmphStrong">./a.out &lt; /etc/termcap &gt; std.out 2&gt; std.err</span><span class="docEmphasis">
+                                    run it again with all three streams redirected</span>
+
+    $ <span class="docEmphStrong">cat std.err</span>
+    one line to standard error
+    $ <span class="docEmphStrong">cat std.out</span>
+    enter any character
+    stream = stdin, fully buffered, buffer size = 4096
+    stream = stdout, fully buffered, buffer size = 4096
+    stream = stderr, unbuffered, buffer size = 1
+    stream = /etc/motd, fully buffered, buffer size = 4096
+</pre><br>
+
+<p class="docText">We can see that the default for this system is to have standard input and standard output line buffered when they're connected to a terminal. The line buffer is 1,024 bytes. Note that this doesn't restrict us to 1,024-byte input and output lines; that's just the size of the buffer. Writing a 2,048-byte line to standard output will require two <tt>write</tt> system calls. When we redirect these two streams to regular files, they become fully buffered, with buffer sizes equal to the preferred I/O sizethe <tt>st_blksize</tt> value from the <tt>stat</tt> structurefor the file system. We also see that the standard error is always unbuffered, as it should be, and that a regular file defaults to fully buffered.</p>
+
+<a name="ch05fig11"></a>
+<h5 class="docExampleTitle">Figure 5.11. Print buffering for various standard I/O streams</H5>
+
+<pre>
+
+#include "apue.h"
+
+void    pr_stdio(const char *, FILE *);
+
+int
+main(void)
+{
+    FILE    *fp;
+
+    fputs("enter any character\n", stdout);
+    if (getchar() == EOF)
+        err_sys("getchar error");
+    fputs("one line to standard error\n", stderr);
+
+    pr_stdio("stdin",  stdin);
+    pr_stdio("stdout", stdout);
+    pr_stdio("stderr", stderr);
+
+    if ((fp = fopen("/etc/motd", "r")) == NULL)
+        err_sys("fopen error");
+    if (getc(fp) == EOF)
+        err_sys("getc error");
+    pr_stdio("/etc/motd", fp);
+    exit(0);
+}
+
+void
+pr_stdio(const char *name, FILE *fp)
+{
+    printf("stream = %s, ", name);
+
+    /*
+     * The following is nonportable.
+     */
+    if (fp-&gt;_IO_file_flags &amp; _IO_UNBUFFERED)
+        printf("unbuffered");
+    else if (fp-&gt;_IO_file_flags &amp; _IO_LINE_BUF)
+        printf("line buffered");
+    else /* if neither of above */
+        printf("fully buffered");
+    printf(", buffer size = %d\n", fp-&gt;_IO_buf_end - fp-&gt;_IO_buf_base);
+}
+</pre><br>
+
+
+
+<UL></ul></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

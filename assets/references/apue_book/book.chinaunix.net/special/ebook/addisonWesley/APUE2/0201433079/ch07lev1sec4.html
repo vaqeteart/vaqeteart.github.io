@@ -1,0 +1,64 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 7.4.&nbsp; Command-Line Arguments</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch07lev1sec4"></a>
+<h3 class="docSection1Title">7.4. Command-Line Arguments</h3>
+<p class="docText"><a name="idd1e47627"></a><a name="idd1e47630"></a><a name="idd1e47633"></a><a name="idd1e47638"></a><a name="idd1e47643"></a><a name="idd1e47646"></a>When a program is executed, the process that does the <tt>exec</tt> can pass command-line arguments to the new program. This is part of the normal operation of the UNIX system shells. We have already seen this in many of the examples from earlier chapters.</P>
+<a name="ch07ex03"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch07lev1sec4.html#ch07fig04">Figure 7.4</a> echoes all its command-line arguments to standard output. Note that the normal <tt>echo</tt>(1) program doesn't echo the zeroth argument.</P>
+<p class="docText">If we compile this program and name the executable <tt>echoarg</tt>, we have</P>
+
+<pre>
+    $ <span class="docEmphStrong">./echoarg arg1 TEST foo</span>
+    argv[0]: ./echoarg
+    argv[1]: arg1
+    argv[2]: TEST
+    argv[3]: foo
+</pre><BR>
+
+<p class="docText">We are guaranteed by both ISO C and POSIX.1 that <tt>argv[argc]</tt> is a null pointer. This lets us alternatively code the argument-processing loop as</p>
+
+<pre>
+    for (i = 0; argv[i] != NULL; i++)
+</pre><BR>
+
+
+<a name="ch07fig04"></a>
+<H5 class="docExampleTitle">Figure 7.4. Echo all command-line arguments to standard output</H5>
+
+<pre>
+#include "apue.h"
+
+int
+main(int argc, char *argv[])
+{
+    int     i;
+
+    for (i = 0; i &lt; argc;  i++)     /* echo all command-line args */
+        printf("argv[%d]: %s\n", i, argv[i]);
+    exit(0);
+}
+</pre><br>
+
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

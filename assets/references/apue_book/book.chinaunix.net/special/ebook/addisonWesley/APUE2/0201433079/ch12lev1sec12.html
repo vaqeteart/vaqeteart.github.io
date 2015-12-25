@@ -1,0 +1,26 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Exercises</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch12lev1sec12"></a>
+<h3 class="docSection1Title">Exercises</h3>
+<P><table border="0" cellspacing="16" cellpadding="0"><TR valign="top"><td align="right" class="docText" width="50"><a name="ch12qa1q1"></a><B><a class="docLink" href="app03lev1sec12.html#ch12qa1q1a1">12.1</a></b></TD><TD><p class="docText">Run the program in <a class="docLink" href="ch12lev1sec9.html#ch12fig17">Figure 12.17</a> on a Linux system, but redirect the output into a file. Explain the results.</p></TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch12qa1q2"></a><B>12.2</b></td><TD><p class="docText">Implement <tt>putenv_r</tt>, a reentrant version of <tt>putenv</tt>. Make sure that your implementation is async-signal safe as well as thread-safe.</P></TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch12qa1q3"></a><b><a class="docLink" href="app03lev1sec12.html#ch12qa1q3a3">12.3</a></b></TD><TD><p class="docText">Can you make the program in <a class="docLink" href="ch12lev1sec6.html#ch12fig13">Figure 12.13</a> async-signal safe by blocking signals at the beginning of the function and restoring the previous signal mask before returning? Explain.</p></td></tr><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch12qa1q4"></a><b><a class="docLink" href="app03lev1sec12.html#ch12qa1q4a4">12.4</a></b></TD><td><p class="docText">Write a program to exercise the version of <tt>getenv</tt> from <a class="docLink" href="ch12lev1sec6.html#ch12fig13">Figure 12.13</a>. Compile and run the program on FreeBSD. What happens? Explain.</P></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch12qa1q5"></a><b><a class="docLink" href="app03lev1sec12.html#ch12qa1q5a5">12.5</a></b></td><td><p class="docText">Given that you can create multiple threads to perform different tasks within a program, explain why you might still need to use <tt>fork</tt>.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch12qa1q6"></a><b><a class="docLink" href="app03lev1sec12.html#ch12qa1q6a6">12.6</a></b></td><td><p class="docText">Reimplement the program in <a class="docLink" href="ch10lev1sec19.html#ch10fig29">Figure 10.29</a> to make it thread-safe without using <tt>nanosleep</tt>.</p></td></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch12qa1q7"></a><B><a class="docLink" href="app03lev1sec12.html#ch12qa1q7a7">12.7</a></b></TD><TD><p class="docText">After calling <tt>fork</tt>, could we safely reinitialize a condition variable in the child process by first destroying the condition variable with <tt>pthread_cond_destroy</tt> and then initializing it with <tt>pthread_cond_init</tt>?</p></TD></TR></table></P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

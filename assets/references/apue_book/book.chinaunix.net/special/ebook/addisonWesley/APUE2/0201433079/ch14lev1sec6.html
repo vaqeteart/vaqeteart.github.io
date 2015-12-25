@@ -1,0 +1,56 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 14.6.&nbsp; Asynchronous I/O</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch14lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch14lev1sec6"></a>
+<h3 class="docSection1Title" id="454331-958">14.6. Asynchronous I/O</h3>
+<p class="docText">Using <tt>select</tt> and <tt>poll</tt>, as described in the previous section, is a synchronous form of notification. The system doesn't tell us anything until we ask (by calling either <tt>select</tt> or <tt>poll</tt>). As we saw in <a class="docLink" href="ch10.html#ch10">Chapter 10</a>, signals provide an asynchronous form of notification that something has happened. All systems derived from BSD and System V provide some form of asynchronous I/O, using a signal (<tt>SIGPOLL</tt> in System V; <tt>SIGIO</tt> in BSD) to notify the process that something of interest has happened on a descriptor.</P>
+<blockquote>
+<p class="docText">We saw that <tt>select</tt> and <tt>poll</tt> work with any descriptors. But with asynchronous I/O, we now encounter restrictions. On systems derived from System V, asynchronous I/O works only with STREAMS devices and STREAMS pipes. On systems derived from BSD, asynchronous I/O works only with terminals and networks.</P>
+</blockquote>
+<p class="docText">One limitation of asynchronous I/O is that there is only one signal per process. If we enable more than one descriptor for asynchronous I/O, we cannot tell which descriptor the signal corresponds to when the signal is delivered.</p>
+<blockquote>
+<p class="docText">The Single UNIX Specification includes an optional generic asynchronous I/O mechanism, adopted from the real-time draft standard. It is unrelated to the mechanisms we describe here. This mechanism solves a lot of the limitations that exist with these older asynchronous I/O mechanisms, but we will not discuss it further.</P>
+</blockquote>
+<a name="ch14lev2sec17"></a>
+<H4 class="docSection2Title">14.6.1. System V Asynchronous I/O</H4>
+<p class="docText">In System V, asynchronous I/O is part of the STREAMS system and works only with STREAMS devices and STREAMS pipes. The System V asynchronous I/O signal is <tt>SIGPOLL</tt>.</p>
+<p class="docText"><a name="idd1e105910"></a><a name="idd1e105915"></a><a name="idd1e105920"></a><a name="idd1e105925"></a><a name="idd1e105930"></a><a name="idd1e105935"></a><a name="idd1e105940"></a><a name="idd1e105945"></a><a name="idd1e105950"></a><a name="idd1e105955"></a><a name="idd1e105960"></a><a name="idd1e105965"></a><a name="idd1e105970"></a><a name="idd1e105975"></a><a name="idd1e105980"></a><a name="idd1e105985"></a><a name="idd1e105990"></a><a name="idd1e105995"></a><a name="idd1e106000"></a><a name="idd1e106005"></a><a name="idd1e106010"></a><a name="idd1e106015"></a><a name="idd1e106020"></a>To enable asynchronous I/O for a STREAMS device, we have to call <tt>ioctl</tt> with a second argument (<span class="docEmphasis">request</span>) of <tt>I_SETSIG</tt>. The third argument is an integer value formed from one or more of the constants in <a class="docLink" href="ch14lev1sec6.html#ch14fig26">Figure 14.26</a>. These constants are defined in <tt>&lt;stropts.h&gt;</tt>.</P>
+<a name="ch14fig26"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 14.26. Conditions for generating <tt>SIGPOLL</tt> signal</h5></caption><colgroup><col width="75"><col width="450"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Constant</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></P></th></TR></thead><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_INPUT</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">A message other than a high-priority message has arrived.</P></TD></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_RDNORM</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">An ordinary message has arrived.</P></td></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_RDBAND</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">A message with a nonzero priority band has arrived.</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_BANDURG</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">If this constant is specified with <tt>S_RDBAND</tt>, the <tt>SIGURG</tt> signal is generated instead of <tt>SIGPOLL</tt> when a nonzero priority band message has arrived.</p></td></tr><tr><TD class="rightBorder bottomBorder" align="left" valign="top"><p class="docText"><tt>S_HIPRI</tt></P></td><TD class="bottomBorder" align="left" valign="top"><p class="docText">A high-priority message has arrived.</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_OUTPUT</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The write queue is no longer full.</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_WRNORM</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Same as <tt>S_OUTPUT</tt>.</P></TD></tr><tr><td class="rightBorder bottomBorder" align="left" valign="top"><p class="docText"><tt>S_WRBAND</tt></p></TD><td class="bottomBorder" align="left" valign="top"><p class="docText">We can send a nonzero priority band message.</P></td></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_MSG</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">A STREAMS signal message that contains the <tt>SIGPOLL</tt> signal has arrived.</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_ERROR</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">An <tt>M_ERROR</tt> message has arrived.</p></td></tr><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_HANGUP</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">An <tt>M_HANGUP</tt> message has arrived.</P></TD></tr></table></P><BR>
+<p class="docText">In <a class="docLink" href="ch14lev1sec6.html#ch14fig26">Figure 14.26</a>, whenever we say &quot;has arrived,&quot; we mean &quot;has arrived at the stream head's read queue.&quot;</P>
+<p class="docText">In addition to calling <tt>ioctl</tt> to specify the conditions that should generate the <tt>SIGPOLL</tt> signal, we also have to establish a signal handler for this signal. Recall from <a class="docLink" href="ch10lev1sec2.html#ch10fig01">Figure 10.1</a> that the default action for <tt>SIGPOLL</tt> is to terminate the process, so we should establish the signal handler before calling <tt>ioctl</tt>.</p>
+
+<a name="ch14lev2sec18"></a>
+<H4 class="docSection2Title">14.6.2. BSD Asynchronous I/O</h4>
+<p class="docText">Asynchronous I/O in BSD-derived systems is a combination of two signals: <tt>SIGIO</tt> and <tt>SIGURG</tt>. The former is the general asynchronous I/O signal, and the latter is used only to notify the process that out-of-band data has arrived on a network connection.</P>
+<p class="docText">To receive the <tt>SIGIO</tt> signal, we need to perform three steps.</P>
+<a name="ch14pro01"></a>
+
+
+
+<table border="0" class="docText"><TR><td width="25" valign="top"><div class="docText"><B>1. </b></div></TD><td><div class="docText">Establish a signal handler for <tt>SIGIO</tt>, by calling either <tt>signal</tt> or <tt>sigaction</tt>.<BR><BR>
+</div></td></tr><tr><td width="25" valign="top"><div class="docText"><B>2. </b></div></td><TD><div class="docText">Set the process ID or process group ID to receive the signal for the descriptor, by calling <tt>fcntl</tt> with a command of <tt>F_SETOWN</tt> (<a class="docLink" href="ch03lev1sec14.html#ch03lev1sec14">Section 3.14</a>).<br><BR>
+</div></td></tr><tr><td width="25" valign="top"><div class="docText"><b>3. </b></div></td><td><div class="docText">Enable asynchronous I/O on the descriptor by calling <tt>fcntl</tt> with a command of <tt>F_SETFL</tt> to set the <tt>O_ASYNC</tt> file status flag (<a class="docLink" href="ch03lev1sec14.html#ch03fig09">Figure 3.9</a>).<br><br>
+</div></td></tr></table>
+<p class="docText">Step 3 can be performed only on descriptors that refer to terminals or networks, which is a fundamental limitation of the BSD asynchronous I/O facility.</p>
+<p class="docText">For the <tt>SIGURG</tt> signal, we need perform only steps 1 and 2. <tt>SIGURG</tt> is generated only for descriptors that refer to network connections that support out-of-band data.</p>
+
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch14lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

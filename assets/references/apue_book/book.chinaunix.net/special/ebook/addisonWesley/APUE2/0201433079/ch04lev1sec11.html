@@ -1,0 +1,53 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.11.&nbsp; chown, fchown, and lchown Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec11"></a>
+<h3 class="docSection1Title">4.11. <tt>chown</tt>, <tt>fchown</tt>, and <tt>lchown</tt> Functions</h3>
+<p class="docText">The <tt>chown</tt> functions allow us to change the user ID of a file and the group ID of a file.</P>
+<a name="inta15"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch04lev1sec11.html#PLID0">[View full width]</a></div><pre>#include &lt;unistd.h&gt;
+
+int chown(const char *<span class="docEmphItalicAlt">pathname</span>, uid_t <span class="docEmphItalicAlt">owner</span>, gid_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">group</span>);
+
+int fchown(int <span class="docEmphItalicAlt">filedes</span>, uid_t <span class="docEmphItalicAlt">owner</span>, gid_t <span class="docEmphItalicAlt">group</span>);
+
+int lchown(const char *<span class="docEmphItalicAlt">pathname</span>, uid_t <span class="docEmphItalicAlt">owner</span>,
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> gid_t <span class="docEmphItalicAlt">group</span>);</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">All three return: 0 if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">These three functions operate similarly unless the referenced file is a symbolic link. In that case, <tt>lchown</tt> changes the owners of the symbolic link itself, not the file pointed to by the symbolic link.</P>
+<blockquote>
+<p class="docText">The <tt>lchown</tt> function is an XSI extension to the POSIX.1 functionality defined in the Single UNIX Specification. As such, all UNIX System implementations are expected to provide it.</p>
+</blockquote>
+<p class="docText">If either of the arguments <span class="docEmphasis">owner</span> or <span class="docEmphasis">group</span> is -1, the corresponding ID is left unchanged.</P>
+<p class="docText">Historically, BSD-based systems have enforced the restriction that only the superuser can change the ownership of a file. This is to prevent users from giving away <a name="idd1e27602"></a><a name="idd1e27607"></a><a name="idd1e27612"></a><a name="idd1e27617"></a><a name="idd1e27622"></a><a name="idd1e27627"></a><a name="idd1e27632"></a><a name="idd1e27637"></a><a name="idd1e27642"></a><a name="idd1e27645"></a><a name="idd1e27648"></a><a name="idd1e27651"></a><a name="idd1e27656"></a><a name="idd1e27659"></a><a name="idd1e27664"></a>their files to others, thereby defeating any disk space quota restrictions. System V, however, has allowed any user to change the ownership of any files they own.</P>
+<blockquote>
+<p class="docText">POSIX.1 allows either form of operation, depending on the value of <tt>_POSIX_CHOWN_RESTRICTED</tt>.</p>
+<p class="docText">With Solaris 9, this functionality is a configuration option, whose default value is to enforce the restriction. FreeBSD 5.2.1, Linux 2.4.22, and Mac OS X 10.3 always enforce the <tt>chown</tt> restriction.</P>
+</blockquote>
+<p class="docText">Recall from <a class="docLink" href="ch02lev1sec6.html#ch02lev1sec6">Section 2.6</a> that the <tt>_POSIX_CHOWN_RESTRICTED</tt> constant can optionally be defined in the header <tt>&lt;unistd.h&gt;</tt>, and can always be queried using either the <tt>pathconf</tt> function or the <tt>fpathconf</tt> function. Also recall that this option can depend on the referenced file; it can be enabled or disabled on a per file system basis. We'll use the phrase, if <tt>_POSIX_CHOWN_RESTRICTED</tt> is in effect, to mean if it applies to the particular file that we're talking about, regardless of whether this actual constant is defined in the header.</P>
+<p class="docText">If <tt>_POSIX_CHOWN_RESTRICTED</tt> is in effect for the specified file, then</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">Only a superuser process can change the user ID of the file.</p></div></li><LI><div style="font-weight:normal"><p class="docList">A nonsuperuser process can change the group ID of the file if the process owns the file (the effective user ID equals the user ID of the file), <span class="docEmphasis">owner</span> is specified as 1 or equals the user ID of the file, and <span class="docEmphasis">group</span> equals either the effective group ID of the process or one of the process's supplementary group IDs.</p></div></LI></ol></div>
+<p class="docText">This means that when <tt>_POSIX_CHOWN_RESTRICTED</tt> is in effect, you can't change the user ID of other users' files. You can change the group ID of files that you own, but only to groups that you belong to.</p>
+<p class="docText">If these functions are called by a process other than a superuser process, on successful return, both the set-user-ID and the set-group-ID bits are cleared.</P>
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

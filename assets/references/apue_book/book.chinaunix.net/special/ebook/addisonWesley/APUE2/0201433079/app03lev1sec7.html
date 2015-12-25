@@ -1,0 +1,33 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Chapter 7</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app03lev1sec7"></a>
+<h3 class="docSection1Title" id="454331-979">Chapter 7</h3>
+<p class="docText"></P>
+<P><table border="0" cellspacing="16" cellpadding="0"><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch07qa1q1a2"></a><B><a class="docLink" href="ch07lev1sec13.html#ch07qa1q1">7.1</a></b></TD><td><p class="docText"><a name="idd1e52335"></a><a name="idd1e52340"></a><a name="idd1e52345"></a><a name="idd1e52350"></a><a name="idd1e52355"></a><a name="idd1e52360"></a><a name="idd1e52365"></a><a name="idd1e52368"></a><a name="idd1e52373"></a><a name="idd1e52378"></a>It appears that the return value from <tt>printf</tt> (the number of characters output) becomes the return value of <tt>main</tt>. Not all systems exhibit this property.</P></TD></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch07qa1q2a2"></a><b><a class="docLink" href="ch07lev1sec13.html#ch07qa1q2">7.2</a></b></TD><TD><p class="docText">When the program is run interactively, standard output is usually line buffered, so the actual output occurs when each newline is output. If standard output were directed to a file, however, it would probably be fully buffered, and the actual output wouldn't occur until the standard I/O cleanup is performed.</P></td></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch07qa1q3a3"></a><B><a class="docLink" href="ch07lev1sec13.html#ch07qa1q3">7.3</a></b></TD><td><p class="docText">On most UNIX systems, there is no way to do this. Copies of <tt>argc</tt> and <tt>argv</tt> are not kept in global variables like <tt>environ</tt> is.</p></td></tr><TR valign="top"><td align="right" class="docText" width="50"><a name="ch07qa1q4a4"></a><B><a class="docLink" href="ch07lev1sec13.html#ch07qa1q4">7.4</a></b></td><TD><p class="docText">This provides a way to terminate the process when it tries to dereference a null pointer, a common C programming error.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch07qa1q5a5"></a><b><a class="docLink" href="ch07lev1sec13.html#ch07qa1q5">7.5</a></b></td><td><p class="docText">The definitions are</p>
+<pre>
+   typedef void     Exitfunc(void);
+
+   int atexit(Exitfunc *<span class="docEmphItalicAlt">func</span>);
+</pre><br>
+</td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch07qa1q6a6"></a><b><a class="docLink" href="ch07lev1sec13.html#ch07qa1q6">7.6</a></b></td><td><p class="docText"><tt>calloc</tt> initializes the memory that it allocates to all zero bits. ISO C does not guarantee that this is the same as either a floating-point 0 or a null pointer.</P></TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch07qa1q7a7"></a><B><a class="docLink" href="ch07lev1sec13.html#ch07qa1q7">7.7</a></b></td><TD><p class="docText">The heap and the stack aren't allocated until a program is executed by one of the <tt>exec</tt> functions (described in <a class="docLink" href="ch08lev1sec10.html#ch08lev1sec10">Section 8.10</a>).</P></TD></tr><TR valign="top"><td align="right" class="docText" width="50"><a name="ch07qa1q8a8"></a><B><a class="docLink" href="ch07lev1sec13.html#ch07qa1q8">7.8</a></b></TD><TD><p class="docText">The executable file (<tt>a.out</tt>) contains symbol table information that can be helpful in debugging a <tt>core</tt> file. To remove this information, the <tt>strip</tt>(1) command is used. Stripping the two <tt>a.out</tt> files reduces their size to 381,976 and 2,912 bytes.</p></TD></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch07qa1q9a9"></a><B><a class="docLink" href="ch07lev1sec13.html#ch07qa1q9">7.9</a></b></td><td><p class="docText">When shared libraries are not used, a large portion of the executable file is occupied by the standard I/O library.</p></td></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch07qa1q10a10"></a><b><a class="docLink" href="ch07lev1sec13.html#ch07qa1q10">7.10</a></b></TD><td><p class="docText">The code is incorrect, since it references the automatic integer <tt>val</tt> through a pointer after the automatic variable is no longer in existence. Automatic variables declared after the left brace that starts a compound statement disappear after the matching right brace.</p></td></tr></table></p>
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

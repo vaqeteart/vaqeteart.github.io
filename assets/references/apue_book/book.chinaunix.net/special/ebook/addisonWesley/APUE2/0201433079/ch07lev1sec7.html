@@ -1,0 +1,48 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 7.7.&nbsp; Shared Libraries</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch07lev1sec7"></a>
+<h3 class="docSection1Title" id="454331-824">7.7. Shared Libraries</h3>
+<p class="docText">Most UNIX systems today support shared libraries. Arnold [<a class="docLink" href="bib01.html#biblio01_005">1986</a>] describes an early implementation under System V, and Gingell et al. [<a class="docLink" href="bib01.html#biblio01_023">1987</a>] describe a different implementation under SunOS. Shared libraries remove the common library routines from the executable file, instead maintaining a single copy of the library routine somewhere in memory that all processes reference. This reduces the size of each executable file but may add some runtime overhead, either when the program is first executed or the first time each shared library function is called. Another advantage of shared libraries is that library functions can be replaced with new versions without having to relink edit every program that uses the library. (This assumes that the number and type of arguments haven't changed.)</P>
+<p class="docText"><a name="idd1e48052"></a><a name="idd1e48057"></a><a name="idd1e48064"></a><a name="idd1e48069"></a><a name="idd1e48074"></a><a name="idd1e48081"></a><a name="idd1e48086"></a><a name="idd1e48091"></a><a name="idd1e48098"></a><a name="idd1e48103"></a><a name="idd1e48108"></a>Different systems provide different ways for a program to say that it wants to use or not use the shared libraries. Options for the <tt>cc</tt>(1) and <tt>ld</tt>(1) commands are typical. As an example of the size differences, the following executable filethe classic <tt>hello.c</tt> programwas first created without shared libraries:</P>
+
+<pre>
+    $ <span class="docEmphStrong">cc -static hello1.c</span>             <span class="docEmphItalicAlt">prevent gcc from using shared libraries</span>
+    $ <span class="docEmphStrong">ls -l a.out</span>
+    -rwxrwxr-x 1 sar         475570 Feb 18 23:17 a.out
+    $ <span class="docEmphStrong">size a.out</span>
+       text     data     bss     dec     hex    filename
+     375657     3780    3220  382657   5d6c1    a.out
+</pre><br>
+
+<p class="docText">If we compile this program to use shared libraries, the text and data sizes of the executable file are greatly decreased:</P>
+
+<pre>
+    $ <span class="docEmphStrong">cc hello1.c</span>                    <span class="docEmphItalicAlt">gcc defaults to use shared libraries</span>
+    $ <span class="docEmphStrong">ls -l a.out</span>
+    -rwxrwxr-x 1 sar         11410 Feb 18 23:19 a.out
+    $ <span class="docEmphStrong">size a.out</span>
+       text     data     bss   dec       hex    filename
+        872      256       4  1132       46c    a.out
+</pre><BR>
+
+
+<UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

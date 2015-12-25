@@ -1,0 +1,672 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 11.6.&nbsp; Thread Synchronization</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch11lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch11lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch11lev1sec6"></a>
+<h3 class="docSection1Title">11.6. Thread Synchronization</h3>
+<p class="docText">When multiple threads of control share the same memory, we need to make sure that each thread sees a consistent view of its data. If each thread uses variables that other threads don't read or modify, no consistency problems exist. Similarly, if a variable is read-only, there is no consistency problem with more than one thread reading its value at the same time. However, when one thread can modify a variable that other threads can read or modify, we need to synchronize the threads to ensure that they don't use an invalid value when accessing the variable's memory contents.</P>
+<p class="docText">When one thread modifies a variable, other threads can potentially see inconsistencies when reading the value of the variable. On processor architectures in which the modification takes more than one memory cycle, this can happen when the memory read is interleaved between the memory write cycles. Of course, this behavior is architecture dependent, but portable programs can't make any assumptions about what type of processor architecture is being used.</P>
+<p class="docText"><a class="docLink" href="ch11lev1sec6.html#ch11fig07">Figure 11.7</a> shows a hypothetical example of two threads reading and writing the same variable. In this example, thread A reads the variable and then writes a new value to it, but the write operation takes two memory cycles. If thread B reads the same variable between the two write cycles, it will see an inconsistent value.</p>
+<a name="ch11fig07"></a><P><center>
+<H5 class="docFigureTitle">Figure 11.7. Interleaved memory cycles with two threads</H5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="276" height="245" SRC="images/0201433079/graphics/11fig07.gif;423615"></p>
+
+</center></P><BR>
+<p class="docText">To solve this problem, the threads have to use a lock that will allow only one thread to access the variable at a time. <a class="docLink" href="ch11lev1sec6.html#ch11fig08">Figure 11.8</a> shows this synchronization. If it wants to read the variable, thread B acquires a lock. Similarly, when thread A updates the variable, it acquires the same lock. Thus, thread B will be unable to read the variable until thread A releases the lock.</P>
+<a name="ch11fig08"></a><p><center>
+<H5 class="docFigureTitle">Figure 11.8. Two threads synchronizing memory access</h5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="288" height="361" SRC="images/0201433079/graphics/11fig08.gif;423615"></P>
+
+</center></P><BR>
+<p class="docText">You also need to synchronize two or more threads that might try to modify the same variable at the same time. Consider the case in which you increment a variable (<a class="docLink" href="ch11lev1sec6.html#ch11fig09">Figure 11.9</a>). The increment operation is usually broken down into three steps.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">Read the memory location into a register.</P></div></li><LI><div style="font-weight:normal"><p class="docList">Increment the value in the register.</P></div></li><li><div style="font-weight:normal"><p class="docList">Write the new value back to the memory location.</p></div></li></ol></div>
+<a name="ch11fig09"></a><P><center>
+<h5 class="docFigureTitle">Figure 11.9. Two unsynchronized threads incrementing the same variable</H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/11fig09_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" id="195131139046" width="500" height="430" SRC="images/0201433079/graphics/11fig09.gif;423615"></p>
+</center></P><br>
+<p class="docText">If two threads try to increment the same variable at almost the same time without synchronizing with each other, the results can be inconsistent. You end up with a value that is either one or two greater than before, depending on the value observed when the second thread starts its operation. If the second thread performs step 1 before the first thread performs step 3, the second thread will read the same initial value as the first thread, increment it, and write it back, with no net effect.</p>
+<p class="docText">If the modification is atomic, then there isn't a race. In the previous example, if the increment takes only one memory cycle, then no race exists. If our data always appears to be <span class="docEmphasis">sequentially consistent</span>, then we need no additional synchronization. Our operations are sequentially consistent when multiple threads can't observe inconsistencies in our data. In modern computer systems, memory accesses take multiple bus cycles, and multiprocessors generally interleave bus cycles among multiple processors, so we aren't guaranteed that our data is sequentially consistent.</p>
+<p class="docText">In a sequentially consistent environment, we can explain modifications to our data as a sequential step of operations taken by the running threads. We can say such things as &quot;Thread A incremented the variable, then thread B incremented the variable, so its value is two greater than before&quot; or &quot;Thread B incremented the variable, then thread A incremented the variable, so its value is two greater than before.&quot; No possible ordering of the two threads can result in any other value of the variable.</p>
+<p class="docText">Besides the computer architecture, races can arise from the ways in which our programs use variables, creating places where it is possible to view inconsistencies. For example, we might increment a variable and then make a decision based on its value. The combination of the increment step and the decision-making step aren't atomic, so this opens a window where inconsistencies can arise.</p>
+<a name="ch11lev2sec1"></a>
+<h4 class="docSection2Title">Mutexes</h4>
+<p class="docText">We can protect our data and ensure access by only one thread at a time by using the pthreads mutual-exclusion interfaces. A <span class="docEmphasis">mutex</span> is basically a lock that we set (lock) before accessing a shared resource and release (unlock) when we're done. While it is set, any other thread that tries to set it will block until we release it. If more than one thread is blocked when we unlock the mutex, then all threads blocked on the lock will be made runnable, and the first one to run will be able to set the lock. The others will <a name="idd1e83633"></a><a name="idd1e83638"></a><a name="idd1e83643"></a><a name="idd1e83648"></a><a name="idd1e83655"></a><a name="idd1e83660"></a><a name="idd1e83667"></a><a name="idd1e83672"></a><a name="idd1e83677"></a><a name="idd1e83684"></a><a name="idd1e83689"></a><a name="idd1e83694"></a><a name="idd1e83701"></a><a name="idd1e83706"></a><a name="idd1e83713"></a>see that the mutex is still locked and go back to waiting for it to become available again. In this way, only one thread will proceed at a time.</p>
+<p class="docText">This mutual-exclusion mechanism works only if we design our threads to follow the same data-access rules. The operating system doesn't serialize access to data for us. If we allow one thread to access a shared resource without first acquiring a lock, then inconsistencies can occur even though the rest of our threads do acquire the lock before attempting to access the shared resource.</p>
+<p class="docText">A mutex variable is represented by the <tt>pthread_mutex_t</tt> data type. Before we can use a mutex variable, we must first initialize it by either setting it to the constant <tt>PTHREAD_MUTEX_INITIALIZER</tt> (for statically-allocated mutexes only) or calling <tt>pthread_mutex_init</tt>. If we allocate the mutex dynamically (by calling <tt>malloc</tt>, for example), then we need to call <tt>pthread_mutex_destroy</tt> before freeing the memory.</p>
+<a name="inta227"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch11lev1sec6.html#PLID0">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_mutex_init(pthread_mutex_t *restrict
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">mutex</span>,
+                       const pthread_mutexattr_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">attr</span>);
+
+int pthread_mutex_destroy(pthread_mutex_t *<span class="docEmphItalicAlt">mutex</span>);
+</pre><br>
+
+</p></td></tr><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</p></TD></TR></table></P><br>
+<p class="docText">To initialize a mutex with the default attributes, we set <span class="docEmphasis">attr</span> to <tt>NULL</tt>. We will discuss nondefault mutex attributes in <a class="docLink" href="ch12lev1sec4.html#ch12lev1sec4">Section 12.4</a>.</P>
+<p class="docText">To lock a mutex, we call <tt>pthread_mutex_lock</tt>. If the mutex is already locked, the calling thread will block until the mutex is unlocked. To unlock a mutex, we call <tt>pthread_mutex_unlock</tt>.</P>
+<a name="inta229"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;pthread.h&gt;
+
+int pthread_mutex_lock(pthread_mutex_t *<span class="docEmphItalicAlt">mutex</span>);
+
+int pthread_mutex_trylock(pthread_mutex_t *<span class="docEmphItalicAlt">mutex</span>);
+
+int pthread_mutex_unlock(pthread_mutex_t *<span class="docEmphItalicAlt">mutex</span>);
+</pre><br>
+
+</P></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">All return: 0 if OK, error number on failure</P></td></TR></table></P><br>
+<p class="docText">If a thread can't afford to block, it can use <tt>pthread_mutex_trylock</tt> to lock the mutex conditionally. If the mutex is unlocked at the time <tt>pthread_mutex_trylock</tt> is called, then <tt>pthread_mutex_trylock</tt> will lock the mutex without blocking and return 0. Otherwise, <tt>pthread_mutex_trylock</tt> will fail, returning <tt>EBUSY</tt> without locking the mutex.</p>
+<a name="ch11ex05"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText"><a class="docLink" href="ch11lev1sec6.html#ch11fig10">Figure 11.10</a> illustrates a mutex used to protect a data structure. When more than one thread needs to access a dynamically-allocated object, we can embed a reference count in the object to ensure that we don't free its memory before all threads are done using it.</P>
+<p class="docText"><a name="idd1e83865"></a><a name="idd1e83870"></a>We lock the mutex before incrementing the reference count, decrementing the reference count, and checking whether the reference count reaches zero. No locking is necessary when we initialize the reference count to 1 in the <tt>foo_alloc</tt> function, <a name="idd1e83880"></a><a name="idd1e83883"></a><a name="idd1e83886"></a><a name="idd1e83891"></a>because the allocating thread is the only reference to it so far. If we were to place the structure on a list at this point, it could be found by other threads, so we would need to lock it first.</p>
+<p class="docText">Before using the object, threads are expected to add a reference count to it. When they are done, they must release the reference. When the last reference is released, the object's memory is freed.</P>
+
+<a name="ch11fig10"></a>
+<h5 class="docExampleTitle">Figure 11.10. Using a mutex to protect a data structure</H5>
+
+<pre>
+#include &lt;stdlib.h&gt;
+#include &lt;pthread.h&gt;
+
+struct foo {
+    int             f_count;
+    pthread_mutex_t f_lock;
+    /* ... more stuff here ... */
+};
+
+struct foo *
+foo_alloc(void) /* allocate the object */
+{
+    struct foo *fp;
+
+    if ((fp = malloc(sizeof(struct foo))) != NULL) {
+        fp-&gt;f_count = 1;
+        if (pthread_mutex_init(&amp;fp-&gt;f_lock, NULL) != 0) {
+            free(fp);
+            return(NULL);
+        }
+        /* ... continue initialization ... */
+    }
+    return(fp);
+}
+
+void
+foo_hold(struct foo *fp) /* add a reference to the object */
+{
+    pthread_mutex_lock(&amp;fp-&gt;f_lock);
+    fp-&gt;f_count++;
+    pthread_mutex_unlock(&amp;fp-&gt;f_lock);
+}
+
+void
+foo_rele(struct foo *fp) /* release a reference to the object */
+{
+    pthread_mutex_lock(&amp;fp-&gt;f_lock);
+    if (--fp-&gt;f_count == 0) { /* last reference */
+        pthread_mutex_unlock(&amp;fp-&gt;f_lock);
+        pthread_mutex_destroy(&amp;fp-&gt;f_lock);
+        free(fp);
+    } else {
+        pthread_mutex_unlock(&amp;fp-&gt;f_lock);
+    }
+}
+</pre><br>
+
+
+
+<a name="ch11lev2sec2"></a>
+<h4 class="docSection2Title">Deadlock Avoidance</h4>
+<p class="docText">A thread will deadlock itself if it tries to lock the same mutex twice, but there are less obvious ways to create deadlocks with mutexes. For example, when we use more than one mutex in our programs, a deadlock can occur if we allow one thread to hold a mutex and block while trying to lock a second mutex at the same time that another thread holding the second mutex tries to lock the first mutex. Neither thread can proceed, because each needs a resource that is held by the other, so we have a deadlock.</p>
+<p class="docText">Deadlocks can be avoided by carefully controlling the order in which mutexes are locked. For example, assume that you have two mutexes, A and B, that you need to lock at the same time. If all threads always lock mutex A before mutex B, no deadlock can occur from the use of the two mutexes (but you can still deadlock on other resources). Similarly, if all threads always lock mutex B before mutex A, no deadlock will occur. You'll have the potential for a deadlock only when one thread attempts to lock the mutexes in the opposite order from another thread.</p>
+<p class="docText">Sometimes, an application's architecture makes it difficult to apply a lock ordering. If enough locks and data structures are involved that the functions you have available can't be molded to fit a simple hierarchy, then you'll have to try some other approach. In this case, you might be able to release your locks and try again at a later time. You can use the <tt>pthread_mutex_trylock</tt> interface to avoid deadlocking in this case. If you are already holding locks and <tt>pthread_mutex_trylock</tt> is successful, then you can proceed. If it can't acquire the lock, however, you can release the locks you already hold, clean up, and try again later.</p>
+<a name="ch11ex06"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">In this example, we update <a class="docLink" href="ch11lev1sec6.html#ch11fig10">Figure 11.10</a> to show the use of two mutexes. We avoid deadlocks by ensuring that when we need to acquire two mutexes at the same time, we always lock them in the same order. The second mutex protects a hash list that we use to keep track of the <tt>foo</tt> data structures. Thus, the <tt>hashlock</tt> mutex protects both the <tt>fh</tt> hash table and the <tt>f_next</tt> hash link field in the <tt>foo</tt> structure. The <tt>f_lock</tt> mutex in the <tt>foo</tt> structure protects access to the remainder of the <tt>foo</tt> structure's fields.</p>
+<p class="docText"><a name="idd1e83985"></a><a name="idd1e83990"></a><a name="idd1e83995"></a><a name="idd1e84000"></a><a name="idd1e84005"></a><a name="idd1e84010"></a><a name="idd1e84015"></a>Comparing <a class="docLink" href="ch11lev1sec6.html#ch11fig11">Figure 11.11</a> with <a class="docLink" href="ch11lev1sec6.html#ch11fig10">Figure 11.10</a>, we see that our allocation function now locks the hash list lock, adds the new structure to a hash bucket, and before unlocking the hash list lock, locks the mutex in the new structure. Since the new structure is placed on a global list, other threads can find it, so we need to block them if they try to access the new structure, until we are done initializing it.</p>
+<p class="docText">The <tt>foo_find</tt> function locks the hash list lock and searches for the requested structure. If it is found, we increase the reference count and return a pointer to the structure. Note that we honor the lock ordering by locking the hash list lock in <tt>foo_find</tt> before <tt>foo_hold</tt> locks the <tt>foo</tt> structure's <tt>f_lock</tt> mutex.</p>
+<p class="docText">Now with two locks, the <tt>foo_rele</tt> function is more complicated. If this is the last reference, we need to unlock the structure mutex so that we can acquire the hash list lock, since we'll need to remove the structure from the hash list. Then we reacquire the structure mutex. Because we could have blocked since the last time we held the structure mutex, we need to recheck the condition to see whether we still need to free the structure. If another thread found the structure and added a reference to it while we blocked to honor the lock ordering, we simply need to decrement the reference count, unlock everything, and return.</p>
+<p class="docText">This locking is complex, so we need to revisit our design. We can simplify things considerably by using the hash list lock to protect the structure reference count, too. The structure mutex can be used to protect everything else in the <tt>foo</tt> structure. <a class="docLink" href="ch11lev1sec6.html#ch11fig12">Figure 11.12</a> reflects this change.</p>
+<p class="docText"><a name="idd1e84066"></a><a name="idd1e84071"></a>Note how much simpler the program in <a class="docLink" href="ch11lev1sec6.html#ch11fig12">Figure 11.12</a> is compared to the program in <a class="docLink" href="ch11lev1sec6.html#ch11fig11">Figure 11.11</a>. The lock-ordering issues surrounding the hash list and the reference count go away when we use the same lock for both purposes. Multithreaded software design involves these types of tradeoffs. If your locking granularity is too coarse, you end up with too many threads blocking behind the same locks, with little improvement possible from concurrency. If your locking granularity is too fine, then you suffer bad performance from excess locking overhead, and you end up with complex code. As a programmer, you need to find the correct balance between code complexity and performance, and still satisfy your locking requirements.</p>
+
+<a name="ch11fig11"></a>
+<h5 class="docExampleTitle">Figure 11.11. Using two mutexes</h5>
+
+<pre>
+#include &lt;stdlib.h&gt;
+#include &lt;pthread.h&gt;
+
+#define NHASH 29
+#define HASH(fp) (((unsigned long)fp)%NHASH)
+struct foo *fh[NHASH];
+
+pthread_mutex_t hashlock = PTHREAD_MUTEX_INITIALIZER;
+
+struct foo {
+    int             f_count;
+    pthread_mutex_t f_lock;
+    struct foo     *f_next; /* protected by hashlock */
+    int             f_id;
+    /* ... more stuff here ... */
+};
+
+struct foo *
+foo_alloc(void) /* allocate the object */
+{
+    struct foo  *fp;
+    int         idx;
+
+    if ((fp = malloc(sizeof(struct foo))) != NULL) {
+        fp-&gt;f_count = 1;
+        if (pthread_mutex_init(&amp;fp-&gt;f_lock, NULL) != 0) {
+            free(fp);
+            return(NULL);
+        }
+        idx = HASH(fp);
+        pthread_mutex_lock(&amp;hashlock);
+        fp-&gt;f_next = fh[idx];
+        fh[idx] = fp-&gt;f_next;
+        pthread_mutex_lock(&amp;fp-&gt;f_lock);
+        pthread_mutex_unlock(&amp;hashlock);
+        /* ... continue initialization ... */
+        pthread_mutex_unlock(&amp;fp-&gt;f_lock);
+    }
+    return(fp);
+}
+
+void
+foo_hold(struct foo *fp) /* add a reference to the object */
+{
+    pthread_mutex_lock(&amp;fp-&gt;f_lock);
+    fp-&gt;f_count++;
+    pthread_mutex_unlock(&amp;fp-&gt;f_lock);
+}
+
+struct foo *
+foo_find(int id) /* find an existing object */
+{
+    struct foo *fp;
+    int        idx;
+
+    idx = HASH(fp);
+
+    pthread_mutex_lock(&amp;hashlock);
+    for (fp = fh[idx]; fp != NULL; fp = fp-&gt;f_next) {
+        if (fp-&gt;f_id == id) {
+            foo_hold(fp);
+            break;
+        }
+    }
+    pthread_mutex_unlock(&amp;hashlock);
+    return(fp);
+}
+
+void
+foo_rele(struct foo *fp) /* release a reference to the object */
+{
+    struct foo  *tfp;
+    int         idx;
+
+    pthread_mutex_lock(&amp;fp-&gt;f_lock);
+    if (fp-&gt;f_count == 1) { /* last reference */
+        pthread_mutex_unlock(&amp;fp-&gt;f_lock);
+        pthread_mutex_lock(&amp;hashlock);
+        pthread_mutex_lock(&amp;fp-&gt;f_lock);
+        /* need to recheck the condition */
+        if (fp-&gt;f_count != 1) {
+            fp-&gt;f_count--;
+            pthread_mutex_unlock(&amp;fp-&gt;f_lock);
+            pthread_mutex_unlock(&amp;hashlock);
+            return;
+        }
+        /* remove from list */
+        idx = HASH(fp);
+        tfp = fh[idx];
+        if (tfp == fp) {
+            fh[idx] = fp-&gt;f_next;
+        } else {
+            while (tfp-&gt;f_next != fp)
+                tfp = tfp-&gt;f_next;
+            tfp-&gt;f_next = fp-&gt;f_next;
+        }
+        pthread_mutex_unlock(&amp;hashlock);
+        pthread_mutex_unlock(&amp;fp-&gt;f_lock);
+        pthread_mutex_destroy(&amp;fp-&gt;f_lock);
+        free(fp);
+    } else {
+        fp-&gt;f_count--;
+        pthread_mutex_unlock(&amp;fp-&gt;f_lock);
+    }
+}
+</pre><br>
+
+
+<a name="ch11fig12"></a>
+<H5 class="docExampleTitle">Figure 11.12. Simplified locking</H5>
+
+<pre>
+#include &lt;stdlib.h&gt;
+#include &lt;pthread.h&gt;
+
+#define NHASH 29
+#define HASH(fp) (((unsigned long)fp)%NHASH)
+
+struct foo *fh[NHASH];
+pthread_mutex_t hashlock = PTHREAD_MUTEX_INITIALIZER;
+
+struct foo {
+    int             f_count; /* protected by hashlock */
+    pthread_mutex_t f_lock;
+    struct foo     *f_next; /* protected by hashlock */
+    int             f_id;
+    /* ... more stuff here ... */
+};
+
+struct foo *
+foo_alloc(void) /* allocate the object */
+{
+    struct foo  *fp;
+    int         idx;
+
+    if ((fp = malloc(sizeof(struct foo))) != NULL) {
+        fp-&gt;f_count = 1;
+        if (pthread_mutex_init(&amp;fp-&gt;f_lock, NULL) != 0) {
+            free(fp);
+            return(NULL);
+        }
+        idx = HASH(fp);
+        pthread_mutex_lock(&amp;hashlock);
+        fp-&gt;f_next = fh[idx];
+        fh[idx] = fp-&gt;f_next;
+        pthread_mutex_lock(&amp;fp-&gt;f_lock);
+        pthread_mutex_unlock(&amp;hashlock);
+        /* ... continue initialization ... */
+    }
+    return(fp);
+
+}
+
+void
+foo_hold(struct foo *fp) /* add a reference to the object */
+{
+    pthread_mutex_lock(&amp;hashlock);
+    fp-&gt;f_count++;
+    pthread_mutex_unlock(&amp;hashlock);
+}
+
+struct foo *
+foo_find(int id) /* find a existing object */
+{
+    struct foo  *fp;
+    int         idx;
+
+    idx = HASH(fp);
+    pthread_mutex_lock(&amp;hashlock);
+    for (fp = fh[idx]; fp != NULL; fp = fp-&gt;f_next) {
+        if (fp-&gt;f_id == id) {
+            fp-&gt;f_count++;
+            break;
+        }
+    }
+    pthread_mutex_unlock(&amp;hashlock);
+    return(fp);
+}
+
+void
+foo_rele(struct foo *fp) /* release a reference to the object */
+{
+    struct foo  *tfp;
+    int         idx;
+
+    pthread_mutex_lock(&amp;hashlock);
+    if (--fp-&gt;f_count == 0) { /* last reference, remove from list */
+        idx = HASH(fp);
+        tfp = fh[idx];
+        if (tfp == fp) {
+            fh[idx] = fp-&gt;f_next;
+
+        } else {
+            while (tfp-&gt;f_next != fp)
+                tfp = tfp-&gt;f_next;
+            tfp-&gt;f_next = fp-&gt;f_next;
+        }
+        pthread_mutex_unlock(&amp;hashlock);
+        pthread_mutex_destroy(&amp;fp-&gt;f_lock);
+        free(fp);
+    } else {
+        pthread_mutex_unlock(&amp;hashlock);
+    }
+}
+</pre><br>
+
+
+
+<a name="ch11lev2sec3"></a>
+<H4 class="docSection2Title">ReaderWriter Locks</H4>
+<p class="docText"><a name="idd1e84133"></a><a name="idd1e84138"></a><a name="idd1e84143"></a><a name="idd1e84148"></a><a name="idd1e84153"></a><a name="idd1e84158"></a><a name="idd1e84163"></a><a name="idd1e84168"></a><a name="idd1e84192"></a><a name="idd1e84197"></a>Readerwriter locks are similar to mutexes, except that they allow for higher degrees of parallelism. With a mutex, the state is either locked or unlocked, and only one thread can lock it at a time. Three states are possible with a readerwriter lock: locked in read mode, locked in write mode, and unlocked. Only one thread at a time can hold a readerwriter lock in write mode, but multiple threads can hold a readerwriter lock in read mode at the same time.</P>
+<p class="docText">When a readerwriter lock is write-locked, all threads attempting to lock it block until it is unlocked. When a readerwriter lock is read-locked, all threads attempting to lock it in read mode are given access, but any threads attempting to lock it in write mode block until all the threads have relinquished their read locks. Although implementations vary, readerwriter locks usually block additional readers if a lock is already held in read mode and a thread is blocked trying to acquire the lock in write mode. This prevents a constant stream of readers from starving waiting writers.</p>
+<p class="docText">Readerwriter locks are well suited for situations in which data structures are read more often than they are modified. When a readerwriter lock is held in write mode, the data structure it protects can be modified safely, since only one thread at a time can hold the lock in write mode. When the readerwriter lock is held in read mode, the data structure it protects can be read by multiple threads, as long as the threads first acquire the lock in read mode.</P>
+<p class="docText"><a name="idd1e84212"></a><a name="idd1e84217"></a><a name="idd1e84224"></a><a name="idd1e84229"></a><a name="idd1e84236"></a><a name="idd1e84241"></a><a name="idd1e84248"></a><a name="idd1e84253"></a><a name="idd1e84260"></a><a name="idd1e84265"></a><a name="idd1e84272"></a><a name="idd1e84277"></a><a name="idd1e84284"></a><a name="idd1e84289"></a><a name="idd1e84296"></a><a name="idd1e84301"></a>Readerwriter locks are also called sharedexclusive locks. When a readerwriter lock is read-locked, it is said to be locked in shared mode. When it is write-locked, it is said to be locked in exclusive mode.</P>
+<p class="docText">As with mutexes, readerwriter locks must be initialized before use and destroyed before freeing their underlying memory.</P>
+<a name="inta237"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID5"></a><div class="v1"><a href="ch11lev1sec6.html#PLID5">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_rwlock_init(pthread_rwlock_t *restrict
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">rwlock</span>,
+                        const pthread_rwlockattr_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">attr</span>);
+
+int pthread_rwlock_destroy(pthread_rwlock_t *<span class="docEmphItalicAlt">rwlock</span>);
+</pre><BR>
+
+</P></TD></tr><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</p></TD></TR></table></p><br>
+<p class="docText">A readerwriter lock is initialized by calling <tt>pthread_rwlock_init</tt>. We can pass a null pointer for <span class="docEmphasis">attr</span> if we want the readerwriter lock to have the default attributes. We discuss readerwriter lock attributes in <a class="docLink" href="ch12lev1sec4.html#ch12lev1sec4">Section 12.4</a>.</p>
+<p class="docText">Before freeing the memory backing a readerwriter lock, we need to call <tt>pthread_rwlock_destroy</tt> to clean it up. If <tt>pthread_rwlock_init</tt> allocated any resources for the readerwriter lock, <tt>pthread_rwlock_destroy</tt> frees those resources. If we free the memory backing a readerwriter lock without first calling <tt>pthread_rwlock_destroy</tt>, any resources assigned to the lock will be lost.</p>
+<p class="docText">To lock a readerwriter lock in read mode, we call <tt>pthread_rwlock_rdlock</tt>. To write-lock a readerwriter lock, we call <tt>pthread_rwlock_wrlock</tt>. Regardless of how we lock a readerwriter lock, we can call <tt>pthread_rwlock_unlock</tt> to unlock it.</P>
+<a name="inta238"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;pthread.h&gt;
+
+int pthread_rwlock_rdlock(pthread_rwlock_t *<span class="docEmphItalicAlt">rwlock</span>);
+
+int pthread_rwlock_wrlock(pthread_rwlock_t *<span class="docEmphItalicAlt">rwlock</span>);
+
+int pthread_rwlock_unlock(pthread_rwlock_t *<span class="docEmphItalicAlt">rwlock</span>);
+</pre><BR>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">All return: 0 if OK, error number on failure</p></td></tr></table></p><br>
+<p class="docText">Implementations might place a limit on the number of times a readerwriter lock can be locked in shared mode, so we need to check the return value of <tt>pthread_rwlock_rdlock</tt>. Even though <tt>pthread_rwlock_wrlock</tt> and <tt>pthread_rwlock_unlock</tt> have error returns, we don't need to check them if we design our locking properly. The only error returns defined are when we use them improperly, such as with an uninitialized lock, or when we might deadlock by attempting to acquire a lock we already own.</p>
+<p class="docText">The Single UNIX Specification also defines conditional versions of the readerwriter locking primitives.</p>
+<a name="inta239"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID7"></a><div class="v1"><a href="ch11lev1sec6.html#PLID7">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_rwlock_tryrdlock(pthread_rwlock_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">rwlock</span>);
+
+int pthread_rwlock_trywrlock(pthread_rwlock_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">rwlock</span>);
+</pre><br>
+
+</p></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</P></TD></tr></table></P><BR>
+<p class="docText"><a name="idd1e84471"></a><a name="idd1e84476"></a><a name="idd1e84481"></a>When the lock can be acquired, these functions return 0. Otherwise, they return the error <tt>EBUSY</tt>. These functions can be used in situations in which conforming to a lock hierarchy isn't enough to avoid a deadlock, as we discussed previously.</P>
+<a name="ch11ex07"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText">The program in <a class="docLink" href="ch11lev1sec6.html#ch11fig13">Figure 11.13</a> illustrates the use of readerwriter locks. A queue of job requests is protected by a single readerwriter lock. This example shows a possible implementation of <a class="docLink" href="ch11lev1sec3.html#ch11fig01">Figure 11.1</a>, whereby multiple worker threads obtain jobs assigned to them by a single master thread.</p>
+<p class="docText"><a name="idd1e84508"></a><a name="idd1e84513"></a><a name="idd1e84518"></a><a name="idd1e84523"></a><a name="idd1e84528"></a><a name="idd1e84533"></a>In this example, we lock the queue's readerwriter lock in write mode whenever we need to add a job to the queue or remove a job from the queue. Whenever we search the queue, we grab the lock in read mode, allowing all the worker threads to search the queue concurrently. Using a readerwriter lock will improve performance in this case only if threads search the queue much more frequently than they add or remove jobs.</P>
+<p class="docText">The worker threads take only those jobs that match their thread ID off the queue. Since the job structures are used only by one thread at a time, they don't need any extra locking.</P>
+
+<a name="ch11fig13"></a>
+<H5 class="docExampleTitle">Figure 11.13. Using readerwriter locks</h5>
+
+<pre>
+#include &lt;stdlib.h&gt;
+#include &lt;pthread.h&gt;
+
+struct job {
+    struct job *j_next;
+    struct job *j_prev;
+    pthread_t   j_id;   /* tells which thread handles this job */
+    /* ... more stuff here ... */
+};
+
+struct queue {
+    struct job      *q_head;
+    struct job      *q_tail;
+    pthread_rwlock_t q_lock;
+};
+
+/*
+* Initialize a queue.
+*/
+int
+queue_init(struct queue *qp)
+{
+    int err;
+
+    qp-&gt;q_head = NULL;
+    qp-&gt;q_tail = NULL;
+    err = pthread_rwlock_init(&amp;qp-&gt;q_lock, NULL);
+    if (err != 0)
+        return(err);
+
+    /* ... continue initialization ... */
+
+    return(0);
+}
+
+/*
+ * Insert a job at the head of the queue.
+ */
+void
+job_insert(struct queue *qp, struct job *jp)
+{
+    pthread_rwlock_wrlock(&amp;qp-&gt;q_lock);
+    jp-&gt;j_next = qp-&gt;q_head;
+    jp-&gt;j_prev = NULL;
+    if (qp-&gt;q_head != NULL)
+        qp-&gt;q_head-&gt;j_prev = jp;
+    else
+        qp-&gt;q_tail = jp;      /* list was empty */
+    qp-&gt;q_head = jp;
+    pthread_rwlock_unlock(&amp;qp-&gt;q_lock);
+}
+
+/*
+ * Append a job on the tail of the queue.
+ */
+void
+job_append(struct queue *qp, struct job *jp)
+{
+    pthread_rwlock_wrlock(&amp;qp-&gt;q_lock);
+    jp-&gt;j_next = NULL;
+    jp-&gt;j_prev = qp-&gt;q_tail;
+    if (qp-&gt;q_tail != NULL)
+        qp-&gt;q_tail-&gt;j_next = jp;
+    else
+        qp-&gt;q_head = jp;   /* list was empty */
+    qp-&gt;q_tail = jp;
+    pthread_rwlock_unlock(&amp;qp-&gt;q_lock);
+}
+
+/*
+ * Remove the given job from a queue.
+ */
+void
+job_remove(struct queue *qp, struct job *jp)
+{
+    pthread_rwlock_wrlock(&amp;qp-&gt;q_lock);
+    if (jp == qp-&gt;q_head) {
+        qp-&gt;q_head = jp-&gt;j_next;
+        if (qp-&gt;q_tail == jp)
+            qp-&gt;q_tail = NULL;
+    } else if (jp == qp-&gt;q_tail) {
+        qp-&gt;q_tail = jp-&gt;j_prev;
+        if (qp-&gt;q_head == jp)
+            qp-&gt;q_head = NULL;
+    } else {
+        jp-&gt;j_prev-&gt;j_next = jp-&gt;j_next;
+        jp-&gt;j_next-&gt;j_prev = jp-&gt;j_prev;
+    }
+    pthread_rwlock_unlock(&amp;qp-&gt;q_lock);
+}
+/*
+ * Find a job for the given thread ID.
+ */
+struct job *
+job_find(struct queue *qp, pthread_t id)
+{
+    struct job *jp;
+
+    if (pthread_rwlock_rdlock(&amp;qp-&gt;q_lock) != 0)
+        return(NULL);
+
+    for (jp = qp-&gt;q_head; jp != NULL; jp = jp-&gt;j_next)
+         if (pthread_equal(jp-&gt;j_id, id))
+             break;
+
+    pthread_rwlock_unlock(&amp;qp-&gt;q_lock);
+    return(jp);
+}
+</pre><BR>
+
+
+
+<a name="ch11lev2sec4"></a>
+<H4 class="docSection2Title">Condition Variables</h4>
+<p class="docText"><a name="idd1e84580"></a><a name="idd1e84585"></a>Condition variables are another synchronization mechanism available to threads. Condition variables provide a place for threads to rendezvous. When used with mutexes, condition variables allow threads to wait in a race-free way for arbitrary conditions to occur.</P>
+<p class="docText">The condition itself is protected by a mutex. A thread must first lock the mutex to change the condition state. Other threads will not notice the change until they acquire the mutex, because the mutex must be locked to be able to evaluate the condition.</P>
+<p class="docText">Before a condition variable is used, it must first be initialized. A condition variable, represented by the <tt>pthread_cond_t</tt> data type, can be initialized in two ways. We can assign the constant <tt>PTHREAD_COND_INITIALIZER</tt> to a statically-allocated condition variable, but if the condition variable is allocated dynamically, we can use the <tt>pthread_cond_init</tt> function to initialize it.</p>
+<p class="docText">We can use the <tt>pthread_mutex_destroy</tt> function to deinitialize a condition variable before freeing its underlying memory.</p>
+<a name="inta206"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e84626"></a><a name="idd1e84631"></a><a name="idd1e84636"></a><a name="idd1e84643"></a><a name="idd1e84650"></a><a name="idd1e84655"></a><a name="idd1e84662"></a><a name="idd1e84667"></a><a name="idd1e84674"></a><a name="idd1e84679"></a><a name="idd1e84684"></a>
+<a name="PLID9"></a><div class="v1"><a href="ch11lev1sec6.html#PLID9">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_cond_init(pthread_cond_t *restrict <span class="docEmphItalicAlt">cond</span>,
+                      pthread_condattr_t *restrict
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">attr</span>);
+
+int pthread_cond_destroy(pthread_cond_t *<span class="docEmphItalicAlt">cond</span>);
+</pre><br>
+
+</P></td></TR><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</p></td></tr></table></p><br>
+<p class="docText">Unless you need to create a conditional variable with nondefault attributes, the <span class="docEmphasis">attr</span> argument to <tt>pthread_cond_init</tt> can be set to <tt>NULL</tt>. We will discuss condition variable attributes in <a class="docLink" href="ch12lev1sec4.html#ch12lev1sec4">Section 12.4</a>.</p>
+<p class="docText">We use <tt>pthread_cond_wait</tt> to wait for a condition to be true. A variant is provided to return an error code if the condition hasn't been satisfied in the specified amount of time.</p>
+<a name="inta207"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID10"></a><div class="v1"><a href="ch11lev1sec6.html#PLID10">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_cond_wait(pthread_cond_t *restrict <span class="docEmphItalicAlt">cond</span>,
+                      pthread_mutex_t *restrict
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">mutex</span>);
+
+int pthread_cond_timedwait(pthread_cond_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">cond</span>,
+                           pthread_mutex_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">mutex</span>,
+                           const struct timespec
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">timeout</span>);
+</pre><br>
+
+</p></td></tr><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</P></td></TR></table></P><BR>
+<p class="docText">The mutex passed to <tt>pthread_cond_wait</tt> protects the condition. The caller passes it locked to the function, which then atomically places the calling thread on the list of threads waiting for the condition and unlocks the mutex. This closes the window between the time that the condition is checked and the time that the thread goes to sleep waiting for the condition to change, so that the thread doesn't miss a change in the condition. When <tt>pthread_cond_wait</tt> returns, the mutex is again locked.</p>
+<p class="docText">The <tt>pthread_cond_timedwait</tt> function works the same as the <tt>pthread_cond_wait</tt> function with the addition of the timeout. The timeout value specifies how long we will wait. It is specified by the <tt>timespec</tt> structure, where a time value is represented by a number of seconds and partial seconds. Partial seconds are specified in units of nanoseconds:</P>
+
+<pre>
+    struct timespec {
+            time_t tv_sec;   /* seconds */
+            long   tv_nsec;  /* nanoseconds */
+    };
+</pre><BR>
+
+<p class="docText">Using this structure, we need to specify how long we are willing to wait as an absolute time instead of a relative time. For example, if we are willing to wait 3 minutes, instead of translating 3 minutes into a <tt>timespec</tt> structure, we need to translate now + 3 minutes into a <tt>timespec</tt> structure.</P>
+<p class="docText">We can use <tt>gettimeofday</tt> (<a class="docLink" href="ch06lev1sec10.html#ch06lev1sec10">Section 6.10</a>) to get the current time expressed as a <tt>timeval</tt> structure and translate this into a <tt>timespec</tt> structure. To obtain the absolute time for the timeout value, we can use the following function:</p>
+
+<pre>
+   void
+   maketimeout(struct timespec *tsp, long minutes)
+   {
+        struct timeval now;
+
+        /* get the current time */
+        gettimeofday(&amp;now);
+        tsp-&gt;tv_sec = now.tv_sec;
+        tsp-&gt;tv_nsec = now.tv_usec * 1000; /* usec to nsec */
+        /* add the offset to get timeout value */
+        tsp-&gt;tv_sec += minutes * 60;
+   }
+</pre><BR>
+
+<p class="docText"><a name="idd1e84832"></a><a name="idd1e84837"></a><a name="idd1e84842"></a><a name="idd1e84849"></a><a name="idd1e84854"></a>If the timeout expires without the condition occurring, <tt>pthread_cond_timedwait</tt> will reacquire the mutex and return the error <tt>ETIMEDOUT</tt>. When it returns from a successful call to <tt>pthread_cond_wait</tt> or <tt>pthread_cond_timedwait</tt>, a thread needs to reevaluate the condition, since another thread might have run and already changed the condition.</p>
+<p class="docText">There are two functions to notify threads that a condition has been satisfied. The <tt>pthread_cond_signal</tt> function will wake up one thread waiting on a condition, whereas the <tt>pthread_cond_broadcast</tt> function will wake up all threads waiting on a condition.</P>
+<blockquote>
+<p class="docText">The POSIX specification allows for implementations of <tt>pthread_cond_signal</tt> to wake up more than one thread, to make the implementation simpler.</P>
+</blockquote>
+<a name="inta205"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;pthread.h&gt;
+
+int pthread_cond_signal(pthread_cond_t *<span class="docEmphItalicAlt">cond</span>);
+
+int pthread_cond_broadcast(pthread_cond_t *<span class="docEmphItalicAlt">cond</span>);
+</pre><BR>
+
+</p></TD></TR><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</p></td></TR></table></p><BR>
+<p class="docText">When we call <tt>pthread_cond_signal</tt> or <tt>pthread_cond_broadcast</tt>, we are said to be <span class="docEmphasis">signaling</span> the thread or condition. We have to be careful to signal the threads only after changing the state of the condition.</p>
+<a name="ch11ex08"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText"><a class="docLink" href="ch11lev1sec6.html#ch11fig14">Figure 11.14</a> shows an example of how to use condition variables and mutexes together to synchronize threads.</p>
+<p class="docText"><a name="idd1e84950"></a><a name="idd1e84955"></a><a name="idd1e84960"></a><a name="idd1e84965"></a><a name="idd1e84970"></a><a name="idd1e84975"></a><a name="idd1e84980"></a>The condition is the state of the work queue. We protect the condition with a mutex and evaluate the condition in a <tt>while</tt> loop. When we put a message on the work queue, we need to hold the mutex, but we don't need to hold the mutex when we signal the waiting threads. As long as it is okay for a thread to pull the message off the queue before we call <tt>cond_signal</tt>, we can do this after releasing the mutex. Since we check the condition in a <tt>while</tt> loop, this doesn't present a problem: a thread will wake up, find that the queue is still empty, and go back to waiting again. If the code couldn't tolerate this race, we would need to hold the mutex when we signal the threads.</p>
+
+<a name="ch11fig14"></a>
+<h5 class="docExampleTitle">Figure 11.14. Using condition variables</h5>
+
+<pre>
+#include &lt;pthread.h&gt;
+
+struct msg {
+    struct msg *m_next;
+    /* ... more stuff here ... */
+};
+struct msg *workq;
+pthread_cond_t qready = PTHREAD_COND_INITIALIZER;
+pthread_mutex_t qlock = PTHREAD_MUTEX_INITIALIZER;
+
+void
+process_msg(void)
+{
+    struct msg *mp;
+
+    for (;;) {
+        pthread_mutex_lock(&amp;qlock);
+        while (workq == NULL)
+            pthread_cond_wait(&amp;qready, &amp;qlock);
+        mp = workq;
+        workq = mp-&gt;m_next;
+        pthread_mutex_unlock(&amp;qlock);
+        /* now process the message mp */
+    }
+}
+
+void
+enqueue_msg(struct msg *mp)
+{
+    pthread_mutex_lock(&amp;qlock);
+    mp-&gt;m_next = workq;
+    workq = mp;
+    pthread_mutex_unlock(&amp;qlock);
+    pthread_cond_signal(&amp;qready);
+}
+</pre><br>
+
+
+
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch11lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch11lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

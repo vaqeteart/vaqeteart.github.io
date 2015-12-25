@@ -1,0 +1,88 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 20.3.&nbsp; The Library</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch20lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch20lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch20lev1sec3"></a>
+<h3 class="docSection1Title">20.3. The Library</h3>
+<p class="docText">The library we develop in this chapter will be similar to the <tt>ndbm</tt> library, but we'll add the concurrency control mechanisms to allow multiple processes to update the same database at the same time. We first describe the C interface to the database library, then in the next section describe the actual implementation.</P>
+<p class="docText">When we open a database, we are returned a handle (an opaque pointer) representing the database. We'll pass this handle to the remaining database functions.</P>
+<p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch20lev1sec3.html#PLID0">[View full width]</a></div><pre>
+#include "apue_db.h"
+
+DBHANDLE db_open(const char *<span class="docEmphItalicAlt">pathname</span>, int <span class="docEmphItalicAlt">oflag</span>, 
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif">... /* int <span class="docEmphItalicAlt">mode</span> */);
+</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: database handle if OK, <tt>NULL</tt> on error</P></td></TR><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+void db_close(DBHANDLE <span class="docEmphItalicAlt">db</span>);
+</pre><br>
+
+</P></TD></tr></table></P><BR>
+<p class="docText"><a name="idd1e148850"></a><a name="idd1e148855"></a><a name="idd1e148860"></a><a name="idd1e148867"></a><a name="idd1e148872"></a><a name="idd1e148879"></a><a name="idd1e148884"></a><a name="idd1e148889"></a><a name="idd1e148894"></a><a name="idd1e148899"></a><a name="idd1e148906"></a><a name="idd1e148911"></a><a name="idd1e148916"></a>If <tt>db_open</tt> is successful, two files are created: <span class="docEmphasis">pathname.idx</span> is the index file, and <span class="docEmphasis">pathname.dat</span> is the data file. The <span class="docEmphasis">oflag</span> argument is used as the second argument to <tt>open</tt> (<a class="docLink" href="ch03lev1sec3.html#ch03lev1sec3">Section 3.3</a>) to specify how the files are to be opened (read-only, readwrite, create file if it doesn't exist, etc.). The <span class="docEmphasis">mode</span> argument is used as the third argument to <tt>open</tt> (the file access permissions) if the database files are created.</p>
+<p class="docText">When we're done with a database, we call <tt>db_close</tt>. It closes the index file and the data file and releases any memory that it allocated for internal buffers.</p>
+<p class="docText">When we store a new record in the database, we have to specify the key for the record and the data associated with the key. If the database contained personnel records, the key could be the employee ID, and the data could be the employee's name, address, telephone number, date of hire, and the like. Our implementation requires that the key for each record be unique. (We can't have two employee records with the same employee ID, for example.)</p>
+<p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID2"></a><div class="v1"><a href="ch20lev1sec3.html#PLID2">[View full width]</a></div><pre>
+#include "apue_db.h"
+
+int db_store(DBHANDLE <span class="docEmphItalicAlt">db</span>, const char *<span class="docEmphItalicAlt">key</span>, const
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> char *<span class="docEmphItalicAlt">data</span>,
+             int <span class="docEmphItalicAlt">flag</span>);
+</pre><BR>
+
+</p></TD></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, nonzero on error (see following)</p></td></tr></table></p><br>
+<p class="docText">The <span class="docEmphasis">key</span> and <span class="docEmphasis">data</span> arguments are null-terminated character strings. The only restriction on these two strings is that neither can contain null bytes. They may contain, for example, newlines.</p>
+<p class="docText">The <span class="docEmphasis">flag</span> argument can be <tt>DB_INSERT</tt> (to insert a new record), <tt>DB_REPLACE</tt> (to replace an existing record), or <tt>DB_STORE</tt> (to either insert or replace, whichever is appropriate). These three constants are defined in the <tt>apue_db.h</tt> header. If we specify either <tt>DB_INSERT</tt> or <tt>DB_STORE</tt> and the record does not exist, a new record is inserted. If we specify either <tt>DB_REPLACE</tt> or <tt>DB_STORE</tt> and the record already exists, the existing record is replaced with the new record. If we specify <tt>DB_REPLACE</tt> and the record doesn't exist, we set <tt>errno</tt> to <tt>ENOENT</tt> and return 1 without adding the new record. If we specify <tt>DB_INSERT</tt> and the record already exists, no record is inserted. In this case, the return value is 1 to distinguish this from a normal error return (1).</p>
+<p class="docText">We can fetch any record from the database by specifying its <span class="docEmphasis">key</span>.</p>
+<p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include "apue_db.h"
+
+char *db_fetch(DBHANDLE <span class="docEmphItalicAlt">db</span>, const char *<span class="docEmphItalicAlt">key</span>);
+</pre><br>
+
+</p></td></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer to data if OK, <tt>NULL</tt> if record not found</P></TD></TR></table></p><BR>
+<p class="docText">The return value is a pointer to the data that was stored with the <span class="docEmphasis">key</span>, if the record is found. We can also delete a record from the database by specifying its <span class="docEmphasis">key</span>.</P>
+<P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include "apue_db.h"
+
+int db_delete(DBHANDLE <span class="docEmphItalicAlt">db</span>, const char *<span class="docEmphItalicAlt">key</span>);
+</pre><br>
+
+</P></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 if record not found</P></td></TR></table></P><br>
+<p class="docText"><a name="idd1e149133"></a><a name="idd1e149138"></a><a name="idd1e149143"></a><a name="idd1e149150"></a><a name="idd1e149155"></a>In addition to fetching a record by specifying its key, we can go through the entire database, reading each record in turn. To do this, we first call <tt>db_rewind</tt> to rewind the database to the first record and then call <tt>db_nextrec</tt> in a loop to read each sequential record.</p>
+<p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include "apue_db.h"
+
+void db_rewind(DBHANDLE <span class="docEmphItalicAlt">db</span>);
+
+char *db_nextrec(DBHANDLE <span class="docEmphItalicAlt">db</span>, char *<span class="docEmphItalicAlt">key</span>);
+</pre><br>
+
+</P></td></TR><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer to data if OK, <tt>NULL</tt> on end of file</p></td></tr></table></p><br>
+<p class="docText">If <span class="docEmphasis">key</span> is a non-null pointer, <tt>db_nextrec</tt> returns the key by copying it to the memory starting at that location.</p>
+<p class="docText">There is no order to the records returned by <tt>db_nextrec</tt>. All we're guaranteed is that we'll read each record in the database once. If we store three records with keys of A, B, and C, in that order, we have no idea in which order <tt>db_nextrec</tt> will return the three records. It might return B, then A, then C, or some other (apparently random) order. The actual order depends on the implementation of the database.</p>
+<p class="docText">These seven functions provide the interface to the database library. We now describe the actual implementation that we have chosen.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch20lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch20lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,48 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 8.2.&nbsp; Process Identifiers</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch08lev1sec2"></a>
+<h3 class="docSection1Title">8.2. Process Identifiers</h3>
+<p class="docText">Every process has a unique process ID, a non-negative integer. Because the process ID is the only well-known identifier of a process that is always unique, it is often used as a piece of other identifiers, to guarantee uniqueness. For example, applications sometimes include the process ID as part of a filename in an attempt to generate unique filenames.</P>
+<p class="docText">Although unique, process IDs are reused. As processes terminate, their IDs become candidates for reuse. Most UNIX systems implement algorithms to delay reuse, however, so that newly created processes are assigned IDs different from those used by processes that terminated recently. This prevents a new process from being mistaken for the previous process to have used the same ID.</P>
+<p class="docText"><a name="idd1e52725"></a><a name="idd1e52730"></a><a name="idd1e52735"></a><a name="idd1e52740"></a><a name="idd1e52745"></a><a name="idd1e52752"></a><a name="idd1e52757"></a><a name="idd1e52764"></a><a name="idd1e52769"></a><a name="idd1e52776"></a><a name="idd1e52781"></a><a name="idd1e52788"></a><a name="idd1e52793"></a><a name="idd1e52800"></a><a name="idd1e52805"></a><a name="idd1e52812"></a><a name="idd1e52817"></a><a name="idd1e52822"></a><a name="idd1e52827"></a><a name="idd1e52830"></a><a name="idd1e52835"></a><a name="idd1e52840"></a><a name="idd1e52845"></a><a name="idd1e52850"></a><a name="idd1e52855"></a><a name="idd1e52860"></a><a name="idd1e52865"></a><a name="idd1e52870"></a><a name="idd1e52873"></a><a name="idd1e52876"></a><a name="idd1e52881"></a>There are some special processes, but the details differ from implementation to implementation. Process ID 0 is usually the scheduler process and is often known as the <span class="docEmphasis">swapper</span>. No program on disk corresponds to this process, which is part of the kernel and is known as a system process. Process ID 1 is usually the <tt>init</tt> process and is invoked by the kernel at the end of the bootstrap procedure. The program file for this process was <tt>/etc/init</tt> in older versions of the UNIX System and is <tt>/sbin/init</tt> in newer versions. This process is responsible for bringing up a UNIX system after the kernel has been bootstrapped. <tt>init</tt> usually reads the system-dependent initialization filesthe <tt>/etc/rc*</tt> files or <tt>/etc/inittab</tt> and the files in <tt>/etc/init.d</tt>and brings the system to a certain state, such as multiuser. The <tt>init</tt> process never dies. It is a normal user process, not a system process within the kernel, like the swapper, although it does run with superuser privileges. Later in this chapter, we'll see how <tt>init</tt> becomes the parent process of any orphaned child process.</p>
+<p class="docText">Each UNIX System implementation has its own set of kernel processes that provide operating system services. For example, on some virtual memory implementations of the UNIX System, process ID 2 is the <span class="docEmphasis">pagedaemon</span>. This process is responsible for supporting the paging of the virtual memory system.</P>
+<p class="docText">In addition to the process ID, there are other identifiers for every process. The following functions return these identifiers.</P>
+<a name="inta98"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+pid_t getpid(void);
+</pre><BR>
+</P></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: process ID of calling process</P></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>pid_t getppid(void);</pre><br>
+</P></TD></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: parent process ID of calling process</p></TD></tr><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>uid_t getuid(void);</pre><BR>
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: real user ID of calling process</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>uid_t geteuid(void);</pre><br>
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: effective user ID of calling process</p></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>gid_t getgid(void);</pre><BR>
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: real group ID of calling process</p></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>gid_t getegid(void);</pre><BR>
+</p></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: effective group ID of calling process</P></td></tr></table></p><br>
+<p class="docText">Note that none of these functions has an error return. We'll return to the parent process ID in the next section when we discuss the <tt>fork</tt> function. The real and effective user and group IDs were discussed in <a class="docLink" href="ch04lev1sec4.html#ch04lev1sec4">Section 4.4</a>.</P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

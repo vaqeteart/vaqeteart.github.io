@@ -1,0 +1,184 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 12.6.&nbsp; Thread-Specific Data</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch12lev1sec6"></a>
+<h3 class="docSection1Title">12.6. Thread-Specific Data</h3>
+<p class="docText"><a name="idd1e89809"></a><a name="idd1e89814"></a><a name="idd1e89819"></a><a name="idd1e89824"></a>Thread-specific data, also known as thread-private data, is a mechanism for storing and finding data associated with a particular thread. The reason we call the data thread-specific, or thread-private, is that we'd like each thread to access its own separate copy of the data, without worrying about synchronizing access with other threads.</P>
+<p class="docText">Many people went to a lot of trouble designing a threads model that promotes sharing process data and attributes. So why would anyone want to promote interfaces that prevent sharing in this model? There are two reasons.</P>
+<p class="docText">First, sometimes we need to maintain data on a per thread basis. Since there is no guarantee that thread IDs are small, sequential integers, we can't simply allocate an array of per thread data and use the thread ID as the index. Even if we could depend on small, sequential thread IDs, we'd like a little extra protection so that one thread can't mess with another's data.</p>
+<p class="docText">The second reason for thread-private data is to provide a mechanism for adapting process-based interfaces to a multithreaded environment. An obvious example of this is <tt>errno</tt>. Recall the discussion of <tt>errno</tt> in <a class="docLink" href="ch01lev1sec7.html#ch01lev1sec7">Section 1.7</a>. Older interfaces (before the advent of threads) defined <tt>errno</tt> as an integer accessible globally within the context of a process. System calls and library routines set <tt>errno</tt> as a side effect of failing. To make it possible for threads to use these same system calls and library routines, <tt>errno</tt> is redefined as thread-private data. Thus, one thread making a call that sets <tt>errno</tt> doesn't affect the value of <tt>errno</tt> for the other threads in the process.</P>
+<p class="docText">Recall that all threads in a process have access to the entire address space of the process. Other than using registers, there is no way for one thread to prevent another from accessing its data. This is true even for thread-specific data. Even though the underlying implementation doesn't prevent access, the functions provided to manage thread-specific data promote data separation among threads.</P>
+<p class="docText">Before allocating thread-specific data, we need to create a <span class="docEmphasis">key</span> to associate with the data. The key will be used to gain access to the thread-specific data. We use <tt>pthread_key_create</tt> to create a key.</P>
+<a name="inta218"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;pthread.h&gt;
+
+int pthread_key_create(pthread_key_t *<span class="docEmphItalicAlt">keyp</span>,
+                       void (*<span class="docEmphItalicAlt">destructor</span>)(void *));
+</pre><BR>
+
+</p></TD></tr><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, error number on failure</P></td></TR></table></P><br>
+<p class="docText">The key created is stored in the memory location pointed to by <span class="docEmphasis">keyp</span>. The same key can be used by all threads in the process, but each thread will associate a different thread-specific data address with the key. When the key is created, the data address for each thread is set to a null value.</P>
+<p class="docText">In addition to creating a key, <tt>pthread_key_create</tt> associates an optional destructor function with the key. When the thread exits, if the data address has been set to a non-null value, the destructor function is called with the data address as the only argument. If <span class="docEmphasis">destructor</span> is null, then no destructor function is associated with the key. When the thread exits normally, by calling <tt>pthread_exit</tt> or by returning, the <a name="idd1e89930"></a><a name="idd1e89935"></a><a name="idd1e89940"></a><a name="idd1e89945"></a><a name="idd1e89950"></a><a name="idd1e89955"></a><a name="idd1e89960"></a><a name="idd1e89965"></a><a name="idd1e89972"></a>destructor is called. But if the thread calls <tt>exit</tt>, <tt>_exit</tt>, <tt>_Exit</tt>, or <tt>abort</tt>, or otherwise exits abnormally, the destructor is not called.</P>
+<p class="docText">Threads usually use <tt>malloc</tt> to allocate memory for their thread-specific data. The destructor function usually frees the memory that was allocated. If the thread exited without freeing the memory, then the memory would be lost: leaked by the process.</p>
+<p class="docText">A thread can allocate multiple keys for thread-specific data. Each key can have a destructor associated with it. There can be a different destructor function for each key, or they can all use the same function. Each operating system implementation can place a limit on the number of keys a process can allocate (recall <tt>PTHREAD_KEYS_MAX</tt> from <a class="docLink" href="ch12lev1sec2.html#ch12fig01">Figure 12.1</a>).</p>
+<p class="docText">When a thread exits, the destructors for its thread-specific data are called in an implementation-defined order. It is possible for the destructor function to call another function that might create new thread-specific data and associate it with the key. After all destructors are called, the system will check whether any non-null thread-specific values were associated with the keys and, if so, call the destructors again. This process will repeat until either all keys for the thread have null thread-specific data values or a maximum of <tt>PTHREAD_DESTRUCTOR_ITERATIONS</tt> (<a class="docLink" href="ch12lev1sec2.html#ch12fig01">Figure 12.1</a>) attempts have been made.</p>
+<p class="docText">We can break the association of a key with the thread-specific data values for all threads by calling <tt>pthread_key_delete</tt>.</p>
+<a name="inta219"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;pthread.h&gt;
+
+int pthread_key_delete(pthread_key_t *<span class="docEmphItalicAlt">key</span>);
+</pre><br>
+
+</P></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, error number on failure</p></td></tr></table></p><br>
+<p class="docText">Note that calling <tt>pthread_key_delete</tt> will not invoke the destructor function associated with the key. To free any memory associated with the key's thread-specific data values, we need to take additional steps in the application.</p>
+<p class="docText">We need to ensure that a key we allocate doesn't change because of a race during initialization. Code like the following can result in two threads both calling <tt>pthread_key_create</tt>:</p>
+
+<pre>
+   void destructor(void *);
+
+   pthread_key_t key;
+   int init_done = 0;
+
+   int
+   threadfunc(void *arg)
+   {
+        if (!init_done) {
+             init_done = 1;
+             err = pthread_key_create(&amp;key, destructor);
+        }
+        ...
+   }
+</pre><br>
+
+<p class="docText"><a name="idd1e90070"></a><a name="idd1e90075"></a><a name="idd1e90082"></a><a name="idd1e90087"></a><a name="idd1e90094"></a><a name="idd1e90099"></a><a name="idd1e90104"></a>Depending on how the system schedules threads, some threads might see one key value, whereas other threads might see a different value. The way to solve this race is to use <tt>pthread_once</tt>.</p>
+<a name="inta216"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID3"></a><div class="v1"><a href="ch12lev1sec6.html#PLID3">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+pthread_once_t <span class="docEmphItalicAlt">initflag</span> = PTHREAD_ONCE_INIT;
+
+int pthread_once(pthread_once_t *<span class="docEmphItalicAlt">initflag</span>, void 
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif">(*<span class="docEmphItalicAlt">initfn</span>)(void));
+</pre><br>
+
+</P></TD></tr><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, error number on failure</P></td></TR></table></P><BR>
+<p class="docText">The <span class="docEmphasis">initflag</span> must be a nonlocal variable (i.e., global or static) and initialized to <tt>PTHREAD_ONCE_INIT</tt>.</p>
+<p class="docText">If each thread calls <tt>pthread_once</tt>, the system guarantees that the initialization routine, <span class="docEmphasis">initfn</span>, will be called only once, on the first call to <tt>pthread_once</tt>. The proper way to create a key without a race is as follows:</P>
+
+<pre>
+    void destructor(void *);
+
+    pthread_key_t key;
+    pthread_once_t init_done = PTHREAD_ONCE_INIT;
+
+    void
+    thread_init(void)
+    {
+         err = pthread_key_create(&amp;key, destructor);
+    }
+
+    int
+    threadfunc(void *arg)
+    {
+         pthread_once(&amp;init_done, thread_init);
+         ...
+    }
+</pre><br>
+
+<p class="docText">Once a key is created, we can associate thread-specific data with the key by calling <tt>pthread_setspecific</tt>. We can obtain the address of the thread-specific data with <tt>pthread_getspecific</tt>.</P>
+<a name="inta232"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;pthread.h&gt;
+
+void *pthread_getspecific(pthread_key_t <span class="docEmphItalicAlt">key</span>);
+</pre><BR>
+
+</P></td></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: thread-specific data value or <tt>NULL</tt> if no value <br>has been associated with the key</p></td></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID6"></a><div class="v1"><a href="ch12lev1sec6.html#PLID6">[View full width]</a></div><pre>
+int pthread_setspecific(pthread_key_t <span class="docEmphItalicAlt">key</span>, const
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> void *<span class="docEmphItalicAlt">value</span>);
+</pre><br>
+
+</P></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, error number on failure</p></td></tr></table></p><br>
+<p class="docText"><a name="idd1e90244"></a><a name="idd1e90249"></a><a name="idd1e90254"></a><a name="idd1e90259"></a><a name="idd1e90264"></a><a name="idd1e90269"></a><a name="idd1e90274"></a><a name="idd1e90279"></a><a name="idd1e90284"></a><a name="idd1e90289"></a><a name="idd1e90294"></a>If no thread-specific data has been associated with a key, <tt>pthread_getspecific</tt> will return a null pointer. We can use this to determine whether we need to call <tt>pthread_setspecific</tt>.</p>
+<a name="ch12ex05"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">In <a class="docLink" href="ch12lev1sec5.html#ch12fig11">Figure 12.11</a>, we showed a hypothetical implementation of <tt>getenv</tt>. We came up with a new interface to provide the same functionality, but in a thread-safe way (<a class="docLink" href="ch12lev1sec5.html#ch12fig12">Figure 12.12</a>). But what would happen if we couldn't modify our application programs to use the new interface? In that case, we could use thread-specific data to maintain a per thread copy of the data buffer used to hold the return string. This is shown in <a class="docLink" href="ch12lev1sec6.html#ch12fig13">Figure 12.13</a>.</p>
+<p class="docText"><a name="idd1e90331"></a><a name="idd1e90334"></a><a name="idd1e90339"></a><a name="idd1e90344"></a><a name="idd1e90349"></a><a name="idd1e90354"></a><a name="idd1e90359"></a><a name="idd1e90364"></a><a name="idd1e90369"></a>We use <tt>pthread_once</tt> to ensure that only one key is created for the thread-specific data we will use. If <tt>pthread_getspecific</tt> returns a null pointer, we need to allocate the memory buffer and associate it with the key. Otherwise, we use the memory buffer returned by <tt>pthread_getspecific</tt>. For the destructor function, we use <tt>free</tt> to free the memory previously allocated by <tt>malloc</tt>. The destructor function will be called with the value of the thread-specific data only if the value is non-null.</p>
+<p class="docText">Note that although this version of <tt>getenv</tt> is thread-safe, it is not async-signal safe. Even if we made the mutex recursive, we could not make it reentrant with respect to signal handlers, because it calls <tt>malloc</tt>, which itself is not async-signal safe.</p>
+
+<a name="ch12fig13"></a>
+<h5 class="docExampleTitle">Figure 12.13. A thread-safe, compatible version of <tt>getenv</tt></h5>
+
+<pre>
+#include &lt;limits.h&gt;
+#include &lt;string.h&gt;
+#include &lt;pthread.h&gt;
+#include &lt;stdlib.h&gt;
+
+static pthread_key_t key;
+static pthread_once_t init_done = PTHREAD_ONCE_INIT;
+pthread_mutex_t env_mutex = PTHREAD_MUTEX_INITIALIZER;
+
+extern char **environ;
+
+static void
+thread_init(void)
+{
+    pthread_key_create(&amp;key, free);
+}
+
+char *
+getenv(const char *name)
+{
+    int     i, len;
+    char    *envbuf;
+
+    pthread_once(&amp;init_done, thread_init);
+    pthread_mutex_lock(&amp;env_mutex);
+    envbuf = (char *)pthread_getspecific(key);
+    if (envbuf == NULL) {
+        envbuf = malloc(ARG_MAX);
+        if (envbuf == NULL) {
+            pthread_mutex_unlock(&amp;env_mutex);
+            return(NULL);
+        }
+        pthread_setspecific(key, envbuf);
+    }
+    len = strlen(name);
+    for (i = 0; environ[i] != NULL; i++) {
+        if ((strncmp(name, environ[i], len) == 0) &amp;&amp;
+          (environ[i][len] == '=')) {
+            strcpy(envbuf, &amp;environ[i][len+1]);
+            pthread_mutex_unlock(&amp;env_mutex);
+            return(envbuf);
+        }
+    }
+    pthread_mutex_unlock(&amp;env_mutex);
+    return(NULL);
+}
+</pre><BR>
+
+
+
+<UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

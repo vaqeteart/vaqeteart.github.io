@@ -1,0 +1,48 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.20.&nbsp; mkdir and rmdir Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec19.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec21.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec20"></a>
+<h3 class="docSection1Title">4.20. <tt>mkdir</tt> and <tt>rmdir</tt> Functions</h3>
+<p class="docText">Directories are created with the <tt>mkdir</tt> function and deleted with the <tt>rmdir</tt> function.</P>
+<a name="inta158"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>#include &lt;sys/stat.h&gt;
+
+int mkdir(const char *<span class="docEmphItalicAlt">pathname</span>, mode_t <span class="docEmphItalicAlt">mode</span>);</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">This function creates a new, empty directory. The entries for dot and dot-dot are automatically created. The specified file access permissions, <span class="docEmphasis">mode</span>, are modified by the file mode creation mask of the process.</P>
+<p class="docText">A common mistake is to specify the same <span class="docEmphasis">mode</span> as for a file: read and write permissions only. But for a directory, we normally want at least one of the execute bits enabled, to allow access to filenames within the directory. (See <a class="docLink" href="ch04lev1sec26.html#ch04qa1q16">Exercise 4.16</a>.)</p>
+<p class="docText">The user ID and group ID of the new directory are established according to the rules we described in <a class="docLink" href="ch04lev1sec6.html#ch04lev1sec6">Section 4.6</a>.</P>
+<blockquote>
+<p class="docText">Solaris 9 and Linux 2.4.22 also have the new directory inherit the set-group-ID bit from the parent directory. This is so that files created in the new directory will inherit the group ID of that directory. With Linux, the file system implementation determines whether this is supported. For example, the <tt>ext2</tt> and <tt>ext3</tt> file systems allow this behavior to be controlled by an option to the <tt>mount</tt>(1) command. With the Linux implementation of the UFS file system, however, the behavior is not selectable; it inherits the set-group-ID bit to mimic the historical BSD implementation, where the group ID of a directory is inherited from the parent directory.</P>
+<p class="docText">BSD-based implementations don't propagate the set-group-ID bit; they simply inherit the group ID as a matter of policy. Because FreeBSD 5.2.1 and Mac OS X 10.3 are based on 4.4BSD, they do not require this inheriting of the set-group-ID bit. On these platforms, newly created files and directories always inherit the group ID of the parent directory, regardless of the set-group-ID bit.</p>
+<p class="docText">Earlier versions of the UNIX System did not have the <tt>mkdir</tt> function. It was introduced with 4.2BSD and SVR3. In the earlier versions, a process had to call the <tt>mknod</tt> function to create a new directory. But use of the <tt>mknod</tt> function was restricted to superuser processes. To circumvent this, the normal command that created a directory, <tt>mkdir</tt>(1), had to be owned by root with the set-user-ID bit on. To create a directory from a process, the <tt>mkdir</tt>(1) command had to be invoked with the <tt>system</tt>(3) function.</P>
+</blockquote>
+<p class="docText"><a name="idd1e31842"></a><a name="idd1e31847"></a><a name="idd1e31854"></a><a name="idd1e31859"></a><a name="idd1e31864"></a><a name="idd1e31867"></a><a name="idd1e31870"></a><a name="idd1e31875"></a><a name="idd1e31882"></a><a name="idd1e31887"></a><a name="idd1e31892"></a><a name="idd1e31899"></a><a name="idd1e31902"></a><a name="idd1e31907"></a><a name="idd1e31914"></a><a name="idd1e31921"></a><a name="idd1e31926"></a><a name="idd1e31933"></a><a name="idd1e31938"></a>An empty directory is deleted with the <tt>rmdir</tt> function. Recall that an empty directory is one that contains entries only for dot and dot-dot.</P>
+<a name="inta18"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>#include &lt;unistd.h&gt;
+
+int rmdir(const char *<span class="docEmphItalicAlt">pathname</span>);</pre><br>
+
+</P></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></td></tr></table></p><br>
+<p class="docText">If the link count of the directory becomes 0 with this call, and if no other process has the directory open, then the space occupied by the directory is freed. If one or more processes have the directory open when the link count reaches 0, the last link is removed and the dot and dot-dot entries are removed before this function returns. Additionally, no new files can be created in the directory. The directory is not freed, however, until the last process closes it. (Even though some other process has the directory open, it can't be doing much in the directory, as the directory had to be empty for the <tt>rmdir</tt> function to succeed.)</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec19.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec21.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

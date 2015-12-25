@@ -1,0 +1,203 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 8.10.&nbsp; exec Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch08lev1sec10"></a>
+<h3 class="docSection1Title">8.10. <tt>exec</tt> Functions</h3>
+<p class="docText">We mentioned in <a class="docLink" href="ch08lev1sec3.html#ch08lev1sec3">Section 8.3</a> that one use of the <tt>fork</tt> function is to create a new process (the child) that then causes another program to be executed by calling one of the <tt>exec</tt> functions. When a process calls one of the <tt>exec</tt> functions, that process is completely replaced by the new program, and the new program starts executing at its <tt>main</tt> function. The process ID does not change across an <tt>exec</tt>, because a new process is not created; <tt>exec</tt> merely replaces the current processits text, data, heap, and stack segmentswith a brand new program from disk.</P>
+<p class="docText">There are six different <tt>exec</tt> functions, but we'll often simply refer to &quot;the <tt>exec</tt> function,&quot; which means that we could use any of the six functions. These six functions round out the UNIX System process control primitives. With <tt>fork</tt>, we can create new processes; and with the <tt>exec</tt> functions, we can initiate new programs. The <tt>exit</tt> function and the <tt>wait</tt> functions handle termination and waiting for termination. These are the only process control primitives we need. We'll use these primitives in later sections to build additional functions, such as <tt>popen</tt> and <tt>system</tt>.</P>
+<a name="inta37"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch08lev1sec10.html#PLID0">[View full width]</a></div><pre>
+#include &lt;unistd.h&gt;
+
+int execl(const char *<span class="docEmphItalicAlt">pathname</span>, const char *<span class="docEmphItalicAlt">arg0</span>, 
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif">... /* (char *)0 */ );
+
+int execv(const char *<span class="docEmphItalicAlt">pathname</span>, char *const <span class="docEmphItalicAlt">argv</span> []);
+
+int execle(const char *<span class="docEmphItalicAlt">pathname</span>, const char *<span class="docEmphItalicAlt">arg0</span>, ...
+           /* (char *)0,  char *const <span class="docEmphItalicAlt">envp</span>[] */ );
+
+int execve(const char *<span class="docEmphItalicAlt">pathname</span>, char *const
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">argv</span>[], char *const <span class="docEmphItalicAlt">envp</span> []);
+
+int execlp(const char *<span class="docEmphItalicAlt">filename</span>, const char *<span class="docEmphItalicAlt">arg0</span>,
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> ... /* (char *)0 */ );
+
+int execvp(const char *<span class="docEmphItalicAlt">filename</span>, char *const <span class="docEmphItalicAlt">argv</span> []);</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">All six return: 1 on error, no return on success</P></td></TR></table></P><BR>
+<p class="docText"><a name="idd1e56999"></a><a name="idd1e57004"></a><a name="idd1e57010"></a><a name="idd1e57013"></a><a name="idd1e57018"></a><a name="idd1e57023"></a><a name="idd1e57026"></a><a name="idd1e57031"></a>The first difference in these functions is that the first four take a pathname argument, whereas the last two take a filename argument. When a <span class="docEmphasis">filename</span> argument is specified</p>
+<UL><LI><p class="docList">If <span class="docEmphasis">filename</span> contains a slash, it is taken as a pathname.</p></LI><LI><p class="docList">Otherwise, the executable file is searched for in the directories specified by the <tt>PATH</tt> environment variable.</p></li></ul>
+<p class="docText">The <tt>PATH</tt> variable contains a list of directories, called path prefixes, that are separated by colons. For example, the <span class="docEmphasis">name=value</span> environment string</p>
+
+<pre>    PATH=/bin:/usr/bin:/usr/local/bin/:.
+</pre><BR>
+
+<p class="docText">specifies four directories to search. The last path prefix specifies the current directory. (A zero-length prefix also means the current directory. It can be specified as a colon at the beginning of the <span class="docEmphasis">value</span>, two colons in a row, or a colon at the end of the <span class="docEmphasis">value</span>.)</p>
+<blockquote>
+<p class="docText">There are security reasons for <span class="docEmphasis">never</span> including the current directory in the search path. See Garfinkel et al. [<a class="docLink" href="bib01.html#biblio01_021">2003</a>].</P>
+</blockquote>
+<p class="docText">If either <tt>execlp</tt> or <tt>execvp</tt> finds an executable file using one of the path prefixes, but the file isn't a machine executable that was generated by the link editor, the function assumes that the file is a shell script and tries to invoke <tt>/bin/sh</tt> with the <span class="docEmphasis">filename</span> as input to the shell.</p>
+<p class="docText">The next difference concerns the passing of the argument list (<tt>l</tt> stands for list and <tt>v</tt> stands for vector). The functions <tt>execl</tt>, <tt>execlp</tt>, and <tt>execle</tt> require each of the command-line arguments to the new program to be specified as separate arguments. We mark the end of the arguments with a null pointer. For the other three functions (<tt>execv</tt>, <tt>execvp</tt>, and <tt>execve</tt>), we have to build an array of pointers to the arguments, and the address of this array is the argument to these three functions.</P>
+<p class="docText">Before using ISO C prototypes, the normal way to show the command-line arguments for the three functions <tt>execl</tt>, <tt>execle</tt>, and <tt>execlp</tt> was</p>
+
+<pre>
+   char *<span class="docEmphItalicAlt">arg0</span>, char *<span class="docEmphItalicAlt">arg1</span>, ..., char *<span class="docEmphItalicAlt">argn</span>, (char *)0
+</pre><br>
+
+<p class="docText">This specifically shows that the final command-line argument is followed by a null pointer. If this null pointer is specified by the constant <tt>0</tt>, we must explicitly cast it to a pointer; if we don't, it's interpreted as an integer argument. If the size of an integer is different from the size of a <tt>char *</tt>, the actual arguments to the <tt>exec</tt> function will be wrong.</p>
+<p class="docText">The final difference is the passing of the environment list to the new program. The two functions whose names end in an <tt>e</tt> (<tt>execle</tt> and <tt>execve</tt>) allow us to pass a pointer to an array of pointers to the environment strings. The other four functions, however, use the <tt>environ</tt> variable in the calling process to copy the existing environment for the new program. (Recall our discussion of the environment strings in <a class="docLink" href="ch07lev1sec9.html#ch07lev1sec9">Section 7.9</a> and <a class="docLink" href="ch07lev1sec9.html#ch07fig08">Figure 7.8</a>. We mentioned that if the system supported such functions as <tt>setenv</tt> and <tt>putenv</tt>, we could change the current environment and the environment of any subsequent child processes, but we couldn't affect the environment of the parent <a name="idd1e57198"></a><a name="idd1e57203"></a><a name="idd1e57206"></a>process.) Normally, a process allows its environment to be propagated to its children, but in some cases, a process wants to specify a certain environment for a child. One example of the latter is the <tt>login</tt> program when a new login shell is initiated. Normally, <tt>login</tt> creates a specific environment with only a few variables defined and lets us, through the shell start-up file, add variables to the environment when we log in.</p>
+<p class="docText">Before using ISO C prototypes, the arguments to <tt>execle</tt> were shown as</p>
+
+<pre>
+   char *<span class="docEmphItalicAlt">pathname</span>, char *<span class="docEmphItalicAlt">arg0</span>, ..., char *<span class="docEmphItalicAlt">argn</span>, (char *)0, char *<span class="docEmphItalicAlt">envp</span>[]
+</pre><br>
+
+<p class="docText">This specifically shows that the final argument is the address of the array of character pointers to the environment strings. The ISO C prototype doesn't show this, as all the command-line arguments, the null pointer, and the <span class="docEmphasis">envp</span> pointer are shown with the ellipsis notation (<tt>...</tt>).</p>
+<p class="docText">The arguments for these six <tt>exec</tt> functions are difficult to remember. The letters in the function names help somewhat. The letter <tt>p</tt> means that the function takes a <span class="docEmphasis">filename</span> argument and uses the <tt>PATH</tt> environment variable to find the executable file. The letter <tt>l</tt> means that the function takes a list of arguments and is mutually exclusive with the letter <tt>v</tt>, which means that it takes an <span class="docEmphasis">argv</span><tt>[]</tt> vector. Finally, the letter <tt>e</tt> means that the function takes an <span class="docEmphasis">envp</span><tt>[]</tt> array instead of using the current environment. <a class="docLink" href="ch08lev1sec10.html#ch08fig14">Figure 8.14</a> shows the differences among these six functions.</p>
+<a name="ch08fig14"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 8.14. Differences among the six <tt>exec</tt> functions</h5></caption><colgroup><col width="72"><col width="72"><col width="71"><col width="72"><col width="71"><col width="71"><col width="71"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Function</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman"><span class="docEmphasis">pathname</span></span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman"><span class="docEmphasis">filename</span></span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Arg list</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman"><span class="docEmphasis">argv</span>[]</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman"><tt>environ</tt></span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman"><span class="docEmphasis">envp</span>[]</span></P></th></tr></thead><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>execl</tt></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="rightBorder" align="left" valign="top">&nbsp;</TD><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><TD class="rightBorder" align="left" valign="top">&nbsp;</td><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></td><TD class="docTableCell" align="left" valign="top">&nbsp;</TD></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>execlp</tt></p></TD><td class="rightBorder" align="left" valign="top">&nbsp;</TD><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="rightBorder" align="left" valign="top">&nbsp;</td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="left" valign="top">&nbsp;</td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>execle</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="rightBorder" align="left" valign="top">&nbsp;</TD><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></td><TD class="rightBorder" align="left" valign="top">&nbsp;</TD><TD class="rightBorder" align="left" valign="top">&nbsp;</td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>execv</tt></P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="rightBorder" align="left" valign="top">&nbsp;</td><td class="rightBorder" align="left" valign="top">&nbsp;</td><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></TD><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>execvp</tt></p></td><td class="rightBorder" align="left" valign="top">&nbsp;</td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="rightBorder" align="left" valign="top">&nbsp;</td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="docTableCell" align="left" valign="top">&nbsp;</TD></TR><TR><td class="rightBorder bottomBorder" align="left" valign="top"><p class="docText"><tt>execve</tt></P></TD><TD class="rightBorder bottomBorder" align="center" valign="top"><p class="docText">&#8226;</p></TD><td class="rightBorder bottomBorder" align="left" valign="top">&nbsp;</TD><TD class="rightBorder bottomBorder" align="left" valign="top">&nbsp;</TD><td class="rightBorder bottomBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="rightBorder bottomBorder" align="left" valign="top">&nbsp;</TD><TD class="bottomBorder" align="center" valign="top"><p class="docText">&#8226;</p></td></tr><tr><TD class="rightBorder" align="left" valign="top"><p class="docText">(letter in name)</p></TD><td class="rightBorder" align="left" valign="top">&nbsp;</TD><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>p</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>l</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>v</tt></p></td><td class="rightBorder" align="left" valign="top">&nbsp;</td><td class="docTableCell" align="center" valign="top"><p class="docText"><tt>e</tt></p></td></tr></table></p><br>
+<p class="docText">Every system has a limit on the total size of the argument list and the environment list. From <a class="docLink" href="ch02lev1sec5.html#ch02lev2sec13">Section 2.5.2</a> and <a class="docLink" href="ch02lev1sec5.html#ch02fig08">Figure 2.8</a>, this limit is given by <tt>ARG_MAX</tt>. This value must be at least 4,096 bytes on a POSIX.1 system. We sometimes encounter this limit when using the shell's filename expansion feature to generate a list of filenames. On some systems, for example, the command</P>
+
+<pre>
+   grep getrlimit /usr/share/man/*/*
+</pre><BR>
+
+<p class="docText">can generate a shell error of the form</p>
+
+<pre>
+Argument list too long
+</pre><BR>
+
+<blockquote>
+<p class="docText">Historically, the limit in older System V implementations was 5,120 bytes. Older BSD systems had a limit of 20,480 bytes. The limit in current systems is much higher. (See the output from the program in <a class="docLink" href="ch02lev1sec5.html#ch02fig13">Figure 2.13</a>, which is summarized in <a class="docLink" href="ch02lev1sec5.html#ch02fig14">Figure 2.14</a>.)</P>
+</blockquote>
+<p class="docText"><a name="idd1e57583"></a><a name="idd1e57586"></a><a name="idd1e57591"></a><a name="idd1e57594"></a><a name="idd1e57599"></a><a name="idd1e57604"></a><a name="idd1e57609"></a><a name="idd1e57614"></a><a name="idd1e57619"></a><a name="idd1e57624"></a><a name="idd1e57629"></a><a name="idd1e57634"></a><a name="idd1e57639"></a><a name="idd1e57644"></a><a name="idd1e57649"></a><a name="idd1e57654"></a><a name="idd1e57659"></a><a name="idd1e57664"></a><a name="idd1e57669"></a><a name="idd1e57674"></a><a name="idd1e57679"></a><a name="idd1e57682"></a><a name="idd1e57687"></a><a name="idd1e57692"></a><a name="idd1e57695"></a><a name="idd1e57700"></a><a name="idd1e57705"></a><a name="idd1e57708"></a>To get around the limitation in argument list size, we can use the <tt>xargs</tt>(1) command to break up long argument lists. To look for all the occurrences of <tt>geTRlimit</tt> in the man pages on our system, we could use</p>
+
+<pre>
+   find /usr/share/man -type f -print | xargs grep getrlimit
+</pre><BR>
+
+<p class="docText">If the man pages on our system are compressed, however, we could try</P>
+
+<pre>
+   find /usr/share/man -type f -print | xargs bzgrep getrlimit
+</pre><BR>
+
+<p class="docText">We use the <tt>type -f</tt> option to the <tt>find</tt> command to restrict the list to contain only regular files, because the <tt>grep</tt> commands can't search for patterns in directories, and we want to avoid unnecessary error messages.</p>
+<p class="docText">We've mentioned that the process ID does not change after an <tt>exec</tt>, but the new program inherits additional properties from the calling process:</P>
+<ul><LI><p class="docList">Process ID and parent process ID</P></LI><li><p class="docList">Real user ID and real group ID</P></LI><li><p class="docList">Supplementary group IDs</P></LI><li><p class="docList">Process group ID</p></li><li><p class="docList">Session ID</P></li><LI><p class="docList">Controlling terminal</p></LI><li><p class="docList">Time left until alarm clock</p></li><li><p class="docList">Current working directory</p></li><li><p class="docList">Root directory</p></li><li><p class="docList">File mode creation mask</p></li><li><p class="docList">File locks</p></li><li><p class="docList">Process signal mask</p></LI><LI><p class="docList">Pending signals</p></LI><LI><p class="docList">Resource limits</P></li><LI><p class="docList">Values for <tt>tms_utime</tt>, <tt>tms_stime</tt>, <tt>tms_cutime</tt>, and <tt>tms_cstime</tt></P></LI></ul>
+<p class="docText">The handling of open files depends on the value of the close-on-exec flag for each descriptor. Recall from <a class="docLink" href="ch03lev1sec10.html#ch03fig06">Figure 3.6</a> and our mention of the <tt>FD_CLOEXEC</tt> flag in <a class="docLink" href="ch03lev1sec14.html#ch03lev1sec14">Section 3.14</a> that every open descriptor in a process has a close-on-exec flag. If this flag is set, the descriptor is closed across an <tt>exec</tt>. Otherwise, the descriptor is left open across the <tt>exec</tt>. The default is to leave the descriptor open across the <tt>exec</tt> unless we specifically set the close-on-exec flag using <tt>fcntl</tt>.</P>
+<p class="docText">POSIX.1 specifically requires that open directory streams (recall the <tt>opendir</tt> function from <a class="docLink" href="ch04lev1sec21.html#ch04lev1sec21">Section 4.21</a>) be closed across an <tt>exec</tt>. This is normally done by the <tt>opendir</tt> function calling <tt>fcntl</tt> to set the close-on-exec flag for the descriptor corresponding to the open directory stream.</p>
+<p class="docText"><a name="idd1e57884"></a><a name="idd1e57889"></a><a name="idd1e57895"></a><a name="idd1e57900"></a><a name="idd1e57905"></a><a name="idd1e57910"></a><a name="idd1e57915"></a><a name="idd1e57920"></a><a name="idd1e57925"></a><a name="idd1e57928"></a><a name="idd1e57931"></a>Note that the real user ID and the real group ID remain the same across the <tt>exec</tt>, but the effective IDs can change, depending on the status of the set-user-ID and the set- group-ID bits for the program file that is executed. If the set-user-ID bit is set for the new program, the effective user ID becomes the owner ID of the program file. Otherwise, the effective user ID is not changed (it's not set to the real user ID). The group ID is handled in the same way.</P>
+<p class="docText">In many UNIX system implementations, only one of these six functions, <tt>execve</tt>, is a system call within the kernel. The other five are just library functions that eventually invoke this system call. We can illustrate the relationship among these six functions as shown in <a class="docLink" href="ch08lev1sec10.html#ch08fig15">Figure 8.15</a>.</P>
+<a name="ch08fig15"></a><P><center>
+<h5 class="docFigureTitle">Figure 8.15. Relationship of the six <tt>exec</tt> functions</H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/08fig15_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="114" SRC="images/0201433079/graphics/08fig15.gif;423615"></P>
+</center></p><BR>
+<p class="docText">In this arrangement, the library functions <tt>execlp</tt> and <tt>execvp</tt> process the <tt>PATH</tt> environment variable, looking for the first path prefix that contains an executable file named <span class="docEmphasis">filename</span>.</P>
+<a name="ch08ex06"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch08lev1sec10.html#ch08fig16">Figure 8.16</a> demonstrates the <tt>exec</tt> functions.</p>
+<p class="docText"><a name="idd1e58005"></a><a name="idd1e58010"></a><a name="idd1e58015"></a>We first call <tt>execle</tt>, which requires a pathname and a specific environment. The next call is to <tt>execlp</tt>, which uses a filename and passes the caller's environment to the new program. The only reason the call to <tt>execlp</tt> works is that the directory <tt>/home/sar/bin</tt> is one of the current path prefixes. Note also that we set the first argument, <tt>argv[0]</tt> in the new program, to be the filename component of the pathname. Some shells set this argument to be the complete pathname. This is a convention only. We can set <tt>argv[0]</tt> to any string we like. The <tt>login</tt> command does this when it executes the shell. Before executing the shell, <tt>login</tt> adds a dash as a prefix to <tt>argv[0]</tt> to indicate to the shell that it is being invoked as a login shell. A login shell will execute the start-up profile commands, whereas a nonlogin shell will not.</p>
+<p class="docText">The program <tt>echoall</tt> that is executed twice in the program in <a class="docLink" href="ch08lev1sec10.html#ch08fig16">Figure 8.16</a> is shown in <a class="docLink" href="ch08lev1sec10.html#ch08fig17">Figure 8.17</a>. It is a trivial program that echoes all its command-line arguments and its entire environment list.</P>
+<p class="docText"><a name="idd1e58065"></a><a name="idd1e58070"></a><a name="idd1e58075"></a><a name="idd1e58078"></a><a name="idd1e58083"></a><a name="idd1e58088"></a><a name="idd1e58091"></a><a name="idd1e58094"></a><a name="idd1e58099"></a><a name="idd1e58104"></a><a name="idd1e58109"></a><a name="idd1e58116"></a><a name="idd1e58121"></a><a name="idd1e58128"></a><a name="idd1e58131"></a><a name="idd1e58136"></a><a name="idd1e58141"></a>When we execute the program from <a class="docLink" href="ch08lev1sec10.html#ch08fig16">Figure 8.16</a>, we get</p>
+
+<pre>
+  $ <span class="docEmphStrong">./a.out</span>
+  argv[0]: echoall
+  argv[1]: myarg1
+  argv[2]: MY ARG2
+  USER=unknown
+  PATH=/tmp
+  $ argv[0]: echoall
+  argv[1]: only 1 arg
+  USER=sar
+  LOGNAME=sar
+  SHELL=/bin/bash
+                             <span class="docEmphItalicAlt">47 more lines that aren't shown</span>
+  HOME=/home/sar
+</pre><BR>
+
+<p class="docText">Note that the shell prompt appeared before the printing of <tt>argv[0]</tt> from the second <tt>exec</tt>. This is because the parent did not <tt>wait</tt> for this child process to finish.</p>
+
+<a name="ch08fig16"></a>
+<H5 class="docExampleTitle">Figure 8.16. Example of <tt>exec</tt> functions</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/wait.h&gt;
+
+char    *env_init[] = { "USER=unknown", "PATH=/tmp", NULL };
+
+int
+main(void)
+{
+    pid_t   pid;
+
+    if ((pid = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (pid == 0) {  /* specify pathname, specify environment */
+        if (execle("/home/sar/bin/echoall", "echoall", "myarg1",
+                "MY ARG2", (char *)0, env_init) &lt; 0)
+            err_sys("execle error");
+    }
+
+    if (waitpid(pid, NULL, 0) &lt; 0)
+        err_sys("wait error");
+
+    if ((pid = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (pid == 0) {  /* specify filename, inherit environment */
+        if (execlp("echoall", "echoall", "only 1 arg", (char *)0) &lt; 0)
+            err_sys("execlp error");
+    }
+
+    exit(0);
+}
+</pre><br>
+
+
+<a name="ch08fig17"></a>
+<h5 class="docExampleTitle">Figure 8.17. Echo all command-line arguments and all environment strings</h5>
+
+<pre>
+#include "apue.h"
+
+int
+main(int argc, char *argv[])
+{
+    int         i;
+    char        **ptr;
+    extern char **environ;
+
+    for (i = 0; i &lt; argc; i++)      /* echo all command-line args */
+        printf("argv[%d]: %s\n", i, argv[i]);
+
+    for (ptr = environ; *ptr != 0; ptr++)   /* and all env strings */
+        printf("%s\n", *ptr);
+
+    exit(0);
+}
+</pre><br>
+
+
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

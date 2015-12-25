@@ -1,0 +1,51 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 1.11.&nbsp; System Calls and Library Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch01lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch01lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch01lev1sec11"></a>
+<h3 class="docSection1Title">1.11. System Calls and Library Functions</h3>
+<p class="docText"><a name="idd1e4576"></a><a name="idd1e4579"></a><a name="idd1e4582"></a><a name="idd1e4585"></a><a name="idd1e4588"></a><a name="idd1e4593"></a><a name="idd1e4598"></a><a name="idd1e4603"></a><a name="idd1e4606"></a><a name="idd1e4609"></a>All operating systems provide service points through which programs request services from the kernel. All implementations of the UNIX System provide a well-defined, limited number of entry points directly into the kernel called <span class="docEmphasis">system calls</span> (recall <a class="docLink" href="ch01lev1sec2.html#ch01fig01">Figure 1.1</a>). Version 7 of the Research UNIX System provided about 50 system calls, 4.4BSD provided about 110, and SVR4 had around 120. Linux has anywhere between 240 and 260 system calls, depending on the version. FreeBSD has around 320.</P>
+<p class="docText">The system call interface has always been documented in Section 2 of the <span class="docEmphasis">UNIX Programmer's Manual</span>. Its definition is in the C language, regardless of the actual implementation technique used on any given system to invoke a system call. This differs from many older operating systems, which traditionally defined the kernel entry points in the assembler language of the machine.</P>
+<p class="docText">The technique used on UNIX systems is for each system call to have a function of the same name in the standard C library. The user process calls this function, using the standard C calling sequence. This function then invokes the appropriate kernel service, using whatever technique is required on the system. For example, the function may put one or more of the C arguments into general registers and then execute some machine instruction that generates a software interrupt in the kernel. For our purposes, we can consider the system calls as being C functions.</p>
+<p class="docText">Section 3 of the <span class="docEmphasis">UNIX Programmer's Manual</span> defines the general-purpose functions available to programmers. These functions aren't entry points into the kernel, although they may invoke one or more of the kernel's system calls. For example, the <tt>printf</tt> function may use the <tt>write</tt> system call to output a string, but the <tt>strcpy</tt> (copy a string) and <tt>atoi</tt> (convert ASCII to integer) functions don't involve the kernel at all.</P>
+<p class="docText">From an implementor's point of view, the distinction between a system call and a library function is fundamental. But from a user's perspective, the difference is not as critical. From our perspective in this text, both system calls and library functions appear as normal C functions. Both exist to provide services for application programs. We should realize, however, that we can replace the library functions, if desired, whereas the system calls usually cannot be replaced.</P>
+<p class="docText">Consider the memory allocation function <tt>malloc</tt> as an example. There are many ways to do memory allocation and its associated garbage collection (best fit, first fit, and so on). No single technique is optimal for all programs. The UNIX system call that handles memory allocation, <tt>sbrk</tt>(2), is not a general-purpose memory manager. It increases or decreases the address space of the process by a specified number of bytes. How that space is managed is up to the process. The memory allocation function, <tt>malloc</tt>(3), implements one particular type of allocation. If we don't like its operation, we can define our own <tt>malloc</tt> function, which will probably use the <tt>sbrk</tt> system call. In fact, numerous software packages implement their own memory allocation algorithms with the <tt>sbrk</tt> system call. <a class="docLink" href="ch01lev1sec11.html#ch01fig11">Figure 1.11</a> shows the relationship between the application, the <tt>malloc</tt> function, and the <tt>sbrk</tt> system call.</P>
+<a name="ch01fig11"></a><p><center>
+<H5 class="docFigureTitle">Figure 1.11. Separation of <tt>malloc</tt> function and <tt>sbrk</tt> system call</H5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="323" height="420" SRC="images/0201433079/graphics/01fig11.gif;423615"></P>
+
+</center></p><BR>
+<p class="docText">Here we have a clean separation of duties: the system call in the kernel allocates an additional chunk of space on behalf of the process. The <tt>malloc</tt> library function manages this space from user level.</p>
+<p class="docText"><a name="idd1e4713"></a><a name="idd1e4716"></a><a name="idd1e4721"></a><a name="idd1e4726"></a>Another example to illustrate the difference between a system call and a library function is the interface the UNIX System provides to determine the current time and date. Some operating systems provide one system call to return the time and another to return the date. Any special handling, such as the switch to or from daylight saving time, is handled by the kernel or requires human intervention. The UNIX System, on the other hand, provides a single system call that returns the number of seconds since the Epoch: midnight, January 1, 1970, Coordinated Universal Time. Any interpretation of this value, such as converting it to a human-readable time and date using the local time zone, is left to the user process. The standard C library provides routines to handle most cases. These library routines handle such details as the various algorithms for daylight saving time.</P>
+<p class="docText">An application can call either a system call or a library routine. Also realize that many library routines invoke a system call. This is shown in <a class="docLink" href="ch01lev1sec11.html#ch01fig12">Figure 1.12</a>.</P>
+<a name="ch01fig12"></a><P><center>
+<h5 class="docFigureTitle">Figure 1.12. Difference between C library functions and system calls</H5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="402" height="395" SRC="images/0201433079/graphics/01fig12.gif;423615"></P>
+
+</center></p><BR>
+<p class="docText">Another difference between system calls and library functions is that system calls usually provide a minimal interface, whereas library functions often provide more elaborate functionality. We've seen this already in the difference between the <tt>sbrk</tt> system call and the <tt>malloc</tt> library function. We'll see this difference later, when we compare the unbuffered I/O functions (<a class="docLink" href="ch03.html#ch03">Chapter 3</a>) and the standard I/O functions (<a class="docLink" href="ch05.html#ch05">Chapter 5</a>).</P>
+<p class="docText">The process control system calls (<tt>fork</tt>, <tt>exec</tt>, and <tt>wait</tt>) are usually invoked by the user's application code directly. (Recall the bare-bones shell in <a class="docLink" href="ch01lev1sec6.html#ch01fig07">Figure 1.7</a>.) But some <a name="idd1e4788"></a><a name="idd1e4793"></a>library routines exist to simplify certain common cases: the <tt>system</tt> and <tt>popen</tt> library routines, for example. In <a class="docLink" href="ch08lev1sec13.html#ch08lev1sec13">Section 8.13</a>, we'll show an implementation of the <tt>system</tt> function that invokes the basic process control system calls. We'll enhance this example in <a class="docLink" href="ch10lev1sec18.html#ch10lev1sec18">Section 10.18</a> to handle signals correctly.</p>
+<p class="docText">To define the interface to the UNIX System that most programmers use, we have to describe both the system calls and some of the library functions. If we described only the <tt>sbrk</tt> system call, for example, we would skip the more programmer-friendly <tt>malloc</tt> library function that many applications use. In this text, we'll use the term <span class="docEmphasis">function</span> to refer to both system calls and library functions, except when the distinction is necessary.</p>
+
+<ul></ul></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch01lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch01lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

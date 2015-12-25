@@ -1,0 +1,36 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 18.13.&nbsp; termcap, terminfo, and curses</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec14.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch18lev1sec13"></a>
+<h3 class="docSection1Title">18.13. <tt>termcap</tt>, <tt>terminfo</tt>, and <tt>curses</tt></h3>
+<p class="docText"><tt>termcap</tt> stands for &quot;terminal capability,&quot; and it refers to the text file <tt>/etc/termcap</tt> and a set of routines to read this file. The <tt>termcap</tt> scheme was developed at Berkeley to support the <tt>vi</tt> editor. The <tt>termcap</tt> file contains descriptions of various terminals: what features the terminal supports (how many lines and rows, whether the terminal support backspace, etc.) and how to make the terminal perform certain operations (clear the screen, move the cursor to a given location, etc.). Taking this information out of the compiled program and placing it into a text file that can easily be edited allows the <tt>vi</tt> editor to run on many different terminals.</P>
+<p class="docText">The routines that support the <tt>termcap</tt> file were then extracted from the <tt>vi</tt> editor and placed into a separate <tt>curses</tt> library. Many features were added to make this library usable for any program that wanted to manipulate the screen.</P>
+<p class="docText">The <tt>termcap</tt> scheme was not perfect. As more and more terminals were added to the data file, it took longer to scan the file, looking for a specific terminal. The data file also used two-character names to identify the various terminal attributes. These deficiencies led to development of the <tt>terminfo</tt> scheme and its associated <tt>curses</tt> library. The terminal descriptions in <tt>terminfo</tt> are basically compiled versions of a textual description and can be located faster at runtime. <tt>terminfo</tt> appeared with SVR2 and has been in all System V releases since then.</p>
+<blockquote>
+<p class="docText">Historically, System Vbased systems used <tt>terminfo</tt>, and BSD-derived systems used <tt>termcap</tt>, but it is now common for systems to provide both. Mac OS X, however, supports only <tt>terminfo</tt>.</P>
+</blockquote>
+<p class="docText">A description of <tt>terminfo</tt> and the <tt>curses</tt> library is provided by Goodheart [<a class="docLink" href="bib01.html#biblio01_024">1991</a>], but this is currently out of print. Strang [<a class="docLink" href="bib01.html#biblio01_061">1986</a>] describes the Berkeley version of the <tt>curses</tt> library. Strang, Mui, and O'Reilly [<a class="docLink" href="bib01.html#biblio01_062">1988</a>] provide a description of <tt>termcap</tt> and <tt>terminfo</tt>.</P>
+<blockquote>
+<p class="docText">The <tt>ncurses</tt> library, a free version that is compatible with the SVR4 <tt>curses</tt> interface, can be found at <tt>http://invisible-island.net/ncurses/ncurses.html</tt>.</P>
+</blockquote>
+<p class="docText">Neither <tt>termcap</tt> nor <tt>terminfo</tt>, by itself, addresses the problems we've been looking at in this chapter: changing the terminal's mode, changing one of the terminal special characters, handling the window size, and so on. What they do provide is a way to perform typical operations (clear the screen, move the cursor) on a wide variety of <a name="idd1e143504"></a><a name="idd1e143507"></a><a name="idd1e143510"></a><a name="idd1e143515"></a><a name="idd1e143518"></a><a name="idd1e143523"></a><a name="idd1e143528"></a><a name="idd1e143533"></a><a name="idd1e143538"></a><a name="idd1e143541"></a><a name="idd1e143546"></a>terminals. On the other hand, <tt>curses</tt> does help with some of the details that we've addressed in this chapter. Functions are provided by <tt>curses</tt> to set raw mode, set cbreak mode, turn echo on and off, and the like. But the <tt>curses</tt> library is designed for character-based dumb terminals, which have mostly been replaced by pixel-based graphics terminals today.</p>
+
+<UL></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec14.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

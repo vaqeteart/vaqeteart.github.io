@@ -1,0 +1,34 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 12.10.&nbsp; Threads and I/O</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch12lev1sec10"></a>
+<h3 class="docSection1Title">12.10. Threads and I/O</h3>
+<p class="docText"><a name="idd1e94079"></a><a name="idd1e94084"></a><a name="idd1e94089"></a><a name="idd1e94094"></a><a name="idd1e94099"></a>We introduced the <tt>pread</tt> and <tt>pwrite</tt> functions in <a class="docLink" href="ch03lev1sec11.html#ch03lev1sec11">Section 3.11</a>. These functions are helpful in a multithreaded environment, because all threads in a process share the same file descriptors.</P>
+<p class="docText">Consider two threads reading from or writing to the same file descriptor at the same time.</P>
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="250"><col width="250"></colgroup><thead><TR><th class="thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Thread A</span></P></th><th class="thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Thread B</span></P></th></tr></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>lseek(fd, 300, SEEK_SET);</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>lseek(fd, 700, SEEK_SET);</tt></p></TD></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>read(fd, buf1, 100);</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>read(fd, buf2, 100);</tt>
+</P></TD></tr></table></p><br>
+<p class="docText">If thread A executes the <tt>lseek</tt> and then thread B calls <tt>lseek</tt> before thread A calls <tt>read</tt>, then both threads will end up reading the same record. Clearly, this isn't what was intended.</p>
+<p class="docText">To solve this problem, we can use <tt>pread</tt> to make the setting of the offset and the reading of the data one atomic operation.</P>
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="250"><col width="250"></colgroup><thead><TR><th class="thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Thread A</span></p></th><th class="thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Thread B</span></P></th></tr></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>pread(fd, buf1, 100, 300);</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>pread(fd, buf2, 100, 700);</tt>
+</p></td></tr></table></p><br>
+<p class="docText">Using <tt>pread</tt>, we can ensure that thread A reads the record at offset 300, whereas thread B reads the record at offset 700. We can use <tt>pwrite</tt> to solve the problem of concurrent threads writing to the same file.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

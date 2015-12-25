@@ -1,0 +1,71 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 14.7.&nbsp; readv and writev Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch14lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch14lev1sec7"></a>
+<h3 class="docSection1Title">14.7. <tt>readv</tt> and <tt>writev</tt> Functions</h3>
+<p class="docText"><a name="idd1e106357"></a><a name="idd1e106360"></a><a name="idd1e106363"></a><a name="idd1e106368"></a><a name="idd1e106373"></a><a name="idd1e106376"></a><a name="idd1e106381"></a><a name="idd1e106388"></a><a name="idd1e106391"></a><a name="idd1e106394"></a><a name="idd1e106397"></a><a name="idd1e106402"></a><a name="idd1e106407"></a><a name="idd1e106414"></a>The <tt>readv</tt> and <tt>writev</tt> functions let us read into and write from multiple noncontiguous buffers in a single function call. These operations are called <span class="docEmphasis">scatter read</span> and <span class="docEmphasis">gather write</span>.</P>
+<a name="inta265"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch14lev1sec7.html#PLID0">[View full width]</a></div><pre>
+#include &lt;sys/uio.h&gt;
+
+ssize_t readv(int <span class="docEmphItalicAlt">filedes</span>, const struct iovec *<span class="docEmphItalicAlt">iov</span>
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif">, int <span class="docEmphItalicAlt">iovcnt</span>);
+
+ssize_t writev(int <span class="docEmphItalicAlt">filedes</span>, const struct iovec
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">iov</span>, int <span class="docEmphItalicAlt">iovcnt</span>);</pre><BR>
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: number of bytes read or written, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">The second argument to both functions is a pointer to an array of <tt>iovec</tt> structures:</P>
+
+<pre>
+   struct iovec {
+     void   *iov_base;   /* starting address of buffer */
+     size_t  iov_len;    /* size of buffer */
+   };
+</pre><br>
+
+<p class="docText">The number of elements in the <span class="docEmphasis">iov</span> array is specified by <span class="docEmphasis">iovcnt</span>. It is limited to <tt>IOV_MAX</tt> (Recall <a class="docLink" href="ch02lev1sec5.html#ch02fig10">Figure 2.10</a>). <a class="docLink" href="ch14lev1sec7.html#ch14fig27">Figure 14.27</a> shows a picture relating the arguments to these two functions and the <tt>iovec</tt> structure.</P>
+<a name="ch14fig27"></a><P><center>
+<h5 class="docFigureTitle">Figure 14.27. The <tt>iovec</tt> structure for <tt>readv</tt> and <tt>writev</tt></H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/14fig27_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="180" SRC="images/0201433079/graphics/14fig27.gif;423615"></P>
+</center></p><br>
+<p class="docText">The <tt>writev</tt> function gathers the output data from the buffers in order: <span class="docEmphasis">iov[0]</span>, <span class="docEmphasis">iov[1]</span>, through <span class="docEmphasis">iov[iovcnt</span><span class="docEmphasis">1]</span>; <tt>writev</tt> returns the total number of bytes output, which should normally equal the sum of all the buffer lengths.</p>
+<p class="docText">The <tt>readv</tt> function scatters the data into the buffers in order, always filling one buffer before proceeding to the next. <tt>readv</tt> returns the total number of bytes that were read. A count of 0 is returned if there is no more data and the end of file is encountered.</p>
+<blockquote>
+<p class="docText">These two functions originated in 4.2BSD and were later added to SVR4. These two functions are included in the XSI extension of the Single UNIX Specification.</P>
+<p class="docText">Although the Single UNIX Specification defines the buffer address to be a <tt>void *</tt>, many implementations that predate the standard still use a <tt>char *</tt> instead.</p>
+</blockquote>
+<a name="ch14ex11"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText"><a name="idd1e106586"></a><a name="idd1e106591"></a><a name="idd1e106596"></a><a name="idd1e106599"></a><a name="idd1e106602"></a><a name="idd1e106607"></a><a name="idd1e106614"></a>In <a class="docLink" href="ch20lev1sec8.html#ch20lev1sec8">Section 20.8</a>, in the function <tt>_db_writeidx</tt>, we need to write two buffers consecutively to a file. The second buffer to output is an argument passed by the caller, and the first buffer is one we create, containing the length of the second buffer and a file offset of other information in the file. There are three ways we can do this.</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">Call <tt>write</tt> twice, once for each buffer.</p></div></li><li><div style="font-weight:normal"><p class="docList">Allocate a buffer of our own that is large enough to contain both buffers, and copy both into the new buffer. We then call <tt>write</tt> once for this new buffer.</p></div></li><li><div style="font-weight:normal"><p class="docList">Call <tt>writev</tt> to output both buffers.</p></div></li></ol></div>
+<p class="docText">The solution we use in <a class="docLink" href="ch20lev1sec8.html#ch20lev1sec8">Section 20.8</a> is to use <tt>writev</tt>, but it's instructive to compare it to the other two solutions.</p>
+<p class="docText"><a class="docLink" href="ch14lev1sec7.html#ch14fig28">Figure 14.28</a> shows the results from the three methods just described.</p>
+<p class="docText">The test program that we measured output a 100-byte header followed by 200 bytes of data. This was done 1,048,576 times, generating a 300-megabyte file. The test program has three separate casesone for each of the techniques measured in <a class="docLink" href="ch14lev1sec7.html#ch14fig28">Figure 14.28</a>. We used <tt>times</tt> (<a class="docLink" href="ch08lev1sec16.html#ch08lev1sec16">Section 8.16</a>) to obtain the user CPU time, system CPU time, and wall clock time before and after the writes. All three times are shown in seconds.</p>
+<p class="docText">As we expect, the system time increases when we call <tt>write</tt> twice, compared to calling either <tt>write</tt> or <tt>writev</tt> once. This correlates with the results in <a class="docLink" href="ch03lev1sec9.html#ch03fig05">Figure 3.5</a>.</p>
+<p class="docText">Next, note that the sum of the CPU times (user plus system) is less when we do a buffer copy followed by a single <tt>write</tt> compared to a single call to <tt>writev</tt>. With the single <tt>write</tt>, we copy the buffers to a staging buffer at user level, and then the kernel will copy the data to its internal buffers when we call <tt>write</tt>. With <tt>writev</tt>, we should do less copying, because the kernel only needs to copy the data directly into its staging buffers. The fixed cost of using <tt>writev</tt> for such small amounts of data, however, is greater than the benefit. As the amount of data we need to copy increases, the more expensive it will be to copy the buffers in our program, and the <tt>writev</tt> alternative will be more attractive.</p>
+<blockquote>
+<p class="docText">Be careful not to infer too much about the relative performance of Linux to Mac OS X from the numbers shown in <a class="docLink" href="ch14lev1sec7.html#ch14fig28">Figure 14.28</a>. The two computers were very different: they had different processor architectures, different amounts of RAM, and disks with different speeds. To do an apples-to-apples comparison of one operating system to another, we need to use the same hardware for each operating system.</p>
+</blockquote>
+
+<a name="ch14fig28"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 14.28. Timing results comparing <tt>writev</tt> and other techniques</H5></caption><colgroup><col width="200"><col width="50"><col width="50"><col width="50"><col width="50"><col width="50"><col width="50"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom" rowspan="2"><p class="docText"><span class="docEmphRoman">Operation</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top" colspan="3"><p class="docText"><span class="docEmphRoman">Linux (Intel x86)</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="top" colspan="3"><p class="docText"><span class="docEmphRoman">Mac OS X (PowerPC)</span></P></th></TR><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">User</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">System</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Clock</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">User</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">System</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Clock</span></p></th></TR></thead><TR><TD class="rightBorder" align="left" valign="top"><p class="docText">two <tt>write</tt>s</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">1.29</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">3.15</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">7.39</p></TD><td class="rightBorder" align="center" valign="top"><p class="docText">1.60</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">17.40</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">19.84</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">buffer copy, then one <tt>write</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">1.03</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">1.98</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">6.47</P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">1.10</P></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">11.09</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">12.54</P></td></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText">one <tt>writev</tt></P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">0.70</P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">2.72</P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">6.41</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">0.86</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">13.58</p></TD><td class="docTableCell" align="center" valign="top"><p class="docText">14.72</p></td></tr></table></p><br>
+<p class="docText"><a name="idd1e106927"></a><a name="idd1e106932"></a><a name="idd1e106937"></a><a name="idd1e106944"></a><a name="idd1e106947"></a><a name="idd1e106952"></a>In summary, we should always try to use the fewest number of system calls necessary to get the job done. If we are writing small amounts of data, we will find it less expensive to copy the data ourselves and use a single <tt>write</tt> instead of using <tt>writev</tt>. We might find, however, that the performance benefits aren't worth the extra complexity cost needed to manage our own staging buffers.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch14lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

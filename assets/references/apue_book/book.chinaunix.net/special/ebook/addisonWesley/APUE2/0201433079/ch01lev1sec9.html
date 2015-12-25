@@ -1,0 +1,82 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 1.9.&nbsp; Signals</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch01lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch01lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch01lev1sec9"></a>
+<h3 class="docSection1Title">1.9. Signals</h3>
+<p class="docText">Signals are a technique used to notify a process that some condition has occurred. For example, if a process divides by zero, the signal whose name is <tt>SIGFPE</tt> (floating-point exception) is sent to the process. The process has three choices for dealing with the signal.</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">Ignore the signal. This option isn't recommended for signals that denote a hardware exception, such as dividing by zero or referencing memory outside the address space of the process, as the results are undefined.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">Let the default action occur. For a divide-by-zero condition, the default is to terminate the process.</P></div></li><LI><div style="font-weight:normal"><p class="docList">Provide a function that is called when the signal occurs (this is called &quot;catching&quot; the signal). By providing a function of our own, we'll know when the signal occurs and we can handle it as we wish.</P></div></LI></ol></div>
+<p class="docText">Many conditions generate signals. Two terminal keys, called the <span class="docEmphasis">interrupt key</span> often the DELETE key or Control-Cand the <span class="docEmphasis">quit key</span>often Control-backslashare used to interrupt the currently running process. Another way to generate a signal is by calling the <tt>kill</tt> function. We can call this function from a process to send a signal to another process. Naturally, there are limitations: we have to be the owner of the other process (or the superuser) to be able to send it a signal.</p>
+<a name="ch01ex08"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText">Recall the bare-bones shell example (<a class="docLink" href="ch01lev1sec6.html#ch01fig07">Figure 1.7</a>). If we invoke this program and press the interrupt key, the process terminates because the default action for this signal, named <tt>SIGINT</tt>, is to terminate the process. The process hasn't told the kernel to do anything other than the default with this signal, so the process terminates.</P>
+<p class="docText">To catch this signal, the program needs to call the <tt>signal</tt> function, specifying the name of the function to call when the <tt>SIGINT</tt> signal is generated. The function is named <tt>sig_int</tt>; when it's called, it just prints a message and a new prompt. Adding <a name="idd1e4300"></a><a name="idd1e4305"></a><a name="idd1e4310"></a><a name="idd1e4315"></a><a name="idd1e4320"></a>11 lines to the program in <a class="docLink" href="ch01lev1sec6.html#ch01fig07">Figure 1.7</a> gives us the version in <a class="docLink" href="ch01lev1sec9.html#ch01fig10">Figure 1.10</a>. (The 11 new lines are indicated with a plus sign at the beginning of the line.)</P>
+<p class="docText">In <a class="docLink" href="ch10.html#ch10">Chapter 10</a>, we'll take a long look at signals, as most nontrivial applications deal with them.</P>
+
+<a name="ch01fig10"></a>
+<h5 class="docExampleTitle">Figure 1.10. Read commands from standard input and execute them</H5>
+
+<pre>
+  #include "apue.h"
+  #include &lt;sys/wait.h&gt;
+
++ static void sig_int(int);       /* our signal-catching function */
++
+  int
+  main(void)
+  {
+      char    buf[MAXLINE];    /* from apue.h */
+      pid_t   pid;
+      int     status;
+
++     if (signal(SIGINT, sig_int) == SIG_ERR)
++         err_sys("signal error");
++
+      printf("%% ");  /* print prompt (printf requires %% to print %) */
+      while (fgets(buf, MAXLINE, stdin) != NULL) {
+          if (buf[strlen(buf) - 1] == "\n")
+              buf[strlen(buf) - 1] = 0; /* replace newline with null */
+
+          if ((pid = fork()) &lt; 0) {
+              err_sys("fork error");
+          } else if (pid == 0) {        /* child */
+              execlp(buf, buf, (char *)0);
+              err_ret("couldn't execute: %s", buf);
+              exit(127);
+          }
+
+          /* parent */
+          if ((pid = waitpid(pid, &amp;status, 0)) &lt; 0)
+              err_sys("waitpid error");
+          printf("%% ");
+      }
+      exit(0);
+  }
++
++ void
++ sig_int(int signo)
++ {
++     printf("interrupt\n%% ");
++ }
+</pre><BR>
+
+
+
+<ul></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch01lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch01lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

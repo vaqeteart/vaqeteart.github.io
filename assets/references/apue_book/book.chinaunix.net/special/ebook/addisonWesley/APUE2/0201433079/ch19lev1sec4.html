@@ -1,0 +1,128 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 19.4.&nbsp; pty_fork Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch19lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch19lev1sec4"></a>
+<h3 class="docSection1Title">19.4. <tt>pty_fork</tt> Function</h3>
+<p class="docText">We now use the two functions from the previous section, <tt>ptym_open</tt> and <tt>ptys_open</tt>, to write a new function that we call <tt>pty_fork</tt>. This new function combines the opening of the master and the slave with a call to <tt>fork</tt>, establishing the child as a session leader with a controlling terminal.</P>
+<P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch19lev1sec4.html#PLID0">[View full width]</a></div><pre>
+#include "apue.h"
+#include &lt;termios.h&gt;
+#include &lt;sys/ioctl.h&gt;   /* find struct winsize on
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> BSD systems */
+
+pid_t pty_fork(int *<span class="docEmphItalicAlt">ptrfdm</span>, char *<span class="docEmphItalicAlt">slave_name</span>, int
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">slave_namesz</span>,
+               const struct termios *<span class="docEmphItalicAlt">slave_termios</span>,
+               const struct winsize *<span class="docEmphItalicAlt">slave_winsize</span>);</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 in child, process ID of child in parent, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">The file descriptor of the PTY master is returned through the <span class="docEmphasis">ptrfdm</span> pointer.</P>
+<p class="docText">If <span class="docEmphasis">slave_name</span> is non-null, the name of the slave device is stored at that location. The caller has to allocate the storage pointed to by this argument.</p>
+<p class="docText">If the pointer <span class="docEmphasis">slave_termios</span> is non-null, the system uses the referenced structure to initialize the terminal line discipline of the slave. If this pointer is null, the system sets the slave's <tt>termios</tt> structure to an implementation-defined initial state. Similarly, if the <span class="docEmphasis">slave_winsize</span> pointer is non-null, the referenced structure initializes the slave's window size. If this pointer is null, the <tt>winsize</tt> structure is normally initialized to 0.</P>
+<p class="docText"><a name="idd1e146131"></a><a name="idd1e146136"></a><a name="idd1e146139"></a><a name="idd1e146144"></a><a name="idd1e146147"></a><a name="idd1e146152"></a><a name="idd1e146157"></a><a name="idd1e146162"></a><a name="idd1e146165"></a><a class="docLink" href="ch19lev1sec4.html#ch19fig11">Figure 19.11</a> shows the code for this function. It works on all four platforms described in this text, calling the appropriate <tt>ptym_open</tt> and <tt>ptys_open</tt> functions.</P>
+<a name="ch19fig11"></a>
+<h5 class="docExampleTitle">Figure 19.11. The <tt>pty_fork</tt> function</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;termios.h&gt;
+#ifndef TIOCGWINSZ
+#include &lt;sys/ioctl.h&gt;
+#endif
+
+pid_t
+pty_fork(int *ptrfdm, char *slave_name, int slave_namesz,
+         const struct termios *slave_termios,
+         const struct winsize *slave_winsize)
+{
+    int     fdm, fds;
+    pid_t   pid;
+    char    pts_name[20];
+
+    if ((fdm = ptym_open(pts_name, sizeof(pts_name))) &lt; 0)
+        err_sys("can't open master pty: %s, error %d", pts_name, fdm);
+
+    if (slave_name != NULL) {
+        /*
+         * Return name of slave.  Null terminate to handle case
+         * where strlen(pts_name) &gt; slave_namesz.
+         */
+        strncpy(slave_name, pts_name, slave_namesz);
+        slave_name[slave_namesz - 1] = '\0';
+    }
+
+    if ((pid = fork()) &lt; 0) {
+        return(-1);
+    } else if (pid == 0) {      /* child */
+        if (setsid() &lt; 0)
+            err_sys("setsid error");
+
+        /*
+         * System V acquires controlling terminal on open().
+         */
+        if ((fds = ptys_open(pts_name)) &lt; 0)
+            err_sys("can't open slave pty");
+        close(fdm);     /* all done with master in child */
+
+#if defined(TIOCSCTTY)
+        /*
+         * TIOCSCTTY is the BSD way to acquire a controlling terminal.
+         */
+        if (ioctl(fds, TIOCSCTTY, (char *)0) &lt; 0)
+            err_sys("TIOCSCTTY error");
+#endif
+
+        /*
+         * Set slave's termios and window size.
+         */
+        if (slave_termios != NULL) {
+            if (tcsetattr(fds, TCSANOW, slave_termios) &lt; 0)
+                err_sys("tcsetattr error on slave pty");
+        }
+        if (slave_winsize != NULL) {
+            if (ioctl(fds, TIOCSWINSZ, slave_winsize) &lt; 0)
+                err_sys("TIOCSWINSZ error on slave pty");
+        }
+        /*
+         * Slave becomes stdin/stdout/stderr of child.
+         */
+        if (dup2(fds, STDIN_FILENO) != STDIN_FILENO)
+            err_sys("dup2 error to stdin");
+        if (dup2(fds, STDOUT_FILENO) != STDOUT_FILENO)
+            err_sys("dup2 error to stdout");
+        if (dup2(fds, STDERR_FILENO) != STDERR_FILENO)
+            err_sys("dup2 error to stderr");
+        if (fds != STDIN_FILENO &amp;&amp; fds != STDOUT_FILENO &amp;&amp;
+          fds != STDERR_FILENO)
+            close(fds);
+        return(0);      /* child returns 0 just like fork() */
+    } else {                    /* parent */
+        *ptrfdm = fdm;  /* return fd of master */
+        return(pid);    /* parent returns pid of child */
+    }
+}</pre><BR>
+
+
+<p class="docText"><a name="idd1e146212"></a><a name="idd1e146217"></a><a name="idd1e146222"></a><a name="idd1e146227"></a><a name="idd1e146232"></a><a name="idd1e146237"></a><a name="idd1e146242"></a><a name="idd1e146247"></a>After opening the PTY master, <tt>fork</tt> is called. As we mentioned before, we want to wait to call <tt>ptys_open</tt> until in the child and after calling <tt>setsid</tt> to establish a new session. When it calls <tt>setsid</tt>, the child is not a process group leader, so the three steps listed in <a class="docLink" href="ch09lev1sec5.html#ch09lev1sec5">Section 9.5</a> occur: (a) a new session is created with the child as the session leader, (b) a new process group is created for the child, and (c) the child loses any association it might have had with its previous controlling terminal. Under Linux and Solaris, the slave becomes the controlling terminal of this new session when <tt>ptys_open</tt> is called. Under FreeBSD and Mac OS X, we have to call <tt>ioctl</tt> with an argument of <tt>TIOCSCTTY</tt> to allocate the controlling terminal. (Linux also supports the <tt>TIOCSCTTY ioctl</tt> command.) The two structures <tt>termios</tt> and <tt>winsize</tt> are then initialized in the child. Finally, the slave file descriptor is duplicated onto standard input, standard output, and standard error in the child. This means that whatever process the caller <tt>exec</tt>s from the child will have these three descriptors connected to the slave PTY (its controlling terminal).</p>
+<p class="docText">After the call to <tt>fork</tt>, the parent just returns the PTY master descriptor and the process ID of the child. In the next section, we use the <tt>pty_fork</tt> function in the <tt>pty</tt> program.</p>
+
+<ul></ul></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch19lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

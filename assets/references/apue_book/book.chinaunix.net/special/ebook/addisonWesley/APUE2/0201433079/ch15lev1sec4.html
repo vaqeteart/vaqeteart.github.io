@@ -1,0 +1,197 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 15.4.&nbsp; Coprocesses</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch15lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch15lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch15lev1sec4"></a>
+<h3 class="docSection1Title">15.4. Coprocesses</h3>
+<p class="docText">A UNIX system filter is a program that reads from standard input and writes to standard output. Filters are normally connected linearly in shell pipelines. A filter becomes a <span class="docEmphasis">coprocess</span> when the same program generates the filter's input and reads the filter's output.</P>
+<p class="docText">The Korn shell provides coprocesses [<a class="docLink" href="bib01.html#biblio01_014">Bolsky and Korn 1995</a>]. The Bourne shell, the Bourne-again shell, and the C shell don't provide a way to connect processes together as coprocesses. A coprocess normally runs in the background from a shell, and its standard input and standard output are connected to another program using a pipe. Although the shell syntax required to initiate a coprocess and connect its input and output to other processes is quite contorted (see pp. 6263 of Bolsky and Korn [<a class="docLink" href="bib01.html#biblio01_014">1995</a>] for all the details), coprocesses are also useful from a C program.</P>
+<p class="docText">Whereas <tt>popen</tt> gives us a one-way pipe to the standard input or from the standard output of another process, with a coprocess, we have two one-way pipes to the other process: one to its standard input and one from its standard output. We want to write to its standard input, let it operate on the data, and then read from its standard output.</p>
+<a name="ch15ex07"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText">Let's look at coprocesses with an example. The process creates two pipes: one is the standard input of the coprocess, and the other is the standard output of the coprocess. <a class="docLink" href="ch15lev1sec4.html#ch15fig16">Figure 15.16</a> shows this arrangement.</P>
+<p class="docText">The program in <a class="docLink" href="ch15lev1sec4.html#ch15fig17">Figure 15.17</a> is a simple coprocess that reads two numbers from its standard input, computes their sum, and writes the sum to its standard output. (Coprocesses usually do more interesting work than we illustrate here. This example is admittedly contrived so that we can study the plumbing needed to connect the processes.)</p>
+<p class="docText"><a name="idd1e111802"></a><a name="idd1e111807"></a><a name="idd1e111812"></a><a name="idd1e111817"></a><a name="idd1e111822"></a><a name="idd1e111827"></a><a name="idd1e111832"></a><a name="idd1e111837"></a><a name="idd1e111842"></a><a name="idd1e111847"></a><a name="idd1e111852"></a><a name="idd1e111857"></a>We compile this program and leave the executable in the file <tt>add2</tt>.</P>
+<p class="docText">The program in <a class="docLink" href="ch15lev1sec4.html#ch15fig18">Figure 15.18</a> invokes the <tt>add2</tt> coprocess after reading two numbers from its standard input. The value from the coprocess is written to its standard output.</P>
+<p class="docText"><a name="idd1e111879"></a><a name="idd1e111884"></a><a name="idd1e111889"></a><a name="idd1e111894"></a><a name="idd1e111899"></a><a name="idd1e111904"></a><a name="idd1e111909"></a>Here, we create two pipes, with the parent and the child closing the ends they don't need. We have to use two pipes: one for the standard input of the coprocess and one for its standard output. The child then calls <tt>dup2</tt> to move the pipe descriptors onto its standard input and standard output, before calling <tt>execl</tt>.</P>
+<p class="docText"><a name="idd1e111924"></a><a name="idd1e111927"></a><a name="idd1e111930"></a><a name="idd1e111935"></a><a name="idd1e111940"></a><a name="idd1e111945"></a>If we compile and run the program in <a class="docLink" href="ch15lev1sec4.html#ch15fig18">Figure 15.18</a>, it works as expected. Furthermore, if we <tt>kill</tt> the <tt>add2</tt> coprocess while the program in <a class="docLink" href="ch15lev1sec4.html#ch15fig18">Figure 15.18</a> is waiting for our input and then enter two numbers, the signal handler is invoked when the program writes to the pipe that has no reader. (See <a class="docLink" href="ch15lev1sec12.html#ch15qa1q4">Exercise 15.4</a>.)</p>
+<p class="docText">Recall from <a class="docLink" href="ch15lev1sec1.html#ch15fig01">Figure 15.1</a> that not all systems provide full-duplex pipes using the <tt>pipe</tt> function. In <a class="docLink" href="ch17lev1sec2.html#ch17fig04">Figure 17.4</a>, we provide another version of this example using a single full-duplex pipe instead of two half-duplex pipes, for those systems that support full-duplex pipes.</P>
+
+<a name="ch15fig16"></a><p><center>
+<H5 class="docFigureTitle">Figure 15.16. Driving a coprocess by writing its standard input and reading its standard output</H5>
+
+<p class="docText">
+<img border="0" alt="" width="358" height="101" SRC="images/0201433079/graphics/15fig16.gif;423615"></P>
+
+</center></p><BR>
+<a name="ch15fig17"></a>
+<H5 class="docExampleTitle">Figure 15.17. Simple filter to add two numbers</h5>
+
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+    int     n,  int1,  int2;
+    char    line[MAXLINE];
+
+    while ((n = read(STDIN_FILENO, line, MAXLINE)) &gt; 0) {
+        line[n] = 0;        /* null terminate */
+        if (sscanf(line, "%d%d", &amp;int1, &amp;int2) == 2) {
+            sprintf(line, "%d\n", int1 + int2);
+            n = strlen(line);
+            if (write(STDOUT_FILENO, line, n) != n)
+                err_sys("write error");
+        } else {
+            if (write(STDOUT_FILENO, "invalid args\n", 13) != 13)
+                err_sys("write error");
+        }
+    }
+    exit(0);
+}
+</pre><BR>
+
+
+<a name="ch15fig18"></a>
+<H5 class="docExampleTitle">Figure 15.18. Program to drive the <tt>add2</tt> filter</h5>
+
+<pre>
+
+#include "apue.h"
+
+static void sig_pipe(int);      /* our signal handler */
+
+int
+main(void)
+{
+    int     n, fd1[2], fd2[2];
+    pid_t   pid;
+    char    line[MAXLINE];
+
+    if (signal(SIGPIPE, sig_pipe) == SIG_ERR)
+        err_sys("signal error");
+
+    if (pipe(fd1) &lt; 0 || pipe(fd2) &lt; 0)
+        err_sys("pipe error");
+
+    if ((pid = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (pid &gt; 0) {                         /* parent */
+        close(fd1[0]);
+        close(fd2[1]);
+        while (fgets(line, MAXLINE, stdin) != NULL) {
+            n = strlen(line);
+            if (write(fd1[1], line, n) != n)
+                err_sys("write error to pipe");
+            if ((n = read(fd2[0], line, MAXLINE)) &lt; 0)
+                err_sys("read error from pipe");
+            if (n == 0) {
+                err_msg("child closed pipe");
+                break;
+            }
+            line[n] = 0;    /* null terminate */
+            if (fputs(line, stdout) == EOF)
+                err_sys("fputs error");
+        }
+        if (ferror(stdin))
+            err_sys("fgets error on stdin");
+        exit(0);
+    } else {                                  /* child */
+        close(fd1[1]);
+        close(fd2[0]);
+        if (fd1[0] != STDIN_FILENO) {
+            if (dup2(fd1[0], STDIN_FILENO) != STDIN_FILENO)
+                err_sys("dup2 error to stdin");
+            close(fd1[0]);
+        }
+
+        if (fd2[1] != STDOUT_FILENO) {
+            if (dup2(fd2[1], STDOUT_FILENO) != STDOUT_FILENO)
+                err_sys("dup2 error to stdout");
+            close(fd2[1]);
+        }
+        if (execl("./add2", "add2", (char *)0) &lt; 0)
+            err_sys("execl error");
+    }
+    exit(0);
+}
+
+static void
+sig_pipe(int signo)
+{
+    printf("SIGPIPE caught\n");
+    exit(1);
+}
+</pre><br>
+
+
+<a name="ch15ex08"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">In the coprocess <tt>add2</tt> (<a class="docLink" href="ch15lev1sec4.html#ch15fig17">Figure 15.17</a>), we purposely used low-level I/O (UNIX system calls): <tt>read</tt> and <tt>write</tt>. What happens if we rewrite this coprocess to use standard I/O? <a class="docLink" href="ch15lev1sec4.html#ch15fig19">Figure 15.19</a> shows the new version.</P>
+<p class="docText">If we invoke this new coprocess from the program in <a class="docLink" href="ch15lev1sec4.html#ch15fig18">Figure 15.18</a>, it no longer works. The problem is the default standard I/O buffering. When the program in <a class="docLink" href="ch15lev1sec4.html#ch15fig19">Figure 15.19</a> is invoked, the first <tt>fgets</tt> on the standard input causes the standard I/O library to allocate a buffer and choose the type of buffering. Since the standard input is a pipe, the standard I/O library defaults to fully buffered. The same thing happens with the standard output. While <tt>add2</tt> is blocked reading from its standard input, the program in <a class="docLink" href="ch15lev1sec4.html#ch15fig18">Figure 15.18</a> is blocked reading from the pipe. We have a deadlock.</p>
+<p class="docText">Here, we have control over the coprocess that's being run. We can change the program in <a class="docLink" href="ch15lev1sec4.html#ch15fig19">Figure 15.19</a> by adding the following four lines before the <tt>while</tt> loop:</P>
+
+<pre>
+   if (setvbuf(stdin, NULL, _IOLBF, 0) != 0)
+       err_sys("setvbuf error");
+   if (setvbuf(stdout, NULL, _IOLBF, 0) != 0)
+       err_sys("setvbuf error");
+</pre><br>
+
+<p class="docText"><a name="idd1e112114"></a><a name="idd1e112119"></a><a name="idd1e112124"></a><a name="idd1e112127"></a><a name="idd1e112132"></a><a name="idd1e112139"></a><a name="idd1e112142"></a><a name="idd1e112147"></a><a name="idd1e112152"></a><a name="idd1e112157"></a><a name="idd1e112162"></a><a name="idd1e112167"></a><a name="idd1e112172"></a><a name="idd1e112175"></a>These lines cause <tt>fgets</tt> to return when a line is available and cause <tt>printf</tt> to do an <tt>fflush</tt> when a newline is output (refer back to <a class="docLink" href="ch05lev1sec4.html#ch05lev1sec4">Section 5.4</a> for the details on standard I/O buffering). Making these explicit calls to <tt>setvbuf</tt> fixes the program in <a class="docLink" href="ch15lev1sec4.html#ch15fig19">Figure 15.19</a>.</P>
+<p class="docText">If we aren't able to modify the program that we're piping the output into, other techniques are required. For example, if we use <tt>awk</tt>(1) as a coprocess from our program (instead of the <tt>add2</tt> program), the following won't work:</p>
+
+<pre>
+   #! /bin/awk -f
+   { print $1 + $2 }
+</pre><br>
+
+<p class="docText">The reason this won't work is again the standard I/O buffering. But in this case, we cannot change the way <tt>awk</tt> works (unless we have the source code for it). We are unable to modify the executable of <tt>awk</tt> in any way to change the way the standard I/O buffering is handled.</p>
+<p class="docText">The solution for this general problem is to make the coprocess being invoked (<tt>awk</tt> in this case) think that its standard input and standard output are connected to a terminal. That causes the standard I/O routines in the coprocess to line buffer these two I/O streams, similar to what we did with the explicit calls to <tt>setvbuf</tt> previously. We use pseudo terminals to do this in <a class="docLink" href="ch19.html#ch19">Chapter 19</a>.</p>
+
+<a name="ch15fig19"></a>
+<h5 class="docExampleTitle">Figure 15.19. Filter to add two numbers, using standard I/O</h5>
+
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+    int     int1, int2;
+    char    line[MAXLINE];
+
+    while (fgets(line, MAXLINE, stdin) != NULL) {
+        if (sscanf(line, "%d%d", &amp;int1, &amp;int2) == 2) {
+            if (printf("%d\n", int1 + int2) == EOF)
+                err_sys("printf error");
+        } else {
+            if (printf("invalid args\n") == EOF)
+                err_sys("printf error");
+        }
+    }
+    exit(0);
+}
+</pre><br>
+
+
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch15lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch15lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

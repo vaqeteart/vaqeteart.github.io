@@ -1,0 +1,101 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 9.10.&nbsp; Orphaned Process Groups</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch09lev1sec10"></a>
+<h3 class="docSection1Title" id="454331-947">9.10. Orphaned Process Groups</h3>
+<p class="docText">We've mentioned that a process whose parent terminates is called an orphan and is inherited by the <tt>init</tt> process. We now look at entire process groups that can be orphaned and how POSIX.1 handles this situation.</P>
+<a name="ch09ex01"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText">Consider a process that <tt>fork</tt>s a child and then terminates. Although this is nothing abnormal (it happens all the time), what happens if the child is stopped (using job control) when the parent terminates? How will the child ever be continued, and does the child know that it has been orphaned? <a class="docLink" href="ch09lev1sec10.html#ch09fig10">Figure 9.10</a> shows this situation: the parent process has <tt>fork</tt>ed a child that stops, and the parent is about to exit.</P>
+<p class="docText"><a name="idd1e65981"></a><a name="idd1e65986"></a><a name="idd1e65991"></a><a name="idd1e65996"></a><a name="idd1e66001"></a><a name="idd1e66006"></a><a name="idd1e66009"></a><a name="idd1e66014"></a><a name="idd1e66019"></a>The program that creates this situation is shown in <a class="docLink" href="ch09lev1sec10.html#ch09fig11">Figure 9.11</a>. This program has some new features. Here, we are assuming a job-control shell. Recall from the previous section that the shell places the foreground process into its own process group (6099 in this example) and that the shell stays in its own process group (2837). The child inherits the process group of its parent (6099). After the <tt>fork</tt>,</P>
+<UL><li><p class="docList">The parent sleeps for 5 seconds. This is our (imperfect) way of letting the child execute before the parent terminates.</P></LI><LI><p class="docList">The child establishes a signal handler for the hang-up signal (<tt>SIGHUP</tt>). This is so we can see whether <tt>SIGHUP</tt> is sent to the child. (We discuss signal handlers in <a class="docLink" href="ch10.html#ch10">Chapter 10</a>.)</p></LI><li><p class="docList">The child sends itself the stop signal (<tt>SIGTSTP</tt>) with the <tt>kill</tt> function. This stops the child, similar to our stopping a foreground job with our terminal's suspend character (Control-Z).</P></LI><LI><p class="docList">When the parent terminates, the child is orphaned, so the child's parent process ID becomes 1, the <tt>init</tt> process ID.</p></LI><LI><p class="docList">At this point, the child is now a member of an <span class="docEmphasis">orphaned process group</span>. The POSIX.1 definition of an orphaned process group is one in which the parent of every member is either itself a member of the group or is not a member of the group's session. Another way of wording this is that the process group is not orphaned as long as a process in the group has a parent in a different process group but in the same session. If the process group is not orphaned, there is a chance that one of those parents in a different process group but in the same session will restart a stopped process in the process group that is not orphaned. Here, the parent of every process in the group (e.g., process 1 is the parent of process 6100) belongs to another session.</p></LI><LI><p class="docList">Since the process group is orphaned when the parent terminates, POSIX.1 requires that every process in the newly orphaned process group that is stopped (as our child is) be sent the hang-up signal (<tt>SIGHUP</tt>) followed by the continue signal (<tt>SIGCONT</tt>).</p></li><li><p class="docList">This causes the child to be continued, after processing the hang-up signal. The default action for the hang-up signal is to terminate the process, so we have to provide a signal handler to catch the signal. We therefore expect the <tt>printf</tt> in the <tt>sig_hup</tt> function to appear before the <tt>printf</tt> in the <tt>pr_ids</tt> function.</p></LI></ul>
+<p class="docText">Here is the output from the program shown in <a class="docLink" href="ch09lev1sec10.html#ch09fig11">Figure 9.11</a>:</P>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+   parent: pid = 6099, ppid = 2837, pgrp = 6099, tpgrp = 6099
+   child: pid = 6100, ppid = 6099, pgrp = 6099, tpgrp = 6099
+   $ SIGHUP received, pid = 6100
+   child: pid = 6100, ppid = 1, pgrp = 6099, tpgrp = 2837
+   read error from controlling TTY, errno = 5
+</pre><br>
+
+<p class="docText">Note that our shell prompt appears with the output from the child, since two processesour login shell and the childare writing to the terminal. As we expect, the parent process ID of the child has become 1.</P>
+<p class="docText"><a name="idd1e66129"></a><a name="idd1e66132"></a><a name="idd1e66137"></a><a name="idd1e66142"></a><a name="idd1e66147"></a><a name="idd1e66152"></a><a name="idd1e66157"></a><a name="idd1e66162"></a><a name="idd1e66167"></a><a name="idd1e66172"></a><a name="idd1e66177"></a><a name="idd1e66182"></a>After calling <tt>pr_ids</tt> in the child, the program tries to read from standard input. As we saw earlier in this chapter, when a background process group tries to read from its controlling terminal, <tt>SIGTTIN</tt> is generated for the background process group. But here we have an orphaned process group; if the kernel were to stop it with this signal, the processes in the process group would probably never be continued. POSIX.1 specifies that the <tt>read</tt> is to return an error with <tt>errno</tt> set to <tt>EIO</tt> (whose value is 5 on this system) in this situation.</p>
+<p class="docText"><a name="idd1e66206"></a><a name="idd1e66209"></a><a name="idd1e66214"></a><a name="idd1e66217"></a>Finally, note that our child was placed in a background process group when the parent terminated, since the parent was executed as a foreground job by the shell.</p>
+
+<a name="ch09fig10"></a><p><center>
+<h5 class="docFigureTitle">Figure 9.10. Example of a process group about to be orphaned</h5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="289" height="304" SRC="images/0201433079/graphics/09fig10.gif;423615"></p>
+
+</center></p><br>
+<a name="ch09fig11"></a>
+<h5 class="docExampleTitle">Figure 9.11. Creating an orphaned process group</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;errno.h&gt;
+
+static void
+sig_hup(int signo)
+{
+    printf("SIGHUP received, pid = %d\n", getpid());
+}
+
+static void
+pr_ids(char *name)
+{
+    printf("%s: pid = %d, ppid = %d, pgrp = %d, tpgrp = %d\n",
+        name, getpid(), getppid(), getpgrp(), tcgetpgrp(STDIN_FILENO));
+    fflush(stdout);
+}
+
+int
+main(void)
+{
+     char     c;
+     pid_t    pid;
+
+     pr_ids("parent");
+     if ((pid = fork()) &lt; 0) {
+         err_sys("fork error");
+     } else if (pid &gt; 0) {   /* parent */
+         sleep(5);       /*sleep to let child stop itself */
+         exit(0);        /* then parent exits */
+     } else {            /* child */
+         pr_ids("child");
+         signal(SIGHUP, sig_hup);    /* establish signal handler */
+         kill(getpid(), SIGTSTP);    /* stop ourself */
+         pr_ids("child");    /* prints only if we're continued */
+         if (read(STDIN_FILENO, &amp;c, 1) != 1)
+             printf("read error from controlling TTY, errno = %d\n",
+                 errno);
+         exit(0);
+     }
+}
+</pre><br>
+
+
+<p class="docText">We'll see another example of orphaned process groups in <a class="docLink" href="ch19lev1sec5.html#ch19lev1sec5">Section 19.5</a> with the <tt>pty</tt> program.</p>
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

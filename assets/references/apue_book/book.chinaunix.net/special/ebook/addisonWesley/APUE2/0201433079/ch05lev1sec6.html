@@ -1,0 +1,93 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 5.6.&nbsp; Reading and Writing a Stream</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch05lev1sec6"></a>
+<h3 class="docSection1Title" id="454331-942">5.6. Reading and Writing a Stream</h3>
+<p class="docText">Once we open a stream, we can choose from among three types of unformatted I/O:</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">Character-at-a-time I/O. We can read or write one character at a time, with the standard I/O functions handling all the buffering, if the stream is buffered.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">Line-at-a-time I/O. If we want to read or write a line at a time, we use <tt>fgets</tt> and <tt>fputs</tt>. Each line is terminated with a newline character, and we have to specify the maximum line length that we can handle when we call <tt>fgets</tt>. We describe these two functions in <a class="docLink" href="ch05lev1sec7.html#ch05lev1sec7">Section 5.7</a>.</P></div></li><LI><div style="font-weight:normal"><p class="docList">Direct I/O. This type of I/O is supported by the <tt>fread</tt> and <tt>fwrite</tt> functions. For each I/O operation, we read or write some number of objects, where each object is of a specified size. These two functions are often used for binary files where we read or write a structure with each operation. We describe these two functions in <a class="docLink" href="ch05lev1sec9.html#ch05lev1sec9">Section 5.9</a>.</P><blockquote><P><p class="docList">The term <span class="docEmphasis">direct I/O</span>, from the ISO C standard, is known by many names: binary I/O, object-at-a-time I/O, record-oriented I/O, or structure-oriented I/O.</p></P></blockquote></div></li></ol></div>
+<p class="docText">(We describe the formatted I/O functions, such as <tt>printf</tt> and <tt>scanf</tt>, in <a class="docLink" href="ch05lev1sec11.html#ch05lev1sec11">Section 5.11</a>.)</P>
+<a name="ch05lev2sec1"></a>
+<H4 class="docSection2Title">Input Functions</H4>
+<p class="docText">Three functions allow us to read one character at a time.</p>
+<a name="inta62"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdio.h&gt;
+
+int getc(FILE *<span class="docEmphItalicAlt">fp</span>);
+
+int fgetc(FILE *<span class="docEmphItalicAlt">fp</span>);
+
+int getchar(void);
+</pre><BR>
+
+</P></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">All three return: next character if OK, <tt>EOF</tt> on end of file or error</P></td></TR></table></p><BR>
+<p class="docText">The function <tt>getchar</tt> is defined to be equivalent to <tt>getc(stdin)</tt>. The difference between the first two functions is that <tt>getc</tt> can be implemented as a macro, whereas <tt>fgetc</tt> cannot be implemented as a macro. This means three things.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">The argument to <tt>getc</tt> should not be an expression with side effects.</p></div></li><li><div style="font-weight:normal"><p class="docList">Since <tt>fgetc</tt> is guaranteed to be a function, we can take its address. This allows us to pass the address of <tt>fgetc</tt> as an argument to another function.</p></div></li><li><div style="font-weight:normal"><p class="docList"><a name="idd1e36926"></a><a name="idd1e36931"></a><a name="idd1e36938"></a><a name="idd1e36943"></a><a name="idd1e36948"></a><a name="idd1e36955"></a><a name="idd1e36960"></a><a name="idd1e36967"></a><a name="idd1e36972"></a><a name="idd1e36977"></a><a name="idd1e36982"></a>Calls to <tt>fgetc</tt> probably take longer than calls to <tt>getc</tt>, as it usually takes more time to call a function.</p></div></li></ol></div>
+<p class="docText">These three functions return the next character as an <tt>unsigned char</tt> converted to an <tt>int</tt>. The reason for specifying unsigned is so that the high-order bit, if set, doesn't cause the return value to be negative. The reason for requiring an integer return value is so that all possible character values can be returned, along with an indication that either an error occurred or the end of file has been encountered. The constant <tt>EOF</tt> in <tt>&lt;stdio.h&gt;</tt> is required to be a negative value. Its value is often 1. This representation also means that we cannot store the return value from these three functions in a character variable and compare this value later against the constant <tt>EOF</tt>.</p>
+<p class="docText">Note that these functions return the same value whether an error occurs or the end of file is reached. To distinguish between the two, we must call either <tt>ferror</tt> or <tt>feof</tt>.</p>
+<a name="inta16"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdio.h&gt;
+
+int ferror(FILE *<span class="docEmphItalicAlt">fp</span>);
+
+int feof(FILE *<span class="docEmphItalicAlt">fp</span>);
+</pre><br>
+
+</p></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: nonzero (true) if condition is true, 0 (false) otherwise</P></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>void clearerr(FILE *</tt><span class="docEmphasis">fp</span>);</P></td></TR></table></p><BR>
+<p class="docText">In most implementations, two flags are maintained for each stream in the <tt>FILE</tt> object:</P>
+<UL><li><p class="docList">An error flag</P></LI><li><p class="docList">An end-of-file flag</P></LI></ul>
+<p class="docText">Both flags are cleared by calling <tt>clearerr</tt>.</p>
+<p class="docText">After reading from a stream, we can push back characters by calling <tt>ungetc</tt>.</p>
+<a name="inta59"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdio.h&gt;
+
+int ungetc(int <span class="docEmphItalicAlt">c</span>, FILE *<span class="docEmphItalicAlt">fp</span>);
+</pre><BR>
+
+</p></TD></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: <span class="docEmphasis">c</span> if OK, <tt>EOF</tt> on error</p></td></tr></table></p><br>
+<p class="docText">The characters that are pushed back are returned by subsequent reads on the stream in reverse order of their pushing. Be aware, however, that although ISO C allows an implementation to support any amount of pushback, an implementation is required to provide only a single character of pushback. We should not count on more than a single character.</p>
+<p class="docText">The character that we push back does not have to be the same character that was read. We are not able to push back <tt>EOF</tt>. But when we've reached the end of file, we can push back a character. The next read will return that character, and the read after that will return <tt>EOF</tt>. This works because a successful call to <tt>ungetc</tt> clears the end-of-file indication for the stream.</p>
+<p class="docText">Pushback is often used when we're reading an input stream and breaking the input into words or tokens of some form. Sometimes we need to peek at the next character to determine how to handle the current character. It's then easy to push back the character that we peeked at, for the next call to <tt>getc</tt> to return. If the standard I/O library didn't <a name="idd1e37161"></a><a name="idd1e37166"></a><a name="idd1e37173"></a><a name="idd1e37178"></a><a name="idd1e37185"></a><a name="idd1e37190"></a><a name="idd1e37195"></a><a name="idd1e37202"></a><a name="idd1e37205"></a><a name="idd1e37210"></a><a name="idd1e37217"></a><a name="idd1e37222"></a><a name="idd1e37229"></a><a name="idd1e37234"></a><a name="idd1e37239"></a>provide this pushback capability, we would have to store the character in a variable of our own, along with a flag telling us to use this character instead of calling <tt>getc</tt> the next time we need a character.</p>
+<blockquote>
+<p class="docText">When we push characters back with <tt>ungetc</tt>, they don't get written back to the underlying file or device. They are kept incore in the standard I/O library's buffer for the stream.</p>
+</blockquote>
+
+<a name="ch05lev2sec2"></a>
+<h4 class="docSection2Title">Output Functions</h4>
+<p class="docText">We'll find an output function that corresponds to each of the input functions that we've already described.</p>
+<a name="inta253"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdio.h&gt;
+
+int putc(int <span class="docEmphItalicAlt">c</span>, FILE *<span class="docEmphItalicAlt">fp</span>);
+
+int fputc(int <span class="docEmphItalicAlt">c</span>, FILE *<span class="docEmphItalicAlt">fp</span>);
+
+int putchar(int <span class="docEmphItalicAlt">c</span>);
+</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">All three return: <span class="docEmphasis">c</span> if OK, <tt>EOF</tt> on error</P></TD></TR></table></p><BR>
+<p class="docText">Like the input functions, <tt>putchar(c)</tt> is equivalent to <tt>putc(c, stdout)</tt>, and <tt>putc</tt> can be implemented as a macro, whereas <tt>fputc</tt> cannot be implemented as a macro.</p>
+
+
+<UL></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

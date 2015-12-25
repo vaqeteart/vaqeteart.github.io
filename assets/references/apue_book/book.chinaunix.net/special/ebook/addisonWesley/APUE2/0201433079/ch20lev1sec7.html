@@ -1,0 +1,45 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 20.7.&nbsp; Building the Library</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch20lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch20lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch20lev1sec7"></a>
+<h3 class="docSection1Title" id="454331-939">20.7. Building the Library</h3>
+<p class="docText">The database library consists of two files: a public C header file and a C source file. We can build a static library using the commands</P>
+
+<pre>
+gcc -I../include -Wall -c db.c
+ar rsv libapue_db.a db.o
+</pre><BR>
+
+<p class="docText">Applications that want to link with <tt>libapue_db.a</tt> will also need to link with <tt>libapue.a</tt>, since we use some of our common functions in the database library.</p>
+<p class="docText">If, on the other hand, we want to build a dynamic shared library version of the database library, we can use the following commands:</P>
+
+<pre>
+gcc -I../include -Wall -fPIC -c db.c
+gcc -shared -Wl,-soname,libapue_db.so.1 -o libapue_db.so.1 \
+    -L../lib -lapue -lc db.o
+</pre><BR>
+
+<p class="docText">The resulting shared library, <tt>libapue_db.so.1</tt>, needs to be placed in a common directory where the dynamic linker/loader can find it. Alternatively, we can place it in a private directory and modify our <tt>LD_LIBRARY_PATH</tt> environment variable to include the private directory in the search path of the dynamic linker/loader.</P>
+<blockquote>
+<p class="docText">The steps used to build shared libraries vary among platforms. Here, we have shown how to do it on a Linux system with the GNU C compiler.</p>
+</blockquote>
+
+<UL></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch20lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch20lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

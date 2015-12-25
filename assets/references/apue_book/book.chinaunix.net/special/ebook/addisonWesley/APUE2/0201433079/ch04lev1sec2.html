@@ -1,0 +1,66 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.2.&nbsp; stat, fstat, and lstat Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec2"></a>
+<h3 class="docSection1Title" id="454331-871">4.2. <tt>stat</tt>, <tt>fstat</tt>, and <tt>lstat</tt> Functions</h3>
+<p class="docText">The discussion in this chapter centers around the three <tt>stat</tt> functions and the information they return.</P>
+<a name="inta81"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch04lev1sec2.html#PLID0">[View full width]</a></div><pre>
+#include &lt;sys/stat.h&gt;
+
+int stat(const char *restrict <span class="docEmphItalicAlt">pathname</span>, struct
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> stat *restrict <span class="docEmphItalicAlt">buf</span>);
+
+int fstat(int <span class="docEmphItalicAlt">filedes</span>, struct stat *<span class="docEmphItalicAlt">buf</span>);
+
+int lstat(const char *restrict <span class="docEmphItalicAlt">pathname</span>, struct
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> stat *restrict <span class="docEmphItalicAlt">buf</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">All three return: 0 if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">Given a <span class="docEmphasis">pathname</span>, the <tt>stat</tt> function returns a structure of information about the named file. The <tt>fstat</tt> function obtains information about the file that is already open on the descriptor <span class="docEmphasis">filedes</span>. The <tt>lstat</tt> function is similar to <tt>stat</tt>, but when the named file is a <a name="idd1e24174"></a><a name="idd1e24179"></a><a name="idd1e24184"></a><a name="idd1e24189"></a><a name="idd1e24194"></a><a name="idd1e24197"></a><a name="idd1e24202"></a><a name="idd1e24205"></a><a name="idd1e24208"></a><a name="idd1e24211"></a>symbolic link, <tt>lstat</tt> returns information about the symbolic link, not the file referenced by the symbolic link. (We'll need <tt>lstat</tt> in <a class="docLink" href="ch04lev1sec21.html#ch04lev1sec21">Section 4.21</a> when we walk down a directory hierarchy. We describe symbolic links in more detail in <a class="docLink" href="ch04lev1sec16.html#ch04lev1sec16">Section 4.16</a>.)</P>
+<p class="docText">The second argument is a pointer to a structure that we must supply. The function fills in the structure pointed to by <span class="docEmphasis">buf</span>. The definition of the structure can differ among implementations, but it could look like</p>
+
+<pre>
+     struct stat {
+       mode_t    st_mode;      /* file type &amp; mode (permissions) */
+       ino_t     st_ino;       /* i-node number (serial number) */
+       dev_t     st_dev;       /* device number (file system) */
+       dev_t     st_rdev;      /* device number for special files */
+       nlink_t   st_nlink;     /* number of links */
+       uid_t     st_uid;       /* user ID of owner */
+       gid_t     st_gid;       /* group ID of owner */
+       off_t     st_size;      /* size in bytes, for regular files */
+       time_t    st_atime;     /* time of last access */
+       time_t    st_mtime;     /* time of last modification */
+       time_t    st_ctime;     /* time of last file status change */
+       blksize_t st_blksize;   /* best I/O block size */
+       blkcnt_t  st_blocks;    /* number of disk blocks allocated */
+     };
+</pre><BR>
+
+<blockquote>
+<p class="docText">The <tt>st_rdev</tt>, <tt>st_blksize</tt>, and <tt>st_blocks</tt> fields are not required by POSIX.1. They are defined as XSI extensions in the Single UNIX Specification.</P>
+</blockquote>
+<p class="docText">Note that each member is specified by a primitive system data type (see <a class="docLink" href="ch02lev1sec8.html#ch02lev1sec8">Section 2.8</a>). We'll go through each member of this structure to examine the attributes of a file.</p>
+<p class="docText">The biggest user of the <tt>stat</tt> functions is probably the <tt>ls -l</tt> command, to learn all the information about a file.</P>
+
+<UL></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

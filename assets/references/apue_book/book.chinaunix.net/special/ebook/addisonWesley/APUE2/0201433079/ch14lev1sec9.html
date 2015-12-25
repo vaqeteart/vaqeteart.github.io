@@ -1,0 +1,164 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 14.9.&nbsp; Memory-Mapped I/O</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch14lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch14lev1sec9"></a>
+<h3 class="docSection1Title">14.9. Memory-Mapped I/O</h3>
+<p class="docText"><a name="idd1e107141"></a><a name="idd1e107144"></a><a name="idd1e107147"></a><a name="idd1e107150"></a><a name="idd1e107153"></a><a name="idd1e107158"></a><a name="idd1e107161"></a><a name="idd1e107164"></a><a name="idd1e107167"></a><a name="idd1e107172"></a><a name="idd1e107179"></a><a name="idd1e107182"></a><a name="idd1e107187"></a><a name="idd1e107192"></a><a name="idd1e107197"></a><a name="idd1e107202"></a><a name="idd1e107207"></a><a name="idd1e107210"></a><a name="idd1e107213"></a><a name="idd1e107216"></a><a name="idd1e107221"></a><a name="idd1e107226"></a>Memory-mapped I/O lets us map a file on disk into a buffer in memory so that, when we fetch bytes from the buffer, the corresponding bytes of the file are read. Similarly, when we store data in the buffer, the corresponding bytes are automatically written to the file. This lets us perform I/O without using <tt>read</tt> or <tt>write</tt>.</P>
+<blockquote>
+<p class="docText">Memory-mapped I/O has been in use with virtual memory systems for many years. In 1981, 4.1BSD provided a different form of memory-mapped I/O with its <tt>vread</tt> and <tt>vwrite</tt> functions. These two functions were then removed in 4.2BSD and were intended to be replaced with the <tt>mmap</tt> function. The <tt>mmap</tt> function, however, was not included with 4.2BSD (for reasons described in <a class="docLink" href="ch02lev1sec5.html#ch02lev1sec5">Section 2.5</a> of McKusick et al. [<a class="docLink" href="bib01.html#biblio01_042">1996</a>]). Gingell, Moran, and Shannon [<a class="docLink" href="bib01.html#biblio01_023">1987</a>] describe one implementation of <tt>mmap</tt>. The <tt>mmap</tt> function is included in the memory-mapped files option in the Single UNIX Specification and is required on all XSI-conforming systems; most UNIX systems support it.</P>
+</blockquote>
+<p class="docText">To use this feature, we have to tell the kernel to map a given file to a region in memory. This is done by the <tt>mmap</tt> function.</p>
+<a name="inta162"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch14lev1sec9.html#PLID0">[View full width]</a></div><pre>
+#include &lt;sys/mman.h&gt;
+
+void *mmap(void *<span class="docEmphItalicAlt">addr</span>, size_t <span class="docEmphItalicAlt">len</span>, int <span class="docEmphItalicAlt">prot</span>, int
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">flag</span>, int <span class="docEmphItalicAlt">filedes</span>,
+           off_t <span class="docEmphItalicAlt">off</span> );</pre><br>
+</P></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: starting address of mapped region if OK, <tt>MAP_FAILED</tt> on error</p></TD></TR></table></P><br>
+<p class="docText">The <span class="docEmphasis">addr</span> argument lets us specify the address of where we want the mapped region to start. We normally set this to 0 to allow the system to choose the starting address. The return value of this function is the starting address of the mapped area.</P>
+<p class="docText">The <span class="docEmphasis">filedes</span> argument is the file descriptor specifying the file that is to be mapped. We have to open this file before we can map it into the address space. The <span class="docEmphasis">len</span> argument is the number of bytes to map, and <span class="docEmphasis">off</span> is the starting offset in the file of the bytes to map. (Some restrictions on the value of <span class="docEmphasis">off</span> are described later.)</P>
+<p class="docText">The <span class="docEmphasis">prot</span> argument specifies the protection of the mapped region.</p>
+<p class="docText">We can specify the protection as either <tt>PROT_NONE</tt> or the bitwise OR of any combination of <tt>PROT_READ</tt>, <tt>PROT_WRITE</tt>, and <tt>PROT_EXEC</tt>. The protection specified for a region can't allow more access than the <tt>open</tt> mode of the file. For example, we can't specify <tt>PROT_WRITE</tt> if the file was opened read-only.</P>
+<p class="docText">Before looking at the <span class="docEmphasis">flag</span> argument, let's see what's going on here. <a class="docLink" href="ch14lev1sec9.html#ch14fig31">Figure 14.31</a> shows a memory-mapped file. (Recall the memory layout of a typical process, <a name="idd1e107382"></a><a name="idd1e107387"></a><a name="idd1e107392"></a><a class="docLink" href="ch07lev1sec6.html#ch07fig06">Figure 7.6</a>.) In this figure, &quot;start addr&quot; is the return value from <tt>mmap</tt>. We have shown the mapped memory being somewhere between the heap and the stack: this is an implementation detail and may differ from one implementation to the next.</P>
+<a name="ch14fig31"></a><p><center>
+<h5 class="docFigureTitle">Figure 14.31. Example of a memory-mapped file</h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/14fig31_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="374" SRC="images/0201433079/graphics/14fig31.gif;423615"></p>
+</center></P><br>
+<p class="docText">The <span class="docEmphasis">flag</span> argument affects various attributes of the mapped region.</P>
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="100"><col width="400"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>MAP_FIXED</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The return value must equal <span class="docEmphasis">addr</span>. Use of this flag is discouraged, as it hinders portability. If this flag is not specified and if <span class="docEmphasis">addr</span> is nonzero, then the kernel uses <span class="docEmphasis">addr</span> as a hint of where to place the mapped region, but there is no guarantee that the requested address will be used. Maximum portability is obtained by specifying <span class="docEmphasis">addr</span> as 0.<blockquote>
+<p class="docText">Support for the <tt>MAP_FIXED</tt> flag is optional on POSIX-conforming systems, but required on XSI-conforming systems.</p>
+</blockquote>
+</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>MAP_SHARED</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">This flag describes the disposition of store operations into the mapped region by this process. This flag specifies that store operations modify the mapped filethat is, a store operation is equivalent to a <tt>write</tt> to the file. Either this flag or the next (<tt>MAP_PRIVATE</tt>), but not both, must be specified.</p></td></tr><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>MAP_PRIVATE</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">This flag says that store operations into the mapped region cause a private copy of the mapped file to be created. All successive <a name="idd1e107502"></a><a name="idd1e107507"></a><a name="idd1e107512"></a><a name="idd1e107517"></a><a name="idd1e107522"></a><a name="idd1e107529"></a><a name="idd1e107534"></a><a name="idd1e107539"></a><a name="idd1e107544"></a><a name="idd1e107549"></a><a name="idd1e107554"></a><a name="idd1e107557"></a>references to the mapped region then reference the copy. (One use of this flag is for a debugger that maps the text portion of a program file but allows the user to modify the instructions. Any modifications affect the copy, not the original program file.)</P></TD></tr></table></P><BR>
+<p class="docText">Each implementation has additional <tt>MAP_xxx</tt> flag values, which are specific to that implementation. Check the <tt>mmap</tt>(2) manual page on your system for details.</P>
+<p class="docText">The value of <span class="docEmphasis">off</span> and the value of <span class="docEmphasis">addr</span> (if <tt>MAP_FIXED</tt> is specified) are required to be multiples of the system's virtual memory page size. This value can be obtained from the <tt>sysconf</tt> function (<a class="docLink" href="ch02lev1sec5.html#ch02lev2sec15">Section 2.5.4</a>) with an argument of <tt>_SC_PAGESIZE</tt> or <tt>_SC_PAGE_SIZE</tt>. Since <span class="docEmphasis">off</span> and <span class="docEmphasis">addr</span> are often specified as 0, this requirement is not a big deal.</p>
+<p class="docText">Since the starting offset of the mapped file is tied to the system's virtual memory page size, what happens if the length of the mapped region isn't a multiple of the page size? Assume that the file size is 12 bytes and that the system's page size is 512 bytes. In this case, the system normally provides a mapped region of 512 bytes, and the final 500 bytes of this region are set to 0. We can modify the final 500 bytes, but any changes we make to them are not reflected in the file. Thus, we cannot append to a file with <tt>mmap</tt>. We must first grow the file, as we will see in <a class="docLink" href="ch14lev1sec9.html#ch14fig32">Figure 14.32</a>.</P>
+<a name="ch14fig32"></a>
+<h5 class="docExampleTitle">Figure 14.32. Copy a file using memory-mapped I/O</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+#include &lt;sys/mman.h&gt;
+
+int
+main(int argc, char *argv[])
+{
+    int         fdin, fdout;
+    void        *src, *dst;
+    struct stat statbuf;
+
+    if (argc != 3)
+        err_quit("usage: %s &lt;fromfile&gt; &lt;tofile&gt;", argv[0]);
+
+    if ((fdin = open(argv[1], O_RDONLY)) &lt; 0)
+        err_sys("can't open %s for reading", argv[1]);
+
+    if ((fdout = open(argv[2], O_RDWR | O_CREAT | O_TRUNC,
+      FILE_MODE)) &lt; 0)
+        err_sys("can't creat %s for writing", argv[2]);
+
+    if (fstat(fdin, &amp;statbuf) &lt; 0)   /* need size of input file */
+        err_sys("fstat error");
+
+    /* set size of output file */
+    if (lseek(fdout, statbuf.st_size - 1, SEEK_SET) == -1)
+        err_sys("lseek error");
+    if (write(fdout, "", 1) != 1)
+        err_sys("write error");
+
+    if ((src = mmap(0, statbuf.st_size, PROT_READ, MAP_SHARED,
+      fdin, 0)) == MAP_FAILED)
+        err_sys("mmap error for input");
+
+    if ((dst = mmap(0, statbuf.st_size, PROT_READ | PROT_WRITE,
+      MAP_SHARED, fdout, 0)) == MAP_FAILED)
+        err_sys("mmap error for output");
+
+    memcpy(dst, src, statbuf.st_size); /* does the file copy */
+    exit(0);
+}
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e107646"></a><a name="idd1e107651"></a><a name="idd1e107656"></a><a name="idd1e107661"></a><a name="idd1e107666"></a><a name="idd1e107671"></a><a name="idd1e107676"></a><a name="idd1e107681"></a><a name="idd1e107686"></a><a name="idd1e107691"></a><a name="idd1e107696"></a><a name="idd1e107701"></a><a name="idd1e107706"></a><a name="idd1e107711"></a><a name="idd1e107716"></a><a name="idd1e107721"></a>Two signals are normally used with mapped regions. <tt>SIGSEGV</tt> is the signal normally used to indicate that we have tried to access memory that is not available to us. This signal can also be generated if we try to store into a mapped region that we specified to <tt>mmap</tt> as read-only. The <tt>SIGBUS</tt> signal can be generated if we access a portion of the mapped region that does not make sense at the time of the access. For example, assume that we map a file using the file's size, but before we reference the mapped region, the file's size is truncated by some other process. If we then try to access the memory-mapped region corresponding to the end portion of the file that was truncated, we'll receive <tt>SIGBUS</tt>.</P>
+<p class="docText">A memory-mapped region is inherited by a child across a <tt>fork</tt> (since it's part of the parent's address space), but for the same reason, is not inherited by the new program across an <tt>exec</tt>.</p>
+<p class="docText">We can change the permissions on an existing mapping by calling <tt>mprotect</tt>.</P>
+<a name="inta163"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;sys/mman.h&gt;
+
+int mprotect(void *<span class="docEmphItalicAlt">addr</span>, size_t <span class="docEmphItalicAlt">len</span>, int <span class="docEmphItalicAlt">prot</span>);
+</pre><BR>
+
+</p>
+</td></tr><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></TD></tr></table></P><br>
+<p class="docText">The legal values for <span class="docEmphasis">prot</span> are the same as those for <tt>mmap</tt> (<a class="docLink" href="ch14lev1sec9.html#ch14fig30">Figure 14.30</a>). The address argument must be an integral multiple of the system's page size.</p>
+<a name="ch14fig30"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 14.30. Protection of memory-mapped region</h5></caption><colgroup><col width="100"><col width="250"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman"><span class="docEmphasis">prot</span></span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></p></th></tr></thead><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>PROT_READ</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Region can be read.</p></td></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>PROT_WRITE</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Region can be written.</P></td></TR><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>PROT_EXEC</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Region can be executed.</P></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>PROT_NONE</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">Region cannot be accessed.</P></td></tr></table></p><br>
+<blockquote>
+<p class="docText">The <tt>mprotect</tt> function is included as part of the memory protection option in the Single UNIX Specification, but all XSI-conforming systems are required to support it.</P>
+</blockquote>
+<p class="docText">If the pages in a shared mapping have been modified, we can call <tt>msync</tt> to flush the changes to the file that backs the mapping. The <tt>msync</tt> function is similar to <tt>fsync</tt> (<a class="docLink" href="ch03lev1sec13.html#ch03lev1sec13">Section 3.13</a>), but works on memory-mapped regions.</p>
+<P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e107926"></a><a name="idd1e107931"></a><a name="idd1e107936"></a><a name="idd1e107941"></a><a name="idd1e107946"></a><a name="idd1e107951"></a><a name="idd1e107956"></a><a name="idd1e107963"></a><a name="idd1e107968"></a><a name="idd1e107975"></a>
+<pre>
+#include &lt;sys/mman.h&gt;
+
+int msync(void *<span class="docEmphItalicAlt">addr</span>, size_t <span class="docEmphItalicAlt">len</span>, int <span class="docEmphItalicAlt">flags</span>);
+</pre><br>
+
+</p>
+</td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></td></tr></table></p><br>
+<p class="docText">If the mapping is private, the file mapped is not modified. As with the other memory-mapped functions, the address must be aligned on a page boundary.</p>
+<p class="docText">The <span class="docEmphasis">flags</span> argument allows us some control over how the memory is flushed. We can specify the <tt>MS_ASYNC</tt> flag to simply schedule the pages to be written. If we want to wait for the writes to complete before returning, we can use the <tt>MS_SYNC</tt> flag. Either <tt>MS_ASYNC</tt> or <tt>MS_SYNC</tt> must be specified.</p>
+<p class="docText">An optional flag, <tt>MS_INVALIDATE</tt>, lets us tell the operating system to discard any pages that are out of sync with the underlying storage. Some implementations will discard all pages in the specified range when we use this flag, but this behavior is not required.</p>
+<p class="docText">A memory-mapped region is automatically unmapped when the process terminates or by calling <tt>munmap</tt> directly. Closing the file descriptor <span class="docEmphasis">filedes</span> does not unmap the region.</p>
+<a name="inta168"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;sys/mman.h&gt;
+
+int munmap(caddr_t <span class="docEmphItalicAlt">addr</span>, size_t <span class="docEmphItalicAlt">len</span>);
+</pre><BR>
+
+</p>
+</TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</P>
+</TD></TR></table></p><BR>
+<p class="docText"><tt>munmap</tt> does not affect the object that was mappedthat is, the call to <tt>munmap</tt> does not cause the contents of the mapped region to be written to the disk file. The updating of the disk file for a <tt>MAP_SHARED</tt> region happens automatically by the kernel's virtual memory algorithm as we store into the memory-mapped region. Modifications to memory in a <tt>MAP_PRIVATE</tt> region are discarded when the region is unmapped.</p>
+<a name="ch14ex12"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText">The program in <a class="docLink" href="ch14lev1sec9.html#ch14fig32">Figure 14.32</a> copies a file (similar to the <tt>cp</tt>(1) command) using memory-mapped I/O.</P>
+<p class="docText">We first open both files and then call <tt>fstat</tt> to obtain the size of the input file. We need this size for the call to <tt>mmap</tt> for the input file, and we also need to set the size of the output file. We call <tt>lseek</tt> and then <tt>write</tt> one byte to set the size of the output file. If we don't set the output file's size, the call to <tt>mmap</tt> for the output file is OK, but the first reference to the associated memory region generates <tt>SIGBUS</tt>. We might be tempted to use <tt>ftruncate</tt> to set the size of the output file, but not all systems extend the size of a file with this function. (See <a class="docLink" href="ch04lev1sec13.html#ch04lev1sec13">Section 4.13</a>.)</p>
+<blockquote>
+<p class="docText">Extending a file with <tt>ftruncate</tt> works on the four platforms discussed in this text.</P>
+</blockquote>
+<p class="docText">We then call <tt>mmap</tt> for each file, to map the file into memory, and finally call <tt>memcpy</tt> to copy from the input buffer to the output buffer. As the bytes of data are fetched from the input buffer (<tt>src</tt>), the input file is automatically read by the kernel; as the data is stored in the output buffer (<tt>dst</tt>), the data is automatically written to the output file.</P>
+<blockquote>
+<p class="docText">Exactly when the data is written to the file is dependent on the system's page management algorithms. Some systems have daemons that write dirty pages to disk slowly over time. If we want to ensure that the data is safely written to the file, we need to call <tt>msync</tt> with the <tt>MS_SYNC</tt> flag before exiting.</p>
+</blockquote>
+<p class="docText"><a name="idd1e108170"></a><a name="idd1e108173"></a><a name="idd1e108176"></a><a name="idd1e108181"></a><a name="idd1e108184"></a><a name="idd1e108187"></a><a name="idd1e108196"></a>Let's compare this memory-mapped file copy to a copy that is done by calling <tt>read</tt> and <tt>write</tt> (with a buffer size of 8,192). <a class="docLink" href="ch14lev1sec9.html#ch14fig33">Figure 14.33</a> shows the results. The times are given in seconds, and the size of the file being copied was 300 megabytes.</P>
+<p class="docText">For Solaris 9, the total CPU time (user + system) is almost the same for both types of copies: 9.88 seconds versus 9.62 seconds. For Linux 2.4.22, the total CPU time is almost doubled when we use <tt>mmap</tt> and <tt>memcpy</tt> (1.06 seconds versus 1.95 seconds). The difference is probably because the two systems implement process time accounting differently.</P>
+<p class="docText">As far as elapsed time is concerned, the version with <tt>mmap</tt> and <tt>memcpy</tt> is faster than the version with <tt>read</tt> and <tt>write</tt>. This makes sense, because we're doing less work with <tt>mmap</tt> and <tt>memcpy</tt>. With <tt>read</tt> and <tt>write</tt>, we copy the data from the kernel's buffer to the application's buffer (<tt>read</tt>), and then copy the data from the application's buffer to the kernel's buffer (<tt>write</tt>). With <tt>mmap</tt> and <tt>memcpy</tt>, we copy the data directly from one kernel buffer mapped into our address space into another kernel buffer mapped into our address space.</p>
+
+<a name="ch14fig33"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 14.33. Timing results comparing <tt>read/write</tt> versus <tt>mmap/memcpy</tt></h5></caption><colgroup><col width="100"><col width="70"><col width="60"><col width="60"><col width="60"><col width="60"><col width="70"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom" rowspan="2"><p class="docText"><span class="docEmphRoman">Operation</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top" colspan="3"><p class="docText"><span class="docEmphRoman">Linux 2.4.22 (Intel x86)</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="top" colspan="3"><p class="docText"><span class="docEmphRoman">Solaris 9 (SPARC)</span></p></th></TR><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">User</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">System</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Clock</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">User</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">System</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Clock</span></p></th></tr></thead><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>read/write</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">0.04</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">1.02</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">39.76</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">0.18</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">9.70</P></TD><td class="docTableCell" align="center" valign="top"><p class="docText">41.66</P></td></TR><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>mmap/memcpy</tt></p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">0.64</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">1.31</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">24.26</p></TD><td class="rightBorder" align="center" valign="top"><p class="docText">1.68</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">7.94</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">28.53</p></td></tr></table></p><br>
+<p class="docText">Memory-mapped I/O is faster when copying one regular file to another. There are limitations. We can't use it to copy between certain devices (such as a network device or a terminal device), and we have to be careful if the size of the underlying file could change after we map it. Nevertheless, some applications can benefit from memory-mapped I/O, as it can often simplify the algorithms, since we manipulate memory instead of reading and writing a file. One example that can benefit from memory-mapped I/O is the manipulation of a frame buffer device that references a bit-mapped display.</p>
+<p class="docText">Krieger, Stumm, and Unrau [<a class="docLink" href="bib01.html#biblio01_033">1992</a>] describe an alternative to the standard I/O library (<a class="docLink" href="ch05.html#ch05">Chapter 5</a>) that uses memory-mapped I/O.</p>
+<p class="docText">We return to memory-mapped I/O in <a class="docLink" href="ch15lev1sec9.html#ch15lev1sec9">Section 15.9</a>, showing an example of how it can be used to provide shared memory between related processes.</p>
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch14lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

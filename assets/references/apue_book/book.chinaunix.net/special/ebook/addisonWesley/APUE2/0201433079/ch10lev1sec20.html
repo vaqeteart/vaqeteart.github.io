@@ -1,0 +1,95 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 10.20.&nbsp; Job-Control Signals</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec19.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec21.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch10lev1sec20"></a>
+<h3 class="docSection1Title">10.20. Job-Control Signals</h3>
+<p class="docText"><a name="idd1e80499"></a><a name="idd1e80502"></a><a name="idd1e80507"></a><a name="idd1e80512"></a><a name="idd1e80517"></a><a name="idd1e80522"></a><a name="idd1e80527"></a><a name="idd1e80532"></a><a name="idd1e80537"></a><a name="idd1e80542"></a><a name="idd1e80547"></a><a name="idd1e80552"></a><a name="idd1e80557"></a><a name="idd1e80562"></a><a name="idd1e80567"></a><a name="idd1e80572"></a><a name="idd1e80577"></a><a name="idd1e80582"></a><a name="idd1e80587"></a><a name="idd1e80592"></a><a name="idd1e80597"></a>Of the signals shown in <a class="docLink" href="ch10lev1sec2.html#ch10fig01">Figure 10.1</a>, POSIX.1 considers six to be job-control signals:</P>
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="100"><col width="400"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>SIGCHLD</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Child process has stopped or terminated.</P></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>SIGCONT</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Continue process, if stopped.</P></td></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>SIGSTOP</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Stop signal (can't be caught or ignored).</p></td></tr><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt><tt>SIGTSTP</tt></tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">Interactive stop signal.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>SIGTTIN</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Read from controlling terminal by member of a background process group.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>SIGTTOU</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Write to controlling terminal by member of a background process group.</p></TD></TR></table></p><BR>
+<p class="docText"><a name="idd1e80696"></a><a name="idd1e80699"></a><a name="idd1e80704"></a><a name="idd1e80709"></a><a name="idd1e80714"></a><a name="idd1e80717"></a><a name="idd1e80722"></a><a name="idd1e80727"></a>Except for <tt>SIGCHLD</tt>, most application programs don't handle these signals: interactive shells usually do all the work required to handle these signals. When we type the suspend character (usually Control-Z), <tt>SIGTSTP</tt> is sent to all processes in the foreground process group. When we tell the shell to resume a job in the foreground or background, the shell sends all the processes in the job the <tt>SIGCONT</tt> signal. Similarly, if <tt>SIGTTIN</tt> or <tt>SIGTTOU</tt> is delivered to a process, the process is stopped by default, and the job-control shell recognizes this and notifies us.</P>
+<p class="docText">An exception is a process that is managing the terminal: the <tt>vi</tt>(1) editor, for example. It needs to know when the user wants to suspend it, so that it can restore the terminal's state to the way it was when <tt>vi</tt> was started. Also, when it resumes in the foreground, the <tt>vi</tt> editor needs to set the terminal state back to the way it wants it, and it needs to redraw the terminal screen. We see how a program such as <tt>vi</tt> handles this in the example that follows.</P>
+<p class="docText">There are some interactions between the job-control signals. When any of the four stop signals (<tt>SIGTSTP</tt>, <tt>SIGSTOP</tt>, <tt>SIGTTIN</tt>, or <tt>SIGTTOU</tt>) is generated for a process, any pending <tt>SIGCONT</tt> signal for that process is discarded. Similarly, when the <tt>SIGCONT</tt> signal is generated for a process, any pending stop signals for that same process are discarded.</p>
+<p class="docText">Note that the default action for <tt>SIGCONT</tt> is to continue the process, if it is stopped; otherwise, the signal is ignored. Normally, we don't have to do anything with this signal. When <tt>SIGCONT</tt> is generated for a process that is stopped, the process is continued, even if the signal is blocked or ignored.</P>
+<a name="ch10ex20"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText">The program in <a class="docLink" href="ch10lev1sec20.html#ch10fig30">Figure 10.30</a> demonstrates the normal sequence of code used when a program handles job control. This program simply copies its standard input to its standard output, but comments are given in the signal handler for typical actions performed by a program that manages a screen. When the program in <a class="docLink" href="ch10lev1sec20.html#ch10fig30">Figure 10.30</a> starts, it arranges to catch the <tt>SIGTSTP</tt> signal only if the signal's disposition is <tt>SIG_DFL</tt>. The reason is that when the program is started by a shell that doesn't support job control (<tt>/bin/sh</tt>, for example), the signal's disposition should be set to <tt>SIG_IGN</tt>. In fact, the shell doesn't explicitly ignore this signal; <tt>init</tt> sets the disposition of the three job-control signals (<tt>SIGTSTP</tt>, <tt>SIGTTIN</tt>, and <tt>SIGTTOU</tt>) to <tt>SIG_IGN</tt>. This disposition is then inherited by all login shells. Only a job-control shell should reset the disposition of these three signals to <tt>SIG_DFL</tt>.</p>
+<p class="docText">When we type the suspend character, the process receives the <tt>SIGTSTP</tt> signal, and the signal handler is invoked. At this point, we would do any terminal-related processing: move the cursor to the lower-left corner, restore the terminal mode, and so on. We then send ourself the same signal, <tt>SIGTSTP</tt>, after resetting its disposition to its default (stop the process) and unblocking the signal. We have to unblock it since we're currently handling that same signal, and the system blocks it automatically while it's being caught. At this point, the system stops the process. It is continued only when it receives (usually from the job-control shell, in response to an interactive <tt>fg</tt> command) a<a name="idd1e80851"></a><a name="idd1e80854"></a><a name="idd1e80857"></a><a name="idd1e80860"></a><a name="idd1e80865"></a><a name="idd1e80870"></a><a name="idd1e80877"></a><a name="idd1e80882"></a><a name="idd1e80887"></a><a name="idd1e80890"></a><a name="idd1e80895"></a><a name="idd1e80900"></a><a name="idd1e80907"></a><tt>SIGCONT</tt> signal. We don't catch <tt>SIGCONT</tt>. Its default disposition is to continue the stopped process; when this happens, the program continues as though it returned from the <tt>kill</tt> function. When the program is continued, we reset the disposition for the <tt>SIGTSTP</tt> signal and do whatever terminal processing we want (we could redraw the screen, for example).</P>
+
+<a name="ch10fig30"></a>
+<h5 class="docExampleTitle">Figure 10.30. How to handle <tt>SIGTSTP</tt></H5>
+
+<pre>
+#include "apue.h"
+
+#define BUFFSIZE   1024
+
+static void sig_tstp(int);
+
+int
+main(void)
+{
+    int     n;
+    char    buf[BUFFSIZE];
+
+    /*
+     * Only catch SIGTSTP if we're running with a job-control shell.
+     */
+    if (signal(SIGTSTP, SIG_IGN) == SIG_DFL)
+        signal(SIGTSTP, sig_tstp);
+
+    while ((n = read(STDIN_FILENO, buf, BUFFSIZE)) &gt; 0)
+        if (write(STDOUT_FILENO, buf, n) != n)
+            err_sys("write error");
+
+    if (n &lt; 0)
+        err_sys("read error");
+
+    exit(0);
+}
+
+static void
+sig_tstp(int signo) /* signal handler for SIGTSTP */
+{
+    sigset_t    mask;
+
+    /* ... move cursor to lower left corner, reset tty mode ... */
+
+    /*
+     * Unblock SIGTSTP, since it's blocked while we're handling it.
+     */
+    sigemptyset(&amp;mask);
+    sigaddset(&amp;mask, SIGTSTP);
+    sigprocmask(SIG_UNBLOCK, &amp;mask, NULL);
+
+    signal(SIGTSTP, SIG_DFL);   /* reset disposition to default */
+
+    kill(getpid(), SIGTSTP);    /* and send the signal to ourself */
+
+    /* we won't return from the kill until we're continued */
+
+    signal(SIGTSTP, sig_tstp);  /* reestablish signal handler */
+
+    /* ... reset tty mode, redraw screen ... */
+}
+</pre><BR>
+
+
+
+<UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec19.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec21.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

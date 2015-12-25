@@ -1,0 +1,100 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 16.6.&nbsp; Socket Options</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch16lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch16lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch16lev1sec6"></a>
+<h3 class="docSection1Title" id="454331-995">16.6. Socket Options</h3>
+<p class="docText"><a name="idd1e125659"></a><a name="idd1e125664"></a><a name="idd1e125669"></a><a name="idd1e125674"></a><a name="idd1e125679"></a><a name="idd1e125684"></a><a name="idd1e125689"></a><a name="idd1e125694"></a><a name="idd1e125699"></a><a name="idd1e125704"></a>The socket mechanism provides two socket-option interfaces for us to control the behavior of sockets. One interface is used to set an option, and another interface allows us to query the state of an option. We can get and set three kinds of options:</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">Generic options that work with all socket types</p></div></LI><LI><div style="font-weight:normal"><p class="docList">Options that are managed at the socket level, but depend on the underlying protocols for support</P></div></li><LI><div style="font-weight:normal"><p class="docList">Protocol-specific options unique to each individual protocol</P></div></LI></ol></div>
+<p class="docText">The Single UNIX Specification defines only the socket-layer options (the first two option types in the preceding list).</p>
+<p class="docText">We can set a socket option with the <tt>setsockopt</tt> function.</P>
+<a name="inta134"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch16lev1sec6.html#PLID0">[View full width]</a></div><pre>
+#include &lt;sys/socket.h&gt;
+
+int setsockopt(int <span class="docEmphItalicAlt">sockfd</span>, int <span class="docEmphItalicAlt">level</span>, int <span class="docEmphItalicAlt">option</span>,
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> const void *<span class="docEmphItalicAlt">val</span>,
+               socklen_t <span class="docEmphItalicAlt">len</span>);
+</pre><BR>
+</p></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</P></td></tr></table></p><br>
+<p class="docText">The <span class="docEmphasis">level</span> argument identifies the protocol to which the option applies. If the option is a generic socket-level option, then <span class="docEmphasis">level</span> is set to <tt>SOL_SOCKET</tt>. Otherwise, <span class="docEmphasis">level</span> is set to the number of the protocol that controls the option. Examples are <tt>IPPROTO_TCP</tt> for TCP options and <tt>IPPROTO_IP</tt> for IP options. <a class="docLink" href="ch16lev1sec6.html#ch16fig19">Figure 16.19</a> summarizes the generic socket-level options defined by the Single UNIX Specification.</P>
+<a name="ch16fig19"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 16.19. Socket options</h5></caption><colgroup><col width="100"><col width="100"><col width="300"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Option</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Type of <span class="docEmphasis">val</span> argument</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Description</span></p></th></tr></thead><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_ACCEPTCONN</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Return whether a socket is enabled for listening (<tt>getsockopt</tt> only).</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_BROADCAST</tt></P></TD><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Broadcast datagrams if <tt>*val</tt> is nonzero.</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_DEBUG</tt></P></td><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Debugging in network drivers enabled if <tt>*val</tt> is nonzero.</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_DONTROUTE</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Bypass normal routing if <tt>*val</tt> is nonzero.</P></td></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_ERROR</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Return and clear pending socket error (<tt>getsockopt</tt> only).</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_KEEPALIVE</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Periodic keep-alive messages enabled if <tt>*val</tt> is nonzero.</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_LINGER</tt></P></TD><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>struct linger</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Delay time when unsent messages exist and socket is closed.</P></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_OOBINLINE</tt></P></td><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt></P></td><td class="docTableCell" align="left" valign="top"><p class="docText">Out-of-band data placed inline with normal data if <tt>*val</tt> is nonzero.</p></td></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_RCVBUF</tt></p></TD><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The size in bytes of the receive buffer.</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_RCVLOWAT</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The minimum amount of data in bytes to return on a receive call.</p></td></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_RCVTIMEO</tt></P></TD><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>struct timeval</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">The timeout value for a socket receive call.</P></td></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_REUSEADDR</tt></P></TD><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Reuse addresses in <tt>bind</tt> if <tt>*val</tt> is nonzero.</P></TD></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_SNDBUF</tt></p></TD><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The size in bytes of the send buffer.</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_SNDLOWAT</tt></p></td><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The minimum amount of data in bytes to transmit in a send call.</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_SNDTIMEO</tt></p></TD><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>struct timeval</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">The timeout value for a socket send call.</P></td></TR><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>SO_TYPE</tt></p></TD><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>int</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Identify the socket type (<tt>getsockopt only</tt>).</p></TD></TR></table></p><BR>
+<p class="docText">The <span class="docEmphasis">val</span> argument points to a data structure or an integer, depending on the option. Some options are on/off switches. If the integer is nonzero, then the option is enabled. If the integer is zero, then the option is disabled. The <span class="docEmphasis">len</span> argument specifies the size of the object to which <span class="docEmphasis">val</span> points.</P>
+<p class="docText">We can find out the current value of an option with the <tt>getsockopt</tt> function.</p>
+<a name="inta303"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID1"></a><div class="v1"><a href="ch16lev1sec6.html#PLID1">[View full width]</a></div><pre>
+#include &lt;sys/socket.h&gt;
+
+int getsockopt(int <span class="docEmphItalicAlt">sockfd</span>, int <span class="docEmphItalicAlt">level</span>, int <span class="docEmphItalicAlt">option</span>,
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> void *restrict <span class="docEmphItalicAlt">val</span>,
+               socklen_t *restrict <span class="docEmphItalicAlt">lenp</span>);
+</pre><BR>
+
+</p></TD></tr><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></td></tr></table></p><br>
+<p class="docText">Note that the <span class="docEmphasis">lenp</span> argument is a pointer to an integer. Before calling <tt>getsockopt</tt>, we set the integer to the size of the buffer where the option is to be copied. If the actual size <a name="idd1e126198"></a><a name="idd1e126203"></a><a name="idd1e126210"></a><a name="idd1e126215"></a><a name="idd1e126220"></a>of the option is greater than this size, the option is silently truncated. If the actual size of the option is less than or equal to this size, then the integer is updated with the actual size on return.</p>
+<a name="ch16ex09"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">The function in <a class="docLink" href="ch16lev1sec4.html#ch16fig10">Figure 16.10</a> fails to operate properly when the server terminates and we try to restart it immediately. Normally, the implementation of TCP will prevent us from binding the same address until a timeout expires, which is usually on the order of several minutes. Luckily, the <tt>SO_REUSEADDR</tt> socket option allows us to bypass this restriction, as illustrated in <a class="docLink" href="ch16lev1sec6.html#ch16fig20">Figure 16.20</a>.</p>
+<p class="docText">To enable the <tt>SO_REUSEADDR</tt> option, we set an integer to a nonzero value and pass the address of the integer as the <span class="docEmphasis">val</span> argument to <tt>setsockopt</tt>. We set the <span class="docEmphasis">len</span> argument to the size of an integer to indicate the size of the object to which <span class="docEmphasis">val</span> points.</p>
+
+<a name="ch16fig20"></a>
+<h5 class="docExampleTitle">Figure 16.20. Initialize a socket endpoint for use by a server with address reuse</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;errno.h&gt;
+#include &lt;sys/socket.h&gt;
+
+int
+initserver(int type, const struct sockaddr *addr, socklen_t alen,
+  int qlen)
+{
+    int fd, err;
+    int reuse = 1;
+
+    if ((fd = socket(addr-&gt;sa_family, type, 0)) &lt; 0)
+        return(-1);
+    if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &amp;reuse,
+      sizeof(int)) &lt; 0) {
+        err = errno;
+        goto errout;
+    }
+    if (bind(fd, addr, alen) &lt; 0) {
+        err = errno;
+        goto errout;
+    }
+    if (type == SOCK_STREAM || type == SOCK_SEQPACKET) {
+        if (listen(fd, qlen) &lt; 0) {
+            err = errno;
+            goto errout;
+        }
+    }
+    return(fd);
+
+errout:
+    close(fd);
+    errno = err;
+    return(-1);
+}
+</pre><br>
+
+
+
+<ul></ul></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch16lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch16lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,130 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 1.5.&nbsp; Input and Output</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch01lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch01lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch01lev1sec5"></a>
+<h3 class="docSection1Title">1.5. Input and Output</h3>
+<a name="ch01lev2sec8"></a>
+<H4 class="docSection2Title">File Descriptors</H4>
+<p class="docText"><a name="idd1e2725"></a><a name="idd1e2730"></a><a name="idd1e2735"></a><a name="idd1e2740"></a><a name="idd1e2745"></a><a name="idd1e2750"></a><a name="idd1e2755"></a><a name="idd1e2760"></a><a name="idd1e2763"></a><a name="idd1e2766"></a><a name="idd1e2769"></a><a name="idd1e2774"></a><a name="idd1e2779"></a><a name="idd1e2782"></a>File descriptors are normally small non-negative integers that the kernel uses to identify the files being accessed by a particular process. Whenever it opens an existing file or creates a new file, the kernel returns a file descriptor that we use when we want to read or write the file.</p>
+
+<a name="ch01lev2sec9"></a>
+<H4 class="docSection2Title">Standard Input, Standard Output, and Standard Error</H4>
+<p class="docText">By convention, all shells open three descriptors whenever a new program is run: standard input, standard output, and standard error. If nothing special is done, as in the simple command</P>
+
+<pre>
+   ls
+</pre><br>
+
+<p class="docText">then all three are connected to the terminal. Most shells provide a way to redirect any or all of these three descriptors to any file. For example,</P>
+
+<pre>
+   ls &gt; file.list
+</pre><BR>
+
+<p class="docText">executes the <tt>ls</tt> command with its standard output redirected to the file named <tt>file.list</tt>.</P>
+
+<a name="ch01lev2sec10"></a>
+<h4 class="docSection2Title">Unbuffered I/O</H4>
+<p class="docText">Unbuffered I/O is provided by the functions <tt>open</tt>, <tt>read</tt>, <tt>write</tt>, <tt>lseek</tt>, and <tt>close</tt>. These functions all work with file descriptors.</p>
+<a name="ch01ex02"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText">If we're willing to read from the standard input and write to the standard output, then the program in <a class="docLink" href="ch01lev1sec5.html#ch01fig04">Figure 1.4</a> copies any regular file on a UNIX system.</P>
+<p class="docText"><a name="idd1e2853"></a><a name="idd1e2858"></a><a name="idd1e2863"></a><a name="idd1e2868"></a><a name="idd1e2873"></a>The <tt>&lt;unistd.h&gt;</tt> header, included by <tt>apue.h</tt>, and the two constants <tt>STDIN_FILENO</tt> and <tt>STDOUT_FILENO</tt> are part of the POSIX standard (about which we'll have a lot more to say in the next chapter). In this header are function prototypes for many of the UNIX system services, such as the <tt>read</tt> and <tt>write</tt> functions that we call.</p>
+<p class="docText">The constants <tt>STDIN_FILENO</tt> and <tt>STDOUT_FILENO</tt> are defined in <tt>&lt;unistd.h&gt;</tt> and specify the file descriptors for standard input and standard output. These values are typically 0 and 1, respectively, but we'll use the new names for portability.</P>
+<p class="docText">In <a class="docLink" href="ch03lev1sec9.html#ch03lev1sec9">Section 3.9</a>, we'll examine the <tt>BUFFSIZE</tt> constant in detail, seeing how various values affect the efficiency of the program. Regardless of the value of this constant, however, this program still copies any regular file.</P>
+<p class="docText">The <tt>read</tt> function returns the number of bytes that are read, and this value is used as the number of bytes to write. When the end of the input file is encountered, <tt>read</tt> returns 0 and the program stops. If a read error occurs, <tt>read</tt> returns -1. Most of the system functions return 1 when an error occurs.</p>
+<p class="docText">If we compile the program into the standard name (<tt>a.out</tt>) and execute it as</P>
+
+<pre>
+   ./a.out &gt; data
+</pre><BR>
+
+<p class="docText">standard input is the terminal, standard output is redirected to the file <tt>data</tt>, and standard error is also the terminal. If this output file doesn't exist, the shell creates it by default. The program copies lines that we type to the standard output until we type the end-of-file character (usually Control-D).</p>
+<p class="docText">If we run</p>
+
+<pre>
+   ./a.out &lt; infile &gt; outfile
+</pre><br>
+
+<p class="docText">then the file named <tt>infile</tt> will be copied to the file named <tt>outfile</tt>.</p>
+
+<a name="ch01fig04"></a>
+<H5 class="docExampleTitle">Figure 1.4. List all the files in a directory</h5>
+
+<pre>
+#include "apue.h"
+
+#define BUFFSIZE    4096
+
+int
+main(void)
+{
+    int     n;
+    char    buf[BUFFSIZE];
+
+    while ((n = read(STDIN_FILENO, buf, BUFFSIZE)) &gt; 0)
+        if (write(STDOUT_FILENO, buf, n) != n)
+            err_sys("write error");
+        if (n &lt; 0)
+            err_sys("read error");
+
+        exit(0);
+}
+</pre><BR>
+
+
+<p class="docText">In <a class="docLink" href="ch03.html#ch03">Chapter 3</a>, we describe the unbuffered I/O functions in more detail.</p>
+
+<a name="ch01lev2sec11"></a>
+<H4 class="docSection2Title">Standard I/O</h4>
+<p class="docText">The standard I/O functions provide a buffered interface to the unbuffered I/O functions. Using standard I/O prevents us from having to worry about choosing optimal buffer sizes, such as the <tt>BUFFSIZE</tt> constant in <a class="docLink" href="ch01lev1sec5.html#ch01fig04">Figure 1.4</a>. Another advantage of using the standard I/O functions is that they simplify dealing with lines of input (a common occurrence in UNIX applications). The <tt>fgets</tt> function, for example, reads an entire line. The <tt>read</tt> function, on the other hand, reads a specified number of bytes. As we shall see in <a class="docLink" href="ch05lev1sec4.html#ch05lev1sec4">Section 5.4</a>, the standard I/O library provides functions that let us control the style of buffering used by the library.</p>
+<p class="docText"><a name="idd1e3025"></a><a name="idd1e3030"></a><a name="idd1e3035"></a><a name="idd1e3040"></a><a name="idd1e3045"></a><a name="idd1e3050"></a><a name="idd1e3053"></a><a name="idd1e3058"></a><a name="idd1e3061"></a><a name="idd1e3066"></a><a name="idd1e3071"></a><a name="idd1e3076"></a>The most common standard I/O function is <tt>printf</tt>. In programs that call <tt>printf</tt>, we'll always include <tt>&lt;stdio.h&gt;</tt>normally by including <tt>apue.h</tt>as this header contains the function prototypes for all the standard I/O functions.</p>
+<a name="ch01ex03"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch01lev1sec5.html#ch01fig05">Figure 1.5</a>, which we'll examine in more detail in <a class="docLink" href="ch05lev1sec8.html#ch05lev1sec8">Section 5.8</a>, is like the previous program that called <tt>read</tt> and <tt>write</tt>. This program copies standard input to standard output and can copy any regular file.</p>
+<p class="docText">The function <tt>getc</tt> reads one character at a time, and this character is written by <tt>putc</tt>. After the last byte of input has been read, <tt>getc</tt> returns the constant <tt>EOF</tt> (defined in <tt>&lt;stdio.h&gt;</tt>). The standard I/O constants <tt>stdin</tt> and <tt>stdout</tt> are also defined in the <tt>&lt;stdio.h&gt;</tt> header and refer to the standard input and standard output.</p>
+
+<a name="ch01fig05"></a>
+<h5 class="docExampleTitle">Figure 1.5. Copy standard input to standard output, using standard I/O</h5>
+
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+    int     c;
+
+    while ((c = getc(stdin)) != EOF)
+        if (putc(c, stdout) == EOF)
+            err_sys("output error");
+
+    if (ferror(stdin))
+        err_sys("input error");
+
+    exit(0);
+}
+</pre><br>
+
+
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch01lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch01lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

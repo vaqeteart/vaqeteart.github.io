@@ -1,0 +1,75 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 5.10.&nbsp; Positioning a Stream</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch05lev1sec10"></a>
+<h3 class="docSection1Title" id="454331-845">5.10. Positioning a Stream</h3>
+<p class="docText">There are three ways to position a standard I/O stream:</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">The two functions <tt>ftell</tt> and <tt>fseek</tt>. They have been around since Version 7, but they assume that a file's position can be stored in a long integer.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">The two functions <tt>ftello</tt> and <tt>fseeko</tt>. They were introduced in the Single UNIX Specification to allow for file offsets that might not fit in a long integer. They replace the long integer with the <tt>off_t</tt> data type.</P></div></li><LI><div style="font-weight:normal"><p class="docList">The two functions <tt>fgetpos</tt> and <tt>fsetpos</tt>. They were introduced by ISO C. They use an abstract data type, <tt>fpos_t</tt>, that records a file's position. This data type can be made as big as necessary to record a file's position.</P></div></LI></ol></div>
+<p class="docText">Portable applications that need to move to non-UNIX systems should use <tt>fgetpos</tt> and <tt>fsetpos</tt>.</p>
+<a name="inta272"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdio.h&gt;
+
+long ftell(FILE *<span class="docEmphItalicAlt">fp</span>);
+</pre><BR>
+
+</P></td></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: current file position indicator if OK, 1L on error</P></TD></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+int fseek(FILE *<span class="docEmphItalicAlt">fp</span>, long <span class="docEmphItalicAlt">offset</span>, int <span class="docEmphItalicAlt">whence</span>);
+</pre><br>
+
+</P></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, nonzero on error</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+void rewind(FILE *<span class="docEmphItalicAlt">fp</span>);
+</pre><br>
+
+</p></td></tr></table></p><br>
+<p class="docText"><a name="idd1e38513"></a><a name="idd1e38520"></a><a name="idd1e38527"></a><a name="idd1e38534"></a><a name="idd1e38541"></a><a name="idd1e38546"></a><a name="idd1e38551"></a><a name="idd1e38556"></a><a name="idd1e38561"></a>For a binary file, a file's position indicator is measured in bytes from the beginning of the file. The value returned by <tt>ftell</tt> for a binary file is this byte position. To position a binary file using <tt>fseek</tt>, we must specify a byte <span class="docEmphasis">offset</span> and how that offset is interpreted. The values for <span class="docEmphasis">whence</span> are the same as for the <tt>lseek</tt> function from <a class="docLink" href="ch03lev1sec6.html#ch03lev1sec6">Section 3.6</a>: <tt>SEEK_SET</tt> means from the beginning of the file, <tt>SEEK_CUR</tt> means from the current file position, and <tt>SEEK_END</tt> means from the end of file. ISO C doesn't require an implementation to support the <tt>SEEK_END</tt> specification for a binary file, as some systems require a binary file to be padded at the end with zeros to make the file size a multiple of some magic number. Under the UNIX System, however, <tt>SEEK_END</tt> is supported for binary files.</p>
+<p class="docText">For text files, the file's current position may not be measurable as a simple byte offset. Again, this is mainly under non-UNIX systems that might store text files in a different format. To position a text file, <span class="docEmphasis">whence</span> has to be <tt>SEEK_SET</tt>, and only two values for <span class="docEmphasis">offset</span> are allowed: 0meaning rewind the file to its beginningor a value that was returned by <tt>ftell</tt> for that file. A stream can also be set to the beginning of the file with the <tt>rewind</tt> function.</p>
+<p class="docText">The <tt>ftello</tt> function is the same as <tt>ftell</tt>, and the <tt>fseeko</tt> function is the same as <tt>fseek</tt>, except that the type of the offset is <tt>off_t</tt> instead of <tt>long</tt>.</p>
+<a name="inta79"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdio.h&gt;
+
+off_t ftello(FILE *<span class="docEmphItalicAlt">fp</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: current file position indicator if OK, <tt>(off_t)</tt><tt>1</tt> on error</p></TD></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+int fseeko(FILE *<span class="docEmphItalicAlt">fp</span>, off_t <span class="docEmphItalicAlt">offset</span>, int <span class="docEmphItalicAlt">whence</span>);
+</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, nonzero on error</P></TD></tr></table></P><BR>
+<p class="docText">Recall the discussion of the <tt>off_t</tt> data type in <a class="docLink" href="ch03lev1sec6.html#ch03lev1sec6">Section 3.6</a>. Implementations can define the <tt>off_t</tt> type to be larger than 32 bits.</p>
+<p class="docText">As we mentioned, the <tt>fgetpos</tt> and <tt>fsetpos</tt> functions were introduced by the ISO C standard.</p>
+<a name="inta63"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdio.h&gt;
+
+int fgetpos(FILE *restrict <span class="docEmphItalicAlt">fp</span>, fpos_t *restrict <span class="docEmphItalicAlt">pos</span>);
+
+int fsetpos(FILE *<span class="docEmphItalicAlt">fp</span>, const fpos_t *<span class="docEmphItalicAlt">pos</span>);
+</pre><br>
+
+</P></td></TR><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, nonzero on error</p></td></tr></table></p><br>
+<p class="docText">The <tt>fgetpos</tt> function stores the current value of the file's position indicator in the object pointed to by <span class="docEmphasis">pos</span>. This value can be used in a later call to <tt>fsetpos</tt> to reposition the stream to that location.</p>
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

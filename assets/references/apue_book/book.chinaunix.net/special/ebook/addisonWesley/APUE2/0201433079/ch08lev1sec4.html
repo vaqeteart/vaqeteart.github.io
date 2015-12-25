@@ -1,0 +1,82 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 8.4.&nbsp; vfork Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch08lev1sec4"></a>
+<h3 class="docSection1Title">8.4. <tt>vfork</tt> Function</h3>
+<p class="docText">The function <tt>vfork</tt> has the same calling sequence and same return values as <tt>fork</tt>. But the semantics of the two functions differ.</P>
+<blockquote>
+<p class="docText">The <tt>vfork</tt> function originated with 2.9BSD. Some consider the function a blemish, but all the platforms covered in this book support it. In fact, the BSD developers removed it from the 4.4BSD release, but all the open source BSD distributions that derive from 4.4BSD added support for it back into their own releases. The <tt>vfork</tt> function is marked as an obsolete interface in Version 3 of the Single UNIX Specification.</P>
+</blockquote>
+<p class="docText">The <tt>vfork</tt> function is intended to create a new process when the purpose of the new process is to <tt>exec</tt> a new program (step 2 at the end of the previous section). The bare-bones shell in the program from <a class="docLink" href="ch01lev1sec6.html#ch01fig07">Figure 1.7</a> is also an example of this type of program. The <tt>vfork</tt> function creates the new process, just like <tt>fork</tt>, without copying the address space of the parent into the child, as the child won't reference that address space; the child simply calls <tt>exec</tt> (or <tt>exit</tt>) right after the <tt>vfork</tt>. Instead, while the child is running and until it calls either <tt>exec</tt> or <tt>exit</tt>, the child runs in the address space of the parent. This optimization provides an efficiency gain on some paged virtual-memory implementations of the UNIX System. (As we mentioned in the previous section, implementations use copy-on-write to improve the efficiency of a <tt>fork</tt> followed by an <tt>exec</tt>, but no copying is still faster than some copying.)</p>
+<p class="docText">Another difference between the two functions is that <tt>vfork</tt> guarantees that the child runs first, until the child calls <tt>exec</tt> or <tt>exit</tt>. When the child calls either of these functions, the parent resumes. (This can lead to deadlock if the child depends on further actions of the parent before calling either of these two functions.)</P>
+<a name="ch08ex02"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText">The program in <a class="docLink" href="ch08lev1sec4.html#ch08fig03">Figure 8.3</a> is a modified version of the program from <a class="docLink" href="ch08lev1sec3.html#ch08fig01">Figure 8.1</a>. We've replaced the call to <tt>fork</tt> with <tt>vfork</tt> and removed the <tt>write</tt> to standard output. Also, we don't need to have the parent call <tt>sleep</tt>, as we're guaranteed that it is put to sleep by the kernel until the child calls either <tt>exec</tt> or <tt>exit</tt>.</p>
+<p class="docText"><a name="idd1e54120"></a><a name="idd1e54123"></a><a name="idd1e54128"></a><a name="idd1e54133"></a><a name="idd1e54138"></a><a name="idd1e54143"></a><a name="idd1e54148"></a>Running this program gives us</P>
+
+<pre>
+$ <span class="docEmphStrong">./a.out</span>
+before vfork
+pid = 29039, glob = 7, var = 89
+</pre><BR>
+
+<p class="docText">Here, the incrementing of the variables done by the child changes the values in the parent. Because the child runs in the address space of the parent, this doesn't surprise us. This behavior, however, differs from <tt>fork</tt>.</P>
+<p class="docText">Note in <a class="docLink" href="ch08lev1sec4.html#ch08fig03">Figure 8.3</a> that we call <tt>_exit</tt> instead of <tt>exit</tt>. As we described in <a class="docLink" href="ch07lev1sec3.html#ch07lev1sec3">Section 7.3</a>, <tt>_exit</tt> does not perform any flushing of standard I/O buffers. If we call <tt>exit</tt> instead, the results are indeterminate. Depending on the implementation of the standard I/O library, we might see no difference in the output, or we might find that the output from the parent's <tt>printf</tt> has disappeared.</p>
+<p class="docText">If the child calls <tt>exit</tt>, the implementation flushes the standard I/O streams. If this is the only action taken by the library, then we will see no difference with the output generated if the child called <tt>_exit</tt>. If the implementation also closes the standard I/O streams, however, the memory representing the <tt>FILE</tt> object for the standard output will be cleared out. Because the child is borrowing the parent's address space, when the parent resumes and calls <tt>printf</tt>, no output will appear and <tt>printf</tt> will return -1. Note that the parent's <tt>STDOUT_FILENO</tt> is still valid, as the child gets a copy of the parent's file descriptor array (refer back to <a class="docLink" href="ch08lev1sec3.html#ch08fig02">Figure 8.2</a>).</P>
+<blockquote>
+<p class="docText"><a name="idd1e54222"></a><a name="idd1e54227"></a><a name="idd1e54232"></a><a name="idd1e54237"></a><a name="idd1e54242"></a><a name="idd1e54245"></a><a name="idd1e54250"></a><a name="idd1e54253"></a><a name="idd1e54258"></a><a name="idd1e54261"></a>Most modern implementations of <tt>exit</tt> will not bother to close the streams. Because the process is about to exit, the kernel will close all the file descriptors open in the process. Closing them in the library simply adds overhead without any benefit.</p>
+</blockquote>
+
+<a name="ch08fig03"></a>
+<H5 class="docExampleTitle">Figure 8.3. Example of <tt>vfork</tt> function</H5>
+
+<pre>
+#include "apue.h"
+
+int     glob = 6;       /* external variable in initialized data */
+
+int
+main(void)
+{
+    int     var;        /* automatic variable on the stack */
+    pid_t   pid;
+
+    var = 88;
+    printf("before vfork\n");   /* we don't flush stdio */
+    if ((pid = vfork()) &lt; 0) {
+        err_sys("vfork error");
+    } else if (pid == 0) {      /* child */
+        glob++;                 /* modify parent's variables */
+        var++;
+        _exit(0);               /* child terminates */
+    }
+    /*
+     * Parent continues here.
+     */
+    printf("pid = %d, glob = %d, var = %d\n", getpid(), glob, var);
+    exit(0);
+}
+</pre><BR>
+
+
+<p class="docText"><a class="docLink" href="ch05lev1sec6.html#ch05lev1sec6">Section 5.6</a> of McKusick et al. [<a class="docLink" href="bib01.html#biblio01_042">1996</a>] contains additional information on the implementation issues of <tt>fork</tt> and <tt>vfork</tt>. <a class="docLink" href="ch08lev1sec18.html#ch08qa1q1">Exercises 8.1</a> and <a class="docLink" href="ch08lev1sec18.html#ch08qa1q2">8.2</a> continue the discussion of <tt>vfork</tt>.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

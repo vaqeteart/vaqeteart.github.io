@@ -1,0 +1,41 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 18.4.&nbsp; Getting and Setting Terminal Attributes</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch18lev1sec4"></a>
+<h3 class="docSection1Title">18.4. Getting and Setting Terminal Attributes</h3>
+<p class="docText"><a name="idd1e137825"></a><a name="idd1e137830"></a><a name="idd1e137835"></a><a name="idd1e137838"></a><a name="idd1e137843"></a><a name="idd1e137850"></a><a name="idd1e137855"></a><a name="idd1e137860"></a><a name="idd1e137865"></a><a name="idd1e137870"></a><a name="idd1e137877"></a><a name="idd1e137882"></a>To get and set a <tt>termios</tt> structure, we call two functions: <tt>tcgetattr</tt> and <tt>tcsetattr</tt>. This is how we examine and modify the various option flags and special characters to make the terminal operate the way we want it to.</P>
+<a name="inta346"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch18lev1sec4.html#PLID0">[View full width]</a></div><pre>
+#include &lt;termios.h&gt;
+
+int tcgetattr(int <span class="docEmphItalicAlt">filedes</span>, struct termios *<span class="docEmphItalicAlt">termptr</span>);
+
+int tcsetattr(int <span class="docEmphItalicAlt">filedes</span>, int <span class="docEmphItalicAlt">opt</span>, const struct
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> termios *<span class="docEmphItalicAlt">termptr</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">Both functions take a pointer to a <tt>termios</tt> structure and either return the current terminal attributes or set the terminal's attributes. Since these two functions operate only on terminal devices, <tt>errno</tt> is set to <tt>ENOTTY</tt> and 1 is returned if <span class="docEmphasis">filedes</span> does not refer to a terminal device.</P>
+<p class="docText">The argument <span class="docEmphasis">opt</span> for <tt>tcsetattr</tt> lets us specify when we want the new terminal attributes to take effect. This argument is specified as one of the following constants.</p>
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="100"><col width="400"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>TCSANOW</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">The change occurs immediately.</p></td></tr><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>TCSADRAIN</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The change occurs after all output has been transmitted. This option should be used if we are changing the output parameters.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>TCSAFLUSH</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The change occurs after all output has been transmitted. Furthermore, when the change takes place, all input data that has not been read is discarded (flushed).</p></td></tr></table></p><br>
+<p class="docText">The return status of <tt>tcsetattr</tt> confuses the programming. This function returns OK if it was able to perform <span class="docEmphasis">any</span> of the requested actions, even if it couldn't perform all the requested actions. If the function returns OK, it is our responsibility to see whether all the requested actions were performed. This means that after we call <tt>tcsetattr</tt> to set the desired attributes, we need to call <tt>tcgetattr</tt> and compare the actual terminal's attributes to the desired attributes to detect any differences.</p>
+
+<ul></ul></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

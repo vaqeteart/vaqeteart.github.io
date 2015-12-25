@@ -1,0 +1,95 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.23.&nbsp; Device Special Files</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec22.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec24.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec23"></a>
+<h3 class="docSection1Title">4.23. Device Special Files</h3>
+<p class="docText">The two fields <tt>st_dev</tt> and <tt>st_rdev</tt> are often confused. We'll need to use these fields in <a class="docLink" href="ch18lev1sec9.html#ch18lev1sec9">Section 18.9</a> when we write the <tt>ttyname</tt> function. The rules are simple.</P>
+<UL><li><p class="docList">Every file system is known by its major and minor device numbers, which are encoded in the primitive system data type <tt>dev_t</tt>. The major number identifies the device driver and sometimes encodes which peripheral board to communicate with; the minor number identifies the specific subdevice. Recall from <a class="docLink" href="ch04lev1sec14.html#ch04fig13">Figure 4.13</a> that a disk drive often contains several file systems. Each file system on the same disk drive would usually have the same major number, but a different minor number.</P></LI><LI><p class="docList"><a name="idd1e33007"></a><a name="idd1e33010"></a><a name="idd1e33013"></a><a name="idd1e33018"></a><a name="idd1e33023"></a><a name="idd1e33026"></a><a name="idd1e33029"></a><a name="idd1e33032"></a><a name="idd1e33035"></a><a name="idd1e33040"></a><a name="idd1e33045"></a><a name="idd1e33048"></a><a name="idd1e33053"></a><a name="idd1e33058"></a><a name="idd1e33063"></a>We can usually access the major and minor device numbers through two macros defined by most implementations: <tt>major</tt> and <tt>minor</tt>. This means that we don't care how the two numbers are stored in a <tt>dev_t</tt> object.</p><blockquote>
+<p class="docText">Early systems stored the device number in a 16-bit integer, with 8 bits for the major number and 8 bits for the minor number. FreeBSD 5.2.1 and Mac OS X 10.3 use a 32-bit integer, with 8 bits for the major number and 24 bits for the minor number. On 32-bit systems, Solaris 9 uses a 32-bit integer for <tt>dev_t</tt>, with 14 bits designated as the major number and 18 bits designated as the minor number. On 64-bit systems, Solaris 9 represents <tt>dev_t</tt> as a 64-bit integer, with 32 bits for each number. On Linux 2.4.22, although <tt>dev_t</tt> is a 64-bit integer, currently the major and minor numbers are each only 8 bits.</P>
+<p class="docText">POSIX.1 states that the <tt>dev_t</tt> type exists, but doesn't define what it contains or how to get at its contents. The macros <tt>major</tt> and <tt>minor</tt> are defined by most implementations. Which header they are defined in depends on the system. They can be found in <tt>&lt;sys/types.h&gt;</tt> on BSD-based systems. Solaris defines them in <tt>&lt;sys/mkdev.h&gt;</tt>. Linux defines these macros in <tt>&lt;sys/sysmacros.h&gt;</tt>, which is included by <tt>&lt;sys/types.h&gt;</tt>.</P>
+</blockquote></LI><li><p class="docList">The <tt>st_dev</tt> value for every filename on a system is the device number of the file system containing that filename and its corresponding i-node.</P></li><LI><p class="docList">Only character special files and block special files have an <tt>st_rdev</tt> value. This value contains the device number for the actual device.</P></LI></ul>
+<a name="ch04ex11"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText">The program in <a class="docLink" href="ch04lev1sec23.html#ch04fig25">Figure 4.25</a> prints the device number for each command-line argument. Additionally, if the argument refers to a character special file or a block special file, the <tt>st_rdev</tt> value for the special file is also printed.</p>
+<p class="docText"><a name="idd1e33152"></a><a name="idd1e33157"></a><a name="idd1e33162"></a><a name="idd1e33167"></a><a name="idd1e33172"></a><a name="idd1e33178"></a><a name="idd1e33183"></a><a name="idd1e33186"></a><a name="idd1e33189"></a><a name="idd1e33194"></a><a name="idd1e33199"></a><a name="idd1e33204"></a>Running this program gives us the following output:</P>
+
+<pre>
+      $ <span class="docEmphStrong">./a.out / /home/sar /dev/tty[01]</span>
+      /: dev = 3/3
+      /home/sar: dev = 3/4
+      /dev/tty0: dev = 0/7 (character) rdev = 4/0
+      /dev/tty1: dev = 0/7 (character) rdev = 4/1
+      <span class="docEmphStrong">$ mount</span><span class="docEmphItalicAlt">                      which directories are mounted on which devices?</span>
+      /dev/hda3 on / type ext2 (rw,noatime)
+      /dev/hda4 on /home type ext2 (rw,noatime)
+      $ <span class="docEmphStrong">ls -lL /dev/tty[01] /dev/hda[34]</span>
+      brw-------  1 root       3,   3 Dec 31  1969 /dev/hda3
+      brw-------  1 root       3,   4 Dec 31  1969 /dev/hda4
+      crw-------  1 root       4,   0 Dec 31  1969 /dev/tty0
+      crw-------  1 root       4,   1 Jan 18 15:36 /dev/tty1
+</pre><BR>
+
+<p class="docText">The first two arguments to the program are directories (<tt>/</tt> and <tt>/home/sar</tt>), and the next two are the device names <tt>/dev/tty[01]</tt>. (We use the shell's regular expression language to shorten the amount of typing we need to do. The shell will expand the string <tt>/dev/tty[01]</tt> to <tt>/dev/tty0 /dev/tty1</tt>.)</p>
+<p class="docText">We expect the devices to be character special files. The output from the program shows that the root directory has a different device number than does the <tt>/home/sar</tt> directory. This indicates that they are on different file systems. Running the <tt>mount</tt>(1) command verifies this.</p>
+<p class="docText">We then use <tt>ls</tt> to look at the two disk devices reported by <tt>mount</tt> and the two terminal devices. The two disk devices are block special files, and the two terminal devices are character special files. (Normally, the only types of devices that are block special files are those that can contain random-access file systems: disk drives, floppy disk drives, and CD-ROMs, for example. Some older versions of the UNIX System supported magnetic tapes for file systems, but this was never widely used.)</p>
+<p class="docText">Note that the filenames and i-nodes for the two terminal devices (<tt>st_dev</tt>) are on device 0/7the <tt>devfs</tt> pseudo file system, which implements the <tt>/dev</tt>but that their actual device numbers are 4/0 and 4/1.</p>
+
+<a name="ch04fig25"></a>
+<H5 class="docExampleTitle">Figure 4.25. Print <tt>st_dev</tt> and <tt>st_rdev</tt> values</h5>
+
+<pre>
+#include "apue.h"
+#ifdef SOLARIS
+#include &lt;sys/mkdev.h&gt;
+#endif
+
+int
+main(int argc, char *argv[])
+{
+
+    int         i;
+    struct stat buf;
+
+    for (i = 1; i &lt; argc; i++) {
+        printf("%s: ", argv[i]);
+        if (stat(argv[i], &amp;buf) &lt; 0) {
+            err_ret("stat error");
+            continue;
+         }
+
+         printf("dev = %d/%d", major(buf.st_dev), minor(buf.st_dev));
+         if (S_ISCHR(buf.st_mode) || S_ISBLK(buf.st_mode)) {
+             printf(" (%s) rdev = %d/%d",
+                     (S_ISCHR(buf.st_mode)) ? "character" : "block",
+                     major(buf.st_rdev), minor(buf.st_rdev));
+
+         }
+         printf("\n");
+    }
+
+    exit(0);
+
+}
+</pre><BR>
+
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec22.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec24.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

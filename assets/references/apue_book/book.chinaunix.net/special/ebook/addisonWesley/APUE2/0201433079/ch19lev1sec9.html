@@ -1,0 +1,49 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Exercises</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch20.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch19lev1sec9"></a>
+<h3 class="docSection1Title">Exercises</h3>
+<P><table border="0" cellspacing="16" cellpadding="0"><TR valign="top"><td align="right" class="docText" width="50"><a name="ch19qa1q1"></a><B><a class="docLink" href="app03lev1sec19.html#ch19qa1q1a1">19.1</a></b></TD><TD><p class="docText">When we remotely log in to a BSD system using either <tt>telnet</tt> or <tt>rlogin</tt>, the ownership of the PTY slave and its permissions are set, as we described in <a class="docLink" href="ch19lev1sec3.html#ch19lev2sec7">Section 19.3.2</a>. How does this happen?</p>
+</TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch19qa1q2"></a><B>19.2</b></td><TD><p class="docText"><a name="idd1e148022"></a><a name="idd1e148027"></a><a name="idd1e148032"></a><a name="idd1e148037"></a><a name="idd1e148042"></a><a name="idd1e148047"></a><a name="idd1e148052"></a><a name="idd1e148057"></a><a name="idd1e148060"></a><a name="idd1e148065"></a>Modify the function <tt>grantpt</tt> from <a class="docLink" href="ch19lev1sec3.html#ch19fig09">Figure 19.9</a> to invoke a set-user-ID program to change the ownership and protection of the PTY slave device on a BSD system (similar to what the Solaris version of the <tt>grantpt</tt> function does).</P>
+</TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch19qa1q3"></a><b><a class="docLink" href="app03lev1sec19.html#ch19qa1q3a1">19.3</a></b></TD><TD><p class="docText">Use the <tt>pty</tt> program to determine the values used by your system to initialize a slave PTY's <tt>termios</tt> structure and <tt>winsize</tt> structure.</p>
+</td></tr><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch19qa1q4"></a><b>19.4</b></TD><td><p class="docText">Recode the <tt>loop</tt> function (<a class="docLink" href="ch19lev1sec5.html#ch19fig13">Figure 19.13</a>) as a single process using either <tt>select</tt> or <tt>poll</tt>.</P>
+</td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch19qa1q5"></a><b><a class="docLink" href="app03lev1sec19.html#ch19qa1q5a1">19.5</a></b></td><td><p class="docText">In the child process after <tt>pty_fork</tt> returns, standard input, standard output, and standard error are all open for readwrite. Can you change standard input to be read-only and the other two to be write-only?</p>
+</td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch19qa1q6"></a><b><a class="docLink" href="app03lev1sec19.html#ch19qa1q6a1">19.6</a></b></td><td><p class="docText">In <a class="docLink" href="ch19lev1sec6.html#ch19fig14">Figure 19.14</a>, identify which process groups are foreground and which are background, and identify the session leaders.</p>
+</td></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch19qa1q7"></a><B><a class="docLink" href="app03lev1sec19.html#ch19qa1q7a1">19.7</a></b></TD><TD><p class="docText">In <a class="docLink" href="ch19lev1sec6.html#ch19fig14">Figure 19.14</a>, in what order do the processes terminate when we type the end-of-file character? Verify this with process accounting, if possible.</p>
+</TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch19qa1q8"></a><B><a class="docLink" href="app03lev1sec19.html#ch19qa1q8a1">19.8</a></b></td><TD><p class="docText">The <tt>script(1)</tt> program normally adds to the beginning of the output file a line with the starting time, and to the end of the output file another line with the ending time. Add these features to the simple shell script that we showed.</P>
+</TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch19qa1q9"></a><b><a class="docLink" href="app03lev1sec19.html#ch19qa1q9a1">19.9</a></b></TD><TD><p class="docText"><a name="idd1e148281"></a><a name="idd1e148284"></a><a name="idd1e148287"></a><a name="idd1e148292"></a><a name="idd1e148297"></a><a name="idd1e148302"></a><a name="idd1e148307"></a><a name="idd1e148312"></a><a name="idd1e148317"></a><a name="idd1e148322"></a>Explain why the contents of the file <tt>data</tt> are output to the terminal in the following example, when the program <tt>ttyname</tt> only generates output and never reads its input.</p>
+
+<pre>
+    $ <span class="docEmphStrong">cat data</span>                      <span class="docEmphItalicAlt">a file with two lines</span>
+    hello,
+    world
+    $ <span class="docEmphStrong">pty -i &lt; data ttyname</span>         <span class="docEmphItalicAlt">-i says ignore eof on stdin</span>
+    hello,                          <span class="docEmphItalicAlt">where did these two lines come from?</span>
+    world
+    fd 0: /dev/ttyp5                <span class="docEmphItalicAlt">we expect these three lines from ttyname</span>
+    fd 1: /dev/ttyp5
+    fd 2: /dev/ttyp5
+</pre><br>
+
+</td></tr><TR valign="top"><td align="right" class="docText" width="50"><a name="ch19qa1q10"></a><B>19.10</b></td><TD><p class="docText">Write a program that calls <tt>pty_fork</tt> and have the child <tt>exec</tt> another program that you must write. The new program that the child <tt>exec</tt>s must catch <tt>SIGTERM</tt> and <tt>SIGWINCH</tt>. When it catches a signal, the program should print that it did; for the latter signal, it should also print the terminal's window size. Then have the parent process send the <tt>SIGTERM</tt> signal to the process group of the PTY slave with the <tt>ioctl</tt> we described in <a class="docLink" href="ch19lev1sec7.html#ch19lev1sec7">Section 19.7</a>. Read back from the slave to verify that the signal was caught. Follow this with the parent setting the window size of the PTY slave and read back the slave's output again. Have the parent <tt>exit</tt> and determine whether the slave process also terminates; if so, how does it terminate?</p>
+</td></tr></table></p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch20.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,35 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.6.&nbsp; Ownership of New Files and Directories</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec6"></a>
+<h3 class="docSection1Title">4.6. Ownership of New Files and Directories</h3>
+<p class="docText"><a name="idd1e25758"></a><a name="idd1e25763"></a><a name="idd1e25770"></a><a name="idd1e25775"></a><a name="idd1e25780"></a><a name="idd1e25785"></a><a name="idd1e25790"></a><a name="idd1e25795"></a><a name="idd1e25801"></a><a name="idd1e25807"></a><a name="idd1e25810"></a><a name="idd1e25815"></a><a name="idd1e25818"></a><a name="idd1e25821"></a><a name="idd1e25826"></a><a name="idd1e25831"></a><a name="idd1e25836"></a><a name="idd1e25841"></a><a name="idd1e25846"></a><a name="idd1e25851"></a><a name="idd1e25854"></a><a name="idd1e25857"></a><a name="idd1e25860"></a>When we described the creation of a new file in <a class="docLink" href="ch03.html#ch03">Chapter 3</a>, using either <tt>open</tt> or <tt>creat</tt>, we never said what values were assigned to the user ID and group ID of the new file. We'll see how to create a new directory in <a class="docLink" href="ch04lev1sec20.html#ch04lev1sec20">Section 4.20</a> when we describe the <tt>mkdir</tt> function. The rules for the ownership of a new directory are identical to the rules in this section for the ownership of a new file.</P>
+<p class="docText">The user ID of a new file is set to the effective user ID of the process. POSIX.1 allows an implementation to choose one of the following options to determine the group ID of a new file.</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">The group ID of a new file can be the effective group ID of the process.</P></div></LI><LI><div style="font-weight:normal"><p class="docList">The group ID of a new file can be the group ID of the directory in which the file is being created.</p><blockquote>
+<p class="docText">FreeBSD 5.2.1 and Mac OS X 10.3 always uses the group ID of the directory as the group ID of the new file.</P>
+<p class="docText">The Linux <tt>ext2</tt> and <tt>ext3</tt> file systems allow the choice between these two POSIX.1 options to be made on a file system basis, using a special flag to the <tt>mount</tt>(1) command. On Linux 2.4.22 (with the proper mount option) and Solaris 9, the group ID of a new file depends on whether the set-group-ID bit is set for the directory in which the file is being created. If this bit is set for the directory, the group ID of the new file is set to the group ID of the directory; otherwise, the group ID of the new file is set to the effective group ID of the process.</P>
+</blockquote></div></LI></ol></div>
+<p class="docText">Using the second optioninheriting the group ID of the directoryassures us that all files and directories created in that directory will have the group ID belonging to the directory. This group ownership of files and directories will then propagate down the hierarchy from that point. This is used, for example, in the <tt>/var/spool/mail</tt> directory on Linux.</p>
+<blockquote>
+<p class="docText">As we mentioned, this option for group ownership is the default for FreeBSD 5.2.1 and Mac OS X 10.3, but an option for Linux and Solaris. Under Linux 2.4.22 and Solaris 9, we have to enable the set-group-ID bit, and the <tt>mkdir</tt> function has to propagate a directory's set-group-ID bit automatically for this to work. (This is described in <a class="docLink" href="ch04lev1sec20.html#ch04lev1sec20">Section 4.20</a>.)</P>
+</blockquote>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

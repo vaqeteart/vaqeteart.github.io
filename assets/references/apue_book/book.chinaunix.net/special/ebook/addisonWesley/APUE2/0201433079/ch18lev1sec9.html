@@ -1,0 +1,318 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 18.9.&nbsp; Terminal Identification</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch18lev1sec9"></a>
+<h3 class="docSection1Title">18.9. Terminal Identification</h3>
+<p class="docText">Historically, the name of the controlling terminal in most versions of the UNIX System has been <tt>/dev/tty</tt>. POSIX.1 provides a runtime function that we can call to determine the name of the controlling terminal.</P>
+<a name="inta26"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdio.h&gt;
+
+char *ctermid(char *<span class="docEmphItalicAlt">ptr</span>);</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer to name of controlling terminal <br>on success, pointer to empty string on error</P></td></TR></table></P><BR>
+<p class="docText">If <span class="docEmphasis">ptr</span> is non-null, it is assumed to point to an array of at least <tt>L_ctermid</tt> bytes, and the name of the controlling terminal of the process is stored in the array. The constant <tt>L_ctermid</tt> is defined in <tt>&lt;stdio.h&gt;</tt>. If <span class="docEmphasis">ptr</span> is a null pointer, the function allocates room for the array (usually as a static variable). Again, the name of the controlling terminal of the process is stored in the array.</p>
+<p class="docText">In both cases, the starting address of the array is returned as the value of the function. Since most UNIX systems use <tt>/dev/tty</tt> as the name of the controlling terminal, this function is intended to aid portability to other operating systems.</P>
+<blockquote>
+<p class="docText">All four platforms described in this text return the string <tt>/dev/tty</tt> when we call <tt>ctermid</tt>.</P>
+</blockquote>
+<a name="ch18ex03"></a>
+<h5 class="docExampleTitle">Example<tt>ctermid</tt> Function</H5>
+<p class="docText"><a class="docLink" href="ch18lev1sec9.html#ch18fig12">Figure 18.12</a> shows an implementation of the POSIX.1 <tt>ctermid</tt> function.</P>
+<p class="docText"><a name="idd1e141308"></a><a name="idd1e141313"></a><a name="idd1e141320"></a><a name="idd1e141325"></a><a name="idd1e141330"></a><a name="idd1e141335"></a>Note that we can't protect against overrunning the caller's buffer, because we have no way to determine its size.</p>
+
+<a name="ch18fig12"></a>
+<h5 class="docExampleTitle">Figure 18.12. Implementation of POSIX.1 <tt>ctermid</tt> function</h5>
+
+<pre>
+#include     &lt;stdio.h&gt;
+#include     &lt;string.h&gt;
+
+static char ctermid_name[L_ctermid];
+
+char *
+ctermid(char *str)
+{
+    if (str == NULL)
+        str = ctermid_name;
+    return(strcpy(str, "/dev/tty"));    /* strcpy() returns str */
+}
+</pre><br>
+
+
+<p class="docText">Two functions that are more interesting for a UNIX system are <tt>isatty</tt>, which returns true if a file descriptor refers to a terminal device, and <tt>ttyname</tt>, which returns the pathname of the terminal device that is open on a file descriptor.</P>
+<a name="inta148"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+int isatty(int <span class="docEmphItalicAlt">filedes</span>);</pre><BR>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 1 (true) if terminal device, 0 (false) otherwise
+</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+char *ttyname(int <span class="docEmphItalicAlt">filedes</span>);</pre><br>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer to pathname of terminal, <tt>NULL</tt> on error</p></TD></TR></table></p><BR>
+<a name="ch18ex04"></a>
+<H5 class="docExampleTitle">Example<tt>isatty</tt> Function</H5>
+<p class="docText">The <tt>isatty</tt> function is trivial to implement, as we show in <a class="docLink" href="ch18lev1sec9.html#ch18fig13">Figure 18.13</a>. We simply try one of the terminal-specific functions (that doesn't change anything if it succeeds) and look at the return value.</p>
+<p class="docText">We test our <tt>isatty</tt> function with the program in <a class="docLink" href="ch18lev1sec9.html#ch18fig14">Figure 18.14</a>.</P>
+<p class="docText"><a name="idd1e141464"></a><a name="idd1e141469"></a><a name="idd1e141474"></a>When we run the program from <a class="docLink" href="ch18lev1sec9.html#ch18fig14">Figure 18.14</a>, we get the following output:</P>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+   fd 0: tty
+   fd 1: tty
+   fd 2: tty
+   $ <span class="docEmphStrong">./a.out &lt;/etc/passwd 2&gt;/dev/null</span>
+   fd 0: not a tty
+   fd 1: tty
+   fd 2: not a tty
+</pre><BR>
+
+
+<a name="ch18fig13"></a>
+<h5 class="docExampleTitle">Figure 18.13. Implementation of POSIX.1 <tt>isatty</tt> function</H5>
+
+<pre>
+#include    &lt;termios.h&gt;
+
+int
+isatty(int fd)
+{
+    struct termios ts;
+    return(tcgetattr(fd, &amp;ts) != -1); /* true if no error (is a tty) */
+}
+</pre><br>
+
+
+<a name="ch18fig14"></a>
+<H5 class="docExampleTitle">Figure 18.14. Test the <tt>isatty</tt> function</H5>
+
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+    printf("fd 0: %s\n", isatty(0) ? "tty" : "not a tty");
+    printf("fd 1: %s\n", isatty(1) ? "tty" : "not a tty");
+    printf("fd 2: %s\n", isatty(2) ? "tty" : "not a tty");
+    exit(0);
+}</pre><BR>
+
+
+<a name="ch18ex05"></a>
+<h5 class="docExampleTitle">Example<tt>ttyname</tt> Function</H5>
+<p class="docText">The <tt>ttyname</tt> function (<a class="docLink" href="ch18lev1sec9.html#ch18fig15">Figure 18.15</a>) is longer, as we have to search all the device entries, looking for a match.</P>
+<p class="docText"><a name="idd1e141571"></a><a name="idd1e141576"></a><a name="idd1e141581"></a><a name="idd1e141586"></a><a name="idd1e141591"></a><a name="idd1e141596"></a><a name="idd1e141599"></a><a name="idd1e141604"></a><a name="idd1e141609"></a><a name="idd1e141614"></a><a name="idd1e141619"></a>The technique is to read the <tt>/dev</tt> directory, looking for an entry with the same device number and i-node number. Recall from <a class="docLink" href="ch04lev1sec23.html#ch04lev1sec23">Section 4.23</a> that each file system has a unique device number (the <tt>st_dev</tt> field in the <tt>stat</tt> structure, from <a class="docLink" href="ch04lev1sec2.html#ch04lev1sec2">Section 4.2</a>), and each directory entry in that file system has a unique i-node number (the <tt>st_ino</tt> field in <a name="idd1e141648"></a><a name="idd1e141651"></a><a name="idd1e141656"></a><a name="idd1e141661"></a><a name="idd1e141666"></a><a name="idd1e141669"></a><a name="idd1e141672"></a>the <tt>stat</tt> structure). We assume in this function that when we hit a matching device number and matching i-node number, we've located the desired directory entry. We could also verify that the two entries have matching <tt>st_rdev</tt> fields (the major and minor device numbers for the terminal device) and that the directory entry is also a character special file. But since we've already verified that the file descriptor argument is both a terminal device and a character special file, and since a matching device number and i-node number is unique on a UNIX system, there is no need for the additional comparisons.</p>
+<p class="docText">The name of our terminal might reside in a subdirectory in <tt>/dev</tt>. Thus, we might need to search the entire file system tree under <tt>/dev</tt>. We skip several directories that might produce incorrect or odd-looking results: <tt>/dev/.</tt>, <tt>/dev/..</tt>, and <tt>/dev/fd</tt>. We also skip the aliases <tt>/dev/stdin</tt>, <tt>/dev/stdout</tt>, and <tt>/dev/stderr</tt>, since they are symbolic links to files in <tt>/dev/fd</tt>.</P>
+<p class="docText">We can test this implementation with the program shown in <a class="docLink" href="ch18lev1sec9.html#ch18fig16">Figure 18.16</a>.</P>
+<p class="docText"><a name="idd1e141724"></a><a name="idd1e141727"></a><a name="idd1e141732"></a><a name="idd1e141737"></a><a name="idd1e141742"></a><a name="idd1e141747"></a><a name="idd1e141750"></a><a name="idd1e141753"></a><a name="idd1e141756"></a><a name="idd1e141761"></a><a name="idd1e141766"></a><a name="idd1e141771"></a><a name="idd1e141776"></a><a name="idd1e141779"></a><a name="idd1e141782"></a><a name="idd1e141787"></a><a name="idd1e141792"></a>Running the program from <a class="docLink" href="ch18lev1sec9.html#ch18fig16">Figure 18.16</a> gives us</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out &lt; /dev/console 2&gt; /dev/null</span>
+   fd 0: /dev/console
+   fd 1: /dev/ttyp3
+   fd 2: not a tty
+</pre><br>
+
+
+<a name="ch18fig15"></a>
+<h5 class="docExampleTitle">Figure 18.15. Implementation of POSIX.1 <tt>ttyname</tt> function</h5>
+
+<pre>
+#include    &lt;sys/stat.h&gt;
+#include    &lt;dirent.h&gt;
+#include    &lt;limits.h&gt;
+#include    &lt;string.h&gt;
+#include    &lt;termios.h&gt;
+#include    &lt;unistd.h&gt;
+#include    &lt;stdlib.h&gt;
+
+struct devdir {
+    struct devdir    *d_next;
+    char             *d_name;
+};
+
+static struct devdir    *head;
+static struct devdir    *tail;
+static char             pathname[_POSIX_PATH_MAX + 1];
+
+static void
+add(char *dirname)
+{
+    struct devdir    *ddp;
+    int              len;
+
+    len = strlen(dirname);
+
+    /*
+     * Skip ., .., and /dev/fd.
+     */
+    if ((dirname[len-1] == '.') &amp;&amp; (dirname[len-2] == '/' ||
+      (dirname[len-2] == '.' &amp;&amp; dirname[len-3] == '/')))
+        return;
+    if (strcmp(dirname, "/dev/fd") == 0)
+        return;
+    ddp = malloc(sizeof(struct devdir));
+    if (ddp == NULL)
+        return;
+
+    ddp-&gt;d_name = strdup(dirname);
+    if (ddp-&gt;d_name == NULL) {
+        free(ddp);
+        return;
+    }
+    ddp-&gt;d_next = NULL;
+    if (tail == NULL) {
+        head = ddp;
+        tail = ddp;
+    } else {
+        tail-&gt;d_next = ddp;
+        tail = ddp;
+    }
+}
+
+static void
+cleanup(void)
+{
+    struct devdir *ddp, *nddp;
+
+    ddp = head;
+    while (ddp != NULL) {
+        nddp = ddp-&gt;d_next;
+        free(ddp-&gt;d_name);
+        free(ddp);
+        ddp = nddp;
+    }
+    head = NULL;
+    tail = NULL;
+}
+
+static char *
+searchdir(char *dirname, struct stat *fdstatp)
+{
+    struct stat     devstat;
+    DIR             *dp;
+    int             devlen;
+    struct dirent   *dirp;
+
+    strcpy(pathname, dirname);
+    if ((dp = opendir(dirname)) == NULL)
+        return(NULL);
+    strcat(pathname, "/");
+    devlen = strlen(pathname);
+    while ((dirp = readdir(dp)) != NULL) {
+        strncpy(pathname + devlen, dirp-&gt;d_name,
+          _POSIX_PATH_MAX - devlen);
+        /*
+         * Skip aliases.
+         */
+        if (strcmp(pathname, "/dev/stdin") == 0 ||
+          strcmp(pathname, "/dev/stdout") == 0 ||
+          strcmp(pathname, "/dev/stderr") == 0)
+            continue;
+        if (stat(pathname, &amp;devstat) &lt; 0)
+            continue;
+        if (S_ISDIR(devstat.st_mode)) {
+            add(pathname);
+            continue;
+        }
+        if (devstat.st_ino == fdstatp-&gt;st_ino &amp;&amp;
+          devstat.st_dev == fdstatp-&gt;st_dev) { /* found a match */
+            closedir(dp);
+            return(pathname);
+        }
+    }
+    closedir(dp);
+    return(NULL);
+}
+
+char *
+ttyname(int fd)
+{
+    struct stat     fdstat;
+    struct devdir   *ddp;
+    char            *rval;
+
+    if (isatty(fd) == 0)
+        return(NULL);
+    if (fstat(fd, &amp;fdstat) &lt; 0)
+        return(NULL);
+    if (S_ISCHR(fdstat.st_mode) == 0)
+        return(NULL);
+
+    rval = searchdir("/dev", &amp;fdstat);
+    if (rval == NULL) {
+        for (ddp = head; ddp != NULL; ddp = ddp-&gt;d_next)
+            if ((rval = searchdir(ddp-&gt;d_name, &amp;fdstat)) != NULL)
+                break;
+    }
+
+    cleanup();
+    return(rval);
+}
+</pre><BR>
+
+
+<a name="ch18fig16"></a>
+<h5 class="docExampleTitle">Figure 18.16. Test the <tt>ttyname</tt> function</H5>
+
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+    char *name;
+
+    if (isatty(0)) {
+        name = ttyname(0);
+        if (name == NULL)
+            name = "undefined";
+    } else {
+        name = "not a tty";
+    }
+    printf("fd 0: %s\n", name);
+    if (isatty(1)) {
+        name = ttyname(1);
+        if (name == NULL)
+            name = "undefined";
+    } else {
+        name = "not a tty";
+    }
+    printf("fd 1: %s\n", name);
+    if (isatty(2)) {
+        name = ttyname(2);
+        if (name == NULL)
+            name = "undefined";
+    } else {
+        name = "not a tty";
+    }
+    printf("fd 2: %s\n", name);
+    exit(0);
+}
+</pre><br>
+
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch18lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch18lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

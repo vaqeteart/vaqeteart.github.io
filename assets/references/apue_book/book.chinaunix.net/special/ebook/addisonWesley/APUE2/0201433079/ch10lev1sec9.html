@@ -1,0 +1,57 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 10.9.&nbsp; kill and raise Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch10lev1sec9"></a>
+<h3 class="docSection1Title">10.9. <tt>kill</tt> and <tt>raise</tt> Functions</h3>
+<p class="docText">The <tt>kill</tt> function sends a signal to a process or a group of processes. The <tt>raise</tt> function allows a process to send a signal to itself.</P>
+<blockquote>
+<p class="docText"><tt>raise</tt> was originally defined by ISO C. POSIX.1 includes it to align itself with the ISO C standard, but POSIX.1 extends the specification of <tt>raise</tt> to deal with threads (we discuss how threads interact with signals in <a class="docLink" href="ch12lev1sec8.html#ch12lev1sec8">Section 12.8</a>). Since ISO C does not deal with multiple processes, it could not define a function, such as <tt>kill</tt>, that requires a process ID argument.</P>
+</blockquote>
+<a name="inta149"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e73831"></a><a name="idd1e73836"></a><a name="idd1e73841"></a><a name="idd1e73846"></a><a name="idd1e73851"></a><a name="idd1e73858"></a><a name="idd1e73861"></a><a name="idd1e73866"></a><a name="idd1e73871"></a><a name="idd1e73878"></a><a name="idd1e73883"></a><a name="idd1e73888"></a><a name="idd1e73893"></a><a name="idd1e73898"></a><a name="idd1e73903"></a><a name="idd1e73906"></a><a name="idd1e73911"></a>
+<pre>
+#include &lt;signal.h&gt;
+
+int kill(pid_t <span class="docEmphItalicAlt">pid</span>, int <span class="docEmphItalicAlt">signo</span>);
+
+int raise(int <span class="docEmphItalicAlt">signo</span>);
+</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, 1 on error</P></td></TR></table></P><BR>
+<p class="docText">The call</p>
+   
+<pre>
+   raise(signo);</pre><BR>
+
+<p class="docText">is equivalent to the call</P>
+   
+<pre>
+   kill(getpid(), signo);</pre><br>
+
+<p class="docText">There are four different conditions for the <span class="docEmphasis">pid</span> argument to <tt>kill</tt>.</P>
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="100"><col width="400"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><span class="docEmphasis">pid</span> <tt>&gt;</tt> 0</p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The signal is sent to the process whose process ID is <span class="docEmphasis">pid</span>.</p></TD></tr><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><span class="docEmphasis">pid</span> <tt>==</tt> 0</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The signal is sent to all processes whose process group ID equals the process group ID of the sender and for which the sender has permission to send the signal. Note that the term <span class="docEmphasis">all processes</span> excludes an implementation-defined set of system processes. For most UNIX systems, this set of system processes includes the kernel processes and <tt>init</tt> (pid 1).
+</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><span class="docEmphasis">pid</span> <tt>&lt;</tt> 0</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The signal is sent to all processes whose process group ID equals the absolute value of <span class="docEmphasis">pid</span> and for which the sender has permission to send the signal. Again, the set of all processes excludes certain system processes, as described earlier.
+</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><span class="docEmphasis">pid</span> <tt>==</tt> 1</P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">The signal is sent to all processes on the system for which the sender has permission to send the signal. As before, the set of processes excludes certain system processes.</P></TD></TR></table></p><BR>
+<p class="docText">As we've mentioned, a process needs permission to send a signal to another process. The superuser can send a signal to any process. For other users, the basic rule is that the real or effective user ID of the sender has to equal the real or effective user ID of the receiver. If the implementation supports <tt>_POSIX_SAVED_IDS</tt> (as POSIX.1 now requires), the saved set-user-ID of the receiver is checked instead of its effective user ID. There is also one special case for the permission testing: if the signal being sent is <tt>SIGCONT</tt>, a process can send it to any other process in the same session.</P>
+<p class="docText">POSIX.1 defines signal number 0 as the null signal. If the <span class="docEmphasis">signo</span> argument is 0, then the normal error checking is performed by <tt>kill</tt>, but no signal is sent. This is often used to determine if a specific process still exists. If we send the process the null signal and it doesn't exist, <tt>kill</tt> returns 1 and <tt>errno</tt> is set to <tt>ESRCH</tt>. Be aware, however, that UNIX systems recycle process IDs after some amount of time, so the existence of a process with a given process ID does not mean that it's the process that you think it is.</P>
+<p class="docText">Also understand that the test for process existence is not atomic. By the time that <tt>kill</tt> returns the answer to the caller, the process in question might have exited, so the answer is of limited value.</p>
+<p class="docText"><a name="idd1e74085"></a><a name="idd1e74090"></a><a name="idd1e74097"></a><a name="idd1e74102"></a><a name="idd1e74107"></a><a name="idd1e74114"></a>If the call to <tt>kill</tt> causes the signal to be generated for the calling process and if the signal is not blocked, either <span class="docEmphasis">signo</span> or some other pending, unblocked signal is delivered to the process before <tt>kill</tt> returns. (Additional conditions occur with threads; see <a class="docLink" href="ch12lev1sec8.html#ch12lev1sec8">Section 12.8</a> for more information.)</P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

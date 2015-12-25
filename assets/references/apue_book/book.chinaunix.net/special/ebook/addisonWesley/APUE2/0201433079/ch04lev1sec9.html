@@ -1,0 +1,100 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.9.&nbsp; chmod and fchmod Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec9"></a>
+<h3 class="docSection1Title" id="454331-967">4.9. <tt>chmod</tt> and <tt>fchmod</tt> Functions</h3>
+<p class="docText">These two functions allow us to change the file access permissions for an existing file.</P>
+<a name="inta14"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>#include &lt;sys/stat.h&gt;
+
+int chmod(const char *<span class="docEmphItalicAlt">pathname</span>, mode_t <span class="docEmphItalicAlt">mode</span>);
+
+int fchmod(int <span class="docEmphItalicAlt">filedes</span>, mode_t <span class="docEmphItalicAlt">mode</span>);</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">The <tt>chmod</tt> function operates on the specified file, whereas the <tt>fchmod</tt> function operates on a file that has already been opened.</P>
+<p class="docText">To change the permission bits of a file, the effective user ID of the process must be equal to the owner ID of the file, or the process must have superuser permissions.</p>
+<p class="docText">The <span class="docEmphasis">mode</span> is specified as the bitwise OR of the constants shown in <a class="docLink" href="ch04lev1sec9.html#ch04fig11">Figure 4.11</a>.</P>
+<a name="ch04fig11"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 4.11. The <span class="docEmphasis">mode</span> constants for <tt>chmod</tt> functions, from <tt>&lt;sys/stat.h&gt;</tt></H5></caption><colgroup><col width="100"><col width="250"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman"><span class="docEmphasis">mode</span></span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></p></th></tr></thead><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_ISUID</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">set-user-ID on execution</P></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_ISGID</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">set-group-ID on execution</p></td></tr><tr><td class="rightBorder bottomBorder" align="left" valign="top"><p class="docText"><tt>S_ISVTX</tt></p></td><td class="bottomBorder" align="left" valign="top"><p class="docText">saved-text (sticky bit)</p></td></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_IRWXU</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">read, write, and execute by user (owner)</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><blockquote><P><p class="docList"><tt>S_IRUSR</tt></p></P></blockquote></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">read by user (owner)</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><blockquote><p><p class="docList"><tt>S_IWUSR</tt></p></p></blockquote></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">write by user (owner)</P></td></TR><tr><td class="rightBorder bottomBorder" align="left" valign="top"><p class="docText"><blockquote><p><p class="docList"><tt>S_IXUSR</tt></p></p></blockquote></p></td><td class="bottomBorder" align="left" valign="top"><p class="docText">execute by user (owner)</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_IRWXG</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">read, write, and execute by group</p></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><blockquote><P><p class="docList"><tt>S_IRGRP</tt></P></p></blockquote></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">read by group</p></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><blockquote><P><p class="docList"><tt>S_IWGRP</tt></p></P></blockquote></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">write by group</P></td></tr><tr><td class="rightBorder bottomBorder" align="left" valign="top"><p class="docText"><blockquote><P><p class="docList"><tt>S_IXGRP</tt></p></P></blockquote></p></TD><td class="bottomBorder" align="left" valign="top"><p class="docText">execute by group</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S_IRWXO</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">read, write, and execute by other (world)</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><blockquote><p><p class="docList"><tt>S_IROTH</tt></p></p></blockquote></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">read by other (world)</P></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><blockquote><P><p class="docList"><tt>S_IWOTH</tt></P></p></blockquote></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">write by other (world)</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><blockquote><p><p class="docList"><tt>S_IXOTH</tt></P></P></blockquote></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">execute by other (world)</p></TD></tr></table></P><br>
+<p class="docText"><a name="idd1e27036"></a><a name="idd1e27041"></a><a name="idd1e27044"></a><a name="idd1e27047"></a><a name="idd1e27052"></a><a name="idd1e27057"></a><a name="idd1e27062"></a><a name="idd1e27067"></a><a name="idd1e27072"></a><a name="idd1e27077"></a><a name="idd1e27082"></a><a name="idd1e27087"></a><a name="idd1e27092"></a><a name="idd1e27097"></a><a name="idd1e27102"></a><a name="idd1e27107"></a><a name="idd1e27112"></a><a name="idd1e27117"></a><a name="idd1e27122"></a><a name="idd1e27127"></a><a name="idd1e27130"></a>Note that nine of the entries in <a class="docLink" href="ch04lev1sec9.html#ch04fig11">Figure 4.11</a> are the nine file access permission bits from <a class="docLink" href="ch04lev1sec5.html#ch04fig06">Figure 4.6</a>. We've added the two set-ID constants (<tt>S_ISUID</tt> and <tt>S_ISGID</tt>), the saved-text constant (<tt>S_ISVTX</tt>), and the three combined constants (<tt>S_IRWXU</tt>, <tt>S_IRWXG</tt>, and <tt>S_IRWXO</tt>).</P>
+<blockquote>
+<p class="docText">The saved-text bit (<tt>S_ISVTX</tt>) is not part of POSIX.1. It is defined as an XSI extension in the Single UNIX Specification. We describe its purpose in the next section.</p>
+</blockquote>
+<a name="ch04ex04"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">Recall the final state of the files <tt>foo</tt> and <tt>bar</tt> when we ran the program in <a class="docLink" href="ch04lev1sec8.html#ch04fig09">Figure 4.9</a> to demonstrate the <tt>umask</tt> function:</p>
+
+<pre>
+       $ <span class="docEmphStrong">ls -l foo bar</span>
+       -rw------- 1 sar                0 Dec 7 21:20 bar
+       -rw-rw-rw- 1 sar                0 Dec 7 21:20 foo
+</pre><br>
+
+<p class="docText">The program shown in <a class="docLink" href="ch04lev1sec9.html#ch04fig12">Figure 4.12</a> modifies the mode of these two files.</p>
+<p class="docText">After running the program in <a class="docLink" href="ch04lev1sec9.html#ch04fig12">Figure 4.12</a>, we see that the final state of the two files is</p>
+
+<pre>
+     $ <span class="docEmphStrong">ls -l foo bar</span>
+     -rw-r--r-- 1 sar           0 Dec 7 21:20 bar
+     -rw-rwSrw- 1 sar           0 Dec 7 21:20 foo
+</pre><br>
+
+<p class="docText">In this example, we have set the permissions of the file <tt>bar</tt> to an absolute value, regardless of the current permission bits. For the file <tt>foo</tt>, we set the permissions relative to their current state. To do this, we first call <tt>stat</tt> to obtain the current permissions and then modify them. We have explicitly turned on the set-group-ID bit and turned off the group-execute bit. Note that the <tt>ls</tt> command lists the group-execute permission as <tt>S</tt> to signify that the set-group-ID bit is set without the group-execute bit being set.</p>
+<blockquote>
+<p class="docText"><a name="idd1e27238"></a><a name="idd1e27243"></a><a name="idd1e27248"></a><a name="idd1e27251"></a><a name="idd1e27256"></a><a name="idd1e27261"></a><a name="idd1e27264"></a><a name="idd1e27267"></a><a name="idd1e27270"></a><a name="idd1e27275"></a><a name="idd1e27278"></a>On Solaris, the <tt>ls</tt> command displays an <tt>l</tt> instead of an <tt>S</tt> to indicate that mandatory file and record locking has been enabled for this file. This applies only to regular files, but we'll discuss this more in <a class="docLink" href="ch14lev1sec3.html#ch14lev1sec3">Section 14.3</a>.</p>
+</blockquote>
+<p class="docText">Finally, note that the time and date listed by the <tt>ls</tt> command did not change after we ran the program in <a class="docLink" href="ch04lev1sec9.html#ch04fig12">Figure 4.12</a>. We'll see in <a class="docLink" href="ch04lev1sec18.html#ch04lev1sec18">Section 4.18</a> that the <tt>chmod</tt> function updates only the time that the i-node was last changed. By default, the <tt>ls -l</tt> lists the time when the contents of the file were last modified.</p>
+
+<a name="ch04fig12"></a>
+<h5 class="docExampleTitle">Figure 4.12. Example of <tt>chmod</tt> function</h5>
+
+<pre>#include "apue.h"
+
+int
+main(void)
+{
+     struct stat      statbuf;
+
+     /* turn on set-group-ID and turn off group-execute */
+
+     if (stat("foo", &amp;statbuf) &lt; 0)
+         err_sys("stat error for foo");
+     if (chmod("foo", (statbuf.st_mode &amp; ~S_IXGRP) | S_ISGID) &lt; 0)
+         err_sys("chmod error for foo");
+
+     /* set absolute mode to "rw-r--r--" */
+
+     if (chmod("bar", S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH) &lt; 0)
+         err_sys("chmod error for bar");
+
+     exit(0);
+}
+</pre><br>
+
+
+<p class="docText">The <tt>chmod</tt> functions automatically clear two of the permission bits under the following conditions:</p>
+<ul><li><p class="docList">On systems, such as Solaris, that place special meaning on the sticky bit when used with regular files, if we try to set the sticky bit (<tt>S_ISVTX</tt>) on a regular file and do not have superuser privileges, the sticky bit in the <span class="docEmphasis">mode</span> is automatically turned off. (We describe the sticky bit in the next section.) This means that only the superuser can set the sticky bit of a regular file. The reason is to prevent malicious users from setting the sticky bit and adversely affecting system performance.</P><blockquote>
+<p class="docText">On FreeBSD 5.2.1, Mac OS X 10.3, and Solaris 9, only the superuser can set the sticky bit on a regular file. Linux 2.4.22 places no such restriction on the setting of the sticky bit, because the bit has no meaning when applied to regular files on Linux. Although the bit also has no meaning when applied to regular files on FreeBSD and Mac OS X, these systems prevent everyone but the superuser from setting it on a regular file.</P>
+</blockquote></li><LI><p class="docList">It is possible that the group ID of a newly created file is a group that the calling process does not belong to. Recall from <a class="docLink" href="ch04lev1sec6.html#ch04lev1sec6">Section 4.6</a> that it's possible for the group ID of the new file to be the group ID of the parent directory. Specifically, if the group ID of the new file does not equal either the effective group ID of the process or one of the process's supplementary group IDs and if the process does not have superuser privileges, then the set-group-ID bit is automatically turned off. This prevents a user from creating a set-group-ID file owned by a group that the user doesn't belong to.</P><blockquote>
+<p class="docText">FreeBSD 5.2.1, Linux 2.4.22, Mac OS X 10.3, and Solaris 9 add another security feature to try to prevent misuse of some of the protection bits. If a process that does not have superuser privileges writes to a file, the set-user-ID and set-group-ID bits are automatically turned off. If malicious users find a set-group-ID or a set-user-ID file they can write to, even though they can modify the file, they lose the special privileges of the file.</P>
+</blockquote></li></UL>
+
+<UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

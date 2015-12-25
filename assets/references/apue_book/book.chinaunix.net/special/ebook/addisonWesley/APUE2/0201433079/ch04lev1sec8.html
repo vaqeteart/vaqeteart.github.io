@@ -1,0 +1,91 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.8.&nbsp; umask Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec8"></a>
+<h3 class="docSection1Title">4.8. <tt>umask</tt> Function</h3>
+<p class="docText">Now that we've described the nine permission bits associated with every file, we can describe the file mode creation mask that is associated with every process.</P>
+<p class="docText">The <tt>umask</tt> function sets the file mode creation mask for the process and returns the previous value. (This is one of the few functions that doesn't have an error return.)</P>
+<a name="inta360"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>#include &lt;sys/stat.h&gt;
+
+mode_t umask(mode_t <span class="docEmphItalicAlt">cmask</span>);</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: previous file mode creation mask</P></td></TR></table></P><BR>
+<p class="docText">The <span class="docEmphasis">cmask</span> argument is formed as the bitwise OR of any of the nine constants from <a class="docLink" href="ch04lev1sec5.html#ch04fig06">Figure 4.6</a>: <tt>S_IRUSR</tt>, <tt>S_IWUSR</tt>, and so on.</p>
+<p class="docText">The file mode creation mask is used whenever the process creates a new file or a new directory. (Recall from <a class="docLink" href="ch03lev1sec3.html#ch03lev1sec3">Sections 3.3</a> and <a class="docLink" href="ch03lev1sec4.html#ch03lev1sec4">3.4</a> our description of the <tt>open</tt> and <tt>creat</tt> functions. Both accept a <span class="docEmphasis">mode</span> argument that specifies the new file's access permission bits.) We describe how to create a new directory in <a class="docLink" href="ch04lev1sec20.html#ch04lev1sec20">Section 4.20</a>. Any bits that are <span class="docEmphasis">on</span> in the file mode creation mask are turned <span class="docEmphasis">off</span> in the file's <span class="docEmphasis">mode</span>.</P>
+<a name="ch04ex03"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch04lev1sec8.html#ch04fig09">Figure 4.9</a> creates two files, one with a <tt>umask</tt> of 0 and one with a <tt>umask</tt> that disables all the group and other permission bits.</P>
+<p class="docText">If we run this program, we can see how the permission bits have been set.</P>
+
+<pre>
+       $ <span class="docEmphStrong">umask</span><span class="docEmphItalicAlt">                    first print the current file mode creation mask</span>
+       002
+       $ <span class="docEmphStrong">./a.out</span>
+       $ <span class="docEmphStrong">ls -l foo bar</span>
+       -rw------- 1 sar            0 Dec 7 21:20 bar
+       -rw-rw-rw- 1 sar            0 Dec 7 21:20 foo
+       $ <span class="docEmphStrong">umask</span>                    <span class="docEmphItalicAlt">see if the file mode creation mask changed</span>
+       002
+</pre><br>
+
+
+<a name="ch04fig09"></a>
+<h5 class="docExampleTitle">Figure 4.9. Example of <tt>umask</tt> function</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+
+#define RWRWRW (S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH)
+
+int
+main(void)
+{
+    umask(0);
+    if (creat("foo", RWRWRW) &lt; 0)
+        err_sys("creat error for foo");
+    umask(S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+    if (creat("bar", RWRWRW) &lt; 0)
+        err_sys("creat error for bar");
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e26460"></a>Most users of UNIX systems never deal with their <tt>umask</tt> value. It is usually set once, on login, by the shell's start-up file, and never changed. Nevertheless, when writing programs that create new files, if we want to ensure that specific access permission bits are enabled, we must modify the <tt>umask</tt> value while the process is running. For example, if we want to ensure that anyone can read a file, we should set the <tt>umask</tt> to 0. Otherwise, the <tt>umask</tt> value that is in effect when our process is running can cause permission bits to be turned off.</P>
+<p class="docText">In the preceding example, we use the shell's <tt>umask</tt> command to print the file mode creation mask before we run the program and after. This shows us that changing the file mode creation mask of a process doesn't affect the mask of its parent (often a shell). All of the shells have a built-in <tt>umask</tt> command that we can use to set or print the current file mode creation mask.</p>
+<p class="docText">Users can set the <tt>umask</tt> value to control the default permissions on the files they create. The value is expressed in octal, with one bit representing one permission to be masked off, as shown in <a class="docLink" href="ch04lev1sec8.html#ch04fig10">Figure 4.10</a>. Permissions can be denied by setting the corresponding bits. Some common <tt>umask</tt> values are 002 to prevent others from writing your files, 022 to prevent group members and others from writing your files, and 027 to prevent group members from writing your files and others from reading, writing, or executing your files.</P>
+<a name="ch04fig10"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 4.10. The <tt>umask</tt> file access permission bits</h5></caption><colgroup><col width="75"><col width="100"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Mask bit</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Meaning</span></p></th></tr></thead><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>0400</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">user-read</p></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>0200</tt></p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">user-write</P></td></TR><TR><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>0100</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">user-execute</P></td></TR><tr><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>0040</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">group-read</P></TD></tr><TR><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>0020</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">group-write</p></TD></tr><TR><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>0010</tt></P></td><td class="docTableCell" align="left" valign="top"><p class="docText">group-execute</p></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>0004</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">other-read</p></td></tr><tr><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>0002</tt></p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">other-write</P></td></TR><TR><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>0001</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">other-execute</P></td></TR></table></p><BR>
+<p class="docText"><a name="idd1e26646"></a><a name="idd1e26651"></a><a name="idd1e26658"></a><a name="idd1e26663"></a><a name="idd1e26668"></a><a name="idd1e26675"></a><a name="idd1e26678"></a>The Single UNIX Specification requires that the shell support a symbolic form of the <tt>umask</tt> command. Unlike the octal format, the symbolic format specifies which permissions are to be allowed (i.e., clear in the file creation mask) instead of which ones are to be denied (i.e., set in the file creation mask). Compare both forms of the command, shown below.</P>
+
+<pre>
+       $ <span class="docEmphStrong">umask</span><span class="docEmphItalicAlt">                        first print the current file mode creation mask</span>
+       002
+       $ <span class="docEmphStrong">umask -S</span><span class="docEmphItalicAlt">                     print the symbolic form</span>
+       u=rwx,g=rwx,o=rx
+       $ <span class="docEmphStrong">umask 027</span><span class="docEmphItalicAlt">                    change the file mode creation mask</span>
+       $ <span class="docEmphStrong">umask -S</span><span class="docEmphItalicAlt">                     print the symbolic form</span>
+       u=rwx,g=rx,o=
+</pre><BR>
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

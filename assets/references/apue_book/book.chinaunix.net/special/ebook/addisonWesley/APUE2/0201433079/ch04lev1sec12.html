@@ -1,0 +1,79 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.12.&nbsp; File Size</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec12"></a>
+<h3 class="docSection1Title" id="454331-993">4.12. File Size</h3>
+<p class="docText">The <tt>st_size</tt> member of the <tt>stat</tt> structure contains the size of the file in bytes. This field is meaningful only for regular files, directories, and symbolic links.</P>
+<blockquote>
+<p class="docText">Solaris also defines the file size for a pipe as the number of bytes that are available for reading from the pipe. We'll discuss pipes in <a class="docLink" href="ch15lev1sec2.html#ch15lev1sec2">Section 15.2</a>.</P>
+</blockquote>
+<p class="docText">For a regular file, a file size of 0 is allowed. We'll get an end-of-file indication on the first read of the file.</p>
+<p class="docText">For a directory, the file size is usually a multiple of a number, such as 16 or 512. We talk about reading directories in <a class="docLink" href="ch04lev1sec21.html#ch04lev1sec21">Section 4.21</a>.</P>
+<p class="docText">For a symbolic link, the file size is the number of bytes in the filename. For example, in the following case, the file size of 7 is the length of the pathname <tt>usr/lib</tt>:</P>
+
+<pre>
+    lrwxrwxrwx 1 root           7 Sep 25 07:14 lib -&gt; usr/lib
+</pre><BR>
+
+<p class="docText">(Note that symbolic links do not contain the normal C null byte at the end of the name, as the length is always specified by <tt>st_size</tt>.)</p>
+<p class="docText"><a name="idd1e27794"></a><a name="idd1e27797"></a><a name="idd1e27800"></a><a name="idd1e27805"></a><a name="idd1e27810"></a><a name="idd1e27815"></a><a name="idd1e27820"></a><a name="idd1e27823"></a><a name="idd1e27826"></a><a name="idd1e27831"></a><a name="idd1e27834"></a><a name="idd1e27837"></a><a name="idd1e27840"></a><a name="idd1e27845"></a>Most contemporary UNIX systems provide the fields <tt>st_blksize</tt> and <tt>st_blocks</tt>. The first is the preferred block size for I/O for the file, and the latter is the actual number of 512-byte blocks that are allocated. Recall from <a class="docLink" href="ch03lev1sec9.html#ch03lev1sec9">Section 3.9</a> that we encountered the minimum amount of time required to read a file when we used <tt>st_blksize</tt> for the <tt>read</tt> operations. The standard I/O library, which we describe in <a class="docLink" href="ch05.html#ch05">Chapter 5</a>, also tries to read or write <tt>st_blksize</tt> bytes at a time, for efficiency.</P>
+<blockquote>
+<p class="docText">Be aware that different versions of the UNIX System use units other than 512-byte blocks for <tt>st_blocks</tt>. Using this value is nonportable.</P>
+</blockquote>
+<a name="ch04lev2sec1"></a>
+<H4 class="docSection2Title">Holes in a File</h4>
+<p class="docText">In <a class="docLink" href="ch03lev1sec6.html#ch03lev1sec6">Section 3.6</a>, we mentioned that a regular file can contain &quot;holes.&quot; We showed an example of this in <a class="docLink" href="ch03lev1sec6.html#ch03fig02">Figure 3.2</a>. Holes are created by seeking past the current end of file and writing some data. As an example, consider the following:</P>
+
+<pre>
+     $ <span class="docEmphStrong">ls -l core</span>
+     -rw-r--r-- 1 sar       8483248 Nov 18 12:18 core
+     $ <span class="docEmphStrong">du -s core</span>
+     272        core
+</pre><br>
+
+<p class="docText">The size of the file <tt>core</tt> is just over 8 MB, yet the <tt>du</tt> command reports that the amount of disk space used by the file is 272 512-byte blocks (139,264 bytes). (The <tt>du</tt> command on many BSD-derived systems reports the number of 1,024-byte blocks; Solaris reports the number of 512-byte blocks.) Obviously, this file has many holes.</P>
+<p class="docText">As we mentioned in <a class="docLink" href="ch03lev1sec6.html#ch03lev1sec6">Section 3.6</a>, the <tt>read</tt> function returns data bytes of 0 for any byte positions that have not been written. If we execute the following, we can see that the normal I/O operations read up through the size of the file:</P>
+
+<pre>
+     $ <span class="docEmphStrong">wc -c core</span>
+      8483248 core
+</pre><BR>
+
+<blockquote>
+<p class="docText">The <tt>wc</tt>(1) command with the <tt>-c</tt> option counts the number of characters (bytes) in the file.</p>
+</blockquote>
+<p class="docText">If we make a copy of this file, using a utility such as <tt>cat</tt>(1), all these holes are written out as actual data bytes of 0:</P>
+
+<pre>
+       $ <span class="docEmphStrong">cat core &gt; core.copy</span>
+       $ <span class="docEmphStrong">ls -l core*</span>
+       -rw-r--r--  1 sar      8483248 Nov 18 12:18 core
+       -rw-rw-r--  1 sar      8483248 Nov 18 12:27 core.copy
+       $ <span class="docEmphStrong">du -s core*</span>
+       272     core
+       16592   core.copy
+</pre><BR>
+
+<p class="docText">Here, the actual number of bytes used by the new file is 8,495,104 (512 x 16,592). The difference between this size and the size reported by <tt>ls</tt> is caused by the number of blocks used by the file system to hold pointers to the actual data blocks.</p>
+<p class="docText">Interested readers should refer to <a class="docLink" href="ch04lev1sec2.html#ch04lev1sec2">Section 4.2</a> of Bach [<a class="docLink" href="bib01.html#biblio01_013">1986</a>], <a class="docLink" href="ch07lev1sec2.html#ch07lev1sec2">Sections 7.2</a> and <a class="docLink" href="ch07lev1sec3.html#ch07lev1sec3">7.3</a> of McKusick et al. [<a class="docLink" href="bib01.html#biblio01_042">1996</a>] (or <a class="docLink" href="ch08lev1sec2.html#ch08lev1sec2">Sections 8.2</a> and <a class="docLink" href="ch08lev1sec3.html#ch08lev1sec3">8.3</a> in McKusick and Neville-Neil [<a class="docLink" href="bib01.html#biblio01_043">2005</a>]), and <a name="idd1e28003"></a><a name="idd1e28006"></a><a name="idd1e28011"></a><a name="idd1e28016"></a><a name="idd1e28021"></a><a name="idd1e28024"></a><a name="idd1e28029"></a><a name="idd1e28034"></a><a name="idd1e28039"></a><a name="idd1e28044"></a><a name="idd1e28051"></a><a name="idd1e28054"></a><a name="idd1e28057"></a><a name="idd1e28060"></a><a name="idd1e28063"></a><a name="idd1e28068"></a><a name="idd1e28073"></a><a name="idd1e28076"></a><a name="idd1e28079"></a><a name="idd1e28084"></a><a name="idd1e28091"></a><a name="idd1e28096"></a><a name="idd1e28099"></a><a class="docLink" href="ch14lev1sec2.html#ch14lev1sec2">Section 14.2</a> of Mauro and McDougall [<a class="docLink" href="bib01.html#biblio01_044">2001</a>] for additional details on the physical layout of files.</P>
+
+
+<UL></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

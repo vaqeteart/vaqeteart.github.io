@@ -1,0 +1,224 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 19.6.&nbsp; Using the pty Program</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch19lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch19lev1sec6"></a>
+<h3 class="docSection1Title">19.6. Using the <tt>pty</tt> Program</h3>
+<p class="docText">We'll now look at various examples with the <tt>pty</tt> program, seeing the need for the command-line options.</P>
+<p class="docText">If our shell is the Korn shell, we can execute</P>
+
+<pre>
+pty ksh
+</pre><br>
+
+<p class="docText">and get a brand new invocation of the shell, running under a pseudo terminal.</P>
+<p class="docText">If the file <tt>ttyname</tt> is the program we showed in <a class="docLink" href="ch18lev1sec9.html#ch18fig16">Figure 18.16</a>, we can run the <tt>pty</tt> program as follows:</P>
+
+<pre>
+   $ <span class="docEmphStrong">who</span>
+   sar  :0      Oct  5 18:07
+   sar  pts/0   Oct  5 18:07
+   sar  pts/1   Oct  5 18:07
+   sar  pts/2   Oct  5 18:07
+   sar  pts/3   Oct  5 18:07
+   sar  pts/4   Oct  5 18:07        <span class="docEmphItalicAlt">pts/4 is the highest PTY currently in use</span>
+   $ <span class="docEmphStrong">pty ttyname</span>                    <span class="docEmphItalicAlt">run program in Figure 18.16 from PTY</span>
+   fd 0: /dev/pts/5                 <span class="docEmphItalicAlt">pts/5 is the next available PTY</span>
+   fd 1: /dev/pts/5
+   fd 2: /dev/pts/5
+</pre><BR>
+
+<a name="ch19lev2sec9"></a>
+<h4 class="docSection2Title"><tt>utmp</tt> File</H4>
+<p class="docText">In <a class="docLink" href="ch06lev1sec8.html#ch06lev1sec8">Section 6.8</a>, we described the <tt>utmp</tt> file that records all users currently logged in to a UNIX system. The question is whether a user running a program on a pseudo terminal <a name="idd1e146788"></a><a name="idd1e146791"></a><a name="idd1e146794"></a><a name="idd1e146797"></a><a name="idd1e146802"></a><a name="idd1e146807"></a><a name="idd1e146810"></a><a name="idd1e146815"></a><a name="idd1e146818"></a><a name="idd1e146823"></a><a name="idd1e146828"></a><a name="idd1e146831"></a><a name="idd1e146836"></a><a name="idd1e146841"></a><a name="idd1e146846"></a><a name="idd1e146851"></a>is considered logged in. In the case of remote logins, <tt>telnetd</tt> and <tt>rlogind</tt>, obviously an entry should be made in the <tt>utmp</tt> file for the user logged in on the pseudo terminal. There is little agreement, however, whether users running a shell on a pseudo terminal from a window system or from a program, such as <tt>script</tt>, should have entries made in the <tt>utmp</tt> file. Some systems record these and some don't. If a system doesn't record these in the <tt>utmp</tt> file, the <tt>who</tt>(1) program normally won't show the corresponding pseudo terminals as being used.</P>
+<p class="docText">Unless the <tt>utmp</tt> file has other-write permission enabled (which is considered to be a security hole), random programs that use pseudo terminals won't be able to write to this file.</P>
+
+<a name="ch19lev2sec10"></a>
+<h4 class="docSection2Title">Job Control Interaction</H4>
+<p class="docText">If we run a job-control shell under <tt>pty</tt>, it works normally. For example,</p>
+
+<pre>
+    pty ksh
+</pre><BR>
+
+<p class="docText">runs the Korn shell under <tt>pty</tt>. We can run programs under this new shell and use job control just as we do with our login shell. But if we run an interactive program other than a job-control shell under <tt>pty</tt>, asin</P>
+
+<pre>
+    pty cat
+</pre><BR>
+
+<p class="docText">everything is fine until we type the job-control suspend character. At that point, the job-control character is echoed as <tt>^Z</tt> and is ignored. Under earlier BSD-based systems, the <tt>cat</tt> process terminates, the <tt>pty</tt> process terminates, and we're back to our original shell. To understand what's going on here, we need to examine all the processes involved, their process groups, and sessions. <a class="docLink" href="ch19lev1sec6.html#ch19fig14">Figure 19.14</a> shows the arrangement when <tt>pty cat</tt> is running.</p>
+<a name="ch19fig14"></a><P><center>
+<H5 class="docFigureTitle">Figure 19.14. Process groups and sessions for <tt>pty cat</tt></h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/19fig14_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="351" SRC="images/0201433079/graphics/19fig14.gif;423615"></P>
+</center></P><br>
+<p class="docText">When we type the suspend character (Control-Z), it is recognized by the line discipline module beneath the <tt>cat</tt> process, since <tt>pty</tt> puts the terminal (beneath the <tt>pty</tt> parent) into raw mode. But the kernel won't stop the <tt>cat</tt> process, because it belongs to an orphaned process group (<a class="docLink" href="ch09lev1sec10.html#ch09lev1sec10">Section 9.10</a>). The parent of <tt>cat</tt> is the <tt>pty</tt> parent, and it belongs to another session.</p>
+<p class="docText">Historically, implementations have handled this condition differently. POSIX.1 says only that the <tt>SIGTSTP</tt> signal can't be delivered to the process. Systems derived from 4.3BSD delivered <tt>SIGKILL</tt> instead, which the process can't even catch. In 4.4BSD, this behavior was changed to conform to POSIX.1. Instead of sending <tt>SIGKILL</tt>, the 4.4BSD kernel silently discards the <tt>SIGTSTP</tt> signal if it has the default disposition and is to be delivered to a process in an orphaned process group. Most current implementations follow this behavior.</p>
+<p class="docText">When we use <tt>pty</tt> to run a job-control shell, the jobs invoked by this new shell are never members of an orphaned process group, because the job-control shell always belongs to the same session. In that case, the Control-Z that we type is sent to the process invoked by the shell, not to the shell itself.</p>
+<p class="docText">The only way to avoid this inability of the process invoked by <tt>pty</tt> to handle job-control signals is to add yet another command-line flag to <tt>pty</tt>, telling it to recognize the job control suspend character itself (in the <tt>pty</tt> child) instead of letting the character get all the way through to the other line discipline.</P>
+
+<a name="ch19lev2sec11"></a>
+<h4 class="docSection2Title">Watching the Output of Long-Running Programs</H4>
+<p class="docText">Another example of job-control interaction with the <tt>pty</tt> program is with the example in <a class="docLink" href="ch19lev1sec2.html#ch19fig06">Figure 19.6</a>. If we run the program that generates output slowly as</p>
+
+<pre>
+   pty slowout &gt; file.out &amp;
+</pre><BR>
+
+<p class="docText">the <tt>pty</tt> process is stopped immediately when the child tries to read from its standard input (the terminal). The reason is that the job is a background job and gets job-control stopped when it tries to access the terminal. If we redirect standard input so that <tt>pty</tt> doesn't try to read from the terminal, as in</p>
+
+<pre>
+   pty slowout &lt; /dev/null &gt; file.out &amp;
+</pre><br>
+
+<p class="docText">the <tt>pty</tt> program stops immediately because it reads an end of file on its standard input and terminates. The solution for this problem is the <tt>-i</tt> option, which says to ignore an end of file on the standard input:</p>
+
+<pre>
+   pty -i slowout &lt; /dev/null &gt; file.out &amp;
+</pre><br>
+
+<p class="docText">This flag causes the <tt>pty</tt> child in <a class="docLink" href="ch19lev1sec5.html#ch19fig13">Figure 19.13</a> to exit when the end of file is encountered, but the child doesn't tell the parent to terminate. Instead, the parent continues copying the PTY slave output to standard output (the file <tt>file.out</tt> in the example).</p>
+
+<a name="ch19lev2sec12"></a>
+<h4 class="docSection2Title"><tt>script</tt> Program</h4>
+<p class="docText"><a name="idd1e147079"></a><a name="idd1e147082"></a><a name="idd1e147088"></a><a name="idd1e147091"></a><a name="idd1e147096"></a><a name="idd1e147101"></a><a name="idd1e147106"></a>Using the <tt>pty</tt> program, we can implement the <tt>script(1)</tt> program as the following shell script:</p>
+
+<pre>
+    #!/bin/sh
+    pty "${SHELL:-/bin/sh}" | tee typescript
+</pre><br>
+
+<p class="docText">Once we run this shell script, we can execute the <tt>ps</tt> command to see all the process relationships. <a class="docLink" href="ch19lev1sec6.html#ch19fig15">Figure 19.15</a> details these relationships.</p>
+<a name="ch19fig15"></a><p><center>
+<h5 class="docFigureTitle">Figure 19.15. Arrangement of processes for <tt>script</tt> shell script</h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/19fig15_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="282" SRC="images/0201433079/graphics/19fig15.gif;423615"></p>
+</center></p><br>
+<p class="docText">In this example, we assume that the <tt>SHELL</tt> variable is the Korn shell (probably <tt>/bin/ksh</tt>). As we mentioned earlier, <tt>script</tt> copies only what is output by the new shell (and any processes that it invokes), but since the line discipline module above the PTY slave normally has echo enabled, most of what we type also gets written to the <tt>typescript</tt> file.</p>
+
+<a name="ch19lev2sec13"></a>
+<H4 class="docSection2Title">Running Coprocesses</H4>
+<p class="docText">In <a class="docLink" href="ch15lev1sec2.html#ch15fig08">Figure 15.8</a>, the coprocess couldn't use the standard I/O functions, because standard input and standard output do not refer to a terminal, so the standard I/O functions treat them as fully buffered. If we run the coprocess under <tt>pty</tt> by replacing the line</p>
+
+<pre>
+    if (execl("./add2", "add2", (char *)0) &lt; 0)
+</pre><BR>
+
+<p class="docText"><a name="idd1e147191"></a><a name="idd1e147196"></a><a name="idd1e147201"></a><a name="idd1e147206"></a><a name="idd1e147211"></a><a name="idd1e147216"></a><a name="idd1e147221"></a>with</P>
+
+<pre>
+    if (execl("./pty", "pty", "-e", "add2", (char *)0) &lt; 0)
+</pre><BR>
+
+<p class="docText">the program now works, even if the coprocess uses standard I/O.</p>
+<p class="docText"><a class="docLink" href="ch19lev1sec6.html#ch19fig16">Figure 19.16</a> shows the arrangement of processes when we run the coprocess with a pseudo terminal as its input and output. It is an expansion of <a class="docLink" href="ch19lev1sec2.html#ch19fig05">Figure 19.5</a>, showing all the process connections and data flow. The box labeled &quot;driving program&quot; is the program from <a class="docLink" href="ch15lev1sec2.html#ch15fig08">Figure 15.8</a>, with the <tt>execl</tt> changed as described previously.</P>
+<a name="ch19fig16"></a><P><center>
+<H5 class="docFigureTitle">Figure 19.16. Running a coprocess with a pseudo terminal as its input and output</h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/19fig16_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="318" SRC="images/0201433079/graphics/19fig16.gif;423615"></P>
+</center></p><BR>
+<p class="docText">This example shows the need for the <tt>-e</tt> (no echo) option for the <tt>pty</tt> program. The <tt>pty</tt> program is not running interactively, because its standard input is not connected to a terminal. In <a class="docLink" href="ch19lev1sec5.html#ch19fig12">Figure 19.12</a>, the <tt>interactive</tt> flag defaults to false, since the call to <tt>isatty</tt> returns false. This means that the line discipline above the actual terminal remains in a canonical mode with echo enabled. By specifying the <tt>-e</tt> option, we turn off echo in the line discipline module above the PTY slave. If we don't do this, everything we type is echoed twiceby both line discipline modules.</P>
+<p class="docText">We also have the <tt>-e</tt> option turn off the <tt>ONLCR</tt> flag in the <tt>termios</tt> structure to prevent all the output from the coprocess from being terminated with a carriage return and a newline.</P>
+<p class="docText">Testing this example on different systems showed another problem that we alluded to in <a class="docLink" href="ch14lev1sec8.html#ch14lev1sec8">Section 14.8</a> when we described the <tt>readn</tt> and <tt>writen</tt> functions. The amount of data returned by a <tt>read</tt>, when the descriptor refers to something other than an <a name="idd1e147323"></a><a name="idd1e147328"></a><a name="idd1e147333"></a><a name="idd1e147338"></a><a name="idd1e147343"></a>ordinary disk file, can differ between implementations. This coprocess example using <tt>pty</tt> gave unexpected results that were tracked down to the <tt>read</tt> function on the pipe in the program from <a class="docLink" href="ch15lev1sec2.html#ch15fig08">Figure 15.8</a> returning less than a line. The solution was to not use the program shown in <a class="docLink" href="ch15lev1sec2.html#ch15fig08">Figure 15.8</a>, but to use the version of this program from Exercise 15.5 that was modified to use the standard I/O library, with the standard I/O streams for the both pipes set to line buffering. By doing this, the <tt>fgets</tt> function does as many <tt>read</tt>s as required to obtain a complete line. The <tt>while</tt> loop in <a class="docLink" href="ch15lev1sec2.html#ch15fig08">Figure 15.8</a> assumes that each line sent to the coprocess causes one line to be returned.</p>
+
+<a name="ch19lev2sec14"></a>
+<H4 class="docSection2Title">Driving Interactive Programs Noninteractively</H4>
+<p class="docText">Although it's tempting to think that <tt>pty</tt> can run any coprocess, even a coprocess that is interactive, it doesn't work. The problem is that <tt>pty</tt> just copies everything on its standard input to the PTY and everything from the PTY to its standard output, never looking at what it sends or what it gets back.</p>
+<p class="docText">As an example, we can run the <tt>telnet</tt> command under <tt>pty</tt> talking directly to the remote host:</P>
+
+<pre>
+    pty telnet 192.168.1.3
+</pre><BR>
+
+<p class="docText">Doing this provides no benefit over just typing <tt>telnet 192.168.1.3</tt>, but we would like to run the <tt>telnet</tt> program from a script, perhaps to check some condition on the remote host. If the file <tt>telnet.cmd</tt> contains the four lines</p>
+
+<pre>
+    sar
+    <span class="docEmphItalicAlt">passwd</span>
+    uptime
+    exit
+</pre><br>
+
+<p class="docText">the first line is the user name we use to log in to the remote host, the second line is the password, the third line is a command we'd like to run, and the fourth line terminates the session. But if we run this script as</p>
+
+<pre>
+    pty -i &lt; telnet.cmd telnet 192.168.1.3
+</pre><br>
+
+<p class="docText">it doesn't do what we want. What happens is that the contents of the file <tt>telnet.cmd</tt> are sent to the remote host before it has a chance to prompt us for an account name and password. When it turns off echoing to read the password, <tt>login</tt> uses the <tt>tcsetattr</tt> option, which discards any data already queued. Thus, the data we send is thrown away.</P>
+<p class="docText">When we run the <tt>telnet</tt> program interactively, we wait for the remote host to prompt for a password before we type it, but the <tt>pty</tt> program doesn't know to do this. This is why it takes a more sophisticated program than <tt>pty</tt>, such as <tt>expect</tt>, to drive an interactive program from a script file.</p>
+<p class="docText">Even running <tt>pty</tt> from the program in <a class="docLink" href="ch15lev1sec2.html#ch15fig08">Figure 15.8</a>, as we showed earlier, doesn't help, because the program in <a class="docLink" href="ch15lev1sec2.html#ch15fig08">Figure 15.8</a> assumes that each line it writes to the pipe generates exactly one line on the other pipe. With an interactive program, one line of input may generate many lines of output. Furthermore, the program in <a class="docLink" href="ch15lev1sec2.html#ch15fig08">Figure 15.8</a> <a name="idd1e147473"></a><a name="idd1e147478"></a><a name="idd1e147483"></a><a name="idd1e147490"></a><a name="idd1e147495"></a><a name="idd1e147500"></a><a name="idd1e147505"></a><a name="idd1e147510"></a><a name="idd1e147515"></a><a name="idd1e147520"></a><a name="idd1e147525"></a><a name="idd1e147530"></a>always sent a line to the coprocess before reading from it. This won't work when we want to read from the coprocess before sending it anything.</P>
+<p class="docText">There are a few ways to proceed from here to be able to drive an interactive program from a script. We could add a command language and interpreter to <tt>pty</tt>, but a reasonable command language would probably be ten times larger than the <tt>pty</tt> program. Another option is to take a command language and use the <tt>pty_fork</tt> function to invoke interactive programs. This is what the <tt>expect</tt> program does.</p>
+<p class="docText">We'll take a different path and just provide an option (<tt>-d</tt>) to allow <tt>pty</tt> to be connected to a driver process for its input and output. The standard output of the driver is <tt>pty</tt>'s standard input and vice versa. This is similar to a coprocess, but on &quot;the other side&quot; of <tt>pty</tt>. The resulting arrangement of processes is almost identical to <a class="docLink" href="ch19lev1sec6.html#ch19fig16">Figure 19.16</a>, but in the current scenario, <tt>pty</tt> does the <tt>fork</tt> and <tt>exec</tt> of the driver process. Also, instead of two half-duplex pipes, we'll use a single bidirectional pipe between <tt>pty</tt> and the driver process.</P>
+<p class="docText"><a class="docLink" href="ch19lev1sec6.html#ch19fig17">Figure 19.17</a> shows the source for the <tt>do_driver</tt> function, which is called by the <tt>main</tt> function of <tt>pty</tt> (<a class="docLink" href="ch19lev1sec5.html#ch19fig12">Figure 19.12</a>) when the <tt>-d</tt> option is specified.</p>
+<a name="ch19fig17"></a>
+<h5 class="docExampleTitle">Figure 19.17. The <tt>do_driver</tt> function for the <tt>pty</tt> program</h5>
+
+<pre>
+#include "apue.h"
+
+void
+do_driver(char *driver)
+{
+    pid_t   child;
+    int     pipe[2];
+
+    /*
+     * Create a stream pipe to communicate with the driver.
+     */ 
+    if (s_pipe(pipe) &lt; 0)
+        err_sys("can't create stream pipe");
+
+    if ((child = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (child == 0) {        /* child */
+        close(pipe[1]);
+
+        /* stdin for driver */
+        if (dup2(pipe[0], STDIN_FILENO) != STDIN_FILENO)
+            err_sys("dup2 error to stdin");
+
+        /* stdout for driver */
+        if (dup2(pipe[0], STDOUT_FILENO) != STDOUT_FILENO)
+            err_sys("dup2 error to stdout");
+        if (pipe[0] != STDIN_FILENO &amp;&amp; pipe[0] != STDOUT_FILENO)
+            close(pipe[0]);
+
+        /* leave stderr for driver alone */
+        execlp(driver, driver, (char *)0);
+        err_sys("execlp error for: %s", driver);
+    }
+    close(pipe[0]);     /* parent */
+    if (dup2(pipe[1], STDIN_FILENO) != STDIN_FILENO)
+        err_sys("dup2 error to stdin");
+    if (dup2(pipe[1], STDOUT_FILENO) != STDOUT_FILENO)
+        err_sys("dup2 error to stdout");
+    if (pipe[1] != STDIN_FILENO &amp;&amp; pipe[1] != STDOUT_FILENO)
+        close(pipe[1]);
+
+    /*
+     * Parent returns, but with stdin and stdout connected
+     * to the driver.
+     */
+}</pre><br>
+
+
+<p class="docText"><a name="idd1e147640"></a><a name="idd1e147645"></a><a name="idd1e147648"></a><a name="idd1e147653"></a><a name="idd1e147658"></a><a name="idd1e147661"></a><a name="idd1e147664"></a><a name="idd1e147667"></a><a name="idd1e147672"></a><a name="idd1e147677"></a><a name="idd1e147682"></a><a name="idd1e147687"></a><a name="idd1e147692"></a><a name="idd1e147695"></a><a name="idd1e147698"></a><a name="idd1e147704"></a><a name="idd1e147707"></a>By writing our own driver program that is invoked by <tt>pty</tt>, we can drive interactive programs in any way desired. Even though it has its standard input and standard output connected to <tt>pty</tt>, the driver process can still interact with the user by reading and writing <tt>/dev/tty</tt>. This solution still isn't as general as the <tt>expect</tt> program, but it provides a useful option to <tt>pty</tt> for fewer than 50 lines of code.</p>
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch19lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

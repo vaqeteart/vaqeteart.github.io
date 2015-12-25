@@ -1,0 +1,208 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 8.13.&nbsp; system Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec14.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch08lev1sec13"></a>
+<h3 class="docSection1Title" id="454331-830">8.13. <tt>system</tt> Function</h3>
+<p class="docText">It is convenient to execute a command string from within a program. For example, assume that we want to put a time-and-date stamp into a certain file. We could use the functions we describe in <a class="docLink" href="ch06lev1sec10.html#ch06lev1sec10">Section 6.10</a> to do this: call <tt>time</tt> to get the current calendar time, then call <tt>localtime</tt> to convert it to a broken-down time, and then call <tt>strftime</tt> to format the result, and write the results to the file. It is much easier, however, to say</P>
+
+<pre>system("date &gt; file");
+</pre><BR>
+
+<p class="docText">ISO C defines the <tt>system</tt> function, but its operation is strongly system dependent. POSIX.1 includes the <tt>system</tt> interface, expanding on the ISO C definition to describe its behavior in a POSIX environment.</p>
+<a name="inta342"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdlib.h&gt;
+
+int system(const char *<span class="docEmphItalicAlt">cmdstring</span>);
+</pre><br>
+
+</P></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: (see below)</p></TD></TR></table></P><br>
+<p class="docText">If <span class="docEmphasis">cmdstring</span> is a null pointer, <tt>system</tt> returns nonzero only if a command processor is available. This feature determines whether the <tt>system</tt> function is supported on a given operating system. Under the UNIX System, <tt>system</tt> is always available.</P>
+<p class="docText">Because <tt>system</tt> is implemented by calling <tt>fork</tt>, <tt>exec</tt>, and <tt>waitpid</tt>, there are three types of return values.</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">If either the <tt>fork</tt> fails or <tt>waitpid</tt> returns an error other than <tt>EINTR</tt>, <tt>system</tt> returns 1 with <tt>errno</tt> set to indicate the error.</P></div></LI><li><div style="font-weight:normal"><p class="docList">If the <tt>exec</tt> fails, implying that the shell can't be executed, the return value is as if the shell had executed <tt>exit(127)</tt>.</p></div></li><li><div style="font-weight:normal"><p class="docList">Otherwise, all three functions<tt>fork</tt>, <tt>exec</tt>, and <tt>waitpid</tt>succeed, and the return value from <tt>system</tt> is the termination status of the shell, in the format specified for <tt>waitpid</tt>.</P><blockquote>
+<p class="docText">Some older implementations of <tt>system</tt> returned an error (<tt>EINTR</tt>) if <tt>waitpid</tt> was interrupted by a caught signal. Because there is no cleanup strategy that an application can use to recover from this type of error, POSIX later added the requirement that <tt>system</tt> not return an error in this case. (We discuss interrupted system calls in <a class="docLink" href="ch10lev1sec5.html#ch10lev1sec5">Section 10.5</a>.)</p>
+</blockquote></div></LI></ol></div>
+<p class="docText"><a name="idd1e60039"></a><a name="idd1e60042"></a><a name="idd1e60048"></a><a name="idd1e60053"></a><a name="idd1e60058"></a><a name="idd1e60063"></a><a name="idd1e60068"></a><a class="docLink" href="ch08lev1sec13.html#ch08fig22">Figure 8.22</a> shows an implementation of the <tt>system</tt> function. The one feature that it doesn't handle is signals. We'll update this function with signal handling in <a class="docLink" href="ch10lev1sec18.html#ch10lev1sec18">Section 10.18</a>.</p>
+<a name="ch08fig22"></a>
+<H5 class="docExampleTitle">Figure 8.22. The <tt>system</tt> function, without signal handling</h5>
+
+<pre>
+#include    &lt;sys/wait.h&gt;
+#include    &lt;errno.h&gt;
+#include    &lt;unistd.h&gt;
+
+int
+system(const char *cmdstring)    /* version without signal handling */
+{
+    pid_t   pid;
+    int     status;
+
+    if (cmdstring == NULL)
+        return(1);      /* always a command processor with UNIX */
+
+    if ((pid = fork()) &lt; 0) {
+        status = -1;    /* probably out of processes */
+    } else if (pid == 0) {              /* child */
+        execl("/bin/sh", "sh", "-c", cmdstring, (char *)0);
+        _exit(127);     /* execl error */
+    } else {                             /* parent */
+        while (waitpid(pid, &amp;status, 0) &lt; 0) {
+            if (errno != EINTR) {
+                status = -1; /* error other than EINTR from waitpid() */
+                break;
+            }
+        }
+    }
+
+    return(status);
+}
+</pre><br>
+
+
+<p class="docText">The shell's <tt>-c</tt> option tells it to take the next command-line argument<span class="docEmphasis">cmdstring</span>, in this caseas its command input instead of reading from standard input or from a given file. The shell parses this null-terminated C string and breaks it up into separate command-line arguments for the command. The actual command string that is passed to the shell can contain any valid shell commands. For example, input and output redirection using <tt>&lt;</tt> and <tt>&gt;</tt> can be used.</p>
+<p class="docText">If we didn't use the shell to execute the command, but tried to execute the command ourself, it would be more difficult. First, we would want to call <tt>execlp</tt> instead of <tt>execl</tt>, to use the <tt>PATH</tt> variable, like the shell. We would also have to break up the null-terminated C string into separate command-line arguments for the call to <tt>execlp</tt>. Finally, we wouldn't be able to use any of the shell metacharacters.</p>
+<p class="docText">Note that we call <tt>_exit</tt> instead of <tt>exit</tt>. We do this to prevent any standard I/O buffers, which would have been copied from the parent to the child across the <tt>fork</tt>, from being flushed in the child.</p>
+<p class="docText"><a name="idd1e60157"></a><a name="idd1e60160"></a><a name="idd1e60165"></a><a name="idd1e60170"></a>We can test this version of <tt>system</tt> with the program shown in <a class="docLink" href="ch08lev1sec13.html#ch08fig23">Figure 8.23</a>. (The <tt>pr_exit</tt> function was defined in <a class="docLink" href="ch08lev1sec6.html#ch08fig05">Figure 8.5</a>.)</p>
+<a name="ch08fig23"></a>
+<h5 class="docExampleTitle">Figure 8.23. Calling the <tt>system</tt> function</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/wait.h&gt;
+
+int
+main(void)
+{
+    int      status;
+
+    if ((status = system("date")) &lt; 0)
+        err_sys("system() error");
+    pr_exit(status);
+
+   if ((status = system("nosuchcommand")) &lt; 0)
+       err_sys("system() error");
+   pr_exit(status);
+
+   if ((status = system("who; exit 44")) &lt; 0)
+       err_sys("system() error");
+   pr_exit(status);
+
+   exit(0);
+}
+</pre><br>
+
+
+<p class="docText">Running the program in <a class="docLink" href="ch08lev1sec13.html#ch08fig23">Figure 8.23</a> gives us</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+   Sun Mar 21 18:41:32 EST 2004
+   normal termination, exit status = 0     <span class="docEmphItalicAlt">for</span> date
+   sh: nosuchcommand: command not found
+   normal termination, exit status = 127   <span class="docEmphItalicAlt">for</span> nosuchcommand
+   sar      :0       Mar 18 19:45
+   sar      pts/0    Mar 18 19:45 (:0)
+   sar      pts/1    Mar 18 19:45 (:0)
+   sar      pts/2    Mar 18 19:45 (:0)
+   sar      pts/3    Mar 18 19:45 (:0)
+   normal termination, exit status = 44   <span class="docEmphItalicAlt">for</span> exit
+</pre><br>
+
+<p class="docText">The advantage in using <tt>system</tt>, instead of using <tt>fork</tt> and <tt>exec</tt> directly, is that <tt>system</tt> does all the required error handling and (in our next version of this function in <a class="docLink" href="ch10lev1sec18.html#ch10lev1sec18">Section 10.18</a>) all the required signal handling.</p>
+<p class="docText">Earlier systems, including SVR3.2 and 4.3BSD, didn't have the <tt>waitpid</tt> function available. Instead, the parent waited for the child, using a statement such as</p>
+
+<pre>
+   while ((lastpid = wait(&amp;status)) != pid &amp;&amp; lastpid != -1)
+    ;</pre><br>
+
+<p class="docText">A problem occurs if the process that calls <tt>system</tt> has spawned its own children before calling <tt>system</tt>. Because the <tt>while</tt> statement above keeps looping until the child that was generated by <tt>system</tt> terminates, if any children of the process terminate before the <a name="idd1e60282"></a><a name="idd1e60287"></a><a name="idd1e60292"></a><a name="idd1e60297"></a><a name="idd1e60302"></a><a name="idd1e60305"></a>process identified by <tt>pid</tt>, then the process ID and termination status of these other children are discarded by the <tt>while</tt> statement. Indeed, this inability to <tt>wait</tt> for a specific child is one of the reasons given in the POSIX.1 Rationale for including the <tt>waitpid</tt> function. We'll see in <a class="docLink" href="ch15lev1sec3.html#ch15lev1sec3">Section 15.3</a> that the same problem occurs with the <tt>popen</tt> and <tt>pclose</tt> functions, if the system doesn't provide a <tt>waitpid</tt> function.</p>
+<a name="ch08lev2sec5"></a>
+<h4 class="docSection2Title">Set-User-ID Programs</h4>
+<p class="docText">What happens if we call <tt>system</tt> from a set-user-ID program? Doing so is a security hole and should never be done. <a class="docLink" href="ch08lev1sec13.html#ch08fig24">Figure 8.24</a> shows a simple program that just calls <tt>system</tt> for its command-line argument.</P>
+<a name="ch08fig24"></a>
+<H5 class="docExampleTitle">Figure 8.24. Execute the command-line argument using <tt>system</tt></h5>
+
+<pre>
+#include "apue.h"
+
+int
+main(int argc, char *argv[])
+{
+    int     status;
+
+    if (argc &lt; 2)
+        err_quit("command-line argument required");
+
+    if ((status = system(argv[1])) &lt; 0)
+        err_sys("system() error");
+    pr_exit(status);
+
+    exit(0);
+}
+</pre><BR>
+
+
+<p class="docText">We'll compile this program into the executable file <tt>tsys</tt>.</P>
+<p class="docText"><a class="docLink" href="ch08lev1sec13.html#ch08fig25">Figure 8.25</a> shows another simple program that prints its real and effective user IDs.</P>
+<a name="ch08fig25"></a>
+<h5 class="docExampleTitle">Figure 8.25. Print real and effective user IDs</H5>
+
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+    printf("real uid = %d, effective uid = %d\n", getuid(), geteuid());
+    exit(0);
+}
+</pre><BR>
+
+
+<p class="docText">We'll compile this program into the executable file <tt>printuids</tt>. Running both programs gives us the following:</P>
+
+<pre>
+   $ <span class="docEmphStrong">tsys printuids</span>                          <span class="docEmphItalicAlt">normal execution, no special privileges</span>
+   real uid = 205, effective uid = 205
+   normal termination, exit status = 0
+   $ <span class="docEmphStrong">su</span>                                      <span class="docEmphItalicAlt">become superuser</span>
+   Password:                                 <span class="docEmphItalicAlt">enter superuser password</span>
+   # <span class="docEmphStrong">chown root tsys</span>                         <span class="docEmphItalicAlt">change owner</span>
+   # <span class="docEmphStrong">chmod u+s tsys</span>                          <span class="docEmphItalicAlt">make set-user-ID</span>
+   # <span class="docEmphStrong">ls -l tsys</span>                              <span class="docEmphItalicAlt">verify file's permissions and owner</span>
+   -rwsrwxr-x 1 root       16361 Mar 16 16:59 tsys
+   # <span class="docEmphStrong">exit</span>                                    <span class="docEmphItalicAlt">leave superuser shell</span>
+   $ <span class="docEmphStrong">tsys printuids</span>
+   real uid = 205, effective uid = 0         <span class="docEmphItalicAlt">oops, this is a security hole</span>
+   normal termination, exit status = 0
+</pre><br>
+
+<p class="docText"><a name="idd1e60476"></a><a name="idd1e60481"></a><a name="idd1e60486"></a><a name="idd1e60491"></a><a name="idd1e60496"></a><a name="idd1e60501"></a><a name="idd1e60507"></a><a name="idd1e60512"></a><a name="idd1e60517"></a><a name="idd1e60522"></a><a name="idd1e60525"></a><a name="idd1e60530"></a><a name="idd1e60533"></a><a name="idd1e60536"></a><a name="idd1e60541"></a><a name="idd1e60546"></a>The superuser permissions that we gave the <tt>tsys</tt> program are retained across the <tt>fork</tt> and <tt>exec</tt> that are done by <tt>system</tt>.</P>
+<blockquote>
+<p class="docText">When <tt>/bin/sh</tt> is <tt>bash</tt> version 2, the previous example doesn't work, because <tt>bash</tt> will reset the effective user ID to the real user ID when they don't match.</p>
+</blockquote>
+<p class="docText">If it is running with special permissionseither set-user-ID or set-group-IDand wants to spawn another process, a process should use <tt>fork</tt> and <tt>exec</tt> directly, being certain to change back to normal permissions after the <tt>fork</tt>, before calling <tt>exec</tt>. The <tt>system</tt> function should <span class="docEmphasis">never</span> be used from a set-user-ID or a set-group-ID program.</P>
+<blockquote>
+<p class="docText">One reason for this admonition is that <tt>system</tt> invokes the shell to parse the command string, and the shell uses its <tt>IFS</tt> variable as the input field separator. Older versions of the shell didn't reset this variable to a normal set of characters when invoked. This allowed a malicious user to set <tt>IFS</tt> before <tt>system</tt> was called, causing <tt>system</tt> to execute a different program.</P>
+</blockquote>
+
+
+<UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec14.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

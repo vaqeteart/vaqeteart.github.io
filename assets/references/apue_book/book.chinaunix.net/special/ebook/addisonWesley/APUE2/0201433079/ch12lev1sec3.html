@@ -1,0 +1,166 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 12.3.&nbsp; Thread Attributes</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch12lev1sec3"></a>
+<h3 class="docSection1Title">12.3. Thread Attributes</h3>
+<p class="docText">In all the examples in which we called <tt>pthread_create</tt> in <a class="docLink" href="ch11.html#ch11">Chapter 11</a>, we passed in a null pointer instead of passing in a pointer to a <tt>pthread_attr_t</tt> structure. We can use the <tt>pthread_attr_t</tt> structure to modify the default attributes, and associate these attributes with threads that we create. We use the <tt>pthread_attr_init</tt> function <a name="idd1e85826"></a><a name="idd1e85831"></a><a name="idd1e85836"></a><a name="idd1e85841"></a><a name="idd1e85848"></a><a name="idd1e85855"></a><a name="idd1e85860"></a><a name="idd1e85865"></a><a name="idd1e85870"></a><a name="idd1e85875"></a><a name="idd1e85880"></a>to initialize the <tt>pthread_attr_t</tt> structure. After calling <tt>pthread_attr_init</tt>, the <tt>pthread_attr_t</tt> structure contains the default values for all the thread attributes supported by the implementation. To change individual attributes, we need to call other functions, as described later in this section.</P>
+<a name="inta188"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;pthread.h&gt;
+
+int pthread_attr_init(pthread_attr_t *<span class="docEmphItalicAlt">attr</span>);
+
+int pthread_attr_destroy(pthread_attr_t   *<span class="docEmphItalicAlt">attr</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</p></TD></tr></table></P><BR>
+<p class="docText">To deinitialize a <tt>pthread_attr_t</tt> structure, we call <tt>pthread_attr_destroy</tt>. If an implementation of <tt>pthread_attr_init</tt> allocated any dynamic memory for the attribute object, <tt>pthread_attr_destroy</tt> will free that memory. In addition, <tt>pthread_attr_destroy</tt> will initialize the attribute object with invalid values, so if it is used by mistake, <tt>pthread_create</tt> will return an error.</P>
+<p class="docText">The <tt>pthread_attr_t</tt> structure is opaque to applications. This means that applications aren't supposed to know anything about its internal structure, thus promoting application portability. Following this model, POSIX.1 defines separate functions to query and set each attribute.</p>
+<p class="docText">The thread attributes defined by POSIX.1 are summarized in <a class="docLink" href="ch12lev1sec3.html#ch12fig03">Figure 12.3</a>. POSIX.1 defines additional attributes in the real-time threads option, but we don't discuss those here. In <a class="docLink" href="ch12lev1sec3.html#ch12fig03">Figure 12.3</a>, we also show which platforms support each thread attribute. If the attribute is accessible through an obsolete interface, we show <span class="docEmphStrong">ob</span> in the table entry.</P>
+<a name="ch12fig03"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 12.3. POSIX.1 thread attributes</H5></caption><colgroup><col width="80"><col width="200"><col width="70"><col width="50"><col width="50"><col width="50"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Name</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Description</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">FreeBSD 5.2.1</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Linux 2.4.22</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Mac OS X 10.3</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Solaris 9</span></p></th></TR></thead><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><span class="docEmphasis">detachstate</span></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">detached thread attribute</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><span class="docEmphasis">guardsize</span></P></TD><TD class="rightBorder" align="left" valign="top"><p class="docText">guard buffer size in bytes at end of thread stack</p></TD><TD class="rightBorder" align="left" valign="top">&nbsp;</TD><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><span class="docEmphasis">stackaddr</span></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">lowest address of thread stack</p></TD><td class="rightBorder" align="center" valign="top"><p class="docText"><span class="docEmphStrong">ob</span></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText"><span class="docEmphStrong">ob</span>
+</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><span class="docEmphasis">stacksize</span></p></td><td class="rightBorder" align="left" valign="top"><p class="docText">size in bytes of thread stack</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td></TR></table></p><BR>
+<p class="docText">In <a class="docLink" href="ch11lev1sec5.html#ch11lev1sec5">Section 11.5</a>, we introduced the concept of detached threads. If we are no longer interested in an existing thread's termination status, we can use <tt>pthread_detach</tt> to allow the operating system to reclaim the thread's resources when the thread exits.</P>
+<p class="docText">If we know that we don't need the thread's termination status at the time we create the thread, we can arrange for the thread to start out in the detached state by modifying the <span class="docEmphasis">detachstate</span> thread attribute in the <tt>pthread_attr_t</tt> structure. We can use the <tt>pthread_attr_setdetachstate</tt> function to set the <span class="docEmphasis">detachstate</span> thread attribute to one of two legal values: <tt>PTHREAD_CREATE_DETACHED</tt> to start the thread in the detached state or <tt>PTHREAD_CREATE_JOINABLE</tt> to start the thread normally, so its termination status can be retrieved by the application.</P>
+<a name="inta189"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e86183"></a><a name="idd1e86192"></a><a name="idd1e86199"></a><a name="idd1e86206"></a><a name="idd1e86211"></a>
+<a name="PLID1"></a><div class="v1"><a href="ch12lev1sec3.html#PLID1">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_attr_getdetachstate(const
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> pthread_attr_t *restrict <span class="docEmphItalicAlt">attr</span>,
+                                int *<span class="docEmphItalicAlt">detachstate</span>);
+
+int pthread_attr_setdetachstate(pthread_attr_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">attr</span>, int <span class="docEmphItalicAlt">detachstate</span>);
+</pre><br>
+
+</P></TD></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</p></TD></tr></table></P><br>
+<p class="docText">We can call <tt>pthread_attr_getdetachstate</tt> to obtain the current <span class="docEmphasis">detachstate</span> attribute. The integer pointed to by the second argument is set to either <tt>PTHREAD_CREATE_DETACHED</tt> or <tt>PTHREAD_CREATE_JOINABLE</tt>, depending on the value of the attribute in the given <tt>pthread_attr_t</tt> structure.</P>
+<a name="ch12ex01"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText"><a class="docLink" href="ch12lev1sec3.html#ch12fig04">Figure 12.4</a> shows a function that can be used to create a thread in the detached state.</p>
+<p class="docText">Note that we ignore the return value from the call to <tt>pthread_attr_destroy</tt>. In this case, we initialized the thread attributes properly, so <tt>pthread_attr_destroy</tt> shouldn't fail. Nonetheless, if it does fail, cleaning up would be difficult: we would have to destroy the thread we just created, which is possibly already running, asynchronous to the execution of this function. By ignoring the error return from <tt>pthread_attr_destroy</tt>, the worst that can happen is that we leak a small amount of memory if <tt>pthread_attr_init</tt> allocated any. But if <tt>pthread_attr_init</tt> succeeded in initializing the thread attributes and then <tt>pthread_attr_destroy</tt> failed to clean up, we have no recovery strategy anyway, because the attributes structure is opaque to the application. The only interface defined to clean up the structure is <tt>pthread_attr_destroy</tt>, and it just failed.</p>
+
+<a name="ch12fig04"></a>
+<h5 class="docExampleTitle">Figure 12.4. Creating a thread in the detached state</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;pthread.h&gt;
+
+int
+makethread(void *(*fn)(void *), void *arg)
+{
+    int             err;
+    pthread_t       tid;
+    pthread_attr_t  attr;
+
+    err = pthread_attr_init(&amp;attr);
+    if (err != 0)
+        return(err);
+    err = pthread_attr_setdetachstate(&amp;attr, PTHREAD_CREATE_DETACHED);
+    if (err == 0)
+        err = pthread_create(&amp;tid, &amp;attr, fn, arg);
+    pthread_attr_destroy(&amp;attr);
+    return(err);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e86323"></a><a name="idd1e86328"></a><a name="idd1e86333"></a><a name="idd1e86338"></a><a name="idd1e86343"></a><a name="idd1e86348"></a><a name="idd1e86355"></a><a name="idd1e86360"></a><a name="idd1e86365"></a><a name="idd1e86372"></a><a name="idd1e86377"></a><a name="idd1e86382"></a><a name="idd1e86387"></a><a name="idd1e86392"></a><a name="idd1e86397"></a><a name="idd1e86400"></a><a name="idd1e86405"></a>Support for thread stack attributes is optional for a POSIX-conforming operating system, but is required if the system is to conform to the XSI. At compile time, you can check whether your system supports each thread stack attribute using the <tt>_POSIX_THREAD_ATTR_STACKADDR</tt> and <tt>_POSIX_THREAD_ATTR_STACKSIZE</tt> symbols. If one is defined, then the system supports the corresponding thread stack attribute. You can also check at runtime, by using the <tt>_SC_THREAD_ATTR_STACKADDR</tt> and <tt>_SC_THREAD_ATTR_STACKSIZE</tt> parameters to the <tt>sysconf</tt> function.</p>
+<p class="docText">POSIX.1 defines several interfaces to manipulate thread stack attributes. Two older functions, <tt>pthread_attr_getstackaddr</tt> and <tt>pthread_attr_setstackaddr</tt>, are marked as obsolete in Version 3 of the Single UNIX Specification, although many pthreads implementations still provide them. The preferred way to query and modify a thread's stack attributes is to use the newer functions <tt>pthread_attr_getstack</tt> and <tt>pthread_attr_setstack</tt>. These functions clear up ambiguities present in the definition of the older interfaces.</p>
+<a name="inta191"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID3"></a><div class="v1"><a href="ch12lev1sec3.html#PLID3">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_attr_getstack(const pthread_attr_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">attr</span>,
+                          void **restrict <span class="docEmphItalicAlt">stackaddr</span>,
+                          size_t *restrict <span class="docEmphItalicAlt">stacksize</span>);
+
+int pthread_attr_setstack(const pthread_attr_t *<span class="docEmphItalicAlt">attr</span>,
+                          void *<span class="docEmphItalicAlt">stackaddr</span>, size_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">stacksize</span>);
+</pre><br>
+
+</p></td></tr><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</P></td></TR></table></P><BR>
+<p class="docText">These two functions are used to manage both the <span class="docEmphasis">stackaddr</span> and the <span class="docEmphasis">stacksize</span> thread attributes.</p>
+<p class="docText">With a process, the amount of virtual address space is fixed. Since there is only one stack, its size usually isn't a problem. With threads, however, the same amount of virtual address space must be shared by all the thread stacks. You might have to reduce your default thread stack size if your application uses so many threads that the cumulative size of their stacks exceeds the available virtual address space. On the other hand, if your threads call functions that allocate large automatic variables or call functions many stack frames deep, you might need more than the default stack size.</P>
+<p class="docText">If you run out of virtual address space for thread stacks, you can use <tt>malloc</tt> or <tt>mmap</tt> (see <a class="docLink" href="ch14lev1sec9.html#ch14lev1sec9">Section 14.9</a>) to allocate space for an alternate stack and use <tt>pthread_attr_setstack</tt> to change the stack location of threads you create. The address specified by the <span class="docEmphasis">stackaddr</span> parameter is the lowest addressable address in the range of memory to be used as the thread's stack, aligned at the proper boundary for the processor architecture.</P>
+<p class="docText">The <span class="docEmphasis">stackaddr</span> thread attribute is defined as the lowest memory address for the stack. This is not necessarily the start of the stack, however. If stacks grow from higher address to lower addresses for a given processor architecture, the <span class="docEmphasis">stackaddr</span> thread attribute will be the end of the stack instead of the beginning.</P>
+<blockquote>
+<p class="docText">The drawback with <tt>pthread_attr_getstackaddr</tt> and <tt>pthread_attr_setstackaddr</tt> is that the <span class="docEmphasis">stackaddr</span> parameter was underspecified. It could have been interpreted as the start <a name="idd1e86539"></a><a name="idd1e86544"></a><a name="idd1e86549"></a><a name="idd1e86554"></a><a name="idd1e86561"></a><a name="idd1e86566"></a><a name="idd1e86573"></a><a name="idd1e86578"></a><a name="idd1e86585"></a><a name="idd1e86590"></a><a name="idd1e86597"></a>of the stack or as the lowest memory address of the memory extent to use as the stack. On architectures in which the stacks grow down from higher memory addresses to lower addresses, if the <span class="docEmphasis">stackaddr</span> parameter is the lowest memory address of the stack, then you need to know the stack size to determine the start of the stack. The <tt>pthread_attr_getstack</tt> and <tt>pthread_attr_setstack</tt> functions correct these shortcomings.</p>
+</blockquote>
+<p class="docText">An application can also get and set the <span class="docEmphasis">stacksize</span> thread attribute using the <tt>pthread_attr_getstacksize</tt> and <tt>pthread_attr_setstacksize</tt> functions.</P>
+<a name="inta190"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID4"></a><div class="v1"><a href="ch12lev1sec3.html#PLID4">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_attr_getstacksize(const pthread_attr_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">attr</span>,
+                              size_t *restrict
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">stacksize</span>);
+
+int pthread_attr_setstacksize(pthread_attr_t *<span class="docEmphItalicAlt">attr</span>
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif">, size_t <span class="docEmphItalicAlt">stacksize</span>);
+</pre><BR>
+
+</p></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</P></td></tr></table></p><br>
+<p class="docText">The <tt>pthread_attr_setstacksize</tt> function is useful when you want to change the default stack size but don't want to deal with allocating the thread stacks on your own.</P>
+<p class="docText">The <span class="docEmphasis">guardsize</span> thread attribute controls the size of the memory extent after the end of the thread's stack to protect against stack overflow. By default, this is set to <tt>PAGESIZE</tt> bytes. We can set the <span class="docEmphasis">guardsize</span> thread attribute to 0 to disable this feature: no guard buffer will be provided in this case. Also, if we change the <span class="docEmphasis">stackaddr</span> thread attribute, the system assumes that we will be managing our own stacks and disables stack guard buffers, just as if we had set the <span class="docEmphasis">guardsize</span> thread attribute to 0.</p>
+<a name="inta195"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID5"></a><div class="v1"><a href="ch12lev1sec3.html#PLID5">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_attr_getguardsize(const pthread_attr_t
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">attr</span>,
+                              size_t *restrict
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">guardsize</span>);
+
+int pthread_attr_setguardsize(pthread_attr_t *<span class="docEmphItalicAlt">attr</span>
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif">, size_t <span class="docEmphItalicAlt">guardsize</span>);
+</pre><br>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, error number on failure</p></td></tr></table></p><br>
+<p class="docText">If the <span class="docEmphasis">guardsize</span> thread attribute is modified, the operating system might round it up to an integral multiple of the page size. If the thread's stack pointer overflows into the guard area, the application will receive an error, possibly with a signal.</p>
+<p class="docText">The Single UNIX Specification defines several other optional thread attributes as part of the real-time threads option. We will not discuss them here.</p>
+<a name="ch12lev2sec1"></a>
+<h4 class="docSection2Title">More Thread Attributes</h4>
+<p class="docText">Threads have other attributes not represented by the <tt>pthread_attr_t</tt> structure:</p>
+<ul><LI><p class="docList">The cancelability state (discussed in <a class="docLink" href="ch12lev1sec7.html#ch12lev1sec7">Section 12.7</a>)</P></li><LI><p class="docList">The cancelability type (also discussed in <a class="docLink" href="ch12lev1sec7.html#ch12lev1sec7">Section 12.7</a>)</P></LI><li><p class="docList">The concurrency level</P></LI></UL>
+<p class="docText"><a name="idd1e86776"></a><a name="idd1e86781"></a><a name="idd1e86788"></a><a name="idd1e86793"></a><a name="idd1e86800"></a><a name="idd1e86805"></a><a name="idd1e86812"></a><a name="idd1e86817"></a><a name="idd1e86822"></a>The concurrency level controls the number of kernel threads or processes on top of which the user-level threads are mapped. If an implementation keeps a one-to-one mapping between kernel-level threads and user-level threads, then changing the concurrency level will have no effect, since it is possible for all user-level threads to be scheduled. If the implementation multiplexes user-level threads on top of kernel-level threads or processes, however, you might be able to improve performance by increasing the number of user-level threads that can run at a given time. The <tt>pthread_setconcurrency</tt> function can be used to provide a hint to the system of the desired level of concurrency.</p>
+<a name="inta215"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;pthread.h&gt;
+
+int pthread_getconcurrency(void);
+</pre><BR>
+
+</P></td></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: current concurrency level</P></TD></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+int pthread_setconcurrency(int <span class="docEmphItalicAlt">level</span>);
+</pre><br>
+
+</P></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, error number on failure</p></td></tr></table></p><br>
+<p class="docText">The <tt>pthread_getconcurrency</tt> function returns the current concurrency level. If the operating system is controlling the concurrency level (i.e., if no prior call to <tt>pthread_setconcurrency</tt> has been made), then <tt>pthread_getconcurrency</tt> will return 0.</p>
+<p class="docText">The concurrency level specified by <tt>pthread_setconcurrency</tt> is only a hint to the system. There is no guarantee that the requested concurrency level will be honored. You can tell the system that you want it to decide for itself what concurrency level to use by passing a <span class="docEmphasis">level</span> of 0. Thus, an application can undo the effects of a prior call to <tt>pthread_setconcurrency</tt> with a nonzero value of <span class="docEmphasis">level</span> by calling it again with <span class="docEmphasis">level</span> set to 0.</p>
+
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,112 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 10.13.&nbsp; sigpending Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec14.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch10lev1sec13"></a>
+<h3 class="docSection1Title">10.13. <tt>sigpending</tt> Function</h3>
+<p class="docText">The <tt>sigpending</tt> function returns the set of signals that are blocked from delivery and currently pending for the calling process. The set of signals is returned through the <span class="docEmphasis">set</span> argument.</P>
+<a name="inta321"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;signal.h&gt;
+
+int sigpending(sigset_t *<span class="docEmphItalicAlt">set</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></TD></tr></table></P><BR>
+<a name="ch10ex09"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText"><a class="docLink" href="ch10lev1sec13.html#ch10fig15">Figure 10.15</a> shows many of the signal features that we've been describing.</P>
+<p class="docText"><a name="idd1e75596"></a><a name="idd1e75601"></a><a name="idd1e75606"></a><a name="idd1e75611"></a><a name="idd1e75616"></a><a name="idd1e75621"></a>The process blocks <tt>SIGQUIT</tt>, saving its current signal mask (to reset later), and then goes to sleep for 5 seconds. Any occurrence of the quit signal during this period is blocked and won't be delivered until the signal is unblocked. At the end of the 5-second sleep, we check whether the signal is pending and unblock the signal.</P>
+<p class="docText">Note that we saved the old mask when we blocked the signal. To unblock the signal, we did a <tt>SIG_SETMASK</tt> of the old mask. Alternatively, we could <tt>SIG_UNBLOCK</tt> only the signal that we had blocked. Be aware, however, if we write a function that can be called by others and if we need to block a signal in our function, we can't use <tt>SIG_UNBLOCK</tt> to unblock the signal. In this case, we have to use <tt>SIG_SETMASK</tt> and reset the signal mask to its prior value, because it's possible that the caller had specifically blocked this signal before calling our function. We'll see an example of this in the <tt>system</tt> function in <a class="docLink" href="ch10lev1sec18.html#ch10lev1sec18">Section 10.18</a>.</p>
+<p class="docText">If we generate the quit signal during this sleep period, the signal is now pending and unblocked, so it is delivered before <tt>sigprocmask</tt> returns. We'll see this occur because the <tt>printf</tt> in the signal handler is output before the <tt>printf</tt> that follows the call to <tt>sigprocmask</tt>.</P>
+<p class="docText">The process then goes to sleep for another 5 seconds. If we generate the quit signal during this sleep period, the signal should terminate the process, since we reset the <a name="idd1e75671"></a><a name="idd1e75676"></a><a name="idd1e75681"></a><a name="idd1e75688"></a><a name="idd1e75693"></a>handling of the signal to its default when we caught it. In the following output, the terminal prints <tt>^\</tt> when we input Control-backslash, the terminal quit character:</P>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+    <span class="docEmphStrong">
+    ^\</span>                       <span class="docEmphItalicAlt">generate signal once (before 5 seconds are up)</span>
+    SIGQUIT pending          <span class="docEmphItalicAlt">after return from</span> sleep
+    caught SIGQUIT           <span class="docEmphItalicAlt">in signal handler</span>
+    SIGQUIT unblocked        <span class="docEmphItalicAlt">after return from</span> sigprocmask
+    <span class="docEmphStrong">^\</span>Quit(coredump)         <span class="docEmphItalicAlt">generate signal again</span>
+    $ <span class="docEmphStrong">./a.out</span>
+    <span class="docEmphStrong">
+    ^\^\^\^\^\^\^\^\^\^\</span>     <span class="docEmphItalicAlt">generate signal 10 times (before 5 seconds are up)</span>
+    SIGQUIT pending
+    caught SIGQUIT           <span class="docEmphItalicAlt">signal is generated only once</span>
+    SIGQUIT unblocked
+    <span class="docEmphStrong">^\</span>Quit(coredump)         <span class="docEmphItalicAlt">generate signal again</span>
+</pre><br>
+
+<p class="docText">The message <tt>Quit(coredump)</tt> is printed by the shell when it sees that its child terminated abnormally. Note that when we run the program the second time, we generate the quit signal ten times while the process is asleep, yet the signal is delivered only once to the process when it's unblocked. This demonstrates that signals are not queued on this system.</p>
+
+<a name="ch10fig15"></a>
+<h5 class="docExampleTitle">Figure 10.15. Example of signal sets and <tt>sigprocmask</tt></h5>
+
+<pre>
+#include "apue.h"
+
+static void sig_quit(int);
+
+int
+main(void)
+{
+    sigset_t    newmask, oldmask, pendmask;
+
+    if (signal(SIGQUIT, sig_quit) == SIG_ERR)
+        err_sys("can't catch SIGQUIT");
+
+    /*
+     * Block SIGQUIT and save current signal mask.
+     */
+    sigemptyset(&amp;newmask);
+    sigaddset(&amp;newmask, SIGQUIT);
+    if (sigprocmask(SIG_BLOCK, &amp;newmask, &amp;oldmask) &lt; 0)
+        err_sys("SIG_BLOCK error");
+
+    sleep(5);   /* SIGQUIT here will remain pending */
+    if (sigpending(&amp;pendmask) &lt; 0)
+        err_sys("sigpending error");
+    if (sigismember(&amp;pendmask, SIGQUIT))
+        printf("\nSIGQUIT pending\n");
+
+    /*
+     * Reset signal mask which unblocks SIGQUIT.
+     */
+    if (sigprocmask(SIG_SETMASK, &amp;oldmask, NULL) &lt; 0)
+        err_sys("SIG_SETMASK error");
+    printf("SIGQUIT unblocked\n");
+
+    sleep(5);   /* SIGQUIT here will terminate with core file */
+    exit(0);
+}
+
+static void
+sig_quit(int signo)
+{
+    printf("caught SIGQUIT\n");
+    if (signal(SIGQUIT, SIG_DFL) == SIG_ERR)
+        err_sys("can't reset SIGQUIT");
+}
+</pre><BR>
+
+
+
+<ul></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec14.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

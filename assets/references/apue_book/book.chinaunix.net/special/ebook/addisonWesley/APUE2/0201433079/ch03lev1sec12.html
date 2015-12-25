@@ -1,0 +1,79 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 3.12.&nbsp; dup and dup2 Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch03lev1sec12"></a>
+<h3 class="docSection1Title">3.12. <tt>dup</tt> and <tt>dup2</tt> Functions</h3>
+<p class="docText"><a name="idd1e21038"></a><a name="idd1e21041"></a><a name="idd1e21046"></a><a name="idd1e21053"></a><a name="idd1e21058"></a><a name="idd1e21065"></a><a name="idd1e21070"></a>An existing file descriptor is duplicated by either of the following functions.</P>
+<a name="inta28"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+int dup(int <span class="docEmphItalicAlt">filedes</span>);
+
+int dup2(int <span class="docEmphItalicAlt">filedes</span>, int <span class="docEmphItalicAlt">filedes2</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: new file descriptor if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">The new file descriptor returned by <tt>dup</tt> is guaranteed to be the lowest-numbered available file descriptor. With <tt>dup2</tt>, we specify the value of the new descriptor with the <span class="docEmphasis">filedes2</span> argument. If <span class="docEmphasis">filedes2</span> is already open, it is first closed. If <span class="docEmphasis">filedes</span> equals <span class="docEmphasis">filedes2</span>, then <tt>dup2</tt> returns <span class="docEmphasis">filedes2</span> without closing it.</P>
+<p class="docText">The new file descriptor that is returned as the value of the functions shares the same file table entry as the <span class="docEmphasis">filedes</span> argument. We show this in <a class="docLink" href="ch03lev1sec12.html#ch03fig08">Figure 3.8</a>.</p>
+<a name="ch03fig08"></a><P><center>
+<H5 class="docFigureTitle">Figure 3.8. Kernel data structures after <tt>dup</tt>(1)</h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/03fig08_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="174" SRC="images/0201433079/graphics/03fig08.gif;423615"></P>
+</center></P><br>
+<p class="docText">In this figure, we're assuming that when it's started, the process executes</p>
+
+<pre>
+    newfd = dup(1);
+</pre><br>
+
+<p class="docText">We assume that the next available descriptor is 3 (which it probably is, since 0, 1, and 2 are opened by the shell). Because both descriptors point to the same file table entry, they share the same file status flagsread, write, append, and so onand the same current file offset.</p>
+<p class="docText">Each descriptor has its own set of file descriptor flags. As we describe in the next section, the close-on-exec file descriptor flag for the new descriptor is always cleared by the <tt>dup</tt> functions.</P>
+<p class="docText">Another way to duplicate a descriptor is with the <tt>fcntl</tt> function, which we describe in <a class="docLink" href="ch03lev1sec14.html#ch03lev1sec14">Section 3.14</a>. Indeed, the call</p>
+
+<pre>
+    dup(filedes);
+</pre><BR>
+
+<p class="docText">is equivalent to</p>
+
+<pre>
+    fcntl(filedes, F_DUPFD, 0);
+</pre><BR>
+
+<p class="docText"><a name="idd1e21208"></a><a name="idd1e21211"></a><a name="idd1e21214"></a><a name="idd1e21217"></a><a name="idd1e21222"></a><a name="idd1e21227"></a><a name="idd1e21232"></a><a name="idd1e21235"></a><a name="idd1e21240"></a><a name="idd1e21245"></a><a name="idd1e21252"></a><a name="idd1e21257"></a><a name="idd1e21262"></a><a name="idd1e21269"></a><a name="idd1e21272"></a><a name="idd1e21277"></a><a name="idd1e21284"></a><a name="idd1e21289"></a><a name="idd1e21294"></a>Similarly, the call</p>
+
+<pre>
+    dup2(filedes, filedes2);
+</pre><br>
+
+<p class="docText">is equivalent to</p>
+
+<pre>
+    close(filedes2);
+    fcntl(filedes, F_DUPFD, filedes2);
+</pre><br>
+
+<p class="docText">In this last case, the <tt>dup2</tt> is not exactly the same as a <tt>close</tt> followed by an <tt>fcntl</tt>. The differences are as follows.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList"><tt>dup2</tt> is an atomic operation, whereas the alternate form involves two function calls. It is possible in the latter case to have a signal catcher called between the <tt>close</tt> and the <tt>fcntl</tt> that could modify the file descriptors. (We describe signals in <a class="docLink" href="ch10.html#ch10">Chapter 10</a>.)</p></div></li><li><div style="font-weight:normal"><p class="docList">There are some <tt>errno</tt> differences between <tt>dup2</tt> and <tt>fcntl</tt>.</p><blockquote>
+<p class="docText">The <tt>dup2</tt> system call originated with Version 7 and propagated through the BSD releases. The <tt>fcntl</tt> method for duplicating file descriptors appeared with System III and continued with System V. SVR3.2 picked up the <tt>dup2</tt> function, and 4.2BSD picked up the <tt>fcntl</tt> function and the <tt>F_DUPFD</tt> functionality. POSIX.1 requires both <tt>dup2</tt> and the <tt>F_DUPFD</tt> feature of <tt>fcntl</tt>.</p>
+</blockquote></div></li></ol></div>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

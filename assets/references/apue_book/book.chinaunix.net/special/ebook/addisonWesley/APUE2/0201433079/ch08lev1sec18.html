@@ -1,0 +1,44 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Exercises</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec17.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch08lev1sec18"></a>
+<h3 class="docSection1Title" id="454331-880">Exercises</h3>
+<P><table border="0" cellspacing="16" cellpadding="0"><TR valign="top"><td align="right" class="docText" width="50"><a name="ch08qa1q1"></a><B><a class="docLink" href="app03lev1sec8.html#ch08qa1q1a1">8.1</a></b></TD><TD><p class="docText">In <a class="docLink" href="ch08lev1sec4.html#ch08fig03">Figure 8.3</a>, we said that replacing the call to <tt>_exit</tt> with a call to <tt>exit</tt> might cause the standard output to be closed and <tt>printf</tt> to return -1. Modify the program to check whether your implementation behaves this way. If it does not, how can you simulate this behavior?</p></TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch08qa1q2"></a><B><a class="docLink" href="app03lev1sec8.html#ch08qa1q2a2">8.2</a></b></td><TD><p class="docText">Recall the typical arrangement of memory in <a class="docLink" href="ch07lev1sec6.html#ch07fig06">Figure 7.6</a>. Because the stack frames corresponding to each function call are usually stored in the stack, and because after a <tt>vfork</tt>, the child runs in the address space of the parent, what happens if the call to <tt>vfork</tt> is from a function other than <tt>main</tt> and the child does a return from this function after the <tt>vfork</tt>? Write a test program to verify this, and draw a picture of what's happening.</P></TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch08qa1q3"></a><b><a class="docLink" href="app03lev1sec8.html#ch08qa1q3a3">8.3</a></b></TD><TD><p class="docText">When we execute the program in <a class="docLink" href="ch08lev1sec9.html#ch08fig13">Figure 8.13</a> one time, as in</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+</pre><br>
+
+<p class="docText">the output is correct. But if we execute the program multiple times, one right after the other, as in</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out ; ./a.out ; ./a.out</span>
+   output from parent
+   ooutput from parent
+   ouotuptut from child
+   put from parent
+   output from child
+   utput from child
+</pre><br>
+
+<p class="docText">the output is not correct. What's happening? How can we correct this? Can this problem happen if we let the child write its output first?</P></td></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch08qa1q4"></a><b><a class="docLink" href="app03lev1sec8.html#ch08qa1q4a4">8.4</a></b></td><td><p class="docText">In the program shown in <a class="docLink" href="ch08lev1sec12.html#ch08fig20">Figure 8.20</a>, we call <tt>execl</tt>, specifying the <span class="docEmphasis">pathname</span> of the interpreter file. If we called <tt>execlp</tt> instead, specifying a <span class="docEmphasis">filename</span> of <tt>testinterp</tt>, and if the directory <tt>/home/sar/bin</tt> was a path prefix, what would be printed as <tt>argv[2]</tt> when the program is run?</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch08qa1q5"></a><b><a class="docLink" href="app03lev1sec8.html#ch08qa1q5a5">8.5</a></b></td><td><p class="docText">How can a process obtain its saved set-user-ID?</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch08qa1q6"></a><b><a class="docLink" href="app03lev1sec8.html#ch08qa1q6a6">8.6</a></b></TD><TD><p class="docText">Write a program that creates a zombie, and then call <tt>system</tt> to execute the <tt>ps</tt>(1) command to verify that the process is a zombie.</p></TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch08qa1q7"></a><B>8.7</b></TD><TD><p class="docText">We mentioned in <a class="docLink" href="ch08lev1sec10.html#ch08lev1sec10">Section 8.10</a> that POSIX.1 requires that open directory streams be closed across an <tt>exec</tt>. Verify this as follows: call <tt>opendir</tt> for the root directory, peek at your system's implementation of the <tt>DIR</tt> structure, and print the close-on-exec flag. Then <tt>open</tt> the same directory for reading, and print the close-on-exec flag.</p></TD></tr></table></P>
+
+<UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec17.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

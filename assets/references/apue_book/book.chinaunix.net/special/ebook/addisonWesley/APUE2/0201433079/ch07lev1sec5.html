@@ -1,0 +1,48 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 7.5.&nbsp; Environment List</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch07lev1sec5"></a>
+<h3 class="docSection1Title">7.5. Environment List</h3>
+<p class="docText">Each program is also passed an <span class="docEmphasis">environment list</span>. Like the argument list, the environment list is an array of character pointers, with each pointer containing the address of a null-terminated C string. The address of the array of pointers is contained in the global variable <tt>environ</tt>:</P>
+
+<pre>
+    extern char **environ;
+</pre><BR>
+
+<p class="docText">For example, if the environment consisted of five strings, it could look like <a class="docLink" href="ch07lev1sec5.html#ch07fig05">Figure 7.5</a>. Here we explicitly show the null bytes at the end of each string. We'll call <tt>environ</tt> the <a name="idd1e47746"></a><a name="idd1e47751"></a><a name="idd1e47756"></a><a name="idd1e47761"></a><a name="idd1e47766"></a><span class="docEmphasis">environment pointer</span>, the array of pointers the environment list, and the strings they point to the <span class="docEmphasis">environment strings</span>.</p>
+<a name="ch07fig05"></a><P><center>
+<H5 class="docFigureTitle">Figure 7.5. Environment consisting of five C character strings</H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/07fig05_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="210" SRC="images/0201433079/graphics/07fig05.gif;423615"></p>
+</center></P><BR>
+<p class="docText">By convention, the environment consists of</P>
+<blockquote>
+<p class="docText"><span class="docEmphasis">name</span><tt>=</tt><span class="docEmphasis">value</span></p>
+</blockquote>
+<p class="docText">strings, as shown in <a class="docLink" href="ch07lev1sec5.html#ch07fig05">Figure 7.5</a>. Most predefined names are entirely uppercase, but this is only a convention.</P>
+<p class="docText">Historically, most UNIX systems have provided a third argument to the <tt>main</tt> function that is the address of the environment list:</p>
+
+<pre>
+    int main(int <span class="docEmphItalicAlt">argc</span>, char *<span class="docEmphItalicAlt">argv</span>[], char *<span class="docEmphItalicAlt">envp</span>[]);
+</pre><BR>
+
+<p class="docText">Because ISO C specifies that the <tt>main</tt> function be written with two arguments, and because this third argument provides no benefit over the global variable <tt>environ</tt>, POSIX.1 specifies that <tt>environ</tt> should be used instead of the (possible) third argument. Access to specific environment variables is normally through the <tt>getenv</tt> and <tt>putenv</tt> functions, described in <a class="docLink" href="ch07lev1sec9.html#ch07lev1sec9">Section 7.9</a>, instead of through the <tt>environ</tt> variable. But to go through the entire environment, the <tt>environ</tt> pointer must be used.</P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

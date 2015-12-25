@@ -1,0 +1,554 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 16.3.&nbsp; Addressing</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch16lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch16lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch16lev1sec3"></a>
+<h3 class="docSection1Title">16.3. Addressing</h3>
+<p class="docText">In the previous section, we learned how to create and destroy a socket. Before we learn to do something useful with a socket, we need to learn how to identify the process that we want to communicate with. Identifying the process has two components. The machine's network address helps us identify the computer on the network we wish to contact, and the service helps us identify the particular process on the computer.</P>
+<a name="ch16lev2sec1"></a>
+<H4 class="docSection2Title">16.3.1. Byte Ordering</h4>
+<p class="docText">When communicating with processes running on the same computer, we generally don't have to worry about byte ordering. The byte order is a characteristic of the processor architecture, dictating how bytes are ordered within larger data types, such as integers. <a class="docLink" href="ch16lev1sec3.html#ch16fig04">Figure 16.4</a> shows how the bytes within a 32-bit integer are numbered.</P>
+<a name="ch16fig04"></a><P><center>
+<H5 class="docFigureTitle">Figure 16.4. Byte order in a 32-bit integer</h5>
+
+<p class="docText">
+<img border="0" alt="" width="162" height="211" SRC="images/0201433079/graphics/16fig04.gif;423615"></P>
+
+</center></P><BR>
+<p class="docText">If the processor architecture supports <span class="docEmphasis">big-endian</span> byte order, then the highest byte address occurs in the least significant byte (LSB). <span class="docEmphasis">Little-endian</span> byte order is the opposite: the least significant byte contains the lowest byte address. Note that regardless of the byte ordering, the most significant byte (MSB) is always on the left, and the least significant byte is always on the right. Thus, if we were to assign a 32-bit integer the value <tt>0x04030201</tt>, the most significant byte would contain 4, and the least significant byte would contain 1, regardless of the byte ordering. If we were then to cast a <a name="idd1e120586"></a><a name="idd1e120591"></a><a name="idd1e120594"></a><a name="idd1e120599"></a><a name="idd1e120606"></a><a name="idd1e120611"></a><a name="idd1e120618"></a><a name="idd1e120621"></a><a name="idd1e120624"></a><a name="idd1e120629"></a><a name="idd1e120634"></a><a name="idd1e120641"></a><a name="idd1e120646"></a><a name="idd1e120653"></a>character pointer (<tt>cp</tt>) to the address of the integer, we would see a difference from the byte ordering. On a little-endian processor, <tt>cp[0]</tt> would refer to the least significant byte and contain 1; <tt>cp[3]</tt> would refer to the most significant byte and contain 4. Compare that to a big-endian processor, where <tt>cp[0]</tt> would contain 4, referring to the most significant byte, and <tt>cp[3]</tt> would contain 1, referring to the least significant byte. <a class="docLink" href="ch16lev1sec3.html#ch16fig05">Figure 16.5</a> summarizes the byte ordering for the four platforms discussed in this text.</p>
+<a name="ch16fig05"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 16.5. Byte order for test platforms</H5></caption><colgroup><col width="150"><col width="200"><col width="150"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="left" valign="top"><p class="docText"><span class="docEmphRoman">Operating system</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="left" valign="top"><p class="docText"><span class="docEmphRoman">Processor architecture</span></p></th><th class="bottomBorder thead" scope="col" align="left" valign="top"><p class="docText"><span class="docEmphRoman">Byte order</span></P></th></TR></thead><tr><TD class="rightBorder" align="left" valign="top"><p class="docText">FreeBSD 5.2.1</P></td><td class="rightBorder" align="left" valign="top"><p class="docText">Intel Pentium</p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">little-endian</p></TD></tr><TR><td class="rightBorder" align="left" valign="top"><p class="docText">Linux 2.4.22</p></td><td class="rightBorder" align="left" valign="top"><p class="docText">Intel Pentium</p></td><td class="docTableCell" align="left" valign="top"><p class="docText">little-endian</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">Mac OS X 10.3</p></td><td class="rightBorder" align="left" valign="top"><p class="docText">PowerPC</p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">big-endian</P></td></TR><TR><TD class="rightBorder" align="left" valign="top"><p class="docText">Solaris 9</p></TD><TD class="rightBorder" align="left" valign="top"><p class="docText">Sun SPARC</P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">big-endian</p></TD></TR></table></P><br>
+<blockquote>
+<p class="docText">To confuse matters further, some processors can be configured for either little-endian or big-endian operation.</P>
+</blockquote>
+<p class="docText">Network protocols specify a byte ordering so that heterogeneous computer systems can exchange protocol information without confusing the byte ordering. The TCP/IP protocol suite uses big-endian byte order. The byte ordering becomes visible to applications when they exchange formatted data. With TCP/IP, addresses are presented in network byte order, so applications sometimes need to translate them between the processor 's byte order and the network byte order. This is common when printing an address in a human-readable form, for example.</P>
+<p class="docText">Four common functions are provided to convert between the processor byte order and the network byte order for TCP/IP applications.</p>
+<a name="inta142"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;arpa/inet.h&gt;
+
+uint32_t htonl(uint32_t <span class="docEmphItalicAlt">hostint32</span>);</pre><br>
+</p></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 32-bit integer in network byte order</p></TD></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+uint16_t htons(uint16_t <span class="docEmphItalicAlt">hostint16</span>);</pre><br>
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 16-bit integer in network byte order</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+uint32_t ntohl(uint32_t <span class="docEmphItalicAlt">netint32</span>);</pre><br>
+</p></td></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 32-bit integer in host byte order</P></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+uint16_t ntohs(uint16_t <span class="docEmphItalicAlt">netint16</span>);</pre><BR>
+</P></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 16-bit integer in host byte order</P></TD></tr></table></P><BR>
+<p class="docText">The <tt>h</tt> is for &quot;host&quot; byte order, and the <tt>n</tt> is for &quot;network&quot; byte order. The <tt>l</tt> is for &quot;long&quot; (i.e., 4-byte) integer, and the <tt>s</tt> is for &quot;short&quot; (i.e., 2-byte) integer. These four functions are defined in <tt>&lt;arpa/inet.h&gt;</tt>, although some older systems define them in <tt>&lt;netinet/in.h&gt;</tt>.</p>
+
+<a name="ch16lev2sec2"></a>
+<H4 class="docSection2Title">16.3.2. Address Formats</H4>
+<p class="docText"><a name="idd1e120900"></a><a name="idd1e120905"></a><a name="idd1e120910"></a><a name="idd1e120915"></a><a name="idd1e120920"></a><a name="idd1e120925"></a><a name="idd1e120930"></a><a name="idd1e120935"></a><a name="idd1e120940"></a><a name="idd1e120945"></a>An address identifies a socket endpoint in a particular communication domain. The address format is specific to the particular domain. So that addresses with different formats can be passed to the socket functions, the addresses are cast to a generic <tt>sockaddr</tt> address structure:</p>
+
+<pre>
+   struct sockaddr {
+     sa_family_t   sa_family;   /* address family */
+     char          sa_data[];   /* variable-length address */
+     .
+     .
+     .
+   };
+</pre><br>
+
+<p class="docText">Implementations are free to add additional members and define a size for the <tt>sa_data</tt> member. For example, on Linux, the structure is defined as</p>
+
+<pre>
+   struct sockaddr {
+     sa_family_t  sa_family;     /* address family */
+     char         sa_data[14];   /* variable-length address */
+   };
+</pre><br>
+
+<p class="docText">But on FreeBSD, the structure is defined as</P>
+
+<pre>
+   struct sockaddr {
+     unsigned char  sa_len;        /* total length */
+     sa_family_t    sa_family;     /* address family */
+     char           sa_data[14];   /* variable-length address */
+   };
+</pre><br>
+
+<p class="docText">Internet addresses are defined in <tt>&lt;netinet/in.h&gt;</tt>. In the IPv4 Internet domain (<tt>AF_INET</tt>), a socket address is represented by a <tt>sockaddr_in</tt> structure:</P>
+
+<pre>
+   struct in_addr {
+     in_addr_t       s_addr;       /* IPv4 address */
+   };
+
+   struct sockaddr_in {
+     sa_family_t    sin_family;   /* address family */
+     in_port_t      sin_port;     /* port number */
+     struct in_addr sin_addr;     /* IPv4 address */
+   };
+</pre><br>
+
+<p class="docText">The <tt>in_port_t</tt> data type is defined to be a <tt>uint16_t</tt>. The <tt>in_addr_t</tt> data type is defined to be a <tt>uint32_t</tt>. These integer data types specify the number of bits in the data type and are defined in <tt>&lt;stdint.h&gt;</tt>.</P>
+<p class="docText">In contrast to the <tt>AF_INET</tt> domain, the IPv6 Internet domain (<tt>AF_INET6</tt>) socket address is represented by a <tt>sockaddr_in6</tt> structure:</p>
+
+<pre>
+   struct in6_addr {
+     uint8_t        s6_addr[16];     /* IPv6 address */
+   };
+</pre><br>
+
+
+<pre>
+   struct sockaddr_in6 {
+     sa_family_t     sin6_family;     /* address family */
+     in_port_t       sin6_port;       /* port number */
+     uint32_t        sin6_flowinfo;   /* traffic class and flow info */
+     struct in6_addr sin6_addr;       /* IPv6 address */
+     uint32_t        sin6_scope_id;   /* set of interfaces for scope */
+   };
+</pre><br>
+
+<p class="docText"><a name="idd1e121027"></a><a name="idd1e121030"></a><a name="idd1e121035"></a><a name="idd1e121040"></a><a name="idd1e121045"></a><a name="idd1e121050"></a><a name="idd1e121055"></a><a name="idd1e121062"></a><a name="idd1e121067"></a><a name="idd1e121074"></a><a name="idd1e121079"></a>These are the definitions required by the Single UNIX Specification. Individual implementations are free to add additional fields. For example, on Linux, the <tt>sockaddr_in</tt> structure is defined as</p>
+
+<pre>
+   struct sockaddr_in {
+     sa_family_t     sin_family;     /* address family */
+     in_port_t       sin_port;       /* port number */
+     struct in_addr  sin_addr;       /* IPv4 address */
+     unsigned char   sin_zero[8];    /* filler */
+   };
+</pre><br>
+
+<p class="docText">where the <tt>sin_zero</tt> member is a filler field that should be set to all-zero values.</p>
+<p class="docText">Note that although the <tt>sockaddr_in</tt> and <tt>sockaddr_in6</tt> structures are quite different, they are both passed to the socket routines cast to a <tt>sockaddr</tt> structure. In <a class="docLink" href="ch17lev1sec3.html#ch17lev1sec3">Section 17.3</a>, we will see that the structure of a UNIX domain socket address is different from both of the Internet domain socket address formats.</p>
+<p class="docText">It is sometimes necessary to print an address in a format that is understandable by a person instead of a computer. The BSD networking software included the <tt>inet_addr</tt> and <tt>inet_ntoa</tt> functions to convert between the binary address format and a string in dotted-decimal notation (a.b.c.d). These functions, however, work only with IPv4 addresses. Two new functions<tt>inet_ntop</tt> and <tt>inet_pton</tt>support similar functionality and work with both IPv4 and IPv6 addresses.</p>
+<a name="inta143"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID11"></a><div class="v1"><a href="ch16lev1sec3.html#PLID11">[View full width]</a></div><pre>
+#include &lt;arpa/inet.h&gt;
+
+const char *inet_ntop(int <span class="docEmphItalicAlt">domain</span>, const void
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">addr</span>,
+                      char *restrict <span class="docEmphItalicAlt">str</span>,
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> socklen_t <span class="docEmphItalicAlt">size</span>);
+</pre><br>
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer to address string on success, <tt>NULL</tt> on error</P></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+int inet_pton(int <span class="docEmphItalicAlt">domain</span>, const char *restrict <span class="docEmphItalicAlt">str</span>,
+              void *restrict <span class="docEmphItalicAlt">addr</span>);</pre><BR>
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 1 on success, 0 if the format is invalid, or 1 on error</P></td></TR></table></P><BR>
+<p class="docText">The <tt>inet_ntop</tt> function converts a binary address in network byte order into a text string; <tt>inet_pton</tt> converts a text string into a binary address in network byte order. Only two <span class="docEmphasis">domain</span> values are supported: <tt>AF_INET</tt> and <tt>AF_INET6</tt>.</p>
+<p class="docText">For <tt>inet_ntop</tt>, the <span class="docEmphasis">size</span> parameter specifies the size of the buffer (<span class="docEmphasis">str</span>) to hold the text string. Two constants are defined to make our job easier: <tt>INET_ADDRSTRLEN</tt> is large enough to hold a text string representing an IPv4 address, and <tt>INET6_ADDRSTRLEN</tt> is large enough to hold a text string representing an IPv6 address. For <tt>inet_pton</tt>, the <span class="docEmphasis">addr</span> buffer needs to be large enough to hold a 32-bit address if <span class="docEmphasis">domain</span> is <tt>AF_INET</tt> or large enough to hold a 128-bit address if <span class="docEmphasis">domain</span> is <tt>AF_INET6</tt>.</P>
+
+<a name="ch16lev2sec3"></a>
+<H4 class="docSection2Title">16.3.3. Address Lookup</h4>
+<p class="docText"><a name="idd1e121255"></a><a name="idd1e121260"></a><a name="idd1e121267"></a><a name="idd1e121272"></a><a name="idd1e121277"></a><a name="idd1e121282"></a><a name="idd1e121289"></a><a name="idd1e121294"></a><a name="idd1e121299"></a>Ideally, an application won't have to be aware of the internal structure of a socket address. If an application simply passes socket addresses around as <tt>sockaddr</tt> structures and doesn't rely on any protocol-specific features, then the application will work with many different protocols that provide the same type of service.</P>
+<p class="docText">Historically, the BSD networking software has provided interfaces to access the various network configuration information. In <a class="docLink" href="ch06lev1sec7.html#ch06lev1sec7">Section 6.7</a>, we briefly discussed the networking data files and the functions used to access them. In this section, we discuss them in a little more detail and introduce the newer functions used to look up addressing information.</P>
+<p class="docText">The network configuration information returned by these functions can be kept in a number of places. They can be kept in static files (<tt>/etc/hosts</tt>, <tt>/etc/services</tt>, etc.), or they can be managed by a name service, such as DNS (Domain Name System) or NIS (Network Information Service). Regardless of where the information is kept, the same functions can be used to access it.</p>
+<p class="docText">The hosts known by a given computer system are found by calling <tt>gethostent</tt>.</p>
+<a name="inta31"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;netdb.h&gt;
+
+struct hostent *gethostent(void);</pre><br>
+</P></td></TR><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer if OK, <tt>NULL</tt> on error</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+void sethostent(int <span class="docEmphItalicAlt">stayopen</span>);
+
+void endhostent(void);
+</pre><br>
+</p></td></tr></table></p><br>
+<p class="docText">If the host database file isn't already open, <tt>gethostent</tt> will open it. The <tt>gethostent</tt> function returns the next entry in the file. The <tt>sethostent</tt> function will open the file or rewind it if it is already open. The <tt>endhostent</tt> function will close the file.</p>
+<p class="docText">When <tt>gethostent</tt> returns, we get a pointer to a <tt>hostent</tt> structure which might point to a static data buffer that is overwritten each time we call <tt>gethostent</tt>. The <tt>hostent</tt> structure is defined to have at least the following members:</p>
+
+<pre>
+   struct hostent {
+     char   *h_name;       /* name of host */
+     char  **h_aliases;    /* pointer to alternate host name array */
+     int     h_addrtype;   /* address type */
+     int     h_length;     /* length in bytes of address */
+     char  **h_addr_list;  /* pointer to array of network addresses */
+     .
+     .
+     .
+   };
+</pre><br>
+
+<p class="docText">The addresses returned are in network byte order.</p>
+<p class="docText">Two additional functions<tt>gethostbyname</tt> and <tt>gethostbyaddr</tt>originally were included with the <tt>hostent</tt> functions, but are now considered to be obsolete. We'll see replacements for them shortly.</P>
+<p class="docText"><a name="idd1e121423"></a><a name="idd1e121428"></a><a name="idd1e121433"></a><a name="idd1e121440"></a><a name="idd1e121445"></a><a name="idd1e121452"></a><a name="idd1e121457"></a><a name="idd1e121464"></a><a name="idd1e121469"></a><a name="idd1e121476"></a><a name="idd1e121481"></a><a name="idd1e121488"></a><a name="idd1e121493"></a><a name="idd1e121500"></a><a name="idd1e121505"></a><a name="idd1e121512"></a><a name="idd1e121517"></a><a name="idd1e121524"></a><a name="idd1e121529"></a><a name="idd1e121534"></a><a name="idd1e121539"></a><a name="idd1e121546"></a><a name="idd1e121551"></a>We can get network names and numbers with a similar set of interfaces.</P>
+<a name="inta32"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;netdb.h&gt;
+
+struct netent *getnetbyaddr(uint32_t <span class="docEmphItalicAlt">net</span>, int <span class="docEmphasis">type</span>);
+
+struct netent *getnetbyname(const char *<span class="docEmphItalicAlt">name</span>);
+
+struct netent *getnetent(void);</pre><BR>
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">All return: pointer if OK, <tt>NULL</tt> on error</P></td></TR><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+void setnetent(int <span class="docEmphItalicAlt">stayopen</span>);
+
+void endnetent(void);
+</pre><br>
+</P></TD></tr></table></P><BR>
+<p class="docText">The <tt>netent</tt> structure contains at least the following fields:</p>
+
+<pre>
+   struct netent {
+     char     *n_name;      /* network name */
+     char    **n_aliases;   /* alternate network name array pointer */
+     int       n_addrtype;  /* address type */
+     uint32_t  n_net;       /* network number */
+     .
+     .
+     .
+   };
+</pre><br>
+
+<p class="docText">The network number is returned in network byte order. The address type is one of the address family constants (<tt>AF_INET</tt>, for example).</p>
+<p class="docText">We can map between protocol names and numbers with the following functions.</p>
+<a name="inta33"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;netdb.h&gt;
+
+struct protoent *getprotobyname(const char *<span class="docEmphItalicAlt">name</span>);
+
+struct protoent *getprotobynumber(int <span class="docEmphasis">proto</span>);
+
+struct protoent *getprotoent(void);</pre><br>
+</P></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">All return: pointer if OK, <tt>NULL</tt> on error</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+void setprotoent(int <span class="docEmphItalicAlt">stayopen</span>);
+
+void endprotoent(void);</pre><br>
+
+</p></td></tr></table></p><br>
+<p class="docText">The <tt>protoent</tt> structure as defined by POSIX.1 has at least the following members:</p>
+
+<pre>
+   struct protoent {
+     char   *p_name;     /* protocol name */
+     char  **p_aliases;  /* pointer to alternate protocol name array */
+     int     p_proto;    /* protocol number */
+     .
+     .
+     .
+   };
+</pre><br>
+
+<p class="docText">Services are represented by the port number portion of the address. Each service is offered on a unique, well-known port number. We can map a service name to a port <a name="idd1e121686"></a><a name="idd1e121691"></a><a name="idd1e121696"></a><a name="idd1e121703"></a><a name="idd1e121708"></a><a name="idd1e121715"></a><a name="idd1e121720"></a><a name="idd1e121727"></a><a name="idd1e121732"></a><a name="idd1e121737"></a><a name="idd1e121742"></a><a name="idd1e121749"></a><a name="idd1e121754"></a><a name="idd1e121761"></a><a name="idd1e121766"></a><a name="idd1e121773"></a><a name="idd1e121778"></a><a name="idd1e121783"></a><a name="idd1e121788"></a>number with <tt>getservbyname</tt>, map a port number to a service name with <tt>getservbyport</tt>, or scan the services database sequentially with <tt>getservent</tt>.</P>
+<a name="inta35"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID22"></a><div class="v1"><a href="ch16lev1sec3.html#PLID22">[View full width]</a></div><pre>
+#include &lt;netdb.h&gt;
+
+struct servent *getservbyname(const char *<span class="docEmphItalicAlt">name</span>,
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> const char *<span class="docEmphItalicAlt">proto</span>);
+
+struct servent *getservbyport(int <span class="docEmphItalicAlt">port</span>, const char
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">proto</span>);
+
+struct servent *getservent(void);</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">All return: pointer if OK, <tt>NULL</tt> on error</p></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+void setservent(int <span class="docEmphItalicAlt">stayopen</span>);
+
+void endservent(void);</pre><BR>
+</p></TD></TR></table></p><BR>
+<p class="docText">The <tt>servent</tt> structure is defined to have at least the following members:</P>
+
+<pre>
+   struct servent {
+     char   *s_name;      /* service name */
+     char  **s_aliases;   /* pointer to alternate service name array */
+     int     s_port;      /* port number */
+     char   *s_proto;     /* name of protocol */
+     .
+     .
+     .
+   };
+</pre><br>
+
+<p class="docText">POSIX.1 defines several new functions to allow an application to map from a host name and a service name to an address and vice versa. These functions replace the older <tt>gethostbyname</tt> and <tt>gethostbyaddr</tt> functions.</p>
+<p class="docText">The <tt>getaddrinfo</tt> function allows us to map a host name and a service name to an address.</p>
+<a name="inta75"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;sys/socket.h&gt;
+#include &lt;netdb.h&gt;
+
+int getaddrinfo(const char *restrict <span class="docEmphItalicAlt">host</span>,
+                const char *restrict <span class="docEmphItalicAlt">service</span>,
+                const struct addrinfo *restrict <span class="docEmphItalicAlt">hint</span>,
+                struct addrinfo **restrict <span class="docEmphItalicAlt">res</span>);
+</pre><BR>
+</p></TD></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, nonzero error code on error</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+void freeaddrinfo(struct addrinfo *<span class="docEmphItalicAlt">ai</span>);
+</pre><br>
+</p></td></tr></table></p><br>
+<p class="docText">We need to provide the host name, the service name, or both. If we provide only one name, the other should be a null pointer. The host name can be either a node name or the host address in dotted-decimal notation.</p>
+<p class="docText">The <tt>getaddrinfo</tt> function returns a linked list of <tt>addrinfo</tt> structures. We can use <tt>freeaddrinfo</tt> to free one or more of these structures, depending on how many structures are linked together using the <tt>ai_next</tt> field.</p>
+<p class="docText"><a name="idd1e121952"></a><a name="idd1e121957"></a><a name="idd1e121962"></a><a name="idd1e121969"></a><a name="idd1e121974"></a><a name="idd1e121981"></a><a name="idd1e121986"></a>The <tt>addrinfo</tt> structure is defined to include at least the following members:</p>
+
+<pre>
+   struct addrinfo {
+     int               ai_flags;       /* customize behavior */
+     int               ai_family;      /* address family */
+     int               ai_socktype;    /* socket type */
+     int               ai_protocol;    /* protocol */
+     socklen_t         ai_addrlen;     /* length in bytes of address */
+     struct sockaddr  *ai_addr;        /* address */
+     char             *ai_canonname;   /* canonical name of host */
+     struct addrinfo  *ai_next;        /* next in list */
+     .
+     .
+     .
+   };
+</pre><BR>
+
+<p class="docText">We can supply an optional <span class="docEmphasis">hint</span> to select addresses that meet certain criteria. The hint is a template used for filtering addresses and uses only the <tt>ai_family</tt>, <tt>ai_flags</tt>, <tt>ai_protocol</tt>, and <tt>ai_socktype</tt> fields. The remaining integer fields must be set to 0, and the pointer fields must be null. <a class="docLink" href="ch16lev1sec3.html#ch16fig06">Figure 16.6</a> summarizes the flags we can use in the <tt>ai_flags</tt> field to customize how addresses and names are treated.</P>
+<a name="ch16fig06"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 16.6. Flags for addrinfo structure</H5></caption><colgroup><col width="100"><col width="400"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Flag</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></P></th></TR></thead><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>AI_ADDRCONFIG</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">Query for whichever address type (IPv4 or IPv6) is configured.</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>AI_ALL</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Look for both IPv4 and IPv6 addresses (used only with <tt>AI_V4MAPPED</tt>).</p></td></tr><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>AI_CANONNAME</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Request a canonical name (as opposed to an alias).</P></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>AI_NUMERICHOST</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Return the host address in numeric format.</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>AI_NUMERICSERV</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Return the service as a port number.</p></td></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>AI_PASSIVE</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Socket address is intended to be bound for listening.</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>AI_V4MAPPED</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">If no IPv6 addresses are found, return IPv4 addresses mapped in IPv6 format.</P></TD></tr></table></P><BR>
+<p class="docText">If <tt>getaddrinfo</tt> fails, we can't use <tt>perror</tt> or <tt>strerror</tt> to generate an error message. Instead, we need to call <tt>gai_strerror</tt> to convert the error code returned into an error message.</p>
+<a name="inta91"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;netdb.h&gt;
+
+const char *gai_strerror(int <span class="docEmphItalicAlt">error</span>);</pre><br>
+</p></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: a pointer to a string describing the error</p></TD></tr></table></p><br>
+<p class="docText">The <tt>getnameinfo</tt> function converts an address into a host name and a service name.</p>
+<a name="inta110"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID29"></a><div class="v1"><a href="ch16lev1sec3.html#PLID29">[View full width]</a></div><pre>
+#include &lt;sys/socket.h&gt;
+#include &lt;netdb.h&gt;
+
+int getnameinfo(const struct sockaddr *restrict <span class="docEmphItalicAlt">addr</span>,
+                socklen_t <span class="docEmphItalicAlt">alen</span>, char *restrict <span class="docEmphasis">host</span>,
+                socklen_t <span class="docEmphItalicAlt">hostlen</span>, char *restrict
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphasis">service</span>,
+                socklen_t <span class="docEmphItalicAlt">servlen</span>, unsigned int
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">flags</span>);
+</pre><br>
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, nonzero on error</p></td></tr></table></p><BR>
+<p class="docText"><a name="idd1e122242"></a><a name="idd1e122247"></a><a name="idd1e122252"></a><a name="idd1e122257"></a>The socket address (<span class="docEmphasis">addr</span>) is translated into a host name and a service name. If <span class="docEmphasis">host</span> is non-null, it points to a buffer <span class="docEmphasis">hostlen</span> bytes long that will be used to return the host name. Similarly, if <span class="docEmphasis">service</span> is non-null, it points to a buffer <span class="docEmphasis">servlen</span> bytes long that will be used to return the service name.</P>
+<p class="docText">The <span class="docEmphasis">flags</span> argument gives us some control over how the translation is done. <a class="docLink" href="ch16lev1sec3.html#ch16fig07">Figure 16.7</a> summarizes the supported flags.</p>
+<a name="ch16fig07"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 16.7. Flags for the <tt>getnameinfo</tt> function</H5></caption><colgroup><col width="100"><col width="400"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Flag</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></P></th></TR></thead><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>NI_DGRAM</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">The service is datagram based instead of stream based.</P></td></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>NI_NAMEREQD</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">If the host name can't be found, treat this as an error.</p></td></tr><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>NI_NOFQDN</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">Return only the node name portion of the fully-qualified domain name for local hosts.</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>NI_NUMERICHOST</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Return the numeric form of the host address instead of the name.</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>NI_NUMERICSERV</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Return the numeric form of the service address (i.e., the port number) instead of the name.</p></TD></TR></table></p><BR>
+<a name="ch16ex01"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText"><a class="docLink" href="ch16lev1sec3.html#ch16fig08">Figure 16.8</a> illustrates the use of the <tt>getaddrinfo</tt> function.</p>
+<p class="docText">This program illustrates the use of the <tt>getaddrinfo</tt> function. If multiple protocols provide the given service for the given host, the program will print more than one entry. In this example, we print out the address information only for the protocols that work with IPv4 (<tt>ai_family</tt> equals <tt>AF_INET</tt>). If we wanted to restrict the output to the <tt>AF_INET</tt> protocol family, we could set the <tt>ai_family</tt> field in the hint.</P>
+<p class="docText">When we run the program on one of the test systems, we get</P>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out harry nfs</span>
+   flags canon family inet type stream protocol TCP
+       host harry address 192.168.1.105 port 2049
+   flags canon family inet type datagram protocol UDP
+       host harry address 192.168.1.105 port 2049
+</pre><BR>
+
+
+<a name="ch16fig08"></a>
+<h5 class="docExampleTitle">Figure 16.8. Print host and service information</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;netdb.h&gt;
+#include &lt;arpa/inet.h&gt;
+#if defined(BSD) || defined(MACOS)
+#include &lt;sys/socket.h&gt;
+#include &lt;netinet/in.h&gt;
+#endif
+
+void
+print_family(struct addrinfo *aip)
+{
+    printf(" family ");
+    switch (aip-&gt;ai_family) {
+    case AF_INET:
+        printf("inet");
+        break;
+    case AF_INET6:
+        printf("inet6");
+        break;
+    case AF_UNIX:
+        printf("unix");
+        break;
+    case AF_UNSPEC:
+        printf("unspecified");
+        break;
+    default:
+        printf("unknown");
+    }
+
+}
+void
+print_type(struct addrinfo *aip)
+{
+    printf(" type ");
+    switch (aip-&gt;ai_socktype) {
+    case SOCK_STREAM:
+        printf("stream");
+        break;
+    case SOCK_DGRAM:
+        printf("datagram");
+        break;
+    case SOCK_SEQPACKET:
+        printf("seqpacket");
+        break;
+    case SOCK_RAW:
+        printf("raw");
+        break;
+    default:
+        printf("unknown (%d)", aip-&gt;ai_socktype);
+    }
+}
+
+void
+print_protocol(struct addrinfo *aip)
+{
+    printf(" protocol ");
+    switch (aip-&gt;ai_protocol) {
+    case 0:
+        printf("default");
+        break;
+    case IPPROTO_TCP:
+        printf("TCP");
+        break;
+    case IPPROTO_UDP:
+        printf("UDP");
+        break;
+    case IPPROTO_RAW:
+        printf("raw");
+        break;
+    default:
+        printf("unknown (%d)", aip-&gt;ai_protocol);
+    }
+}
+
+void
+print_flags(struct addrinfo *aip)
+{
+    printf("flags");
+    if (aip-&gt;ai_flags == 0) {
+        printf(" 0");
+
+    } else {
+        if (aip-&gt;ai_flags &amp; AI_PASSIVE)
+            printf(" passive");
+        if (aip-&gt;ai_flags &amp; AI_CANONNAME)
+            printf(" canon");
+        if (aip-&gt;ai_flags &amp; AI_NUMERICHOST)
+            printf(" numhost");
+#if defined(AI_NUMERICSERV)
+        if (aip-&gt;ai_flags &amp; AI_NUMERICSERV)
+            printf(" numserv");
+#endif
+#if defined(AI_V4MAPPED)
+        if (aip-&gt;ai_flags &amp; AI_V4MAPPED)
+            printf(" v4mapped");
+#endif
+#if defined(AI_ALL)
+        if (aip-&gt;ai_flags &amp; AI_ALL)
+            printf(" all");
+#endif
+    }
+}
+int
+main(int argc, char *argv[])
+{
+    struct addrinfo     *ailist, *aip;
+    struct addrinfo     hint;
+    struct sockaddr_in  *sinp;
+    const char          *addr;
+    int                 err;
+    char                abuf[INET_ADDRSTRLEN];
+
+    if (argc != 3)
+        err_quit("usage: %s nodename service", argv[0]);
+    hint.ai_flags = AI_CANONNAME;
+    hint.ai_family = 0;
+    hint.ai_socktype = 0;
+    hint.ai_protocol = 0;
+    hint.ai_addrlen = 0;
+    hint.ai_canonname = NULL;
+    hint.ai_addr = NULL;
+    hint.ai_next = NULL;
+    if ((err = getaddrinfo(argv[1], argv[2], &amp;hint, &amp;ailist)) != 0)
+        err_quit("getaddrinfo error: %s", gai_strerror(err));
+    for (aip = ailist; aip != NULL; aip = aip-&gt;ai_next) {
+        print_flags(aip);
+        print_family(aip);
+        print_type(aip);
+        print_protocol(aip);
+        printf("\n\thost %s", aip-&gt;ai_canonname?aip-&gt;ai_canonname:"-");
+        if (aip-&gt;ai_family == AF_INET) {
+
+           sinp = (struct sockaddr_in *)aip-&gt;ai_addr;
+           addr = inet_ntop(AF_INET, &amp;sinp-&gt;sin_addr, abuf,
+               INET_ADDRSTRLEN);
+           printf(" address %s", addr?addr:"unknown");
+           printf(" port %d", ntohs(sinp-&gt;sin_port));
+        }
+        printf("\n");
+    }
+    exit(0);
+}
+</pre><br>
+
+
+
+<a name="ch16lev2sec4"></a>
+<H4 class="docSection2Title">16.3.4. Associating Addresses with Sockets</H4>
+<p class="docText"><a name="idd1e122462"></a><a name="idd1e122467"></a><a name="idd1e122472"></a><a name="idd1e122477"></a><a name="idd1e122482"></a><a name="idd1e122487"></a><a name="idd1e122492"></a><a name="idd1e122497"></a><a name="idd1e122502"></a><a name="idd1e122507"></a><a name="idd1e122512"></a><a name="idd1e122517"></a><a name="idd1e122522"></a><a name="idd1e122527"></a><a name="idd1e122532"></a><a name="idd1e122537"></a><a name="idd1e122542"></a><a name="idd1e122547"></a><a name="idd1e122552"></a><a name="idd1e122559"></a><a name="idd1e122564"></a>The address associated with a client's socket is of little interest, and we can let the system choose a default address for us. For a server, however, we need to associate a well-known address with the server's socket on which client requests will arrive. Clients need a way to discover the address to use to contact a server, and the simplest scheme is for a server to reserve an address and register it in <tt>/etc/services</tt> or with a name service.</P>
+<p class="docText">We use the <tt>bind</tt> function to associate an address with a socket.</p>
+<a name="inta07"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID32"></a><div class="v1"><a href="ch16lev1sec3.html#PLID32">[View full width]</a></div><pre>
+#include &lt;sys/socket.h&gt;
+
+int bind(int <span class="docEmphItalicAlt">sockfd</span>, const struct sockaddr *<span class="docEmphItalicAlt">addr</span>,
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> socklen_t <span class="docEmphItalicAlt">len</span>);</pre><BR>
+</P></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</P></td></TR></table></p><BR>
+<p class="docText">There are several restrictions on the address we can use:</p>
+<ul><li><p class="docList">The address we specify must be valid for the machine on which the process is running; we can't specify an address belonging to some other machine.</p></li><li><p class="docList">The address must match the format supported by the address family we used to create the socket.</p></li><li><p class="docList"><a name="idd1e122633"></a><a name="idd1e122638"></a><a name="idd1e122645"></a><a name="idd1e122648"></a><a name="idd1e122653"></a><a name="idd1e122660"></a><a name="idd1e122665"></a><a name="idd1e122672"></a><a name="idd1e122677"></a><a name="idd1e122682"></a><a name="idd1e122687"></a><a name="idd1e122692"></a><a name="idd1e122697"></a>The port number in the address cannot be less than 1,024 unless the process has the appropriate privilege (i.e., is the superuser).</p></li><li><p class="docList">Usually, only one socket endpoint can be bound to a given address, although some protocols allow duplicate bindings.</p></li></ul>
+<p class="docText">For the Internet domain, if we specify the special IP address <tt>INADDR_ANY</tt>, the socket endpoint will be bound to all the system's network interfaces. This means that we can receive packets from any of the network interface cards installed in the system. We'll see in the next section that the system will choose an address and bind it to our socket for us if we call <tt>connect</tt> or <tt>listen</tt> without first binding an address to the socket.</p>
+<p class="docText">We can use the <tt>getsockname</tt> function to discover the address bound to a socket.</p>
+<a name="inta24"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID33"></a><div class="v1"><a href="ch16lev1sec3.html#PLID33">[View full width]</a></div><pre>
+#include &lt;sys/socket.h&gt;
+
+int getsockname(int <span class="docEmphItalicAlt">sockfd</span>, struct sockaddr
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">addr</span>,
+                socklen_t *restrict <span class="docEmphItalicAlt">alenp</span>);
+</pre><BR>
+</P></TD></tr><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</P></td></TR></table></p><BR>
+<p class="docText">Before calling <tt>getsockname</tt>, we set <span class="docEmphasis">alenp</span> to point to an integer containing the size of the <tt>sockaddr</tt> buffer. On return, the integer is set to the size of the address returned. If the address won't fit in the buffer provided, the address is silently truncated. If no address is currently bound to the socket, the results are undefined.</P>
+<p class="docText">If the socket is connected to a peer, we can find out the peer's address by calling the <tt>getpeername</tt> function.</P>
+<a name="inta115"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID34"></a><div class="v1"><a href="ch16lev1sec3.html#PLID34">[View full width]</a></div><pre>
+#include &lt;sys/socket.h&gt;
+
+int getpeername(int <span class="docEmphItalicAlt">sockfd</span>, struct sockaddr
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">addr</span>,
+                socklen_t *restrict <span class="docEmphItalicAlt">alenp</span>);
+</pre><br>
+</P></TD></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></TD></tr></table></P><br>
+<p class="docText">Other than returning the peer's address, the <tt>getpeername</tt> function is identical to the <tt>getsockname</tt> function.</P>
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch16lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch16lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

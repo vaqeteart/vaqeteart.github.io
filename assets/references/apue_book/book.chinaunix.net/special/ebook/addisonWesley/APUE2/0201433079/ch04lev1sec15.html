@@ -1,0 +1,121 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.15.&nbsp; link, unlink, remove, and rename Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec14.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec16.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec15"></a>
+<h3 class="docSection1Title" id="454331-954">4.15. <tt>link</tt>, <tt>unlink</tt>, <tt>remove</tt>, and <tt>rename</tt> Functions</h3>
+<p class="docText">As we saw in the previous section, any file can have multiple directory entries pointing to its i-node. The way we create a link to an existing file is with the <tt>link</tt> function.</P>
+<a name="inta151"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e28625"></a><a name="idd1e28628"></a><a name="idd1e28631"></a><a name="idd1e28638"></a><a name="idd1e28641"></a><a name="idd1e28644"></a>
+<a name="PLID0"></a><div class="v1"><a href="ch04lev1sec15.html#PLID0">[View full width]</a></div><pre>#include &lt;unistd.h&gt;
+
+int link(const char *<span class="docEmphItalicAlt">existingpath</span>, const char
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">newpath</span>);</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">This function creates a new directory entry, <span class="docEmphasis">newpath</span>, that references the existing file <span class="docEmphasis">existingpath</span>. If the <span class="docEmphasis">newpath</span> already exists, an error is returned. Only the last component of the <span class="docEmphasis">newpath</span> is created. The rest of the path must already exist.</P>
+<p class="docText">The creation of the new directory entry and the increment of the link count must be an atomic operation. (Recall the discussion of atomic operations in <a class="docLink" href="ch03lev1sec11.html#ch03lev1sec11">Section 3.11</a>.)</p>
+<p class="docText">Most implementations require that both pathnames be on the same file system, although POSIX.1 allows an implementation to support linking across file systems. If an implementation supports the creation of hard links to directories, it is restricted to only the superuser. The reason is that doing this can cause loops in the file system, which most utilities that process the file system aren't capable of handling. (We show an example of a loop introduced by a symbolic link in <a class="docLink" href="ch04lev1sec16.html#ch04lev1sec16">Section 4.16</a>.) Many file system implementations disallow hard links to directories for this reason.</P>
+<p class="docText">To remove an existing directory entry, we call the <tt>unlink</tt> function.</P>
+<a name="inta363"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>#include &lt;unistd.h&gt;
+
+int unlink(const char *<span class="docEmphItalicAlt">pathname</span>);</pre><br>
+
+</p></td></tr><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</P></td></TR></table></p><br>
+<p class="docText">This function removes the directory entry and decrements the link count of the file referenced by <span class="docEmphasis">pathname</span>. If there are other links to the file, the data in the file is still accessible through the other links. The file is not changed if an error occurs.</p>
+<p class="docText">We've mentioned before that to unlink a file, we must have write permission and execute permission in the directory containing the directory entry, as it is the directory entry that we will be removing. Also, we mentioned in <a class="docLink" href="ch04lev1sec10.html#ch04lev1sec10">Section 4.10</a> that if the sticky bit is set in this directory we must have write permission for the directory and one of the following:</p>
+<ul><li><p class="docList">Own the file</p></li><li><p class="docList">Own the directory</p></li><li><p class="docList">Have superuser privileges</p></li></ul>
+<p class="docText">Only when the link count reaches 0 can the contents of the file be deleted. One other condition prevents the contents of a file from being deleted: as long as some process has the file open, its contents will not be deleted. When a file is closed, the kernel first checks the count of the number of processes that have the file open. If this count has reached 0, the kernel then checks the link count; if it is 0, the file's contents are deleted.</p>
+<a name="ch04ex05"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText"><a name="idd1e28778"></a><a name="idd1e28783"></a><a name="idd1e28788"></a><a name="idd1e28793"></a>The program shown in <a class="docLink" href="ch04lev1sec15.html#ch04fig16">Figure 4.16</a> opens a file and then unlinks it. The program then goes to sleep for 15 seconds before terminating.</P>
+<p class="docText">Running this program gives us</p>
+
+<pre>
+    $ <span class="docEmphStrong">ls -l tempfile</span>            <span class="docEmphItalicAlt">look at how big the file is</span>
+    -rw-r----- 1 sar     413265408 Jan 21 07:14 tempfile
+    $ <span class="docEmphStrong">df /home</span>                  <span class="docEmphItalicAlt">check how much free space is available</span>
+    Filesystem  1K-blocks     Used  Available  Use%  Mounted  on
+    /dev/hda4    11021440  1956332    9065108   18%  /home
+    $ <span class="docEmphStrong">./a.out &amp;</span>                 <span class="docEmphItalicAlt">run the program in <a class="docLink" href="ch04lev1sec15.html#ch04fig16">Figure 4.16</a> in the background</span>
+    1364                        <span class="docEmphItalicAlt">the shell prints its process ID</span>
+    $ file unlinked             <span class="docEmphItalicAlt">the file is unlinked</span>
+    <span class="docEmphStrong">ls -l tempfile</span>              <span class="docEmphItalicAlt">see if the filename is still there</span>
+    ls: tempfile: No such file or directory           <span class="docEmphItalicAlt">the directory entry is gone</span>
+    $ <span class="docEmphStrong">df /home</span>                  <span class="docEmphItalicAlt">see if the space is available yet</span>
+    Filesystem  1K-blocks     Used  Available  Use%  Mounted  on
+    /dev/hda4    11021440  1956332    9065108   18%  /home
+    $ done                      <span class="docEmphItalicAlt">the program is done, all open files are closed</span>
+    <span class="docEmphStrong">df /home</span>                    <span class="docEmphItalicAlt">now the disk space should be available</span>
+    Filesystem  1K-blocks     Used  Available  Use%  Mounted on
+    /dev/hda4    11021440  1552352    9469088   15%  /home
+                                <span class="docEmphItalicAlt">now the 394.1 MB of disk space are available</span>
+</pre><BR>
+
+
+<a name="ch04fig16"></a>
+<H5 class="docExampleTitle">Figure 4.16. Open a file and then <tt>unlink</tt> it</H5>
+
+<pre>#include "apue.h"
+#include &lt;fcntl.h&gt;
+
+int
+main(void)
+{
+    if (open("tempfile", O_RDWR) &lt; 0)
+        err_sys("open error");
+    if (unlink("tempfile") &lt; 0)
+        err_sys("unlink error");
+    printf("file unlinked\n");
+    sleep(15);
+    printf("done\n");
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText">This property of <tt>unlink</tt> is often used by a program to ensure that a temporary file it creates won't be left around in case the program crashes. The process creates a file using either <tt>open</tt> or <tt>creat</tt> and then immediately calls <tt>unlink</tt>. The file is not deleted, however, because it is still open. Only when the process either closes the file or terminates, which causes the kernel to close all its open files, is the file deleted.</P>
+<p class="docText">If <span class="docEmphasis">pathname</span> is a symbolic link, <tt>unlink</tt> removes the symbolic link, not the file referenced by the link. There is no function to remove the file referenced by a symbolic link given the name of the link.</P>
+<p class="docText"><a name="idd1e28909"></a><a name="idd1e28916"></a><a name="idd1e28923"></a>The superuser can call <tt>unlink</tt> with <span class="docEmphasis">pathname</span> specifying a directory, but the function <tt>rmdir</tt> should be used instead to unlink a directory. We describe the <tt>rmdir</tt> function in <a class="docLink" href="ch04lev1sec20.html#ch04lev1sec20">Section 4.20</a>.</P>
+<p class="docText">We can also unlink a file or a directory with the <tt>remove</tt> function. For a file, <tt>remove</tt> is identical to <tt>unlink</tt>. For a directory, <tt>remove</tt> is identical to <tt>rmdir</tt>.</p>
+<a name="inta270"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>#include &lt;stdio.h&gt;
+
+int remove(const char *<span class="docEmphItalicAlt">pathname</span>);</pre><BR>
+
+</P></td></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</P></TD></tr></table></p><br>
+<blockquote>
+<p class="docText">ISO C specifies the <tt>remove</tt> function to delete a file. The name was changed from the historical UNIX name of <tt>unlink</tt> because most non-UNIX systems that implement the C standard didn't support the concept of links to a file at the time.</p>
+</blockquote>
+<p class="docText">A file or a directory is renamed with the <tt>rename</tt> function.</P>
+<a name="inta271"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>#include &lt;stdio.h&gt;
+
+int rename(const char *<span class="docEmphItalicAlt">oldname</span>, const char *<span class="docEmphItalicAlt">newname</span>);</pre><BR>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></td></tr></table></p><br>
+<blockquote>
+<p class="docText">This function is defined by ISO C for files. (The C standard doesn't deal with directories.) POSIX.1 expanded the definition to include directories and symbolic links.</p>
+</blockquote>
+<p class="docText">There are several conditions to describe, depending on whether <span class="docEmphasis">oldname</span> refers to a file, a directory, or a symbolic link. We must also describe what happens if <span class="docEmphasis">newname</span> already exists.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">If <span class="docEmphasis">oldname</span> specifies a file that is not a directory, then we are renaming a file or a symbolic link. In this case, if <span class="docEmphasis">newname</span> exists, it cannot refer to a directory. If <span class="docEmphasis">newname</span> exists and is not a directory, it is removed, and <span class="docEmphasis">oldname</span> is renamed to <span class="docEmphasis">newname</span>. We must have write permission for the directory containing <span class="docEmphasis">oldname</span> and for the directory containing <span class="docEmphasis">newname</span>, since we are changing both directories.</p></div></li><li><div style="font-weight:normal"><p class="docList">If <span class="docEmphasis">oldname</span> specifies a directory, then we are renaming a directory. If <span class="docEmphasis">newname</span> exists, it must refer to a directory, and that directory must be empty. (When we say that a directory is empty, we mean that the only entries in the directory are dot and dot-dot.) If <span class="docEmphasis">newname</span> exists and is an empty directory, it is removed, and <span class="docEmphasis">oldname</span> is renamed to <span class="docEmphasis">newname</span>. Additionally, when we're renaming a directory, <span class="docEmphasis">newname</span> cannot contain a path prefix that names <span class="docEmphasis">oldname</span>. For example, we can't rename <tt>/usr/foo</tt> to <tt>/usr/foo/testdir</tt>, since the old name (<tt>/usr/foo</tt>) is a path prefix of the new name and cannot be removed.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">If either <span class="docEmphasis">oldname</span> or <span class="docEmphasis">newname</span> refers to a symbolic link, then the link itself is processed, not the file to which it resolves.</p></div></LI><LI><div style="font-weight:normal"><p class="docList"><a name="idd1e29137"></a><a name="idd1e29140"></a><a name="idd1e29143"></a><a name="idd1e29148"></a><a name="idd1e29153"></a><a name="idd1e29158"></a><a name="idd1e29163"></a><a name="idd1e29166"></a><a name="idd1e29171"></a><a name="idd1e29174"></a><a name="idd1e29177"></a><a name="idd1e29182"></a><a name="idd1e29185"></a><a name="idd1e29190"></a><a name="idd1e29193"></a><a name="idd1e29196"></a><a name="idd1e29201"></a><a name="idd1e29206"></a><a name="idd1e29211"></a><a name="idd1e29216"></a><a name="idd1e29221"></a><a name="idd1e29226"></a><a name="idd1e29229"></a><a name="idd1e29232"></a>As a special case, if the <span class="docEmphasis">oldname</span> and <span class="docEmphasis">newname</span> refer to the same file, the function returns successfully without changing anything.</P></div></li></ol></div>
+<p class="docText">If <span class="docEmphasis">newname</span> already exists, we need permissions as if we were deleting it. Also, because we're removing the directory entry for <span class="docEmphasis">oldname</span> and possibly creating a directory entry for <span class="docEmphasis">newname</span>, we need write permission and execute permission in the directory containing <span class="docEmphasis">oldname</span> and in the directory containing <span class="docEmphasis">newname</span>.</P>
+
+<UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec14.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec16.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

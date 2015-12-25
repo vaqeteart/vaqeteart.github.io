@@ -1,0 +1,47 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 9.6.&nbsp; Controlling Terminal</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch09lev1sec6"></a>
+<h3 class="docSection1Title" id="454331-838">9.6. Controlling Terminal</h3>
+<p class="docText"><a name="idd1e64529"></a><a name="idd1e64532"></a><a name="idd1e64537"></a><a name="idd1e64540"></a><a name="idd1e64543"></a><a name="idd1e64548"></a>Sessions and process groups have a few other characteristics.</P>
+<UL><li><p class="docList">A session can have a single <span class="docEmphasis">controlling terminal</span>. This is usually the terminal device (in the case of a terminal login) or pseudo-terminal device (in the case of a network login) on which we log in.</P></LI><LI><p class="docList">The session leader that establishes the connection to the controlling terminal is called the <span class="docEmphasis">controlling process</span>.</p></LI><LI><p class="docList">The process groups within a session can be divided into a single <span class="docEmphasis">foreground process group</span> and one or more <span class="docEmphasis">background process groups</span>.</P></li><LI><p class="docList">If a session has a controlling terminal, it has a single foreground process group, and all other process groups in the session are background process groups.</p></LI><LI><p class="docList">Whenever we type the terminal's interrupt key (often DELETE or Control-C), this causes the interrupt signal be sent to all processes in the foreground process group.</P></li><LI><p class="docList">Whenever we type the terminal's quit key (often Control-backslash), this causes the quit signal to be sent to all processes in the foreground process group.</P></li><LI><p class="docList">If a modem (or network) disconnect is detected by the terminal interface, the hang-up signal is sent to the controlling process (the session leader).</P></li></ul>
+<p class="docText">These characteristics are shown in <a class="docLink" href="ch09lev1sec6.html#ch09fig07">Figure 9.7</a>.</p>
+<a name="ch09fig07"></a><p><center>
+<H5 class="docFigureTitle">Figure 9.7. Process groups and sessions showing controlling terminal</h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/09fig07_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" id="195131139046" width="500" height="293" SRC="images/0201433079/graphics/09fig07.gif;423615"></P>
+</center></p><BR>
+<p class="docText"><a name="idd1e64633"></a><a name="idd1e64636"></a><a name="idd1e64641"></a><a name="idd1e64646"></a><a name="idd1e64651"></a><a name="idd1e64654"></a><a name="idd1e64659"></a><a name="idd1e64664"></a><a name="idd1e64669"></a><a name="idd1e64674"></a><a name="idd1e64677"></a><a name="idd1e64682"></a><a name="idd1e64685"></a><a name="idd1e64690"></a><a name="idd1e64697"></a><a name="idd1e64702"></a><a name="idd1e64707"></a><a name="idd1e64714"></a>Usually, we don't have to worry about the controlling terminal; it is established automatically when we log in.</p>
+<blockquote>
+<p class="docText">POSIX.1 leaves the choice of the mechanism used to allocate a controlling terminal up to each individual implementation. We'll show the actual steps in <a class="docLink" href="ch19lev1sec4.html#ch19lev1sec4">Section 19.4</a>.</p>
+<p class="docText">Systems derived from UNIX System V allocate the controlling terminal for a session when the session leader opens the first terminal device that is not already associated with a session. This assumes that the call to <tt>open</tt> by the session leader does not specify the <tt>O_NOCTTY</tt> flag (<a class="docLink" href="ch03lev1sec3.html#ch03lev1sec3">Section 3.3</a>).</p>
+<p class="docText">BSD-based systems allocate the controlling terminal for a session when the session leader calls <tt>ioctl</tt> with a <span class="docEmphasis">request</span> argument of <tt>TIOCSCTTY</tt> (the third argument is a null pointer). The session cannot already have a controlling terminal for this call to succeed. (Normally, this call to <tt>ioctl</tt> follows a call to <tt>setsid</tt>, which guarantees that the process is a session leader without a controlling terminal.) The POSIX.1 <tt>O_NOCTTY</tt> flag to <tt>open</tt> is not used by BSD-based systems, except in compatibility-mode support for other systems.</p>
+</blockquote>
+<p class="docText">There are times when a program wants to talk to the controlling terminal, regardless of whether the standard input or standard output is redirected. The way a program guarantees that it is talking to the controlling terminal is to <tt>open</tt> the file <tt>/dev/tty</tt>. This special file is a synonym within the kernel for the controlling terminal. Naturally, if the program doesn't have a controlling terminal, the <tt>open</tt> of this device will fail.</p>
+<p class="docText">The classic example is the <tt>getpass</tt>(3) function, which reads a password (with terminal echoing turned off, of course). This function is called by the <tt>crypt</tt>(1) program and can be used in a pipeline. For example,</p>
+
+<pre>
+   crypt &lt; salaries | lpr
+</pre><br>
+
+<p class="docText">decrypts the file <tt>salaries</tt> and pipes the output to the print spooler. Because <tt>crypt</tt> reads its input file on its standard input, the standard input can't be used to enter the password. Also, <tt>crypt</tt> is designed so that we have to enter the encryption password each time we run the program, to prevent us from saving the password in a file (which could be a security hole).</p>
+<p class="docText">There are known ways to break the encoding used by the <tt>crypt</tt> program. See Garfinkel et al. [<a class="docLink" href="bib01.html#biblio01_021">2003</a>] for more details on encrypting files.</p>
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

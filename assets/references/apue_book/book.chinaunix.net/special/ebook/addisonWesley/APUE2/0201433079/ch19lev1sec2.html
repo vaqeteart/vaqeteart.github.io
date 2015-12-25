@@ -1,0 +1,102 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 19.2.&nbsp; Overview</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch19lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch19lev1sec2"></a>
+<h3 class="docSection1Title">19.2. Overview</h3>
+<p class="docText">The term <span class="docEmphasis">pseudo terminal</span> implies that it looks like a terminal to an application program, but it's not a real terminal. <a class="docLink" href="ch19lev1sec2.html#ch19fig01">Figure 19.1</a> shows the typical arrangement of the processes involved when a pseudo terminal is being used. The key points in this figure are the following.</P>
+<a name="ch19fig01"></a><P><center>
+<h5 class="docFigureTitle">Figure 19.1. Typical arrangement of processes using a pseudo terminal</H5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="364" height="383" SRC="images/0201433079/graphics/19fig01.gif;423615"></P>
+
+</center></P><br>
+<UL><LI><p class="docList">Normally, a process opens the pseudo-terminal master and then calls <tt>fork</tt>. The child establishes a new session, opens the corresponding pseudo-terminal slave, <a name="idd1e143897"></a><a name="idd1e143902"></a><a name="idd1e143907"></a><a name="idd1e143910"></a><a name="idd1e143915"></a><a name="idd1e143918"></a><a name="idd1e143921"></a><a name="idd1e143926"></a><a name="idd1e143931"></a><a name="idd1e143934"></a><a name="idd1e143937"></a><a name="idd1e143943"></a><a name="idd1e143949"></a><a name="idd1e143955"></a><a name="idd1e143961"></a><a name="idd1e143966"></a>duplicates the file descriptor to the standard input, standard output, and standard error, and then calls <tt>exec</tt>. The pseudo-terminal slave becomes the controlling terminal for the child process.</P></li><LI><p class="docList">It appears to the user process above the slave that its standard input, standard output, and standard error are a terminal device. The process can issue all the terminal I/O functions from <a class="docLink" href="ch18.html#ch18">Chapter 18</a> on these descriptors. But since there is not a real terminal device beneath the slave, functions that don't make sense (change the baud rate, send a break character, set odd parity, etc.) are just ignored.</p></LI><LI><p class="docList">Anything written to the master appears as input to the slave and vice versa. Indeed, all the input to the slave comes from the user process above the pseudo-terminal master. This behaves like a bidirectional pipe, but with the terminal line discipline module above the slave, we have additional capabilities over a plain pipe.</P></li></UL>
+<p class="docText"><a class="docLink" href="ch19lev1sec2.html#ch19fig01">Figure 19.1</a> shows what a pseudo terminal looks like on a FreeBSD, Mac OS X, or Linux system. In <a class="docLink" href="ch19lev1sec3.html#ch19lev2sec7">Sections 19.3.2</a> and <a class="docLink" href="ch19lev1sec3.html#ch19lev2sec8">19.3.3</a>, we show how to open these devices.</P>
+<p class="docText">Under Solaris, a pseudo terminal is built using the STREAMS subsystem (<a class="docLink" href="ch14lev1sec4.html#ch14lev1sec4">Section 14.4</a>). <a class="docLink" href="ch19lev1sec2.html#ch19fig02">Figure 19.2</a> details the arrangement of the pseudo-terminal STREAMS modules under Solaris. The two STREAMS modules that are shown as dashed boxes are optional. The <tt>pckt</tt> and <tt>ptem</tt> modules help provide semantics specific to pseudo terminals. The other two modules (<tt>ldterm</tt> and <tt>ttcompat</tt>) provide line discipline processing.</p>
+<a name="ch19fig02"></a><P><center>
+<H5 class="docFigureTitle">Figure 19.2. Arrangement of pseudo terminals under Solaris</h5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="374" height="550" SRC="images/0201433079/graphics/19fig02.gif;423615"></p>
+
+</center></p><br>
+<p class="docText"><a name="idd1e144045"></a><a name="idd1e144050"></a><a name="idd1e144055"></a><a name="idd1e144058"></a>Note that the three STREAMS modules above the slave are the same as the output from the program shown in <a class="docLink" href="ch14lev1sec4.html#ch14fig18">Figure 14.18</a> for a network login. In <a class="docLink" href="ch19lev1sec3.html#ch19lev2sec6">Section 19.3.1</a>, we show how to build this arrangement of STREAMS modules.</P>
+<p class="docText">From this point on, we'll simplify the figures by not showing the &quot;read and write functions&quot; from <a class="docLink" href="ch19lev1sec2.html#ch19fig01">Figure 19.1</a> or the &quot;stream head&quot; from <a class="docLink" href="ch19lev1sec2.html#ch19fig02">Figure 19.2</a>. We'll also use the abbreviation PTY for pseudo terminal and lump all the STREAMS modules above the slave PTY in <a class="docLink" href="ch19lev1sec2.html#ch19fig02">Figure 19.2</a> into a box called &quot;terminal line discipline,&quot; as in <a class="docLink" href="ch19lev1sec2.html#ch19fig01">Figure 19.1</a>.</p>
+<p class="docText">We'll now examine some of the typical uses of pseudo terminals.</P>
+<a name="ch19lev2sec1"></a>
+<h4 class="docSection2Title">Network Login Servers</H4>
+<p class="docText">Pseudo terminals are built into servers that provide network logins. The typical examples are the <tt>telnetd</tt> and <tt>rlogind</tt> servers. <a class="docLink" href="ch15.html#ch15">Chapter 15</a> of Stevens [<a class="docLink" href="bib01.html#biblio01_058">1990</a>] details the steps involved in the <tt>rlogin</tt> service. Once the login shell is running on the remote host, we have the arrangement shown in <a class="docLink" href="ch19lev1sec2.html#ch19fig03">Figure 19.3</a>. A similar arrangement is used by the <tt>telnetd</tt> server.</p>
+<a name="ch19fig03"></a><p><center>
+<h5 class="docFigureTitle">Figure 19.3. Arrangement of processes for <tt>rlogind</tt> server</h5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="491" height="337" SRC="images/0201433079/graphics/19fig03.gif;423615"></p>
+
+</center></p><br>
+<p class="docText"><a name="idd1e144146"></a><a name="idd1e144151"></a><a name="idd1e144156"></a><a name="idd1e144161"></a><a name="idd1e144166"></a><a name="idd1e144171"></a>We show two calls to <tt>exec</tt> between the <tt>rlogind</tt> server and the login shell, because the <tt>login</tt> program is usually between the two to validate the user.</p>
+<p class="docText">A key point in this figure is that the process driving the PTY master is normally reading and writing another I/O stream at the same time. In this example, the other I/O stream is the TCP/IP box. This implies that the process must be using some form of I/O multiplexing (<a class="docLink" href="ch14lev1sec5.html#ch14lev1sec5">Section 14.5</a>), such as <tt>select</tt> or <tt>poll</tt>, or must be divided into two processes or threads.</p>
+
+<a name="ch19lev2sec2"></a>
+<h4 class="docSection2Title"><tt>script</tt> Program</h4>
+<p class="docText">The <tt>script</tt>(1) program that is supplied with most UNIX systems makes a copy in a file of everything that is input and output during a terminal session. The program does this by placing itself between the terminal and a new invocation of our login shell. <a class="docLink" href="ch19lev1sec2.html#ch19fig04">Figure 19.4</a> details the interactions involved in the <tt>script</tt> program. Here, we specifically show that the <tt>script</tt> program is normally run from a login shell, which then waits for <tt>script</tt> to terminate.</p>
+<a name="ch19fig04"></a><p><center>
+<h5 class="docFigureTitle">Figure 19.4. The <tt>script</tt> program</h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/19fig04_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" id="195131139046" width="500" height="403" SRC="images/0201433079/graphics/19fig04.gif;423615"></p>
+</center></p><BR>
+<p class="docText">While <tt>script</tt> is running, everything output by the terminal line discipline above the PTY slave is copied to the script file (usually called <tt>typescript</tt>). Since our keystrokes are normally echoed by that line discipline module, the script file also contains our input. The script file won't contain any passwords that we enter, however, since passwords aren't echoed.</P>
+<blockquote>
+<p class="docText">While writing the first edition of this book, Rich Stevens used the <tt>script</tt> program to capture the output of the example programs. This avoided typographical errors that could have occurred if he had copied the program output by hand. The drawback to using <tt>script</tt>, however, is having to deal with control characters that are present in the script file.</p>
+</blockquote>
+<p class="docText"><a name="idd1e144272"></a><a name="idd1e144277"></a><a name="idd1e144280"></a><a name="idd1e144285"></a>After developing the general <tt>pty</tt> program in <a class="docLink" href="ch19lev1sec5.html#ch19lev1sec5">Section 19.5</a>, we'll see that a trivial shell script turns it into a version of the <tt>script</tt> program.</P>
+
+<a name="ch19lev2sec3"></a>
+<H4 class="docSection2Title"><tt>expect</tt> Program</H4>
+<p class="docText">Pseudo terminals can be used to drive interactive programs in noninteractive modes. Numerous programs are hardwired to require a terminal to run. One example is the <tt>passwd</tt>(1) command, which requires that the user enter a password in response to a prompt.</p>
+<p class="docText">Rather than modify all the interactive programs to support a batch mode of operation, a better solution is to provide a way to drive any interactive program from a script. The <tt>expect</tt> program [<a class="docLink" href="bib01.html#biblio01_036">Libes 1990</a>, <a class="docLink" href="bib01.html#biblio01_037">1991</a>, <a class="docLink" href="bib01.html#biblio01_038">1994</a>] provides a way to do this. It uses pseudo terminals to run other programs, similar to the <tt>pty</tt> program in <a class="docLink" href="ch19lev1sec5.html#ch19lev1sec5">Section 19.5</a>. But <tt>expect</tt> also provides a programming language to examine the output of the program being run to make decisions about what to send the program as input. When an interactive program is being run from a script, we can't just copy everything from the script to the program and vice versa. Instead, we have to send the program some input, look at its output, and decide what to send it next.</P>
+
+<a name="ch19lev2sec4"></a>
+<H4 class="docSection2Title">Running Coprocesses</H4>
+<p class="docText"><a name="idd1e144350"></a><a name="idd1e144353"></a><a name="idd1e144356"></a><a name="idd1e144359"></a><a name="idd1e144364"></a><a name="idd1e144369"></a><a name="idd1e144374"></a><a name="idd1e144379"></a><a name="idd1e144384"></a>In the coprocess example in <a class="docLink" href="ch15lev1sec4.html#ch15fig19">Figure 15.19</a>, we couldn't invoke a coprocess that used the standard I/O library for its input and output, because when we talked to the coprocess across a pipe, the standard I/O library fully buffered the standard input and standard output, leading to a deadlock. If the coprocess is a compiled program for which we don't have the source code, we can't add <tt>fflush</tt> statements to solve this problem. <a class="docLink" href="ch15lev1sec4.html#ch15fig16">Figure 15.16</a> showed a process driving a coprocess. What we need to do is place a pseudo terminal between the two processes, as shown in <a class="docLink" href="ch19lev1sec2.html#ch19fig05">Figure 19.5</a>, to trick the coprocess into thinking that it is being driven from a terminal instead of from another process.</p>
+<a name="ch19fig05"></a><P><center>
+<h5 class="docFigureTitle">Figure 19.5. Driving a coprocess using a pseudo terminal</H5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="499" height="98" SRC="images/0201433079/graphics/19fig05.gif;423615"></P>
+
+</center></P><br>
+<p class="docText">Now the standard input and standard output of the coprocess look like a terminal device, so the standard I/O library will set these two streams to be line buffered.</P>
+<p class="docText">The parent can obtain a pseudo terminal between itself and the coprocess in two ways. (The parent in this case could be either the program in <a class="docLink" href="ch15lev1sec4.html#ch15fig18">Figure 15.18</a>, which used two pipes to communicate with the coprocess, or the program in <a class="docLink" href="ch17lev1sec2.html#ch17fig04">Figure 17.4</a>, which used a single STREAMS pipe.) One way is for the parent to call the <tt>pty_fork</tt> function directly (<a class="docLink" href="ch19lev1sec4.html#ch19lev1sec4">Section 19.4</a>) instead of calling <tt>fork</tt>. Another is to <tt>exec</tt> the <tt>pty</tt> program (<a class="docLink" href="ch19lev1sec5.html#ch19lev1sec5">Section 19.5</a>) with the coprocess as its argument. We'll look at these two solutions after showing the <tt>pty</tt> program.</P>
+
+<a name="ch19lev2sec5"></a>
+<h4 class="docSection2Title">Watching the Output of Long-Running Programs</H4>
+<p class="docText">If we have a program that runs for a long time, we can easily run it in the background using any of the standard shells. But if we redirect its standard output to a file, and if it doesn't generate much output, we can't easily monitor its progress, because the standard I/O library will fully buffer its standard output. All that we'll see are blocks of output written by the standard I/O library to the output file, possibly in chunks as large as 8,192 bytes.</P>
+<p class="docText">If we have the source code, we can insert calls to <tt>fflush</tt>. Alternatively, we can run the program under the <tt>pty</tt> program, making its standard I/O library think that its standard output is a terminal. <a class="docLink" href="ch19lev1sec2.html#ch19fig06">Figure 19.6</a> shows this arrangement, where we have called the slow output program <tt>slowout</tt>. The <tt>fork/exec</tt> arrow from the login shell to the <tt>pty</tt> process is shown as a dashed arrow to reiterate that the <tt>pty</tt> process is running as a background job.</p>
+<a name="ch19fig06"></a><p><center>
+<h5 class="docFigureTitle">Figure 19.6. Running a slow output program using a pseudo terminal</h5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="492" height="461" SRC="images/0201433079/graphics/19fig06.gif;423615"></P>
+
+</center></p><BR>
+
+
+<ul></UL></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch19lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch19lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

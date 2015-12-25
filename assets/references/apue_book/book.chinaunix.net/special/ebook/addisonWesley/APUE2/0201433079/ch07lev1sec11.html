@@ -1,0 +1,176 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 7.11.&nbsp; getrlimit and setrlimit Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch07lev1sec11"></a>
+<h3 class="docSection1Title">7.11. <tt>getrlimit</tt> and <tt>setrlimit</tt> Functions</H3>
+<p class="docText">Every process has a set of resource limits, some of which can be queried and changed by the <tt>geTRlimit</tt> and <tt>setrlimit</tt> functions.</p>
+<a name="inta127"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch07lev1sec11.html#PLID0">[View full width]</a></div><pre>
+  #include &lt;sys/resource.h&gt;
+
+  int getrlimit(int <span class="docEmphItalicAlt">resource</span>, struct rlimit *<span class="docEmphItalicAlt">rlptr</span>);
+
+  int setrlimit(int <span class="docEmphItalicAlt">resource</span>, const struct rlimit
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">rlptr</span>);
+</pre><br>
+
+</P></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, nonzero on error</p></TD></TR></table></P><br>
+<blockquote>
+<p class="docText">These two functions are defined as XSI extensions in the Single UNIX Specification. The resource limits for a process are normally established by process 0 when the system is initialized and then inherited by each successive process. Each implementation has its own way of tuning the various limits.</P>
+</blockquote>
+<p class="docText">Each call to these two functions specifies a single <span class="docEmphasis">resource</span> and a pointer to the following structure:</P>
+
+<pre>
+    struct rlimit {
+      rlim_t  rlim_cur;   /* soft limit: current limit */
+      rlim_t  rlim_max;   /* hard limit: maximum value for rlim_cur */
+    };
+</pre><br>
+
+<p class="docText"><a name="idd1e51259"></a><a name="idd1e51264"></a><a name="idd1e51267"></a><a name="idd1e51272"></a><a name="idd1e51277"></a><a name="idd1e51282"></a><a name="idd1e51287"></a><a name="idd1e51292"></a><a name="idd1e51297"></a><a name="idd1e51302"></a><a name="idd1e51307"></a><a name="idd1e51312"></a><a name="idd1e51317"></a><a name="idd1e51322"></a><a name="idd1e51327"></a><a name="idd1e51332"></a><a name="idd1e51337"></a><a name="idd1e51342"></a><a name="idd1e51347"></a><a name="idd1e51352"></a><a name="idd1e51357"></a><a name="idd1e51362"></a><a name="idd1e51367"></a><a name="idd1e51372"></a><a name="idd1e51377"></a><a name="idd1e51382"></a>Three rules govern the changing of the resource limits.</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">A process can change its soft limit to a value less than or equal to its hard limit.</p></div></li><li><div style="font-weight:normal"><p class="docList">A process can lower its hard limit to a value greater than or equal to its soft limit. This lowering of the hard limit is irreversible for normal users.</p></div></LI><li><div style="font-weight:normal"><p class="docList">Only a superuser process can raise a hard limit.</P></div></li></ol></div>
+<p class="docText">An infinite limit is specified by the constant <tt>RLIM_INFINITY</tt>.</P>
+<p class="docText">The <span class="docEmphasis">resource</span> argument takes on one of the following values. <a class="docLink" href="ch07lev1sec11.html#ch07fig15">Figure 7.15</a> shows which limits are defined by the Single UNIX Specification and supported by each implementation.</p>
+<a name="ch07fig15"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 7.15. Support for resource limits</h5></caption><colgroup><col width="180"><col width="40"><col width="40"><col width="40"><col width="60"><col width="40"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">Limit</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle"><p class="docText"><span class="docEmphRoman">XSI</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">FreeBSD 5.2.1</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Linux 2.4.22</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Mac OS X 10.3</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Solaris 9</span></p></th></tr></thead><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>RLIMIT_AS</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="docTableCell" align="center" valign="top">&nbsp;</TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td><TD class="docTableCell" align="center" valign="top">&nbsp;</TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>RLIMIT_CORE</tt></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>RLIMIT_CPU</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>RLIMIT_DATA</tt></P></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></tr><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>RLIMIT_FSIZE</tt></p></TD><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</P></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>RLIMIT_LOCKS</tt></p></TD><TD class="rightBorder" align="center" valign="top">&nbsp;</td><TD class="docTableCell" align="center" valign="top">&nbsp;</TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD><TD class="docTableCell" align="center" valign="top">&nbsp;</TD><td class="docTableCell" align="center" valign="top">&nbsp;</TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>RLIMIT_MEMLOCK</tt></P></td><TD class="rightBorder" align="center" valign="top">&nbsp;</TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td><TD class="docTableCell" align="center" valign="top">&nbsp;</td></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>RLIMIT_NOFILE</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>RLIMIT_NPROC</tt></P></td><TD class="rightBorder" align="center" valign="top">&nbsp;</TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></TD><TD class="docTableCell" align="center" valign="top">&nbsp;</td></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>RLIMIT_RSS</tt></p></td><td class="rightBorder" align="center" valign="top">&nbsp;</TD><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top">&nbsp;</td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>RLIMIT_SBSIZE</tt></p></td><td class="rightBorder" align="center" valign="top">&nbsp;</td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><TD class="docTableCell" align="center" valign="top">&nbsp;</TD><td class="docTableCell" align="center" valign="top">&nbsp;</TD><TD class="docTableCell" align="center" valign="top">&nbsp;</TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>RLIMIT_STACK</tt></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">&#8226;</p></TD><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td><TD class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</P></td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>RLIMIT_VMEM</tt></p></TD><td class="rightBorder" align="center" valign="top">&nbsp;</td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td><td class="docTableCell" align="center" valign="top">&nbsp;</td><td class="docTableCell" align="center" valign="top">&nbsp;</td><td class="docTableCell" align="center" valign="top"><p class="docText">&#8226;</p></td></tr></table></p><br>
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="100"><col width="400"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>RLIMIT_AS</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The maximum size in bytes of a process's total available memory. This affects the <tt>sbrk</tt> function (<a class="docLink" href="ch01lev1sec11.html#ch01lev1sec11">Section 1.11</a>) and the <tt>mmap</tt> function (<a class="docLink" href="ch14lev1sec9.html#ch14lev1sec9">Section 14.9</a>).</P></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>RLIMIT_CORE</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The maximum size in bytes of a core file. A limit of 0 prevents the creation of a core file.</p></TD></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>RLIMIT_CPU</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">The maximum amount of CPU time in seconds. When the soft limit is exceeded, the <tt>SIGXCPU</tt> signal is sent to the process.</P></TD></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>RLIMIT_DATA</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">The maximum size in bytes of the data segment: the sum of the initialized data, uninitialized data, and heap from <a class="docLink" href="ch07lev1sec6.html#ch07fig06">Figure 7.6</a>.</P></td></TR><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>RLIMIT_FSIZE</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The maximum size in bytes of a file that may be created. When the soft limit is exceeded, the process is sent the <tt>SIGXFSZ</tt> signal.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>RLIMIT_LOCKS</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The maximum number of file locks a process can hold. (This number also includes file leases, a Linux-specific feature. See the Linux <tt>fcntl</tt>(2) manual page for more information.)</p></td></tr><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>RLIMIT_MEMLOCK</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The maximum amount of memory in bytes that a process can lock into memory using <tt>mlock</tt>(2).</P></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>RLIMIT_NOFILE</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">The maximum number of open files per process. Changing this limit affects the value returned by the <tt>sysconf</tt> function for its <tt>_SC_OPEN_MAX</tt> argument (<a class="docLink" href="ch02lev1sec5.html#ch02lev2sec15">Section 2.5.4</a>). See <a class="docLink" href="ch02lev1sec5.html#ch02fig16">Figure 2.16</a> also.</p></TD></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>RLIMIT_NPROC</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">The maximum number of child processes per real user ID. Changing this limit affects the value returned for <tt>_SC_CHILD_MAX</tt> by the <tt>sysconf</tt> function (<a class="docLink" href="ch02lev1sec5.html#ch02lev2sec15">Section 2.5.4</a>).</P></TD></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>RLIMIT_RSS</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">Maximum resident set size (RSS) in bytes. If available physical memory is low, the kernel takes memory from processes that exceed their RSS.</P></td></TR><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>RLIMIT_SBSIZE</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The maximum size in bytes of socket buffers that a user can consume at any given time.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>RLIMIT_STACK</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">The maximum size in bytes of the stack. See <a class="docLink" href="ch07lev1sec6.html#ch07fig06">Figure 7.6</a>.</p></td></tr><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>RLIMIT_VMEM</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">This is a synonym for <tt>RLIMIT_AS</tt>.</P></TD></tr></table></P><BR>
+<p class="docText"><a name="idd1e52037"></a><a name="idd1e52040"></a><a name="idd1e52043"></a><a name="idd1e52046"></a><a name="idd1e52051"></a><a name="idd1e52054"></a><a name="idd1e52057"></a><a name="idd1e52062"></a><a name="idd1e52065"></a><a name="idd1e52070"></a><a name="idd1e52075"></a><a name="idd1e52078"></a><a name="idd1e52083"></a><a name="idd1e52088"></a>The resource limits affect the calling process and are inherited by any of its children. This means that the setting of resource limits needs to be built into the shells to affect all our future processes. Indeed, the Bourne shell, the GNU Bourne-again shell, and the Korn shell have the built-in <tt>ulimit</tt> command, and the C shell has the built-in <tt>limit</tt> command. (The <tt>umask</tt> and <tt>chdir</tt> functions also have to be handled as shell built-ins.)</P>
+<a name="ch07ex05"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText">The program in <a class="docLink" href="ch07lev1sec11.html#ch07fig16">Figure 7.16</a> prints out the current soft limit and hard limit for all the resource limits supported on the system. To compile this program on all the various implementations, we have conditionally included the resource names that differ. Note also that we must use a different <tt>printf</tt> format on platforms that define <tt>rlim_t</tt> to be an <tt>unsigned long long</tt> instead of an <tt>unsigned long</tt>.</p>
+<p class="docText"><a name="idd1e52131"></a><a name="idd1e52136"></a><a name="idd1e52141"></a><a name="idd1e52146"></a><a name="idd1e52151"></a><a name="idd1e52154"></a><a name="idd1e52159"></a><a name="idd1e52164"></a>Note that we've used the ISO C string-creation operator (<tt>#</tt>) in the <tt>doit</tt> macro, to generate the string value for each resource name. When we say</P>
+
+<pre>
+    doit(RLIMIT_CORE);
+</pre><BR>
+
+<p class="docText">the C preprocessor expands this into</P>
+
+<pre>
+    pr_limits("RLIMIT_CORE", RLIMIT_CORE);
+</pre><br>
+
+<p class="docText">Running this program under FreeBSD gives us the following:</P>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+    RLIMIT_CORE       (infinite) (infinite)
+    RLIMIT_CPU        (infinite) (infinite)
+    RLIMIT_DATA        536870912  536870912
+    RLIMIT_FSIZE      (infinite) (infinite)
+    RLIMIT_MEMLOCK    (infinite) (infinite)
+    RLIMIT_NOFILE           1735       1735
+    RLIMIT_NPROC             867        867
+    RLIMIT_RSS        (infinite) (infinite)
+    RLIMIT_SBSIZE     (infinite) (infinite)
+    RLIMIT_STACK        67108864   67108864
+    RLIMIT_VMEM       (infinite) (infinite)
+</pre><BR>
+
+<p class="docText">Solaris gives us the following results:</p>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+    RLIMIT_AS          (infinite) (infinite)
+    RLIMIT_CORE        (infinite) (infinite)
+    RLIMIT_CPU         (infinite) (infinite)
+    RLIMIT_DATA        (infinite) (infinite)
+    RLIMIT_FSIZE       (infinite) (infinite)
+    RLIMIT_NOFILE             256      65536
+    RLIMIT_STACK          8388608 (infinite)
+    RLIMIT_VMEM        (infinite) (infinite)
+</pre><BR>
+
+
+<a name="ch07fig16"></a>
+<H5 class="docExampleTitle">Figure 7.16. Print the current resource limits</h5>
+
+<pre>
+#include "apue.h"
+#if defined(BSD) || defined(MACOS)
+#include &lt;sys/time.h&gt;
+#define FMT "%10lld "
+#else
+#define FMT "%10ld "
+#endif
+#include &lt;sys/resource.h&gt;
+
+#define doit(name) pr_limits(#name, name)
+
+static void pr_limits(char *, int);
+
+int
+main(void)
+{
+
+#ifdef  RLIMIT_AS
+    doit(RLIMIT_AS);
+#endif
+    doit(RLIMIT_CORE);
+    doit(RLIMIT_CPU);
+    doit(RLIMIT_DATA);
+    doit(RLIMIT_FSIZE);
+#ifdef  RLIMIT_LOCKS
+    doit(RLIMIT_LOCKS);
+#endif
+#ifdef  RLIMIT_MEMLOCK
+    doit(RLIMIT_MEMLOCK);
+#endif
+    doit(RLIMIT_NOFILE);
+#ifdef  RLIMIT_NPROC
+    doit(RLIMIT_NPROC);
+#endif
+#ifdef  RLIMIT_RSS
+    doit(RLIMIT_RSS);
+#endif
+#ifdef  RLIMIT_SBSIZE
+    doit(RLIMIT_SBSIZE);
+#endif
+    doit(RLIMIT_STACK);
+#ifdef  RLIMIT_VMEM
+    doit(RLIMIT_VMEM);
+#endif
+    exit(0);
+}
+
+static void
+pr_limits(char *name, int resource)
+{
+    struct rlimit limit;
+
+    if (getrlimit(resource, &amp;limit) &lt; 0)
+        err_sys("getrlimit error for %s", name);
+    printf("%-14s ", name);
+    if (limit.rlim_cur == RLIM_INFINITY)
+        printf("(infinite) ");
+    else
+        printf(FMT, limit.rlim_cur);
+    if (limit.rlim_max == RLIM_INFINITY)
+        printf("(infinite)");
+    else
+        printf(FMT, limit.rlim_max);
+    putchar((int)'\n');
+}
+</pre><br>
+
+
+<p class="docText"><a class="docLink" href="ch10lev1sec23.html#ch10qa1q11">Exercise 10.11</a> continues the discussion of resource limits, after we've covered signals.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch07lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch07lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

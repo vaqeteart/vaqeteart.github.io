@@ -1,0 +1,28 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 3.1.&nbsp; Introduction</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec2.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch03lev1sec1"></a>
+<h3 class="docSection1Title" id="454331-825">3.1. Introduction</h3>
+<p class="docText"><a name="idd1e17441"></a><a name="idd1e17446"></a><a name="idd1e17451"></a><a name="idd1e17456"></a><a name="idd1e17461"></a><a name="idd1e17466"></a><a name="idd1e17471"></a><a name="idd1e17476"></a><a name="idd1e17481"></a><a name="idd1e17486"></a><a name="idd1e17491"></a><a name="idd1e17496"></a><a name="idd1e17501"></a><a name="idd1e17504"></a>We'll start our discussion of the UNIX System by describing the functions available for file I/Oopen a file, read a file, write a file, and so on. Most file I/O on a UNIX system can be performed using only five functions: <tt>open</tt>, <tt>read</tt>, <tt>write</tt>, <tt>lseek</tt>, and <tt>close</tt>. We then examine the effect of various buffer sizes on the <tt>read</tt> and <tt>write</tt> functions.</P>
+<p class="docText">The functions described in this chapter are often referred to as <span class="docEmphasis">unbuffered I/O</span>, in contrast to the standard I/O routines, which we describe in <a class="docLink" href="ch05.html#ch05">Chapter 5</a>. The term <span class="docEmphasis">unbuffered</span> means that each <tt>read</tt> or <tt>write</tt> invokes a system call in the kernel. These unbuffered I/O functions are not part of ISO C, but are part of POSIX.1 and the Single UNIX Specification.</P>
+<p class="docText">Whenever we describe the sharing of resources among multiple processes, the concept of an atomic operation becomes important. We examine this concept with regard to file I/O and the arguments to the <tt>open</tt> function. This leads to a discussion of how files are shared among multiple processes and the kernel data structures involved. After describing these features, we describe the <tt>dup</tt>, <tt>fcntl</tt>, <tt>sync</tt>, <tt>fsync</tt>, and <tt>ioctl</tt> functions.</p>
+
+<UL></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec2.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

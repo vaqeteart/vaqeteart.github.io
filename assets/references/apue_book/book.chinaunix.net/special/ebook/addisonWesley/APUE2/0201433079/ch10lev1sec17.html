@@ -1,0 +1,97 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 10.17.&nbsp; abort Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec16.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec18.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch10lev1sec17"></a>
+<h3 class="docSection1Title">10.17. <tt>abort</tt> Function</h3>
+<p class="docText">We mentioned earlier that the <tt>abort</tt> function causes abnormal program termination.</P>
+<a name="inta01"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdlib.h&gt;
+
+void abort(void);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">This function never returns</p></TD></tr></table></P><BR>
+<p class="docText">This function sends the <tt>SIGABRT</tt> signal to the caller. (Processes should not ignore this signal.) ISO C states that calling <tt>abort</tt> will deliver an unsuccessful termination notification to the host environment by calling <tt>raise(SIGABRT)</tt>.</P>
+<p class="docText">ISO C requires that if the signal is caught and the signal handler returns, <tt>abort</tt> still doesn't return to its caller. If this signal is caught, the only way the signal handler can't return is if it calls <tt>exit</tt>, <tt>_exit</tt>, <tt>_Exit</tt>, <tt>longjmp</tt>, or <tt>siglongjmp</tt>. (<a class="docLink" href="ch10lev1sec15.html#ch10lev1sec15">Section 10.15</a> discusses the differences between <tt>longjmp</tt> and <tt>siglongjmp</tt>.) POSIX.1 also specifies that <tt>abort</tt> overrides the blocking or ignoring of the signal by the process.</p>
+<p class="docText">The intent of letting the process catch the <tt>SIGABRT</tt> is to allow it to perform any cleanup that it wants to do before the process terminates. If the process doesn't terminate itself from this signal handler, POSIX.1 states that, when the signal handler returns, <tt>abort</tt> terminates the process.</P>
+<p class="docText">The ISO C specification of this function leaves it up to the implementation as to whether output streams are flushed and whether temporary files (<a class="docLink" href="ch05lev1sec13.html#ch05lev1sec13">Section 5.13</a>) are deleted. POSIX.1 goes further and requires that if the call to <tt>abort</tt> terminates the process, then the effect on the open standard I/O streams in the process will be the same as if the process had called <tt>fclose</tt> on each stream before terminating.</P>
+<blockquote>
+<p class="docText">Earlier versions of System V generated the <tt>SIGIOT</tt> signal from the <tt>abort</tt> function. Furthermore, it was possible for a process to ignore this signal or to catch it and return from the signal handler, in which case <tt>abort</tt> returned to its caller.</p>
+<p class="docText">4.3BSD generated the <tt>SIGILL</tt> signal. Before doing this, the 4.3BSD function unblocked the signal and reset its disposition to <tt>SIG_DFL</tt> (terminate with <tt>core</tt> file). This prevented a process from either ignoring the signal or catching it.</P>
+<p class="docText">Historically, implementations of <tt>abort</tt> differ in how they deal with standard I/O streams. For defensive programming and improved portability, if we want standard I/O streams to be flushed, we specifically do it before calling <tt>abort</tt>. We do this in the <tt>err_dump</tt> function (<a class="docLink" href="app02.html#app02">Appendix B</a>).</P>
+<p class="docText">Since most UNIX System implementations of <tt>tmpfile</tt> call <tt>unlink</tt> immediately after creating the file, the ISO C warning about temporary files does not usually concern us.</p>
+</blockquote>
+<a name="ch10ex16"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText"><a name="idd1e79234"></a><a name="idd1e79239"></a><a name="idd1e79244"></a><a name="idd1e79249"></a><a name="idd1e79254"></a><a name="idd1e79259"></a><a name="idd1e79264"></a><a name="idd1e79269"></a><a name="idd1e79274"></a><a name="idd1e79279"></a><a name="idd1e79284"></a><a class="docLink" href="ch10lev1sec17.html#ch10fig25">Figure 10.25</a> shows an implementation of the <tt>abort</tt> function as specified by POSIX.1.</p>
+<p class="docText">We first see whether the default action will occur; if so, we flush all the standard I/O streams. This is not equivalent to an <tt>fclose</tt> on all the open streams (since it just flushes them and doesn't close them), but when the process terminates, the system <a name="idd1e79303"></a><a name="idd1e79306"></a><a name="idd1e79311"></a><a name="idd1e79316"></a><a name="idd1e79321"></a><a name="idd1e79324"></a><a name="idd1e79329"></a><a name="idd1e79334"></a><a name="idd1e79339"></a><a name="idd1e79344"></a>closes all open files. If the process catches the signal and returns, we flush all the streams again, since the process could have generated more output. The only condition we don't handle is if the process catches the signal and calls <tt>_exit</tt> or <tt>_Exit</tt>. In this case, any unflushed standard I/O buffers in memory are discarded. We assume that a caller that does this doesn't want the buffers flushed.</P>
+<p class="docText">Recall from <a class="docLink" href="ch10lev1sec9.html#ch10lev1sec9">Section 10.9</a> that if calling <tt>kill</tt> causes the signal to be generated for the caller, and if the signal is not blocked (which we guarantee in <a class="docLink" href="ch10lev1sec17.html#ch10fig25">Figure 10.25</a>), then the signal (or some other pending, unlocked signal) is delivered to the process before <tt>kill</tt> returns. We block all signals except <tt>SIGABRT</tt>, so we know that if the call to <tt>kill</tt> returns, the process caught the signal and the signal handler returned.</p>
+
+<a name="ch10fig25"></a>
+<H5 class="docExampleTitle">Figure 10.25. Implementation of POSIX.1 <tt>abort</tt></h5>
+
+<pre>
+#include &lt;signal.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+
+void
+abort(void)         /* POSIX-style abort() function */
+{
+    sigset_t           mask;
+    struct sigaction   action;
+
+    /*
+     * Caller can't ignore SIGABRT, if so reset to default.
+     */
+    sigaction(SIGABRT, NULL, &amp;action);
+    if (action.sa_handler == SIG_IGN) {
+        action.sa_handler = SIG_DFL;
+        sigaction(SIGABRT, &amp;action, NULL);
+    }
+    if (action.sa_handler == SIG_DFL)
+        fflush(NULL);           /* flush all open stdio streams */
+
+    /*
+     * Caller can't block SIGABRT; make sure it's unblocked.
+     */
+    sigfillset(&amp;mask);
+    sigdelset(&amp;mask, SIGABRT);  /* mask has only SIGABRT turned off */
+    sigprocmask(SIG_SETMASK, &amp;mask, NULL);
+    kill(getpid(), SIGABRT);    /* send the signal */
+
+    /*
+     * If we're here, process caught SIGABRT and returned.
+     */
+    fflush(NULL);               /* flush all open stdio streams */
+    action.sa_handler = SIG_DFL;
+    sigaction(SIGABRT, &amp;action, NULL);  /* reset to default */
+    sigprocmask(SIG_SETMASK, &amp;mask, NULL);  /* just in case ... */
+    kill(getpid(), SIGABRT);                /* and one more time */
+    exit(1);    /* this should never be executed ... */
+}
+</pre><BR>
+
+
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec16.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec18.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

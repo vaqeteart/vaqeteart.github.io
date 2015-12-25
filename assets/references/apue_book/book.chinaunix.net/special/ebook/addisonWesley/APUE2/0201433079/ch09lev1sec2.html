@@ -1,0 +1,92 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 9.2.&nbsp; Terminal Logins</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch09lev1sec2"></a>
+<h3 class="docSection1Title">9.2. Terminal Logins</h3>
+<p class="docText">Let's start by looking at the programs that are executed when we log in to a UNIX system. In early UNIX systems, such as Version 7, users logged in using dumb terminals that were connected to the host with hard-wired connections. The terminals were either local (directly connected) or remote (connected through a modem). In either case, these logins came through a terminal device driver in the kernel. For example, the <a name="idd1e62737"></a><a name="idd1e62740"></a><a name="idd1e62745"></a><a name="idd1e62748"></a><a name="idd1e62753"></a><a name="idd1e62758"></a><a name="idd1e62763"></a><a name="idd1e62768"></a><a name="idd1e62773"></a><a name="idd1e62778"></a><a name="idd1e62783"></a>common devices on PDP-11s were DH-11s and DZ-11s. A host had a fixed number of these terminal devices, so there was a known upper limit on the number of simultaneous logins.</P>
+<p class="docText">As bit-mapped graphical terminals became available, windowing systems were developed to provide users with new ways to interact with host computers. Applications were developed to create &quot;terminal windows&quot; to emulate character-based terminals, allowing users to interact with hosts in familiar ways (i.e., via the shell command line).</P>
+<p class="docText">Today, some platforms allow you to start a windowing system after logging in, whereas other platforms automatically start the windowing system for you. In the latter case, you might still have to log in, depending on how the windowing system is configured (some windowing systems can be configured to log you in automatically).</p>
+<p class="docText">The procedure that we now describe is used to log in to a UNIX system using a terminal. The procedure is similar regardless of the type of terminal we useit could be a character-based terminal, a graphical terminal emulating a simple character-based terminal, or a graphical terminal running a windowing system.</P>
+<a name="ch09lev2sec1"></a>
+<H4 class="docSection2Title">BSD Terminal Logins</H4>
+<p class="docText">This procedure has not changed much over the past 30 years. The system administrator creates a file, usually <tt>/etc/ttys</tt>, that has one line per terminal device. Each line specifies the name of the device and other parameters that are passed to the <tt>getty</tt> program. One parameter is the baud rate of the terminal, for example. When the system is bootstrapped, the kernel creates process ID 1, the <tt>init</tt> process, and it is <tt>init</tt> that brings the system up multiuser. The <tt>init</tt> process reads the file <tt>/etc/ttys</tt> and, for every terminal device that allows a login, does a <tt>fork</tt> followed by an <tt>exec</tt> of the program <tt>getty</tt>. This gives us the processes shown in <a class="docLink" href="ch09lev1sec2.html#ch09fig01">Figure 9.1</a>.</p>
+<a name="ch09fig01"></a><P><center>
+<H5 class="docFigureTitle">Figure 9.1. Processes invoked by <tt>init</tt> to allow terminal logins</H5>
+
+<p class="docText">
+<img border="0" alt="" width="247" height="257" SRC="images/0201433079/graphics/09fig01.gif;423615"></p>
+
+</center></P><br>
+<p class="docText">All the processes shown in <a class="docLink" href="ch09lev1sec2.html#ch09fig01">Figure 9.1</a> have a real user ID of 0 and an effective user ID of 0 (i.e., they all have superuser privileges). The <tt>init</tt> process also <tt>exec</tt>s the <tt>getty</tt> program with an empty environment.</P>
+<p class="docText"><a name="idd1e62874"></a><a name="idd1e62879"></a><a name="idd1e62885"></a><a name="idd1e62890"></a><a name="idd1e62895"></a><a name="idd1e62900"></a><a name="idd1e62905"></a><a name="idd1e62910"></a><a name="idd1e62913"></a><a name="idd1e62918"></a><a name="idd1e62923"></a><a name="idd1e62928"></a>It is <tt>getty</tt> that calls <tt>open</tt> for the terminal device. The terminal is opened for reading and writing. If the device is a modem, the <tt>open</tt> may delay inside the device driver until the modem is dialed and the call is answered. Once the device is open, file descriptors 0, 1, and 2 are set to the device. Then <tt>getty</tt> outputs something like <tt>login:</tt> and waits for us to enter our user name. If the terminal supports multiple speeds, <tt>getty</tt> can detect special characters that tell it to change the terminal's speed (baud rate). Consult your UNIX system manuals for additional details on the <tt>getty</tt> program and the data files (<tt>gettytab</tt>) that can drive its actions.</P>
+<p class="docText">When we enter our user name, <tt>getty</tt>'s job is complete, and it then invokes the <tt>login</tt> program, similar to</P>
+
+<pre>
+   execle("/bin/login", "login", "-p", username, (char *)0, envp);
+</pre><br>
+
+<p class="docText">(There can be options in the <tt>gettytab</tt> file to have it invoke other programs, but the default is the <tt>login</tt> program.) <tt>init</tt> invokes <tt>getty</tt> with an empty environment; <tt>getty</tt> creates an environment for <tt>login</tt> (the <tt>envp</tt> argument) with the name of the terminal (something like <tt>TERM=foo</tt>, where the type of terminal <tt>foo</tt> is taken from the <tt>gettytab</tt> file) and any environment strings that are specified in the <tt>gettytab</tt>. The <tt>-p</tt> flag to <tt>login</tt> tells it to preserve the environment that it is passed and to add to that environment, not replace it. <a class="docLink" href="ch09lev1sec2.html#ch09fig02">Figure 9.2</a> shows the state of these processes right after <tt>login</tt> has been invoked.</P>
+<a name="ch09fig02"></a><P><center>
+<h5 class="docFigureTitle">Figure 9.2. State of processes after <tt>login</tt> has been invoked</H5>
+
+<p class="docText">
+<img border="0" alt="" width="309" height="295" SRC="images/0201433079/graphics/09fig02.gif;423615"></P>
+
+</center></p><br>
+<p class="docText">All the processes shown in <a class="docLink" href="ch09lev1sec2.html#ch09fig02">Figure 9.2</a> have superuser privileges, since the original <tt>init</tt> process has superuser privileges. The process ID of the bottom three processes in <a class="docLink" href="ch09lev1sec2.html#ch09fig02">Figure 9.2</a> is the same, since the process ID does not change across an <tt>exec</tt>. Also, all the processes other than the original <tt>init</tt> process have a parent process ID of 1.</p>
+<p class="docText">The <tt>login</tt> program does many things. Since it has our user name, it can call <tt>getpwnam</tt> to fetch our password file entry. Then <tt>login</tt> calls <tt>getpass</tt>(3) to display the prompt <tt>Password:</tt> and read our password (with echoing disabled, of course). It calls <tt>crypt</tt>(3) to encrypt the password that we entered and compares the encrypted <a name="idd1e63079"></a><a name="idd1e63084"></a><a name="idd1e63089"></a><a name="idd1e63094"></a><a name="idd1e63099"></a><a name="idd1e63105"></a><a name="idd1e63111"></a><a name="idd1e63117"></a><a name="idd1e63123"></a><a name="idd1e63129"></a><a name="idd1e63134"></a><a name="idd1e63139"></a><a name="idd1e63144"></a><a name="idd1e63147"></a><a name="idd1e63150"></a><a name="idd1e63155"></a><a name="idd1e63160"></a><a name="idd1e63163"></a><a name="idd1e63168"></a><a name="idd1e63171"></a><a name="idd1e63176"></a><a name="idd1e63181"></a><a name="idd1e63186"></a><a name="idd1e63191"></a><a name="idd1e63196"></a><a name="idd1e63201"></a><a name="idd1e63206"></a><a name="idd1e63211"></a><a name="idd1e63214"></a><a name="idd1e63219"></a><a name="idd1e63224"></a>result to the <tt>pw_passwd</tt> field from our shadow password file entry. If the login attempt fails because of an invalid password (after a few tries), <tt>login</tt> calls <tt>exit</tt> with an argument of 1. This termination will be noticed by the parent (<tt>init</tt>), and it will do another <tt>fork</tt> followed by an <tt>exec</tt> of <tt>getty</tt>, starting the procedure over again for this terminal.</p>
+<p class="docText">This is the traditional authentication procedure used on UNIX systems. Modern UNIX systems have evolved to support multiple authentication procedures. For example, FreeBSD, Linux, Mac OS X, and Solaris all support a more flexible scheme known as PAM (Pluggable Authentication Modules). PAM allows an administrator to configure the authentication methods to be used to access services that are written to use the PAM library.</P>
+<p class="docText">If our application needs to verify that a user has the appropriate permission to perform a task, we can either hard code the authentication mechanism in the application, or we can use the PAM library to give us the equivalent functionality. The advantage to using PAM is that administrators can configure different ways to authenticate users for different tasks, based on the local site policies.</p>
+<p class="docText">If we log in correctly, <tt>login</tt> will</P>
+<ul><LI><p class="docList">Change to our home directory (<tt>chdir</tt>)</p></li><li><p class="docList">Change the ownership of our terminal device (<tt>chown</tt>) so we own it</p></li><li><p class="docList">Change the access permissions for our terminal device so we have permission to read from and write to it</p></li><li><p class="docList">Set our group IDs by calling <tt>setgid</tt> and <tt>initgroups</tt></p></li><li><p class="docList">Initialize the environment with all the information that <tt>login</tt> has: our home directory (<tt>HOME</tt>), shell (<tt>SHELL</tt>), user name (<tt>USER</tt> and <tt>LOGNAME</tt>), and a default path (<tt>PATH</tt>)</p></li><li><p class="docList">Change to our user ID (<tt>setuid</tt>) and invoke our login shell, as in</p><pre>
+        execl("/bin/sh", "-sh", (char *)0);
+</pre><br>
+<blockquote>
+<p class="docText">The minus sign as the first character of <tt>argv[0]</tt> is a flag to all the shells that they are being invoked as a login shell. The shells can look at this character and modify their start-up accordingly.</P>
+</blockquote></LI></ul>
+<p class="docText">The <tt>login</tt> program really does more than we've described here. It optionally prints the message-of-the-day file, checks for new mail, and performs other tasks. We're interested only in the features that we've described.</P>
+<p class="docText">Recall from our discussion of the <tt>setuid</tt> function in <a class="docLink" href="ch08lev1sec11.html#ch08lev1sec11">Section 8.11</a> that since it is called by a superuser process, <tt>setuid</tt> changes all three user IDs: the real user ID, effective user ID, and saved set-user-ID. The call to <tt>setgid</tt> that was done earlier by <tt>login</tt> has the same effect on all three group IDs.</P>
+<p class="docText">At this point, our login shell is running. Its parent process ID is the original <tt>init</tt> process (process ID 1), so when our login shell terminates, <tt>init</tt> is notified (it is sent a <tt>SIGCHLD</tt> signal), and it can start the whole procedure over again for this terminal. File descriptors 0, 1, and 2 for our login shell are set to the terminal device. <a class="docLink" href="ch09lev1sec2.html#ch09fig03">Figure 9.3</a> shows this arrangement.</P>
+<a name="ch09fig03"></a><p><center>
+<H5 class="docFigureTitle">Figure 9.3. Arrangement of processes after everything is set for a terminal login</H5>
+
+<p class="docText">
+<img border="0" alt="" width="311" height="334" SRC="images/0201433079/graphics/09fig03.gif;423615"></P>
+
+</center></p><BR>
+<p class="docText"><a name="idd1e63399"></a><a name="idd1e63402"></a><a name="idd1e63407"></a><a name="idd1e63412"></a><a name="idd1e63417"></a><a name="idd1e63420"></a><a name="idd1e63423"></a><a name="idd1e63426"></a><a name="idd1e63429"></a><a name="idd1e63434"></a><a name="idd1e63440"></a><a name="idd1e63445"></a><a name="idd1e63450"></a><a name="idd1e63453"></a><a name="idd1e63456"></a><a name="idd1e63461"></a><a name="idd1e63466"></a><a name="idd1e63471"></a>Our login shell now reads its start-up files (<tt>.profile</tt> for the Bourne shell and Korn shell; <tt>.bash_profile</tt>, <tt>.bash_login</tt>, or <tt>.profile</tt> for the GNU Bourne-again shell; and <tt>.cshrc</tt> and <tt>.login</tt> for the C shell). These start-up files usually change some of the environment variables and add many additional variables to the environment. For example, most users set their own <tt>PATH</tt> and often prompt for the actual terminal type (<tt>TERM</tt>). When the start-up files are done, we finally get the shell's prompt and can enter commands.</p>
+
+<a name="ch09lev2sec2"></a>
+<H4 class="docSection2Title">Mac OS X Terminal Logins</H4>
+<p class="docText">On Mac OS X, the terminal login process follows the same steps as in the BSD login process, since Mac OS X is based in part on FreeBSD. With Mac OS X, however, we are presented with a graphical-based login screen from the start.</P>
+
+<a name="ch09lev2sec3"></a>
+<h4 class="docSection2Title">Linux Terminal Logins</H4>
+<p class="docText">The Linux login procedure is very similar to the BSD procedure. Indeed, the Linux <tt>login</tt> command is derived from the 4.3BSD <tt>login</tt> command. The main difference between the BSD login procedure and the Linux login procedure is in the way the terminal configuration is specified.</P>
+<p class="docText">On Linux, <tt>/etc/inittab</tt> contains the configuration information specifying the terminal devices for which <tt>init</tt> should start a <tt>getty</tt> process, similar to the way it is done on System V. Depending on the version of <tt>getty</tt> in use, the terminal characteristics are specified either on the command line (as with <tt>agetty</tt>) or in the file <tt>/etc/gettydefs</tt> (as with <tt>mgetty</tt>).</p>
+
+<a name="ch09lev2sec4"></a>
+<H4 class="docSection2Title">Solaris Terminal Logins</H4>
+<p class="docText"><a name="idd1e63559"></a><a name="idd1e63564"></a><a name="idd1e63569"></a><a name="idd1e63572"></a><a name="idd1e63577"></a><a name="idd1e63582"></a><a name="idd1e63585"></a><a name="idd1e63590"></a><a name="idd1e63593"></a><a name="idd1e63596"></a><a name="idd1e63599"></a><a name="idd1e63604"></a><a name="idd1e63607"></a><a name="idd1e63612"></a><a name="idd1e63615"></a><a name="idd1e63618"></a><a name="idd1e63621"></a>Solaris supports two forms of terminal logins: (a) <tt>getty</tt> style, as described previously for BSD, and (b) <tt>ttymon</tt> logins, a feature introduced with SVR4. Normally, <tt>getty</tt> is used for the console, and <tt>ttymon</tt> is used for other terminal logins.</p>
+<p class="docText">The <tt>ttymon</tt> command is part of a larger facility termed SAF, the Service Access Facility. The goal of the SAF was to provide a consistent way to administer services that provide access to a system. (See <a class="docLink" href="ch06.html#ch06">Chapter 6</a> of Rago [<a class="docLink" href="bib01.html#biblio01_052">1993</a>] for more details.) For our purposes, we end up with the same picture as in <a class="docLink" href="ch09lev1sec2.html#ch09fig03">Figure 9.3</a>, with a different set of steps between <tt>init</tt> and the login shell. <tt>init</tt> is the parent of <tt>sac</tt> (the service access controller), which does a <tt>fork</tt> and <tt>exec</tt> of the <tt>ttymon</tt> program when the system enters multiuser state. The <tt>ttymon</tt> program monitors all the terminal ports listed in its configuration file and does a <tt>fork</tt> when we've entered our login name. This child of <tt>ttymon</tt> does an <tt>exec</tt> of <tt>login</tt>, and <tt>login</tt> prompts us for our password. Once this is done, <tt>login exec</tt>s our login shell, and we're at the position shown in <a class="docLink" href="ch09lev1sec2.html#ch09fig03">Figure 9.3</a>. One difference is that the parent of our login shell is now <tt>ttymon</tt>, whereas the parent of the login shell from a <tt>getty</tt> login is <tt>init</tt>.</p>
+
+
+<ul></ul></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

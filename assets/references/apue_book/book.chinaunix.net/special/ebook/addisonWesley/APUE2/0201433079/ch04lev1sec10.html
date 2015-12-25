@@ -1,0 +1,33 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.10.&nbsp; Sticky Bit</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec10"></a>
+<h3 class="docSection1Title" id="454331-817">4.10. Sticky Bit</h3>
+<p class="docText">The <tt>S_ISVTX</tt> bit has an interesting history. On versions of the UNIX System that predated demand paging, this bit was known as the <span class="docEmphasis">sticky bit</span>. If it was set for an executable program file, then the first time the program was executed, a copy of the program's text was saved in the swap area when the process terminated. (The text portion of a program is the machine instructions.) This caused the program to load into memory more quickly the next time it was executed, because the swap area was handled as a contiguous file, compared to the possibly random location of data blocks <a name="idd1e27401"></a><a name="idd1e27406"></a><a name="idd1e27413"></a><a name="idd1e27418"></a><a name="idd1e27425"></a><a name="idd1e27430"></a><a name="idd1e27437"></a><a name="idd1e27442"></a><a name="idd1e27445"></a><a name="idd1e27448"></a>in a normal UNIX file system. The sticky bit was often set for common application programs, such as the text editor and the passes of the C compiler. Naturally, there was a limit to the number of sticky files that could be contained in the swap area before running out of swap space, but it was a useful technique. The name <span class="docEmphasis">sticky</span> came about because the text portion of the file stuck around in the swap area until the system was rebooted. Later versions of the UNIX System referred to this as the <span class="docEmphasis">saved-text</span> bit; hence, the constant <tt>S_ISVTX</tt>. With today's newer UNIX systems, most of which have a virtual memory system and a faster file system, the need for this technique has disappeared.</P>
+<p class="docText">On contemporary systems, the use of the sticky bit has been extended. The Single UNIX Specification allows the sticky bit to be set for a directory. If the bit is set for a directory, a file in the directory can be removed or renamed only if the user has write permission for the directory and one of the following:</P>
+<ul><LI><p class="docList">Owns the file</P></LI><li><p class="docList">Owns the directory</P></LI><LI><p class="docList">Is the superuser</p></LI></ul>
+<p class="docText">The directories <tt>/tmp</tt> and <tt>/var/spool/uucppublic</tt> are typical candidates for the sticky bitthey are directories in which any user can typically create files. The permissions for these two directories are often read, write, and execute for everyone (user, group, and other). But users should not be able to delete or rename files owned by others.</P>
+<blockquote>
+<p class="docText">The saved-text bit is not part of POSIX.1. It is an XSI extension to the basic POSIX.1 functionality defined in the Single UNIX Specification, and is supported by FreeBSD 5.2.1, Linux 2.4.22, Mac OS X 10.3, and Solaris 9.</P>
+<p class="docText">Solaris 9 places special meaning on the sticky bit if it is set on a regular file. In this case, if none of the execute bits is set, the operating system will not cache the contents of the file.</P>
+</blockquote>
+
+<ul></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec9.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec11.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

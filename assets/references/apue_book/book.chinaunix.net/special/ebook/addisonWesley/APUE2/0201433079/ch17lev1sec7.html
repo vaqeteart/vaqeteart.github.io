@@ -1,0 +1,27 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 17.7.&nbsp; Summary</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch17lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch17lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch17lev1sec7"></a>
+<h3 class="docSection1Title">17.7. Summary</h3>
+<p class="docText"><a name="idd1e132206"></a><a name="idd1e132211"></a><a name="idd1e132216"></a><a name="idd1e132221"></a><a name="idd1e132226"></a><a name="idd1e132231"></a><a name="idd1e132234"></a>The key points in this chapter are the ability to pass file descriptors between processes and the ability of a server to accept unique connections from clients. We've seen how to do this using both STREAMS pipes and UNIX domain sockets. Although all platforms provide support for UNIX domain sockets (refer back to <a class="docLink" href="ch15lev1sec1.html#ch15fig01">Figure 15.1</a>), we've seen that there are differences in each implementation, which makes it more difficult for us to develop portable applications.</P>
+<p class="docText">We presented two versions of an open server. One version was invoked directly by the client, using <tt>fork</tt> and <tt>exec</tt>. The second was a daemon server that handled all client requests. Both versions used the file descriptor passing and receiving functions. The final version also used the clientserver connection functions introduced in <a class="docLink" href="ch17lev1sec2.html#ch17lev2sec2">Section 17.2.2</a> and the I/O multiplexing functions from <a class="docLink" href="ch14lev1sec5.html#ch14lev1sec5">Section 14.5</a>.</P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch17lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch17lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

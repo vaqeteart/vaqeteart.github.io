@@ -1,0 +1,34 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Chapter 5</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app03lev1sec5"></a>
+<h3 class="docSection1Title">Chapter 5</h3>
+<p class="docText"></P>
+<P><table border="0" cellspacing="16" cellpadding="0"><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch05qa1q2a2"></a><B><a class="docLink" href="ch05lev1sec16.html#ch05qa1q2">5.2</a></b></TD><td><p class="docText">The <tt>fgets</tt> function reads up through and including the next newline <span class="docEmphasis">or</span> until the buffer is full (leaving room, of course, for the terminating null). Also, <tt>fputs</tt> writes everything in the buffer until it hits a null byte; it doesn't care whether a newline is in the buffer. So, if <tt>MAXLINE</tt> is too small, both functions still work; they're just called more often than they would be if the buffer were larger.</P>
+<p class="docText">If either of these functions removed or added the newline (as <tt>gets</tt> and <tt>puts</tt> do), we would have to ensure that our buffer was big enough for the largest line.</P></TD></tr><TR valign="top"><td align="right" class="docText" width="50"><a name="ch05qa1q3a3"></a><B><a class="docLink" href="ch05lev1sec16.html#ch05qa1q3">5.3</a></b></TD><TD><p class="docText">The function call</p>
+<pre>
+   printf("");
+</pre><BR>
+
+<p class="docText">returns 0, since no characters are output.</P>
+</td></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch05qa1q4a4"></a><b><a class="docLink" href="ch05lev1sec16.html#ch05qa1q4">5.4</a></b></td><td><p class="docText"><a name="idd1e41458"></a><a name="idd1e41463"></a><a name="idd1e41468"></a><a name="idd1e41473"></a><a name="idd1e41478"></a><a name="idd1e41483"></a><a name="idd1e41488"></a><a name="idd1e41493"></a><a name="idd1e41498"></a><a name="idd1e41503"></a><a name="idd1e41508"></a><a name="idd1e41513"></a><a name="idd1e41518"></a><a name="idd1e41523"></a><a name="idd1e41528"></a><a name="idd1e41531"></a><a name="idd1e41536"></a>This is a common error. The return value from <tt>getc</tt> and <tt>getchar</tt> is an <tt>int</tt>, not a <tt>char</tt>. <tt>EOF</tt> is often defined to be -1, so if the system uses signed characters, the code normally works. But if the system uses unsigned characters, after the <tt>EOF</tt> returned by <tt>getchar</tt> is stored as an unsigned character, the character's value no longer equals -1, so the loop never terminates. The four platforms described in this book all use signed characters, so the example code works on these platforms.</P></td></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch05qa1q5a5"></a><b><a class="docLink" href="ch05lev1sec16.html#ch05qa1q5">5.5</a></b></td><td><p class="docText">A 5-character prefix, a 4-character per process unique identifier, and a 5-character per system unique identifier (the process ID) equals 14 characters, the original UNIX System limit on the length of a filename.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch05qa1q6a6"></a><b><a class="docLink" href="ch05lev1sec16.html#ch05qa1q6">5.6</a></b></td><td><p class="docText">Call <tt>fsync</tt> after each call to <tt>fflush</tt>. The argument to <tt>fsync</tt> is obtained with the <tt>fileno</tt> function. Calling <tt>fsync</tt> without calling <tt>fflush</tt> might do nothing if all the data were still in memory buffers.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch05qa1q7a7"></a><b><a class="docLink" href="ch05lev1sec16.html#ch05qa1q7">5.7</a></b></TD><TD><p class="docText">Standard input and standard output are both line buffered when a program is run interactively. When <tt>fgets</tt> is called, standard output is flushed automatically.</p></TD></TR></table></P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,30 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 11.2.&nbsp; Thread Concepts</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch11lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch11lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch11lev1sec2"></a>
+<h3 class="docSection1Title">11.2. Thread Concepts</h3>
+<p class="docText">A typical UNIX process can be thought of as having a single thread of control: each process is doing only one thing at a time. With multiple threads of control, we can design our programs to do more than one thing at a time within a single process, with each thread handling a separate task. This approach can have several benefits.</P>
+<UL><li><p class="docList">We can simplify code that deals with asynchronous events by assigning a separate thread to handle each event type. Each thread can then handle its event using a synchronous programming model. A synchronous programming model is much simpler than an asynchronous one.</P></LI><LI><p class="docList"><a name="idd1e82034"></a><a name="idd1e82039"></a><a name="idd1e82044"></a><a name="idd1e82049"></a><a name="idd1e82054"></a><a name="idd1e82059"></a>Multiple processes have to use complex mechanisms provided by the operating system to share memory and file descriptors, as we will see in <a class="docLink" href="ch15.html#ch15">Chapters 15</a> and <a class="docLink" href="ch17.html#ch17">17</a>. Threads, on the other hand, automatically have access to the same memory address space and file descriptors.</p></LI><LI><p class="docList">Some problems can be partitioned so that overall program throughput can be improved. A single process that has multiple tasks to perform implicitly serializes those tasks, because there is only one thread of control. With multiple threads of control, the processing of independent tasks can be interleaved by assigning a separate thread per task. Two tasks can be interleaved only if they don't depend on the processing performed by each other.</P></li><LI><p class="docList">Similarly, interactive programs can realize improved response time by using multiple threads to separate the portions of the program that deal with user input and output from the other parts of the program.</p></LI></UL>
+<p class="docText">Some people associate multithreaded programming with multiprocessor systems. The benefits of a multithreaded programming model can be realized even if your program is running on a uniprocessor. A program can be simplified using threads regardless of the number of processors, because the number of processors doesn't affect the program structure. Furthermore, as long as your program has to block when serializing tasks, you can still see improvements in response time and throughput when running on a uniprocessor, because some threads might be able to run while others are blocked.</P>
+<p class="docText">A thread consists of the information necessary to represent an execution context within a process. This includes a <span class="docEmphasis">thread ID</span> that identifies the thread within a process, a set of register values, a stack, a scheduling priority and policy, a signal mask, an <tt>errno</tt> variable (recall <a class="docLink" href="ch01lev1sec7.html#ch01lev1sec7">Section 1.7</a>), and thread-specific data (<a class="docLink" href="ch12lev1sec6.html#ch12lev1sec6">Section 12.6</a>). Everything within a process is sharable among the threads in a process, including the text of the executable program, the program's global and heap memory, the stacks, and the file descriptors.</p>
+<p class="docText">The threads interface we're about to see is from POSIX.1-2001. The threads interface, also known as &quot;pthreads&quot; for &quot;POSIX threads,&quot; is an optional feature in POSIX.1-2001. The feature test macro for POSIX threads is <tt>_POSIX_THREADS</tt>. Applications can either use this in an <tt>#ifdef</tt> test to determine at compile time whether threads are supported or call <tt>sysconf</tt> with the <tt>_SC_THREADS</tt> constant to determine at runtime whether threads are supported.</P>
+
+<UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch11lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch11lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

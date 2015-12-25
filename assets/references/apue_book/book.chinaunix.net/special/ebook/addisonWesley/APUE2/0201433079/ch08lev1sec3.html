@@ -1,0 +1,126 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 8.3.&nbsp; fork Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch08lev1sec3"></a>
+<h3 class="docSection1Title">8.3. <tt>fork</tt> Function</h3>
+<p class="docText"><a name="idd1e53049"></a><a name="idd1e53052"></a><a name="idd1e53057"></a><a name="idd1e53062"></a><a name="idd1e53065"></a><a name="idd1e53068"></a><a name="idd1e53073"></a><a name="idd1e53076"></a><a name="idd1e53083"></a><a name="idd1e53088"></a><a name="idd1e53091"></a><a name="idd1e53094"></a><a name="idd1e53097"></a><a name="idd1e53100"></a><a name="idd1e53103"></a><a name="idd1e53106"></a><a name="idd1e53109"></a><a name="idd1e53112"></a><a name="idd1e53115"></a><a name="idd1e53120"></a><a name="idd1e53123"></a><a name="idd1e53126"></a><a name="idd1e53129"></a><a name="idd1e53134"></a>An existing process can create a new one by calling the <tt>fork</tt> function.</P>
+<a name="inta68"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+pid_t fork(void);
+</pre><BR>
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 in child, process ID of child in parent, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">The new process created by <tt>fork</tt> is called the <span class="docEmphasis">child process</span>. This function is called once but returns twice. The only difference in the returns is that the return value in the child is 0, whereas the return value in the parent is the process ID of the new child. The reason the child's process ID is returned to the parent is that a process can have more than one child, and there is no function that allows a process to obtain the process IDs of its children. The reason <tt>fork</tt> returns 0 to the child is that a process can have only a single parent, and the child can always call <tt>getppid</tt> to obtain the process ID of its parent. (Process ID 0 is reserved for use by the kernel, so it's not possible for 0 to be the process ID of a child.)</P>
+<p class="docText">Both the child and the parent continue executing with the instruction that follows the call to <tt>fork</tt>. The child is a copy of the parent. For example, the child gets a copy of the parent's data space, heap, and stack. Note that this is a copy for the child; the parent and the child do not share these portions of memory. The parent and the child share the text segment (<a class="docLink" href="ch07lev1sec6.html#ch07lev1sec6">Section 7.6</a>).</p>
+<p class="docText">Current implementations don't perform a complete copy of the parent's data, stack, and heap, since a <tt>fork</tt> is often followed by an <tt>exec</tt>. Instead, a technique called <span class="docEmphasis">copy-on-write</span> (COW) is used. These regions are shared by the parent and the child and have their protection changed by the kernel to read-only. If either process tries to modify these regions, the kernel then makes a copy of that piece of memory only, typically a &quot;page&quot; in a virtual memory system. <a class="docLink" href="ch09lev1sec2.html#ch09lev1sec2">Section 9.2</a> of Bach [1986] and <a class="docLink" href="ch05lev1sec6.html#ch05lev1sec6">Sections 5.6</a> and <a class="docLink" href="ch05lev1sec7.html#ch05lev1sec7">5.7</a> of McKusick et al. [<a class="docLink" href="bib01.html#biblio01_042">1996</a>] provide more detail on this feature.</P>
+<blockquote>
+<p class="docText">Variations of the <tt>fork</tt> function are provided by some platforms. All four platforms discussed in this book support the <tt>vfork</tt>(2) variant discussed in the next section.</P>
+<p class="docText">Linux 2.4.22 also provides new process creation through the <tt>clone</tt>(2) system call. This is a generalized form of <tt>fork</tt> that allows the caller to control what is shared between parent and child.</p>
+<p class="docText">FreeBSD 5.2.1 provides the <tt>rfork</tt>(2) system call, which is similar to the Linux <tt>clone</tt> system call. The <tt>rfork</tt> call is derived from the Plan 9 operating system (Pike et al. [<a class="docLink" href="bib01.html#biblio01_049">1995</a>]).</P>
+<p class="docText">Solaris 9 provides two threads libraries: one for POSIX threads (pthreads) and one for Solaris threads. The behavior of <tt>fork</tt> differs between the two thread libraries. For POSIX threads, <tt>fork</tt> creates a process containing only the calling thread, but for Solaris threads, <tt>fork</tt> creates a process containing copies of all threads from the process of the calling thread. To provide similar semantics as POSIX threads, Solaris provides the <tt>fork1</tt> function, which can be used to create a process that duplicates only the calling thread, regardless of the thread library used. Threads are discussed in detail in <a class="docLink" href="ch11.html#ch11">Chapters 11</a> and <a class="docLink" href="ch12.html#ch12">12</a>.</P>
+</blockquote>
+<a name="ch08ex01"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText"><a name="idd1e53285"></a><a name="idd1e53290"></a><a name="idd1e53295"></a><a name="idd1e53300"></a>The program in <a class="docLink" href="ch08lev1sec3.html#ch08fig01">Figure 8.1</a> demonstrates the <tt>fork</tt> function, showing how changes to variables in a child process do not affect the value of the variables in the parent process.</p>
+<p class="docText">If we execute this program, we get</p>
+
+<pre>
+$ ./<span class="docEmphStrong">a.out</span>
+a write to stdout
+before fork
+pid = 430, glob = 7, var = 89      <span class="docEmphItalicAlt">child's variables were changed</span>
+pid = 429, glob = 6, var = 88      <span class="docEmphItalicAlt">parent's copy was not changed</span>
+$ ./<span class="docEmphStrong">a.out &gt; temp.out</span>
+$ <span class="docEmphStrong">cat temp.out</span>
+a write to stdout
+before fork
+pid = 432, glob = 7, var = 89
+before fork
+pid = 431, glob = 6, var = 88
+</pre><BR>
+
+<p class="docText">In general, we never know whether the child starts executing before the parent or vice versa. This depends on the scheduling algorithm used by the kernel. If it's required that the child and parent synchronize, some form of interprocess communication is <a name="idd1e53338"></a><a name="idd1e53341"></a><a name="idd1e53346"></a><a name="idd1e53351"></a><a name="idd1e53356"></a><a name="idd1e53361"></a><a name="idd1e53366"></a><a name="idd1e53369"></a><a name="idd1e53374"></a><a name="idd1e53379"></a><a name="idd1e53384"></a>required. In the program shown in <a class="docLink" href="ch08lev1sec3.html#ch08fig01">Figure 8.1</a>, we simply have the parent put itself to sleep for 2 seconds, to let the child execute. There is no guarantee that this is adequate, and we talk about this and other types of synchronization in <a class="docLink" href="ch08lev1sec9.html#ch08lev1sec9">Section 8.9</a> when we discuss race conditions. In <a class="docLink" href="ch10lev1sec16.html#ch10lev1sec16">Section 10.16</a>, we show how to use signals to synchronize a parent and a child after a <tt>fork</tt>.</p>
+<p class="docText">When we write to standard output, we subtract 1 from the size of <tt>buf</tt> to avoid writing the terminating null byte. Although <tt>strlen</tt> will calculate the length of a string not including the terminating null byte, <tt>sizeof</tt> calculates the size of the buffer, which does include the terminating null byte. Another difference is that using <tt>strlen</tt> requires a function call, whereas <tt>sizeof</tt> calculates the buffer length at compile time, as the buffer is initialized with a known string, and its size is fixed.</P>
+<p class="docText">Note the interaction of <tt>fork</tt> with the I/O functions in the program in <a class="docLink" href="ch08lev1sec3.html#ch08fig01">Figure 8.1</a>. Recall from <a class="docLink" href="ch03.html#ch03">Chapter 3</a> that the <tt>write</tt> function is not buffered. Because <tt>write</tt> is called before the <tt>fork</tt>, its data is written once to standard output. The standard I/O library, however, is buffered. Recall from <a class="docLink" href="ch05lev1sec12.html#ch05lev1sec12">Section 5.12</a> that standard output is line buffered if it's connected to a terminal device; otherwise, it's fully buffered. When we run the program interactively, we get only a single copy of the <tt>printf</tt> line, because the standard output buffer is flushed by the newline. But when we redirect standard output to a file, we get two copies of the <tt>printf</tt> line. In this second case, the <tt>printf</tt> before the <tt>fork</tt> is called once, but the line remains in the buffer when <tt>fork</tt> is called. This buffer is then copied into the child when the parent's data space is copied to the child. Both the parent and the child now have a standard I/O buffer with this line in it. The second <tt>printf</tt>, right before the <tt>exit</tt>, just appends its data to the existing buffer. When each process terminates, its copy of the buffer is finally flushed.</p>
+
+<a name="ch08fig01"></a>
+<H5 class="docExampleTitle">Figure 8.1. Example of <tt>fork</tt> function</h5>
+
+<pre>
+#include "apue.h"
+
+int     glob = 6;       /* external variable in initialized data */
+char    buf[] = "a write to stdout\n";
+
+int
+main(void)
+{
+    int       var;      /* automatic variable on the stack */
+    pid_t     pid;
+
+    var = 88;
+    if (write(STDOUT_FILENO, buf, sizeof(buf)-1) != sizeof(buf)-1)
+        err_sys("write error");
+    printf("before fork\n");    /* we don't flush stdout */
+
+    if ((pid = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (pid == 0) {      /* child */
+        glob++;                 /* modify variables */
+        var++;
+    } else {
+        sleep(2);               /* parent */
+    }
+
+    printf("pid = %d, glob = %d, var = %d\n", getpid(), glob, var);
+    exit(0);
+}
+</pre><br>
+
+
+<a name="ch08lev2sec1"></a>
+<h4 class="docSection2Title">File Sharing</h4>
+<p class="docText">When we redirect the standard output of the parent from the program in <a class="docLink" href="ch08lev1sec3.html#ch08fig01">Figure 8.1</a>, the child's standard output is also redirected. Indeed, one characteristic of <tt>fork</tt> is that all file descriptors that are open in the parent are duplicated in the child. We say &quot;duplicated&quot; because it's as if the <tt>dup</tt> function had been called for each descriptor. The parent and the child share a file table entry for every open descriptor (recall <a class="docLink" href="ch03lev1sec12.html#ch03fig08">Figure 3.8</a>).</p>
+<p class="docText">Consider a process that has three different files opened for standard input, standard output, and standard error. On return from <tt>fork</tt>, we have the arrangement shown in <a class="docLink" href="ch08lev1sec3.html#ch08fig02">Figure 8.2</a>.</p>
+<a name="ch08fig02"></a><p><center>
+<h5 class="docFigureTitle">Figure 8.2. Sharing of open files between parent and child after <tt>fork</tt></h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/08fig02_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="363" SRC="images/0201433079/graphics/08fig02.gif;423615"></p>
+</center></p><br>
+<p class="docText">It is important that the parent and the child share the same file offset. Consider a process that <tt>fork</tt>s a child, then <tt>wait</tt>s for the child to complete. Assume that both processes write to standard output as part of their normal processing. If the parent has its standard output redirected (by a shell, perhaps) it is essential that the parent's file offset be updated by the child when the child writes to standard output. In this case, the child can write to standard output while the parent is <tt>wait</tt>ing for it; on completion of the child, the parent can continue writing to standard output, knowing that its output will be appended to whatever the child wrote. If the parent and the child did not share the same file offset, this type of interaction would be more difficult to accomplish and would require explicit actions by the parent.</p>
+<p class="docText"><a name="idd1e53568"></a><a name="idd1e53573"></a><a name="idd1e53578"></a><a name="idd1e53583"></a><a name="idd1e53588"></a><a name="idd1e53593"></a><a name="idd1e53598"></a><a name="idd1e53603"></a><a name="idd1e53606"></a><a name="idd1e53611"></a>If both parent and child write to the same descriptor, without any form of synchronization, such as having the parent <tt>wait</tt> for the child, their output will be intermixed (assuming it's a descriptor that was open before the <tt>fork</tt>). Although this is possiblewe saw it in <a class="docLink" href="ch08lev1sec3.html#ch08fig02">Figure 8.2</a>it's not the normal mode of operation.</p>
+<p class="docText">There are two normal cases for handling the descriptors after a <tt>fork</tt>.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">The parent waits for the child to complete. In this case, the parent does not need to do anything with its descriptors. When the child terminates, any of the shared descriptors that the child read from or wrote to will have their file offsets updated accordingly.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">Both the parent and the child go their own ways. Here, after the <tt>fork</tt>, the parent closes the descriptors that it doesn't need, and the child does the same thing. This way, neither interferes with the other's open descriptors. This scenario is often the case with network servers.</p></div></LI></ol></div>
+<p class="docText">Besides the open files, there are numerous other properties of the parent that are inherited by the child:</P>
+<UL><li><p class="docList">Real user ID, real group ID, effective user ID, effective group ID</P></LI><LI><p class="docList">Supplementary group IDs</p></LI><li><p class="docList"><a name="idd1e53668"></a><a name="idd1e53673"></a><a name="idd1e53678"></a><a name="idd1e53681"></a><a name="idd1e53686"></a><a name="idd1e53691"></a><a name="idd1e53694"></a><a name="idd1e53699"></a><a name="idd1e53704"></a><a name="idd1e53709"></a><a name="idd1e53714"></a><a name="idd1e53719"></a><a name="idd1e53724"></a><a name="idd1e53727"></a><a name="idd1e53732"></a><a name="idd1e53737"></a><a name="idd1e53740"></a><a name="idd1e53743"></a><a name="idd1e53748"></a>Process group ID</P></LI><LI><p class="docList">Session ID</p></LI><LI><p class="docList">Controlling terminal</p></LI><LI><p class="docList">The set-user-ID and set-group-ID flags</p></li><li><p class="docList">Current working directory</p></LI><li><p class="docList">Root directory</P></li><LI><p class="docList">File mode creation mask</p></li><li><p class="docList">Signal mask and dispositions</p></li><li><p class="docList">The close-on-exec flag for any open file descriptors</p></li><li><p class="docList">Environment</p></li><li><p class="docList">Attached shared memory segments</p></li><li><p class="docList">Memory mappings</p></li><LI><p class="docList">Resource limits</P></li></UL>
+<p class="docText">The differences between the parent and child are</P>
+<UL><li><p class="docList">The return value from <tt>fork</tt></P></LI><LI><p class="docList">The process IDs are different</p></LI><li><p class="docList">The two processes have different parent process IDs: the parent process ID of the child is the parent; the parent process ID of the parent doesn't change</P></LI><LI><p class="docList">The child's <tt>tms_utime</tt>, <tt>tms_stime</tt>, <tt>tms_cutime</tt>, and <tt>tms_cstime</tt> values are set to 0</p></LI><LI><p class="docList">File locks set by the parent are not inherited by the child</p></LI><LI><p class="docList">Pending alarms are cleared for the child</p></li><li><p class="docList">The set of pending signals for the child is set to the empty set</p></LI></ul>
+<p class="docText">Many of these features haven't been discussed yetwe'll cover them in later chapters.</P>
+<p class="docText">The two main reasons for <tt>fork</tt> to fail are (a) if too many processes are already in the system, which usually means that something else is wrong, or (b) if the total number of processes for this real user ID exceeds the system's limit. Recall from <a class="docLink" href="ch02lev1sec5.html#ch02fig10">Figure 2.10</a> that <tt>CHILD_MAX</tt> specifies the maximum number of simultaneous processes per real user ID.</p>
+<p class="docText">There are two uses for <tt>fork</tt>:</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">When a process wants to duplicate itself so that the parent and child can each execute different sections of code at the same time. This is common for network serversthe parent waits for a service request from a client. When the request arrives, the parent calls <tt>fork</tt> and lets the child handle the request. The parent goes back to waiting for the next service request to arrive.</p></div></li><li><div style="font-weight:normal"><p class="docList">When a process wants to execute a different program. This is common for shells. In this case, the child does an <tt>exec</tt> (which we describe in <a class="docLink" href="ch08lev1sec10.html#ch08lev1sec10">Section 8.10</a>) right after it returns from the <tt>fork</tt>.</p></div></li></ol></div>
+<p class="docText"><a name="idd1e53920"></a><a name="idd1e53923"></a><a name="idd1e53926"></a><a name="idd1e53929"></a><a name="idd1e53934"></a><a name="idd1e53939"></a><a name="idd1e53944"></a><a name="idd1e53947"></a><a name="idd1e53952"></a>Some operating systems combine the operations from step 2a <tt>fork</tt> followed by an <tt>exec</tt>into a single operation called a <span class="docEmphasis">spawn</span>. The UNIX System separates the two, as there are numerous cases where it is useful to <tt>fork</tt> without doing an <tt>exec</tt>. Also, separating the two allows the child to change the per-process attributes between the <tt>fork</tt> and the <tt>exec</tt>, such as I/O redirection, user ID, signal disposition, and so on. We'll see numerous examples of this in <a class="docLink" href="ch15.html#ch15">Chapter 15</a>.</p>
+<blockquote>
+<p class="docText">The Single UNIX Specification does include <tt>spawn</tt> interfaces in the advanced real-time option group. These interfaces are not intended to be replacements for <tt>fork</tt> and <tt>exec</tt>, however. They are intended to support systems that have difficulty implementing <tt>fork</tt> efficiently, especially systems without hardware support for memory management.</p>
+</blockquote>
+
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

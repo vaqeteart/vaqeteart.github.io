@@ -35,10 +35,44 @@
   	      	   
 
 		   <script>
-		       var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+		       var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"books":{"id":"categories_study_books","path":"/categories/study/books","title":"books","parent":"categories_study","children":{"apue":{"id":"categories_study_books_apue","path":"/categories/study/books/apue","title":"APUE","parent":"categories_study_books","children":null}}},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
 		       var categories_count = JSON.parse('{"/categories":0}');
 
   		       
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
     		       var post_categories = '/categories/note';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -446,9 +480,43 @@
   <h2> 分类 </h2>
   
   <script>
-    var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+    var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"books":{"id":"categories_study_books","path":"/categories/study/books","title":"books","parent":"categories_study","children":{"apue":{"id":"categories_study_books_apue","path":"/categories/study/books/apue","title":"APUE","parent":"categories_study_books","children":null}}},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
     var categories_count = JSON.parse('{"/categories":0}');
 
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
     
     var post_categories = '/categories/note';
     if (typeof(categories_count[post_categories]) == "undefined")
@@ -888,9 +956,9 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
     code {
         border:groove #555555;
-        border-width:thin;
+	border-width:thin;
         background-color: #111111;
-        color: #C7EDCC;
+	color: #C7EDCC;
     }
 
 
@@ -951,7 +1019,33 @@
     margin-top: -1.5em; 
 }
 
-</style>
+</style><br>
+<div id="mypreamble" align="right" style="float:right" class="status">
+    <table> <tbody> 
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Author</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">QuietHeart</td>	  
+	</tr>
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Email</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">
+	    <a href="mailto:quiet_heart000@126.com">quiet_heart000@126.com</a>
+	  </td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Date</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2015-11-27 五]</td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2015-12-25 五 15:42:09></td>
+	</tr>
+    </tbody></table>
+</div>
+<br>
+
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -2024,6 +2118,31 @@ Push的过程大致如下：
 参考相关文档：<a href="http://orgmode.org/manual/MobileOrg.html#MobileOrg">MobileOrg</a>
 </p>
 </div>
+
+<div id="outline-container-orgheadline60" class="outline-5">
+<h5 id="orgheadline60"><span class="section-number-5">4.7.5.1</span> 改进</h5>
+<div class="outline-text-5" id="text-4-7-5-1">
+<ul class="org-ul">
+<li>已经将状态文件冠以 <code>_</code> 前缀，便于在Agenda View中集中浏览，例如: <code>_inbox.org</code>, <code>_next.org</code> &#x2026;。</li>
+<li><p>
+每一步处理中，处理子项的步骤可以按照层次冠以 <code>----</code> 前缀， n层子处理步骤冠以n个 =-&#x2014;=前缀。例如：
+</p>
+<pre class="example">
+**NEXT test1
+***----&lt;2015-12-21 一 16:17&gt; xxx1
+***----&lt;2015-12-21 一 16:17&gt; xxx2
+****--------&lt;2015-12-21 一 16:17&gt;xxx2.1
+****--------&lt;2015-12-21 一 16:17&gt;xxx2.2
+</pre>
+
+<p>
+这样显示便于在Agenda中一目了然哪些是子待办事项，以4个为单位因为4个字符比较容易输入。
+</p></li>
+
+<li>回顾的细化：短期回顾简单处理时，会将特定状态关键字的任务从状态文件间迁移，稍复杂的处理会将任务直接迁移至特定文档中（在该文档中做为属于该文档的任务）；中期处理之时，除了对应状态关键字和状态文件，也对状态关键字的任务必要时迁出状态文件进入特定文档中。</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -2173,14 +2292,6 @@ wait for more</li>
 </div>
 </div>
 </div>
-<br>
-
-<div id="mypreamble" class="status">
-<p class="author" align='right'>Author: QuietHeart (<a href="mailto:quiet_heart000@126.com">quiet_heart000@126.com</a>)</p>
-<p class="date" align='right'>Date: <span class="timestamp-wrapper"><span class="timestamp">[2015-11-27 五 16:16]</span></span></p>
-<p class="creator" align='right'><a href="http://www.gnu.org/software/emacs/">Emacs</a> 23.3.1 (<a href="http://orgmode.org">Org</a> mode 8.3.1)</p>
-</div>
-<br>
 
   </div>
 </article>

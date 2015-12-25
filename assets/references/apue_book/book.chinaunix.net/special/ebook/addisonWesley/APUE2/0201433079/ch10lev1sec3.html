@@ -1,0 +1,147 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 10.3.&nbsp; signal Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch10lev1sec3"></a>
+<h3 class="docSection1Title" id="454331-844">10.3. <tt>signal</tt> Function</h3>
+<p class="docText">The simplest interface to the signal features of the UNIX System is the <tt>signal</tt> function.</P>
+<a name="inta320"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;signal.h&gt;
+
+void (*signal(int <span class="docEmphItalicAlt">signo</span>, void (*<span class="docEmphItalicAlt">func</span>)(int)))(int);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: previous disposition of signal (see following) if OK, <tt>SIG_ERR</tt> on error</p></TD></tr></table></P><BR>
+<blockquote>
+<p class="docText">The <tt>signal</tt> function is defined by ISO C, which doesn't involve multiple processes, process groups, terminal I/O, and the like. Therefore, its definition of signals is vague enough to be almost useless for UNIX systems.</P>
+<p class="docText">Implementations derived from UNIX System V support the <tt>signal</tt> function, but it provides the old unreliable-signal semantics. (We describe these older semantics in <a class="docLink" href="ch10lev1sec4.html#ch10lev1sec4">Section 10.4</a>.) This function provides backward compatibility for applications that require the older semantics. New applications should not use these unreliable signals.</p>
+<p class="docText">4.4BSD also provides the <tt>signal</tt> function, but it is defined in terms of the <tt>sigaction</tt> function (which we describe in <a class="docLink" href="ch10lev1sec14.html#ch10lev1sec14">Section 10.14</a>), so using it under 4.4BSD provides the newer reliable-signal semantics. FreeBSD 5.2.1 and Mac OS X 10.3 follow this strategy.</P>
+<p class="docText">Solaris 9 has roots in both System V and BSD, but it chooses to follow the System V semantics for the <tt>signal</tt> function.</P>
+<p class="docText">On Linux 2.4.22, the semantic of <tt>signal</tt> can follow either the BSD or System V semantics, depending on the version of the C library and how you compile your application.</p>
+<p class="docText">Because the semantics of <tt>signal</tt> differ among implementations, it is better to use the <tt>sigaction</tt> function instead. When we describe the <tt>sigaction</tt> function in <a class="docLink" href="ch10lev1sec14.html#ch10lev1sec14">Section 10.14</a>, we provide an implementation of <tt>signal</tt> that uses it. All the examples in this text use the <tt>signal</tt> function that we show in <a class="docLink" href="ch10lev1sec14.html#ch10fig18">Figure 10.18</a>.</P>
+</blockquote>
+<p class="docText"><a name="idd1e70505"></a><a name="idd1e70510"></a><a name="idd1e70515"></a><a name="idd1e70518"></a><a name="idd1e70523"></a><a name="idd1e70528"></a><a name="idd1e70533"></a><a name="idd1e70538"></a>The <span class="docEmphasis">signo</span> argument is just the name of the signal from <a class="docLink" href="ch10lev1sec2.html#ch10fig01">Figure 10.1</a>. The value of <span class="docEmphasis">func</span> is (a) the constant <tt>SIG_IGN</tt>, (b) the constant <tt>SIG_DFL</tt>, or (c) the address of a function to be called when the signal occurs. If we specify <tt>SIG_IGN</tt>, we are telling the system to ignore the signal. (Remember that we cannot ignore the two signals <tt>SIGKILL</tt> and <tt>SIGSTOP</tt>.) When we specify <tt>SIG_DFL</tt>, we are setting the action associated with the signal to its default value (see the final column in <a class="docLink" href="ch10lev1sec2.html#ch10fig01">Figure 10.1</a>). When we specify the address of a function to be called when the signal occurs, we are arranging to &quot;catch&quot; the signal. We call the function either the <span class="docEmphasis">signal handler</span> or the <span class="docEmphasis">signal-catching function</span>.</P>
+<p class="docText">The prototype for the <tt>signal</tt> function states that the function requires two arguments and returns a pointer to a function that returns nothing (<tt>void</tt>). The <tt>signal</tt> function's first argument, <span class="docEmphasis">signo</span>, is an integer. The second argument is a pointer to a function that takes a single integer argument and returns nothing. The function whose address is returned as the value of <tt>signal</tt> takes a single integer argument (the final <tt>(int)</tt>). In plain English, this declaration says that the signal handler is passed a single integer argument (the signal number) and that it returns nothing. When we call <tt>signal</tt> to establish the signal handler, the second argument is a pointer to the function. The return value from <tt>signal</tt> is the pointer to the previous signal handler.</p>
+<blockquote>
+<p class="docText">Many systems call the signal handler with additional, implementation-dependent arguments. We discuss this further in <a class="docLink" href="ch10lev1sec14.html#ch10lev1sec14">Section 10.14</a>.</p>
+</blockquote>
+<p class="docText">The perplexing <tt>signal</tt> function prototype shown at the beginning of this section can be made much simpler through the use of the following <tt>typedef</tt> [<a class="docLink" href="bib01.html#biblio01_050">Plauger 1992</a>]:</p>
+
+<pre>
+   typedef void Sigfunc(int);
+</pre><br>
+
+<p class="docText">Then the prototype becomes</P>
+
+<pre>
+   Sigfunc *signal(int, Sigfunc *);
+</pre><br>
+
+<p class="docText">We've included this <tt>typedef</tt> in <tt>apue.h</tt> (<a class="docLink" href="app02.html#app02">Appendix B</a>) and use it with the functions in this chapter.</P>
+<p class="docText">If we examine the system's header <tt>&lt;signal.h&gt;</tt>, we probably find declarations of the form</p>
+
+<pre>
+   #define SIG_ERR (void (*)())-1
+   #define SIG_DFL (void (*)())0
+   #define SIG_IGN (void (*)())1
+</pre><BR>
+
+<p class="docText">These constants can be used in place of the &quot;pointer to a function that takes an integer argument and returns nothing,&quot; the second argument to <tt>signal</tt>, and the return value from <tt>signal</tt>. The three values used for these constants need not be -1, 0, and 1. They must be three values that can never be the address of any declarable function. Most UNIX systems use the values shown.</p>
+<a name="ch10ex01"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText"><a class="docLink" href="ch10lev1sec3.html#ch10fig02">Figure 10.2</a> shows a simple signal handler that catches either of the two user-defined signals and prints the signal number. In <a class="docLink" href="ch10lev1sec10.html#ch10lev1sec10">Section 10.10</a>, we describe the <tt>pause</tt> function, which simply suspends the calling process until a signal is received.</p>
+<p class="docText"><a name="idd1e70691"></a><a name="idd1e70696"></a><a name="idd1e70701"></a><a name="idd1e70706"></a><a name="idd1e70711"></a><a name="idd1e70714"></a><a name="idd1e70719"></a><a name="idd1e70724"></a><a name="idd1e70729"></a>We invoke the program in the background and use the <tt>kill</tt>(1) command to send it signals. Note that the term <span class="docEmphasis">kill</span> in the UNIX System is a misnomer. The <tt>kill</tt>(1) command and the <tt>kill</tt>(2) function just send a signal to a process or process group. Whether or not that signal terminates the process depends on which signal is sent and whether the process has arranged to catch the signal.</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out &amp;</span>                   <span class="docEmphItalicAlt">start process in background</span>
+   [1]      7216                 <span class="docEmphasis">job-control shell prints job number and process ID</span>
+   $ <span class="docEmphStrong">kill -USR1 7216</span>             <span class="docEmphItalicAlt">send it</span> SIGUSR1
+   received SIGUSR1
+   $ <span class="docEmphStrong">kill -USR2 7216</span>             <span class="docEmphItalicAlt">send it</span> SIGUSR2
+   received SIGUSR2
+   $ <span class="docEmphStrong">kill 7216</span>                   <span class="docEmphItalicAlt">now send it</span> SIGTERM
+   [1]+  Terminated    ./a.out
+</pre><br>
+
+<p class="docText">When we send the <tt>SIGTERM</tt> signal, the process is terminated, since it doesn't catch the signal, and the default action for the signal is termination.</p>
+
+<a name="ch10fig02"></a>
+<h5 class="docExampleTitle">Figure 10.2. Simple program to catch <tt>SIGUSR1</tt> and <tt>SIGUSR2</tt></h5>
+
+<pre>
+#include "apue.h"
+
+static void sig_usr(int);   /* one handler for both signals */
+
+int
+main(void)
+{
+    if (signal(SIGUSR1, sig_usr) == SIG_ERR)
+        err_sys("can't catch SIGUSR1");
+    if (signal(SIGUSR2, sig_usr) == SIG_ERR)
+        err_sys("can't catch SIGUSR2");
+    for ( ; ; )
+        pause();
+}
+
+static void
+sig_usr(int signo)      /* argument is signal number */
+{
+    if (signo == SIGUSR1)
+        printf("received SIGUSR1\n");
+    else if (signo == SIGUSR2)
+        printf("received SIGUSR2\n");
+    else
+        err_dump("received signal %d\n", signo);
+}
+</pre><br>
+
+
+<a name="ch10lev2sec1"></a>
+<h4 class="docSection2Title">Program Start-Up</h4>
+<p class="docText">When a program is executed, the status of all signals is either default or ignore. Normally, all signals are set to their default action, unless the process that calls <tt>exec</tt> is ignoring the signal. Specifically, the <tt>exec</tt> functions change the disposition of any <a name="idd1e70829"></a><a name="idd1e70834"></a><a name="idd1e70839"></a><a name="idd1e70844"></a>signals being caught to their default action and leave the status of all other signals alone. (Naturally, a signal that is being caught by a process that calls <tt>exec</tt> cannot be caught by the same function in the new program, since the address of the signal- catching function in the caller probably has no meaning in the new program file that is executed.)</p>
+<p class="docText">One specific example is how an interactive shell treats the interrupt and quit signals for a background process. With a shell that doesn't support job control, when we execute a process in the background, as in</p>
+
+<pre>
+    cc main.c &amp;
+</pre><br>
+
+<p class="docText">the shell automatically sets the disposition of the interrupt and quit signals in the background process to be ignored. This is so that if we type the interrupt character, it doesn't affect the background process. If this weren't done and we typed the interrupt character, it would terminate not only the foreground process, but also all the background processes.</p>
+<p class="docText">Many interactive programs that catch these two signals have code that looks like</p>
+
+<pre>
+         void sig_int(int), sig_quit(int);
+
+         if (signal(SIGINT, SIG_IGN) != SIG_IGN)
+             signal(SIGINT, sig_int);
+         if (signal(SIGQUIT, SIG_IGN) != SIG_IGN)
+             signal(SIGQUIT, sig_quit);
+</pre><BR>
+
+<p class="docText">Doing this, the process catches the signal only if the signal is not currently being ignored.</P>
+<p class="docText">These two calls to <tt>signal</tt> also show a limitation of the <tt>signal</tt> function: we are not able to determine the current disposition of a signal without changing the disposition. We'll see later in this chapter how the <tt>sigaction</tt> function allows us to determine a signal's disposition without changing it.</p>
+
+<a name="ch10lev2sec2"></a>
+<H4 class="docSection2Title">Process Creation</H4>
+<p class="docText">When a process calls <tt>fork</tt>, the child inherits the parent's signal dispositions. Here, since the child starts off with a copy of the parent's memory image, the address of a signal-catching function has meaning in the child.</P>
+
+
+<ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec2.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec4.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

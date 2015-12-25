@@ -1,0 +1,153 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 5.11.&nbsp; Formatted I/O</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch05lev1sec11"></a>
+<h3 class="docSection1Title">5.11. Formatted I/O</h3>
+<a name="ch05lev2sec3"></a>
+<H4 class="docSection2Title">Formatted Output</H4>
+<p class="docText"><a name="idd1e38789"></a><a name="idd1e38794"></a><a name="idd1e38801"></a><a name="idd1e38806"></a><a name="idd1e38813"></a><a name="idd1e38818"></a><a name="idd1e38825"></a><a name="idd1e38830"></a>Formatted output is handled by the four <tt>printf</tt> functions.</p>
+<a name="inta70"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch05lev1sec11.html#PLID0">[View full width]</a></div><pre>
+#include &lt;stdio.h&gt;
+
+int printf(const char *restrict <span class="docEmphItalicAlt">format</span>, ...);
+
+int fprintf(FILE *restrict <span class="docEmphItalicAlt">fp</span>, const char
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">format</span>, ...);
+</pre><br>
+
+</P></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: number of characters output if OK, negative value if output error</p></TD></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID1"></a><div class="v1"><a href="ch05lev1sec11.html#PLID1">[View full width]</a></div><pre>
+int sprintf(char *restrict <span class="docEmphItalicAlt">buf</span>, const char
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">format</span>, ...);
+
+int snprintf(char *restrict <span class="docEmphItalicAlt">buf</span>, size_t <span class="docEmphItalicAlt">n</span>,
+             const char *restrict <span class="docEmphItalicAlt">format</span>, ...);
+</pre><BR>
+
+</P></td></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: number of characters stored in array if OK, negative value if encoding error</p></td></tr></table></P><br>
+<p class="docText">The <tt>printf</tt> function writes to the standard output, <tt>fprintf</tt> writes to the specified stream, and <tt>sprintf</tt> places the formatted characters in the array <span class="docEmphasis">buf</span>. The <tt>sprintf</tt> function automatically appends a null byte at the end of the array, but this null byte is not included in the return value.</P>
+<p class="docText">Note that it's possible for <tt>sprintf</tt> to overflow the buffer pointed to by <span class="docEmphasis">buf</span>. It's the caller's responsibility to ensure that the buffer is large enough. Because this can lead to buffer-overflow problems, <tt>snprintf</tt> was introduced. With it, the size of the buffer is an explicit parameter; any characters that would have been written past the end of the buffer are discarded instead. The <tt>snprintf</tt> function returns the number of characters that would have been written to the buffer had it been big enough. As with <tt>sprintf</tt>, the return value doesn't include the terminating null byte. If <tt>snprintf</tt> returns a positive value less than the buffer size <span class="docEmphasis">n</span>, then the output was not truncated. If an encoding error occurs, <tt>snprintf</tt> returns a negative value.</p>
+<p class="docText">The format specification controls how the remainder of the arguments will be encoded and ultimately displayed. Each argument is encoded according to a conversion specification that starts with a percent sign (%). Except for the conversion specifications, other characters in the format are copied unmodified. A conversion specification has four optional components, shown in square brackets below:</P>
+
+<pre>
+    %[flags][fldwidth][precision][lenmodifier]convtype
+</pre><br>
+
+<p class="docText">The flags are summarized in <a class="docLink" href="ch05lev1sec11.html#ch05fig07">Figure 5.7</a>.</p>
+<a name="ch05fig07"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 5.7. The flags component of a conversion specification</h5></caption><colgroup><col width="75"><col width="425"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Flag</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></p></th></tr></thead><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>-</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">left-justify the output in the field</p></td></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>+</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">always display sign of a signed conversion</P></td></TR><TR><TD class="rightBorder" align="center" valign="top"><p class="docText">(space)</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">prefix by a space if no sign is generated</P></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>#</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">convert using alternate form (include 0x prefix for hex format, for example)</P></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>0</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">prefix with leading zeros instead of padding with spaces</p></TD></tr></table></p><br>
+<p class="docText">The <tt>fldwidth</tt> component specifies a minimum field width for the conversion. If the conversion results in fewer characters, it is padded with spaces. The field width is a non-negative decimal integer or an asterisk.</p>
+<p class="docText">The <tt>precision</tt> component specifies the minimum number of digits to appear for integer conversions, the minimum number of digits to appear to the right of the decimal point for floating-point conversions, or the maximum number of bytes for string conversions. The precision is a period (.) followed by a optional non-negative decimal integer or an asterisk.</p>
+<p class="docText"><a name="idd1e39074"></a>Both the field width and precision can be an asterisk. In this case, an integer argument specifies the value to be used. The argument appears directly before the argument to converted.</p>
+<p class="docText">The <tt>lenmodifier</tt> component specifies the size of the argument. Possible values are summarized in <a class="docLink" href="ch05lev1sec11.html#ch05fig08">Figure 5.8</a>.</p>
+<a name="ch05fig08"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 5.8. The length modifier component of a conversion specification</h5></caption><colgroup><col width="200"><col width="300"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="left" valign="top"><p class="docText"><span class="docEmphRoman">Length modifier</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></p></th></tr></thead><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>hh</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">signed or unsigned <tt>char</tt>
+</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>h</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">signed or unsigned <tt>short</tt>
+</p></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>l</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">signed or unsigned <tt>long</tt> or wide character</P></td></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>ll</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">signed or unsigned <tt>long long</tt>
+</P></td></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>j</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>intmax_t</tt> or <tt>uintmax_t</tt>
+</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>z</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>size_t</tt>
+</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>t</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>ptrdiff_t</tt></p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>L</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>long double</tt></p>
+</TD></tr></table></P><BR>
+<p class="docText">The <tt>convtype</tt> component is not optional. It controls how the argument is interpreted. The various conversion types are summarized in <a class="docLink" href="ch05lev1sec11.html#ch05fig09">Figure 5.9</a>.</P>
+<a name="ch05fig09"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 5.9. The conversion type component of a conversion specification</H5></caption><colgroup><col width="90"><col width="400"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Conversion type</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></P></th></tr></thead><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>d,i</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">signed decimal</P></td></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>o</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">unsigned octal</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>u</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">unsigned decimal</p></td></tr><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>x,X</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">unsigned hexadecimal</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>f,F</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>double</tt> floating-point number</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>e,E</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>double</tt> floating-point number in exponential format</P></TD></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>g,G</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">interpreted as <tt>f, F, e,</tt> or <tt>E,</tt> depending on value converted</P></td></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>a,A</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>double</tt> floating-point number in hexadecimal exponential format</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>c</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">character (with <tt>l</tt> length modifier, wide character)</p></td></tr><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>s</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">string (with <tt>l</tt> length modifier, wide character string)</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>p</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">pointer to a <tt>void</tt>
+</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>n</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">pointer to a signed integer into which is written the number of characters written so far</P></TD></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>%</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">a % character</P></td></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>C</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">wide character (an XSI extension, equivalent to <tt>lc</tt>)</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">wide character string (an XSI extension, equivalent to <tt>ls</tt>)</p></td></tr></table></p><BR>
+<p class="docText"><a name="idd1e39494"></a><a name="idd1e39499"></a><a name="idd1e39506"></a><a name="idd1e39509"></a><a name="idd1e39514"></a><a name="idd1e39519"></a><a name="idd1e39522"></a><a name="idd1e39527"></a><a name="idd1e39534"></a><a name="idd1e39539"></a><a name="idd1e39546"></a><a name="idd1e39551"></a><a name="idd1e39556"></a><a name="idd1e39561"></a><a name="idd1e39568"></a><a name="idd1e39573"></a><a name="idd1e39580"></a><a name="idd1e39585"></a><a name="idd1e39592"></a><a name="idd1e39597"></a>The following four variants of the <tt>printf</tt> family are similar to the previous four, but the variable argument list (<tt>...</tt>) is replaced with <span class="docEmphasis">arg</span>.</P>
+<a name="inta368"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID3"></a><div class="v1"><a href="ch05lev1sec11.html#PLID3">[View full width]</a></div><pre>
+#include &lt;stdarg.h&gt;
+#include &lt;stdio.h&gt;
+
+int vprintf(const char *restrict <span class="docEmphItalicAlt">format</span>, va_list <span class="docEmphItalicAlt">arg</span>);
+
+int vfprintf(FILE *restrict <span class="docEmphItalicAlt">fp</span>, const char
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">format</span>,
+             va_list <span class="docEmphItalicAlt">arg</span>);
+</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: number of characters output if OK, negative value if output error</P></td></TR><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID4"></a><div class="v1"><a href="ch05lev1sec11.html#PLID4">[View full width]</a></div><pre>
+int vsprintf(char *restrict <span class="docEmphItalicAlt">buf</span>, const char
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">format</span>,
+             va_list <span class="docEmphItalicAlt">arg</span>);
+
+int vsnprintf(char *restrict <span class="docEmphItalicAlt">buf</span>, size_t <span class="docEmphItalicAlt">n</span>,
+              const char *restrict <span class="docEmphItalicAlt">format</span>, va_list
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">arg</span>);
+</pre><br>
+
+</P></TD></tr><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: number of characters stored in array if OK, negative value if encoding error</p></td></tr></table></p><BR>
+<p class="docText">We use the <tt>vsnprintf</tt> function in the error routines in <a class="docLink" href="app02.html#app02">Appendix B</a>.</p>
+<p class="docText">Refer to <a class="docLink" href="ch07lev1sec3.html#ch07lev1sec3">Section 7.3</a> of Kernighan and Ritchie [<a class="docLink" href="bib01.html#biblio01_003">1988</a>] for additional details on handling variable-length argument lists with ISO Standard C. Be aware that the variable-length argument list routines provided with ISO Cthe <tt>&lt;stdarg.h&gt;</tt> header and its associated routinesdiffer from the <tt>&lt;varargs.h&gt;</tt> routines that were provided with older UNIX systems.</P>
+
+<a name="ch05lev2sec4"></a>
+<h4 class="docSection2Title">Formatted Input</H4>
+<p class="docText">Formatted input is handled by the three <tt>scanf</tt> functions.</p>
+<a name="inta369"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID5"></a><div class="v1"><a href="ch05lev1sec11.html#PLID5">[View full width]</a></div><pre>
+#include &lt;stdio.h&gt;
+
+int scanf(const char *restrict <span class="docEmphItalicAlt">format</span>, ...);
+
+int fscanf(FILE *restrict <span class="docEmphItalicAlt">fp</span>, const char *restrict
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">format</span>, ...);
+
+int sscanf(const char *restrict <span class="docEmphItalicAlt">buf</span>, const char
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">format</span>,
+           ...);
+</pre><br>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">All three return: number of input items assigned, <br><tt>EOF</tt> if input error or end of file before any conversion</p></td></tr></table></p><br>
+<p class="docText">The <tt>scanf</tt> family is used to parse an input string and convert character sequences into variables of specified types. The arguments following the format contain the addresses of the variables to initialize with the results of the conversions.</p>
+<p class="docText"><a name="idd1e39785"></a>The format specification controls how the arguments are converted for assignment. The percent sign (%) indicates the start of a conversion specification. Except for the conversion specifications and white space, other characters in the format have to match the input. If a character doesn't match, processing stops, leaving the remainder of the input unread.</P>
+<p class="docText">There are three optional components to a conversion specification, shown in square brackets below:</P>
+
+<pre>
+    %[*][fldwidth][lenmodifier]convtype
+</pre><br>
+
+<p class="docText">The optional leading asterisk is used to suppress conversion. Input is converted as specified by the rest of the conversion specification, but the result is not stored in an argument.</P>
+<p class="docText">The <tt>fldwidth</tt> component specifies the maximum field width in characters. The <tt>lenmodifier</tt> component specifies the size of the argument to be initialized with the result of the conversion. The same length modifiers supported by the <tt>printf</tt> family of functions are supported by the <tt>scanf</tt> family of functions (see <a class="docLink" href="ch05lev1sec11.html#ch05fig08">Figure 5.8</a> for a list of the length modifiers).</P>
+<p class="docText">The <tt>convtype</tt> field is similar to the conversion type field used by the <tt>printf</tt> family, but there are some differences. One difference is that results that are stored in unsigned types can optionally be signed on input. For example, 1 will scan as 4294967295 into an unsigned integer. <a class="docLink" href="ch05lev1sec11.html#ch05fig10">Figure 5.10</a> summarizes the conversion types supported by the <tt>scanf</tt> family of functions.</P>
+<a name="ch05fig10"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 5.10. The conversion type component of a conversion specification</H5></caption><colgroup><col width="125"><col width="375"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Conversion <br>type</span></P></th><th class="bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Description</span></p></th></TR></thead><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>d</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">signed decimal, base 10</p></TD></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>i</tt></p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">signed decimal, base determined by format of input</p></TD></tr><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>o</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">unsigned octal (input optionally signed)</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>u</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">unsigned decimal, base 10 (input optionally signed)</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>x</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">unsigned hexadecimal (input optionally signed)</P></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>a,A,e,E,f,F,g,G</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">floating-point number</P></td></TR><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>c</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">character (with <tt>l</tt> length modifier, wide character)</p></TD></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>s</tt></p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">string (with <tt>l</tt> length modifier, wide character string)</p></TD></tr><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>[</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">matches a sequence of listed characters, ending with <tt>]</tt>
+</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>[^</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">matches all characters except the ones listed, ending with <tt>]</tt>
+</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>p</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">pointer to a <tt>void</tt>
+</P></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>n</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText">pointer to a signed integer into which is written the number of characters read so far</P></td></TR><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>%</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">a % character</p></TD></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>C</tt></p></td><TD class="docTableCell" align="left" valign="top"><p class="docText">wide character (an XSI extension, equivalent to <tt>lc</tt>)</p></TD></tr><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>S</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">wide character string (an XSI extension, equivalent to <tt>ls</tt>)</p></td></tr></table></p><br>
+<p class="docText">As with the <tt>printf</tt> family, the <tt>scanf</tt> family also supports functions that use variable argument lists as specified by <tt>&lt;stdarg.h&gt;</tt>.</p>
+<a name="inta65"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e40097"></a><a name="idd1e40102"></a><a name="idd1e40107"></a><a name="idd1e40112"></a><a name="idd1e40117"></a><a name="idd1e40124"></a><a name="idd1e40129"></a><a name="idd1e40132"></a><a name="idd1e40135"></a><a name="idd1e40140"></a><a name="idd1e40143"></a><a name="idd1e40148"></a><a name="idd1e40153"></a><a name="idd1e40158"></a><a name="idd1e40165"></a><a name="idd1e40170"></a><a name="idd1e40177"></a><a name="idd1e40182"></a>
+<a name="PLID7"></a><div class="v1"><a href="ch05lev1sec11.html#PLID7">[View full width]</a></div><pre>
+#include &lt;stdarg.h&gt;
+#include &lt;stdio.h&gt;
+
+int vscanf(const char *restrict <span class="docEmphItalicAlt">format</span>, va_list <span class="docEmphItalicAlt">arg</span>);
+
+int vfscanf(FILE *restrict <span class="docEmphItalicAlt">fp</span>, const char
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">format</span>,
+            va_list <span class="docEmphItalicAlt">arg</span>);
+
+int vsscanf(const char *restrict <span class="docEmphasis">buf</span>, const char
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphasis">format</span>,
+            va_list <span class="docEmphasis">arg</span>);
+</pre><br>
+
+</p></td></tr><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">All three return: number of input items assigned, <br><tt>EOF</tt> if input error or end of file before any conversion</P></TD></TR></table></p><BR>
+<p class="docText">Refer to your UNIX system manual for additional details on the <tt>scanf</tt> family of functions.</P>
+
+
+<UL></ul></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

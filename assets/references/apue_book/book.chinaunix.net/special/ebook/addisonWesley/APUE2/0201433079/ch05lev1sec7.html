@@ -1,0 +1,59 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 5.7.&nbsp; Line-at-a-Time I/O</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch05lev1sec7"></a>
+<h3 class="docSection1Title">5.7. Line-at-a-Time I/O</h3>
+<p class="docText">Line-at-a-time input is provided by the following two functions.</P>
+<a name="inta64"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch05lev1sec7.html#PLID0">[View full width]</a></div><pre>
+#include &lt;stdio.h&gt;
+
+char *fgets(char *restrict <span class="docEmphItalicAlt">buf</span>, int <span class="docEmphItalicAlt">n</span>, FILE
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">fp</span>);
+
+char *gets(char *<span class="docEmphItalicAlt">buf</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: <tt>buf</tt> if OK, <tt>NULL</tt> on end of file or error</p></TD></tr></table></P><BR>
+<p class="docText">Both specify the address of the buffer to read the line into. The <tt>gets</tt> function reads from standard input, whereas <tt>fgets</tt> reads from the specified stream.</P>
+<p class="docText">With <tt>fgets</tt>, we have to specify the size of the buffer, <span class="docEmphasis">n</span>. This function reads up through and including the next newline, but no more than <span class="docEmphasis">n</span><span class="docEmphasis">1</span> characters, into the buffer. The buffer is terminated with a null byte. If the line, including the terminating newline, is longer than <span class="docEmphasis">n</span><span class="docEmphasis">1</span>, only a partial line is returned, but the buffer is always null terminated. Another call to <tt>fgets</tt> will read what follows on the line.</p>
+<p class="docText">The <tt>gets</tt> function should never be used. The problem is that it doesn't allow the caller to specify the buffer size. This allows the buffer to overflow, if the line is longer than the buffer, writing over whatever happens to follow the buffer in memory. For a description of how this flaw was used as part of the Internet worm of 1988, see the June 1989 issue (vol. 32, no. 6) of <span class="docEmphasis">Communications of the ACM</span> . An additional difference with <tt>gets</tt> is that it doesn't store the newline in the buffer, as does <tt>fgets</tt>.</P>
+<blockquote>
+<p class="docText"><a name="idd1e37435"></a><a name="idd1e37440"></a><a name="idd1e37445"></a><a name="idd1e37450"></a><a name="idd1e37457"></a><a name="idd1e37464"></a>This difference in newline handling between the two functions goes way back in the evolution of the UNIX System. Even the Version 7 manual (1979) states &quot;<tt>gets</tt> deletes a newline, <tt>fgets</tt> keeps it, all in the name of backward compatibility.&quot;</P>
+</blockquote>
+<p class="docText">Even though ISO C requires an implementation to provide <tt>gets</tt>, use <tt>fgets</tt> instead.</p>
+<p class="docText">Line-at-a-time output is provided by <tt>fputs</tt> and <tt>puts</tt>.</P>
+<a name="inta259"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID1"></a><div class="v1"><a href="ch05lev1sec7.html#PLID1">[View full width]</a></div><pre>
+#include &lt;stdio.h&gt;
+
+int fputs(const char *restrict <span class="docEmphItalicAlt">str</span>, FILE *restrict
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">fp</span>);
+
+int puts(const char *<span class="docEmphItalicAlt">str</span>);
+</pre><br>
+
+</p></TD></tr><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: non-negative value if OK, <tt>EOF</tt> on error</P></td></tr></table></p><br>
+<p class="docText">The function <tt>fputs</tt> writes the null-terminated string to the specified stream. The null byte at the end is not written. Note that this need not be line-at-a-time output, since the string need not contain a newline as the last non-null character. Usually, this is the casethe last non-null character is a newlinebut it's not required.</p>
+<p class="docText">The <tt>puts</tt> function writes the null-terminated string to the standard output, without writing the null byte. But <tt>puts</tt> then writes a newline character to the standard output.</p>
+<p class="docText">The <tt>puts</tt> function is not unsafe, like its counterpart <tt>gets</tt>. Nevertheless, we'll avoid using it, to prevent having to remember whether it appends a newline. If we always use <tt>fgets</tt> and <tt>fputs</tt>, we know that we always have to deal with the newline character at the end of each line.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,41 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Chapter 19</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec18.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec20.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app03lev1sec19"></a>
+<h3 class="docSection1Title">Chapter 19</h3>
+<p class="docText"></P>
+<P><table border="0" cellspacing="16" cellpadding="0"><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch19qa1q1a1"></a><B><a class="docLink" href="ch19lev1sec9.html#ch19qa1q1">19.1</a></b></TD><td><p class="docText">Both servers, <tt>telnetd</tt> and <tt>rlogind</tt>, run with superuser privileges, so their calls to <tt>chown</tt> and <tt>chmod</tt> succeed.</P></TD></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch19qa1q3a1"></a><b><a class="docLink" href="ch19lev1sec9.html#ch19qa1q3">19.3</a></b></TD><TD><p class="docText">Execute <tt>pty -n stty -a</tt> to prevent the slave's <tt>termios</tt> structure and <tt>winsize</tt> structure from being initialized.</P></td></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch19qa1q5a1"></a><B><a class="docLink" href="ch19lev1sec9.html#ch19qa1q5">19.5</a></b></TD><td><p class="docText">Unfortunately, the <tt>F_SETFL</tt> command of <tt>fcntl</tt> doesn't allow the readwrite status to be changed.</p></td></tr><TR valign="top"><td align="right" class="docText" width="50"><a name="ch19qa1q6a1"></a><B><a class="docLink" href="ch19lev1sec9.html#ch19qa1q6">19.6</a></b></td><TD><p class="docText">There are three process groups: (1) the login shell, (2) the <tt>pty</tt> parent and child, and (3) the <tt>cat</tt> process. The first two process groups constitute a session with the login shell as the session leader. The second session contains only the <tt>cat</tt> process. The first process group (the login shell) is a background process group, and the other two are foreground process groups.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch19qa1q7a1"></a><b><a class="docLink" href="ch19lev1sec9.html#ch19qa1q7">19.7</a></b></td><td><p class="docText">First, <tt>cat</tt> terminates when it receives the end of file from its line discipline. This causes the PTY slave to terminate, which causes the PTY master to terminate. This in turn generates an end of file for the <tt>pty</tt> parent that's reading from the PTY master. The parent sends <tt>SIGTERM</tt> to the child, so the child terminates next. (The child doesn't catch this signal.) Finally, the parent calls <tt>exit(0)</tt> at the end of the <tt>main</tt> function.</p>
+<p class="docText">The relevant output from the program shown in <a class="docLink" href="ch08lev1sec14.html#ch08fig29">Figure 8.29</a> is</p>
+<pre>
+     cat             e =      270, chars =         274, stat =      0:
+     pty             e =      262, chars =          40, stat =     15: F     X
+     pty             e =      288, chars =         188, stat =      0:
+</pre><br>
+</td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch19qa1q8a1"></a><b><a class="docLink" href="ch19lev1sec9.html#ch19qa1q8">19.8</a></b></td><TD><p class="docText">This can be done with the shell's <tt>echo</tt> command and the <tt>date</tt>(1) command, all in a subshell:</P>
+<pre>
+   #!/bin/sh
+   ( echo "Script started on " 'date';
+     pty "${SHELL:-/bin/sh}";
+     echo "Script done on " 'date' ) | tee typescript
+</pre><br>
+</TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch19qa1q9a1"></a><B><a class="docLink" href="ch19lev1sec9.html#ch19qa1q9">19.9</a></b></TD><TD><p class="docText">The line discipline above the PTY slave has echo enabled, so whatever <tt>pty</tt> reads on its standard input and writes to the PTY master gets echoed by default. This echoing is done by the line discipline module above the slave even though the program (<tt>ttyname</tt>) never reads the data.</p></TD></tr></table></P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app03lev1sec18.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app03lev1sec20.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,63 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 3.16.&nbsp; /dev/fd</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec15.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec17.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch03lev1sec16"></a>
+<h3 class="docSection1Title">3.16. <tt>/dev/fd</tt></h3>
+<p class="docText">Newer systems provide a directory named <tt>/dev/fd</tt> whose entries are files named <tt>0</tt>, <tt>1</tt>, <tt>2</tt>, and so on. Opening the file <tt>/dev/fd/</tt><span class="docEmphasis">n</span> is equivalent to duplicating descriptor <span class="docEmphasis">n</span>, assuming that descriptor <span class="docEmphasis">n</span> is open.</P>
+<blockquote>
+<p class="docText">The <tt>/dev/fd</tt> feature was developed by Tom Duff and appeared in the 8th Edition of the Research UNIX System. It is supported by all of the systems described in this book: FreeBSD 5.2.1, Linux 2.4.22, Mac OS X 10.3, and Solaris 9. It is not part of POSIX.1.</P>
+</blockquote>
+<p class="docText"><a name="idd1e23379"></a><a name="idd1e23384"></a><a name="idd1e23389"></a><a name="idd1e23394"></a><a name="idd1e23399"></a><a name="idd1e23404"></a><a name="idd1e23409"></a><a name="idd1e23414"></a><a name="idd1e23419"></a><a name="idd1e23424"></a>In the function call</p>
+
+<pre>
+    fd = open("/dev/fd/0", mode);
+</pre><BR>
+
+<p class="docText">most systems ignore the specified <tt>mode</tt>, whereas others require that it be a subset of the mode used when the referenced file (standard input, in this case) was originally opened. Because the previous <tt>open</tt> is equivalent to</P>
+
+<pre>
+    fd = dup(0);
+</pre><BR>
+
+<p class="docText">the descriptors 0 and <tt>fd</tt> share the same file table entry (<a class="docLink" href="ch03lev1sec12.html#ch03fig08">Figure 3.8</a>). For example, if descriptor 0 was opened read-only, we can only read on <tt>fd</tt>. Even if the system ignores the open mode, and the call</p>
+
+<pre>
+    fd = open("/dev/fd/0", O_RDWR);
+</pre><BR>
+
+<p class="docText">succeeds, we still can't write to <tt>fd</tt>.</P>
+<p class="docText">We can also call <tt>creat</tt> with a <tt>/dev/fd</tt> pathname argument, as well as specifying <tt>O_CREAT</tt> in a call to <tt>open</tt>. This allows a program that calls <tt>creat</tt> to still work if the pathname argument is <tt>/dev/fd/1</tt>, for example.</P>
+<p class="docText">Some systems provide the pathnames <tt>/dev/stdin</tt>, <tt>/dev/stdout</tt>, and <tt>/dev/stderr</tt>. These pathnames are equivalent to <tt>/dev/fd/0</tt>, <tt>/dev/fd/1</tt>, and <tt>/dev/fd/2</tt>.</p>
+<p class="docText">The main use of the <tt>/dev/fd</tt> files is from the shell. It allows programs that use pathname arguments to handle standard input and standard output in the same manner as other pathnames. For example, the <tt>cat</tt>(1) program specifically looks for an input filename of <tt>-</tt> and uses this to mean standard input. The command</P>
+
+<pre>
+    filter file2 | cat file1 - file3 | lpr
+</pre><br>
+
+<p class="docText">is an example. First, <tt>cat</tt> reads <tt>file1</tt>, next its standard input (the output of the <tt>filter</tt> program on <tt>file2</tt>), then <tt>file3</tt>. If <tt>/dev/fd</tt> is supported, the special handling of <tt>-</tt> can be removed from <tt>cat</tt>, and we can enter</P>
+
+<pre>
+    filter file2 | cat file1 /dev/fd/0 file3 | lpr
+</pre><BR>
+
+<p class="docText">The special meaning of <tt>-</tt> as a command-line argument to refer to the standard input or standard output is a kludge that has crept into many programs. There are also problems if we specify <tt>-</tt> as the first file, as it looks like the start of another command-line option. Using <tt>/dev/fd</tt> is a step toward uniformity and cleanliness.</P>
+
+<ul></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec15.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec17.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

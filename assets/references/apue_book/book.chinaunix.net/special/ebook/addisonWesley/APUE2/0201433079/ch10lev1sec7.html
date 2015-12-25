@@ -1,0 +1,93 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 10.7.&nbsp; SIGCLD Semantics</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch10lev1sec7"></a>
+<h3 class="docSection1Title" id="454331-980">10.7. <tt>SIGCLD</tt> Semantics</h3>
+<p class="docText">Two signals that continually generate confusion are <tt>SIGCLD</tt> and <tt>SIGCHLD</tt>. First, <tt>SIGCLD</tt> (without the <tt>H</tt>) is the System V name, and this signal has different semantics from the BSD signal, named <tt>SIGCHLD</tt>. The POSIX.1 signal is also named <tt>SIGCHLD</tt>.</P>
+<p class="docText">The semantics of the BSD <tt>SIGCHLD</tt> signal are normal, in that its semantics are similar to those of all other signals. When the signal occurs, the status of a child has changed, and we need to call one of the <tt>wait</tt> functions to determine what has happened.</P>
+<p class="docText">System V, however, has traditionally handled the <tt>SIGCLD</tt> signal differently from other signals. SVR4-based systems continue this questionable tradition (i.e., compatibility constraint) if we set its disposition using either <tt>signal</tt> or <tt>sigset</tt> (the older, SVR3-compatible functions to set the disposition of a signal). This older handling of <tt>SIGCLD</tt> consists of the following.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">If the process specifically sets its disposition to <tt>SIG_IGN</tt>, children of the calling process will not generate zombie processes. Note that this is different from its default action (<tt>SIG_DFL</tt>), which from <a class="docLink" href="ch10lev1sec2.html#ch10fig01">Figure 10.1</a> is to be ignored. Instead, on termination, the status of these child processes is discarded. If it subsequently calls one of the <tt>wait</tt> functions, the calling process will block until all its children have terminated, and then <tt>wait</tt> returns 1 with <tt>errno</tt> set to <tt>ECHILD</tt>. (The default disposition of this signal is to be ignored, but this default will not cause the preceding semantics to occur. Instead, we specifically have to set its disposition to <tt>SIG_IGN</tt>.)</P><blockquote>
+<p class="docText">POSIX.1 does not specify what happens when <tt>SIGCHLD</tt> is ignored, so this behavior is allowed. The Single UNIX Specification includes an XSI extension specifying that this behavior be supported for <tt>SIGCHLD</tt>.</P>
+<p class="docText">4.4BSD always generates zombies if <tt>SIGCHLD</tt> is ignored. If we want to avoid zombies, we have to <tt>wait</tt> for our children. FreeBSD 5.2.1 works like 4.4BSD. Mac OS X 10.3, however, doesn't create zombies when <tt>SIGCHLD</tt> is ignored.</p>
+<p class="docText">With SVR4, if either <tt>signal</tt> or <tt>sigset</tt> is called to set the disposition of <tt>SIGCHLD</tt> to be ignored, zombies are never generated. Solaris 9 and Linux 2.4.22 follow SVR4 in this behavior.</P>
+<p class="docText">With <tt>sigaction</tt>, we can set the <tt>SA_NOCLDWAIT</tt> flag (<a class="docLink" href="ch10lev1sec14.html#ch10fig16">Figure 10.16</a>) to avoid zombies. This action is supported on all four platforms: FreeBSD 5.2.1, Linux 2.4.22, Mac OS X 10.3, and Solaris 9.</P>
+</blockquote></div></LI><li><div style="font-weight:normal"><p class="docList"><a name="idd1e73352"></a><a name="idd1e73357"></a><a name="idd1e73360"></a><a name="idd1e73365"></a><a name="idd1e73370"></a><a name="idd1e73375"></a><a name="idd1e73380"></a>If we set the disposition of <tt>SIGCLD</tt> to be caught, the kernel immediately checks whether any child processes are ready to be <tt>wait</tt>ed for and, if so, calls the <tt>SIGCLD</tt> handler.</P></div></li></ol></div>
+<p class="docText">Item 2 changes the way we have to write a signal handler for this signal, as illustrated in the following example.</P>
+<a name="ch10ex03"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText">Recall from <a class="docLink" href="ch10lev1sec4.html#ch10lev1sec4">Section 10.4</a> that the first thing to do on entry to a signal handler is to call <tt>signal</tt> again, to reestablish the handler. (This action was to minimize the window of time when the signal is reset back to its default and could get lost.) We show this in <a class="docLink" href="ch10lev1sec7.html#ch10fig06">Figure 10.6</a>. This program doesn't work on some platforms. If we compile and run it under a traditional System V platform, such as OpenServer 5 or UnixWare 7, the output <a name="idd1e73417"></a><a name="idd1e73422"></a><a name="idd1e73425"></a><a name="idd1e73430"></a><a name="idd1e73433"></a><a name="idd1e73436"></a><a name="idd1e73439"></a><a name="idd1e73444"></a><a name="idd1e73449"></a><a name="idd1e73454"></a><a name="idd1e73459"></a><a name="idd1e73464"></a><a name="idd1e73469"></a><a name="idd1e73474"></a>is a continual string of <tt>SIGCLD received</tt> lines. Eventually, the process runs out of stack space and terminates abnormally.</p>
+<blockquote>
+<p class="docText">FreeBSD 5.2.1 and Mac OS X 10.3 don't exhibit this problem, because BSD-based systems generally don't support historic System V semantics for <tt>SIGCLD</tt>. Linux 2.4.22 also doesn't exhibit this problem, because it doesn't call the <tt>SIGCHLD</tt> signal handler when a process arranges to catch <tt>SIGCHLD</tt> and child processes are ready to be <tt>wait</tt>ed for, even though <tt>SIGCLD</tt> and <tt>SIGCHLD</tt> are defined to be the same value. Solaris 9, on the other hand, does call the signal handler in this situation, but includes extra code in the kernel to avoid this problem.</P>
+<p class="docText">Although the four platforms described in this book solve this problem, realize that platforms (such as UnixWare) still exist that haven't addressed it.</P>
+</blockquote>
+<p class="docText">The problem with this program is that the call to <tt>signal</tt> at the beginning of the signal handler invokes item 2 from the preceding discussionthe kernel checks whether a child needs to be <tt>wait</tt>ed for (which there is, since we're processing a <tt>SIGCLD</tt> signal), so it generates another call to the signal handler. The signal handler calls <tt>signal</tt>, and the whole process starts over again.</p>
+<p class="docText">To fix this program, we have to move the call to <tt>signal</tt> after the call to <tt>wait</tt>. By doing this, we call <tt>signal</tt> after fetching the child's termination status; the signal is generated again by the kernel only if some other child has since terminated.</P>
+<blockquote>
+<p class="docText">POSIX.1 states that when we establish a signal handler for <tt>SIGCHLD</tt> and there exists a terminated child we have not yet <tt>wait</tt>ed for, it is unspecified whether the signal is generated. This allows the behavior described previously. But since POSIX.1 does not reset a signal's disposition to its default when the signal occurs (assuming that we're using the POSIX.1 <tt>sigaction</tt> function to set its disposition), there is no need for us to ever establish a signal handler for <tt>SIGCHLD</tt> within that handler.</P>
+</blockquote>
+
+<a name="ch10fig06"></a>
+<h5 class="docExampleTitle">Figure 10.6. System V <tt>SIGCLD</tt> handler that doesn't work</h5>
+
+<pre>#include      "apue.h"
+#include      &lt;sys/wait.h&gt;
+
+static void sig_cld(int);
+
+int
+main()
+{
+    pid_t   pid;
+
+    if (signal(SIGCLD, sig_cld) == SIG_ERR)
+        perror("signal error");
+    if ((pid = fork()) &lt; 0) {
+        perror("fork error");
+    } else if (pid == 0) {      /* child */
+        sleep(2);
+        _exit(0);
+    }
+    pause();    /* parent */
+    exit(0);
+}
+
+static void
+sig_cld(int signo)   /* interrupts pause() */
+{
+    pid_t   pid;
+    int     status;
+
+    printf("SIGCLD received\n");
+    if (signal(SIGCLD, sig_cld) == SIG_ERR) /* reestablish handler */
+        perror("signal error");
+    if ((pid = wait(&amp;status)) &lt; 0)      /* fetch child status */
+        perror("wait error");
+    printf("pid = %d\n", pid);
+}
+</pre><br>
+
+
+<p class="docText">Be cognizant of the <tt>SIGCHLD</tt> semantics for your implementation. Be especially aware of some systems that <tt>#define SIGCHLD</tt> to be <tt>SIGCLD</tt> or vice versa. Changing the name may allow you to compile a program that was written for another system, but if that program depends on the other semantics, it may not work.</p>
+<blockquote>
+<p class="docText">On the four platforms described in this text, <tt>SIGCLD</tt> is equivalent to <tt>SIGCHLD</tt>.</P>
+</blockquote>
+
+<ul></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

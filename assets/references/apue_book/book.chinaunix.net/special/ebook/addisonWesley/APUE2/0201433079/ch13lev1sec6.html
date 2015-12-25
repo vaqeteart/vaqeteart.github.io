@@ -1,0 +1,222 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 13.6.&nbsp; Daemon Conventions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch13lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch13lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch13lev1sec6"></a>
+<h3 class="docSection1Title">13.6. Daemon Conventions</h3>
+<p class="docText"><a name="idd1e97430"></a><a name="idd1e97435"></a><a name="idd1e97440"></a><a name="idd1e97445"></a><a name="idd1e97450"></a><a name="idd1e97455"></a><a name="idd1e97460"></a><a name="idd1e97465"></a>Several common conventions are followed by daemons in the UNIX System.</P>
+<UL><li><p class="docList">If the daemon uses a lock file, the file is usually stored in <tt>/var/run</tt>. Note, however, that the daemon might need superuser permissions to create a file here. The name of the file is usually <span class="docEmphasis">name</span><tt>.pid</tt>, where <span class="docEmphasis">name</span> is the name of the daemon or the service. For example, the name of the <tt>cron</tt> daemon's lock file is <tt>/var/run/crond.pid</tt>.</P></LI><LI><p class="docList">If the daemon supports configuration options, they are usually stored in <tt>/etc</tt>. The configuration file is named <span class="docEmphasis">name</span><tt>.conf</tt>, where <span class="docEmphasis">name</span> is the name of the daemon or the name of the service. For example, the configuration for the <tt>syslogd</tt> daemon is <tt>/etc/syslog.conf</tt>.</p></LI><LI><p class="docList">Daemons can be started from the command line, but they are usually started from one of the system initialization scripts (<tt>/etc/rc*</tt> or <tt>/etc/init.d/*</tt>). If the daemon should be restarted automatically when it exits, we can arrange for <tt>init</tt> to restart it if we include a <tt>respawn</tt> enTRy for it in <tt>/etc/inittab</tt>.</p></LI><li><p class="docList">If a daemon has a configuration file, the daemon reads it when it starts, but usually won't look at it again. If an administrator changes the configuration, the daemon would need to be stopped and restarted to account for the configuration changes. To avoid this, some daemons will catch <tt>SIGHUP</tt> and reread their configuration files when they receive the signal. Since they aren't associated with terminals and are either session leaders without controlling terminals or members of orphaned process groups, daemons have no reason to expect to receive <tt>SIGHUP</tt>. Thus, they can safely reuse it.</P></LI></UL>
+<a name="ch13ex04"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText"><a name="idd1e97557"></a><a name="idd1e97562"></a><a name="idd1e97567"></a><a name="idd1e97572"></a><a name="idd1e97577"></a>The program shown in <a class="docLink" href="ch13lev1sec6.html#ch13fig07">Figure 13.7</a> shows one way a daemon can reread its configuration file. The program uses <tt>sigwait</tt> and multiple threads, as discussed in <a class="docLink" href="ch12lev1sec8.html#ch12lev1sec8">Section 12.8</a>.</P>
+<p class="docText"><a name="idd1e97597"></a><a name="idd1e97600"></a><a name="idd1e97605"></a><a name="idd1e97610"></a>We call <tt>daemonize</tt> from <a class="docLink" href="ch13lev1sec3.html#ch13fig01">Figure 13.1</a> to initialize the daemon. When it returns, we call <tt>already_running</tt> from <a class="docLink" href="ch13lev1sec5.html#ch13fig06">Figure 13.6</a> to ensure that only one copy of the daemon is running. At this point, <tt>SIGHUP</tt> is still ignored, so we need to reset the disposition to the default behavior; otherwise, the thread calling <tt>sigwait</tt> may never see the signal.</p>
+<p class="docText">We block all signals, as is recommended for multithreaded programs, and create a thread to handle signals. The thread's only job is to wait for <tt>SIGHUP</tt> and <tt>SIGTERM</tt>. When it receives <tt>SIGHUP</tt>, the thread calls <tt>reread</tt> to reread its configuration file. When it receives <tt>SIGTERM</tt>, the thread logs a message and exits.</P>
+<p class="docText">Recall from <a class="docLink" href="ch10lev1sec2.html#ch10fig01">Figure 10.1</a> that the default action for <tt>SIGHUP</tt> and <tt>SIGTERM</tt> is to terminate the process. Because we block these signals, the daemon will not die when one of them is sent to the process. Instead, the thread calling <tt>sigwait</tt> will return with an indication that the signal has been received.</P>
+
+<a name="ch13fig07"></a>
+<h5 class="docExampleTitle">Figure 13.7. Daemon rereading configuration files</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;pthread.h&gt;
+#include &lt;syslog.h&gt;
+
+sigset_t    mask;
+
+extern int already_running(void);
+
+void
+reread(void)
+{
+    /* ... */
+}
+
+void *
+thr_fn(void *arg)
+{
+    int err, signo;
+
+    for (;;) {
+        err = sigwait(&amp;mask, &amp;signo);
+        if (err != 0) {
+            syslog(LOG_ERR, "sigwait failed");
+            exit(1);
+        }
+
+        switch (signo) {
+        case SIGHUP:
+            syslog(LOG_INFO, "Re-reading configuration file");
+            reread();
+            break;
+
+        case SIGTERM:
+            syslog(LOG_INFO, "got SIGTERM; exiting");
+            exit(0);
+
+        default:
+            syslog(LOG_INFO, "unexpected signal %d\n", signo);
+        }
+    }
+    return(0);
+}
+
+int
+main(int argc, char *argv[])
+{
+    int                 err;
+    pthread_t           tid;
+    char                *cmd;
+    struct sigaction    sa;
+
+    if ((cmd = strrchr(argv[0], '/')) == NULL)
+        cmd = argv[0];
+    else
+        cmd++;
+
+    /*
+     * Become a daemon.
+     */
+    daemonize(cmd);
+
+    /*
+     * Make sure only one copy of the daemon is running.
+     */
+    if (already_running()) {
+        syslog(LOG_ERR, "daemon already running");
+        exit(1);
+    }
+
+    /*
+     * Restore SIGHUP default and block all signals.
+     */
+    sa.sa_handler = SIG_DFL;
+    sigemptyset(&amp;sa.sa_mask);
+    sa.sa_flags = 0;
+    if (sigaction(SIGHUP, &amp;sa, NULL) &lt; 0)
+        err_quit("%s: can't restore SIGHUP default");
+    sigfillset(&amp;mask);
+    if ((err = pthread_sigmask(SIG_BLOCK, &amp;mask, NULL)) != 0)
+        err_exit(err, "SIG_BLOCK error");
+
+    /*
+     * Create a thread to handle SIGHUP and SIGTERM.
+     */
+    err = pthread_create(&amp;tid, NULL, thr_fn, 0);
+    if (err != 0)
+        err_exit(err, "can't create thread");
+    /*
+     * Proceed with the rest of the daemon.
+     */
+    /* ... */
+    exit(0);
+}
+</pre><br>
+
+
+<a name="ch13ex05"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText"><a name="idd1e97704"></a><a name="idd1e97709"></a><a name="idd1e97714"></a><a name="idd1e97719"></a><a name="idd1e97724"></a><a name="idd1e97729"></a><a name="idd1e97734"></a><a name="idd1e97739"></a><a name="idd1e97744"></a>As noted in <a class="docLink" href="ch12lev1sec8.html#ch12lev1sec8">Section 12.8</a>, Linux threads behave differently with respect to signals. Because of this, identifying the proper process to signal in <a class="docLink" href="ch13lev1sec6.html#ch13fig07">Figure 13.7</a> will be difficult. In addition, we aren't guaranteed that the daemon will react as we expect, because of the implementation differences.</p>
+<p class="docText">The program in <a class="docLink" href="ch13lev1sec6.html#ch13fig08">Figure 13.8</a> shows how a daemon can catch <tt>SIGHUP</tt> and reread its configuration file without using multiple threads.</P>
+<p class="docText"><a name="idd1e97771"></a><a name="idd1e97776"></a><a name="idd1e97781"></a><a name="idd1e97786"></a><a name="idd1e97791"></a><a name="idd1e97796"></a><a name="idd1e97801"></a><a name="idd1e97804"></a><a name="idd1e97809"></a><a name="idd1e97814"></a>After initializing the daemon, we install signal handlers for <tt>SIGHUP</tt> and <tt>SIGTERM</tt>. We can either place the reread logic in the signal handler or just set a flag in the handler and have the main thread of the daemon do all the work instead.</p>
+
+<a name="ch13fig08"></a>
+<H5 class="docExampleTitle">Figure 13.8. Alternate implementation of daemon rereading configuration files</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;syslog.h&gt;
+#include &lt;errno.h&gt;
+
+extern int lockfile(int);
+extern int already_running(void);
+
+void
+reread(void)
+{
+    /* ... */
+}
+
+void
+sigterm(int signo)
+{
+    syslog(LOG_INFO, "got SIGTERM; exiting");
+    exit(0);
+}
+
+void
+sighup(int signo)
+{
+    syslog(LOG_INFO, "Re-reading configuration file");
+    reread();
+}
+int
+main(int argc, char *argv[])
+{
+    char                *cmd;
+    struct sigaction    sa;
+    if ((cmd = strrchr(argv[0], '/')) == NULL)
+        cmd = argv[0];
+    else
+        cmd++;
+
+    /*
+     * Become a daemon.
+     */
+    daemonize(cmd);
+
+    /*
+     * Make sure only one copy of the daemon is running.
+     */
+    if (already_running()) {
+        syslog(LOG_ERR, "daemon already running");
+        exit(1);
+    }
+
+    /*
+     * Handle signals of interest.
+     */
+    sa.sa_handler = sigterm;
+    sigemptyset(&amp;sa.sa_mask);
+    sigaddset(&amp;sa.sa_mask, SIGHUP);
+    sa.sa_flags = 0;
+    if (sigaction(SIGTERM, &amp;sa, NULL) &lt; 0) {
+        syslog(LOG_ERR, "can't catch SIGTERM: %s", strerror(errno));
+        exit(1);
+    }
+    sa.sa_handler = sighup;
+    sigemptyset(&amp;sa.sa_mask);
+    sigaddset(&amp;sa.sa_mask, SIGTERM);
+    sa.sa_flags = 0;
+    if (sigaction(SIGHUP, &amp;sa, NULL) &lt; 0) {
+        syslog(LOG_ERR, "can't catch SIGHUP: %s", strerror(errno));
+        exit(1);
+    }
+
+    /*
+     * Proceed with the rest of the daemon.
+     */
+    /* ... */
+    exit(0);
+}
+</pre><br>
+
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch13lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch13lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

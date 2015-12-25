@@ -1,0 +1,156 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 5.13.&nbsp; Temporary Files</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec14.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch05lev1sec13"></a>
+<h3 class="docSection1Title">5.13. Temporary Files</h3>
+<p class="docText">The ISO C standard defines two functions that are provided by the standard I/O library to assist in creating temporary files.</P>
+<a name="inta356"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdio.h&gt;
+
+char *tmpnam(char *<span class="docEmphItalicAlt">ptr</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer to unique pathname</p></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+FILE *tmpfile(void);
+</pre><BR>
+
+</p></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: file pointer if OK, <tt>NULL</tt> on error</P></td></tr></table></p><br>
+<p class="docText">The <tt>tmpnam</tt> function generates a string that is a valid pathname and that is not the same name as an existing file. This function generates a different pathname each time it is called, up to <tt>TMP_MAX</tt> times. <tt>TMP_MAX</tt> is defined in <tt>&lt;stdio.h&gt;</tt>.</P>
+<blockquote>
+<p class="docText"><a name="idd1e40592"></a><a name="idd1e40597"></a><a name="idd1e40602"></a><a name="idd1e40607"></a><a name="idd1e40612"></a><a name="idd1e40617"></a><a name="idd1e40620"></a>Although ISO C defines <tt>TMP_MAX</tt>, the C standard requires only that its value be at least 25. The Single UNIX Specification, however, requires that XSI-conforming systems support a value of at least 10,000. Although this minimum value allows an implementation to use four digits (00009999), most implementations on UNIX systems use lowercase or uppercase characters.</p>
+</blockquote>
+<p class="docText">If <span class="docEmphasis">ptr</span> is <tt>NULL</tt>, the generated pathname is stored in a static area, and a pointer to this area is returned as the value of the function. Subsequent calls to <tt>tmpnam</tt> can overwrite this static area. (This means that if we call this function more than once and we want to save the pathname, we have to save a copy of the pathname, not a copy of the pointer.) If <span class="docEmphasis">ptr</span> is not <tt>NULL</tt>, it is assumed that it points to an array of at least <tt>L_tmpnam</tt> characters. (The constant <tt>L_tmpnam</tt> is defined in <tt>&lt;stdio.h&gt;</tt>.) The generated pathname is stored in this array, and <span class="docEmphasis">ptr</span> is also returned as the value of the function.</P>
+<p class="docText">The <tt>tmpfile</tt> function creates a temporary binary file (type <tt>wb+</tt>) that is automatically removed when it is closed or on program termination. Under the UNIX System, it makes no difference that this file is a binary file.</p>
+<a name="ch05ex02"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch05lev1sec13.html#ch05fig12">Figure 5.12</a> demonstrates these two functions.</p>
+<p class="docText">If we execute the program in <a class="docLink" href="ch05lev1sec13.html#ch05fig12">Figure 5.12</a>, we get</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+   /tmp/fileC1Icwc
+   /tmp/filemSkHSe
+   one line of output
+</pre><br>
+
+
+<a name="ch05fig12"></a>
+<h5 class="docExampleTitle">Figure 5.12. Demonstrate <tt>tmpnam</tt> and <tt>tmpfile</tt> functions</h5>
+
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+    char    name[L_tmpnam], line[MAXLINE];
+    FILE    *fp;
+
+    printf("%s\n", tmpnam(NULL));       /* first temp name */
+
+    tmpnam(name);                       /* second temp name */
+    printf("%s\n", name);
+
+    if ((fp = tmpfile()) == NULL)       /* create temp file */
+        err_sys("tmpfile error");
+    fputs("one line of output\n", fp);  /* write to temp file */
+    rewind(fp);                         /* then read it back */
+    if (fgets(line, sizeof(line), fp) == NULL)
+        err_sys("fgets error");
+    fputs(line, stdout);                /* print the line we wrote */
+
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e40727"></a><a name="idd1e40733"></a><a name="idd1e40738"></a><a name="idd1e40743"></a><a name="idd1e40748"></a><a name="idd1e40755"></a><a name="idd1e40760"></a>The standard technique often used by the <tt>tmpfile</tt> function is to create a unique pathname by calling <tt>tmpnam</tt>, then create the file, and immediately <tt>unlink</tt> it. Recall from <a class="docLink" href="ch04lev1sec15.html#ch04lev1sec15">Section 4.15</a> that unlinking a file does not delete its contents until the file is closed. This way, when the file is closed, either explicitly or on program termination, the contents of the file are deleted.</p>
+<p class="docText">The Single UNIX Specification defines two additional functions as XSI extensions for dealing with temporary files. The first of these is the <tt>tempnam</tt> function.</p>
+<a name="inta353"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID4"></a><div class="v1"><a href="ch05lev1sec13.html#PLID4">[View full width]</a></div><pre>
+#include &lt;stdio.h&gt;
+
+char *tempnam(const char *<span class="docEmphItalicAlt">directory</span>, const char
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *<span class="docEmphItalicAlt">prefix</span>);
+</pre><br>
+
+</p></td></tr><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer to unique pathname</P></td></TR></table></P><BR>
+<p class="docText">The <tt>tempnam</tt> function is a variation of <tt>tmpnam</tt> that allows the caller to specify both the directory and a prefix for the generated pathname. There are four possible choices for the directory, and the first one that is true is used.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">If the environment variable <tt>TMPDIR</tt> is defined, it is used as the directory. (We describe environment variables in <a class="docLink" href="ch07lev1sec9.html#ch07lev1sec9">Section 7.9</a>.)</P></div></LI><li><div style="font-weight:normal"><p class="docList">If <span class="docEmphasis">directory</span> is not <tt>NULL</tt>, it is used as the directory.</P></div></li><LI><div style="font-weight:normal"><p class="docList">The string <tt>P_tmpdir</tt> in <tt>&lt;stdio.h&gt;</tt> is used as the directory.</P></div></LI><li><div style="font-weight:normal"><p class="docList">A local directory, usually <tt>/tmp</tt>, is used as the directory.</P></div></LI></ol></div>
+<p class="docText">If the <span class="docEmphasis">prefix</span> argument is not <tt>NULL</tt>, it should be a string of up to five bytes to be used as the first characters of the filename.</p>
+<p class="docText">This function calls the <tt>malloc</tt> function to allocate dynamic storage for the constructed pathname. We can free this storage when we're done with the pathname. (We describe the <tt>malloc</tt> and <tt>free</tt> functions in <a class="docLink" href="ch07lev1sec8.html#ch07lev1sec8">Section 7.8</a>.)</P>
+<a name="ch05ex03"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch05lev1sec13.html#ch05fig13">Figure 5.13</a> shows the use of <tt>tempnam</tt>.</p>
+<p class="docText"><a name="idd1e40915"></a><a name="idd1e40920"></a><a name="idd1e40923"></a><a name="idd1e40926"></a><a name="idd1e40933"></a><a name="idd1e40938"></a>Note that if either command-line argumentthe directory or the prefixbegins with a blank, we pass a null pointer to the function. We can now show the various ways to use it:</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out /home/sar TEMP</span>                <span class="docEmphItalicAlt">specify both directory and prefix</span>
+   /home/sar/TEMPsf00zi
+   $ <span class="docEmphStrong">./a.out " " PFX</span>                       <span class="docEmphItalicAlt">use default directory:</span> P_tmpdir
+   /tmp/PFXfBw7Gi
+   $ <span class="docEmphStrong">TMPDIR=/var/tmp ./a.out /usr/tmp " "</span>  <span class="docEmphItalicAlt">use environment variable; no prefix</span>
+   /var/tmp/file8fVYNi                     <span class="docEmphasis">environment variable overrides directory</span>
+   $ <span class="docEmphStrong">TMPDIR=/no/such/dir ./a.out /home/sar/tmp QQQ</span>
+   /home/sar/tmp/QQQ98s8Ui                 <span class="docEmphItalicAlt">invalid environment directory is ignored</span>
+</pre><br>
+
+<p class="docText">As the four steps that we listed earlier for specifying the directory name are tried in order, this function also checks whether the corresponding directory name makes sense. If the directory doesn't exist (the <tt>/no/such/dir</tt> example), that case is skipped, and the next choice for the directory name is tried. From this example, we can see that for this implementation, the <tt>P_tmpdir</tt> directory is <tt>/tmp</tt>. The technique that we used to set the environment variable, specifying <tt>TMPDIR=</tt> before the program name, is used by the Bourne shell, the Korn shell, and <tt>bash</tt>.</P>
+
+<a name="ch05fig13"></a>
+<h5 class="docExampleTitle">Figure 5.13. Demonstrate <tt>tempnam</tt> function</H5>
+
+<pre>
+#include "apue.h"
+
+int
+main(int argc, char *argv[])
+{
+    if (argc != 3)
+        err_quit("usage: a.out &lt;directory&gt; &lt;prefix&gt;");
+
+    printf("%s\n", tempnam(argv[1][0] != ' ' ? argv[1] : NULL,
+      argv[2][0] != ' ' ?  argv[2] : NULL));
+
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText">The second function that XSI defines is <tt>mkstemp</tt>. It is similar to <tt>tmpfile</tt>, but returns an open file descriptor for the temporary file instead of a file pointer.</P>
+<a name="inta160"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdlib.h&gt;
+
+int mkstemp(char *<span class="docEmphItalicAlt">template</span>);
+</pre><br>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: file descriptor if OK, 1 on error</p></td></tr></table></p><br>
+<p class="docText">The returned file descriptor is open for reading and writing. The name of the temporary file is selected using the <span class="docEmphasis">template</span> string. This string is a pathname whose last six characters are set to <tt>XXXXXX</tt>. The function replaces these with different characters to create a unique pathname. If <tt>mkstemp</tt> returns success, it modifies the <span class="docEmphasis">template</span> string to reflect the name of the temporary file.</p>
+<p class="docText">Unlike <tt>tmpfile</tt>, the temporary file created by <tt>mkstemp</tt> is not removed automatically for us. If we want to remove it from the file system namespace, we need to unlink it ourselves.</p>
+<p class="docText">There is a drawback to using <tt>tmpnam</tt> and <tt>tempnam</tt>: a window exists between the time that the unique pathname is returned and the time that an application creates a file with that name. During this timing window, another process can create a file of the same name. The <tt>tempfile</tt> and <tt>mkstemp</tt> functions should be used instead, as they don't suffer from this problem.</p>
+<blockquote>
+<p class="docText">The <tt>mktemp</tt> function is similar to <tt>mkstemp</tt>, except that it creates a name suitable only for use as a temporary file. The <tt>mktemp</tt> function doesn't create a file, so it suffers from the same drawback as <tt>tmpnam</tt> and <tt>tempnam</tt>. The <tt>mktemp</tt> function is marked as a legacy interface in the Single UNIX Specification. Legacy interfaces might be withdrawn in future versions of the Single UNIX Specification, and so should be avoided.</P>
+</blockquote>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec12.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec14.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

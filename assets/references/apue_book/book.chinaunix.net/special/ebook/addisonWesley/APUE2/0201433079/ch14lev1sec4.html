@@ -1,0 +1,385 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 14.4.&nbsp; STREAMS</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch14lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch14lev1sec4"></a>
+<h3 class="docSection1Title">14.4. STREAMS</h3>
+<p class="docText"><a name="idd1e101076"></a><a name="idd1e101079"></a><a name="idd1e101084"></a><a name="idd1e101087"></a><a name="idd1e101092"></a><a name="idd1e101095"></a><a name="idd1e101098"></a><a name="idd1e101101"></a><a name="idd1e101104"></a><a name="idd1e101107"></a><a name="idd1e101110"></a><a name="idd1e101113"></a>The STREAMS mechanism is provided by System V as a general way to interface communication drivers into the kernel. We need to discuss STREAMS to understand the terminal interface in System V, the use of the <tt>poll</tt> function for I/O multiplexing (<a class="docLink" href="ch14lev1sec5.html#ch14lev2sec15">Section 14.5.2</a>), and the implementation of STREAMS-based pipes and named pipes (<a class="docLink" href="ch17lev1sec2.html#ch17lev1sec2">Sections 17.2</a> and <a class="docLink" href="ch17lev1sec2.html#ch17lev2sec1">17.2.1</a>).</P>
+<blockquote>
+<p class="docText">Be careful not to confuse this usage of the word <span class="docEmphasis">stream</span> with our previous usage of it in the standard I/O library (<a class="docLink" href="ch05lev1sec2.html#ch05lev1sec2">Section 5.2</a>). The streams mechanism was developed by Dennis Ritchie [<a class="docLink" href="bib01.html#biblio01_054">Ritchie 1984</a>] as a way of cleaning up the traditional character I/O system (c-lists) and to accommodate networking protocols. The streams mechanism was later added to SVR3, after enhancing it a bit and capitalizing the name. Complete support for STREAMS (i.e., a STREAMS-based terminal I/O system) was provided with SVR4. The SVR4 implementation is described in [<a class="docLink" href="bib01.html#biblio01_010">AT&amp;T 1990d</a>]. Rago [<a class="docLink" href="bib01.html#biblio01_052">1993</a>] discusses both user-level STREAMS programming and kernel-level STREAMS programming.</P>
+<p class="docText">STREAMS is an optional feature in the Single UNIX Specification (included as the XSI STREAMS Option Group). Of the four platforms discussed in this text, only Solaris provides native support for STREAMS. A STREAMS subsystem is available for Linux, but you need to add it yourself. It is not usually included by default.</p>
+</blockquote>
+<p class="docText">A stream provides a full-duplex path between a user process and a device driver. There is no need for a stream to talk to a hardware device; a stream can also be used with a pseudo-device driver. <a class="docLink" href="ch14lev1sec4.html#ch14fig13">Figure 14.13</a> shows the basic picture for what is called a simple stream.</P>
+<a name="ch14fig13"></a><P><center>
+<H5 class="docFigureTitle">Figure 14.13. A simple stream</h5>
+
+<p class="docText">
+<img border="0" alt="" width="234" height="291" SRC="images/0201433079/graphics/14fig13.gif;423615"></P>
+
+</center></P><BR>
+<p class="docText">Beneath the stream head, we can push processing modules onto the stream. This is done using an <tt>ioctl</tt> command. <a class="docLink" href="ch14lev1sec4.html#ch14fig14">Figure 14.14</a> shows a stream with a single processing module. We also show the connection between these boxes with two arrows to stress the full-duplex nature of streams and to emphasize that the processing in one direction is separate from the processing in the other direction.</p>
+<a name="ch14fig14"></a><P><center>
+<h5 class="docFigureTitle">Figure 14.14. A stream with a processing module</H5>
+
+<p class="docText">
+<img border="0" alt="" width="466" height="330" SRC="images/0201433079/graphics/14fig14.gif;423615"></P>
+
+</center></P><br>
+<p class="docText"><a name="idd1e101206"></a><a name="idd1e101209"></a><a name="idd1e101212"></a><a name="idd1e101215"></a><a name="idd1e101220"></a><a name="idd1e101225"></a><a name="idd1e101230"></a><a name="idd1e101235"></a><a name="idd1e101238"></a><a name="idd1e101241"></a><a name="idd1e101246"></a><a name="idd1e101251"></a><a name="idd1e101256"></a><a name="idd1e101259"></a><a name="idd1e101264"></a>Any number of processing modules can be pushed onto a stream. We use the term <span class="docEmphasis">push</span>, because each new module goes beneath the stream head, pushing any previously pushed modules down. (This is similar to a last-in, first-out stack.) In <a class="docLink" href="ch14lev1sec4.html#ch14fig14">Figure 14.14</a>, we have labeled the downstream and upstream sides of the stream. Data that we write to a stream head is sent downstream. Data read by the device driver is sent upstream.</P>
+<p class="docText">STREAMS modules are similar to device drivers in that they execute as part of the kernel, and they are normally link edited into the kernel when the kernel is built. If the system supports dynamically-loadable kernel modules (as do Linux and Solaris), then we can take a STREAMS module that has not been link edited into the kernel and try to push it onto a stream; however, there is no guarantee that arbitrary combinations of modules and drivers will work properly together.</P>
+<p class="docText">We access a stream with the functions from <a class="docLink" href="ch03.html#ch03">Chapter 3</a>: <tt>open</tt>, <tt>close</tt>, <tt>read</tt>, <tt>write</tt>, and <tt>ioctl</tt>. Additionally, three new functions were added to the SVR3 kernel to support STREAMS (<tt>getmsg</tt>, <tt>putmsg</tt>, and <tt>poll</tt>), and another two (<tt>getpmsg</tt> and <tt>putpmsg</tt>) were added with SVR4 to handle messages with different priority bands within a stream. We describe these five new functions later in this section.</p>
+<p class="docText">The <span class="docEmphasis">pathname</span> that we <tt>open</tt> for a stream normally lives beneath the <tt>/dev</tt> directory. Simply looking at the device name using <tt>ls -l</tt>, we can't tell whether the device is a STREAMS device. All STREAMS devices are character special files.</P>
+<p class="docText">Although some STREAMS documentation implies that we can write processing modules and push them willy-nilly onto a stream, the writing of these modules requires the same skills and care as writing a device driver. Generally, only specialized applications or functions push and pop STREAMS modules.</P>
+<blockquote>
+<p class="docText">Before STREAMS, terminals were handled with the existing c-list mechanism. (Section 10.3.1 of Bach [<a class="docLink" href="bib01.html#biblio01_013">1986</a>] and <a class="docLink" href="ch10lev1sec6.html#ch10lev1sec6">Section 10.6</a> of McKusick et al. [<a class="docLink" href="bib01.html#biblio01_042">1996</a>] describe c-lists in SVR2 and 4.4BSD, <a name="idd1e101351"></a><a name="idd1e101354"></a><a name="idd1e101357"></a><a name="idd1e101360"></a><a name="idd1e101363"></a><a name="idd1e101366"></a><a name="idd1e101369"></a><a name="idd1e101372"></a><a name="idd1e101377"></a><a name="idd1e101382"></a><a name="idd1e101385"></a>respectively.) Adding other character-based devices to the kernel usually involved writing a device driver and putting everything into the driver. Access to the new device was typically through the raw device, meaning that every user <tt>read</tt> or <tt>write</tt> ended up directly in the device driver. The STREAMS mechanism cleans up this way of interacting, allowing the data to flow between the stream head and the driver in STREAMS messages and allowing any number of intermediate processing modules to operate on the data.</p>
+</blockquote>
+<a name="ch14lev2sec7"></a>
+<h4 class="docSection2Title">STREAMS Messages</h4>
+<p class="docText">All input and output under STREAMS is based on messages. The stream head and the user process exchange messages using <tt>read</tt>, <tt>write</tt>, <tt>ioctl</tt>, <tt>getmsg</tt>, <tt>getpmsg</tt>, <tt>putmsg</tt>, and <tt>putpmsg</tt>. Messages are also passed up and down a stream between the stream head, the processing modules, and the device driver.</p>
+<p class="docText">Between the user process and the stream head, a message consists of a message type, optional control information, and optional data. We show in <a class="docLink" href="ch14lev1sec4.html#ch14fig15">Figure 14.15</a> how the various message types are generated by the arguments to <tt>write</tt>, <tt>putmsg</tt>, and <tt>putpmsg</tt>. The control information and data are specified by <tt>strbuf</tt> structures:</P>
+
+<pre>
+   struct strbuf
+     int maxlen;  /* size of buffer */
+     int len;     /* number of bytes currently in buffer */
+     char *buf;   /* pointer to buffer */
+   };
+</pre><br>
+
+<a name="ch14fig15"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 14.15. Type of STREAMS message generated for <tt>write</tt>, <tt>putmsg</tt>, and <tt>putpmsg</tt></H5></caption><colgroup><col width="75"><col width="65"><col width="65"><col width="70"><col width="75"><col width="150"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="left" valign="top"><p class="docText"><span class="docEmphRoman">Function</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Control?</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman">Data?</span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman"><span class="docEmphasis">band</span></span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top"><p class="docText"><span class="docEmphRoman"><span class="docEmphasis">flag</span></span></p></th><th class="rightBorder bottomBorder thead" scope="col" align="left" valign="top"><p class="docText"><span class="docEmphRoman">Message type generated</span></p></th></tr></thead><tr><td class="rightBorder bottomBorder" align="left" valign="top"><p class="docText"><tt>write</tt></p></td><td class="rightBorder bottomBorder" align="center" valign="top"><p class="docText">N/A</p></td><td class="rightBorder bottomBorder" align="center" valign="top"><p class="docText">yes</p></TD><TD class="rightBorder bottomBorder" align="center" valign="top"><p class="docText">N/A</p></TD><TD class="rightBorder bottomBorder" align="center" valign="top"><p class="docText">N/A</P></td><TD class="bottomBorder" align="left" valign="top"><p class="docText"><tt>M_DATA</tt> (ordinary)</P></TD></tr><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>putmsg</tt></P></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">no</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">no</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">N/A</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">0</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">no message sent, returns 0</P></td></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>putmsg</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">no</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">yes</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">N/A</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">0</p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>M_DATA</tt> (ordinary)</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>putmsg</tt></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">yes</P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">yes or no</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">N/A</P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">0</P></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>M_PROTO</tt> (ordinary)</P></TD></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>putmsg</tt></p></TD><td class="rightBorder" align="center" valign="top"><p class="docText">yes</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">yes or no</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">N/A</p></td><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>RS_HIPRI</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>M_PCPROTO</tt> (high-priority)</p></td></tr><tr><td class="rightBorder bottomBorder" align="left" valign="top"><p class="docText"><tt>putmsg</tt></p></td><td class="rightBorder bottomBorder" align="center" valign="top"><p class="docText">no</P></TD><td class="rightBorder bottomBorder" align="center" valign="top"><p class="docText">yes or no</P></TD><TD class="rightBorder bottomBorder" align="center" valign="top"><p class="docText">N/A</p></TD><TD class="rightBorder bottomBorder" align="center" valign="top"><p class="docText"><tt>RS_HIPRI</tt></P></td><TD class="bottomBorder" align="left" valign="top"><p class="docText">error, <tt>EINVAL</tt>
+</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>putpmsg</tt></P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">yes or no</P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">yes or no</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">0255</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">0</p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">error, <tt>EINVAL</tt>
+</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>putpmsg</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">no</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">no</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">0255</p></td><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>MSG_BAND</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">no message sent, returns 0</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>putpmsg</tt></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">no</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">yes</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">0</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>MSG_BAND</tt></P></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>M_DATA</tt> (ordinary)</p></td></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>putpmsg</tt></p></TD><td class="rightBorder" align="center" valign="top"><p class="docText">no</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">yes</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">1255</p></td><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>MSG_BAND</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>M_DATA</tt> (priority band)</p></td></tr><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>putpmsg</tt></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">yes</P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">yes or no</P></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">0</p></TD><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>MSG_BAND</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>M_PROTO</tt> (ordinary)</p></TD></TR><tr><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>putpmsg</tt></P></td><td class="rightBorder" align="center" valign="top"><p class="docText">yes</p></td><TD class="rightBorder" align="center" valign="top"><p class="docText">yes or no</p></TD><td class="rightBorder" align="center" valign="top"><p class="docText">1255</P></td><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>MSG_BAND</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>M_PROTO</tt> (priority band)</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>putpmsg</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">yes</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">yes or no</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">0</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText"><tt>MSG_HIPRI</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>M_PCPROTO</tt> (high-priority)</P></TD></tr><TR><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>putpmsg</tt></P></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">no</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">yes or no</p></TD><TD class="rightBorder" align="center" valign="top"><p class="docText">0</p></td><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>MSG_HIPRI</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText">error, <tt>EINVAL</tt>
+</P></td></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText"><tt>putpmsg</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">yes or no</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">yes or no</p></td><td class="rightBorder" align="center" valign="top"><p class="docText">nonzero</p></td><td class="rightBorder" align="center" valign="top"><p class="docText"><tt>MSG_HIPRI</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">error, <tt>EINVAL</tt>
+</P></TD></tr></table></P><BR>
+<p class="docText">When we send a message with <tt>putmsg</tt> or <tt>putpmsg</tt>, <tt>len</tt> specifies the number of bytes of data in the buffer. When we receive a message with <tt>getmsg</tt> or <tt>getpmsg</tt>, <tt>maxlen</tt> specifies the size of the buffer (so the kernel won't overflow the buffer), and <tt>len</tt> is set by the kernel to the amount of data stored in the buffer. We'll see that a zero-length message is OK and that a <tt>len</tt> of 1 can specify that there is no control or data.</P>
+<p class="docText">Why do we need to pass both control information and data? Providing both allows us to implement service interfaces between a user process and a stream. Olander, McGrath, and Israel [<a class="docLink" href="bib01.html#biblio01_047">1986</a>] describe the original implementation of service interfaces in System V. <a class="docLink" href="ch05.html#ch05">Chapter 5</a> of AT&amp;T [<a class="docLink" href="bib01.html#biblio01_010">1990d</a>] describes service interfaces in detail, along with a simple example. Probably the best-known service interface, described in <a class="docLink" href="ch04.html#ch04">Chapter 4</a> of Rago [<a class="docLink" href="bib01.html#biblio01_052">1993</a>], is the System V Transport Layer Interface (TLI), which provides an interface to the networking system.</p>
+<p class="docText">Another example of control information is sending a connectionless network message (a datagram). To send the message, we need to specify the contents of the message (the data) and the destination address for the message (the control information). If we couldn't send control and data together, some ad hoc scheme would be required. For example, we could specify the address using an <tt>ioctl</tt>, followed by a <tt>write</tt> of the data. Another technique would be to require that the address occupy the first <span class="docEmphasis">N</span> bytes of the data that is written using <tt>write</tt>. Separating the control information from the data, and providing functions that handle both (<tt>putmsg</tt> and <tt>getmsg</tt>) is a cleaner way to handle this.</P>
+<p class="docText">There are about 25 different types of messages, but only a few of these are used between the user process and the stream head. The rest are passed up and down a stream within the kernel. (These message types are of interest to people writing <a name="idd1e102051"></a><a name="idd1e102056"></a><a name="idd1e102059"></a><a name="idd1e102064"></a><a name="idd1e102069"></a><a name="idd1e102074"></a><a name="idd1e102079"></a><a name="idd1e102084"></a><a name="idd1e102091"></a><a name="idd1e102098"></a>STREAMS processing modules, but can safely be ignored by people writing user-level code.) We'll encounter only three of these message types with the functions we use (<tt>read</tt>, <tt>write</tt>, <tt>getmsg</tt>, <tt>getpmsg</tt>, <tt>putmsg</tt>, and <tt>putpmsg</tt>):</P>
+<UL><li><p class="docList"><tt>M_DATA</tt> (user data for I/O)</P></li><LI><p class="docList"><tt>M_PROTO</tt> (protocol control information)</P></LI><li><p class="docList"><tt>M_PCPROTO</tt> (high-priority protocol control information)</P></LI></ul>
+<p class="docText">Every message on a stream has a queueing priority:</P>
+<UL><li><p class="docList">High-priority messages (highest priority)</p></li><li><p class="docList">Priority band messages</P></li><LI><p class="docList">Ordinary messages (lowest priority)</p></LI></ul>
+<p class="docText">Ordinary messages are simply priority band messages with a band of 0. Priority band messages have a band of 1255, with a higher band specifying a higher priority. High-priority messages are special in that only one is queued by the stream head at a time. Additional high-priority messages are discarded when one is already on the stream head's read queue.</p>
+<p class="docText">Each STREAMS module has two input queues. One receives messages from the module above (messages moving downstream from the stream head toward the driver), and one receives messages from the module below (messages moving upstream from the driver toward the stream head). The messages on an input queue are arranged by priority. We show in <a class="docLink" href="ch14lev1sec4.html#ch14fig15">Figure 14.15</a> how the arguments to <tt>write</tt>, <tt>putmsg</tt>, and <tt>putpmsg</tt> cause these various priority messages to be generated.</p>
+<p class="docText">There are other types of messages that we don't consider. For example, if the stream head receives an <tt>M_SIG</tt> message from below, it generates a signal. This is how a terminal line discipline module sends the terminal-generated signals to the foreground process group associated with a controlling terminal.</p>
+
+<a name="ch14lev2sec8"></a>
+<h4 class="docSection2Title"><tt>putmsg</tt> and <tt>putpmsg</tt> Functions</h4>
+<p class="docText">A STREAMS message (control information or data, or both) is written to a stream using either <tt>putmsg</tt> or <tt>putpmsg</tt>. The difference in these two functions is that the latter allows us to specify a priority band for the message.</p>
+<a name="inta257"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID1"></a><div class="v1"><a href="ch14lev1sec4.html#PLID1">[View full width]</a></div><pre>
+#include &lt;stropts.h&gt;
+
+int putmsg(int <span class="docEmphItalicAlt">filedes</span>, const struct strbuf *<span class="docEmphItalicAlt">ctlptr</span>,
+           const struct strbuf *<span class="docEmphItalicAlt">dataptr</span>, int <span class="docEmphItalicAlt">flag</span>);
+
+int putpmsg(int <span class="docEmphItalicAlt">filedes</span>, const struct strbuf *<span class="docEmphItalicAlt">ctlptr</span>,
+            const struct strbuf *<span class="docEmphItalicAlt">dataptr</span>, int <span class="docEmphasis">band</span>
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif">, int <span class="docEmphasis">flag</span>);</pre><br>
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: 0 if OK, 1 on error</p></TD></TR></table></p><BR>
+<p class="docText">We can also <tt>write</tt> to a stream, which is equivalent to a <tt>putmsg</tt> without any control information and with a <span class="docEmphasis">flag</span> of 0.</P>
+<p class="docText"><a name="idd1e102280"></a><a name="idd1e102285"></a><a name="idd1e102290"></a><a name="idd1e102295"></a><a name="idd1e102300"></a><a name="idd1e102305"></a><a name="idd1e102308"></a><a name="idd1e102313"></a><a name="idd1e102318"></a><a name="idd1e102323"></a><a name="idd1e102326"></a><a name="idd1e102333"></a>These two functions can generate the three different priorities of messages: ordinary, priority band, and high priority. <a class="docLink" href="ch14lev1sec4.html#ch14fig15">Figure 14.15</a> details the combinations of the arguments to these two functions that generate the various types of messages.</P>
+<p class="docText">The notation &quot;N/A&quot; means <span class="docEmphasis">not applicable</span>. In this figure, a &quot;no&quot; for the control portion of the message corresponds to either a null <span class="docEmphasis">ctlptr</span> argument or <span class="docEmphasis">ctlptr&gt;len</span> being 1. A &quot;yes&quot; for the control portion corresponds to <span class="docEmphasis">ctlptr</span> being non-null and <span class="docEmphasis">ctlptr&gt;len</span> being greater than or equal to 0. The data portion of the message is handled equivalently (using <span class="docEmphasis">dataptr</span> instead of <span class="docEmphasis">ctlptr</span>).</p>
+
+<a name="ch14lev2sec9"></a>
+<H4 class="docSection2Title">STREAMS <tt>ioctl</tt> Operations</H4>
+<p class="docText">In <a class="docLink" href="ch03lev1sec15.html#ch03lev1sec15">Section 3.15</a>, we said that the <tt>ioctl</tt> function is the catchall for anything that can't be done with the other I/O functions. The STREAMS system continues this tradition.</P>
+<p class="docText">Between Linux and Solaris, there are almost 40 different operations that can be performed on a stream using <tt>ioctl</tt>. Most of these operations are documented in the <tt>streamio</tt>(7) manual page. The header <tt>&lt;stropts.h&gt;</tt> must be included in C code that uses any of these operations. The second argument for <tt>ioctl</tt>, <span class="docEmphasis">request</span>, specifies which of the operations to perform. All the <span class="docEmphasis">request</span>s begin with <tt>I_</tt>. The third argument depends on the <span class="docEmphasis">request</span>. Sometimes, the third argument is an integer value; sometimes, it's a pointer to an integer or a structure.</p>
+<a name="ch14ex08"></a>
+<H5 class="docExampleTitle">Example<tt>isastream</tt> Function</h5>
+<p class="docText">We sometimes need to determine if a descriptor refers to a stream or not. This is similar to calling the <tt>isatty</tt> function to determine if a descriptor refers to a terminal device (<a class="docLink" href="ch18lev1sec9.html#ch18lev1sec9">Section 18.9</a>). Linux and Solaris provide the <tt>isastream</tt> function.</P>
+<a name="inta147"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e102448"></a><a name="idd1e102453"></a><a name="idd1e102460"></a><a name="idd1e102465"></a>
+<pre>
+#include &lt;stropts.h&gt;
+
+int isastream(int <span class="docEmphItalicAlt">filedes</span>);</pre><BR>
+</P></td></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 1 (true) if STREAMS device, 0 (false) otherwise</p></td></tr></table></P><br>
+<p class="docText">Like <tt>isatty</tt>, this is usually a trivial function that merely tries an <tt>ioctl</tt> that is valid only on a STREAMS device. <a class="docLink" href="ch14lev1sec4.html#ch14fig16">Figure 14.16</a> shows one possible implementation of this function. We use the <tt>I_CANPUT ioctl</tt> command, which checks if the band specified by the third argument (0 in the example) is writable. If the <tt>ioctl</tt> succeeds, the stream is not changed.</P>
+<p class="docText">We can use the program in <a class="docLink" href="ch14lev1sec4.html#ch14fig17">Figure 14.17</a> to test this function.</p>
+<p class="docText"><a name="idd1e102515"></a><a name="idd1e102518"></a><a name="idd1e102523"></a><a name="idd1e102528"></a><a name="idd1e102533"></a><a name="idd1e102538"></a><a name="idd1e102543"></a><a name="idd1e102548"></a><a name="idd1e102553"></a><a name="idd1e102558"></a><a name="idd1e102563"></a><a name="idd1e102568"></a><a name="idd1e102573"></a><a name="idd1e102576"></a><a name="idd1e102581"></a><a name="idd1e102586"></a>Running this program on Solaris 9 shows the various errors returned by the <tt>ioctl</tt> function:</P>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out /dev/tty /dev/fb /dev/null /etc/motd</span>
+   /dev/tty: streams device
+   /dev/fb: not a stream: Invalid argument
+   /dev/null: not a stream: No such device or address
+   /etc/motd: not a stream: Inappropriate ioctl for device
+</pre><br>
+
+<p class="docText">Note that <tt>/dev/tty</tt> is a STREAMS device, as we expect under Solaris. The character special file <tt>/dev/fb</tt> is not a STREAMS device, but it supports other <tt>ioctl</tt> requests. These devices return <tt>EINVAL</tt> when the <tt>ioctl</tt> request is unknown. The character special file <tt>/dev/null</tt> does not support any <tt>ioctl</tt> operations, so the error <tt>ENODEV</tt> is returned. Finally, <tt>/etc/motd</tt> is a regular file, not a character special file, so the classic error <tt>ENOTTY</tt> is returned. We never receive the error we might expect: <tt>ENOSTR</tt> (&quot;Device is not a stream&quot;).</p>
+<blockquote>
+<p class="docText">The message for <tt>ENOTTY</tt> used to be &quot;Not a typewriter,&quot; a historical artifact because the UNIX kernel returns <tt>ENOTTY</tt> whenever an <tt>ioctl</tt> is attempted on a descriptor that doesn't refer to a character special device. This message has been updated on Solaris to &quot;Inappropriate ioctl for device.&quot;</p>
+</blockquote>
+
+<a name="ch14fig16"></a>
+<h5 class="docExampleTitle">Figure 14.16. Check if descriptor is a STREAMS device</h5>
+
+<pre>
+#include   &lt;stropts.h&gt;
+#include   &lt;unistd.h&gt;
+
+int
+isastream(int fd)
+{
+    return(ioctl(fd, I_CANPUT, 0) != -1);
+}
+</pre><br>
+
+
+<a name="ch14fig17"></a>
+<h5 class="docExampleTitle">Figure 14.17. Test the <tt>isastream</tt> function</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+
+int
+main(int argc, char *argv[])
+{
+    int     i, fd;
+
+    for (i = 1; i &lt; argc; i++) {
+        if ((fd = open(argv[i], O_RDONLY)) &lt; 0) {
+            err_ret("%s: can't open", argv[i]);
+            continue;
+        }
+
+        if (isastream(fd) == 0)
+            err_ret("%s: not a stream", argv[i]);
+        else
+            err_msg("%s: streams device", argv[i]);
+     }
+
+     exit(0);
+}
+</pre><br>
+
+
+<a name="ch14ex09"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">If the <tt>ioctl</tt> <span class="docEmphasis">request</span> is <tt>I_LIST</tt>, the system returns the names of all the modules on the streamthe ones that have been pushed onto the stream, including the topmost driver. (We say topmost because in the case of a multiplexing driver, there may be more than one driver. <a class="docLink" href="ch12.html#ch12">Chapter 12</a> of Rago [<a class="docLink" href="bib01.html#biblio01_052">1993</a>] discusses multiplexing drivers in detail.) The third argument must be a pointer to a <tt>str_list</tt> structure:</p>
+
+<pre>
+   struct str_list {
+     int                sl_nmods;   /* number of entries in array */
+     struct str_mlist  *sl_modlist; /* ptr to first element of array */
+   };
+</pre><br>
+
+<p class="docText">We have to set <tt>sl_modlist</tt> to point to the first element of an array of <tt>str_mlist</tt> structures and set <tt>sl_nmods</tt> to the number of entries in the array:</p>
+
+<pre>
+   struct str_mlist {
+     char l_name[FMNAMESZ+1]; /* null terminated module name */
+   };
+</pre><br>
+
+<p class="docText">The constant <tt>FMNAMESZ</tt> is defined in the header <tt>&lt;sys/conf.h&gt;</tt> and is often 8. The extra byte in <tt>l_name</tt> is for the terminating null byte.</p>
+<p class="docText">If the third argument to the <tt>ioctl</tt> is 0, the count of the number of modules is returned (as the value of <tt>ioctl</tt>) instead of the module names. We'll use this to determine the number of modules and then allocate the required number of <tt>str_mlist</tt> structures.</p>
+<p class="docText"><a class="docLink" href="ch14lev1sec4.html#ch14fig18">Figure 14.18</a> illustrates the <tt>I_LIST</tt> operation. Since the returned list of names doesn't differentiate between the modules and the driver, when we print the module names, we know that the final entry in the list is the driver at the bottom of the stream.</P>
+<p class="docText"><a name="idd1e102786"></a><a name="idd1e102791"></a><a name="idd1e102796"></a><a name="idd1e102801"></a><a name="idd1e102806"></a><a name="idd1e102811"></a><a name="idd1e102816"></a><a name="idd1e102821"></a><a name="idd1e102826"></a><a name="idd1e102831"></a><a name="idd1e102837"></a><a name="idd1e102843"></a><a name="idd1e102849"></a><a name="idd1e102855"></a><a name="idd1e102861"></a><a name="idd1e102866"></a><a name="idd1e102871"></a><a name="idd1e102876"></a>If we run the program in <a class="docLink" href="ch14lev1sec4.html#ch14fig18">Figure 14.18</a> from both a network login and a console login, to see which STREAMS modules are pushed onto the controlling terminal, we get the following:</P>
+
+<pre>
+   $ <span class="docEmphStrong">who</span>
+   sar        console     May 1 18:27
+   sar        pts/7       Jul 12 06:53
+   $ <span class="docEmphStrong">./a.out /dev/console</span>
+   #modules = 5
+     module: redirmod
+     module: ttcompat
+     module: ldterm
+     module: ptem
+     driver: pts
+   $ <span class="docEmphStrong">./a.out /dev/pts/7</span>
+   #modules = 4
+     module: ttcompat
+     module: ldterm
+     module: ptem
+     driver: pts
+</pre><br>
+
+<p class="docText">The modules are the same in both cases, except that the console has an extra module on top that helps with virtual console redirection. On this computer, a windowing system was running on the console, so <tt>/dev/console</tt> actually refers to a pseudo terminal instead of to a hardwired device. We'll return to the pseudo terminal case in <a class="docLink" href="ch19.html#ch19">Chapter 19</a>.</P>
+
+<a name="ch14fig18"></a>
+<H5 class="docExampleTitle">Figure 14.18. List the names of the modules on a stream</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+#include &lt;stropts.h&gt;
+#include &lt;sys/conf.h&gt;
+
+int
+main(int argc, char *argv[])
+{
+    int                 fd, i, nmods;
+    struct str_list     list;
+
+    if (argc != 2)
+        err_quit("usage: %s &lt;pathname&gt;", argv[0]);
+
+    if ((fd = open(argv[1], O_RDONLY)) &lt; 0)
+        err_sys("can't open %s", argv[1]);
+    if (isastream(fd) == 0)
+        err_quit("%s is not a stream", argv[1]);
+
+    /*
+     * Fetch number of modules.
+     */
+    if ((nmods = ioctl(fd, I_LIST, (void *) 0)) &lt; 0)
+        err_sys("I_LIST error for nmods");
+    printf("#modules = %d\n", nmods);
+
+    /*
+     * Allocate storage for all the module names.
+     */
+    list.sl_modlist = calloc(nmods, sizeof(struct str_mlist));
+    if (list.sl_modlist == NULL)
+        err_sys("calloc error");
+    list.sl_nmods = nmods;
+
+    /*
+     * Fetch the module names.
+     */
+    if (ioctl(fd, I_LIST, &amp;list) &lt; 0)
+        err_sys("I_LIST error for list");
+
+    /*
+     * Print the names.
+     */
+    for (i = 1; i &lt;= nmods; i++)
+        printf(" %s: %s\n", (i == nmods) ? "driver" : "module",
+          list.sl_modlist++-&gt;l_name);
+
+    exit(0);
+}
+</pre><br>
+
+
+
+<a name="ch14lev2sec10"></a>
+<H4 class="docSection2Title"><tt>write</tt> to STREAMS Devices</H4>
+<p class="docText"><a name="idd1e102925"></a><a name="idd1e102930"></a><a name="idd1e102935"></a><a name="idd1e102940"></a>In <a class="docLink" href="ch14lev1sec4.html#ch14fig15">Figure 14.15</a> we said that a <tt>write</tt> to a STREAMS device generates an <tt>M_DATA</tt> message. Although this is generally true, there are some additional details to consider. First, with a stream, the topmost processing module specifies the minimum and maximum packet sizes that can be sent downstream. (We are unable to query the module for these values.) If we <tt>write</tt> more than the maximum, the stream head normally breaks the data into packets of the maximum size, with one final packet that can be smaller than the maximum.</P>
+<p class="docText">The next thing to consider is what happens if we <tt>write</tt> zero bytes to a stream. Unless the stream refers to a pipe or FIFO, a zero-length message is sent downstream. With a pipe or FIFO, the default is to ignore the zero-length <tt>write</tt>, for compatibility with previous versions. We can change this default for pipes and FIFOs using an <tt>ioctl</tt> to set the write mode for the stream.</p>
+
+<a name="ch14lev2sec11"></a>
+<H4 class="docSection2Title">Write Mode</h4>
+<p class="docText">Two <tt>ioctl</tt> commands fetch and set the write mode for a stream. Setting <span class="docEmphasis">request</span> to <tt>I_GWROPT</tt> requires that the third argument be a pointer to an integer, and the current write mode for the stream is returned in that integer. If <span class="docEmphasis">request</span> is <tt>I_SWROPT</tt>, the third argument is an integer whose value becomes the new write mode for the stream. As with the file descriptor flags and the file status flags (<a class="docLink" href="ch03lev1sec14.html#ch03lev1sec14">Section 3.14</a>), we should always <a name="idd1e103017"></a><a name="idd1e103022"></a><a name="idd1e103029"></a><a name="idd1e103034"></a><a name="idd1e103041"></a><a name="idd1e103046"></a><a name="idd1e103051"></a><a name="idd1e103056"></a><a name="idd1e103061"></a><a name="idd1e103066"></a><a name="idd1e103071"></a><a name="idd1e103076"></a><a name="idd1e103081"></a><a name="idd1e103086"></a>fetch the current write mode value and modify it rather than set the write mode to some absolute value (possibly turning off some other bits that were enabled).</P>
+<p class="docText">Currently, only two write mode values are defined.</P>
+<a name="inta119"></a><P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="100"><col width="400"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>SNDZERO</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">A zero-length <tt>write</tt> to a pipe or FIFO will cause a zero-length message to be sent downstream. By default, this zero-length <tt>write</tt> sends no message.</P></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>SNDPIPE</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">Causes <tt>SIGPIPE</tt> to be sent to the calling process that calls either <tt>write</tt> or <tt>putmsg</tt> after an error has occurred on a stream.</p></TD></tr></table></p><br>
+<p class="docText">A stream also has a read mode, and we'll look at it after describing the <tt>getmsg</tt> and <tt>getpmsg</tt> functions.</p>
+
+<a name="ch14lev2sec12"></a>
+<h4 class="docSection2Title"><tt>getmsg</tt> and <tt>getpmsg</tt> Functions</h4>
+<p class="docText">STREAMS messages are read from a stream head using <tt>read</tt>, <tt>getmsg</tt>, or <tt>getpmsg</tt>.</p>
+<a name="inta109"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID10"></a><div class="v1"><a href="ch14lev1sec4.html#PLID10">[View full width]</a></div><pre>
+#include &lt;stropts.h&gt;
+
+int getmsg(int <span class="docEmphItalicAlt">filedes</span>, struct strbuf *restrict
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">ctlptr</span>,
+           struct strbuf *restrict <span class="docEmphItalicAlt">dataptr</span>, int
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">flagptr</span>);
+
+int getpmsg(int <span class="docEmphItalicAlt">filedes</span>, struct strbuf *restrict
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> <span class="docEmphItalicAlt">ctlptr</span>,
+            struct strbuf *restrict <span class="docEmphItalicAlt">dataptr</span>, int
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> *restrict <span class="docEmphItalicAlt">bandptr</span>,
+            int *restrict <span class="docEmphItalicAlt">flagptr</span>);</pre><br>
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Both return: non-negative value if OK, 1 on error</p></TD></TR></table></p><BR>
+<p class="docText">Note that <span class="docEmphasis">flagptr</span> and <span class="docEmphasis">bandptr</span> are pointers to integers. The integer pointed to by these two pointers must be set before the call to specify the type of message desired, and the integer is also set on return to the type of message that was read.</P>
+<p class="docText">If the integer pointed to by <span class="docEmphasis">flagptr</span> is 0, <tt>getmsg</tt> returns the next message on the stream head's read queue. If the next message is a high-priority message, the integer pointed to by <span class="docEmphasis">flagptr</span> is set to <tt>RS_HIPRI</tt> on return. If we want to receive only high-priority messages, we must set the integer pointed to by <span class="docEmphasis">flagptr</span> to <tt>RS_HIPRI</tt> before calling <tt>getmsg</tt>.</P>
+<p class="docText">A different set of constants is used by <tt>getpmsg</tt>. We can set the integer pointed to by <span class="docEmphasis">flagptr</span> to <tt>MSG_HIPRI</tt> to receive only high-priority messages. We can set the integer to <tt>MSG_BAND</tt> and then set the integer pointed to by <span class="docEmphasis">bandptr</span> to a nonzero priority value to receive only messages from that band, or higher (including high-priority messages). If we only want to receive the first available message, we can set the integer pointed to by <span class="docEmphasis">flagptr</span> to <tt>MSG_ANY</tt>; on return, the integer will be overwritten with either <tt>MSG_HIPRI</tt> or <tt>MSG_BAND</tt>, depending on the type of message received. If the message we retrieved was not a high-priority message, the integer pointed to by <span class="docEmphasis">bandptr</span> will contain the message's priority band.</p>
+<p class="docText">If <span class="docEmphasis">ctlptr</span> is null or <span class="docEmphasis">ctlptr&gt;maxlen</span> is 1, the control portion of the message will remain on the stream head's read queue, and we will not process it. Similarly, if <span class="docEmphasis">dataptr</span> is null or <span class="docEmphasis">dataptr&gt;maxlen</span> is 1, the data portion of the message is not processed and remains on the stream head's read queue. Otherwise, we will retrieve as much control and data <a name="idd1e103314"></a><a name="idd1e103319"></a><a name="idd1e103324"></a><a name="idd1e103329"></a><a name="idd1e103334"></a><a name="idd1e103339"></a><a name="idd1e103344"></a><a name="idd1e103347"></a><a name="idd1e103352"></a><a name="idd1e103357"></a><a name="idd1e103362"></a><a name="idd1e103367"></a><a name="idd1e103372"></a><a name="idd1e103377"></a>portions of the message as our buffers will hold, and any remainder will be left on the head of the queue for the next call.</P>
+<p class="docText">If the call to <tt>getmsg</tt> or <tt>getpmsg</tt> retrieves a message, the return value is 0. If part of the control portion of the message is left on the stream head read queue, the constant <tt>MORECTL</tt> is returned. Similarly, if part of the data portion of the message is left on the queue, the constant <tt>MOREDATA</tt> is returned. If both control and data are left, the return value is (<tt>MORECTL|MOREDATA</tt>).</P>
+
+<a name="ch14lev2sec13"></a>
+<H4 class="docSection2Title">Read Mode</h4>
+<p class="docText">We also need to consider what happens if we <tt>read</tt> from a STREAMS device. There are two potential problems.</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">What happens to the record boundaries associated with the messages on a stream?</P></div></LI><LI><div style="font-weight:normal"><p class="docList">What happens if we call <tt>read</tt> and the next message on the stream has control information?</p></div></LI></ol></div>
+<p class="docText">The default handling for condition 1 is called byte-stream mode. In this mode, a <tt>read</tt> takes data from the stream until the requested number of bytes has been read or until there is no more data. The message boundaries associated with the STREAMS messages are ignored in this mode. The default handling for condition 2 causes the <tt>read</tt> to return an error if there is a control message at the front of the queue. We can change either of these defaults.</P>
+<p class="docText">Using <tt>ioctl</tt>, if we set <span class="docEmphasis">request</span> to <tt>I_GRDOPT</tt>, the third argument is a pointer to an integer, and the current read mode for the stream is returned in that integer. A <span class="docEmphasis">request</span> of <tt>I_SRDOPT</tt> takes the integer value of the third argument and sets the read mode to that value. The read mode is specified by one of the following three constants:</p>
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="100"><col width="400"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>RNORM</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Normal, byte-stream mode (the default), as described previously.</P></td></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>RMSGN</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Message-nondiscard mode. A <tt>read</tt> takes data from a stream until the requested number of bytes have been read or until a message boundary is encountered. If the <tt>read</tt> uses a partial message, the rest of the data in the message is left on the stream for a subsequent <tt>read</tt>.</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>RMSGD</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Message-discard mode. This is like the nondiscard mode, but if a partial message is used, the remainder of the message is discarded.</p></td></tr></table></p><br>
+<p class="docText">Three additional constants can be specified in the read mode to set the behavior of <tt>read</tt> when it encounters messages containing protocol control information on a stream:</p>
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="100"><col width="400"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>RPROTNORM</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Protocol-normal mode: <tt>read</tt> returns an error of <tt>EBADMSG</tt>. This is the default.</p></TD></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>RPROTDAT</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">Protocol-data mode: <tt>read</tt> returns the control portion as data.</P></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>RPROTDIS</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Protocol-discard mode: <tt>read</tt> discards the control information but returns any data in the message.</p></td></tr></table></p><BR>
+<p class="docText"><a name="idd1e103584"></a><a name="idd1e103587"></a><a name="idd1e103592"></a><a name="idd1e103597"></a><a name="idd1e103602"></a>Only one of the message read modes and one of the protocol read modes can be set at a time. The default read mode is (<tt>RNORM|RPROTNORM</tt>).</p>
+<a name="ch14ex10"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch14lev1sec4.html#ch14fig19">Figure 14.19</a> is the same as the one in <a class="docLink" href="ch03lev1sec9.html#ch03fig04">Figure 3.4</a>, but recoded to use <tt>getmsg</tt> instead of <tt>read</tt>.</P>
+<p class="docText">If we run this program under Solaris, where both pipes and terminals are implemented using STREAMS, we get the following output:</p>
+
+<pre>
+   $ <span class="docEmphStrong">echo hello, world | ./a.out</span>           <span class="docEmphItalicAlt">requires STREAMS-based pipes</span>
+   flag = 0, ctl.len = -1, dat.len = 13
+   hello, world
+   flag = 0, ctl.len = 0, dat.len = 0     <span class="docEmphItalicAlt">indicates a STREAMS hangup</span>
+   $ <span class="docEmphStrong">./a.out</span>                               <span class="docEmphItalicAlt">requires STREAMS-based terminals</span>
+   <span class="docEmphStrong">this is line 1</span>
+   flag = 0, ctl.len = -1, dat.len = 15
+   this is line 1
+   <span class="docEmphStrong">and line 2</span>
+   flag = 0, ctl.len = -1, dat.len = 11
+   and line 2
+   <span class="docEmphStrong">^D</span>                                      <span class="docEmphasis">type the terminal EOF character</span>
+   flag = 0, ctl.len = -1, dat.len = 0    <span class="docEmphItalicAlt">tty end of file is not the same as a hangup</span>
+   $ <span class="docEmphStrong">./a.out &lt; /etc/motd</span>
+   getmsg error: Not a stream device
+</pre><br>
+
+<p class="docText"><a name="idd1e103675"></a><a name="idd1e103680"></a><a name="idd1e103683"></a><a name="idd1e103688"></a>When the pipe is closed (when <tt>echo</tt> terminates), it appears to the program in <a class="docLink" href="ch14lev1sec4.html#ch14fig19">Figure 14.19</a> as a STREAMS hangup, with both the control length and the data length set to 0. (We discuss pipes in <a class="docLink" href="ch15lev1sec2.html#ch15lev1sec2">Section 15.2</a>.) With a terminal, however, typing the end-of-file character causes only the data length to be returned as 0. This terminal end of file is not the same as a STREAMS hangup. As expected, when we redirect standard input to be a non-STREAMS device, <tt>getmsg</tt> returns an error.</p>
+
+<a name="ch14fig19"></a>
+<h5 class="docExampleTitle">Figure 14.19. Copy standard input to standard output using <tt>getmsg</tt></h5>
+
+<pre>
+#include "apue.h"
+#include &lt;stropts.h&gt;
+
+#define BUFFSIZE     4096
+
+int
+main(void)
+{
+    int             n, flag;
+    char            ctlbuf[BUFFSIZE], datbuf[BUFFSIZE];
+    struct strbuf   ctl, dat;
+
+    ctl.buf = ctlbuf;
+    ctl.maxlen = BUFFSIZE;
+    dat.buf = datbuf;
+    dat.maxlen = BUFFSIZE;
+    for ( ; ; ) {
+        flag = 0;       /* return any message */
+        if ((n = getmsg(STDIN_FILENO, &amp;ctl, &amp;dat, &amp;flag)) &lt; 0)
+            err_sys("getmsg error");
+        fprintf(stderr, "flag = %d, ctl.len = %d, dat.len = %d\n",
+          flag, ctl.len, dat.len);
+        if (dat.len == 0)
+            exit(0);
+        else if (dat.len &gt; 0)
+            if (write(STDOUT_FILENO, dat.buf, dat.len) != dat.len)
+                err_sys("write error");
+    }
+}
+</pre><br>
+
+
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch14lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch14lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

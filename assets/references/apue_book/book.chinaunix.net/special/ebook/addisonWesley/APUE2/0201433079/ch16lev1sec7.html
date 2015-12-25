@@ -1,0 +1,50 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 16.7.&nbsp; Out-of-Band Data</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch16lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch16lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch16lev1sec7"></a>
+<h3 class="docSection1Title">16.7. Out-of-Band Data</h3>
+<p class="docText"><a name="idd1e126297"></a><a name="idd1e126302"></a><a name="idd1e126305"></a><a name="idd1e126310"></a><a name="idd1e126315"></a><a name="idd1e126320"></a><a name="idd1e126325"></a><a name="idd1e126328"></a><a name="idd1e126333"></a><a name="idd1e126338"></a><a name="idd1e126343"></a><a name="idd1e126348"></a><a name="idd1e126353"></a><a name="idd1e126358"></a>Out-of-band data is an optional feature supported by some communication protocols, allowing higher-priority delivery of data than normal. Out-of-band data is sent ahead of any data that is already queued for transmission. TCP supports out-of-band data, but UDP doesn't. The socket interface to out-of-band data is heavily influenced by TCP's implementation of out-of-band data.</P>
+<p class="docText">TCP refers to out-of-band data as &quot;urgent&quot; data. TCP supports only a single byte of urgent data, but allows urgent data to be delivered out of band from the normal data delivery mechanisms. To generate urgent data, we specify the <tt>MSG_OOB</tt> flag to any of the three <tt>send</tt> functions. If we send more than one byte with the <tt>MSG_OOB</tt> flag, the last byte will be treated as the urgent-data byte.</P>
+<p class="docText">When urgent data is received, we are sent the <tt>SIGURG</tt> signal if we have arranged for signal generation by the socket. In <a class="docLink" href="ch03lev1sec14.html#ch03lev1sec14">Sections 3.14</a> and <a class="docLink" href="ch14lev1sec6.html#ch14lev2sec18">14.6.2</a>, we saw that we could use the <tt>F_SETOWN</tt> command to <tt>fcntl</tt> to set the ownership of a socket. If the third <a name="idd1e126396"></a><a name="idd1e126399"></a><a name="idd1e126404"></a><a name="idd1e126409"></a><a name="idd1e126414"></a><a name="idd1e126419"></a><a name="idd1e126424"></a><a name="idd1e126429"></a><a name="idd1e126434"></a><a name="idd1e126439"></a><a name="idd1e126444"></a><a name="idd1e126449"></a><a name="idd1e126454"></a><a name="idd1e126461"></a><a name="idd1e126466"></a><a name="idd1e126471"></a><a name="idd1e126476"></a>argument to <tt>fcntl</tt> is positive, it specifies a process ID. If it is a negative value other than -1, it represents the process group ID. Thus, we can arrange that our process receive signals from a socket by calling</p>
+
+<pre>
+   fcntl(sockfd, F_SETOWN, pid);
+</pre><BR>
+
+<p class="docText">The <tt>F_GETOWN</tt> command can be used to retrieve the current socket ownership. As with the <tt>F_SETOWN</tt> command, a negative value represents a process group ID, and a positive value represents a process ID. Thus, the call</P>
+
+<pre>
+   owner = fcntl(sockfd, F_GETOWN, 0);
+</pre><BR>
+
+<p class="docText">will return with <tt>owner</tt> equal to the ID of the process configured to receive signals from the socket if <tt>owner</tt> is positive and with the absolute value of <tt>owner</tt> equal to the ID of the process group configured to receive signals from the socket if <tt>owner</tt> is negative.</p>
+<p class="docText">TCP supports the notion of an <span class="docEmphasis">urgent mark</span> : the point in the normal data stream where the urgent data would go. We can choose to receive the urgent data inline with the normal data if we use the <tt>SO_OOBINLINE</tt> socket option. To help us identify when we have reached the urgent mark, we can use the <tt>sockatmark</tt> function.</P>
+<a name="inta328"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;sys/socket.h&gt;
+
+int sockatmark(int <span class="docEmphItalicAlt">sockfd</span>);
+</pre><BR>
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 1 if at mark, 0 if not at mark, 1 on error</P></TD></tr></table></P><BR>
+<p class="docText">When the next byte to be read is where the urgent mark is located, <tt>sockatmark</tt> will return 1.</p>
+<p class="docText">When out-of-band data is present in a socket's read queue, the <tt>select</tt> function (<a class="docLink" href="ch14lev1sec5.html#ch14lev2sec14">Section 14.5.1</a>) will return the file descriptor as having an exception condition pending. We can choose to receive the urgent data inline with the normal data, or we can use the <tt>MSG_OOB</tt> flag with one of the <tt>recv</tt> functions to receive the urgent data ahead of any other queue data. TCP queues only one byte of urgent data. If another urgent byte arrives before we receive the current one, the existing one is discarded.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch16lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch16lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

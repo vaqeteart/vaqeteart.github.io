@@ -1,0 +1,29 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Exercises</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch11lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch11lev1sec8"></a>
+<h3 class="docSection1Title">Exercises</h3>
+<P><table border="0" cellspacing="16" cellpadding="0"><TR valign="top"><td align="right" class="docText" width="50"><a name="ch11qa1q1"></a><B><a class="docLink" href="app03lev1sec11.html#ch11qa1q1a1">11.1</a></b></TD><TD><p class="docText"><a name="idd1e85051"></a>Modify the example shown in <a class="docLink" href="ch11lev1sec5.html#ch11fig04">Figure 11.4</a> to pass the structure between the threads properly.</p></TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch11qa1q2"></a><B><a class="docLink" href="app03lev1sec11.html#ch11qa1q2a2">11.2</a></b></td><TD><p class="docText"><a name="idd1e85108"></a><a name="idd1e85113"></a><a name="idd1e85118"></a><a name="idd1e85123"></a><a name="idd1e85128"></a><a name="idd1e85133"></a><a name="idd1e85138"></a><a name="idd1e85143"></a>In the example shown in <a class="docLink" href="ch11lev1sec6.html#ch11fig13">Figure 11.13</a>, what additional synchronization (if any) is necessary to allow the master thread to change the thread ID associated with a pending job? How would this affect the <tt>job_remove</tt> function?</P></TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch11qa1q3"></a><b><a class="docLink" href="app03lev1sec11.html#ch11qa1q3a3">11.3</a></b></TD><TD><p class="docText">Apply the techniques shown in <a class="docLink" href="ch11lev1sec6.html#ch11fig14">Figure 11.14</a> to the worker thread example (<a class="docLink" href="ch11lev1sec3.html#ch11fig01">Figure 11.1</a> and <a class="docLink" href="ch11lev1sec6.html#ch11fig13">Figure 11.13</a>) to implement the worker thread function. Don't forget to update the <tt>queue_init</tt> function to initialize the condition variable and change the the <tt>job_insert</tt> and <tt>job_append</tt> functions to signal the worker threads. What difficulties arise?</p></td></tr><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch11qa1q4"></a><b><a class="docLink" href="app03lev1sec11.html#ch11qa1q4a4">11.4</a></b></TD><td><p class="docText">Which sequence of steps is correct?</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">Lock a mutex (<tt>pthread_mutex_lock</tt>).</p></div></li><li><div style="font-weight:normal"><p class="docList">Change the condition protected by the mutex.</p></div></li><li><div style="font-weight:normal"><p class="docList">Signal threads waiting on the condition (<tt>pthread_cond_broadcast</tt>).</p></div></li><li><div style="font-weight:normal"><p class="docList">Unlock the mutex (<tt>pthread_mutex_unlock</tt>).</p></div></li></ol></div>
+<p class="docText">or</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">Lock a mutex (<tt>pthread_mutex_lock</tt>).</p></div></li><li><div style="font-weight:normal"><p class="docList">Change the condition protected by the mutex.</P></div></LI><li><div style="font-weight:normal"><p class="docList">Unlock the mutex (<tt>pthread_mutex_unlock</tt>).</P></div></LI><LI><div style="font-weight:normal"><p class="docList">Signal threads waiting on the condition (<tt>pthread_cond_broadcast</tt>).</p></div></LI></ol></div></TD></TR></table></p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch11lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

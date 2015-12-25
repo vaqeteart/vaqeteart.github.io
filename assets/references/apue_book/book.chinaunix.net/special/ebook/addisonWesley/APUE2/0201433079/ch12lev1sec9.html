@@ -1,0 +1,136 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 12.9.&nbsp; Threads and fork</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch12lev1sec9"></a>
+<h3 class="docSection1Title">12.9. Threads and <tt>fork</tt></h3>
+<p class="docText">When a thread calls <tt>fork</tt>, a copy of the entire process address space is made for the child. Recall the discussion of copy-on-write in <a class="docLink" href="ch08lev1sec3.html#ch08lev1sec3">Section 8.3</a>. The child is an entirely different process from the parent, and as long as neither one makes changes to its memory contents, copies of the memory pages can be shared between parent and child.</P>
+<p class="docText">By inheriting a copy of the address space, the child also inherits the state of every mutex, readerwriter lock, and condition variable from the parent process. If the parent consists of more than one thread, the child will need to clean up the lock state if it isn't going to call <tt>exec</tt> immediately after <tt>fork</tt> returns.</P>
+<p class="docText">Inside the child process, only one thread exists. It is made from a copy of the thread that called <tt>fork</tt> in the parent. If the threads in the parent process hold any locks, the locks will also be held in the child process. The problem is that the child process doesn't <a name="idd1e93702"></a><a name="idd1e93705"></a><a name="idd1e93710"></a>contain copies of the threads holding the locks, so there is no way for the child to know which locks are held and need to be unlocked.</p>
+<p class="docText">This problem can be avoided if the child calls one of the <tt>exec</tt> functions directly after returning from <tt>fork</tt>. In this case, the old address space is discarded, so the lock state doesn't matter. This is not always possible, however, so if the child needs to continue processing, we need to use a different strategy.</P>
+<p class="docText">To clean up the lock state, we can establish <span class="docEmphasis">fork handlers</span> by calling the function <tt>pthread_atfork</tt>.</P>
+<a name="inta187"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch12lev1sec9.html#PLID0">[View full width]</a></div><pre>
+#include &lt;pthread.h&gt;
+
+int pthread_atfork(void (*<span class="docEmphItalicAlt">prepare</span>)(void), void 
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif">(*<span class="docEmphItalicAlt">parent</span>)(void),
+                   void (*<span class="docEmphItalicAlt">child</span>)(void));
+</pre><BR>
+
+</P></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, error number on failure</P></TD></tr></table></P><BR>
+<p class="docText">With <tt>pthread_atfork</tt>, we can install up to three functions to help clean up the locks. The <span class="docEmphasis">prepare</span> fork handler is called in the parent before <tt>fork</tt> creates the child process. This fork handler's job is to acquire all locks defined by the parent. The <span class="docEmphasis">parent</span> fork handler is called in the context of the parent after <tt>fork</tt> has created the child process, but before <tt>fork</tt> has returned. This fork handler's job is to unlock all the locks acquired by the <span class="docEmphasis">prepare</span> fork handler. The <span class="docEmphasis">child</span> fork handler is called in the context of the child process before returning from <tt>fork</tt>. Like the <span class="docEmphasis">parent</span> fork handler, the <span class="docEmphasis">child</span> fork handler too must release all the locks acquired by the <span class="docEmphasis">prepare</span> fork handler.</p>
+<p class="docText">Note that the locks are not locked once and unlocked twice, as it may appear. When the child address space is created, it gets a copy of all locks that the parent defined. Because the <span class="docEmphasis">prepare</span> fork handler acquired all the locks, the memory in the parent and the memory in the child start out with identical contents. When the parent and the child unlock their &quot;copy&quot; of the locks, new memory is allocated for the child, and the memory contents from the parent are copied to the child's memory (copy-on-write), so we are left with a situation that looks as if the parent locked all its copies of the locks and the child locked all its copies of the locks. The parent and the child end up unlocking duplicate locks stored in different memory locations, as if the following sequence of events occurred.</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">The parent acquired all its locks.</p></div></li><li><div style="font-weight:normal"><p class="docList">The child acquired all its locks.</p></div></LI><li><div style="font-weight:normal"><p class="docList">The parent released its locks.</P></div></li><LI><div style="font-weight:normal"><p class="docList">The child released its locks.</p></div></li></ol></div>
+<p class="docText">We can call <tt>pthread_atfork</tt> multiple times to install more than one set of fork handlers. If we don't have a need to use one of the handlers, we can pass a null pointer for the particular handler argument, and it will have no effect. When multiple fork handlers are used, the order in which the handlers are called differs. The <span class="docEmphasis">parent</span> and <span class="docEmphasis">child</span> fork handlers are called in the order in which they were registered, whereas the <span class="docEmphasis">prepare</span> fork handlers are called in the opposite order from which they were registered. This allows multiple modules to register their own fork handlers and still honor the locking hierarchy.</p>
+<p class="docText"><a name="idd1e93858"></a><a name="idd1e93863"></a><a name="idd1e93868"></a>For example, assume that module A calls functions from module B and that each module has its own set of locks. If the locking hierarchy is A before B, module B must install its fork handlers before module A. When the parent calls <tt>fork</tt>, the following steps are taken, assuming that the child process runs before the parent.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">The <span class="docEmphasis">prepare</span> fork handler from module A is called to acquire all module A's locks.</p></div></li><li><div style="font-weight:normal"><p class="docList">The <span class="docEmphasis">prepare</span> fork handler from module B is called to acquire all module B's locks.</p></div></li><li><div style="font-weight:normal"><p class="docList">A child process is created.</p></div></li><li><div style="font-weight:normal"><p class="docList">The <span class="docEmphasis">child</span> fork handler from module B is called to release all module B's locks in the child process.</p></div></li><li><div style="font-weight:normal"><p class="docList">The <span class="docEmphasis">child</span> fork handler from module A is called to release all module A's locks in the child process.</P></div></LI><li><div style="font-weight:normal"><p class="docList">The <tt>fork</tt> function returns to the child.</P></div></LI><LI><div style="font-weight:normal"><p class="docList">The <span class="docEmphasis">parent</span> fork handler from module B is called to release all module B's locks in the parent process.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">The <span class="docEmphasis">parent</span> fork handler from module A is called to release all module A's locks in the parent process.</P></div></li><LI><div style="font-weight:normal"><p class="docList">The <tt>fork</tt> function returns to the parent.</p></div></LI></ol></div>
+<p class="docText">If the fork handlers serve to clean up the lock state, what cleans up the state of condition variables? On some implementations, condition variables might not need any cleaning up. However, an implementation that uses a lock as part of the implementation of condition variables will require cleaning up. The problem is that no interface exists to allow us to do this. If the lock is embedded in the condition variable data structure, then we can't use condition variables after calling <tt>fork</tt>, because there is no portable way to clean up its state. On the other hand, if an implementation uses a global lock to protect all condition variable data structures in a process, then the implementation itself can clean up the lock in the <tt>fork</tt> library routine. Application programs shouldn't rely on implementation details like this, however.</P>
+<a name="ch12ex07"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText">The program in <a class="docLink" href="ch12lev1sec9.html#ch12fig17">Figure 12.17</a> illustrates the use of <tt>pthread_atfork</tt> and fork handlers.</P>
+<p class="docText"><a name="idd1e93975"></a><a name="idd1e93980"></a><a name="idd1e93985"></a><a name="idd1e93990"></a>We define two mutexes, <tt>lock1</tt> and <tt>lock2</tt>. The <span class="docEmphasis">prepare</span> fork handler acquires them both, the <span class="docEmphasis">child</span> fork handler releases them in the context of the child process, and the <span class="docEmphasis">parent</span> fork handler releases them in the context of the parent process.</P>
+<p class="docText">When we run this program, we get the following output:</p>
+
+<pre>
+    $ <span class="docEmphStrong">./a.out</span>
+    thread started...
+    parent about to fork...
+    preparing locks...
+    child unlocking locks...
+    child returned from fork
+    parent unlocking locks...
+    parent returned from fork
+</pre><BR>
+
+<p class="docText">As we can see, the <span class="docEmphasis">prepare</span> fork handler runs after <tt>fork</tt> is called, the <span class="docEmphasis">child</span> fork handler runs before <tt>fork</tt> returns in the child, and the <span class="docEmphasis">parent</span> fork handler runs before <tt>fork</tt> returns in the parent.</P>
+
+<a name="ch12fig17"></a>
+<h5 class="docExampleTitle">Figure 12.17. <tt>pthread_atfork</tt> example</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;pthread.h&gt;
+
+pthread_mutex_t lock1 = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t lock2 = PTHREAD_MUTEX_INITIALIZER;
+
+void
+prepare(void)
+{
+    printf("preparing locks...\n");
+    pthread_mutex_lock(&amp;lock1);
+    pthread_mutex_lock(&amp;lock2);
+}
+void
+parent(void)
+{
+    printf("parent unlocking locks...\n");
+    pthread_mutex_unlock(&amp;lock1);
+    pthread_mutex_unlock(&amp;lock2);
+}
+
+void
+child(void)
+{
+    printf("child unlocking locks...\n");
+    pthread_mutex_unlock(&amp;lock1);
+    pthread_mutex_unlock(&amp;lock2);
+}
+
+void *
+thr_fn(void *arg)
+{
+    printf("thread started...\n");
+    pause();
+    return(0);
+}
+
+int
+main(void)
+{
+    int         err;
+    pid_t       pid;
+    pthread_t   tid;
+
+#if defined(BSD) || defined(MACOS)
+    printf("pthread_atfork is unsupported\n");
+#else
+    if ((err = pthread_atfork(prepare, parent, child)) != 0)
+        err_exit(err, "can't install fork handlers");
+    err = pthread_create(&amp;tid, NULL, thr_fn, 0);
+    if (err != 0)
+        err_exit(err, "can't create thread");
+    sleep(2);
+    printf("parent about to fork...\n");
+    if ((pid = fork()) &lt; 0)
+        err_quit("fork failed");
+    else if (pid == 0) /* child */
+        printf("child returned from fork\n");
+    else        /* parent */
+        printf("parent returned from fork\n");
+#endif
+    exit(0);
+}
+</pre><br>
+
+
+
+<ul></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,104 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 9.8.&nbsp; Job Control</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch09lev1sec8"></a>
+<h3 class="docSection1Title">9.8. Job Control</h3>
+<p class="docText">Job control is a feature added to BSD around 1980. This feature allows us to start multiple jobs (groups of processes) from a single terminal and to control which jobs can access the terminal and which jobs are to run in the background. Job control requires three forms of support:</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">A shell that supports job control</p></div></LI><LI><div style="font-weight:normal"><p class="docList">The terminal driver in the kernel must support job control</P></div></li><LI><div style="font-weight:normal"><p class="docList">The kernel must support certain job-control signals</P><blockquote>
+<p class="docText">SVR3 provided a different form of job control called <span class="docEmphasis">shell layers</span>. The BSD form of job control, however, was selected by POSIX.1 and is what we describe here. In earlier versions of the standard, job control support was optional, but POSIX.1 now requires platforms to support it.</P>
+</blockquote></div></li></ol></div>
+<p class="docText">From our perspective, using job control from a shell, we can start a job in either the foreground or the background. A job is simply a collection of processes, often a pipeline of processes. For example,</P>
+
+<pre>
+   vi main.c
+</pre><br>
+
+<p class="docText">starts a job consisting of one process in the foreground. The commands</P>
+
+<pre>
+   pr *.c | lpr &amp;
+   make all &amp;
+</pre><BR>
+
+<p class="docText">start two jobs in the background. All the processes invoked by these background jobs are in the background.</P>
+<p class="docText">As we said, to use the features provided by job control, we need to be using a shell that supports job control. With older systems, it was simple to say which shells <a name="idd1e65049"></a><a name="idd1e65052"></a><a name="idd1e65055"></a><a name="idd1e65058"></a><a name="idd1e65061"></a><a name="idd1e65066"></a><a name="idd1e65069"></a><a name="idd1e65074"></a><a name="idd1e65079"></a><a name="idd1e65084"></a><a name="idd1e65089"></a><a name="idd1e65094"></a>supported job control and which didn't. The C shell supported job control, the Bourne shell didn't, and it was an option with the Korn shell, depending whether the host supported job control. But the C shell has been ported to systems (e.g., earlier versions of System V) that don't support job control, and the SVR4 Bourne shell, when invoked by the name <tt>jsh</tt> instead of <tt>sh</tt>, supports job control. The Korn shell continues to support job control if the host does. The Bourne-again shell also supports job control. We'll just talk generically about a shell that supports job control, versus one that doesn't, when the difference between the various shells doesn't matter.</p>
+<p class="docText">When we start a background job, the shell assigns it a job identifier and prints one or more of the process IDs. The following script shows how the Korn shell handles this:</P>
+
+<pre>
+   $ <span class="docEmphStrong">make all &gt; Make.out &amp;</span>
+   [1]     1475
+   $ <span class="docEmphStrong">pr *.c | lpr &amp;</span>
+   [2]     1490
+   $                                <span class="docEmphItalicAlt">just press RETURN</span>
+   [2] +  Done                 pr *.c | lpr &amp;
+   [1] +  Done                 make all &gt; Make.out &amp;
+</pre><BR>
+
+<p class="docText">The <tt>make</tt> is job number 1 and the starting process ID is 1475. The next pipeline is job number 2 and the process ID of the first process is 1490. When the jobs are done and when we press RETURN, the shell tells us that the jobs are complete. The reason we have to press RETURN is to have the shell print its prompt. The shell doesn't print the changed status of background jobs at any random timeonly right before it prints its prompt, to let us enter a new command line. If the shell didn't do this, it could output while we were entering an input line.</p>
+<p class="docText">The interaction with the terminal driver arises because a special terminal character affects the foreground job: the suspend key (typically Control-Z). Entering this character causes the terminal driver to send the <tt>SIGTSTP</tt> signal to all processes in the foreground process group. The jobs in any background process groups aren't affected. The terminal driver looks for three special characters, which generate signals to the foreground process group.</P>
+<UL><li><p class="docList">The interrupt character (typically DELETE or Control-C) generates <tt>SIGINT</tt>.</p></li><li><p class="docList">The quit character (typically Control-backslash) generates <tt>SIGQUIT</tt>.</P></li><LI><p class="docList">The suspend character (typically Control-Z) generates <tt>SIGTSTP</tt>.</p></LI></ul>
+<p class="docText">In <a class="docLink" href="ch18.html#ch18">Chapter 18</a>, we'll see how we can change these three characters to be any characters we choose and how we can disable the terminal driver's processing of these special characters.</p>
+<p class="docText">Another job control condition can arise that must be handled by the terminal driver. Since we can have a foreground job and one or more background jobs, which of these receives the characters that we enter at the terminal? Only the foreground job receives terminal input. It is not an error for a background job to try to read from the terminal, but the terminal driver detects this and sends a special signal to the background job: <tt>SIGTTIN</tt>. This signal normally stops the background job; by using the shell, we are notified of this and can bring the job into the foreground so that it can read from the terminal. The following demonstrates this:</p>
+
+<pre>
+   $ <span class="docEmphStrong">cat &gt; temp.foo &amp;</span>          <span class="docEmphItalicAlt">start in background, but it'll read from standard input</span>
+   [1]     1681
+   $                           <span class="docEmphItalicAlt">we press RETURN</span>
+   [1] + Stopped (SIGTTIN)     <span class="docEmphStrong">cat &gt; temp.foo &amp;</span>
+   $ <span class="docEmphStrong">fg %1</span>                     <span class="docEmphItalicAlt">bring job number 1 into the foreground</span>
+   cat &gt; temp.foo              <span class="docEmphItalicAlt">the shell tells us which job is now in the foreground</span>
+   <span class="docEmphStrong">
+   hello, world</span>                <span class="docEmphItalicAlt">enter one line</span>
+   <span class="docEmphStrong">
+   ^D</span>                          <span class="docEmphItalicAlt">type the end-of-file character</span>
+   $ <span class="docEmphStrong">cat temp.foo</span>              <span class="docEmphItalicAlt">check that the one line was put into the file</span>
+   hello, world
+</pre><br>
+
+<p class="docText"><a name="idd1e65219"></a><a name="idd1e65224"></a><a name="idd1e65229"></a><a name="idd1e65234"></a><a name="idd1e65239"></a><a name="idd1e65244"></a><a name="idd1e65249"></a><a name="idd1e65254"></a><a name="idd1e65259"></a>The shell starts the <tt>cat</tt> process in the background, but when <tt>cat</tt> tries to read its standard input (the controlling terminal), the terminal driver, knowing that it is a background job, sends the <tt>SIGTTIN</tt> signal to the background job. The shell detects this change in status of its child (recall our discussion of the <tt>wait</tt> and <tt>waitpid</tt> function in <a class="docLink" href="ch08lev1sec6.html#ch08lev1sec6">Section 8.6</a>) and tells us that the job has been stopped. We then move the stopped job into the foreground with the shell's <tt>fg</tt> command. (Refer to the manual page for the shell that you are using, for all the details on its job control commands, such as <tt>fg</tt> and <tt>bg</tt>, and the various ways to identify the different jobs.) Doing this causes the shell to place the job into the foreground process group (<tt>tcsetpgrp</tt>) and send the continue signal (<tt>SIGCONT</tt>) to the process group. Since it is now in the foreground process group, the job can read from the controlling terminal.</p>
+<p class="docText">What happens if a background job outputs to the controlling terminal? This is an option that we can allow or disallow. Normally, we use the <tt>stty</tt>(1) command to change this option. (We'll see in <a class="docLink" href="ch18.html#ch18">Chapter 18</a> how we can change this option from a program.) The following shows how this works:</p>
+
+<a name="PLID4"></a><div class="v1"><a href="ch09lev1sec8.html#PLID4">[View full width]</a></div><pre>
+   $ <span class="docEmphStrong">cat temp.foo &amp;</span>             <span class="docEmphItalicAlt">execute in background</span>
+   [1]     1719
+   $ hello, world               <span class="docEmphItalicAlt">the output from the background job appears after the prompt</span>
+                                <span class="docEmphItalicAlt">we press RETURN</span>
+   [1] + Done              cat temp.foo &amp;
+   $ <span class="docEmphStrong">stty tostop</span>                <span class="docEmphRoman">disable ability of background jobs to output to
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> controlling terminal</span>
+   $ <span class="docEmphStrong">cat temp.foo &amp;</span>             <span class="docEmphItalicAlt">try it again in the background</span>
+   [1]     1721
+   $                            <span class="docEmphItalicAlt">we press RETURN and find the job is stopped</span>
+   [1] + Stopped(SIGTTOU)               cat temp.foo &amp;
+   $ <span class="docEmphStrong">fg %1</span>                      <span class="docEmphItalicAlt">resume stopped job in the foreground</span>
+   cat temp.foo                 <span class="docEmphItalicAlt">the shell tells us which job is now in the foreground</span>
+   hello, world                 <span class="docEmphItalicAlt">and here is its output</span>
+</pre><br>
+
+<p class="docText">When we disallow background jobs from writing to the controlling terminal, <tt>cat</tt> will block when it tries to write to its standard output, because the terminal driver identifies the write as coming from a background process and sends the job the <tt>SIGTTOU</tt> signal. As with the previous example, when we use the shell's <tt>fg</tt> command to bring the job into the foreground, the job completes.</p>
+<p class="docText"><a class="docLink" href="ch09lev1sec8.html#ch09fig08">Figure 9.8</a> summarizes some of the features of job control that we've been describing. The solid lines through the terminal driver box mean that the terminal I/O and the terminal-generated signals are always connected from the foreground process <a name="idd1e65367"></a><a name="idd1e65370"></a>group to the actual terminal. The dashed line corresponding to the <tt>SIGTTOU</tt> signal means that whether the output from a process in the background process group appears on the terminal is an option.</p>
+<a name="ch09fig08"></a><p><center>
+<h5 class="docFigureTitle">Figure 9.8. Summary of job control features with foreground and background jobs, and terminal driver</h5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/09fig08_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="660" SRC="images/0201433079/graphics/09fig08.gif;423615"></p>
+</center></p><br>
+<p class="docText">Is job control necessary or desirable? Job control was originally designed and implemented before windowing terminals were widespread. Some people claim that a well-designed windowing system removes any need for job control. Some complain <a name="idd1e65402"></a><a name="idd1e65405"></a><a name="idd1e65410"></a><a name="idd1e65413"></a><a name="idd1e65416"></a><a name="idd1e65419"></a><a name="idd1e65422"></a><a name="idd1e65425"></a><a name="idd1e65430"></a><a name="idd1e65435"></a><a name="idd1e65440"></a><a name="idd1e65443"></a><a name="idd1e65448"></a><a name="idd1e65453"></a>that the implementation of job controlrequiring support from the kernel, the terminal driver, the shell, and some applicationsis a hack. Some use job control with a windowing system, claiming a need for both. Regardless of your opinion, job control is a required feature of POSIX.1.</p>
+
+<UL></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

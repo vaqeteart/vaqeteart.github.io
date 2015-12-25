@@ -1,0 +1,73 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 1.8.&nbsp; User Identification</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch01lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch01lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch01lev1sec8"></a>
+<h3 class="docSection1Title">1.8. User Identification</h3>
+<a name="ch01lev2sec17"></a>
+<H4 class="docSection2Title">User ID</H4>
+<p class="docText">The <span class="docEmphasis">user ID</span> from our entry in the password file is a numeric value that identifies us to the system. This user ID is assigned by the system administrator when our login name is assigned, and we cannot change it. The user ID is normally assigned to be unique for every user. We'll see how the kernel uses the user ID to check whether we have the appropriate permissions to perform certain operations.</p>
+<p class="docText">We call the user whose user ID is 0 either <span class="docEmphasis">root</span> or the <span class="docEmphasis">superuser</span>. The entry in the password file normally has a login name of <tt>root</tt>, and we refer to the special privileges of this user as superuser privileges. As we'll see in <a class="docLink" href="ch04.html#ch04">Chapter 4</a>, if a process has superuser privileges, most file permission checks are bypassed. Some operating system functions are restricted to the superuser. The superuser has free rein over the system.</P>
+<blockquote>
+<p class="docText">Client versions of Mac OS X ship with the superuser account disabled; server versions ship with the account already enabled. Instructions are available on Apple's Web site describing how to enable it. See <tt>http://docs.info.apple.com/article.html?artnum=106290</tt>.</P>
+</blockquote>
+
+<a name="ch01lev2sec18"></a>
+<H4 class="docSection2Title">Group ID</h4>
+<p class="docText"><a name="idd1e4072"></a><a name="idd1e4077"></a><a name="idd1e4082"></a><a name="idd1e4087"></a><a name="idd1e4092"></a><a name="idd1e4095"></a>Our entry in the password file also specifies our numeric <span class="docEmphasis">group ID</span>. This too is assigned by the system administrator when our login name is assigned. Typically, the password file contains multiple entries that specify the same group ID. Groups are normally used to collect users together into projects or departments. This allows the sharing of resources, such as files, among members of the same group. We'll see in <a class="docLink" href="ch04lev1sec5.html#ch04lev1sec5">Section 4.5</a> that we can set the permissions on a file so that all members of a group can access the file, whereas others outside the group cannot.</P>
+<p class="docText">There is also a group file that maps group names into numeric group IDs. The group file is usually <tt>/etc/group</tt>.</P>
+<p class="docText">The use of numeric user IDs and numeric group IDs for permissions is historical. With every file on disk, the file system stores both the user ID and the group ID of a file's owner. Storing both of these values requires only four bytes, assuming that each is stored as a two-byte integer. If the full ASCII login name and group name were used instead, additional disk space would be required. In addition, comparing strings during permission checks is more expensive than comparing integers.</P>
+<p class="docText">Users, however, work better with names than with numbers, so the password file maintains the mapping between login names and user IDs, and the group file provides the mapping between group names and group IDs. The <tt>ls -l</tt> command, for example, prints the login name of the owner of a file, using the password file to map the numeric user ID into the corresponding login name.</p>
+<blockquote>
+<p class="docText">Early UNIX systems used 16-bit integers to represent user and group IDs. Contemporary UNIX systems use 32-bit integers.</P>
+</blockquote>
+<a name="ch01ex07"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText">The program in <a class="docLink" href="ch01lev1sec8.html#ch01fig09">Figure 1.9</a> prints the user ID and the group ID.</P>
+<p class="docText">We call the functions <tt>getuid</tt> and <tt>getgid</tt> to return the user ID and the group ID. Running the program yields</P>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+   uid = 205, gid = 105
+</pre><br>
+
+
+<a name="ch01fig09"></a>
+<H5 class="docExampleTitle">Figure 1.9. Print user ID and group ID</H5>
+
+<pre>
+#include "apue.h"
+
+int
+main(void)
+{
+    printf("uid = %d, gid = %d\n", getuid(), getgid());
+    exit(0);
+}
+</pre><br>
+
+
+
+<a name="ch01lev2sec19"></a>
+<H4 class="docSection2Title">Supplementary Group IDs</H4>
+<p class="docText"><a name="idd1e4189"></a><a name="idd1e4192"></a><a name="idd1e4197"></a><a name="idd1e4202"></a><a name="idd1e4207"></a><a name="idd1e4212"></a><a name="idd1e4217"></a><a name="idd1e4220"></a>In addition to the group ID specified in the password file for a login name, most versions of the UNIX System allow a user to belong to additional groups. This started with 4.2BSD, which allowed a user to belong to up to 16 additional groups. These <span class="docEmphasis">supplementary group IDs</span> are obtained at login time by reading the file <tt>/etc/group</tt> and finding the first 16 entries that list the user as a member. As we shall see in the next chapter, POSIX requires that a system support at least eight supplementary groups per process, but most systems support at least 16.</p>
+
+
+<ul></ul></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch01lev1sec7.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch01lev1sec9.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

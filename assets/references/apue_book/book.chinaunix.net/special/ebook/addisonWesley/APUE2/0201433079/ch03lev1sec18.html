@@ -1,0 +1,60 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Exercises</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec17.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch03lev1sec18"></a>
+<h3 class="docSection1Title">Exercises</h3>
+<P><table border="0" cellspacing="16" cellpadding="0"><TR valign="top"><td align="right" class="docText" width="50"><a name="ch03qa1q1"></a><B><a class="docLink" href="app03lev1sec3.html#app03qa1q9a9">3.1</a></b></TD><TD><p class="docText">When reading or writing a disk file, are the functions described in this chapter really unbuffered? Explain.</p></TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch03qa1q2"></a><B>3.2</b></td><TD><p class="docText">Write your own <tt>dup2</tt> function that performs the same service as the <tt>dup2</tt> function described in <a class="docLink" href="ch03lev1sec12.html#ch03lev1sec12">Section 3.12</a>, without calling the <tt>fcntl</tt> function. Be sure to handle errors correctly.</P>
+</TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch03qa1q3"></a><b><a class="docLink" href="app03lev1sec3.html#app03qa1q10a10">3.3</a></b></TD><TD><p class="docText">Assume that a process executes the following three function calls:</p>
+
+<pre>
+    fd1 = open(pathname, oflags);
+    fd2 = dup(fd1);
+    fd3 = open(pathname, oflags);
+</pre><br>
+
+<p class="docText">Draw the resulting picture, similar to <a class="docLink" href="ch03lev1sec12.html#ch03fig08">Figure 3.8</a>. Which descriptors are affected by an <tt>fcntl</tt> on <tt>fd1</tt> with a command of <tt>F_SETFD</tt>? Which descriptors are affected by an <tt>fcntl</tt> on <tt>fd1</tt> with a command of <tt>F_SETFL</tt>?</p>
+</td></TR><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch03qa1q4"></a><b><a class="docLink" href="app03lev1sec3.html#app03qa1q11a11">3.4</a></b></TD><td><p class="docText">The following sequence of code has been observed in various programs:</p>
+
+<pre>
+      dup2(fd, 0);
+      dup2(fd, 1);
+      dup2(fd, 2);
+      if (fd &gt; 2)
+          close(fd);
+</pre><br>
+
+<p class="docText">To see why the <tt>if</tt> test is needed, assume that <tt>fd</tt> is 1 and draw a picture of what happens to the three descriptor entries and the corresponding file table entry with each call to <tt>dup2</tt>. Then assume that <tt>fd</tt> is 3 and draw the same picture.</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch03qa1q5"></a><b><a class="docLink" href="app03lev1sec3.html#app03qa1q12a12">3.5</a></b></td><td><p class="docText">The Bourne shell, Bourne-again shell, and Korn shell notation</p>
+
+<pre>
+     <span class="docEmphItalicAlt">digit1</span>&gt;&amp;<span class="docEmphItalicAlt">digit2</span>
+</pre><br>
+
+<p class="docText">says to redirect descriptor <span class="docEmphasis">digit1</span> to the same file as descriptor <span class="docEmphasis">digit2</span>. What is the difference between the two commands</p>
+
+<pre>
+     ./a.out &gt; outfile 2&gt;&amp;1
+     ./a.out 2&gt;&amp;1 &gt; outfile
+</pre><br>
+
+<p class="docText">(Hint: the shells process their command lines from left to right.)</p>
+</td></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch03qa1q6"></a><B><a class="docLink" href="app03lev1sec3.html#app03qa1q13a13">3.6</a></b></TD><TD><p class="docText">If you <tt>open</tt> a file for readwrite with the append flag, can you still <tt>read</tt> from anywhere in the file using <tt>lseek</tt>? Can you use <tt>lseek</tt> to replace existing data in the file? Write a program to verify this.</p></TD></TR></table></P>
+
+<ul></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec17.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

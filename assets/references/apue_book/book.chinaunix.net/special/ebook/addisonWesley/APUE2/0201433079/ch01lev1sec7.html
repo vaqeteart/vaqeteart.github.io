@@ -1,0 +1,107 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 1.7.&nbsp; Error Handling</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch01lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch01lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch01lev1sec7"></a>
+<h3 class="docSection1Title" id="454331-966">1.7. Error Handling</h3>
+<p class="docText">When an error occurs in one of the UNIX System functions, a negative value is often returned, and the integer <tt>errno</tt> is usually set to a value that gives additional information. For example, the <tt>open</tt> function returns either a non-negative file descriptor if all is OK or 1 if an error occurs. An error from <tt>open</tt> has about 15 possible <tt>errno</tt> values, such as file doesn't exist, permission problem, and so on. Some functions use a convention other than returning a negative value. For example, most functions that return a pointer to an object return a null pointer to indicate an error.</P>
+<p class="docText">The file <tt>&lt;errno.h&gt;</tt> defines the symbol <tt>errno</tt> and constants for each value that <tt>errno</tt> can assume. Each of these constants begins with the character <tt>E</tt>. Also, the first page of Section 2 of the UNIX system manuals, named <tt>intro</tt>(2), usually lists all these error constants. For example, if <tt>errno</tt> is equal to the constant <tt>EACCES</tt>, this indicates a permission problem, such as insufficient permission to open the requested file.</P>
+<blockquote>
+<p class="docText">On Linux, the error constants are listed in the <tt>errno</tt>(3) manual page.</p>
+</blockquote>
+<p class="docText">POSIX and ISO C define <tt>errno</tt> as a symbol expanding into a modifiable lvalue of type integer. This can be either an integer that contains the error number or a function that returns a pointer to the error number. The historical definition is</P>
+
+<pre>
+   extern int errno;
+</pre><BR>
+
+<p class="docText">But in an environment that supports threads, the process address space is shared among multiple threads, and each thread needs its own local copy of <tt>errno</tt> to prevent one thread from interfering with another. Linux, for example, supports multithreaded access to <tt>errno</tt> by defining it as</P>
+
+<pre>
+   extern int *_ _errno_location(void);
+   #define errno  (*_ _errno_location())
+</pre><br>
+
+<p class="docText">There are two rules to be aware of with respect to <tt>errno</tt>. First, its value is never cleared by a routine if an error does not occur. Therefore, we should examine its value only when the return value from a function indicates that an error occurred. Second, the value of <tt>errno</tt> is never set to 0 by any of the functions, and none of the constants defined in <tt>&lt;errno.h&gt;</tt> has a value of 0.</P>
+<p class="docText"><a name="idd1e3680"></a><a name="idd1e3685"></a><a name="idd1e3690"></a><a name="idd1e3697"></a><a name="idd1e3702"></a>Two functions are defined by the C standard to help with printing error messages.</P>
+<a name="inta178"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;string.h&gt;
+
+char *strerror(int <span class="docEmphItalicAlt">errnum</span>);</pre><br>
+
+</P></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer to message string</P></td></TR></table></P><br>
+<p class="docText">This function maps <span class="docEmphasis">errnum</span>, which is typically the <tt>errno</tt> value, into an error message string and returns a pointer to the string.</p>
+<p class="docText">The <tt>perror</tt> function produces an error message on the standard error, based on the current value of <tt>errno</tt>, and returns.</p>
+<p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdio.h&gt;
+
+void perror(const char *<span class="docEmphItalicAlt">msg</span>);</pre><BR>
+
+</p></TD></tr></table></p><br>
+<p class="docText">It outputs the string pointed to by <span class="docEmphasis">msg</span>, followed by a colon and a space, followed by the error message corresponding to the value of <tt>errno</tt>, followed by a newline.</p>
+<a name="ch01ex06"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText"><a class="docLink" href="ch01lev1sec7.html#ch01fig08">Figure 1.8</a> shows the use of these two error functions.</p>
+<p class="docText">If this program is compiled into the file <tt>a.out</tt>, we have</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+   EACCES: Permission denied
+   ./a.out: No such file or directory
+</pre><br>
+
+<p class="docText">Note that we pass the name of the program<tt>argv[0]</tt>, whose value is <tt>./a.out</tt>as the argument to <tt>perror</tt>. This is a standard convention in the UNIX System. By doing this, if the program is executed as part of a pipeline, as in</p>
+
+<pre>
+   prog1 &lt; inputfile | prog2 | prog3 &gt; outputfile
+</pre><br>
+
+<p class="docText">we are able to tell which of the three programs generated a particular error message.</p>
+
+<a name="ch01fig08"></a>
+<h5 class="docExampleTitle">Figure 1.8. Demonstrate <tt>strerror</tt> and <tt>perror</tt></h5>
+
+<pre>
+#include "apue.h"
+#include &lt;errno.h&gt;
+
+int
+main(int argc, char *argv[])
+{
+    fprintf(stderr, "EACCES: %s\n", strerror(EACCES));
+    errno = ENOENT;
+    perror(argv[0]);
+    exit(0);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e3864"></a><a name="idd1e3869"></a><a name="idd1e3874"></a><a name="idd1e3879"></a><a name="idd1e3884"></a><a name="idd1e3889"></a><a name="idd1e3894"></a><a name="idd1e3899"></a><a name="idd1e3904"></a><a name="idd1e3909"></a><a name="idd1e3914"></a><a name="idd1e3919"></a><a name="idd1e3924"></a><a name="idd1e3927"></a><a name="idd1e3932"></a><a name="idd1e3935"></a><a name="idd1e3938"></a><a name="idd1e3943"></a><a name="idd1e3946"></a><a name="idd1e3951"></a>Instead of calling either <tt>strerror</tt> or <tt>perror</tt> directly, all the examples in this text use the error functions shown in <a class="docLink" href="app02.html#app02">Appendix B</a>. The error functions in this appendix let us use the variable argument list facility of ISO C to handle error conditions with a single C statement.</p>
+<a name="ch01lev2sec16"></a>
+<h4 class="docSection2Title">Error Recovery</H4>
+<p class="docText">The errors defined in <tt>&lt;errno.h&gt;</tt> can be divided into two categories: fatal and nonfatal. A fatal error has no recovery action. The best we can do is print an error message on the user's screen or write an error message into a log file, and then exit. Nonfatal errors, on the other hand, can sometimes be dealt with more robustly. Most nonfatal errors are temporary in nature, such as with a resource shortage, and might not occur when there is less activity on the system.</P>
+<p class="docText">Resource-related nonfatal errors include <tt>EAGAIN</tt>, <tt>ENFILE</tt>, <tt>ENOBUFS</tt>, <tt>ENOLCK</tt>, <tt>ENOSPC</tt>, <tt>ENOSR</tt>, <tt>EWOULDBLOCK</tt>, and sometimes <tt>ENOMEM</tt>. <tt>EBUSY</tt> can be treated as a nonfatal error when it indicates that a shared resource is in use. Sometimes, <tt>EINTR</tt> can be treated as a nonfatal error when it interrupts a slow system call (more on this in <a class="docLink" href="ch10lev1sec5.html#ch10lev1sec5">Section 10.5</a>).</p>
+<p class="docText">The typical recovery action for a resource-related nonfatal error is to delay a little and try again later. This technique can be applied in other circumstances. For example, if an error indicates that a network connection is no longer functioning, it might be possible for the application to delay a short time and then reestablish the connection. Some applications use an exponential backoff algorithm, waiting a longer period of time each iteration.</P>
+<p class="docText">Ultimately, it is up to the application developer to determine which errors are recoverable. If a reasonable strategy can be used to recover from an error, we can improve the robustness of our application by avoiding an abnormal exit.</P>
+
+
+<UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch01lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch01lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

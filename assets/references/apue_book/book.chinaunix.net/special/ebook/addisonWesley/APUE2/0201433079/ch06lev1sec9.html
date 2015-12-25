@@ -1,0 +1,66 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 6.9.&nbsp; System Identification</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch06lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch06lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch06lev1sec9"></a>
+<h3 class="docSection1Title">6.9. System Identification</h3>
+<p class="docText">POSIX.1 defines the <tt>uname</tt> function to return information on the current host and operating system.</P>
+<a name="inta361"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;sys/utsname.h&gt;
+
+int uname(struct utsname *<span class="docEmphItalicAlt">name</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: non-negative value if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">We pass the address of a <tt>utsname</tt> structure, and the function fills it in. POSIX.1 defines only the minimum fields in the structure, which are all character arrays, and it's up to each implementation to set the size of each array. Some implementations provide additional fields in the structure.</P>
+
+<pre>
+   struct utsname {
+     char  sysname[];    /* name of the operating system */
+     char  nodename[];   /* name of this node */
+     char  release[];    /* current release of operating system */
+     char  version[];    /* current version of this release */
+     char  machine[];    /* name of hardware type */
+   };
+</pre><br>
+
+<p class="docText"><a name="idd1e44656"></a><a name="idd1e44661"></a><a name="idd1e44668"></a><a name="idd1e44673"></a><a name="idd1e44678"></a><a name="idd1e44683"></a><a name="idd1e44688"></a>Each string is null-terminated. The maximum name lengths supported by the four platforms discussed in this book are listed in <a class="docLink" href="ch06lev1sec9.html#ch06fig07">Figure 6.7</a>. The information in the <tt>utsname</tt> structure can usually be printed with the <tt>uname</tt>(1) command.</P>
+<blockquote>
+<p class="docText">POSIX.1 warns that the <tt>nodename</tt> element may not be adequate to reference the host on a communications network. This function is from System V, and in older days, the <tt>nodename</tt> element was adequate for referencing the host on a UUCP network.</P>
+<p class="docText">Realize also that the information in this structure does not give any information on the POSIX.1 level. This should be obtained using <tt>_POSIX_VERSION</tt>, as described in <a class="docLink" href="ch02lev1sec6.html#ch02lev1sec6">Section 2.6</a>.</p>
+<p class="docText">Finally, this function gives us a way only to fetch the information in the structure; there is nothing specified by POSIX.1 about initializing this information.</P>
+</blockquote>
+<p class="docText">Historically, BSD-derived systems provide the <tt>gethostname</tt> function to return only the name of the host. This name is usually the name of the host on a TCP/IP network.</P>
+<a name="inta107"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+int gethostname(char *<span class="docEmphItalicAlt">name</span>, int <span class="docEmphasis">namelen</span>);
+</pre><br>
+
+</P></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></td></tr></table></p><br>
+<p class="docText">The <span class="docEmphasis">namelen</span> argument specifies the size of the <span class="docEmphasis">name</span> buffer. If enough space is provided, the string returned through <span class="docEmphasis">name</span> is null terminated. If insufficient room is provided, however, it is unspecified whether the string is null terminated.</p>
+<p class="docText">The <tt>gethostname</tt> function, now defined as part of POSIX.1, specifies that the maximum host name length is <tt>HOST_NAME_MAX</tt>. The maximum name lengths supported by the four implementations covered in this book are summarized in <a class="docLink" href="ch06lev1sec9.html#ch06fig07">Figure 6.7</a>.</p>
+<a name="ch06fig07"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><h5 class="docTableTitle">Figure 6.7. System identification name limits</h5></caption><colgroup><col width="100"><col width="100"><col width="100"><col width="100"><col width="100"></colgroup><thead><tr><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="top" rowspan="2"><p class="docText"><span class="docEmphRoman">Interface</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top" colspan="4"><p class="docText"><span class="docEmphRoman">Maximum name length</span></p></th></tr><tr><th class="rightBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">FreeBSD 5.2.1</span></p></th><th class="rightBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Linux 2.4.22</span></p></th><th class="rightBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Mac OS X 10.3</span></P></th><th class="thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Solaris 9</span></P></th></tr></thead><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>uname</tt></P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">256</P></TD><td class="rightBorder" align="center" valign="top"><p class="docText">65</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">256</P></TD><td class="docTableCell" align="center" valign="top"><p class="docText">257</P></TD></tr><TR><TD class="rightBorder" align="left" valign="top"><p class="docText"><tt>gethostname</tt></p></td><td class="rightBorder" align="center" valign="top"><p class="docText">256</p></TD><td class="rightBorder" align="center" valign="top"><p class="docText">64</P></td><TD class="rightBorder" align="center" valign="top"><p class="docText">256</p></td><td class="docTableCell" align="center" valign="top"><p class="docText">256</p></td></tr></table></p><br>
+<p class="docText">If the host is connected to a TCP/IP network, the host name is normally the fully qualified domain name of the host.</p>
+<p class="docText"><a name="idd1e44904"></a><a name="idd1e44907"></a><a name="idd1e44910"></a><a name="idd1e44913"></a><a name="idd1e44918"></a><a name="idd1e44923"></a><a name="idd1e44930"></a><a name="idd1e44935"></a><a name="idd1e44940"></a><a name="idd1e44945"></a><a name="idd1e44950"></a><a name="idd1e44955"></a><a name="idd1e44960"></a><a name="idd1e44963"></a><a name="idd1e44968"></a><a name="idd1e44973"></a><a name="idd1e44978"></a><a name="idd1e44985"></a><a name="idd1e44990"></a><a name="idd1e44995"></a><a name="idd1e44998"></a>There is also a <tt>hostname</tt>(1) command that can fetch or set the host name. (The host name is set by the superuser using a similar function, <tt>sethostname</tt>.) The host name is normally set at bootstrap time from one of the start-up files invoked by <tt>/etc/rc</tt> or <tt>init</tt>.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch06lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch06lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

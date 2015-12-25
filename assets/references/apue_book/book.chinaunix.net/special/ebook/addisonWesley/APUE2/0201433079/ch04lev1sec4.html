@@ -1,0 +1,35 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.4.&nbsp; Set-User-ID and Set-Group-ID</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec4"></a>
+<h3 class="docSection1Title">4.4. Set-User-ID and Set-Group-ID</h3>
+<p class="docText">Every process has six or more IDs associated with it. These are shown in <a class="docLink" href="ch04lev1sec4.html#ch04fig05">Figure 4.5</a>.</P>
+<a name="ch04fig05"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><caption><h5 class="docTableTitle">Figure 4.5. User IDs and group IDs associated with each process</H5></caption><colgroup><col width="200"><col width="250"></colgroup><thead></thead><TR><TD class="bottomBorder" align="left" valign="top"><p class="docText">real user ID <br>real group ID</P></TD><TD class="bottomBorder" align="left" valign="middle"><p class="docText">who we really are</p></TD></tr><TR><TD class="bottomBorder" align="left" valign="top"><p class="docText">effective user ID <BR>effective group ID <br>supplementary group IDs</P></TD><td class="bottomBorder" align="left" valign="middle"><p class="docText">used for file access permission checks</P></TD></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">saved set-user-ID <br>saved set-group-ID</P></td><TD class="docTableCell" align="left" valign="middle"><p class="docText">saved by <tt>exec</tt> functions</p></TD></tr></table></p><br>
+<ul><li><p class="docList">The real user ID and real group ID identify who we really are. These two fields are taken from our entry in the password file when we log in. Normally, these <a name="idd1e25099"></a><a name="idd1e25104"></a><a name="idd1e25109"></a><a name="idd1e25114"></a><a name="idd1e25119"></a><a name="idd1e25122"></a><a name="idd1e25127"></a><a name="idd1e25132"></a><a name="idd1e25137"></a><a name="idd1e25142"></a><a name="idd1e25147"></a><a name="idd1e25152"></a>values don't change during a login session, although there are ways for a superuser process to change them, which we describe in <a class="docLink" href="ch08lev1sec11.html#ch08lev1sec11">Section 8.11</a>.</p></li><li><p class="docList">The effective user ID, effective group ID, and supplementary group IDs determine our file access permissions, as we describe in the next section. (We defined supplementary group IDs in <a class="docLink" href="ch01lev1sec8.html#ch01lev1sec8">Section 1.8</a>.)</p></li><li><p class="docList">The saved set-user-ID and saved set-group-ID contain copies of the effective user ID and the effective group ID when a program is executed. We describe the function of these two saved values when we describe the <tt>setuid</tt> function in <a class="docLink" href="ch08lev1sec11.html#ch08lev1sec11">Section 8.11</a>.</p><blockquote>
+<p class="docText">The saved IDs are required with the 2001 version of POSIX.1. They used to be optional in older versions of POSIX. An application can test for the constant <tt>_POSIX_SAVED_IDS</tt> at compile time or can call <tt>sysconf</tt> with the <tt>_SC_SAVED_IDS</tt> argument at runtime, to see whether the implementation supports this feature.</p>
+</blockquote></li></ul>
+<p class="docText">Normally, the effective user ID equals the real user ID, and the effective group ID equals the real group ID.</p>
+<p class="docText">Every file has an owner and a group owner. The owner is specified by the <tt>st_uid</tt> member of the <tt>stat</tt> structure; the group owner, by the <tt>st_gid</tt> member.</p>
+<p class="docText">When we execute a program file, the effective user ID of the process is usually the real user ID, and the effective group ID is usually the real group ID. But the capability exists to set a special flag in the file's mode word (<tt>st_mode</tt>) that says &quot;when this file is executed, set the effective user ID of the process to be the owner of the file (<tt>st_uid</tt>).&quot; Similarly, another bit can be set in the file's mode word that causes the effective group ID to be the group owner of the file (<tt>st_gid</tt>). These two bits in the file's mode word are called the <span class="docEmphasis">set-user-ID</span> bit and the <span class="docEmphasis">set-group-ID</span> bit.</P>
+<p class="docText">For example, if the owner of the file is the superuser and if the file's set-user-ID bit is set, then while that program file is running as a process, it has superuser privileges. This happens regardless of the real user ID of the process that executes the file. As an example, the UNIX System program that allows anyone to change his or her password, <tt>passwd</tt>(1), is a set-user-ID program. This is required so that the program can write the new password to the password file, typically either <tt>/etc/passwd</tt> or <tt>/etc/shadow</tt>, files that should be writable only by the superuser. Because a process that is running set-user-ID to some other user usually assumes extra permissions, it must be written carefully. We'll discuss these types of programs in more detail in <a class="docLink" href="ch08.html#ch08">Chapter 8</a>.</P>
+<p class="docText">Returning to the <tt>stat</tt> function, the set-user-ID bit and the set-group-ID bit are contained in the file's <tt>st_mode</tt> value. These two bits can be tested against the constants <tt>S_ISUID</tt> and <tt>S_ISGID</tt>.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec3.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec5.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,160 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section B.1.&nbsp; Our Header File</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app02.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app02lev1sec2.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="app02lev1sec1"></a>
+<h3 class="docSection1Title">B.1. Our Header File</h3>
+<p class="docText"><a name="idd1e175897"></a><a name="idd1e175902"></a><a name="idd1e175907"></a><a name="idd1e175912"></a><a name="idd1e175917"></a><a name="idd1e175922"></a>Most programs in the text include the header <tt>apue.h</tt>, shown in <a class="docLink" href="app02lev1sec1.html#app02fig01">Figure B.1</a>. It defines constants (such as <tt>MAXLINE</tt>) and prototypes for our own functions.</P>
+<a name="app02fig01"></a>
+<H5 class="docExampleTitle">Figure B.1. Our header: <tt>apue.h</tt></h5>
+
+<pre>
+/* Our own header, to be included before all standard system headers */
+
+#ifndef _APUE_H
+#define _APUE_H
+
+#define _XOPEN_SOURCE   600  /* Single UNIX Specification, Version 3 */
+
+#include &lt;sys/types.h&gt;       /* some systems still require this */
+#include &lt;sys/stat.h&gt;
+#include &lt;sys/termios.h&gt;     /* for winsize */
+#ifndef TIOCGWINSZ
+#include &lt;sys/ioctl.h&gt;
+#endif
+#include &lt;stdio.h&gt;     /* for convenience */
+#include &lt;stdlib.h&gt;    /* for convenience */
+#include &lt;stddef.h&gt;    /* for offsetof */
+#include &lt;string.h&gt;    /* for convenience */
+#include &lt;unistd.h&gt;    /* for convenience */
+#include &lt;signal.h&gt;    /* for SIG_ERR */
+
+
+#define MAXLINE 4096               /* max line length */
+
+/*
+ * Default file access permissions for new files.
+ */
+#define FILE_MODE   (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
+
+/*
+ * Default permissions for new directories.
+ */
+#define DIR_MODE    (FILE_MODE | S_IXUSR | S_IXGRP | S_IXOTH)
+
+typedef void   Sigfunc(int);   /* for signal handlers */
+
+#if defined(SIG_IGN) &amp;&amp; !defined(SIG_ERR)
+#define SIG_ERR ((Sigfunc *)-1)
+#endif
+
+#define min(a,b)     ((a) &lt; (b) ? (a) : (b))
+#define max(a,b)     ((a) &gt; (b) ? (a) : (b))
+
+/*
+ * Prototypes for our own functions.
+ */
+char    *path_alloc(int *);              /* <a class="docLink" href="ch02lev1sec5.html#ch02fig15">Figure 2.15</a> */
+long     open_max(void);                 /* <a class="docLink" href="ch02lev1sec5.html#ch02fig16">Figure 2.16</a> */
+void     clr_fl(int, int);               /* <a class="docLink" href="ch03lev1sec14.html#ch03fig11">Figure 3.11</a> */
+void     set_fl(int, int);               /* <a class="docLink" href="ch03lev1sec14.html#ch03fig11">Figure 3.11</a> */
+void     pr_exit(int);                   /* <a class="docLink" href="ch08lev1sec6.html#ch08fig05">Figure 8.5</a> */
+void     pr_mask(const char *);          /* <a class="docLink" href="ch10lev1sec12.html#ch10fig14">Figure 10.14</a> */
+Sigfunc *signal_intr(int, Sigfunc *);    /* <a class="docLink" href="ch10lev1sec14.html#ch10fig19">Figure 10.19</a> */
+
+int      tty_cbreak(int);                /* <a class="docLink" href="ch18lev1sec11.html#ch18fig20">Figure 18.20</a> */
+int      tty_raw(int);                   /* <a class="docLink" href="ch18lev1sec11.html#ch18fig20">Figure 18.20</a> */
+int      tty_reset(int);                 /* <a class="docLink" href="ch18lev1sec11.html#ch18fig20">Figure 18.20</a> */
+void     tty_atexit(void);               /* <a class="docLink" href="ch18lev1sec11.html#ch18fig20">Figure 18.20</a> */
+#ifdef  ECHO    /* only if &lt;termios.h&gt;  has been included */
+struct termios  *tty_termios(void);      /* <a class="docLink" href="ch18lev1sec11.html#ch18fig20">Figure 18.20</a> */
+#endif
+
+void     sleep_us(unsigned int);             /* <a class="docLink" href="ch14lev1sec11.html#ch14qa1q6">Exercise 14.6</a> */
+ssize_t  readn(int, void *, size_t);         /* <a class="docLink" href="ch14lev1sec8.html#ch14fig29">Figure 14.29</a> */
+ssize_t  writen(int, const void *, size_t);  /* <a class="docLink" href="ch14lev1sec8.html#ch14fig29">Figure 14.29</a> */
+void     daemonize(const char *);            /* <a class="docLink" href="ch13lev1sec3.html#ch13fig01">Figure 13.1</a> */
+
+int      s_pipe(int *);                 /* <a class="docLink" href="ch17lev1sec2.html#ch17fig06">Figures 17.6</a> and <a class="docLink" href="ch17lev1sec3.html#ch17fig13">17.13</a> */
+int      recv_fd(int, ssize_t (*func)(int,
+                 const void *, size_t));/* <a class="docLink" href="ch17lev1sec4.html#ch17fig21">Figures 17.21</a> and <a class="docLink" href="ch17lev1sec4.html#ch17fig23">17.23</a> */
+int      send_fd(int, int);             /* <a class="docLink" href="ch17lev1sec4.html#ch17fig20">Figures 17.20</a> and <a class="docLink" href="ch17lev1sec4.html#ch17fig22">17.22</a> */
+int      send_err(int, int,
+                  const char *);        /* <a class="docLink" href="ch17lev1sec4.html#ch17fig19">Figure 17.19</a> */
+int      serv_listen(const char *);     /* <a class="docLink" href="ch17lev1sec2.html#ch17fig10">Figures 17.10</a> and <a class="docLink" href="ch17lev1sec3.html#ch17fig15">17.15</a> */
+int      serv_accept(int, uid_t *);     /* <a class="docLink" href="ch17lev1sec2.html#ch17fig11">Figures 17.11</a> and <a class="docLink" href="ch17lev1sec3.html#ch17fig16">17.16</a> */
+
+int      cli_conn(const char *);        /* <a class="docLink" href="ch17lev1sec2.html#ch17fig12">Figures 17.12</a> and <a class="docLink" href="ch17lev1sec3.html#ch17fig17">17.17</a> */
+int      buf_args(char *, int (*func)(int,
+                  char **));            /* <a class="docLink" href="ch17lev1sec5.html#ch17fig32">Figure 17.32</a> */
+
+int      ptym_open(char *, int);    /* <a class="docLink" href="ch19lev1sec3.html#ch19fig08">Figures 19.8</a>, <a class="docLink" href="ch19lev1sec3.html#ch19fig09">19.9</a>, and <a class="docLink" href="ch19lev1sec3.html#ch19fig10">19.10</a> */
+int      ptys_open(char *);         /* <a class="docLink" href="ch19lev1sec3.html#ch19fig08">Figures 19.8</a>, <a class="docLink" href="ch19lev1sec3.html#ch19fig09">19.9</a>, and <a class="docLink" href="ch19lev1sec3.html#ch19fig10">19.10</a> */
+#ifdef  TIOCGWINSZ
+pid_t    pty_fork(int *, char *, int, const struct termios *,
+                  const struct winsize *);      /* <a class="docLink" href="ch19lev1sec4.html#ch19fig11">Figure 19.11</a> */
+#endif
+
+int     lock_reg(int, int, int, off_t, int, off_t); /* <a class="docLink" href="ch14lev1sec3.html#ch14fig05">Figure 14.5</a> */
+#define read_lock(fd, offset, whence, len) \
+            lock_reg((fd), F_SETLK, F_RDLCK, (offset), (whence), (len))
+#define readw_lock(fd, offset, whence, len) \
+            lock_reg((fd), F_SETLKW, F_RDLCK, (offset), (whence), (len))
+#define write_lock(fd, offset, whence, len) \
+            lock_reg((fd), F_SETLK, F_WRLCK, (offset), (whence), (len))
+#define writew_lock(fd, offset, whence, len) \
+            lock_reg((fd), F_SETLKW, F_WRLCK, (offset), (whence), (len))
+#define un_lock(fd, offset, whence, len) \
+            lock_reg((fd), F_SETLK, F_UNLCK, (offset), (whence), (len))
+
+pid_t   lock_test(int, int, off_t, int, off_t);     /* <a class="docLink" href="ch14lev1sec3.html#ch14fig06">Figure 14.6</a> */
+
+#define is_read_lockable(fd, offset, whence, len) \
+            (lock_test((fd), F_RDLCK, (offset), (whence), (len)) == 0)
+#define is_write_lockable(fd, offset, whence, len) \
+            (lock_test((fd), F_WRLCK, (offset), (whence), (len)) == 0)
+
+void    err_dump(const char *, ...);        /* <a class="docLink" href="app02.html#app02">Appendix B</a> */
+void    err_msg(const char *, ...);
+void    err_quit(const char *, ...);
+void    err_exit(int, const char *, ...);
+void    err_ret(const char *, ...);
+void    err_sys(const char *, ...);
+
+void    log_msg(const char *, ...);         /* <a class="docLink" href="app02.html#app02">Appendix B</a> */
+void    log_open(const char *, int, int);
+void    log_quit(const char *, ...);
+void    log_ret(const char *, ...);
+void    log_sys(const char *, ...);
+
+void    TELL_WAIT(void);        /* parent/child from Section 8.9 */
+void    TELL_PARENT(pid_t);
+void    TELL_CHILD(pid_t);
+void    WAIT_PARENT(void);
+void    WAIT_CHILD(void);
+
+#endif  /* _APUE_H */
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e175969"></a><a name="idd1e175974"></a><a name="idd1e175979"></a><a name="idd1e175984"></a><a name="idd1e175989"></a><a name="idd1e175994"></a><a name="idd1e175999"></a><a name="idd1e176004"></a><a name="idd1e176009"></a><a name="idd1e176014"></a><a name="idd1e176019"></a><a name="idd1e176024"></a><a name="idd1e176029"></a><a name="idd1e176034"></a><a name="idd1e176039"></a><a name="idd1e176044"></a><a name="idd1e176049"></a><a name="idd1e176054"></a><a name="idd1e176059"></a><a name="idd1e176064"></a><a name="idd1e176069"></a><a name="idd1e176074"></a><a name="idd1e176079"></a><a name="idd1e176084"></a><a name="idd1e176089"></a><a name="idd1e176094"></a><a name="idd1e176099"></a><a name="idd1e176104"></a><a name="idd1e176109"></a><a name="idd1e176114"></a><a name="idd1e176119"></a><a name="idd1e176124"></a><a name="idd1e176129"></a><a name="idd1e176134"></a><a name="idd1e176139"></a><a name="idd1e176144"></a><a name="idd1e176149"></a><a name="idd1e176154"></a><a name="idd1e176159"></a><a name="idd1e176164"></a><a name="idd1e176169"></a><a name="idd1e176174"></a><a name="idd1e176179"></a><a name="idd1e176184"></a><a name="idd1e176189"></a><a name="idd1e176194"></a><a name="idd1e176199"></a><a name="idd1e176204"></a><a name="idd1e176209"></a><a name="idd1e176214"></a><a name="idd1e176219"></a><a name="idd1e176224"></a><a name="idd1e176229"></a><a name="idd1e176234"></a><a name="idd1e176239"></a><a name="idd1e176244"></a><a name="idd1e176249"></a><a name="idd1e176254"></a><a name="idd1e176259"></a><a name="idd1e176264"></a><a name="idd1e176269"></a><a name="idd1e176274"></a><a name="idd1e176279"></a><a name="idd1e176284"></a><a name="idd1e176289"></a><a name="idd1e176294"></a><a name="idd1e176299"></a><a name="idd1e176304"></a><a name="idd1e176309"></a><a name="idd1e176314"></a><a name="idd1e176319"></a>Most programs need to include the following headers: <tt>&lt;stdio.h&gt;</tt>, <tt>&lt;stdlib.h&gt;</tt> (for the <tt>exit</tt> function prototype), and <tt>&lt;unistd.h&gt;</tt> (for all the standard UNIX function prototypes). So our header automatically includes these system headers, along with <tt>&lt;string.h&gt;</tt>. This also reduces the size of all the program listings in the text.</P>
+<p class="docText"><a name="idd1e176343"></a><a name="idd1e176346"></a><a name="idd1e176351"></a><a name="idd1e176356"></a><a name="idd1e176361"></a><a name="idd1e176364"></a><a name="idd1e176367"></a><a name="idd1e176370"></a><a name="idd1e176375"></a><a name="idd1e176378"></a>The reasons we include our header before all the normal system headers are to allow us to define anything that might be required by headers before they are included, control the order in which header files are included, and allow us to redefine anything that needs to be fixed up to hide the differences between systems.</P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="app02.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="app02lev1sec2.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

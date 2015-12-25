@@ -1,0 +1,187 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 8.12.&nbsp; Interpreter Files</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch08lev1sec12"></a>
+<h3 class="docSection1Title">8.12. Interpreter Files</h3>
+<p class="docText"><a name="idd1e59125"></a><a name="idd1e59131"></a><a name="idd1e59134"></a><a name="idd1e59140"></a><a name="idd1e59145"></a><a name="idd1e59150"></a><a name="idd1e59155"></a><a name="idd1e59158"></a><a name="idd1e59161"></a><a name="idd1e59164"></a><a name="idd1e59167"></a><a name="idd1e59172"></a><a name="idd1e59177"></a>All contemporary UNIX systems support interpreter files. These files are text files that begin with a line of the form</P>
+
+<pre>
+    #! <span class="docEmphItalicAlt">pathname [ optional-argument ]</span>
+</pre><BR>
+
+<p class="docText">The space between the exclamation point and the <span class="docEmphasis">pathname</span> is optional. The most common of these interpreter files begin with the line</p>
+
+<pre>
+   #!/bin/sh
+</pre><BR>
+
+<p class="docText">The <span class="docEmphasis">pathname</span> is normally an absolute pathname, since no special operations are performed on it (i.e., <tt>PATH</tt> is not used). The recognition of these files is done within the kernel as part of processing the <tt>exec</tt> system call. The actual file that gets executed by the kernel is not the interpreter file, but the file specified by the <span class="docEmphasis">pathname</span> on the first line of the interpreter file. Be sure to differentiate between the interpreter filea text file that begins with <tt>#!</tt>and the interpreter, which is specified by the <span class="docEmphasis">pathname</span> on the first line of the interpreter file.</P>
+<p class="docText">Be aware that systems place a size limit on the first line of an interpreter file. This limit includes the <tt>#!</tt>, the <span class="docEmphasis">pathname</span>, the optional argument, the terminating newline, and any spaces.</P>
+<blockquote>
+<p class="docText">On FreeBSD 5.2.1, this limit is 128 bytes. Mac OS X 10.3 extends this limit to 512 bytes. Linux 2.4.22 supports a limit of 127 bytes, whereas Solaris 9 places the limit at 1,023 bytes.</p>
+</blockquote>
+<a name="ch08ex08"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText">Let's look at an example to see what the kernel does with the arguments to the <tt>exec</tt> function when the file being executed is an interpreter file and the optional argument on the first line of the interpreter file. The program in <a class="docLink" href="ch08lev1sec12.html#ch08fig20">Figure 8.20</a> <tt>exec</tt>s an interpreter file.</P>
+<p class="docText"><a name="idd1e59255"></a><a name="idd1e59258"></a><a name="idd1e59263"></a><a name="idd1e59268"></a><a name="idd1e59271"></a><a name="idd1e59276"></a><a name="idd1e59279"></a><a name="idd1e59282"></a><a name="idd1e59285"></a>The following shows the contents of the one-line interpreter file that is executed and the result from running the program in <a class="docLink" href="ch08lev1sec12.html#ch08fig20">Figure 8.20</a>:</p>
+
+<pre>
+   $ <span class="docEmphStrong">cat /home/sar/bin/testinterp</span>
+   #!/home/sar/bin/echoarg foo
+   $ <span class="docEmphStrong">./a.out</span>
+   argv[0]: /home/sar/bin/echoarg
+   argv[1]: foo
+   argv[2]: /home/sar/bin/testinterp
+   argv[3]: myarg1
+   argv[4]: MY ARG2
+</pre><BR>
+
+<p class="docText">The program <tt>echoarg</tt> (the interpreter) just echoes each of its command-line arguments. (This is the program from <a class="docLink" href="ch07lev1sec4.html#ch07fig04">Figure 7.4</a>.) Note that when the kernel <tt>exec</tt>s the interpreter (<tt>/home/sar/bin/echoarg</tt>), <tt>argv[0]</tt> is the <span class="docEmphasis">pathname</span> of the interpreter, <tt>argv[1]</tt> is the optional argument from the interpreter file, and the remaining arguments are the <span class="docEmphasis">pathname</span> (<tt>/home/sar/bin/testinterp</tt>) and the second and third arguments from the call to <tt>execl</tt> in the program shown in <a class="docLink" href="ch08lev1sec12.html#ch08fig20">Figure 8.20</a> (<tt>myarg1</tt> and <tt>MY ARG2</tt>). Both <tt>argv[1]</tt> and <tt>argv[2]</tt> from the call to <tt>execl</tt> have been shifted right two positions. Note that the kernel takes the <span class="docEmphasis">pathname</span> from the <tt>execl</tt> call instead of the first argument (<tt>testinterp</tt>), on the assumption that the <span class="docEmphasis">pathname</span> might contain more information than the first argument.</p>
+
+<a name="ch08fig20"></a>
+<H5 class="docExampleTitle">Figure 8.20. A program that <tt>exec</tt>s an interpreter file</H5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/wait.h&gt;
+
+int
+main(void)
+{
+    pid_t   pid;
+    if ((pid = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (pid == 0) {          /* child */
+        if (execl("/home/sar/bin/testinterp",
+                  "testinterp", "myarg1", "MY ARG2", (char *)0) &lt; 0)
+            err_sys("execl error");
+    }
+    if (waitpid(pid, NULL, 0) &lt; 0) /* parent */
+        err_sys("waitpid error");
+    exit(0);
+}
+</pre><BR>
+
+
+<a name="ch08ex09"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText">A common use for the optional argument following the interpreter <span class="docEmphasis">pathname</span> is to specify the <tt>-f</tt> option for programs that support this option. For example, an <tt>awk</tt>(1) program can be executed as</P>
+
+<pre>
+   awk -f myfile
+</pre><br>
+
+<p class="docText">which tells <tt>awk</tt> to read the <tt>awk</tt> program from the file <tt>myfile</tt>.</P>
+<blockquote>
+<p class="docText">Systems derived from UNIX System V often include two versions of the <tt>awk</tt> language. On these systems, <tt>awk</tt> is often called &quot;old awk&quot; and corresponds to the original version distributed with Version 7. In contrast, <tt>nawk</tt> (new <tt>awk</tt>) contains numerous enhancements and corresponds to the language described in Aho, Kernighan, and Weinberger [<a class="docLink" href="bib01.html#biblio01_003">1988</a>]. This newer version provides access to the command-line arguments, which we need for the example that follows. Solaris 9 provides both versions.</P>
+<p class="docText">The <tt>awk</tt> program is one of the utilities included by POSIX in its 1003.2 standard, which is now part of the base POSIX.1 specification in the Single UNIX Specification. This utility is also based on the language described in Aho, Kernighan, and Weinberger [<a class="docLink" href="bib01.html#biblio01_003">1988</a>].</p>
+<p class="docText">The version of <tt>awk</tt> in Mac OS X 10.3 is based on the Bell Laboratories version that Lucent has placed in the public domain. FreeBSD 5.2.1 and Linux 2.4.22 ship with GNU awk, called <tt>gawk</tt>, which is linked to the name <tt>awk</tt>. The <tt>gawk</tt> version conforms to the POSIX standard, but also includes other extensions. Because they are more up-to-date, the version of <tt>awk</tt> from Bell Laboratories and <tt>gawk</tt> are preferred to either <tt>nawk</tt> or old <tt>awk</tt>. (The version of <tt>awk</tt> from Bell Laboratories is available at <a class="docLink" target="_blank" href="http://cm.bell-labs.com/cm/cs/awkbook/index.html">http://cm.bell-labs.com/cm/cs/awkbook/index.html</a>.)</p>
+</blockquote>
+<p class="docText"><a name="idd1e59494"></a><a name="idd1e59500"></a>Using the <tt>-f</tt> option with an interpreter file lets us write</p>
+
+<pre>
+   #!/bin/awk -f
+   <span class="docEmphItalicAlt">(awk program follows in the interpreter file)</span>
+</pre><br>
+
+<p class="docText">For example, <a class="docLink" href="ch08lev1sec12.html#ch08fig21">Figure 8.21</a> shows <tt>/usr/local/bin/awkexample</tt> (an interpreter file).</P>
+<p class="docText">If one of the path prefixes is <tt>/usr/local/bin</tt>, we can execute the program in <a class="docLink" href="ch08lev1sec12.html#ch08fig21">Figure 8.21</a> (assuming that we've turned on the execute bit for the file) as</p>
+
+<pre>
+   $ <span class="docEmphStrong">awkexample file1 FILENAME2 f3</span>
+   ARGV[0] = awk
+   ARGV[1] = file1
+   ARGV[2] = FILENAME2
+   ARGV[3] = f3
+</pre><BR>
+
+<p class="docText">When <tt>/bin/awk</tt> is executed, its command-line arguments are</p>
+
+<pre>
+   /bin/awk -f /usr/local/bin/awkexample file1 FILENAME2 f3
+</pre><BR>
+
+<p class="docText">The pathname of the interpreter file (<tt>/usr/local/bin/awkexample</tt>) is passed to the interpreter. The filename portion of this pathname (what we typed to the shell) isn't adequate, because the interpreter (<tt>/bin/awk</tt> in this example) can't be expected to use the <tt>PATH</tt> variable to locate files. When it reads the interpreter file, <tt>awk</tt> ignores the first line, since the pound sign is <tt>awk</tt>'s comment character.</p>
+<p class="docText">We can verify these command-line arguments with the following commands:</p>
+
+<pre>
+    $ <span class="docEmphStrong">/bin/su</span>                              <span class="docEmphItalicAlt">become superuser</span>
+    Password:                              <span class="docEmphItalicAlt">enter superuser password</span>
+    # <span class="docEmphStrong">mv /bin/awk /bin/awk.save</span>            <span class="docEmphItalicAlt">save the original program</span>
+    # <span class="docEmphStrong">cp /home/sar/bin/echoarg /bin/awk</span>    <span class="docEmphItalicAlt">and replace it temporarily</span>
+    # <span class="docEmphStrong">suspend</span>                              <span class="docEmphItalicAlt">suspend the superuser shell using job control</span>
+    [1] + Stopped         /bin/su
+    $ <span class="docEmphStrong">awkexample file1 FILENAME2 f3</span>
+    argv[0]: /bin/awk
+    argv[1]: -f
+    argv[2]: /usr/local/bin/awkexample
+    argv[3]: file1
+    argv[4]: FILENAME2
+    argv[5]: f3
+    $ <span class="docEmphStrong">fg</span>                                    <span class="docEmphItalicAlt">resume superuser shell using job control</span>
+    /bin/su
+    # <span class="docEmphStrong">mv /bin/awk.save /bin/awk</span>             <span class="docEmphItalicAlt">restore the original program</span>
+    # <span class="docEmphStrong">exit</span>                                  <span class="docEmphItalicAlt">and exit the superuser shell</span>
+</pre><br>
+
+<p class="docText"><a name="idd1e59625"></a><a name="idd1e59630"></a><a name="idd1e59635"></a><a name="idd1e59640"></a>In this example, the <tt>-f</tt> option for the interpreter is required. As we said, this tells <tt>awk</tt> where to look for the <tt>awk</tt> program. If we remove the <tt>-f</tt> option from the interpreter file, an error message usually results when we try to run it. The exact text of the message varies, depending on where the interpreter file is stored and whether the remaining arguments represent existing files. This is because the command-line arguments in this case are</p>
+
+<pre>
+   /bin/awk /usr/local/bin/awkexample file1 FILENAME2 f3
+</pre><br>
+
+<p class="docText">and <tt>awk</tt> is trying to interpret the string <tt>/usr/local/bin/awkexample</tt> as an <tt>awk</tt> program. If we couldn't pass at least a single optional argument to the interpreter (<tt>-f</tt> in this case), these interpreter files would be usable only with the shells.</p>
+
+<a name="ch08fig21"></a>
+<h5 class="docExampleTitle">Figure 8.21. An <tt>awk</tt> program as an interpreter file</h5>
+
+<pre>
+#!/bin/awk -f
+BEGIN {
+    for (i = 0; i &lt; ARGC; i++)
+        printf "ARGV[%d] = %s\n", i, ARGV[i]
+    exit
+}
+</pre><br>
+
+
+<p class="docText">Are interpreter files required? Not really. They provide an efficiency gain for the user at some expense in the kernel (since it's the kernel that recognizes these files). Interpreter files are useful for the following reasons.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><li><div style="font-weight:normal"><p class="docList">They hide that certain programs are scripts in some other language. For example, to execute the program in <a class="docLink" href="ch08lev1sec12.html#ch08fig21">Figure 8.21</a>, we just say</p><pre>
+   awkexample <span class="docEmphItalicAlt">optional-arguments</span>
+</pre><br>
+<p class="docList">instead of needing to know that the program is really an <tt>awk</tt> script that we would otherwise have to execute as</p><pre>
+   awk -f awkexample <span class="docEmphItalicAlt">optional-arguments</span>
+</pre><br>
+</div></li><li><div style="font-weight:normal"><p class="docList">Interpreter scripts provide an efficiency gain. Consider the previous example again. We could still hide that the program is an <tt>awk</tt> script, by wrapping it in a shell script:</P><pre>
+    awk 'BEGIN {
+        for (i = 0; i &lt; ARGC; i++)
+            printf "ARGV[%d] = %s\n", i, ARGV[i]
+        exit
+    }' $*
+</pre><BR>
+<p class="docList">The problem with this solution is that more work is required. First, the shell reads the command and tries to <tt>execlp</tt> the filename. Because the shell script is an executable file, but isn't a machine executable, an error is returned, and <tt>execlp</tt> assumes that the file is a shell script (which it is). Then <tt>/bin/sh</tt> is executed with the pathname of the shell script as its argument. The shell correctly runs our script, but to run the <tt>awk</tt> program, the shell does a <tt>fork</tt>, <tt>exec</tt>, and <tt>wait</tt>. Thus, there is more overhead in replacing an interpreter script with a shell script.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">Interpreter scripts let us write shell scripts using shells other than <tt>/bin/sh</tt>. When it finds an executable file that isn't a machine executable, <tt>execlp</tt> has to choose a shell to invoke, and it always uses <tt>/bin/sh</tt>. Using an interpreter script, however, we can simply write</P><pre>
+   #!/bin/csh
+   <span class="docEmphItalicAlt">(C shell script follows in the interpreter file)</span>
+</pre><br>
+<p class="docList"><a name="idd1e59794"></a><a name="idd1e59797"></a><a name="idd1e59802"></a><a name="idd1e59807"></a><a name="idd1e59812"></a><a name="idd1e59817"></a><a name="idd1e59820"></a><a name="idd1e59825"></a><a name="idd1e59830"></a><a name="idd1e59837"></a><a name="idd1e59842"></a><a name="idd1e59847"></a>Again, we could wrap this all in a <tt>/bin/sh</tt> script (that invokes the C shell), as we described earlier, but more overhead is required.</P></div></LI></ol></div>
+<p class="docText">None of this would work as we've shown if the three shells and <tt>awk</tt> didn't use the pound sign as their comment character.</P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec11.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec13.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

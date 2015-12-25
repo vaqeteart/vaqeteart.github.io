@@ -1,0 +1,26 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Exercises</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch20lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch21.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch20lev1sec11"></a>
+<h3 class="docSection1Title">Exercises</h3>
+<P><table border="0" cellspacing="16" cellpadding="0"><TR valign="top"><td align="right" class="docText" width="50"><a name="ch20qa1q1"></a><B><a class="docLink" href="app03lev1sec20.html#ch20qa1q1a1">20.1</a></b></TD><TD><p class="docText">The locking in <tt>_db_dodelete</tt> is somewhat conservative. For example, we could allow more concurrency by not write-locking the free list until we really need to; that is, the call to <tt>writew_lock</tt> could be moved between the calls to <tt>_db_writedat</tt> and <tt>_db_readptr</tt>. What happens if we do this?</p></TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch20qa1q2"></a><B><a class="docLink" href="app03lev1sec20.html#ch20qa1q2a2">20.2</a></b></td><TD><p class="docText">If <tt>db_nextrec</tt> did not read-lock the free list and a record that it was reading was also in the process of being deleted, describe how <tt>db_nextrec</tt> could return the correct key but an all-blank (hence incorrect) data record. (Hint: look at <tt>_db_dodelete</tt>.)</P></TD></tr><TR valign="top"><TD align="right" class="docText" width="50"><a name="ch20qa1q3"></a><b><a class="docLink" href="app03lev1sec20.html#ch20qa1q3a3">20.3</a></b></TD><TD><p class="docText">At the end of <a class="docLink" href="ch20lev1sec8.html#ch20lev1sec8">Section 20.8</a>, we described the locking performed by <tt>_db_writeidx</tt> and <tt>_db_writedat</tt>. We said that this locking didn't interfere with other readers and writers except those making calls to <tt>db_store</tt>. Is this true if mandatory locking is being used?</p></td></tr><tr valign="top"><TD align="right" class="docText" width="50"><a name="ch20qa1q4"></a><b>20.4</b></TD><td><p class="docText">How would you integrate the <tt>fsync</tt> function into this database library?</P></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch20qa1q5"></a><b><a class="docLink" href="app03lev1sec20.html#ch20qa1q5a5">20.5</a></b></td><td><p class="docText">In <tt>db_store</tt>, we write the data record before the index record. What happens if you do it in the opposite order?</p></td></tr><tr valign="top"><td align="right" class="docText" width="50"><a name="ch20qa1q6"></a><b>20.6</b></td><td><p class="docText">Create a new database and write some number of records to the database. Write a program that calls <tt>db_nextrec</tt> to read each record in the database, and call <tt>_db_hash</tt> to calculate the hash value for each record. Print a histogram of the number of records on each hash chain. Is the hashing function in <tt>_db_hash</tt> adequate?</p></td></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch20qa1q7"></a><B>20.7</b></TD><TD><p class="docText">Modify the database functions so that the number of hash chains in the index file can be specified when the database is created.</p></TD></TR><TR valign="top"><td align="right" class="docText" width="50"><a name="ch20qa1q8"></a><B>20.8</b></td><TD><p class="docText">Compare the performance of the database functions when the database is (a) on the same host as the test program and (b) on a different host accessed via NFS. Does the record locking provided by the database library still work?</P></TD></tr></table></P>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch20lev1sec10.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch21.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

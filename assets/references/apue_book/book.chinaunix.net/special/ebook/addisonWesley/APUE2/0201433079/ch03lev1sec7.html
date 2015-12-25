@@ -1,0 +1,44 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 3.7.&nbsp; read Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch03lev1sec7"></a>
+<h3 class="docSection1Title">3.7. <tt>read</tt> Function</h3>
+<p class="docText">Data is read from an open file with the <tt>read</tt> function.</P>
+<a name="inta262"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+ssize_t read(int <span class="docEmphItalicAlt">filedes</span>, void *<span class="docEmphItalicAlt">buf</span>, size_t <span class="docEmphItalicAlt">nbytes</span>);</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: number of bytes read, 0 if end of file, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">If the <tt>read</tt> is successful, the number of bytes read is returned. If the end of file is encountered, 0 is returned.</P>
+<p class="docText">There are several cases in which the number of bytes actually read is less than the amount requested:</p>
+<UL><LI><p class="docList">When reading from a regular file, if the end of file is reached before the requested number of bytes has been read. For example, if 30 bytes remain until the end of file and we try to read 100 bytes, <tt>read</tt> returns 30. The next time we call <tt>read</tt>, it will return 0 (end of file).</p></LI><LI><p class="docList">When reading from a terminal device. Normally, up to one line is read at a time. (We'll see how to change this in <a class="docLink" href="ch18.html#ch18">Chapter 18</a>.)</p></li><li><p class="docList">When reading from a network. Buffering within the network may cause less than the requested amount to be returned.</p></LI><li><p class="docList">When reading from a pipe or FIFO. If the pipe contains fewer bytes than requested, <tt>read</tt> will return only what is available.</P></li><LI><p class="docList">When reading from a record-oriented device. Some record-oriented devices, such as magnetic tape, can return up to a single record at a time.</p></li><li><p class="docList">When interrupted by a signal and a partial amount of data has already been read. We discuss this further in <a class="docLink" href="ch10lev1sec5.html#ch10lev1sec5">Section 10.5</a>.</p></li></ul>
+<p class="docText"><a name="idd1e19433"></a><a name="idd1e19438"></a><a name="idd1e19441"></a><a name="idd1e19446"></a><a name="idd1e19451"></a><a name="idd1e19454"></a><a name="idd1e19459"></a><a name="idd1e19464"></a><a name="idd1e19469"></a><a name="idd1e19474"></a>The read operation starts at the file's current offset. Before a successful return, the offset is incremented by the number of bytes actually read.</p>
+<p class="docText">POSIX.1 changed the prototype for this function in several ways. The classic definition is</p>
+
+<pre>
+    int read(int <span class="docEmphItalicAlt">filedes</span>, char *<span class="docEmphItalicAlt">buf</span>, unsigned <span class="docEmphItalicAlt">nbytes</span>);
+</pre><br>
+
+<ul><li><p class="docList">First, the second argument was changed from a <tt>char *</tt> to a <tt>void *</tt> to be consistent with ISO C: the type <tt>void *</tt> is used for generic pointers.</p></li><li><p class="docList">Next, the return value must be a signed integer (<tt>ssize_t</tt>) to return a positive byte count, 0 (for end of file), or 1 (for an error).</p></li><li><p class="docList">Finally, the third argument historically has been an unsigned integer, to allow a 16-bit implementation to read or write up to 65,534 bytes at a time. With the 1990 POSIX.1 standard, the primitive system data type <tt>ssize_t</tt> was introduced to provide the signed return value, and the unsigned <tt>size_t</tt> was used for the third argument. (Recall the <tt>SSIZE_MAX</tt> constant from <a class="docLink" href="ch02lev1sec5.html#ch02lev2sec13">Section 2.5.2</a>.)</P></LI></ul>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch03lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch03lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

@@ -1,0 +1,410 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 17.6.&nbsp; An Open Server, Version 2</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch17lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch17lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch17lev1sec6"></a>
+<h3 class="docSection1Title">17.6. An Open Server, Version 2</h3>
+<p class="docText">In the previous section, we developed an open server that was invoked by a <tt>fork</tt> and <tt>exec</tt> by the client, demonstrating how we can pass file descriptors from a child to a <a name="idd1e131338"></a><a name="idd1e131343"></a><a name="idd1e131350"></a><a name="idd1e131355"></a><a name="idd1e131360"></a><a name="idd1e131365"></a><a name="idd1e131370"></a><a name="idd1e131375"></a><a name="idd1e131380"></a><a name="idd1e131385"></a>parent. In this section, we develop an open server as a daemon process. One server handles all clients. We expect this design to be more efficient, since a <tt>fork</tt> and <tt>exec</tt> are avoided. We still use an s-pipe between the client and the server and demonstrate passing file descriptors between unrelated processes. We'll use the three functions <tt>serv_listen</tt>, <tt>serv_accept</tt>, and <tt>cli_conn</tt> introduced in <a class="docLink" href="ch17lev1sec2.html#ch17lev2sec2">Section 17.2.2</a>. This server also demonstrates how a single server can handle multiple clients, using both the <tt>select</tt> and <tt>poll</tt> functions from <a class="docLink" href="ch14lev1sec5.html#ch14lev1sec5">Section 14.5</a>.</P>
+<p class="docText">The client is similar to the client from <a class="docLink" href="ch17lev1sec5.html#ch17lev1sec5">Section 17.5</a>. Indeed, the file <tt>main.c</tt> is identical (<a class="docLink" href="ch17lev1sec5.html#ch17fig27">Figure 17.27</a>). We add the following line to the <tt>open.h</tt> header (<a class="docLink" href="ch17lev1sec5.html#ch17fig26">Figure 17.26</a>):</P>
+
+<pre>
+#define CS_OPEN "/home/sar/opend" /* server's well-known name */
+</pre><br>
+
+<p class="docText">The file <tt>open.c</tt> does change from <a class="docLink" href="ch17lev1sec5.html#ch17fig28">Figure 17.28</a>, since we now call <tt>cli_conn</tt> instead of doing the <tt>fork</tt> and <tt>exec</tt>. This is shown in <a class="docLink" href="ch17lev1sec6.html#ch17fig34">Figure 17.34</a>.</P>
+<a name="ch17fig34"></a>
+<H5 class="docExampleTitle">Figure 17.34. The <tt>csopen</tt> function, version 2</H5>
+
+<pre>
+#include    "open.h"
+#include    &lt;sys/uio.h&gt;     /* struct iovec */
+
+/*
+ * Open the file by sending the "name" and "oflag" to the
+ * connection server and reading a file descriptor back.
+ */
+int
+csopen(char *name, int oflag)
+{
+    int             len;
+    char            buf[10];
+    struct iovec    iov[3];
+    static int      csfd = -1;
+
+    if (csfd &lt; 0) {     /* open connection to conn server */
+        if ((csfd = cli_conn(CS_OPEN)) &lt; 0)
+            err_sys("cli_conn error");
+    }
+
+    sprintf(buf, " %d", oflag);     /* oflag to ascii */
+    iov[0].iov_base = CL_OPEN " ";  /* string concatenation */
+    iov[0].iov_len  = strlen(CL_OPEN) + 1;
+    iov[1].iov_base = name;
+    iov[1].iov_len  = strlen(name);
+    iov[2].iov_base = buf;
+    iov[2].iov_len  = strlen(buf) + 1;  /* null always sent */
+    len = iov[0].iov_len + iov[1].iov_len + iov[2].iov_len;
+    if (writev(csfd, &amp;iov[0], 3) != len)
+        err_sys("writev error");
+
+    /* read back descriptor; returned errors handled by write() */
+    return(recv_fd(csfd, write));
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e131497"></a><a name="idd1e131504"></a><a name="idd1e131509"></a><a name="idd1e131514"></a>The protocol from the client to the server remains the same.</P>
+<p class="docText">Next, we'll look at the server. The header <tt>opend.h</tt> (<a class="docLink" href="ch17lev1sec6.html#ch17fig35">Figure 17.35</a>) includes the standard headers and declares the global variables and the function prototypes.</P>
+<a name="ch17fig35"></a>
+<H5 class="docExampleTitle">Figure 17.35. The <tt>opend.h</tt> header, version 2</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;errno.h&gt;
+
+#define CS_OPEN "/home/sar/opend"   /* well-known name */
+#define CL_OPEN "open"              /* client's request for server */
+
+extern int   debug;     /* nonzero if interactive (not daemon) */
+extern char  errmsg[];  /* error message string to return to client */
+extern int   oflag;     /* open flag: O_xxx ... */
+extern char *pathname;  /* of file to open for client */
+
+typedef struct {    /* one Client struct per connected client */
+  int   fd;         /* fd, or -1 if available */
+  uid_t uid;
+} Client;
+
+extern Client   *client;        /* ptr to malloc'ed array */
+extern int       client_size;   /* # entries in client[] array */
+
+int      cli_args(int, char **);
+int      client_add(int, uid_t);
+void     client_del(int);
+void     loop(void);
+void     request(char *, int, int, uid_t);
+</pre><BR>
+
+
+<p class="docText">Since this server handles all clients, it must maintain the state of each client connection. This is done with the <tt>client</tt> array declared in the <tt>opend.h</tt> header. <a class="docLink" href="ch17lev1sec6.html#ch17fig36">Figure 17.36</a> defines three functions that manipulate this array.</p>
+<a name="ch17fig36"></a>
+<H5 class="docExampleTitle">Figure 17.36. Functions to manipulate <tt>client</tt> array</H5>
+
+<pre>
+#include    "opend.h"
+
+#define NALLOC  10   /* # client structs to alloc/realloc for */
+
+static void
+client_alloc(void)   /* alloc more entries in the client[] array */
+{
+    int     i;
+
+    if (client == NULL)
+        client = malloc(NALLOC * sizeof(Client));
+    else
+        client = realloc(client, (client_size+NALLOC)*sizeof(Client));
+    if (client == NULL)
+        err_sys("can't alloc for client array");
+
+    /* initialize the new entries */
+    for (i = client_size; i &lt; client_size + NALLOC; i++)
+        client[i].fd = -1;  /* fd of -1 means entry available */
+
+    client_size += NALLOC;
+}
+/*
+ * Called by loop() when connection request from a new client arrives.
+ */
+int
+client_add(int fd, uid_t uid)
+{
+    int     i;
+
+    if (client == NULL)     /* first time we're called */
+        client_alloc();
+again:
+    for (i = 0; i &lt; client_size; i++) {
+        if (client[i].fd == -1) {   /* find an available entry */
+            client[i].fd = fd;
+            client[i].uid = uid;
+            return(i);  /* return index in client[] array */
+        }
+    }
+    /* client array full, time to realloc for more */
+    client_alloc();
+    goto again;     /* and search again (will work this time) */
+}
+/*
+ * Called by loop() when we're done with a client.
+ */
+void
+client_del(int fd)
+{
+    int     i;
+
+    for (i = 0; i &lt; client_size; i++) {
+        if (client[i].fd == fd) {
+            client[i].fd = -1;
+            return;
+        }
+    }
+    log_quit("can't find client entry for fd %d", fd);
+}
+</pre><BR>
+
+
+<p class="docText"><a name="idd1e131602"></a><a name="idd1e131607"></a><a name="idd1e131614"></a><a name="idd1e131619"></a>The first time <tt>client_add</tt> is called, it calls <tt>client_alloc</tt>, which calls <tt>malloc</tt> to allocate space for ten entries in the array. After these ten entries are all in use, a later call to <tt>client_add</tt> causes <tt>realloc</tt> to allocate additional space. By dynamically allocating space this way, we have not limited the size of the <tt>client</tt> array at compile time to some value that we guessed and put into a header. These functions call the <tt>log_</tt> functions (<a class="docLink" href="app02.html#app02">Appendix B</a>) if an error occurs, since we assume that the server is a daemon.</p>
+<p class="docText"><a name="idd1e131655"></a><a name="idd1e131660"></a><a name="idd1e131665"></a><a name="idd1e131670"></a><a name="idd1e131675"></a><a name="idd1e131680"></a><a name="idd1e131685"></a><a name="idd1e131690"></a><a name="idd1e131695"></a><a name="idd1e131700"></a><a name="idd1e131705"></a>The <tt>main</tt> function (<a class="docLink" href="ch17lev1sec6.html#ch17fig37">Figure 17.37</a>) defines the global variables, processes the command-line options, and calls the function <tt>loop</tt>. If we invoke the server with the <tt>-d</tt> option, the server runs interactively instead of as a daemon. This is used when testing the server.</P>
+<a name="ch17fig37"></a>
+<H5 class="docExampleTitle">Figure 17.37. The server <tt>main</tt> function, version 2</h5>
+
+<pre>
+#include    "opend.h"
+#include    &lt;syslog.h&gt;
+
+int      debug, oflag, client_size, log_to_stderr;
+char     errmsg[MAXLINE];
+char    *pathname;
+Client  *client = NULL;
+
+int
+main(int argc, char *argv[])
+{
+    int     c;
+
+    log_open("open.serv", LOG_PID, LOG_USER);
+
+    opterr = 0;     /* don't want getopt() writing to stderr */
+    while ((c = getopt(argc, argv, "d")) != EOF) {
+        switch (c) {
+        case 'd':       /* debug */
+            debug = log_to_stderr = 1;
+            break;
+
+        case '?':
+            err_quit("unrecognized option: -%c", optopt);
+        }
+    }
+
+    if (debug == 0)
+        daemonize("opend");
+
+    loop();     /* never returns */
+}
+</pre><BR>
+
+
+<p class="docText">The function <tt>loop</tt> is the server's infinite loop. We'll show two versions of this function. <a class="docLink" href="ch17lev1sec6.html#ch17fig38">Figure 17.38</a> shows one version that uses <tt>select</tt>; <a class="docLink" href="ch17lev1sec6.html#ch17fig39">Figure 17.39</a> shows another version that uses <tt>poll</tt>.</P>
+<a name="ch17fig38"></a>
+<h5 class="docExampleTitle">Figure 17.38. The <tt>loop</tt> function using <tt>select</tt></h5>
+
+<pre>
+#include    "opend.h"
+#include    &lt;sys/time.h&gt;
+#include    &lt;sys/select.h&gt;
+
+void
+loop(void)
+{
+    int     i, n, maxfd, maxi, listenfd, clifd, nread;
+    char    buf[MAXLINE];
+    uid_t   uid;
+    fd_set  rset, allset;
+
+    FD_ZERO(&amp;allset);
+
+    /* obtain fd to listen for client requests on */
+    if ((listenfd = serv_listen(CS_OPEN)) &lt; 0)
+        log_sys("serv_listen error");
+    FD_SET(listenfd, &amp;allset);
+    maxfd = listenfd;
+    maxi = -1;
+
+    for ( ; ; ) {
+        rset = allset;  /* rset gets modified each time around */
+        if ((n = select(maxfd + 1, &amp;rset, NULL, NULL, NULL)) &lt; 0)
+            log_sys("select error");
+
+        if (FD_ISSET(listenfd, &amp;rset)) {
+            /* accept new client request */
+            if ((clifd = serv_accept(listenfd, &amp;uid)) &lt; 0)
+                log_sys("serv_accept error: %d", clifd);
+            i = client_add(clifd, uid);
+            FD_SET(clifd, &amp;allset);
+            if (clifd &gt; maxfd)
+                maxfd = clifd;  /* max fd for select() */
+            if (i &gt; maxi)
+                maxi = i;   /* max index in client[] array */
+            log_msg("new connection: uid %d, fd %d", uid, clifd);
+            continue;
+        }
+        for (i = 0; i &lt;= maxi; i++) {   /* go through client[] array */
+            if ((clifd = client[i].fd) &lt; 0)
+                continue;
+            if (FD_ISSET(clifd, &amp;rset)) {
+                /* read argument buffer from client */
+                if ((nread = read(clifd, buf, MAXLINE)) &lt; 0) {
+                    log_sys("read error on fd %d", clifd);
+                } else if (nread == 0) {
+                    log_msg("closed: uid %d, fd %d",
+                      client[i].uid, clifd);
+                    client_del(clifd);  /* client has closed cxn */
+                    FD_CLR(clifd, &amp;allset);
+                    close(clifd);
+                } else {    /* process client's request */
+                    request(buf, nread, clifd, client[i].uid);
+                }
+            }
+        }
+    }
+}
+
+</pre><br>
+
+
+<p class="docText"><a name="idd1e131807"></a><a name="idd1e131812"></a><a name="idd1e131817"></a><a name="idd1e131822"></a><a name="idd1e131827"></a><a name="idd1e131832"></a><a name="idd1e131837"></a><a name="idd1e131842"></a><a name="idd1e131847"></a><a name="idd1e131852"></a><a name="idd1e131857"></a><a name="idd1e131862"></a><a name="idd1e131867"></a><a name="idd1e131872"></a><a name="idd1e131877"></a><a name="idd1e131884"></a><a name="idd1e131889"></a><a name="idd1e131894"></a><a name="idd1e131899"></a><a name="idd1e131904"></a><a name="idd1e131909"></a>This function calls <tt>serv_listen</tt> to create the server's endpoint for the client connections. The remainder of the function is a loop that starts with a call to <tt>select</tt>. Two conditions can be true after <tt>select</tt> returns.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">The descriptor <tt>listenfd</tt> can be ready for reading, which means that a new client has called <tt>cli_conn</tt>. To handle this, we call <tt>serv_accept</tt> and then update the <tt>client</tt> array and associated bookkeeping information for the new client. (We keep track of the highest descriptor number for the first argument to <tt>select</tt>. We also keep track of the highest index in use in the <tt>client</tt> array.)</p></div></LI><li><div style="font-weight:normal"><p class="docList">An existing client's connection can be ready for reading. This means that the client has either terminated or sent a new request. We find out about a client termination by <tt>read</tt> returning 0 (end of file). If <tt>read</tt> returns a value greater than 0, there is a new request to process, which we handle by calling <tt>request</tt>.</P></div></li></ol></div>
+<p class="docText">We keep track of which descriptors are currently in use in the <tt>allset</tt> descriptor set. As new clients connect to the server, the appropriate bit is turned on in this descriptor set. The appropriate bit is turned off when the client terminates.</p>
+<p class="docText">We always know when a client terminates, whether the termination is voluntary or not, since all the client's descriptors (including the connection to the server) are automatically closed by the kernel. This differs from the XSI IPC mechanisms.</p>
+<p class="docText">The <tt>loop</tt> function that uses <tt>poll</tt> is shown in <a class="docLink" href="ch17lev1sec6.html#ch17fig39">Figure 17.39</a>.</p>
+<a name="ch17fig39"></a>
+<h5 class="docExampleTitle">Figure 17.39. The <tt>loop</tt> function using <tt>poll</tt></h5>
+
+<pre>
+#include    "opend.h"
+#include    &lt;poll.h&gt;
+#if !defined(BSD) &amp;&amp; !defined(MACOS)
+#include    &lt;stropts.h&gt;
+#endif
+
+void
+loop(void)
+{
+    int             i, maxi, listenfd, clifd, nread;
+    char            buf[MAXLINE];
+    uid_t           uid;
+    struct pollfd   *pollfd;
+
+    if ((pollfd = malloc(open_max() * sizeof(struct pollfd))) == NULL)
+        err_sys("malloc error");
+
+    /* obtain fd to listen for client requests on */
+    if ((listenfd = serv_listen(CS_OPEN)) &lt; 0)
+        log_sys("serv_listen error");
+    client_add(listenfd, 0);    /* we use [0] for listenfd */
+    pollfd[0].fd = listenfd;
+    pollfd[0].events = POLLIN;
+    maxi = 0;
+
+    for ( ; ; ) {
+        if (poll(pollfd, maxi + 1, -1) &lt; 0)
+            log_sys("poll error");
+ 
+        if (pollfd[0].revents &amp; POLLIN) {
+            /* accept new client request */
+            if ((clifd = serv_accept(listenfd, &amp;uid)) &gt; 0)
+                log_sys("serv_accept error: %d", clifd);
+            i = client_add(clifd, uid);
+            pollfd[i].fd = clifd;
+            pollfd[i].events = POLLIN;
+            if (i &gt; maxi)
+                maxi = i;
+            log_msg("new connection: uid %d, fd %d", uid, clifd);
+        }
+
+        for (i = 1; i &lt;= maxi; i++) {
+            if ((clifd = client[i].fd) &lt; 0)
+                continue;
+            if (pollfd[i].revents &amp; POLLHUP) {
+                goto hungup;
+            } else if (pollfd[i].revents &amp; POLLIN) {
+                /* read argument buffer from client */
+                if ((nread = read(clifd, buf, MAXLINE)) &lt; 0) {
+                    log_sys("read error on fd %d", clifd);
+                } else if (nread == 0) {
+hungup: 
+                    log_msg("closed: uid %d, fd %d",
+                      client[i].uid, clifd);
+                    client_del(clifd);  /* client has closed conn */
+                    pollfd[i].fd = -1;
+                    close(clifd);
+                } else {        /* process client's request */
+                    request(buf, nread, clifd, client[i].uid);
+                }
+            } 
+        }
+    }
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e132018"></a><a name="idd1e132023"></a><a name="idd1e132028"></a>To allow for as many clients as there are possible open descriptors, we dynamically allocate space for the array of <tt>pollfd</tt> structures. (Recall the <tt>open_max</tt> function from <a class="docLink" href="ch02lev1sec5.html#ch02fig16">Figure 2.16</a>.)</p>
+<p class="docText">We use the first entry (index 0) of the <tt>client</tt> array for the <tt>listenfd</tt> descriptor. That way, a client's index in the <tt>client</tt> array is the same index that we use in the <tt>pollfd</tt> array. The arrival of a new client connection is indicated by a <tt>POLLIN</tt> on the <tt>listenfd</tt> descriptor. As before, we call <tt>serv_accept</tt> to accept the connection.</p>
+<p class="docText">For an existing client, we have to handle two different events from <tt>poll</tt>: a client termination is indicated by <tt>POLLHUP</tt>, and a new request from an existing client is indicated by <tt>POLLIN</tt>. Recall from <a class="docLink" href="app03lev1sec15.html#ch15qa1q7a7">Exercise 15.7</a> that the hang-up message can arrive at the stream head while there is still data to be read from the stream. With a pipe, we want to read all the data before processing the hangup. But with this server, when we receive the hangup from the client, we can <tt>close</tt> the connection (the stream) to the <a name="idd1e132087"></a><a name="idd1e132092"></a><a name="idd1e132097"></a><a name="idd1e132102"></a><a name="idd1e132109"></a><a name="idd1e132114"></a><a name="idd1e132119"></a><a name="idd1e132124"></a><a name="idd1e132129"></a>client, effectively throwing away any data still on the stream. There is no reason to process any requests still on the stream, since we can't send any responses back.</p>
+<p class="docText">As with the <tt>select</tt> version of this function, new requests from a client are handled by calling the <tt>request</tt> function (<a class="docLink" href="ch17lev1sec6.html#ch17fig40">Figure 17.40</a>). This function is similar to the earlier version (<a class="docLink" href="ch17lev1sec5.html#ch17fig31">Figure 17.31</a>). It calls the same function, <tt>buf_args</tt> (<a class="docLink" href="ch17lev1sec5.html#ch17fig32">Figure 17.32</a>), that calls <tt>cli_args</tt> (<a class="docLink" href="ch17lev1sec5.html#ch17fig33">Figure 17.33</a>), but since it runs from a daemon process, it logs error messages instead of printing them on the standard error stream.</p>
+<a name="ch17fig40"></a>
+<h5 class="docExampleTitle">Figure 17.40. The <tt>request</tt> function, version 2</h5>
+
+<pre>
+#include    "opend.h"
+#include    &lt;fcntl.h&gt;
+
+void
+request(char *buf, int nread, int clifd, uid_t uid)
+{
+    int     newfd;
+
+    if (buf[nread-1] != 0) {
+        sprintf(errmsg,
+          "request from uid %d not null terminated: %*.*s\n",
+          uid, nread, nread, buf);
+        send_err(clifd, -1, errmsg);
+        return;
+    }
+    log_msg("request: %s, from uid %d", buf, uid);
+
+    /* parse the arguments, set options */
+    if (buf_args(buf, cli_args) &lt; 0) {
+        send_err(clifd, -1, errmsg);
+        log_msg(errmsg);
+        return;
+    }
+
+    if ((newfd = open(pathname, oflag)) &lt; 0) {
+        sprintf(errmsg, "can't open %s: %s\n",
+          pathname, strerror(errno));
+        send_err(clifd, -1, errmsg);
+        log_msg(errmsg);
+        return;
+    }
+
+    /* send the descriptor */
+    if (send_fd(clifd, newfd) &lt; 0)
+        log_sys("send_fd error");
+    log_msg("sent fd %d over fd %d for %s", newfd, clifd, pathname);
+    close(newfd);       /* we're done with descriptor */
+}
+</pre><br>
+
+
+<p class="docText">This completes the second version of the open server, using a single daemon to handle all the client requests.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></TD></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch17lev1sec5.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch17lev1sec7.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

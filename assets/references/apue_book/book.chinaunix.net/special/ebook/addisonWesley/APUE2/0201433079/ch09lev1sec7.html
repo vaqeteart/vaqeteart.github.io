@@ -1,0 +1,50 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 9.7.&nbsp; tcgetpgrp, tcsetpgrp, and tcgetsid Functions</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch09lev1sec7"></a>
+<h3 class="docSection1Title">9.7. <tt>tcgetpgrp</tt>, <tt>tcsetpgrp</tt>, and <tt>tcgetsid</tt> Functions</h3>
+<p class="docText">We need a way to tell the kernel which process group is the foreground process group, so that the terminal device driver knows where to send the terminal input and the terminal-generated signals (<a class="docLink" href="ch09lev1sec6.html#ch09fig07">Figure 9.7</a>).</P>
+<a name="inta347"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+pid_t tcgetpgrp(int <span class="docEmphItalicAlt">filedes</span>);
+</pre><BR>
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: process group ID of foreground process group if OK, 1 on error</p></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+int tcsetpgrp(int <span class="docEmphItalicAlt">filedes</span>, pid_t <span class="docEmphItalicAlt">pgrpid</span>);
+</pre><BR>
+</p></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</P></td></tr></table></p><br>
+<p class="docText"><a name="idd1e64886"></a><a name="idd1e64889"></a><a name="idd1e64892"></a><a name="idd1e64897"></a><a name="idd1e64900"></a><a name="idd1e64905"></a><a name="idd1e64908"></a><a name="idd1e64911"></a><a name="idd1e64914"></a><a name="idd1e64917"></a><a name="idd1e64924"></a>The function <tt>tcgetpgrp</tt> returns the process group ID of the foreground process group associated with the terminal open on <span class="docEmphasis">filedes</span>.</P>
+<p class="docText">If the process has a controlling terminal, the process can call <tt>tcsetpgrp</tt> to set the foreground process group ID to <span class="docEmphasis">pgrpid</span>. The value of <span class="docEmphasis">pgrpid</span> must be the process group ID of a process group in the same session, and <span class="docEmphasis">filedes</span> must refer to the controlling terminal of the session.</p>
+<p class="docText">Most applications don't call these two functions directly. They are normally called by job-control shells.</P>
+<p class="docText">The Single UNIX Specification defines an XSI extension called <tt>tcgetsid</tt> to allow an application to obtain the process group ID for the session leader given a file descriptor for the controlling TTY.</p>
+<a name="inta348"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;termios.h&gt;
+
+pid_t tcgetsid(int <span class="docEmphItalicAlt">filedes</span>);
+</pre><br>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: session leader's process group ID if OK, 1 on error</p></td></tr></table></p><br>
+<p class="docText">Applications that need to manage controlling terminals can use <tt>tcgetsid</tt> to identify the session ID of the controlling terminal's session leader (which is equivalent to the session leader's process group ID).</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch09lev1sec6.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch09lev1sec8.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

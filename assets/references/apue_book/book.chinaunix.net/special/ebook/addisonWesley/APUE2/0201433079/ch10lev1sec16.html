@@ -1,0 +1,343 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 10.16.&nbsp; sigsuspend Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec15.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec17.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch10lev1sec16"></a>
+<h3 class="docSection1Title" id="454331-856">10.16. <tt>sigsuspend</tt> Function</h3>
+<p class="docText">We have seen how we can change the signal mask for a process to block and unblock selected signals. We can use this technique to protect critical regions of code that we don't want interrupted by a signal. What if we want to unblock a signal and then <tt>pause</tt>, waiting for the previously blocked signal to occur? Assuming that the signal is <tt>SIGINT</tt>, the incorrect way to do this is</P>
+
+<pre>
+      sigset_t     newmask, oldmask;
+
+      sigemptyset(&amp;newmask);
+      sigaddset(&amp;newmask, SIGINT);
+
+      /* block SIGINT and save current signal mask */
+      if (sigprocmask(SIG_BLOCK, &amp;newmask, &amp;oldmask) &lt; 0)
+          err_sys("SIG_BLOCK error");
+
+      /* critical region of code */
+
+      /* reset signal mask, which unblocks SIGINT */
+      if (sigprocmask(SIG_SETMASK, &amp;oldmask, NULL) &lt; 0)
+          err_sys("SIG_SETMASK error");
+
+      /* window is open */
+      pause();  /* wait for signal to occur */
+
+      /* continue processing */
+</pre><BR>
+
+<p class="docText">If the signal is sent to the process while it is blocked, the signal delivery will be deferred until the signal is unblocked. To the application, this can look as if the signal occurs between the unblocking and the <tt>pause</tt> (depending on how the kernel implements signals). If this happens, or if the signal does occur between the unblocking and the <tt>pause</tt>, we have a problem. Any occurrence of the signal in this window of time is lost in the sense that we might not see the signal again, in which case the <tt>pause</tt> will block indefinitely. This is another problem with the earlier unreliable signals.</p>
+<p class="docText">To correct this problem, we need a way to both reset the signal mask and put the process to sleep in a single atomic operation. This feature is provided by the <tt>sigsuspend</tt> function.</P>
+<a name="inta324"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e78333"></a><a name="idd1e78338"></a><a name="idd1e78343"></a><a name="idd1e78348"></a><a name="idd1e78353"></a><a name="idd1e78358"></a><a name="idd1e78363"></a><a name="idd1e78368"></a><a name="idd1e78373"></a><a name="idd1e78378"></a><a name="idd1e78383"></a>
+<pre>
+#include &lt;signal.h&gt;
+
+int sigsuspend(const sigset_t *<span class="docEmphItalicAlt">sigmask</span>);
+</pre><BR>
+
+</P></TD></tr><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 1 with <tt>errno</tt> set to <tt>EINTR</tt></P></TD></TR></table></p><BR>
+<p class="docText">The signal mask of the process is set to the value pointed to by <span class="docEmphasis">sigmask</span>. Then the process is suspended until a signal is caught or until a signal occurs that terminates the process. If a signal is caught and if the signal handler returns, then <tt>sigsuspend</tt> returns, and the signal mask of the process is set to its value before the call to <tt>sigsuspend</tt>.</P>
+<p class="docText">Note that there is no successful return from this function. If it returns to the caller, it always returns 1 with <tt>errno</tt> set to <tt>EINTR</tt> (indicating an interrupted system call).</p>
+<a name="ch10ex13"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText"><a class="docLink" href="ch10lev1sec16.html#ch10fig22">Figure 10.22</a> shows the correct way to protect a critical region of code from a specific signal.</p>
+<p class="docText"><a name="idd1e78446"></a>Note that when <tt>sigsuspend</tt> returns, it sets the signal mask to its value before the call. In this example, the <tt>SIGINT</tt> signal will be blocked. We therefore reset the signal mask to the value that we saved earlier (<tt>oldmask</tt>).</p>
+<p class="docText">Running the program from <a class="docLink" href="ch10lev1sec16.html#ch10fig22">Figure 10.22</a> produces the following output:</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+   program start:
+   in critical region: SIGINT
+<span class="docEmphStrong">
+   ^?</span>                               <span class="docEmphItalicAlt">type the interrupt character</span>
+   in sig_int: SIGINT SIGUSR1
+   after return from sigsuspend: SIGINT
+   program exit:
+</pre><br>
+
+<p class="docText">We added <tt>SIGUSR1</tt> to the mask installed when we called <tt>sigsuspend</tt> so that when the signal handler ran, we could tell that the mask had actually changed. We can see that when <tt>sigsuspend</tt> returns, it restores the signal mask to its value before the call.</P>
+
+<a name="ch10fig22"></a>
+<h5 class="docExampleTitle">Figure 10.22. Protecting a critical region from a signal</H5>
+
+<pre>
+#include "apue.h"
+
+static void sig_int(int);
+
+int
+main(void)
+{
+    sigset_t    newmask, oldmask, waitmask;
+
+    pr_mask("program start: ");
+
+    if (signal(SIGINT, sig_int) == SIG_ERR)
+        err_sys("signal(SIGINT) error");
+    sigemptyset(&amp;waitmask);
+    sigaddset(&amp;waitmask, SIGUSR1);
+    sigemptyset(&amp;newmask);
+    sigaddset(&amp;newmask, SIGINT);
+
+    /*
+     * Block SIGINT and save current signal mask.
+     */
+    if (sigprocmask(SIG_BLOCK, &amp;newmask, &amp;oldmask) &lt; 0)
+        err_sys("SIG_BLOCK error");
+
+    /*
+     * Critical region of code.
+     */
+    pr_mask("in critical region: ");
+
+    /*
+     * Pause, allowing all signals except SIGUSR1.
+     */
+    if (sigsuspend(&amp;waitmask) != -1)
+        err_sys("sigsuspend error");
+
+    pr_mask("after return from sigsuspend: ");
+
+    /*
+     * Reset signal mask which unblocks SIGINT.
+     */
+    if (sigprocmask(SIG_SETMASK, &amp;oldmask, NULL) &lt; 0)
+        err_sys("SIG_SETMASK error");
+
+    /*
+     * And continue processing ...
+     */
+    pr_mask("program exit: ");
+
+    exit(0);
+}
+
+static void
+sig_int(int signo)
+{
+    pr_mask("\nin sig_int: ");
+}
+</pre><br>
+
+
+<a name="ch10ex14"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText">Another use of <tt>sigsuspend</tt> is to wait for a signal handler to set a global variable. In the program shown in <a class="docLink" href="ch10lev1sec16.html#ch10fig23">Figure 10.23</a>, we catch both the interrupt signal and the quit signal, but want to wake up the main routine only when the quit signal is caught.</p>
+<p class="docText"><a name="idd1e78537"></a><a name="idd1e78542"></a><a name="idd1e78547"></a><a name="idd1e78552"></a><a name="idd1e78557"></a><a name="idd1e78562"></a><a name="idd1e78569"></a><a name="idd1e78574"></a>Sample output from this program is</p>
+
+<pre>
+   $ <span class="docEmphStrong">./a.out</span>
+<span class="docEmphStrong">
+   ^?</span>                <span class="docEmphItalicAlt">type the interrupt character</span>
+   interrupt
+<span class="docEmphStrong">
+   ^?</span>                <span class="docEmphItalicAlt">type the interrupt character again</span>
+   interrupt
+<span class="docEmphStrong">
+   ^?</span>                <span class="docEmphItalicAlt">and again</span>
+   interrupt
+<span class="docEmphStrong">
+   ^?</span>                <span class="docEmphItalicAlt">and again</span>
+   interrupt
+<span class="docEmphStrong">
+   ^?</span>                <span class="docEmphItalicAlt">and again</span>
+   interrupt
+<span class="docEmphStrong">
+   ^?</span>                <span class="docEmphItalicAlt">and again</span>
+   interrupt
+<span class="docEmphStrong">
+   ^?</span>                <span class="docEmphItalicAlt">and again</span>
+   interrupt
+<span class="docEmphStrong">
+   ^\</span> $              <span class="docEmphItalicAlt">now terminate with quit character</span>
+</pre><br>
+
+
+<a name="ch10fig23"></a>
+<h5 class="docExampleTitle">Figure 10.23. Using <tt>sigsuspend</tt> to wait for a global variable to be set</h5>
+
+<pre>
+#include "apue.h"
+
+volatile sig_atomic_t    quitflag;    /* set nonzero by signal handler */
+
+static void
+sig_int(int signo)  /* one signal handler for SIGINT and SIGQUIT */
+{
+    if (signo == SIGINT)
+        printf("\ninterrupt\n");
+    else if (signo == SIGQUIT)
+        quitflag = 1;   /* set flag for main loop */
+}
+
+int
+main(void)
+{
+     sigset_t     newmask, oldmask, zeromask;
+
+     if (signal(SIGINT, sig_int) == SIG_ERR)
+         err_sys("signal(SIGINT) error");
+     if (signal(SIGQUIT, sig_int) == SIG_ERR)
+         err_sys("signal(SIGQUIT) error");
+
+     sigemptyset(&amp;zeromask);
+     sigemptyset(&amp;newmask);
+     sigaddset(&amp;newmask, SIGQUIT);
+
+     /*
+      * Block SIGQUIT and save current signal mask.
+      */
+     if (sigprocmask(SIG_BLOCK, &amp;newmask, &amp;oldmask) &lt; 0)
+         err_sys("SIG_BLOCK error");
+
+     while (quitflag == 0)
+         sigsuspend(&amp;zeromask);
+
+     /*
+      * SIGQUIT has been caught and is now blocked; do whatever.
+      */
+     quitflag = 0;
+
+     /*
+      * Reset signal mask which unblocks SIGQUIT.
+      */
+     if (sigprocmask(SIG_SETMASK, &amp;oldmask, NULL) &lt; 0)
+         err_sys("SIG_SETMASK error");
+
+     exit(0);
+}
+</pre><br>
+
+
+<blockquote>
+<p class="docText"><a name="idd1e78656"></a><a name="idd1e78661"></a><a name="idd1e78666"></a><a name="idd1e78671"></a><a name="idd1e78676"></a><a name="idd1e78681"></a><a name="idd1e78686"></a><a name="idd1e78691"></a>For portability between non-POSIX systems that support ISO C, and POSIX.1 systems, the only thing we should do within a signal handler is assign a value to a variable of type <tt>sig_atomic_t</tt>, and nothing else. POSIX.1 goes further and specifies a list of functions that are safe to call from within a signal handler (<a class="docLink" href="ch10lev1sec6.html#ch10fig04">Figure 10.4</a>), but if we do this, our code may not run correctly on non-POSIX systems.</p>
+</blockquote>
+<a name="ch10ex15"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">As another example of signals, we show how signals can be used to synchronize a parent and child. <a class="docLink" href="ch10lev1sec16.html#ch10fig24">Figure 10.24</a> shows implementations of the five routines <tt>TELL_WAIT</tt>, <tt>TELL_PARENT</tt>, <tt>TELL_CHILD</tt>, <tt>WAIT_PARENT</tt>, and <tt>WAIT_CHILD</tt> from <a class="docLink" href="ch08lev1sec9.html#ch08lev1sec9">Section 8.9</a>.</p>
+<p class="docText"><a name="idd1e78749"></a><a name="idd1e78752"></a><a name="idd1e78757"></a><a name="idd1e78762"></a><a name="idd1e78767"></a><a name="idd1e78772"></a>We use the two user-defined signals: <tt>SIGUSR1</tt> is sent by the parent to the child, and <tt>SIGUSR2</tt> is sent by the child to the parent. In <a class="docLink" href="ch15lev1sec2.html#ch15fig07">Figure 15.7</a>, we show another implementation of these five functions using pipes.</p>
+
+<a name="ch10fig24"></a>
+<h5 class="docExampleTitle">Figure 10.24. Routines to allow a parent and child to synchronize</h5>
+
+<pre>
+#include "apue.h"
+
+static volatile sig_atomic_t sigflag; /* set nonzero by sig handler */
+static sigset_t newmask, oldmask, zeromask;
+
+static void
+sig_usr(int signo)   /* one signal handler for SIGUSR1 and SIGUSR2 */
+{
+    sigflag = 1;
+}
+
+void
+TELL_WAIT(void)
+{
+    if (signal(SIGUSR1, sig_usr) == SIG_ERR)
+        err_sys("signal(SIGUSR1) error");
+    if (signal(SIGUSR2, sig_usr) == SIG_ERR)
+        err_sys("signal(SIGUSR2) error");
+    sigemptyset(&amp;zeromask);
+    sigemptyset(&amp;newmask);
+    sigaddset(&amp;newmask, SIGUSR1);
+    sigaddset(&amp;newmask, SIGUSR2);
+
+    /*
+     * Block SIGUSR1 and SIGUSR2, and save current signal mask.
+     */
+    if (sigprocmask(SIG_BLOCK, &amp;newmask, &amp;oldmask) &lt; 0)
+        err_sys("SIG_BLOCK error");
+}
+
+void
+TELL_PARENT(pid_t pid)
+{
+    kill(pid, SIGUSR2);              /* tell parent we're done */
+}
+
+void
+WAIT_PARENT(void)
+{
+    while (sigflag == 0)
+        sigsuspend(&amp;zeromask);   /* and wait for parent */
+    sigflag = 0;
+
+    /*
+     * Reset signal mask to original value.
+     */
+    if (sigprocmask(SIG_SETMASK, &amp;oldmask, NULL) &lt; 0)
+        err_sys("SIG_SETMASK error");
+}
+
+void
+TELL_CHILD(pid_t pid)
+{
+    kill(pid, SIGUSR1);             /* tell child we're done */
+}
+
+void
+WAIT_CHILD(void)
+{
+    while (sigflag == 0)
+        sigsuspend(&amp;zeromask);  /* and wait for child */
+    sigflag = 0;
+
+    /*
+     * Reset signal mask to original value.
+     */
+    if (sigprocmask(SIG_SETMASK, &amp;oldmask, NULL) &lt; 0)
+        err_sys("SIG_SETMASK error");
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e78818"></a><a name="idd1e78823"></a><a name="idd1e78828"></a><a name="idd1e78833"></a><a name="idd1e78838"></a><a name="idd1e78843"></a><a name="idd1e78850"></a><a name="idd1e78857"></a><a name="idd1e78864"></a>The <tt>sigsuspend</tt> function is fine if we want to go to sleep while waiting for a signal to occur (as we've shown in the previous two examples), but what if we want to call other system functions while we're waiting? Unfortunately, this problem has no bulletproof solution unless we use multiple threads and dedicate a separate thread to handling signals, as we discuss in <a class="docLink" href="ch12lev1sec8.html#ch12lev1sec8">Section 12.8</a>.</p>
+<p class="docText">Without using threads, the best we can do is to set a global variable in the signal handler when the signal occurs. For example, if we catch both <tt>SIGINT</tt> and <tt>SIGALRM</tt> and install the signal handlers using the <tt>signal_intr</tt> function, the signals will interrupt any slow system call that is blocked. The signals are most likely to occur when we're blocked in a call to the <tt>select</tt> function (<a class="docLink" href="ch14lev1sec5.html#ch14lev2sec14">Section 14.5.1</a>), waiting for input from a slow device. (This is especially true for <tt>SIGALRM</tt>, since we set the alarm clock to prevent us from waiting forever for input.) The code to handle this looks similar to the following:</p>
+
+<pre>
+       if (intr_flag)       /* flag set by our SIGINT handler */
+           handle_intr();
+       if (alrm_flag)       /* flag set by our SIGALRM handler */
+           handle_alrm();
+
+       /* signals occurring in here are lost */
+
+       while (select( ... ) &lt; 0) {
+           if (errno == EINTR) {
+               if (alrm_flag)
+                   handle_alrm();
+               else if (intr_flag)
+                   handle_intr();
+          } else {
+              /* some other error */
+          }
+      }
+</pre><BR>
+
+<p class="docText">We test each of the global flags before calling <tt>select</tt> and again if <tt>select</tt> returns an interrupted system call error. The problem occurs if either signal is caught between the first two <tt>if</tt> statements and the subsequent call to <tt>select</tt>. Signals occurring in here are lost, as indicated by the code comment. The signal handlers are called, and they set the appropriate global variable, but the <tt>select</tt> never returns (unless some data is ready to be read).</P>
+<p class="docText">What we would like to be able to do is the following sequence of steps, in order.</p>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">Block <tt>SIGINT</tt> and <tt>SIGALRM</tt>.</P></div></LI><li><div style="font-weight:normal"><p class="docList">Test the two global variables to see whether either signal has occurred and, if so, handle the condition.</P></div></LI><LI><div style="font-weight:normal"><p class="docList"><a name="idd1e78947"></a><a name="idd1e78952"></a><a name="idd1e78959"></a><a name="idd1e78962"></a><a name="idd1e78967"></a><a name="idd1e78972"></a><a name="idd1e78977"></a><a name="idd1e78982"></a><a name="idd1e78987"></a><a name="idd1e78992"></a><a name="idd1e78997"></a><a name="idd1e79002"></a><a name="idd1e79007"></a><a name="idd1e79012"></a><a name="idd1e79017"></a><a name="idd1e79022"></a><a name="idd1e79027"></a><a name="idd1e79032"></a><a name="idd1e79037"></a><a name="idd1e79042"></a>Call <tt>select</tt> (or any other system function, such as <tt>read</tt>) and unblock the two signals, as an atomic operation.</p></div></LI></ol></div>
+<p class="docText">The <tt>sigsuspend</tt> function helps us only if step 3 is a <tt>pause</tt> operation.</p>
+
+<UL></UL></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch10lev1sec15.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch10lev1sec17.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

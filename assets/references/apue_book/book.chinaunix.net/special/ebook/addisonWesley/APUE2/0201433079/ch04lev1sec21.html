@@ -1,0 +1,240 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.21.&nbsp; Reading Directories</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec20.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec22.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec21"></a>
+<h3 class="docSection1Title">4.21. Reading Directories</h3>
+<p class="docText">Directories can be read by anyone who has access permission to read the directory. But only the kernel can write to a directory, to preserve file system sanity. Recall from <a class="docLink" href="ch04lev1sec5.html#ch04lev1sec5">Section 4.5</a> that the write permission bits and execute permission bits for a directory determine if we can create new files in the directory and remove files from the directorythey don't specify if we can write to the directory itself.</P>
+<p class="docText">The actual format of a directory depends on the UNIX System implementation and the design of the file system. Earlier systems, such as Version 7, had a simple structure: each directory entry was 16 bytes, with 14 bytes for the filename and 2 bytes for the i-node number. When longer filenames were added to 4.2BSD, each entry became variable length, which means that any program that reads a directory is now system dependent. To simplify this, a set of directory routines were developed and are part of POSIX.1. Many implementations prevent applications from using the <tt>read</tt> function to access the contents of directories, thereby further isolating applications from the implementation-specific details of directory formats.</P>
+<a name="inta173"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;dirent.h&gt;
+
+DIR *opendir(const char *<span class="docEmphItalicAlt">pathname</span>);</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer if OK, <tt>NULL</tt> on error</P></td></TR><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+struct dirent *readdir(DIR *<span class="docEmphItalicAlt">dp</span>);</pre><br>
+</P></TD></tr><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer if OK, <tt>NULL</tt> at end of directory or error</p></td></tr><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+void rewinddir(DIR *<span class="docEmphItalicAlt">dp</span>);
+
+int closedir(DIR *<span class="docEmphItalicAlt">dp</span>);</pre><br>
+
+</P></td></TR><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+long telldir(DIR *<span class="docEmphItalicAlt">dp</span>);</pre><br>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: current location in directory associated with <span class="docEmphasis">dp</span>
+</p></td></tr><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+void seekdir(DIR *<span class="docEmphItalicAlt">dp</span>, long <span class="docEmphItalicAlt">loc</span>);</pre><BR>
+
+</p></TD></TR></table></P><br>
+<p class="docText"><a name="idd1e32120"></a><a name="idd1e32125"></a><a name="idd1e32130"></a><a name="idd1e32135"></a><a name="idd1e32140"></a><a name="idd1e32145"></a><a name="idd1e32150"></a><a name="idd1e32155"></a><a name="idd1e32160"></a><a name="idd1e32165"></a><a name="idd1e32168"></a><a name="idd1e32173"></a><a name="idd1e32176"></a><a name="idd1e32179"></a>The <tt>telldir</tt> and <tt>seekdir</tt> functions are not part of the base POSIX.1 standard. They are XSI extensions in the Single UNIX Specifications, so all conforming UNIX System implementations are expected to provide them.</P>
+<p class="docText">Recall our use of several of these functions in the program shown in <a class="docLink" href="ch01lev1sec4.html#ch01fig03">Figure 1.3</a>, our bare-bones implementation of the <tt>ls</tt> command.</P>
+<p class="docText">The <tt>dirent</tt> structure defined in the file <tt>&lt;dirent.h&gt;</tt> is implementation dependent. Implementations define the structure to contain at least the following two members:</P>
+
+<pre>
+      struct dirent {
+        ino_t d_ino;                  /* i-node number */
+        char  d_name[NAME_MAX + 1];   /* null-terminated filename */
+      }
+</pre><br>
+
+<blockquote>
+<p class="docText">The <tt>d_ino</tt> enTRy is not defined by POSIX.1, since it's an implementation feature, but it is defined in the XSI extension to POSIX.1. POSIX.1 defines only the <tt>d_name</tt> entry in this structure.</P>
+</blockquote>
+<p class="docText">Note that <tt>NAME_MAX</tt> is not a defined constant with Solarisits value depends on the file system in which the directory resides, and its value is usually obtained from the <tt>fpathconf</tt> function. A common value for <tt>NAME_MAX</tt> is 255. (Recall <a class="docLink" href="ch02lev1sec5.html#ch02fig14">Figure 2.14</a>.) Since the filename is null terminated, however, it doesn't matter how the array <tt>d_name</tt> is defined in the header, because the array size doesn't indicate the length of the filename.</P>
+<p class="docText">The <tt>DIR</tt> structure is an internal structure used by these six functions to maintain information about the directory being read. The purpose of the <tt>DIR</tt> structure is similar to that of the <tt>FILE</tt> structure maintained by the standard I/O library, which we describe in <a class="docLink" href="ch05.html#ch05">Chapter 5</a>.</P>
+<p class="docText">The pointer to a <tt>DIR</tt> structure that is returned by <tt>opendir</tt> is then used with the other five functions. The <tt>opendir</tt> function initializes things so that the first <tt>readdir</tt> reads the first entry in the directory. The ordering of entries within the directory is implementation dependent and is usually not alphabetical.</p>
+<a name="ch04ex08"></a>
+<H5 class="docExampleTitle">Example</H5>
+<p class="docText">We'll use these directory routines to write a program that traverses a file hierarchy. The goal is to produce the count of the various types of files that we show in <a class="docLink" href="ch04lev1sec3.html#ch04fig04">Figure 4.4</a>. The program shown in <a class="docLink" href="ch04lev1sec21.html#ch04fig22">Figure 4.22</a> takes a single argumentthe starting pathnameand recursively descends the hierarchy from that point. Solaris provides a function, <tt>ftw</tt>(3), that performs the actual traversal of the hierarchy, calling a user-defined function for each file. The problem with this function is that it calls the <tt>stat</tt> function for each file, which causes the program to follow symbolic links. For example, if we start at the root and have a symbolic link named <tt>/lib</tt> that points to <tt>/usr/lib</tt>, all the files in the directory <tt>/usr/lib</tt> are counted twice. To correct this, Solaris provides an additional function, <tt>nftw</tt>(3), with an option that stops it from following symbolic links. Although we could use <tt>nftw</tt>, we'll write our own simple file walker to show the use of the directory routines.</p>
+<blockquote>
+<p class="docText"><a name="idd1e32314"></a><a name="idd1e32317"></a><a name="idd1e32322"></a><a name="idd1e32325"></a>In the Single UNIX Specification, both <tt>ftw</tt> and <tt>nftw</tt> are included in the XSI extensions to the base POSIX.1 specification. Implementations are included in Solaris 9 and Linux 2.4.22. BSD-based systems have a different function, <tt>fts</tt>(3), that provides similar functionality. It is available in FreeBSD 5.2.1, Mac OS X 10.3, and Linux 2.4.22.</P>
+</blockquote>
+<p class="docText"><a name="idd1e32342"></a><a name="idd1e32347"></a><a name="idd1e32354"></a><a name="idd1e32359"></a><a name="idd1e32364"></a><a name="idd1e32369"></a><a name="idd1e32374"></a><a name="idd1e32381"></a><a name="idd1e32386"></a><a name="idd1e32389"></a><a name="idd1e32394"></a><a name="idd1e32397"></a><a name="idd1e32400"></a><a name="idd1e32403"></a><a name="idd1e32408"></a><a name="idd1e32413"></a><a name="idd1e32416"></a><a name="idd1e32419"></a><a name="idd1e32424"></a><a name="idd1e32427"></a><a name="idd1e32430"></a>We have provided more generality in this program than needed. This was done to illustrate the <tt>ftw</tt> function. For example, the function <tt>myfunc</tt> always returns 0, even though the function that calls it is prepared to handle a nonzero return.</P>
+
+<a name="ch04fig22"></a>
+<h5 class="docExampleTitle">Figure 4.22. Recursively descend a directory hierarchy, counting file types</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;dirent.h&gt;
+#include &lt;limits.h&gt;
+
+/* function type that is called for each filename */
+typedef int Myfunc(const char *, const struct stat *, int);
+
+static Myfunc     myfunc;
+static int        myftw(char *, Myfunc *);
+static int        dopath(Myfunc *);
+
+static long nreg, ndir, nblk, nchr, nfifo, nslink, nsock, ntot;
+
+int
+main(int argc, char *argv[])
+{
+    int     ret;
+
+    if (argc != 2)
+        err_quit("usage: ftw &lt;starting-pathname&gt;");
+
+    ret = myftw(argv[1], myfunc);        /* does it all */
+
+    ntot = nreg + ndir + nblk + nchr + nfifo + nslink + nsock;
+    if (ntot == 0)
+        ntot = 1;       /* avoid divide by 0; print 0 for all counts */
+    printf("regular files  = %7ld, %5.2f %%\n", nreg,
+      nreg*100.0/ntot);
+    printf("directories    = %7ld, %5.2f %%\n", ndir,
+      ndir*100.0/ntot);
+    printf("block special  = %7ld, %5.2f %%\n", nblk,
+      nblk*100.0/ntot);
+    printf("char special   = %7ld, %5.2f %%\n", nchr,
+      nchr*100.0/ntot);
+    printf("FIFOs          = %7ld, %5.2f %%\n", nfifo,
+      nfifo*100.0/ntot);
+    printf("symbolic links = %7ld, %5.2f %%\n", nslink,
+      nslink*100.0/ntot);
+    printf("sockets        = %7ld, %5.2f %%\n", nsock,
+      nsock*100.0/ntot);
+
+    exit(ret);
+}
+
+/*
+ * Descend through the hierarchy, starting at "pathname".
+ * The caller's func() is called for every file.
+ */
+#define FTW_F   1       /* file other than directory */
+#define FTW_D   2       /* directory */
+#define FTW_DNR 3       /* directory that can't be read */
+#define FTW_NS  4       /* file that we can't stat */
+
+static char *fullpath;      /* contains full pathname for every file */
+
+static int                  /* we return whatever func() returns */
+myftw(char *pathname, Myfunc *func)
+{
+
+    int len;
+    fullpath = path_alloc(&amp;len);    /* malloc's for PATH_MAX+1 bytes */
+                                        /* (<a class="docLink" href="ch02lev1sec5.html#ch02fig15">Figure 2.15</a>) */
+    strncpy(fullpath, pathname, len);       /* protect against */
+    fullpath[len-1] = 0;                    /* buffer overrun */
+
+    return(dopath(func));
+}
+/*
+ * Descend through the hierarchy, starting at "fullpath".
+ * If "fullpath" is anything other than a directory, we lstat() it,
+ * call func(), and return. For a directory, we call ourself
+ * recursively for each name in the directory.
+ */
+static int                  /* we return whatever func() returns */
+dopath(Myfunc* func)
+{
+    struct stat     statbuf;
+    struct dirent   *dirp;
+    DIR             *dp;
+    int             ret;
+    char            *ptr;
+
+    if (lstat(fullpath, &amp;statbuf) &lt; 0) /* stat error */
+        return(func(fullpath, &amp;statbuf, FTW_NS));
+    if (S_ISDIR(statbuf.st_mode) == 0) /* not a directory */
+        return(func(fullpath, &amp;statbuf, FTW_F));
+
+     /*
+      * It's a directory. First call func() for the directory,
+      * then process each filename in the directory.
+      */
+    if ((ret = func(fullpath, &amp;statbuf, FTW_D)) != 0)
+        return(ret);
+
+    ptr = fullpath + strlen(fullpath);      /* point to end of fullpath */
+    *ptr++ = '/';
+    *ptr = 0;
+
+     if ((dp = opendir(fullpath)) == NULL)     /* can't read directory */
+         return(func(fullpath, &amp;statbuf, FTW_DNR));
+
+     while ((dirp = readdir(dp)) != NULL) {
+         if (strcmp(dirp-&gt;d_name, ".") == 0 ||
+             strcmp(dirp-&gt;d_name, "..") == 0)
+                 continue;        /* ignore dot and dot-dot */
+
+         strcpy(ptr, dirp-&gt;d_name);   /* append name after slash */
+
+         if ((ret = dopath(func)) != 0)          /* recursive */
+              break; /* time to leave */
+     }
+     ptr[-1] = 0;    /* erase everything from slash onwards */
+
+     if (closedir(dp) &lt; 0)
+         err_ret("can't close directory %s", fullpath);
+
+     return(ret);
+}
+
+static int
+myfunc(const char *pathname, const struct stat *statptr, int type)
+{
+    switch (type) {
+    case FTW_F:
+        switch (statptr-&gt;st_mode &amp; S_IFMT) {
+        case S_IFREG:    nreg++;    break;
+        case S_IFBLK:    nblk++;    break;
+        case S_IFCHR:    nchr++;    break;
+        case S_IFIFO:    nfifo++;   break;
+        case S_IFLNK:    nslink++;  break;
+        case S_IFSOCK:   nsock++;   break;
+        case S_IFDIR:
+            err_dump("for S_IFDIR for %s", pathname);
+                    /* directories should have type = FTW_D */
+        }
+        break;
+
+    case FTW_D:
+        ndir++;
+        break;
+
+    case FTW_DNR:
+        err_ret("can't read directory %s", pathname);
+        break;
+
+    case FTW_NS:
+        err_ret("stat error for %s", pathname);
+        break;
+
+    default:
+        err_dump("unknown type %d for pathname %s", type, pathname);
+    }
+
+    return(0);
+}
+</pre><br>
+
+
+<p class="docText"><a name="idd1e32472"></a><a name="idd1e32477"></a><a name="idd1e32482"></a><a name="idd1e32487"></a><a name="idd1e32492"></a><a name="idd1e32497"></a><a name="idd1e32502"></a><a name="idd1e32507"></a><a name="idd1e32512"></a><a name="idd1e32517"></a><a name="idd1e32522"></a><a name="idd1e32527"></a>For additional information on descending through a file system and the use of this technique in many standard UNIX System commands<tt>find</tt>, <tt>ls</tt>, <tt>tar</tt>, and so onrefer to Fowler, Korn, and Vo [<a class="docLink" href="bib01.html#biblio01_019">1989</a>].</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></ul></TD></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec20.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec22.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

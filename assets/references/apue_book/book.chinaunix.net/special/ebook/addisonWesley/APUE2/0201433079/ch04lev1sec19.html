@@ -1,0 +1,113 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 4.19.&nbsp; utime Function</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec18.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec20.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch04lev1sec19"></a>
+<h3 class="docSection1Title">4.19. <tt>utime</tt> Function</h3>
+<p class="docText">The access time and the modification time of a file can be changed with the <tt>utime</tt> function.</P>
+<a name="inta366"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="550"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<a name="PLID0"></a><div class="v1"><a href="ch04lev1sec19.html#PLID0">[View full width]</a></div><pre>#include &lt;utime.h&gt;
+
+int utime(const char *<span class="docEmphItalicAlt">pathname</span>, const struct
+<img border="0" width="14" height="9" alt="" align="left" src="images/ccc.gif"> utimbuf *<span class="docEmphItalicAlt">times</span>);</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></TD></tr></table></P><BR>
+<p class="docText">The structure used by this function is</P>
+
+<pre>
+    struct utimbuf {
+      time_t actime;    /* access time */
+      time_t modtime;   /* modification time */
+    }
+</pre><br>
+
+<p class="docText"><a name="idd1e31304"></a><a name="idd1e31307"></a><a name="idd1e31312"></a><a name="idd1e31317"></a><a name="idd1e31322"></a><a name="idd1e31327"></a><a name="idd1e31332"></a><a name="idd1e31335"></a><a name="idd1e31340"></a><a name="idd1e31345"></a><a name="idd1e31350"></a><a name="idd1e31355"></a><a name="idd1e31360"></a><a name="idd1e31365"></a><a name="idd1e31370"></a><a name="idd1e31375"></a><a name="idd1e31380"></a><a name="idd1e31385"></a><a name="idd1e31390"></a><a name="idd1e31395"></a><a name="idd1e31400"></a><a name="idd1e31405"></a><a name="idd1e31410"></a><a name="idd1e31415"></a><a name="idd1e31420"></a>The two time values in the structure are calendar times, which count seconds since the Epoch, as described in <a class="docLink" href="ch01lev1sec10.html#ch01lev1sec10">Section 1.10</a>.</P>
+<p class="docText">The operation of this function, and the privileges required to execute it, depend on whether the <span class="docEmphasis">times</span> argument is <tt>NULL</tt>.</P>
+<ul><LI><p class="docList">If <span class="docEmphasis">times</span> is a null pointer, the access time and the modification time are both set to the current time. To do this, either the effective user ID of the process must equal the owner ID of the file, or the process must have write permission for the file.</P></li><li><p class="docList">If <span class="docEmphasis">times</span> is a non-null pointer, the access time and the modification time are set to the values in the structure pointed to by <span class="docEmphasis">times</span>. For this case, the effective user ID of the process must equal the owner ID of the file, or the process must be a superuser process. Merely having write permission for the file is not adequate.</p></li></UL>
+<p class="docText">Note that we are unable to specify a value for the changed-status time, <tt>st_ctime</tt>the time the i-node was last changedas this field is automatically updated when the <tt>utime</tt> function is called.</p>
+<p class="docText">On some versions of the UNIX System, the <tt>touch</tt>(1) command uses this function. Also, the standard archive programs, <tt>tar</tt>(1) and <tt>cpio</tt>(1), optionally call <tt>utime</tt> to set the times for a file to the time values saved when the file was archived.</P>
+<a name="ch04ex07"></a>
+<h5 class="docExampleTitle">Example</H5>
+<p class="docText"><a name="idd1e31493"></a><a name="idd1e31498"></a><a name="idd1e31503"></a><a name="idd1e31508"></a>The program shown in <a class="docLink" href="ch04lev1sec19.html#ch04fig21">Figure 4.21</a> truncates files to zero length using the <tt>O_TRUNC</tt> option of the <tt>open</tt> function, but does not change their access time or modification time. To do this, the program first obtains the times with the <tt>stat</tt> function, truncates the file, and then resets the times with the <tt>utime</tt> function.</p>
+<p class="docText">We can demonstrate the program in <a class="docLink" href="ch04lev1sec19.html#ch04fig21">Figure 4.21</a> with the following script:</p>
+
+<pre>
+     $ <span class="docEmphStrong">ls -l changemod times</span>           <span class="docEmphItalicAlt">look at sizes and last-modification times</span>
+     -rwxrwxr-x 1 sar   15019   Nov  18  18:53  changemod
+     -rwxrwxr-x 1 sar   16172   Nov  19  20:05  times
+     $ <span class="docEmphStrong">ls -lu changemod times</span><span class="docEmphItalicAlt">          look at last-access times</span>
+     -rwxrwxr-x 1 sar   15019   Nov  18  18:53  changemod
+     -rwxrwxr-x 1 sar   16172   Nov  19  20:05  times
+     $ <span class="docEmphStrong">date</span><span class="docEmphItalicAlt">                            print today's date</span>
+     Thu Jan 22 06:55:17 EST 2004
+     $ <span class="docEmphStrong">./a.out changemod times</span><span class="docEmphItalicAlt">         run the program in <a class="docLink" href="ch04lev1sec19.html#ch04fig21">Figure 4.21</a></span>
+     $ <span class="docEmphStrong">ls -l changemod times</span>           <span class="docEmphItalicAlt">and check the results</span>
+     -rwxrwxr-x 1 sar        0  Nov  18  18:53  changemod
+     -rwxrwxr-x 1 sar        0  Nov  19  20:05  times
+     $ <span class="docEmphStrong">ls -lu changemod times</span>          <span class="docEmphasis">check the last-access times also</span>
+     -rwxrwxr-x 1 sar        0  Nov  18  18:53  changemod
+     -rwxrwxr-x 1 sar        0  Nov  19  20:05  times
+     $ <span class="docEmphStrong">ls -lc changemod times</span><span class="docEmphasis">          and the changed-status times</span>
+     -rwxrwxr-x 1 sar        0  Jan  22  06:55  changemod
+     -rwxrwxr-x 1 sar        0  Jan  22  06:55  times
+</pre><br>
+
+<p class="docText"><a name="idd1e31586"></a><a name="idd1e31589"></a><a name="idd1e31592"></a><a name="idd1e31595"></a><a name="idd1e31600"></a><a name="idd1e31605"></a><a name="idd1e31610"></a><a name="idd1e31615"></a><a name="idd1e31621"></a><a name="idd1e31627"></a><a name="idd1e31632"></a><a name="idd1e31635"></a><a name="idd1e31638"></a><a name="idd1e31641"></a><a name="idd1e31646"></a><a name="idd1e31653"></a><a name="idd1e31658"></a><a name="idd1e31663"></a><a name="idd1e31668"></a><a name="idd1e31673"></a><a name="idd1e31678"></a><a name="idd1e31681"></a><a name="idd1e31684"></a><a name="idd1e31687"></a><a name="idd1e31690"></a><a name="idd1e31695"></a>As we expect, the last-modification times and the last-access times are not changed. The changed-status times, however, are changed to the time that the program was run.</p>
+
+<a name="ch04fig21"></a>
+<h5 class="docExampleTitle">Figure 4.21. Example of <tt>utime</tt> function</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+#include &lt;utime.h&gt;
+
+int
+main(int argc, char *argv[])
+{
+    int             i, fd;
+    struct stat     statbuf;
+    struct utimbuf  timebuf;
+
+    for (i = 1; i &lt; argc; i++) {
+        if (stat(argv[i], &amp;statbuf) &lt; 0) { /* fetch current times */
+            err_ret("%s: stat error", argv[i]);
+            continue;
+        }
+        if ((fd = open(argv[i], O_RDWR | O_TRUNC)) &lt; 0) { /* truncate */
+            err_ret("%s: open error", argv[i]);
+            continue;
+
+        } 
+        close(fd);
+        timebuf.actime  =  statbuf.st_atime;
+        timebuf.modtime =  statbuf.st_mtime;
+        if (utime(argv[i], &amp;timebuf) &lt; 0) {     /* reset times */
+            err_ret("%s: utime error", argv[i]);
+            continue;
+        }
+    }
+    exit(0);
+}
+</pre><br>
+
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch04lev1sec18.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch04lev1sec20.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

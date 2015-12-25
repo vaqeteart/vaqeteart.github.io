@@ -1,0 +1,252 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 15.9.&nbsp; Shared Memory</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch15lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch15lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch15lev1sec9"></a>
+<h3 class="docSection1Title">15.9. Shared Memory</h3>
+<p class="docText">Shared memory allows two or more processes to share a given region of memory. This is the fastest form of IPC, because the data does not need to be copied between the client and the server. The only trick in using shared memory is synchronizing access to a given region among multiple processes. If the server is placing data into a shared memory region, the client shouldn't try to access the data until the server is done. Often, semaphores are used to synchronize shared memory access. (But as we saw at the end of the previous section, record locking can also be used.)</P>
+<blockquote>
+<p class="docText">The Single UNIX Specification includes an alternate set of interfaces to access shared memory in the shared memory objects option of its real-time extensions. We do not cover the real-time extensions in this text.</P>
+</blockquote>
+<p class="docText">The kernel maintains a structure with at least the following members for each shared memory segment:</p>
+
+<pre>
+   struct shmid_ds {
+     struct ipc_perm  shm_perm;    /* see Section 15.6.2 */
+     size_t           shm_segsz;   /* size of segment in bytes */
+     pid_t            shm_lpid;    /* pid of last shmop() */
+     pid_t            shm_cpid;    /* pid of creator */
+     shmatt_t         shm_nattch;  /* number of current attaches */
+     time_t           shm_atime;   /* last-attach time */
+     time_t           shm_dtime;   /* last-detach time */
+     time_t           shm_ctime;   /* last-change time */
+     .
+     .
+     .
+   };
+</pre><BR>
+
+<p class="docText"><a name="idd1e116598"></a><a name="idd1e116601"></a><a name="idd1e116606"></a><a name="idd1e116611"></a><a name="idd1e116614"></a><a name="idd1e116617"></a><a name="idd1e116622"></a><a name="idd1e116627"></a><a name="idd1e116634"></a><a name="idd1e116639"></a>(Each implementation adds other structure members as needed to support shared memory segments.)</P>
+<p class="docText">The type <tt>shmatt_t</tt> is defined to be an unsigned integer at least as large as an <tt>unsigned short</tt>. <a class="docLink" href="ch15lev1sec9.html#ch15fig30">Figure 15.30</a> lists the system limits (<a class="docLink" href="ch15lev1sec6.html#ch15lev2sec3">Section 15.6.3</a>) that affect shared memory.</P>
+<a name="ch15fig30"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="groups" cellpadding="5"><caption><H5 class="docTableTitle">Figure 15.30. System limits that affect shared memory</H5></caption><colgroup><col width="300"><col width="50"><col width="50"><col width="50"><col width="50"></colgroup><thead><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="middle" rowspan="2"><p class="docText"><span class="docEmphRoman">Description</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="top" colspan="4"><p class="docText"><span class="docEmphRoman">Typical values</span></P></th></tr><TR><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">FreeBSD 5.2.1</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Linux 2.4.22</span></P></th><th class="rightBorder bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Mac OS X 10.3</span></p></th><th class="bottomBorder thead" scope="col" align="center" valign="bottom"><p class="docText"><span class="docEmphRoman">Solaris 9</span></P></th></TR></thead><tr><TD class="rightBorder" align="left" valign="top"><p class="docText">The maximum size in bytes of a shared memory segment</P></td><td class="rightBorder" align="right" valign="top"><p class="docText">33,554,432</p></td><TD class="rightBorder" align="right" valign="top"><p class="docText">33,554,432</p></TD><td class="rightBorder" align="right" valign="top"><p class="docText">4,194,304</P></td><td class="docTableCell" align="right" valign="top"><p class="docText">8,388,608</p></td></tr><tr><td class="rightBorder" align="left" valign="top"><p class="docText">The minimum size in bytes of a shared memory segment</p></td><td class="rightBorder" align="right" valign="top"><p class="docText">1</p></td><td class="rightBorder" align="right" valign="top"><p class="docText">1</p></td><td class="rightBorder" align="right" valign="top"><p class="docText">1</p></TD><TD class="docTableCell" align="right" valign="top"><p class="docText">1</p></TD></TR><TR><td class="rightBorder" align="left" valign="top"><p class="docText">The maximum number of shared memory segments, systemwide</P></TD><TD class="rightBorder" align="right" valign="top"><p class="docText">192</p></TD><td class="rightBorder" align="right" valign="top"><p class="docText">4,096</P></TD><TD class="rightBorder" align="right" valign="top"><p class="docText">32</p></TD><TD class="docTableCell" align="right" valign="top"><p class="docText">100</p></TD></TR><tr><td class="rightBorder" align="left" valign="top"><p class="docText">The maximum number of shared memory segments, per process</p></td><TD class="rightBorder" align="right" valign="top"><p class="docText">128</p></TD><td class="rightBorder" align="right" valign="top"><p class="docText">4,096</P></td><td class="rightBorder" align="right" valign="top"><p class="docText">8</p></td><td class="docTableCell" align="right" valign="top"><p class="docText">6</p></td></tr></table></p><br>
+<p class="docText">The first function called is usually <tt>shmget</tt>, to obtain a shared memory identifier.</p>
+<a name="inta310"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;sys/shm.h&gt;
+
+int shmget(key_t <span class="docEmphItalicAlt">key</span>, size_t <span class="docEmphItalicAlt">size</span>, int <span class="docEmphItalicAlt">flag</span>);
+</pre><br>
+
+</p></td></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: shared memory ID if OK, 1 on error</P></TD></TR></table></p><BR>
+<p class="docText">In <a class="docLink" href="ch15lev1sec6.html#ch15lev2sec1">Section 15.6.1</a>, we described the rules for converting the <span class="docEmphasis">key</span> into an identifier and whether a new segment is created or an existing segment is referenced. When a new segment is created, the following members of the <tt>shmid_ds</tt> structure are initialized.</P>
+<UL><li><p class="docList">The <tt>ipc_perm</tt> structure is initialized as described in <a class="docLink" href="ch15lev1sec6.html#ch15lev2sec2">Section 15.6.2</a>. The <tt>mode</tt> member of this structure is set to the corresponding permission bits of <span class="docEmphasis">flag</span>. These permissions are specified with the values from <a class="docLink" href="ch15lev1sec6.html#ch15fig24">Figure 15.24</a>.</P></li><LI><p class="docList"><tt>shm_lpid</tt>, <tt>shm_nattach</tt>, <tt>shm_atime</tt>, and <tt>shm_dtime</tt> are all set to 0.</P></LI><li><p class="docList"><tt>shm_ctime</tt> is set to the current time.</P></LI><li><p class="docList"><tt>shm_segsz</tt> is set to the <span class="docEmphasis">size</span> requested.</P></LI></ul>
+<p class="docText"><a name="idd1e116933"></a><a name="idd1e116938"></a><a name="idd1e116943"></a><a name="idd1e116948"></a><a name="idd1e116953"></a><a name="idd1e116956"></a><a name="idd1e116961"></a><a name="idd1e116966"></a><a name="idd1e116973"></a><a name="idd1e116978"></a><a name="idd1e116981"></a>The <span class="docEmphasis">size</span> parameter is the size of the shared memory segment in bytes. Implementations will usually round up the size to a multiple of the system's page size, but if an application specifies <span class="docEmphasis">size</span> as a value other than an integral multiple of the system's page size, the remainder of the last page will be unavailable for use. If a new segment is being created (typically in the server), we must specify its <span class="docEmphasis">size</span>. If we are referencing an existing segment (a client), we can specify <span class="docEmphasis">size</span> as 0. When a new segment is created, the contents of the segment are initialized with zeros.</p>
+<p class="docText">The <tt>shmctl</tt> function is the catchall for various shared memory operations.</p>
+<a name="inta308"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;sys/shm.h&gt;
+
+int shmctl(int <span class="docEmphItalicAlt">shmid</span>, int <span class="docEmphItalicAlt">cmd</span>, struct shmid_ds *<span class="docEmphItalicAlt">buf</span>);
+</pre><BR>
+
+</p></TD></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></td></tr></table></p><br>
+<p class="docText">The <span class="docEmphasis">cmd</span> argument specifies one of the following five commands to be performed, on the segment specified by <span class="docEmphasis">shmid</span>.</p>
+<p><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>IPC_STAT</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Fetch the <tt>shmid_ds</tt> structure for this segment, storing it in the structure pointed to by <span class="docEmphasis">buf</span>.</p></td></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>IPC_SET</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText">Set the following three fields from the structure pointed to by <span class="docEmphasis">buf</span> in the <tt>shmid_ds</tt> structure associated with this shared memory segment: <tt>shm_perm.uid</tt>, <tt>shm_perm.gid</tt>, and <tt>shm_perm.mode</tt>. This command can be executed only by a process whose effective user ID equals <tt>shm_perm.cuid</tt> or <tt>shm_perm.uid</tt> or by a process with superuser privileges.</p></TD></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>IPC_RMID</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText">Remove the shared memory segment set from the system. Since an attachment count is maintained for shared memory segments (the <tt>shm_nattch</tt> field in the <tt>shmid_ds</tt> structure), the segment is not removed until the last process using the segment terminates or detaches it. Regardless of whether the segment is still in use, the segment's identifier is immediately removed so that <tt>shmat</tt> can no longer attach the segment. This command can be executed only by a process whose effective user ID equals <tt>shm_perm.cuid</tt> or <tt>shm_perm.uid</tt> or by a process with superuser privileges.</P></TD></tr></table></P><BR>
+<p class="docText">Two additional commands are provided by Linux and Solaris, but are not part of the Single UNIX Specification.</p>
+<P><table cellspacing="0" FRAME="void" RULES="none" cellpadding="5"><colgroup><col width="75"><col width="425"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>SHM_LOCK</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Lock the shared memory segment in memory. This command can be executed only by the superuser.</P></td></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>SHM_UNLOCK</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText">Unlock the shared memory segment. This command can be executed only by the superuser.</p></td></tr></table></p><br>
+<p class="docText">Once a shared memory segment has been created, a process attaches it to its address space by calling <tt>shmat</tt>.</p>
+<a name="inta307"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e117202"></a><a name="idd1e117209"></a><a name="idd1e117214"></a><a name="idd1e117221"></a><a name="idd1e117226"></a><a name="idd1e117231"></a>
+<pre>
+#include &lt;sys/shm.h&gt;
+
+void *shmat(int <span class="docEmphItalicAlt">shmid</span>, const void *<span class="docEmphItalicAlt">addr</span>, int <span class="docEmphItalicAlt">flag</span>);
+</pre><br>
+
+</p></td></tr><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer to shared memory segment if OK, 1 on error</P></td></TR></table></P><BR>
+<p class="docText">The address in the calling process at which the segment is attached depends on the <span class="docEmphasis">addr</span> argument and whether the <tt>SHM_RND</tt> bit is specified in <span class="docEmphasis">flag</span>.</p>
+<UL><LI><p class="docList">If <span class="docEmphasis">addr</span> is 0, the segment is attached at the first available address selected by the kernel. This is the recommended technique.</P></li><LI><p class="docList">If <span class="docEmphasis">addr</span> is nonzero and <tt>SHM_RND</tt> is not specified, the segment is attached at the address given by <span class="docEmphasis">addr</span>.</p></LI><LI><p class="docList">If <span class="docEmphasis">addr</span> is nonzero and <tt>SHM_RND</tt> is specified, the segment is attached at the address given by <span class="docEmphasis">(addr</span> - <span class="docEmphasis">(addr</span> modulus <tt>SHMLBA</tt><span class="docEmphasis">))</span>. The <tt>SHM_RND</tt> command stands for &quot;round.&quot; <tt>SHMLBA</tt> stands for &quot;low boundary address multiple&quot; and is always a power of 2. What the arithmetic does is round the address down to the next multiple of <tt>SHMLBA</tt>.</P></li></UL>
+<p class="docText">Unless we plan to run the application on only a single type of hardware (which is highly unlikely today), we should not specify the address where the segment is to be attached. Instead, we should specify an <span class="docEmphasis">addr</span> of 0 and let the system choose the address.</P>
+<p class="docText">If the <tt>SHM_RDONLY</tt> bit is specified in <span class="docEmphasis">flag</span>, the segment is attached read-only. Otherwise, the segment is attached readwrite.</p>
+<p class="docText">The value returned by <tt>shmat</tt> is the address at which the segment is attached, or 1 if an error occurred. If <tt>shmat</tt> succeeds, the kernel will increment the <tt>shm_nattch</tt> counter in the <tt>shmid_ds</tt> structure associated with the shared memory segment.</P>
+<p class="docText">When we're done with a shared memory segment, we call <tt>shmdt</tt> to detach it. Note that this does not remove the identifier and its associated data structure from the system. The identifier remains in existence until some process (often a server) specifically removes it by calling <tt>shmctl</tt> with a command of <tt>IPC_RMID</tt>.</P>
+<a name="inta309"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;sys/shm.h&gt;
+
+int shmdt(void *<span class="docEmphItalicAlt">addr</span>);
+</pre><br>
+
+</P></td></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, 1 on error</p></td></tr></table></p><br>
+<p class="docText">The <span class="docEmphasis">addr</span> argument is the value that was returned by a previous call to <tt>shmat</tt>. If successful, <tt>shmdt</tt> will decrement the <tt>shm_nattch</tt> counter in the associated <tt>shmid_ds</tt> structure.</p>
+<a name="ch15ex13"></a>
+<h5 class="docExampleTitle">Example</h5>
+<p class="docText">Where a kernel places shared memory segments that are attached with an address of 0 is highly system dependent. <a class="docLink" href="ch15lev1sec9.html#ch15fig31">Figure 15.31</a> shows a program that prints some information on where one particular system places various types of data.</p>
+<p class="docText"><a name="idd1e117431"></a><a name="idd1e117436"></a><a name="idd1e117439"></a><a name="idd1e117444"></a>Running this program on an Intel-based Linux system gives us the following output:</p>
+
+<pre>
+$ <span class="docEmphStrong">./a.out</span>
+array[] from 804a080 to 8053cc0
+stack around bffff9e4
+malloced from 8053cc8 to 806c368
+shared memory attached from 40162000 to 4017a6a0
+</pre><br>
+
+<p class="docText"><a class="docLink" href="ch15lev1sec9.html#ch15fig32">Figure 15.32</a> shows a picture of this, similar to what we said was a typical memory layout in <a class="docLink" href="ch07lev1sec6.html#ch07fig06">Figure 7.6</a>. Note that the shared memory segment is placed well below the stack.</p>
+
+<a name="ch15fig31"></a>
+<h5 class="docExampleTitle">Figure 15.31. Print where various types of data are stored</h5>
+
+<pre>
+#include "apue.h"
+#include &lt;sys/shm.h&gt;
+
+#define ARRAY_SIZE  40000
+#define MALLOC_SIZE 100000
+#define SHM_SIZE    100000
+#define SHM_MODE    0600    /* user read/write */
+
+char    array[ARRAY_SIZE];  /* uninitialized data = bss */
+
+int
+main(void)
+{
+    int     shmid;
+    char    *ptr, *shmptr;
+
+    printf("array[] from %lx to %lx\n", (unsigned long)&amp;array[0],
+      (unsigned long)&amp;array[ARRAY_SIZE]);
+    printf("stack around %lx\n", (unsigned long)&amp;shmid);
+
+    if ((ptr = malloc(MALLOC_SIZE)) == NULL)
+        err_sys("malloc error");
+    printf("malloced from %lx to %lx\n", (unsigned long)ptr,
+      (unsigned long)ptr+MALLOC_SIZE);
+
+    if ((shmid = shmget(IPC_PRIVATE, SHM_SIZE, SHM_MODE)) &lt; 0)
+        err_sys("shmget error");
+    if ((shmptr = shmat(shmid, 0, 0)) == (void *)-1)
+        err_sys("shmat error");
+    printf("shared memory attached from %lx to %lx\n",
+      (unsigned long)shmptr, (unsigned long)shmptr+SHM_SIZE);
+
+    if (shmctl(shmid, IPC_RMID, 0) &lt; 0)
+        err_sys("shmctl error");
+
+    exit(0);
+}
+</pre><br>
+
+
+<a name="ch15fig32"></a><p><center>
+<h5 class="docFigureTitle">Figure 15.32. Memory layout on an Intel-based Linux system</H5>
+<p class="docText"><div class="v1"><a target="_self" href="images/0201433079/graphics/15fig32_alt.gif;423615">[View full size image]</a></div><img border="0" alt="" width="500" height="325" SRC="images/0201433079/graphics/15fig32.gif;423615"></P>
+</center></p><BR>
+<p class="docText"><a name="idd1e117514"></a><a name="idd1e117519"></a><a name="idd1e117522"></a><a name="idd1e117525"></a><a name="idd1e117530"></a><a name="idd1e117535"></a><a name="idd1e117538"></a>Recall that the <tt>mmap</tt> function (<a class="docLink" href="ch14lev1sec9.html#ch14lev1sec9">Section 14.9</a>) can be used to map portions of a file into the address space of a process. This is conceptually similar to attaching a shared memory segment using the <tt>shmat</tt> XSI IPC function. The main difference is that the memory segment mapped with <tt>mmap</tt> is backed by a file, whereas no file is associated with an XSI shared memory segment.</P>
+<a name="ch15ex14"></a>
+<H5 class="docExampleTitle">ExampleMemory Mapping of <tt>/dev/zero</tt></h5>
+<p class="docText">Shared memory can be used between unrelated processes. But if the processes are related, some implementations provide a different technique.</P>
+<blockquote>
+<p class="docText">The following technique works on FreeBSD 5.2.1, Linux 2.4.22, and Solaris 9. Mac OS X 10.3 currently doesn't support the mapping of character devices into the address space of a process.</P>
+</blockquote>
+<p class="docText">The device <tt>/dev/zero</tt> is an infinite source of 0 bytes when read. This device also accepts any data that is written to it, ignoring the data. Our interest in this device for IPC arises from its special properties when it is memory mapped.</P>
+<ul><LI><p class="docList">An unnamed memory region is created whose size is the second argument to <tt>mmap</tt>, rounded up to the nearest page size on the system.</p></LI><LI><p class="docList">The memory region is initialized to 0.</P></li><LI><p class="docList">Multiple processes can share this region if a common ancestor specifies the <tt>MAP_SHARED</tt> flag to <tt>mmap</tt>.</P></li></UL>
+<p class="docText">The program in <a class="docLink" href="ch15lev1sec9.html#ch15fig33">Figure 15.33</a> is an example that uses this special device.</P>
+<p class="docText"><a name="idd1e117614"></a><a name="idd1e117617"></a><a name="idd1e117622"></a><a name="idd1e117627"></a><a name="idd1e117632"></a><a name="idd1e117635"></a>The program opens the <tt>/dev/zero</tt> device and calls <tt>mmap</tt>, specifying a size of a long integer. Note that once the region is mapped, we can <tt>close</tt> the device. The process then creates a child. Since <tt>MAP_SHARED</tt> was specified in the call to <tt>mmap</tt>, writes to the memory-mapped region by one process are seen by the other process. (If we had specified <tt>MAP_PRIVATE</tt> instead, this example wouldn't work.)</p>
+<p class="docText">The parent and the child then alternate running, incrementing a long integer in the shared memory-mapped region, using the synchronization functions from <a class="docLink" href="ch08lev1sec9.html#ch08lev1sec9">Section 8.9</a>. The memory-mapped region is initialized to 0 by <tt>mmap</tt>. The parent increments it to 1, then the child increments it to 2, then the parent increments it to 3, and so on. Note that we have to use parentheses when we increment the value of the long integer in the <tt>update</tt> function, since we are incrementing the value and not the pointer.</p>
+<p class="docText">The advantage of using <tt>/dev/zero</tt> in the manner that we've shown is that an actual file need not exist before we call <tt>mmap</tt> to create the mapped region. Mapping <tt>/dev/zero</tt> automatically creates a mapped region of the specified size. The disadvantage of this technique is that it works only between related processes. With related processes, however, it is probably simpler and more efficient to use threads (<a class="docLink" href="ch11.html#ch11">Chapters 11</a> and <a class="docLink" href="ch12.html#ch12">12</a>). Note that regardless of which technique is used, we still need to synchronize access to the shared data.</p>
+
+<a name="ch15fig33"></a>
+<h5 class="docExampleTitle">Figure 15.33. IPC between parent and child using memory mapped I/O of <tt>/dev/zero</tt></H5>
+
+<pre>
+#include "apue.h"
+#include &lt;fcntl.h&gt;
+#include &lt;sys/mman.h&gt;
+
+#define NLOOPS       1000
+#define SIZE         sizeof(long)     /* size of shared memory area */
+
+static int
+update(long *ptr)
+{
+    return((*ptr)++);    /* return value before increment */
+}
+
+int
+main(void)
+{
+    int     fd, i, counter;
+    pid_t   pid;
+    void    *area;
+
+    if ((fd = open("/dev/zero", O_RDWR)) &lt; 0)
+        err_sys("open error");
+    if ((area = mmap(0, SIZE, PROT_READ | PROT_WRITE, MAP_SHARED,
+      fd, 0)) == MAP_FAILED)
+        err_sys("mmap error");
+    close(fd);      /* can close /dev/zero now that it's mapped */
+
+    TELL_WAIT();
+
+    if ((pid = fork()) &lt; 0) {
+        err_sys("fork error");
+    } else if (pid &gt; 0) {           /* parent */
+        for (i = 0; i &lt; NLOOPS; i += 2) {
+            if ((counter = update((long *)area)) != i)
+                err_quit("parent: expected %d, got %d", i, counter);
+
+            TELL_CHILD(pid);
+            WAIT_CHILD();
+        }
+    } else {                         /* child */
+        for (i = 1; i &lt; NLOOPS + 1; i += 2) {
+            WAIT_PARENT();
+
+            if ((counter = update((long *)area)) != i)
+                err_quit("child: expected %d, got %d", i, counter);
+
+            TELL_PARENT(getppid());
+        }
+    }
+
+    exit(0);
+}
+
+</pre><br>
+
+
+<a name="ch15ex15"></a>
+<H5 class="docExampleTitle">ExampleAnonymous Memory Mapping</h5>
+<p class="docText"><a name="idd1e117710"></a><a name="idd1e117715"></a><a name="idd1e117720"></a><a name="idd1e117725"></a><a name="idd1e117730"></a><a name="idd1e117735"></a><a name="idd1e117740"></a><a name="idd1e117745"></a><a name="idd1e117750"></a><a name="idd1e117755"></a><a name="idd1e117760"></a><a name="idd1e117765"></a>Many implementations provide anonymous memory mapping, a facility similar to the <tt>/dev/zero</tt> feature. To use this facility, we specify the <tt>MAP_ANON</tt> flag to <tt>mmap</tt> and specify the file descriptor as -1. The resulting region is anonymous (since it's not associated with a pathname through a file descriptor) and creates a memory region that can be shared with descendant processes.</P>
+<blockquote>
+<p class="docText">The anonymous memory-mapping facility is supported by all four platforms discussed in this text. Note, however, that Linux defines the <tt>MAP_ANONYMOUS</tt> flag for this facility, but defines the <tt>MAP_ANON</tt> flag to be the same value for improved application portability.</p>
+</blockquote>
+<p class="docText">To modify the program in <a class="docLink" href="ch15lev1sec9.html#ch15fig33">Figure 15.33</a> to use this facility, we make three changes: (a) remove the <tt>open</tt> of <tt>/dev/zero</tt>, (b) remove the <tt>close</tt> of <tt>fd</tt>, and (c) change the call to <tt>mmap</tt> to the following:</p>
+
+<pre>
+if ((area = mmap(0, SIZE, PROT_READ | PROT_WRITE,
+                  MAP_ANON | MAP_SHARED, -1, 0)) == MAP_FAILED)
+</pre><br>
+
+<p class="docText">In this call, we specify the <tt>MAP_ANON</tt> flag and set the file descriptor to -1. The rest of the program from <a class="docLink" href="ch15lev1sec9.html#ch15fig33">Figure 15.33</a> is unchanged.</p>
+
+<p class="docText">The last two examples illustrate sharing memory among multiple related processes. If shared memory is required between unrelated processes, there are two alternatives. Applications can use the XSI shared memory functions, or they can use <tt>mmap</tt> to map the same file into their address spaces using the <tt>MAP_SHARED</tt> flag.</p>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch15lev1sec8.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch15lev1sec10.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

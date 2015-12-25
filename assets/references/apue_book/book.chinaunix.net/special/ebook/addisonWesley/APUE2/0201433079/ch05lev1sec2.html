@@ -1,0 +1,42 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 5.2.&nbsp; Streams and FILE Objects</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch05lev1sec2"></a>
+<h3 class="docSection1Title">5.2. Streams and <tt>FILE</tt> Objects</h3>
+<p class="docText">In <a class="docLink" href="ch03.html#ch03">Chapter 3</a>, all the I/O routines centered around file descriptors. When a file is opened, a file descriptor is returned, and that descriptor is then used for all subsequent I/O operations. With the standard I/O library, the discussion centers around <span class="docEmphasis">streams</span>. (Do not confuse the standard I/O term <span class="docEmphasis">stream</span> with the STREAMS I/O system that is part of System V and standardized in the XSI STREAMS option in the Single UNIX Specification.) When we open or create a file with the standard I/O library, we say that we have associated a stream with the file.</P>
+<p class="docText">With the ASCII character set, a single character is represented by a single byte. With international character sets, a character can be represented by more than one byte. <a name="idd1e34896"></a><a name="idd1e34901"></a><a name="idd1e34906"></a><a name="idd1e34911"></a><a name="idd1e34916"></a><a name="idd1e34921"></a><a name="idd1e34928"></a><a name="idd1e34931"></a><a name="idd1e34934"></a>Standard I/O file streams can be used with single-byte and multibyte (&quot;wide&quot;) character sets. A stream's orientation determines whether the characters that are read and written are single-byte or multibyte. Initially, when a stream is created, it has no orientation. If a multibyte I/O function (see <tt>&lt;wchar.h&gt;</tt>) is used on a stream without orientation, the stream's orientation is set to wide-oriented. If a byte I/O function is used on a stream without orientation, the stream's orientation is set to byte-oriented. Only two functions can change the orientation once set. The <tt>freopen</tt> function (discussed shortly) will clear a stream's orientation; the <tt>fwide</tt> function can be used to set a stream's orientation.</P>
+<a name="inta89"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;wchar.h&gt;
+
+int fwide(FILE *<span class="docEmphItalicAlt">fp</span>, int <span class="docEmphItalicAlt">mode</span>);
+</pre><BR>
+
+</p></TD></TR><TR><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: positive if stream is wide-oriented, <BR>negative if stream is byte-oriented, <br>or 0 if stream has no orientation</P></TD></TR></table></p><BR>
+<p class="docText">The <tt>fwide</tt> function performs different tasks, depending on the value of the <span class="docEmphasis">mode</span> argument.</P>
+<ul><LI><p class="docList">If the <span class="docEmphasis">mode</span> argument is negative, <tt>fwide</tt> will try to make the specified stream byte-oriented.</P></li><li><p class="docList">If the <span class="docEmphasis">mode</span> argument is positive, <tt>fwide</tt> will try to make the specified stream wide-oriented.</p></li><LI><p class="docList">If the <span class="docEmphasis">mode</span> argument is zero, <tt>fwide</tt> will not try to set the orientation, but will still return a value identifying the stream's orientation.</p></LI></ul>
+<p class="docText">Note that <tt>fwide</tt> will not change the orientation of a stream that is already oriented. Also note that there is no error return. Consider what would happen if the stream is invalid. The only recourse we have is to clear <tt>errno</tt> before calling <tt>fwide</tt> and check the value of <tt>errno</tt> when we return. Throughout the rest of this book, we will deal only with byte-oriented streams.</P>
+<p class="docText">When we open a stream, the standard I/O function <tt>fopen</tt> returns a pointer to a <tt>FILE</tt> object. This object is normally a structure that contains all the information required by the standard I/O library to manage the stream: the file descriptor used for actual I/O, a pointer to a buffer for the stream, the size of the buffer, a count of the number of characters currently in the buffer, an error flag, and the like.</p>
+<p class="docText">Application software should never need to examine a <tt>FILE</tt> object. To reference the stream, we pass its <tt>FILE</tt> pointer as an argument to each standard I/O function. Throughout this text, we'll refer to a pointer to a <tt>FILE</tt> object, the type <tt>FILE *</tt> as a <span class="docEmphasis">file pointer</span>.</p>
+<p class="docText">Throughout this chapter, we describe the standard I/O library in the context of a UNIX system. As we mentioned, this library has already been ported to a wide variety of other operating systems. But to provide some insight about how this library can be implemented, we will talk about its typical implementation on a UNIX system.</p>
+
+<ul></ul></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch05lev1sec1.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch05lev1sec3.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

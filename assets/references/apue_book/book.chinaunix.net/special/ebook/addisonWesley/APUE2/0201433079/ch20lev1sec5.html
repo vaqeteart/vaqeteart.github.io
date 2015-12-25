@@ -1,0 +1,47 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 20.5.&nbsp; Centralized or Decentralized?</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch20lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch20lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch20lev1sec5"></a>
+<h3 class="docSection1Title" id="454331-986">20.5. Centralized or Decentralized?</h3>
+<p class="docText">Given multiple processes accessing the same database, we can implement the functions in two ways:</P>
+<div style="font-weight:bold"><ol class="docList" type="1"><LI><div style="font-weight:normal"><p class="docList">Centralized. Have a single process that is the database manager, and have it be the only process that accesses the database. The functions contact this central process using some form of IPC.</p></div></LI><LI><div style="font-weight:normal"><p class="docList">Decentralized. Have each function apply the required concurrency controls (locking) and then issue its own I/O function calls.</P></div></li></ol></div>
+<p class="docText">Database systems have been built using each of these techniques. Given adequate locking routines, the decentralized implementation is usually faster, because IPC is avoided. <a class="docLink" href="ch20lev1sec5.html#ch20fig04">Figure 20.4</a> depicts the operation of the centralized approach.</P>
+<a name="ch20fig04"></a><P><center>
+<H5 class="docFigureTitle">Figure 20.4. Centralized approach for database access</h5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="449" height="475" SRC="images/0201433079/graphics/20fig04.gif;423615"></P>
+
+</center></p><BR>
+<p class="docText">We purposely show the IPC going through the kernel, as most forms of message passing under the UNIX System operate this way. (Shared memory, as described in <a class="docLink" href="ch15lev1sec9.html#ch15lev1sec9">Section 15.9</a>, avoids this copying of the data.) We see with the centralized approach that a record is read by the central process and then passed to the requesting process using <a name="idd1e149608"></a><a name="idd1e149611"></a>IPC. This is a disadvantage of this design. Note that the centralized database manager is the only process that does I/O with the database files.</P>
+<p class="docText">The centralized approach has the advantage that customer tuning of its operation may be possible. For example, we might be able to assign different priorities to different processes through the centralized process. This could affect the scheduling of I/O operations by the centralized process. With the decentralized approach, this is more difficult to do. We are usually at the mercy of the kernel's disk I/O scheduling policy and locking policy; that is, if three processes are waiting for a lock to become available, which process gets the lock next?</P>
+<p class="docText">Another advantage of the centralized approach is that recovery is easier than with the decentralized approach. All the state information is in one place in the centralized approach, so if the database processes are killed, we have only one place to look to identify the outstanding transactions we need to resolve to restore the database to a consistent state.</p>
+<p class="docText">The decentralized approach is shown in <a class="docLink" href="ch20lev1sec5.html#ch20fig05">Figure 20.5</a>. This is the design that we'll implement in this chapter.</P>
+<a name="ch20fig05"></a><P><center>
+<h5 class="docFigureTitle">Figure 20.5. Decentralized approach for database access</H5>
+
+<p class="docText">
+<img border="0" alt="" id="195131139046" width="449" height="474" SRC="images/0201433079/graphics/20fig05.gif;423615"></P>
+
+</center></p><br>
+<p class="docText">The user processes that call the functions in the database library to perform I/O are considered cooperating processes, since they use byte-range locking to provide concurrent access.</p>
+
+<ul></UL></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch20lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch20lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

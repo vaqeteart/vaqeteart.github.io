@@ -1,0 +1,41 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 8.15.&nbsp; User Identification</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec14.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec16.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch08lev1sec15"></a>
+<h3 class="docSection1Title">8.15. User Identification</h3>
+<p class="docText"><a name="idd1e61476"></a><a name="idd1e61481"></a><a name="idd1e61486"></a><a name="idd1e61491"></a><a name="idd1e61496"></a><a name="idd1e61501"></a><a name="idd1e61506"></a><a name="idd1e61511"></a><a name="idd1e61516"></a>Any process can find out its real and effective user ID and group ID. Sometimes, however, we want to find out the login name of the user who's running the program. We could call <tt>getpwuid(getuid())</tt>, but what if a single user has multiple login names, each with the same user ID? (A person might have multiple entries in the password file with the same user ID to have a different login shell for each entry.) The system normally keeps track of the name we log in under (<a class="docLink" href="ch06lev1sec8.html#ch06lev1sec8">Section 6.8</a>), and the <tt>getlogin</tt> function provides a way to fetch that login name.</P>
+<a name="inta108"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;unistd.h&gt;
+
+char *getlogin(void);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Returns: pointer to string giving login name if OK, <tt>NULL</tt> on error</p></TD></tr></table></P><BR>
+<p class="docText">This function can fail if the process is not attached to a terminal that a user logged in to. We normally call these processes <span class="docEmphasis">daemons</span>. We discuss them in <a class="docLink" href="ch13.html#ch13">Chapter 13</a>.</P>
+<p class="docText">Given the login name, we can then use it to look up the user in the password fileto determine the login shell, for exampleusing <tt>getpwnam</tt>.</p>
+<blockquote>
+<p class="docText"><a name="idd1e61598"></a><a name="idd1e61601"></a><a name="idd1e61606"></a><a name="idd1e61611"></a><a name="idd1e61616"></a><a name="idd1e61622"></a><a name="idd1e61625"></a><a name="idd1e61630"></a><a name="idd1e61635"></a><a name="idd1e61638"></a><a name="idd1e61643"></a><a name="idd1e61648"></a><a name="idd1e61653"></a><a name="idd1e61658"></a><a name="idd1e61661"></a><a name="idd1e61666"></a><a name="idd1e61671"></a><a name="idd1e61678"></a><a name="idd1e61683"></a><a name="idd1e61688"></a><a name="idd1e61693"></a><a name="idd1e61698"></a><a name="idd1e61703"></a><a name="idd1e61708"></a><a name="idd1e61713"></a>To find the login name, UNIX systems have historically called the <tt>ttyname</tt> function (<a class="docLink" href="ch18lev1sec9.html#ch18lev1sec9">Section 18.9</a>) and then tried to find a matching entry in the <tt>utmp</tt> file (<a class="docLink" href="ch06lev1sec8.html#ch06lev1sec8">Section 6.8</a>). FreeBSD and Mac OS X store the login name in the session structure associated with the process table entry and provide system calls to fetch and store this name.</P>
+<p class="docText">System V provided the <tt>cuserid</tt> function to return the login name. This function called <tt>getlogin</tt> and, if that failed, did a <tt>getpwuid(getuid())</tt>. The IEEE Standard 1003.11988 specified <tt>cuserid</tt>, but it called for the effective user ID to be used, instead of the real user ID. The 1990 version of POSIX.1 dropped the <tt>cuserid</tt> function.</P>
+<p class="docText">The environment variable <tt>LOGNAME</tt> is usually initialized with the user's login name by <tt>login</tt>(1) and inherited by the login shell. Realize, however, that a user can modify an environment variable, so we shouldn't use <tt>LOGNAME</tt> to validate the user in any way. Instead, <tt>getlogin</tt> should be used.</p>
+</blockquote>
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><UL></UL></td></tr></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch08lev1sec14.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch08lev1sec16.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>

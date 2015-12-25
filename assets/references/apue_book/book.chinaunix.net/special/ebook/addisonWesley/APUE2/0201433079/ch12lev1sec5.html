@@ -1,0 +1,171 @@
+<html>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>Section 12.5.&nbsp; Reentrancy</title>
+<link rel="STYLESHEET" type="text/css" href="images/style.css">
+<link rel="STYLESHEET" type="text/css" href="images/docsafari.css">
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+<br><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><a name="ch12lev1sec5"></a>
+<h3 class="docSection1Title">12.5. Reentrancy</h3>
+<p class="docText">We discussed reentrant functions and signal handlers in <a class="docLink" href="ch10lev1sec6.html#ch10lev1sec6">Section 10.6</a>. Threads are similar to signal handlers when it comes to reentrancy. With both signal handlers and threads, multiple threads of control can potentially call the same function at the same time.</P>
+<p class="docText">If a function can be safely called by multiple threads at the same time, we say that the function is <span class="docEmphasis">thread-safe</span>. All functions defined in the Single UNIX Specification are guaranteed to be thread-safe, except those listed in <a class="docLink" href="ch12lev1sec5.html#ch12fig09">Figure 12.9</a>. In addition, the <tt>ctermid</tt> and <tt>tmpnam</tt> functions are not guaranteed to be thread-safe if they are passed a null pointer. Similarly, there is no guarantee that <tt>wcrtomb</tt> and <tt>wcsrtombs</tt> are thread-safe when they are passed a null pointer for their <tt>mbstate_t</tt> argument.</P>
+<a name="ch12fig09"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="cols" cellpadding="5"><caption><H5 class="docTableTitle">Figure 12.9. Functions <span class="docEmphasis">not</span> guaranteed to be thread-safe by POSIX.1</H5></caption><colgroup><col width="100"><col width="100"><col width="100"><col width="100"><col width="100"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>asctime</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>ecvt</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>gethostent</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>getutxline</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>putc_unlocked</tt>
+</p></TD></TR><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>basename</tt></p></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>encrypt</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>getlogin</tt></P></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>gmtime</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>putchar_unlocked</tt>
+</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>catgets</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>endgrent</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>getnetbyaddr</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>hcreate</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>putenv</tt>
+</P></td></TR><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>crypt</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>endpwent</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>getnetbyname</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>hdestroy</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>pututxline</tt>
+</p></td></tr><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>ctime</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>endutxent</tt></P></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>getnetent</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>hsearch</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>rand</tt>
+</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>dbm_clearerr</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>fcvt</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>getopt</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>inet_ntoa</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>readdir</tt>
+</P></TD></tr><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>dbm_close</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>ftw</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>getprotobyname</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>l64a</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>setenv</tt>
+</p></TD></tr><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>dbm_delete</tt></P></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>gcvt</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>getprotobynumber</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>lgamma</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>setgrent</tt>
+</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>dbm_error</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>getc_unlocked</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>getprotoent</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>lgammaf</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>setkey</tt>
+</P></td></TR><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>dbm_fetch</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>getchar_unlocked</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>getpwent</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>lgammal</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>setpwent</tt>
+</P></td></TR><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>dbm_firstkey</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>getdate</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>getpwnam</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>localeconv</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>setutxent</tt>
+</p></td></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>dbm_nextkey</tt></P></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>getenv</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>getpwuid</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>localtime</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>strerror</tt></P></td></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>dbm_open</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>getgrent</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>getservbyname</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>lrand48</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>strtok</tt></p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>dbm_store</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>getgrgid</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>getservbyport</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>mrand48</tt></p></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>ttyname</tt></P></td></TR><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>dirname</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>getgrnam</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>getservent</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>nftw</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>unsetenv</tt></P></td></TR><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>dlerror</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>gethostbyaddr</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>getutxent</tt></p></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>nl_langinfo</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>wcstombs</tt></p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>drand48</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>gethostbyname</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>getutxid</tt></p></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>ptsname</tt></P></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>wctomb</tt></P></TD></tr></table></P><BR>
+<p class="docText">Implementations that support thread-safe functions will define the <tt>_POSIX_THREAD_SAFE_FUNCTIONS</tt> symbol in <tt>&lt;unistd.h&gt;</tt>. Applications can also use the <tt>_SC_THREAD_SAFE_FUNCTIONS</tt> argument with <tt>sysconf</tt> to check for support of thread-safe functions at runtime. All XSI-conforming implementations are required to support thread-safe functions.</P>
+<p class="docText">When it supports the thread-safe functions feature, an implementation provides alternate, thread-safe versions of some of the POSIX.1 functions that aren't thread-safe. <a class="docLink" href="ch12lev1sec5.html#ch12fig10">Figure 12.10</a> lists the thread-safe versions of these functions. Many functions are not <a name="idd1e88689"></a><a name="idd1e88694"></a><a name="idd1e88699"></a><a name="idd1e88704"></a><a name="idd1e88709"></a><a name="idd1e88714"></a><a name="idd1e88719"></a><a name="idd1e88724"></a><a name="idd1e88729"></a><a name="idd1e88734"></a><a name="idd1e88739"></a><a name="idd1e88744"></a><a name="idd1e88749"></a><a name="idd1e88754"></a><a name="idd1e88759"></a><a name="idd1e88764"></a><a name="idd1e88769"></a><a name="idd1e88774"></a><a name="idd1e88779"></a><a name="idd1e88784"></a><a name="idd1e88789"></a><a name="idd1e88794"></a><a name="idd1e88799"></a><a name="idd1e88804"></a><a name="idd1e88809"></a><a name="idd1e88814"></a><a name="idd1e88819"></a><a name="idd1e88824"></a><a name="idd1e88829"></a><a name="idd1e88834"></a><a name="idd1e88839"></a><a name="idd1e88844"></a><a name="idd1e88849"></a><a name="idd1e88854"></a><a name="idd1e88859"></a><a name="idd1e88864"></a><a name="idd1e88869"></a><a name="idd1e88874"></a><a name="idd1e88879"></a><a name="idd1e88884"></a><a name="idd1e88889"></a><a name="idd1e88894"></a><a name="idd1e88899"></a><a name="idd1e88904"></a><a name="idd1e88909"></a><a name="idd1e88914"></a><a name="idd1e88919"></a><a name="idd1e88924"></a><a name="idd1e88929"></a><a name="idd1e88934"></a><a name="idd1e88939"></a><a name="idd1e88944"></a><a name="idd1e88949"></a><a name="idd1e88954"></a><a name="idd1e88959"></a><a name="idd1e88964"></a><a name="idd1e88969"></a><a name="idd1e88974"></a><a name="idd1e88979"></a><a name="idd1e88984"></a><a name="idd1e88989"></a><a name="idd1e88994"></a><a name="idd1e88999"></a><a name="idd1e89004"></a><a name="idd1e89009"></a><a name="idd1e89014"></a><a name="idd1e89019"></a><a name="idd1e89024"></a><a name="idd1e89029"></a><a name="idd1e89034"></a><a name="idd1e89039"></a><a name="idd1e89044"></a><a name="idd1e89049"></a><a name="idd1e89054"></a><a name="idd1e89059"></a><a name="idd1e89064"></a><a name="idd1e89069"></a><a name="idd1e89074"></a><a name="idd1e89079"></a><a name="idd1e89084"></a><a name="idd1e89089"></a><a name="idd1e89094"></a><a name="idd1e89099"></a><a name="idd1e89104"></a><a name="idd1e89109"></a><a name="idd1e89114"></a><a name="idd1e89119"></a><a name="idd1e89124"></a><a name="idd1e89129"></a><a name="idd1e89134"></a><a name="idd1e89139"></a><a name="idd1e89144"></a><a name="idd1e89149"></a><a name="idd1e89158"></a><a name="idd1e89163"></a><a name="idd1e89168"></a><a name="idd1e89173"></a><a name="idd1e89178"></a><a name="idd1e89183"></a><a name="idd1e89188"></a><a name="idd1e89193"></a><a name="idd1e89198"></a><a name="idd1e89203"></a>thread-safe, because they return data stored in a static memory buffer. They are made thread-safe by changing their interfaces to require that the caller provide its own buffer.</p>
+<a name="ch12fig10"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="cols" cellpadding="5"><caption><h5 class="docTableTitle">Figure 12.10. Alternate thread-safe functions</H5></caption><colgroup><col width="150"><col width="150"></colgroup><thead></thead><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>acstime_r</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>gmtime_r</tt></p></TD></TR><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>ctime_r</tt></p></td><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>localtime_r</tt></p></TD></tr><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>getgrgid_r</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>rand_r</tt></p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>getgrnam_r</tt></p></td><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>readdir_r</tt></p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>getlogin_r</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>strerror_r</tt></P></TD></TR><tr><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>getpwnam_r</tt></P></TD><td class="docTableCell" align="left" valign="top"><p class="docText"><tt>strtok_r</tt></P></td></TR><TR><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>getpwuid_r</tt></p></TD><TD class="docTableCell" align="left" valign="top"><p class="docText"><tt>ttyname_r</tt>
+</p></TD></TR></table></p><br>
+<p class="docText">The functions listed in <a class="docLink" href="ch12lev1sec5.html#ch12fig10">Figure 12.10</a> are named the same as their non-thread-safe relatives, but with an <tt>_r</tt> appended at the end of the name, signifying that these versions are reentrant.</p>
+<p class="docText">If a function is reentrant with respect to multiple threads, we say that it is thread-safe. This doesn't tell us, however, whether the function is reentrant with respect to signal handlers. We say that a function that is safe to be reentered from an asynchronous signal handler is <span class="docEmphasis">async-signal safe</span>. We saw the async-signal safe functions in <a class="docLink" href="ch10lev1sec6.html#ch10fig04">Figure 10.4</a> when we discussed reentrant functions in <a class="docLink" href="ch10lev1sec6.html#ch10lev1sec6">Section 10.6</a>.</p>
+<p class="docText">In addition to the functions listed in <a class="docLink" href="ch12lev1sec5.html#ch12fig10">Figure 12.10</a>, POSIX.1 provides a way to manage <tt>FILE</tt> objects in a thread-safe way. You can use <tt>flockfile</tt> and <tt>ftrylockfile</tt> to obtain a lock associated with a given <tt>FILE</tt> object. This lock is recursive: you can acquire it again, while you already hold it, without deadlocking. Although the exact implementation of the lock is unspecified, it is required that all standard I/O routines that manipulate <tt>FILE</tt> objects behave as if they call <tt>flockfile</tt> and <tt>funlockfile</tt> internally.</P>
+<a name="inta254"></a><p><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><TR><td class="docTableCell" align="left" valign="top"><p class="docText"><a name="idd1e89385"></a><a name="idd1e89392"></a><a name="idd1e89399"></a><a name="idd1e89406"></a><a name="idd1e89413"></a><a name="idd1e89420"></a><a name="idd1e89427"></a>
+<pre>
+#include &lt;stdio.h&gt;
+
+int ftrylockfile(FILE *<span class="docEmphItalicAlt">fp</span>);
+</pre><BR>
+
+</p></td></tr><tr><td class="docTableCell" align="right" valign="top"><p class="docText">Returns: 0 if OK, nonzero if lock can't be acquired</p></td></tr><tr><td class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+void flockfile(FILE *<span class="docEmphItalicAlt">fp</span>);
+
+void funlockfile(FILE *<span class="docEmphItalicAlt">fp</span>);
+</pre><br>
+
+</p></td></tr></table></p><br>
+<p class="docText">Although the standard I/O routines might be implemented to be thread-safe from the perspective of their own internal data structures, it is still useful to expose the locking to applications. This allows applications to compose multiple calls to standard I/O functions into atomic sequences. Of course, when dealing with multiple <tt>FILE</tt> objects, you need to beware of potential deadlocks and to order your locks carefully.</p>
+<p class="docText">If the standard I/O routines acquire their own locks, then we can run into serious performance degradation when doing character-at-a-time I/O. In this situation, we end up acquiring and releasing a lock for every character read or written. To avoid this overhead, unlocked versions of the character-based standard I/O routines are available.</P>
+<a name="inta66"></a><P><table cellspacing="0" class="allBorders" border="1" RULES="none" cellpadding="5"><colgroup><col width="500"></colgroup><thead></thead><tr><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+#include &lt;stdio.h&gt;
+
+int getchar_unlocked(void);
+
+int getc_unlocked(FILE *<span class="docEmphItalicAlt">fp</span>);
+</pre><BR>
+
+</P></td></TR><TR><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: the next character if OK, <tt>EOF</tt> on end of file or error</p></TD></tr><TR><TD class="docTableCell" align="left" valign="top"><p class="docText">
+<pre>
+int putchar_unlocked(int <span class="docEmphItalicAlt">c</span>);
+
+int putc_unlocked(int <span class="docEmphItalicAlt">c</span>, FILE *<span class="docEmphasis">fp</span>);
+</pre><BR>
+
+</p></TD></TR><tr><TD class="docTableCell" align="right" valign="top"><p class="docText">Both return: <span class="docEmphasis">c</span> if OK, <tt>EOF</tt> on error</P></td></tr></table></p><br>
+<p class="docText">These four functions should not be called unless surrounded by calls to <tt>flockfile</tt> (or <tt>ftrylockfile</tt>) and <tt>funlockfile</tt>. Otherwise, unpredictable results can occur (i.e., the types of problems that result from unsynchronized access to data by multiple threads of control).</P>
+<p class="docText">Once you lock the <tt>FILE</tt> object, you can make multiple calls to these functions before releasing the lock. This amortizes the locking overhead across the amount of data read or written.</p>
+<a name="ch12ex04"></a>
+<H5 class="docExampleTitle">Example</h5>
+<p class="docText"><a class="docLink" href="ch12lev1sec5.html#ch12fig11">Figure 12.11</a> shows a possible implementation of <tt>getenv</tt> (<a class="docLink" href="ch07lev1sec9.html#ch07lev1sec9">Section 7.9</a>). This version is not reentrant. If two threads call it at the same time, they will see inconsistent results, because the string returned is stored in a single static buffer that is shared by all threads calling <tt>getenv</tt>.</P>
+<p class="docText"><a name="idd1e89580"></a><a name="idd1e89585"></a><a name="idd1e89590"></a><a name="idd1e89595"></a><a name="idd1e89600"></a><a name="idd1e89605"></a><a name="idd1e89610"></a><a name="idd1e89615"></a><a name="idd1e89620"></a><a name="idd1e89625"></a><a name="idd1e89630"></a><a name="idd1e89635"></a><a name="idd1e89640"></a><a name="idd1e89645"></a>We show a reentrant version of <tt>getenv</tt> in <a class="docLink" href="ch12lev1sec5.html#ch12fig12">Figure 12.12</a>. This version is called <tt>getenv_r</tt>. It uses the <tt>pthread_once</tt> function (described in <a class="docLink" href="ch12lev1sec6.html#ch12lev1sec6">Section 12.6</a>) to ensure that the <tt>thread_init</tt> function is called only once per process.</p>
+<p class="docText"><a name="idd1e89674"></a><a name="idd1e89679"></a><a name="idd1e89684"></a><a name="idd1e89689"></a><a name="idd1e89694"></a>To make <tt>getenv_r</tt> reentrant, we changed the interface so that the caller must provide its own buffer. Thus, each thread can use a different buffer to avoid interfering with the others. Note, however, that this is not enough to make <tt>getenv_r</tt> thread-safe. To make <tt>getenv_r</tt> thread-safe, we need to protect against changes to the environment while we are searching for the requested string. We can use a mutex to serialize access to the environment list by <tt>getenv_r</tt> and <tt>putenv</tt>.</p>
+<p class="docText">We could have used a readerwriter lock to allow multiple concurrent calls to <tt>getenv_r</tt>, but the added concurrency probably wouldn't improve the performance of our program by very much, for two reasons. First, the environment list usually isn't very long, so we won't hold the mutex for too long while we scan the list. Second, calls to <tt>getenv</tt> and <tt>putenv</tt> are infrequent, so if we improve their performance, we won't affect the overall performance of the program very much.</p>
+<p class="docText">If we make <tt>getenv_r</tt> thread-safe, that doesn't mean that it is reentrant with respect to signal handlers. If we use a nonrecursive mutex, we run the risk that a thread will deadlock itself if it calls <tt>getenv_r</tt> from a signal handler. If the signal handler interrupts the thread while it is executing <tt>getenv_r</tt>, we will already be holding <tt>env_mutex</tt> locked, so another attempt to lock it will block, causing the thread to deadlock. Thus, we must use a recursive mutex to prevent other threads from changing the data structures while we look at them, and also prevent deadlocks from signal handlers. The problem is that the pthread functions are not guaranteed to be async-signal safe, so we can't use them to make another function async-signal safe.</p>
+
+<a name="ch12fig11"></a>
+<h5 class="docExampleTitle">Figure 12.11. A nonreentrant version of <tt>getenv</tt></h5>
+
+<pre>
+#include &lt;limits.h&gt;
+#include &lt;string.h&gt;
+
+static char envbuf[ARG_MAX];
+
+extern char **environ;
+
+char *
+getenv(const char *name)
+{
+    int i, len;
+
+    len = strlen(name);
+    for (i = 0; environ[i] != NULL; i++) {
+        if ((strncmp(name, environ[i], len) == 0) &amp;&amp;
+          (environ[i][len] == '=')) {
+            strcpy(envbuf, &amp;environ[i][len+1]);
+            return(envbuf);
+        }
+    }
+    return(NULL);
+ }
+</pre><br>
+
+
+<a name="ch12fig12"></a>
+<h5 class="docExampleTitle">Figure 12.12. A reentrant (thread-safe) version of <tt>getenv</tt></h5>
+
+<pre>
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;pthread.h&gt;
+#include &lt;stdlib.h&gt;
+
+extern char **environ;
+
+pthread_mutex_t env_mutex;
+static pthread_once_t init_done = PTHREAD_ONCE_INIT;
+
+static void
+thread_init(void)
+{
+    pthread_mutexattr_t attr;
+
+    pthread_mutexattr_init(&amp;attr);
+    pthread_mutexattr_settype(&amp;attr, PTHREAD_MUTEX_RECURSIVE);
+    pthread_mutex_init(&amp;env_mutex, &amp;attr);
+    pthread_mutexattr_destroy(&amp;attr);
+}
+
+int
+getenv_r(const char *name, char *buf, int buflen)
+{
+    int i, len, olen;
+
+    pthread_once(&amp;init_done, thread_init);
+    len = strlen(name);
+    pthread_mutex_lock(&amp;env_mutex);
+    for (i = 0; environ[i] != NULL; i++) {
+        if ((strncmp(name, environ[i], len) == 0) &amp;&amp;
+          (environ[i][len] == '=')) {
+            olen = strlen(&amp;environ[i][len+1]);
+            if (olen &gt;= buflen) {
+                pthread_mutex_unlock(&amp;env_mutex);
+                return(ENOSPC);
+            }
+            strcpy(buf, &amp;environ[i][len+1]);
+            pthread_mutex_unlock(&amp;env_mutex);
+            return(0);
+        }
+    }
+    pthread_mutex_unlock(&amp;env_mutex);
+    return(ENOENT);
+}
+</pre><br>
+
+
+
+<a href="../../../../../../www.chinaunix.net/hot.shtml.html"><img src="images/pixel.gif" alt="" width="1" height="1" border="0"></a><ul></ul></td></TR></table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td><div STYLE="MARGIN-LEFT: 0.15in;"><a href="toc.html"><img src="images/team.gif" width="60" height="17" border="0" align="absmiddle"  alt="Team BBL"></a></div></td>
+<td align="right"><div STYLE="MARGIN-LEFT: 0.15in;">
+<a href="ch12lev1sec4.html"><img src="images/prev.gif" width="60" height="17" border="0" align="absmiddle" alt="Previous Page"></a>
+<a href="ch12lev1sec6.html"><img src="images/next.gif" width="60" height="17" border="0" align="absmiddle" alt="Next Page"></a>
+</div></td></tr></table>
+</body></html>
