@@ -1040,7 +1040,7 @@
 	</tr>
     	<tr>
 	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-01-08 五 17:02:51></td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-01-08 五 17:37:43></td>
 	</tr>
     </tbody></table>
 </div>
@@ -1053,10 +1053,17 @@
 <ul>
 <li><a href="#orgheadline1">1. FAQ</a>
 <ul>
-<li><a href="#orgheadline2">1.1. <span class="todo nilNEXT">NEXT</span> 如何设置style文件链接保持在文件路径变化时文件内容不变？</a></li>
-<li><a href="#orgheadline3">1.2. <span class="todo nilNEXT">NEXT</span> 如何设置文件中的签名信息？</a></li>
-<li><a href="#orgheadline4">1.3. <span class="todo nilNEXT">NEXT</span> 如何设置文件中资料的引用位置？</a></li>
-<li><a href="#orgheadline5">1.4. <span class="todo nilNEXT">NEXT</span> 如何为每次更新文章追加设置记录时间戳？</a></li>
+<li><a href="#orgheadline2">1.1. <span class="todo nilINBOX">INBOX</span> 如何设置style文件链接使之在所有文件中可以公用？</a></li>
+<li><a href="#orgheadline3">1.2. <span class="todo nilNEXT">NEXT</span> 如何设置文内引用链接保持在文件路径变化时文件内容不变？</a>
+<ul>
+<li><a href="#orgheadline4">1.2.1. 链接引用文件存放地</a></li>
+<li><a href="#orgheadline5">1.2.2. org文件中引用链接到jekyll导出文件链接的转换</a></li>
+<li><a href="#orgheadline6">1.2.3. 转换实现</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline7">1.3. <span class="todo nilNEXT">NEXT</span> 如何设置文件中的签名信息？</a></li>
+<li><a href="#orgheadline8">1.4. <span class="todo nilNEXT">NEXT</span> 如何设置文件中资料的引用位置？</a></li>
+<li><a href="#orgheadline9">1.5. <span class="todo nilNEXT">NEXT</span> 如何为每次更新文章追加设置记录时间戳？</a></li>
 </ul>
 </li>
 </ul>
@@ -1067,57 +1074,136 @@
 <h2 id="orgheadline1"><span class="section-number-2">1</span> FAQ</h2>
 <div class="outline-text-2" id="text-1">
 </div><div id="outline-container-orgheadline2" class="outline-3">
-<h3 id="orgheadline2"><a id="ID-39d82de4-bbfa-4fe2-b55e-2dc30a0c0de3"></a><span class="section-number-3">1.1</span> <span class="todo NEXT">NEXT</span> 如何设置style文件链接保持在文件路径变化时文件内容不变？</h3>
-<div class="outline-text-3" id="text-1-1">
-<ul class="org-ul">
-<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-17 四 17:42]</span></span></li>
-</ul>
-<p>
-这里是链接文件:
-图片文件存放在data/xxx.files
-</p>
-<pre class="example">
-[[file:~/mygitrepo/quietheart/mydoc/prepub/orgmode/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg][image file]]
-</pre>
-<p>
-效果如下：
-<a href="/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg">image file</a>
-</p>
-
-<p>
-导出结果变成
-</p>
-<pre class="example">
-&lt;a href="file:///home/miracle/mygitrepo/quietheart/mydoc/prepub/jekyll/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg"&gt;image file&lt;/a&gt;
-</pre>
-<p>
-处理成
-</p>
-<pre class="example">
-&lt;a href="/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg"&gt;image file&lt;/a&gt;
-</pre>
+<h3 id="orgheadline2"><span class="section-number-3">1.1</span> <span class="todo INBOX">INBOX</span> 如何设置style文件链接使之在所有文件中可以公用？</h3>
 </div>
-</div>
-
 <div id="outline-container-orgheadline3" class="outline-3">
-<h3 id="orgheadline3"><span class="section-number-3">1.2</span> <span class="todo NEXT">NEXT</span> 如何设置文件中的签名信息？</h3>
+<h3 id="orgheadline3"><span class="section-number-3">1.2</span> <span class="todo NEXT">NEXT</span> 如何设置文内引用链接保持在文件路径变化时文件内容不变？</h3>
 <div class="outline-text-3" id="text-1-2">
 <ul class="org-ul">
 <li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-17 四 17:42]</span></span></li>
 </ul>
 </div>
+
+<div id="outline-container-orgheadline4" class="outline-4">
+<h4 id="orgheadline4"><span class="section-number-4">1.2.1</span> 链接引用文件存放地</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+文章引用的文件，存放在jekyll中data目录的，名为对应文章所在文件扩展名替换为 <code>.files</code> 的目录中。
+</p>
+
+<p>
+假设引用的是一个图片文件， 引用的文章文件名称是 <code>2015-12-17-testexport.org</code>, 导出到jekyll系统中的名称是 <code>2015-12-17-testexport.html</code>, 那么其文章所有被引用的文件都存放在 =data/2015-12-17-testexport.files=。
+</p>
 </div>
-<div id="outline-container-orgheadline4" class="outline-3">
-<h3 id="orgheadline4"><span class="section-number-3">1.3</span> <span class="todo NEXT">NEXT</span> 如何设置文件中资料的引用位置？</h3>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-4">
+<h4 id="orgheadline5"><span class="section-number-4">1.2.2</span> org文件中引用链接到jekyll导出文件链接的转换</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<p>
+org文件中的引用链接，在导出到jekyll的html需要进行转换才能正确显示，转换方式如下
+</p>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-5">
+<h5 id="orgheadline10"><span class="section-number-5">1.2.2.1</span> org文章使用链接的方式</h5>
+<div class="outline-text-5" id="text-1-2-2-1">
+<p>
+org文章中引用本地外部文件和普通orgmode语法一样，如下
+</p>
+<pre class="example">
+[[file:~/mygitrepo/quietheart/mydoc/prepub/orgmode/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg][image file]]
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-5">
+<h5 id="orgheadline11"><span class="section-number-5">1.2.2.2</span> 导出的html链接</h5>
+<div class="outline-text-5" id="text-1-2-2-2">
+<p>
+导出结果到jekyll对应的html文件后，对应链接变成
+</p>
+<pre class="example">
+&lt;a href="file:///home/miracle/mygitrepo/quietheart/mydoc/prepub/jekyll/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg"&gt;image file&lt;/a&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-5">
+<h5 id="orgheadline12"><span class="section-number-5">1.2.2.3</span> 对导出的html链接进行转换</h5>
+<div class="outline-text-5" id="text-1-2-2-3">
+<p>
+这样的结果在jekyll中是无法直接正确显示链接的，需要在导出为html之后，再对相应html文件中相应的链接处进行处理，处理成jekyll可以显示的方式，这里为：
+</p>
+<pre class="example">
+&lt;a href="/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg"&gt;image file&lt;/a&gt;
+</pre>
+
+<p>
+处理成功的效果：
+<a href="/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg">image file</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline6" class="outline-4">
+<h4 id="orgheadline6"><span class="section-number-4">1.2.3</span> 转换实现</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<p>
+这里实现上述转换的方法是定义一个替换链接的函数，把它做为hook添加到 <code>org-publish-after-publishing-hook</code> 中。
+</p>
+
+<p>
+大致如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">(defun my-update-jekyll-html-link (htmlfile)
+;;replace the local file link to site relative link in jekyll.
+;;open
+    (setq htmlbuffer (find-file-existing htmlfile))
+
+;;search
+    (goto-char (point-min))
+
+;;TODO the xxx.files, xxx is better to be replaced by the html file name.
+    (while (re-search-forward "\\(&lt;a href=.*?\\)\\(file:.*?quietheart/mydoc/prepub/jekyll\\)\\(/data/[0-9]\\{4\\}-[0-1][0-9]-[0-3][0-9]-.*?\.files\\)" nil t) 
+        (replace-match "\\1\\3" nil nil))
+
+;;save and close
+    (save-buffer)
+    (kill-buffer htmlbuffer)))
+
+(defun my_after_pub_html_hook (orgfile htmlfile) 
+    (my-update-jekyll-html-link htmlfile)
+)
+
+(add-hook 'org-publish-after-publishing-hook 'my_after_pub_html_hook)))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7"><span class="section-number-3">1.3</span> <span class="todo NEXT">NEXT</span> 如何设置文件中的签名信息？</h3>
 <div class="outline-text-3" id="text-1-3">
 <ul class="org-ul">
 <li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-17 四 17:42]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline5" class="outline-3">
-<h3 id="orgheadline5"><span class="section-number-3">1.4</span> <span class="todo NEXT">NEXT</span> 如何为每次更新文章追加设置记录时间戳？</h3>
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">1.4</span> <span class="todo NEXT">NEXT</span> 如何设置文件中资料的引用位置？</h3>
 <div class="outline-text-3" id="text-1-4">
+<ul class="org-ul">
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-17 四 17:42]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">1.5</span> <span class="todo NEXT">NEXT</span> 如何为每次更新文章追加设置记录时间戳？</h3>
+<div class="outline-text-3" id="text-1-5">
 <ul class="org-ul">
 <li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-17 四 17:42]</span></span></li>
 </ul>
