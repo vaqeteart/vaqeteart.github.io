@@ -1040,7 +1040,7 @@
 	</tr>
     	<tr>
 	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2015-12-25 五 15:39:04></td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-01-08 五 17:02:51></td>
 	</tr>
     </tbody></table>
 </div>
@@ -1063,18 +1063,42 @@
 </div>
 </div>
 
-
 <div id="outline-container-orgheadline1" class="outline-2">
 <h2 id="orgheadline1"><span class="section-number-2">1</span> FAQ</h2>
 <div class="outline-text-2" id="text-1">
 </div><div id="outline-container-orgheadline2" class="outline-3">
-<h3 id="orgheadline2"><span class="section-number-3">1.1</span> <span class="todo NEXT">NEXT</span> 如何设置style文件链接保持在文件路径变化时文件内容不变？</h3>
+<h3 id="orgheadline2"><a id="ID-39d82de4-bbfa-4fe2-b55e-2dc30a0c0de3"></a><span class="section-number-3">1.1</span> <span class="todo NEXT">NEXT</span> 如何设置style文件链接保持在文件路径变化时文件内容不变？</h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
 <li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-17 四 17:42]</span></span></li>
 </ul>
+<p>
+这里是链接文件:
+图片文件存放在data/xxx.files
+</p>
+<pre class="example">
+[[file:~/mygitrepo/quietheart/mydoc/prepub/orgmode/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg][image file]]
+</pre>
+<p>
+效果如下：
+<a href="/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg">image file</a>
+</p>
+
+<p>
+导出结果变成
+</p>
+<pre class="example">
+&lt;a href="file:///home/miracle/mygitrepo/quietheart/mydoc/prepub/jekyll/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg"&gt;image file&lt;/a&gt;
+</pre>
+<p>
+处理成
+</p>
+<pre class="example">
+&lt;a href="/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg"&gt;image file&lt;/a&gt;
+</pre>
 </div>
 </div>
+
 <div id="outline-container-orgheadline3" class="outline-3">
 <h3 id="orgheadline3"><span class="section-number-3">1.2</span> <span class="todo NEXT">NEXT</span> 如何设置文件中的签名信息？</h3>
 <div class="outline-text-3" id="text-1-2">
