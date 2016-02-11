@@ -1,0 +1,5385 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+<title>Emacs学习笔记</title>
+
+<!--theme-->
+<link rel="stylesheet" type="text/css"
+  href="/assets/css/common_green_black.css" media="screen" />
+<script src="/assets/js/jquery-1.11.3.min.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/category_list.js"></script>
+
+
+    <link rel="stylesheet" type="text/css"
+      href="/assets/css/posts.css" media="screen" />
+  </head>
+
+   <body onload="change_categories('categories_study_emacs')">
+     <table class="container">
+        <tbody>
+	      <tr>
+		<script src="/assets/js/nav.js"></script>
+<th id="th_navbar">
+    <table class="navbar"> <tbody> <tr>
+	<th class="navitm">
+	    <a href='/'>主页</a>
+	</th>
+
+	<th class="navblank">
+	</th>
+
+	<th class="navitm">
+	      <a href=/categories/study/emacs/emacs_tips.html>分类</a>
+	      <div id="category_menus" class="second">
+  	      	   
+
+		   <script>
+		       var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"os":{"id":"categories_study_os","path":"/categories/study/os","title":"操作系统","parent":"categories_study","children":null},"books":{"id":"categories_study_books","path":"/categories/study/books","title":"books","parent":"categories_study","children":{"apue":{"id":"categories_study_books_apue","path":"/categories/study/books/apue","title":"APUE","parent":"categories_study_books","children":null}}},"linux":{"id":"categories_study_linux","path":"/categories/study/linux","title":"linux","parent":"categories_study","children":{"misc":{"id":"categories_study_linux_misc","path":"/categories/study/linux/misc","title":"杂乱","parent":"categories_study_linux","children":null},"command":{"id":"categories_study_linux_command","path":"/categories/study/linux/command","title":"命令","parent":"categories_study_linux","children":null}}},"jekyll":{"id":"categories_study_jekyll","path":"/categories/study/jekyll","title":"jekyll","parent":"categories_study","children":null},"kits":{"id":"categories_study_kits","path":"/categories/study/kits","title":"工具","parent":"categories_study","children":null},"emacs":{"id":"categories_study_emacs","path":"/categories/study/emacs","title":"emacs","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+		       var categories_count = JSON.parse('{"/categories":0}');
+
+  		       
+    		       var post_categories = '/categories/study/os';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/emacs';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/emacs';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/life';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/git';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others/rambles';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others/rambles';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+
+    			create_category_menu(categories, 0, categories_count);
+    			//document.write("hello")
+		    </script>
+	      </div>
+	</th>
+
+        <th class="navitm">
+	      <a href='#'>标签</a>
+	      <div id="tag_menus" class="second">
+	          
+		      <a id="gtd_next" href="#"> gtd_next(13)</a>
+		  
+		      <a id="study" href="#"> study(10)</a>
+		  
+		      <a id="gtd_done" href="#"> gtd_done(4)</a>
+		  
+		      <a id="others" href="#"> others(3)</a>
+		  
+		      <a id="life" href="#"> life(1)</a>
+		  
+	      </div>
+        </th>
+
+	<th class="navblank">
+	</th>
+
+	<th class="navitm">
+	      <a href=/more.html>更多</a>
+        </th>
+
+        <th class="navitm">
+	      <a href=/about.html>关于</a>
+        </th>
+
+	<th class="navblank" style="width:25%;">
+	</th>
+
+	<th class="navitm" style="margin:0; padding:0;border:none;">
+	    <form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+	    	  Q
+	    	  <span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+				<input value="Search......" name="s" class="s" 
+		  	 	onfocus="if (this.value == 'Search......') {this.value = '';}" 
+		  	 	onblur="if (this.value == '') {this.value = 'Search......';}"
+			 	style="margin:0;padding:0;border:none;background: #000000; color:#00FF00;" 
+			 	type="text">
+		  </span>
+		  <!--input type="submit" value="Q" style="width:20%;"-->
+	    </form>
+	</th>
+
+	<th class="navblank">
+	</th>
+
+	<th class="navblank">
+	</th>
+
+	<a href='#' id="topbtn">⇑</a>
+
+	<a href='#bottom' id="bottombtn">⇓</a>
+	<!--⇐⇑⇒⇓-->
+
+  <tr> </tbody> </table>
+</th>
+
+	      </tr>
+	      <tr>
+                  <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+    <header style="text-align: center;">
+	<h1>
+	       <a href="/" title="Home Page">QuietHeart's Site</a>
+	</h1>
+    </header>
+</td>
+
+
+
+	      </tr>
+             <tr>
+                <!--td id="td_category_list"  colspan="1" valign="top"><aside id="left-side" >
+  <h2> 分类 </h2>
+  
+  <script>
+    var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"os":{"id":"categories_study_os","path":"/categories/study/os","title":"操作系统","parent":"categories_study","children":null},"books":{"id":"categories_study_books","path":"/categories/study/books","title":"books","parent":"categories_study","children":{"apue":{"id":"categories_study_books_apue","path":"/categories/study/books/apue","title":"APUE","parent":"categories_study_books","children":null}}},"linux":{"id":"categories_study_linux","path":"/categories/study/linux","title":"linux","parent":"categories_study","children":{"misc":{"id":"categories_study_linux_misc","path":"/categories/study/linux/misc","title":"杂乱","parent":"categories_study_linux","children":null},"command":{"id":"categories_study_linux_command","path":"/categories/study/linux/command","title":"命令","parent":"categories_study_linux","children":null}}},"jekyll":{"id":"categories_study_jekyll","path":"/categories/study/jekyll","title":"jekyll","parent":"categories_study","children":null},"kits":{"id":"categories_study_kits","path":"/categories/study/kits","title":"工具","parent":"categories_study","children":null},"emacs":{"id":"categories_study_emacs","path":"/categories/study/emacs","title":"emacs","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+    var categories_count = JSON.parse('{"/categories":0}');
+
+    
+    var post_categories = '/categories/study/os';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/emacs';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/emacs';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/life';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/git';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others/rambles';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others/rambles';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+
+    create_categories(categories, 0, categories_count);
+    //document.write("hello")
+  </script>
+</aside>
+</td-->
+                <td id="td_posts" colspan="6" valign="top">
+		  <article>
+  <h1 id='header1' style="text-align: center;">
+      Emacs学习笔记
+  </h1>
+  <hr id='title_line'>
+  <div>
+    <style type="text/css">
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #0c0;
+    box-shadow: 1px 1px 1px #0e0;
+    padding: 8pt;
+    font-family: italic monospace;
+    color: #C7EDCC;
+    background-color: #111111;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+    code {
+        border:groove #555555;
+	border-width:thin;
+        background-color: #111111;
+	color: #C7EDCC;
+    }
+
+
+#table-of-contents {
+    font-size: 9pt;
+    position: fixed;
+    right: 10px;
+    top: 14em;
+    margin:0;
+    padding:0;
+    border-width:1px;
+    border-style:solid;
+    background: #000000;
+    -webkit-box-shadow: 0 0 1em #777777;
+    -moz-box-shadow: 0 0 1em #777777;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    text-align: right;
+    /* ensure doesn't flow off the screen when expanded */
+    max-height: 60%;
+    overflow: auto; 
+    z-index: 200;
+}
+
+#table-of-contents h2 {
+    font-size: 9pt;
+    max-width: 8em;
+    font-weight: normal;
+    padding-left: 0.5em;
+    padding-top: 0.05em;
+    padding-bottom: 0.05em; 
+}
+
+#table-of-contents ul {
+    margin-left: 14pt; 
+    margin-bottom: 10pt;
+    padding: 0
+}
+
+#table-of-contents li {
+    padding: 0;
+    margin: 1px;
+    list-style: none;
+}
+
+#table-of-contents ul>:first-child {
+    color: blue;
+}
+
+#table-of-contents #text-table-of-contents {
+    display: none;
+    text-align: left;
+}
+
+#table-of-contents:hover #text-table-of-contents {
+    display: block;
+    padding: 0.5em;
+    margin-top: -1.5em; 
+}
+
+</style>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 文件操作</a></li>
+<li><a href="#orgheadline2">2. 文件管理</a>
+<ul>
+<li><a href="#orgheadline3">2.1. 目录显示</a></li>
+<li><a href="#orgheadline4">2.2. 文件操作</a></li>
+<li><a href="#orgheadline5">2.3. 标记操作</a>
+<ul>
+<li><a href="#orgheadline6">2.3.1. 删除标记</a></li>
+<li><a href="#orgheadline7">2.3.2. 普通标记</a></li>
+<li><a href="#orgheadline8">2.3.3. 正则表达式标记</a></li>
+<li><a href="#orgheadline9">2.3.4. 结合标记能使用的操作：</a></li>
+<li><a href="#orgheadline10">2.3.5. 其它</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline11">3. 编辑</a>
+<ul>
+<li><a href="#orgheadline12">3.1. 插入</a></li>
+<li><a href="#orgheadline13">3.2. 撤销与重复</a></li>
+<li><a href="#orgheadline14">3.3. 标记</a></li>
+<li><a href="#orgheadline15">3.4. 删除、移除、复制、粘帖</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline16">4. 窗口操作</a></li>
+<li><a href="#orgheadline17">5. 跳转操作</a>
+<ul>
+<li><a href="#orgheadline18">5.1. 搜索</a></li>
+<li><a href="#orgheadline19">5.2. 基本跳转</a></li>
+<li><a href="#orgheadline20">5.3. 书签</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline21">6. Buffer操作</a></li>
+<li><a href="#orgheadline22">7. 编程相关</a></li>
+<li><a href="#orgheadline23">8. 帮助</a></li>
+<li><a href="#orgheadline24">9. 原理</a>
+<ul>
+<li><a href="#orgheadline25">9.1. 关于递归编辑</a></li>
+<li><a href="#orgheadline26">9.2. 关于mark/region/active region/transient-mark-mode/Text Selection</a></li>
+<li><a href="#orgheadline27">9.3. 关于自动临时保存和备份</a>
+<ul>
+<li><a href="#orgheadline28">9.3.1. 临时文件</a></li>
+<li><a href="#orgheadline29">9.3.2. 自动备份</a></li>
+<li><a href="#orgheadline30">9.3.3. 其他</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline31">9.4. Emacs撤销、重做和重复</a>
+<ul>
+<li><a href="#orgheadline32">9.4.1. 插件</a></li>
+<li><a href="#orgheadline33">9.4.2. 标准操作</a></li>
+<li><a href="#orgheadline34">9.4.3. 比较详细的解释</a></li>
+<li><a href="#orgheadline35">9.4.4. 官方文档</a></li>
+<li><a href="#orgheadline36">9.4.5. 总结</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline37">10. 其他</a>
+<ul>
+<li><a href="#orgheadline38">10.1. 意外操作</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline39">11. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[15/107]</code>(<code>[14%]</code>)</a>
+<ul>
+<li><a href="#orgheadline40">11.1. <span class="todo nilNEXT">NEXT</span> 前进后退？</a>
+<ul>
+<li><a href="#orgheadline41">11.1.1. 插件</a></li>
+<li><a href="#orgheadline42">11.1.2. 链接的后退</a></li>
+<li><a href="#orgheadline43">11.1.3. 查找的后退</a></li>
+<li><a href="#orgheadline44">11.1.4. 输入 <code>C-u C-@</code></a></li>
+</ul>
+</li>
+<li><a href="#orgheadline45">11.2. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> TAB标签栏?</a></li>
+<li><a href="#orgheadline46">11.3. <span class="done nilDONE">DONE</span> 如何删除一行</a></li>
+<li><a href="#orgheadline47">11.4. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 如何移动一行？</a></li>
+<li><a href="#orgheadline48">11.5. <span class="done nilDONE">DONE</span> 如何删除至行首？</a></li>
+<li><a href="#orgheadline49">11.6. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何save all?</a></li>
+<li><a href="#orgheadline50">11.7. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 只读切换?</a></li>
+<li><a href="#orgheadline51">11.8. <span class="done nilDONE">DONE</span> 如何删除备份文件，或者不使用自动备份？</a></li>
+<li><a href="#orgheadline52">11.9. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 跳转到当前buffer工作目录？</a></li>
+<li><a href="#orgheadline53">11.10. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> Emacs当前工作目录？</a></li>
+<li><a href="#orgheadline54">11.11. <span class="todo nilLATER">LATER</span> 如何重做？</a></li>
+<li><a href="#orgheadline55">11.12. <span class="todo nilLATER">LATER</span> 如何成块缩进?</a></li>
+<li><a href="#orgheadline56">11.13. <span class="todo nilLATER">LATER</span> 如何创建空文件</a></li>
+<li><a href="#orgheadline57">11.14. <span class="todo nilNEXT">NEXT</span> 如何跳转至上次编辑内容？</a></li>
+<li><a href="#orgheadline58">11.15. <span class="done nilDONE">DONE</span> 如何save all？</a></li>
+<li><a href="#orgheadline59">11.16. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> emacs如何加载插件？</a></li>
+<li><a href="#orgheadline60">11.17. <span class="todo nilLATER">LATER</span> TAB标签显示？</a></li>
+<li><a href="#orgheadline61">11.18. <span class="todo nilLATER">LATER</span> 跳至上次编辑的位置？</a></li>
+<li><a href="#orgheadline62">11.19. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 插件配置</a></li>
+<li><a href="#orgheadline63">11.20. <span class="done nilDONE">DONE</span> kill buffer?</a></li>
+<li><a href="#orgheadline64">11.21. <span class="done nilDONE">DONE</span> 直接执行lisp函数？</a></li>
+<li><a href="#orgheadline65">11.22. <span class="todo nilLATER">LATER</span> 如何实现自动缩进？</a></li>
+<li><a href="#orgheadline66">11.23. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何插入确定的缩进TAB？</a></li>
+<li><a href="#orgheadline67">11.24. <span class="todo nilNEXT">NEXT</span> 如何输入上次输入的内容或者重做？</a></li>
+<li><a href="#orgheadline68">11.25. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 交换行</a></li>
+<li><a href="#orgheadline69">11.26. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 动态加载配置立即生效？</a></li>
+<li><a href="#orgheadline70">11.27. <span class="done nilDONE">DONE</span> 如何执行命令时在回显区快速输入和删除？</a></li>
+<li><a href="#orgheadline71">11.28. <span class="done nilDONE">DONE</span> 如何查看某一配置变量的值？</a></li>
+<li><a href="#orgheadline72">11.29. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 如何恢复默认配置？</a></li>
+<li><a href="#orgheadline73">11.30. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何文件刷新？</a></li>
+<li><a href="#orgheadline74">11.31. <span class="done nilDONE">DONE</span> 如何显示匹配括号？</a></li>
+<li><a href="#orgheadline75">11.32. <span class="todo nilNEXT">NEXT</span> 关于Tab缩进</a>
+<ul>
+<li><a href="#orgheadline76">11.32.1. &#x2014;&#x2014;Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-09-30 三 15:19]</span></span>------</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline77">11.33. <span class="todo nilLATER">LATER</span> 如何显示空白字符？</a></li>
+<li><a href="#orgheadline78">11.34. <span class="todo nilLATER">LATER</span> 如何复制一行？</a></li>
+<li><a href="#orgheadline79">11.35. <span class="todo nilLATER">LATER</span> 缩进提示线？</a></li>
+<li><a href="#orgheadline80">11.36. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 重命名当前文件？</a></li>
+<li><a href="#orgheadline81">11.37. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 宏录制</a></li>
+<li><a href="#orgheadline82">11.38. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何块缩进？</a></li>
+<li><a href="#orgheadline83">11.39. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> C-/是Undo</a></li>
+<li><a href="#orgheadline84">11.40. <span class="done nilDONE">DONE</span> 如何操作目录</a></li>
+<li><a href="#orgheadline85">11.41. <span class="done nilCANCEL">CANCEL</span> 如何管理配置目录</a></li>
+<li><a href="#orgheadline86">11.42. <span class="todo nilLATER">LATER</span> 如何定位光标下路径的文件？</a></li>
+<li><a href="#orgheadline87">11.43. <span class="todo nilLATER">LATER</span> 如何按项目组织目录</a></li>
+<li><a href="#orgheadline88">11.44. <span class="todo nilNEXT">NEXT</span> 如何让Emacs在光标到达当前Buffer最后一行尾部不自动recenter?</a></li>
+<li><a href="#orgheadline89">11.45. <span class="todo nilLATER">LATER</span> 考虑一下用el-get插件管理插件</a></li>
+<li><a href="#orgheadline90">11.46. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> eshell如何操作？</a></li>
+<li><a href="#orgheadline91">11.47. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何配置自动新开“弹出”窗口的分割方向？</a></li>
+<li><a href="#orgheadline92">11.48. <span class="todo nilLATER">LATER</span> Emacs如何控制Pop分割窗口的大小？</a></li>
+<li><a href="#orgheadline93">11.49. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> emacs如何进行会话保存？</a></li>
+<li><a href="#orgheadline94">11.50. <span class="done nilDONE">DONE</span> Emacs背景配色设置？</a>
+<ul>
+<li><a href="#orgheadline95">11.50.1. 下载地址：</a></li>
+<li><a href="#orgheadline96">11.50.2. 配置默认主题</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline97">11.51. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> emacs的光标滚动如何让其不在屏幕尾部自动滚屏到中间？</a></li>
+<li><a href="#orgheadline98">11.52. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何控制鼠标滚轮滚动的行数</a></li>
+<li><a href="#orgheadline99">11.53. <span class="todo nilLATER">LATER</span> emacs如何清除所有buffer?</a></li>
+<li><a href="#orgheadline100">11.54. <span class="todo nilLATER">LATER</span> 配置调试</a></li>
+<li><a href="#orgheadline101">11.55. <span class="todo nilNEXT">NEXT</span> 不喜欢emacs新开"提示窗口"是垂直方向</a></li>
+<li><a href="#orgheadline102">11.56. <span class="done nilDONE">DONE</span> Emacs如何定制颜色？</a></li>
+<li><a href="#orgheadline103">11.57. <span class="todo nilLATER">LATER</span> 如何设置撤销的次数？目前貌似撤销只有有限的几次</a></li>
+<li><a href="#orgheadline104">11.58. <span class="todo nilLATER">LATER</span> 重复最近的命令</a></li>
+<li><a href="#orgheadline105">11.59. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> elisp library</a>
+<ul>
+<li><a href="#orgheadline106">11.59.1. 关于 <code>load-file, load, require, autoload</code></a></li>
+<li><a href="#orgheadline107">11.59.2. 关于 Library, Package, Feature</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline108">11.60. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> Emacs自定义配置</a></li>
+<li><a href="#orgheadline109">11.61. <span class="todo nilLATER">LATER</span> 默认启动xemacs的窗口大小</a></li>
+<li><a href="#orgheadline110">11.62. <span class="todo nilNEXT">NEXT</span> emacs-desktop的会话存储默认位置</a></li>
+<li><a href="#orgheadline111">11.63. <span class="todo nilNEXT">NEXT</span> 如何高亮？</a></li>
+<li><a href="#orgheadline112">11.64. <span class="todo nilNEXT">NEXT</span> Emacs如何进行特定模式下的按键绑定映射？</a></li>
+<li><a href="#orgheadline113">11.65. <span class="todo nilLATER">LATER</span> 如何为当前的Emacs编辑器升级？</a></li>
+<li><a href="#orgheadline114">11.66. <span class="done nilDONE">DONE</span> Emacs撤销、重做和重复</a></li>
+<li><a href="#orgheadline115">11.67. <span class="todo nilNEXT">NEXT</span> Emacs 如何远程访问？</a></li>
+<li><a href="#orgheadline116">11.68. <span class="todo nilLATER">LATER</span> 将emacs custom config变成手动的config</a></li>
+<li><a href="#orgheadline117">11.69. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 恢复文件</a></li>
+<li><a href="#orgheadline118">11.70. <span class="todo nilLATER">LATER</span> 无需远端安装emacs，用本地emacs直接访问远端，可否？</a></li>
+<li><a href="#orgheadline119">11.71. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> Emacs 任务管理？</a></li>
+<li><a href="#orgheadline120">11.72. <span class="todo nilLATER">LATER</span> 崩溃后下次启动自动提示回复文件的方式？</a></li>
+<li><a href="#orgheadline121">11.73. <span class="todo nilLATER">LATER</span> Emacs如何粘帖复制文本到X剪切板中？</a></li>
+<li><a href="#orgheadline122">11.74. <span class="todo nilLATER">LATER</span> Emacs中如何在require后卸载插件？</a></li>
+<li><a href="#orgheadline123">11.75. <span class="todo nilLATER">LATER</span> 拼音输入法</a></li>
+<li><a href="#orgheadline124">11.76. <span class="todo nilNEXT">NEXT</span> Emacs为什么有时候缩进无法删除？</a></li>
+<li><a href="#orgheadline125">11.77. <span class="todo nilNEXT">NEXT</span> Emacs如何搜索光标下的内容</a></li>
+<li><a href="#orgheadline126">11.78. <span class="todo nilLATER">LATER</span> Emacs如何格式化全部代码？</a></li>
+<li><a href="#orgheadline127">11.79. <span class="todo nilNEXT">NEXT</span> 为什么Emacs有时候无法删除缩进？</a></li>
+<li><a href="#orgheadline128">11.80. <span class="todo nilNEXT">NEXT</span> Emacs如何反撤销重做？</a></li>
+<li><a href="#orgheadline129">11.81. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> emacs剪切板和x剪切板共享</a></li>
+<li><a href="#orgheadline130">11.82. <span class="done nilDONE">DONE</span> 完善自己的开发环境，代码跳转、扫描、定位等，不用每次都要手动配置</a></li>
+<li><a href="#orgheadline131">11.83. <span class="todo nilLATER">LATER</span> Emacs 括号跳转</a></li>
+<li><a href="#orgheadline132">11.84. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 关于Narrow</a></li>
+<li><a href="#orgheadline133">11.85. <span class="todo nilNEXT">NEXT</span> emacs如何搜索光标所在字符的内容</a></li>
+<li><a href="#orgheadline134">11.86. <span class="todo nilLATER">LATER</span> C-x =</a></li>
+<li><a href="#orgheadline135">11.87. <span class="todo nilNEXT">NEXT</span> 定义自己的Emacs环境</a></li>
+<li><a href="#orgheadline136">11.88. <span class="todo nilLATER">LATER</span> 将emacs插件分层整理一下，最好能尝试一下新版本的emacs</a></li>
+<li><a href="#orgheadline137">11.89. <span class="todo nilNEXT">NEXT</span> Emacs如何撤销以及反撤销？</a></li>
+<li><a href="#orgheadline138">11.90. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-12-02 三 15:06] </span></span> Emacs标签跳转------</a></li>
+<li><a href="#orgheadline139">11.91. <span class="todo nilLATER">LATER</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-12-02 三 16:58] </span></span> Emacs mark ring------</a></li>
+<li><a href="#orgheadline140">11.92. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 意外发现 <code>ESC-`</code> 在minibuf打开菜单栏</a></li>
+<li><a href="#orgheadline141">11.93. <span class="todo nilNEXT">NEXT</span> 学习资源</a></li>
+<li><a href="#orgheadline142">11.94. <span class="todo nilNEXT">NEXT</span> Emacs如何自定义按键映射不冲突</a></li>
+<li><a href="#orgheadline143">11.95. <span class="todo nilNEXT">NEXT</span> Emacs高级搜索</a></li>
+<li><a href="#orgheadline144">11.96. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> Emacs如何括号匹配？如何显示行号？</a></li>
+<li><a href="#orgheadline145">11.97. 设置输入</a></li>
+<li><a href="#orgheadline146">11.98. <span class="todo nilLATER">LATER</span> 使用Emacs阅读代码</a></li>
+<li><a href="#orgheadline147">11.99. <span class="todo nilLATER">LATER</span> emacs自动保存间隔</a></li>
+<li><a href="#orgheadline148">11.100. <span class="todo nilNEXT">NEXT</span> emacs如何替换文本?</a></li>
+<li><a href="#orgheadline149">11.101. <span class="todo nilLATER">LATER</span> Emacs如何设置多重功能的按键?</a></li>
+<li><a href="#orgheadline150">11.102. <span class="todo nilNEXT">NEXT</span> Emacs如何切换最近buffer,而非只有一个最近buffer?</a></li>
+<li><a href="#orgheadline151">11.103. <span class="todo nilNEXT">NEXT</span> Emacs如何高亮多个单词?</a></li>
+<li><a href="#orgheadline152">11.104. <span class="todo nilLATER">LATER</span> 如何在Emacs直接预览markdown效果？</a></li>
+<li><a href="#orgheadline153">11.105. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> </a></li>
+<li><a href="#orgheadline154">11.106. <span class="todo nilNEXT">NEXT</span> Emacs崩溃后的恢复策略</a></li>
+<li><a href="#orgheadline155">11.107. <span class="todo nilNEXT">NEXT</span> emacs如何跳转到匹配的括号？</a></li>
+<li><a href="#orgheadline156">11.108. <span class="todo nilNEXT">NEXT</span> 一些基本操作</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<p>
+这里是学习Emacs过程记录的笔记，可供日后查阅以及参考。
+</p>
+
+<p>
+简单的emacs操作提示，不做过多解释。心中的疑问放在后面。
+</p>
+
+<p>
+M可以是&lt;ALT&gt;或者&lt;ESC&gt;。
+&lt;Delback&gt;=&lt;Backspace&gt;=
+</p>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 文件操作</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><p>
+启动emacs
+</p>
+
+<p>
+输入如下内容：
+</p>
+<pre class="example">
+$emacs  
+$emacs -nw
+</pre>
+<p>
+另外，启动之后，在键盘上键入 <code>q</code> 跳过系统欢迎的信息.
+</p></li>
+
+<li><p>
+打开目录 
+</p>
+
+<p>
+输入 <code>C-x d</code> 之后可输入具体路径，如果直接回车则默认打开当前buffer文件所在目录。
+</p></li>
+
+<li><p>
+新建目录
+</p>
+
+<p>
+输入 <code>M-x make-directory</code> 然后输入路径，回车。
+</p></li>
+
+<li><p>
+新建文件
+</p>
+
+<p>
+输入 <code>C-x C-f</code> 然后输入路径，写文件(这样不创建新文件)。
+</p></li>
+
+<li><p>
+载入一个文件
+</p>
+
+<p>
+输入 <code>C-x C-f</code> 之后输入路径，回车。
+</p>
+
+<p>
+其实打开的是对应文件的一个buffer，每个文件对应一个buffer，buffer名一般就是文件名去掉后缀。
+</p></li>
+
+<li><p>
+重新载入当前buffer对应文件
+</p>
+
+<p>
+输入 <code>C-x C-v</code> 
+</p></li>
+
+<li><p>
+保存文件
+</p>
+
+<p>
+输入 <code>C-x C-s</code> 输入之后，再输入路径，回车。
+</p></li>
+
+<li><p>
+全部保存
+</p>
+
+<p>
+输入 <code>C-c s</code> 
+</p>
+
+<p>
+输入之后，会依次询问每个文件的是否保存，输入 <code>y</code> 表示保存相应文件； <code>n</code> 表示不保存； <code>!</code> 保存所有; <code>.</code> 保存当前buffer并退出询问; <code>q</code> 直接退出询问；更多的信息可以用 <code>C-h</code> 来查阅。
+</p></li>
+
+<li><p>
+关闭文件
+</p>
+
+<p>
+输入 <code>C-x k</code> 
+</p>
+
+<p>
+输入之后，会进入一个交互命令，输入想要关闭的buffer名字，即可关闭对应的文件再回车，如果什么都不输入直接回车，则默认退出当前buffer关闭对应的文件。
+</p></li>
+
+<li><p>
+退出编辑器
+</p>
+
+<p>
+输入 <code>C-x C-c</code>
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><a id="ID-d08f1630-13b0-478f-9b58-027547b34f75"></a><span class="section-number-2">2</span> 文件管理</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Emacs自带一个文件管理器，为dired模式。
+</p>
+<ul class="org-ul">
+<li><p>
+进入目录浏览
+</p>
+
+<p>
+输入 <code>C-x d</code>
+</p>
+
+<p>
+进入目录后，可以输入 <code>h</code> 查看帮助信息，查看回显区简洁帮助输入 <code>?</code> 
+</p>
+
+<p>
+进入dired模式之后，可以通过下面命令管理文件，此时Emacs可以做为一个文件管理器来使用。
+</p></li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3"><span class="section-number-3">2.1</span> 目录显示</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li><p>
+上一层目录
+</p>
+
+<p>
+输入 <code>^</code>
+</p></li>
+
+<li><p>
+上下移动光标选择不同文件项
+</p>
+
+<p>
+输入 <code>n</code> / <code>p</code>
+</p></li>
+
+<li><p>
+上下移动至下一个目录子项
+</p>
+
+<p>
+输入 <code>&lt;</code> / <code>&gt;</code>
+</p></li>
+
+<li><p>
+上下移动至被标记项
+</p>
+
+<p>
+输入 <code>M-{</code> / <code>M-}</code>
+</p></li>
+
+<li><p>
+退出目录缓冲
+</p>
+
+<p>
+输入 <code>q</code>
+</p></li>
+
+<li><p>
+刷新目录缓冲
+</p>
+
+<p>
+输入 <code>g</code>
+</p></li>
+
+<li><p>
+切换名称日期排序
+</p>
+
+<pre class="example">
+输入 =s=
+</pre></li>
+
+<li><p>
+使用View模式查看文件
+</p>
+
+<p>
+输入 <code>v</code> ， 会以只读方式显示文件内容
+</p></li>
+
+<li><p>
+另一个窗口查看文件
+</p>
+
+<p>
+输入 <code>o</code>
+</p></li>
+
+<li><p>
+查看文件类型
+</p>
+
+<p>
+输入 <code>y</code>
+</p></li>
+
+<li><p>
+跳转文件
+</p>
+
+<p>
+输入 <code>j</code> ,输入之后，会提示选择将要打开的文件路径
+</p></li>
+
+<li><p>
+复制文件名
+</p>
+
+<p>
+输入 <code>w</code>
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">2.2</span> 文件操作</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li><p>
+对应位置创建目录
+</p>
+
+<p>
+输入 <code>+</code>
+</p></li>
+
+<li><p>
+删除对应文件
+</p>
+
+<p>
+对应行输入 <code>D</code> , 会提示是否删除
+</p></li>
+
+<li><p>
+拷贝对应文件
+</p>
+
+<p>
+对应行输入 <code>C</code> ， 会提示目标路径
+</p></li>
+
+<li><p>
+创建硬链接
+</p>
+
+<p>
+对应行输入 <code>H</code> ， 会提示目标路径
+</p></li>
+
+<li><p>
+创建软链接
+</p>
+
+<p>
+绝对路径对应行输入 <code>S</code> ，相对路径对应行输入 <code>Y</code> ， 会提示目标路径
+</p></li>
+
+<li><p>
+重命名文件
+</p>
+
+<p>
+对应行输入 <code>R</code> , 会提示重命名的名称
+</p></li>
+
+<li><p>
+修改文件权限
+</p>
+
+<p>
+对应行输入 <code>M</code> , 会提示修改成什么权限，比如 <code>777</code>
+</p></li>
+
+<li><p>
+修改属组
+</p>
+
+<p>
+对应行输入 <code>G</code>
+</p></li>
+
+<li><p>
+修改属主
+</p>
+
+<p>
+对应行输入 <code>O</code>
+</p></li>
+
+<li><p>
+压缩解压缩
+</p>
+
+<p>
+对应行输入 <code>z</code>
+</p></li>
+
+<li><p>
+执行文件
+</p>
+
+<p>
+对应行输入 <code>X</code>
+</p></li>
+
+<li><p>
+新建文件
+</p>
+
+<p>
+输入 <code>C-x C-f</code>
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">2.3</span> 标记操作</h3>
+<div class="outline-text-3" id="text-2-3">
+</div><div id="outline-container-orgheadline6" class="outline-4">
+<h4 id="orgheadline6"><span class="section-number-4">2.3.1</span> 删除标记</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<ul class="org-ul">
+<li><p>
+标记删除
+</p>
+
+<p>
+对应行输入 <code>d</code>
+</p></li>
+
+<li><p>
+将所有备份文件标记为删除
+</p>
+
+<p>
+输入 <code>~</code>
+</p></li>
+
+<li><p>
+将存盘文件标记为删除
+</p>
+
+<p>
+输入 <code>#</code>
+</p></li>
+
+<li><p>
+对标记删除的文件执行删除
+</p>
+
+<p>
+对应行输入 <code>x</code>
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-4">
+<h4 id="orgheadline7"><span class="section-number-4">2.3.2</span> 普通标记</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<ul class="org-ul">
+<li><p>
+普通标记
+</p>
+
+<p>
+对应行输入 <code>m</code>
+</p></li>
+
+<li><p>
+普通标记所有可执行文件
+</p>
+
+<p>
+输入 <code>**</code>
+</p></li>
+
+<li><p>
+普通标记所有目录项
+</p>
+
+<p>
+输入 <code>*/</code>
+</p></li>
+
+<li><p>
+普通标记所有符号链接
+</p>
+
+<p>
+输入 <code>*@</code>
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-4">
+<h4 id="orgheadline8"><span class="section-number-4">2.3.3</span> 正则表达式标记</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<ul class="org-ul">
+<li><p>
+正则表达式标记匹配名称的文件
+</p>
+
+<p>
+输入 <code>% m</code> , 输入之后，会提示输入满足正则表达式待标记文件名称
+</p></li>
+
+<li><p>
+正则表达式标记匹配内容的文件
+</p>
+
+<p>
+输入 <code>% g</code> , 输入之后，会提示输入待标记文件包含的满足正则表达式的内容
+</p></li>
+
+<li><p>
+正则表达式标记依次拷贝文件
+</p>
+
+<p>
+输入 <code>% C</code> , 输入之后提示输入被拷贝文件满足的正则表达式
+</p></li>
+</ul>
+
+
+<p>
+例如
+</p>
+
+
+<p>
+:\(.+\).cpp
+</p>
+
+<p>
+<code>之后再输入目标例如在前面匹配的基础上输入： =\1.h</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-4">
+<h4 id="orgheadline9"><span class="section-number-4">2.3.4</span> 结合标记能使用的操作：</h4>
+<div class="outline-text-4" id="text-2-3-4">
+<p>
+以下操作可以结合上述描述的普通标记和某些正则来使用，达到批量处理的目的。
+</p>
+
+<ul class="org-ul">
+<li><p>
+删除文件
+</p>
+
+<p>
+<code>D</code>
+</p></li>
+
+<li><p>
+copy
+</p>
+
+<p>
+<code>C</code>
+</p></li>
+
+<li><p>
+重命名或移动
+</p>
+
+<p>
+<code>R</code>
+</p></li>
+
+<li><p>
+改变用户
+</p>
+
+<p>
+<code>O</code>
+</p></li>
+
+<li><p>
+改变群组
+</p>
+
+<p>
+<code>G</code>
+</p></li>
+
+<li><p>
+改变权限
+</p>
+
+<p>
+<code>M</code>
+</p></li>
+
+<li><p>
+符号链接
+</p>
+
+<p>
+<code>S</code>
+</p></li>
+
+<li><p>
+硬链接
+</p>
+
+<p>
+<code>H</code>
+</p></li>
+
+<li><p>
+压缩
+</p>
+
+<p>
+<code>Z</code>
+</p></li>
+
+<li><p>
+复制文件名
+</p>
+
+<p>
+<code>w</code> 
+</p></li>
+
+<li><p>
+删除行，刷新后可恢复
+</p>
+
+<p>
+<code>k</code>
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-4">
+<h4 id="orgheadline10"><span class="section-number-4">2.3.5</span> 其它</h4>
+<div class="outline-text-4" id="text-2-3-5">
+<ul class="org-ul">
+<li><p>
+取消标记删除
+</p>
+
+<p>
+对应行输入 <code>u</code>
+</p></li>
+
+<li><p>
+取消所有标记
+</p>
+
+<p>
+输入 <code>U</code>
+</p></li>
+
+<li><p>
+将文件列表读写切换
+</p>
+
+<p>
+输入 <code>C-x C-q</code>
+</p>
+
+<p>
+读写切换之后，底部会提示为 <code>[(Editable Dired)]</code> ，可以修改对应文件名等。
+</p></li>
+</ul>
+
+<p>
+更多命令
+</p>
+
+<p>
+参见 <code>h</code> 给出的帮助信息。
+</p>
+
+<p>
+参考：<a href="http://www.cnblogs.com/leohxj/archive/2012/02/20/2360606.html">Emacs文件管理</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-2">
+<h2 id="orgheadline11"><a id="ID-a5be1770-c494-4527-a487-93a6348503f1"></a><span class="section-number-2">3</span> 编辑</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><span class="section-number-3">3.1</span> 插入</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li><p>
+插入其他文件
+</p>
+
+<p>
+输入 <code>C-x i</code>
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"><span class="section-number-3">3.2</span> 撤销与重复</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+这里列出最基本的，具体可以参考：<a href="#orgheadline31">Emacs撤销、重做和重复</a>
+</p>
+
+
+<ul class="org-ul">
+<li><p>
+撤销
+</p>
+
+<p>
+输入 <code>C-x u</code> 或输入 <code>C-/</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+重复操作
+</p>
+
+<p>
+输入 <code>C-u &lt;数字&gt; &lt;操作&gt;</code> 或输入 <code>C-&lt;数字&gt; &lt;操作&gt;</code> 
+</p>
+
+<p>
+这两种方法，通过 <code>C-u &lt;数字&gt;</code> 或 <code>C-&lt;数字&gt;</code> 指定好重复次数之后，输入你想进行的操作，就可以重复相应的次数了。
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14"><span class="section-number-3">3.3</span> 标记</h3>
+<div class="outline-text-3" id="text-3-3">
+<ul class="org-ul">
+<li><p>
+标记整个buffer
+</p>
+
+<p>
+输入 <code>C-x h</code>
+</p></li>
+
+<li>标记块
+<ol class="org-ol">
+<li><p>
+标记块开始
+</p>
+
+<p>
+定位到待移除的首部，输入 <code>C-@</code> (或 <code>C-&lt;SPC&gt;</code> ，如果不冲突)，标记完成。此时底部有指示是标记状态。
+</p></li>
+
+<li><p>
+移除相应块
+</p>
+
+<p>
+移动光标，这时候光标经过的地方会高亮，也就是被标记。
+</p></li>
+</ol></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><span class="section-number-3">3.4</span> 删除、移除、复制、粘帖</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+注意：这里的移除类似剪切可再次粘帖回来 、删除的内容不可粘帖回来。
+</p>
+
+
+<ul class="org-ul">
+<li><p>
+移除当前行
+</p>
+
+<p>
+输入 <code>C-S-DEL</code>, 这里的 <code>DEL</code> 就是 <code>Backspace</code> 。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+移除至行尾，可粘帖回来
+</p>
+
+<p>
+输入 <code>C-k</code>, 再次 <code>C-k</code> 会将换行符号移除。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+删除至行首，可粘帖回来
+</p>
+
+<p>
+输入 <code>C-0 C-k</code> 或输入 <code>M-- C-k</code> 或 <code>C-u 0 C-k</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+删除光标前面字符
+</p>
+
+<p>
+输入 <code>&lt;Backspace&gt;</code>, 删除之后，不可通过 <code>C-y</code> 来“粘帖”回来。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+删除光标后面字符
+</p>
+
+<p>
+输入 <code>C-d</code> 删除之后，不可通过 <code>C-y</code> 来“粘帖”回来。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+移除光标前至面第一个单词首
+</p>
+
+<p>
+输入 <code>M-&lt;Backspace&gt;</code> 
+</p>
+
+<p>
+会移除光标前面的内容至单词首部（单词和数字字符，没有标点和其他字符，如"&lt;"，"&gt;"）。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+移除光标后至第一个单词尾
+</p>
+
+<p>
+输入 <code>M-d</code>
+</p>
+
+<p>
+会移除光标后面的内容至单词尾部（单词和数字字符，没有标点和其他字符，如"&lt;"，"&gt;"）。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+删除到指定字符
+</p>
+
+<p>
+输入 <code>M-z &lt;char&gt;</code>
+</p>
+
+<p>
+输入 <code>M-z</code> 之后再输入字符 <code>&lt;char&gt;</code> ，会删除光标到 <code>&lt;char&gt;</code> 之间的内容。
+</p></li>
+</ul>
+
+
+
+<ul class="org-ul">
+<li><p>
+块移除
+</p>
+
+<p>
+标记块后，输入 <code>C-w</code> 。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+块复制
+</p>
+
+<p>
+标记块后，输入 <code>M-w</code> 。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+粘帖最近一次移除或复制的内容
+</p>
+
+<p>
+输入 <code>C-y</code>, 输入之后，可以粘帖最近一次被移除的内容。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+粘帖最近某次移除的内容
+</p>
+
+<p>
+输入 <code>M-y</code>
+</p>
+
+<p>
+不断的 <code>M-y</code> 会不断的变换遍历之前移除的内容（不是复制），直至选择到待粘帖的内容便可结束。
+</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline16" class="outline-2">
+<h2 id="orgheadline16"><span class="section-number-2">4</span> 窗口操作</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li><p>
+关掉当前窗口
+</p>
+
+<p>
+输入 <code>C-x 0</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+关掉其他窗口
+</p>
+
+<p>
+输入 <code>C-x 1</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+水平创建窗口
+</p>
+
+<p>
+输入 <code>C-x 2</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+垂直创建窗口
+</p>
+
+<p>
+输入 <code>C-x 3</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+切换窗口
+</p>
+
+<p>
+输入 <code>C-x o</code>, 在各个窗口之间循环切换。
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline17" class="outline-2">
+<h2 id="orgheadline17"><span class="section-number-2">5</span> 跳转操作</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18"><span class="section-number-3">5.1</span> 搜索</h3>
+<div class="outline-text-3" id="text-5-1">
+<ul class="org-ul">
+<li><p>
+正向搜索
+</p>
+
+<p>
+C-s
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+连续正向搜索
+</p>
+
+<p>
+<code>C-s C-s ...</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+逆向搜索
+</p>
+
+<p>
+<code>C-r</code>
+</p></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="section-number-3">5.2</span> 基本跳转</h3>
+<div class="outline-text-3" id="text-5-2">
+<ul class="org-ul">
+<li><p>
+向前翻页
+</p>
+
+<p>
+<code>C-v</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+向后翻页
+</p>
+
+<p>
+<code>M-v</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+跳至指定行
+</p>
+
+<p>
+输入 <code>M-g g &lt;line number&gt;</code>, 再输入待跳转的行号。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+跳至缓冲区文件首
+</p>
+
+<p>
+输入 <code>M-&lt;</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+跳至缓冲区文件尾
+</p>
+
+<p>
+输入 <code>M-&gt;</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+跳转到同一层次下一个括号结束位置
+</p>
+
+<p>
+输入 <code>C-M-n</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+跳转到同一层次上一个括号开始位置
+</p>
+
+<p>
+输入 <code>C-M-p</code>
+</p></li>
+</ul>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="section-number-3">5.3</span> 书签</h3>
+<div class="outline-text-3" id="text-5-3">
+<ul class="org-ul">
+<li><p>
+创建"书签"
+</p>
+
+<p>
+输入 <code>C-x r &lt;SPC&gt;</code>, 然后随便按一个键，做为书签名比如'a'
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+跳转到"书签"
+</p>
+
+<p>
+输入 <code>C-x r j</code>, 输入刚才创建的书签"a"，就会跳到你刚在的书签所在的那个光标处。
+</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline21" class="outline-2">
+<h2 id="orgheadline21"><span class="section-number-2">6</span> Buffer操作</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li><p>
+查看所有buffer列表
+</p>
+
+<p>
+输入 <code>C-x C-b</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+切换至指定buffer
+</p>
+
+<p>
+输入 <code>C-x b</code> 
+</p>
+
+<p>
+输入之后，进入一个交互模式，输入指定buffer名称即可。如果直接回车，会在上次buffer与本次buffer之间切换。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+关闭buffer
+</p>
+
+<p>
+输入 <code>C-x k</code> 会提示想要关闭的buffer，默认关闭当前buffer。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+关闭3天内未使用的buffer
+</p>
+
+<p>
+输入 <code>M-x clean-buffer-list</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+依次询问式关闭指定（是否保存）的buffer
+</p>
+
+<p>
+输入 <code>M-x kill-some-buffers</code>
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline22" class="outline-2">
+<h2 id="orgheadline22"><span class="section-number-2">7</span> 编程相关</h2>
+</div>
+<div id="outline-container-orgheadline23" class="outline-2">
+<h2 id="orgheadline23"><span class="section-number-2">8</span> 帮助</h2>
+<div class="outline-text-2" id="text-8">
+<ul class="org-ul">
+<li><p>
+查看帮助信息的帮助
+</p>
+
+<p>
+输入 = C-h C-h =, 这样可以显示如何查询其他帮助信息。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+查看某个按键序列帮助
+</p>
+
+<p>
+输入 <code>C-h k xxx</code>
+</p>
+
+<p>
+输入 <code>C-h k</code> 后会有一个交互，让你输入按键序列，输入 <code>xxx</code> 之后，会显示相应的按键绑定以及帮助信息。自定义绑定一个按键之前通过这条命令，可以确认是否被绑定的按键会发生冲突，亦可通过这个命令，在已有的基础上，添加自己扩展的绑定功能。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+查看某个elisp函数的作用
+</p>
+
+<p>
+输入 <code>C-h f</code>
+</p>
+
+<p>
+使用自定制的功能，带来的问题至少有：通用性降低，依赖性增强，与其他功能冲突可能性增加。所以之前使用vim，基本不会用太多的插件以及按键映射，大多数操作使用其默认的配置。但是对于一个通过自定制扩展而闻名的emacs来说，我觉得这一点可以有所改变。通用性降低这方面，我们可以通过将相关配置进行合理组织，然后通过版本控制或者其他方式备份，便于在其他机器上使用；依赖性增强，一方面通过对配置和插件备份可以解决，一方面经常总结文档，以及对相关内容的熟练程度也会让这个问题不了了之；与其他功能的冲突，我们可以通过帮助查看已有按键绑定以及被占用的功能，使用未被使用的做为扩展，由此避免冲突。
+</p>
+
+<p>
+使用原生功能，以及使用自定制功能，是两种不同的理念。前者通用、简单，后者可扩展、高效，还有其他不同，但是各有所长，关键在于根据实际情况，使用最适合的方式来解决问题，方式因人而异，没有绝对的，我个人的倾向是：在vim倾向前者，在emacs倾向后者，但是emacs使用之时，尽量保持原有的功能而不改变成其它的，如果实在不行，可以扩展原有功能。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+查看按键绑定
+</p>
+
+<p>
+输入 <code>C-h b</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+根据正则表达式模糊查找
+</p>
+
+<p>
+输入 <code>C-h a xxx</code>, 这样会列出所有匹配 <code>xxx</code> 的帮助信息。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+查看某前缀按键集合的帮助
+</p>
+
+<p>
+输入 <code>C-c C-h</code>, 会查看C-c为前缀的按键绑定帮助，
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+查看某命令前缀的按键绑定帮助
+</p>
+
+<p>
+输入 <code>&lt;命令前缀&gt; C-h</code>, 例如 <code>C-c C-x C-h</code> 会查看 <code>C-c C-x</code> 为前缀的按键绑定帮助。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+查看info
+</p>
+
+<p>
+输入 <code>M-x info</code>, 或者输入 <code>C-h i</code>
+</p>
+
+<p>
+输入之后，会显示info手册，和linux的一样，不过在emacs中阅读更方便。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+查看当前模式信息
+</p>
+
+<p>
+<code>C-h m</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+退出帮助信息
+</p>
+
+<p>
+输入 <code>q</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+Emacs FAQ
+</p>
+
+<p>
+输入 <code>C-h C-f</code>
+</p></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline24" class="outline-2">
+<h2 id="orgheadline24"><span class="section-number-2">9</span> 原理</h2>
+<div class="outline-text-2" id="text-9">
+</div><div id="outline-container-orgheadline25" class="outline-3">
+<h3 id="orgheadline25"><span class="section-number-3">9.1</span> 关于递归编辑</h3>
+<div class="outline-text-3" id="text-9-1">
+<p>
+所谓的“递归编辑”是指递归编辑状态，由位于状态栏的方括号所指示，其中包含了用小括号来指明的模式名称。比如说，你有时可能会看到[(Fundamental)]，而不是 (Fundamental)。（比如在用 <code>M-%</code> 进行交互式替换的时候你又用了 <code>C-s</code> 进行搜索，这时替换模式并没有结束，但你又进入了搜索模式，这就是所谓的递归编辑。）
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline26" class="outline-3">
+<h3 id="orgheadline26"><span class="section-number-3">9.2</span> 关于mark/region/active region/transient-mark-mode/Text Selection</h3>
+<div class="outline-text-3" id="text-9-2">
+<p>
+内容主要参考 <a href="http://ergoemacs.org/emacs/emacs_region.html">Emacs: What's Region, Active Region, transient-mark-mode?</a> 大致如下：
+</p>
+
+<ul class="org-ul">
+<li><p>
+mark
+</p>
+
+<p>
+一个用户可以设置的位置，用来进行文本选择。通过调用 <code>set-mark-command</code> （即 <code>C-@</code> ）设置mark，在list代码中你可以调用 push-mark或者set-mark设置标记。
+</p></li>
+
+<li><p>
+region
+</p>
+
+<p>
+最后一次mark的位置知道当前光标所在位置，这一段的区域。用户一旦在buffer中设置了mark，region就存在了。可以通过函数 <code>region-beginning</code> , <code>region-end</code> 来获取region的位置。
+</p></li>
+
+<li><p>
+active region
+</p>
+
+<p>
+当变量 <code>mark-active</code> 为true的时候，region就是active状态。
+</p></li>
+
+<li><p>
+transient-mark-mode
+</p>
+
+<p>
+transient-mark-mode也是emacs的一种minor mode，当emacs的 <code>transient-mark-mode</code> 为on的时候，active region将被高亮， 当变量 <code>transient-mark-mode</code> 为true的时候，该模式就是on的状态，默认该模式是on的状态。因为默认为on，并且Buffer中始终有一个region，所以前面对active region需要用 <code>mark-active</code> 进行控制，防止文本中的region始终高亮。
+</p></li>
+
+<li><p>
+什么时候region被active?
+</p>
+
+<p>
+当 <code>set-mark-command</code> 被调用的时候，region就会变成active(高亮状态)，当执行了一个命令后，一般region的状态就会被设置成inactive。总之，你用鼠标或者键盘设置mark之后，被选择的文本就会被高亮，你执行一些操作之后，文本高亮就被取消。
+</p></li>
+
+<li><p>
+什么是Text Selection？
+</p>
+
+<p>
+Text Selection就是被选择的文本，一般与active region同义。Text Selection就是非空的active region，可以通过 <code>use-region-p</code> 检测Text Selection， 这个函数其实检测的是三个内容：a. <code>trasient-mark-mode</code> 是否为on；b. <code>mark-active</code> 是否为true；c.通过 =use-empty-active-region来检测region非空。
+</p></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline27" class="outline-3">
+<h3 id="orgheadline27"><a id="ID-4306b46a-6e55-4dd3-943f-beb64f0a909b"></a><span class="section-number-3">9.3</span> 关于自动临时保存和备份</h3>
+<div class="outline-text-3" id="text-9-3">
+</div>
+<div id="outline-container-orgheadline28" class="outline-4">
+<h4 id="orgheadline28"><span class="section-number-4">9.3.1</span> 临时文件</h4>
+<div class="outline-text-4" id="text-9-3-1">
+<p>
+一般是在Emacs中编辑时,在编辑文件的同一个目录内生成一个以#file-name#这样的文件，这个文件会在我们保存文件之后被emacs删除。这个文件的作用是为了防止在进行编辑的时候异常退出造成的损失。
+</p>
+
+<p>
+临时文件存在大致过程如下：
+</p>
+<pre class="example">
+1. 在Emacs内使用[C-x,C-f]打开要编辑的文件(test-file.txt)
+2. 在打开的buffer中编辑内容
+3. Emacs自动侦测buffer是否更改，如果更改会自动Auto-Save
+4. 此时我们能够在编辑的文件同一目录下看到临时文件为:
+    #test-file.txt#
+5. 使用[C-x,C-s]保存当前buffer
+6. 当前buffer中的内容被写入文件,#test-file.txt#消失——被Emacs自动删除
+</pre>
+
+<p>
+崩溃时恢复的方式
+</p>
+<pre class="example">
+1. 打开要恢复的文件，如：test.txt
+2. [M-x]
+3. 输入:recover-file 回车
+4. 确认恢复
+</pre>
+
+<p>
+关闭自动保存临时文件功能，在你启动的.emacs文件内添加下面这行
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">(setq auto-save-default nil) ;; default is t, close with nil
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline29" class="outline-4">
+<h4 id="orgheadline29"><span class="section-number-4">9.3.2</span> 自动备份</h4>
+<div class="outline-text-4" id="text-9-3-2">
+<p>
+第一次保存的时候，如果保存的文件已经存在，Emacs会自动将保存前的文件重命名作为备份文件，而备份文件使用的是一个“～”作为后缀(如：file-name~)。
+</p>
+
+<p>
+备份文件默认仅会发生在Emacs第一次写入的时候，即，开启Emacs之后，第一次打开文件并保存的时候，编辑期间多次保存并不能产生多次备份动作。然而，下次重新打开Emacs，再次执行同样的动作的时候，同样在第一次保存时，Emacs是会将上次的备份文件覆盖的（如果有）。
+</p>
+
+<p>
+大概的流程如下：
+</p>
+<pre class="example">
+1. 打开文件,如:MitchellChu.txt
+2. 编辑...（这涉及到临时文件的问题，忽略）
+3. 在emacs内发出保存指令
+4. emacs先将MitchellChu.txt保存为：MitchellChu.txt~
+5. 保存完成后，Emacs将当前buffer的内容写入MitchellChu.txt
+注意：此时的MitchellChu.txt已经不再是原来的那个文件，但所有连接到原来那个文件的，现在被这个新文件接管。
+</pre>
+
+<p>
+取消该功能设置如下
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">(setq make-backup-files nil)
+</pre>
+</div>
+
+<p>
+更多设置，比如拷贝、路径、多个备份版本等，可参考：
+<code>backup-by-copying</code> <code>version-control</code> <code>backup-directory-alist</code> 等。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline30" class="outline-4">
+<h4 id="orgheadline30"><span class="section-number-4">9.3.3</span> 其他</h4>
+<div class="outline-text-4" id="text-9-3-3">
+<p>
+参考：
+<a href="http://blog.useasp.net/archive/2014/07/18/emacs-temporary-files-and-backup-files-for-edited-file.aspx">http://blog.useasp.net/archive/2014/07/18/emacs-temporary-files-and-backup-files-for-edited-file.aspx</a>
+</p>
+
+<p>
+<a href="http://blog.csdn.net/flytomysky/article/details/7096561">http://blog.csdn.net/flytomysky/article/details/7096561</a>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline31" class="outline-3">
+<h3 id="orgheadline31"><a id="ID-fea6db6c-78ed-4689-b32e-edc960161039"></a><span class="section-number-3">9.4</span> Emacs撤销、重做和重复</h3>
+<div class="outline-text-3" id="text-9-4">
+<p>
+简单说来，撤销是取消上次的操作，重做是对撤销的撤销，重复是对上次命令进行重做。下面重点对撤销和重做进行叙述。
+</p>
+
+<p>
+“Emacs中只有撤销，没有重做” 或许是初学者的迷惑，也或许让Emacs蒙受了"很烂的编辑器，怪不得很多人不愿意用"的评价。其实，真正的答案很简单： <code>撤销是取消上次的操作，重做是对撤销的撤销</code> 对这简单的两句话若能真正理解，你或许便能知晓真正的答案。当知晓真正的答案之时，你或许会感觉到，Emacs如峰回路转般，让你不得不收回对它以前的无知评论，重新对它产生新的认识。不光是这个小小的功能，其实在整个Emacs的前进过程中，如果能坚持下去，你会遇到很多类似的境况，也许，这也是为什么Emacs的学习曲线不同于其它，是“螺旋”的吧。
+</p>
+
+<p>
+这里给出众多Emacs学修中的一员，在经历众多Emacs道路中的困难之一，对其现象做一个简单的重现，希望能让没有使用过Emacs的朋友，能体会到一点使用它的感觉。
+</p>
+</div>
+
+<div id="outline-container-orgheadline32" class="outline-4">
+<h4 id="orgheadline32"><span class="section-number-4">9.4.1</span> 插件</h4>
+<div class="outline-text-4" id="text-9-4-1">
+<p>
+通过undo-tree插件选择需要恢复的操作
+</p>
+<pre class="example">
+C-x u 进入 undo-tree-visualizer-mode , p n 上下移动，在分支之前 b f 左右切换，t 显示时间戳，选定需要的状态后， q 退出。这是主要的操作，其它的自己摸索好了……
+</pre>
+
+<p>
+参考：<a href="http://www.dr-qubit.org/undo-tree/undo-tree.el">http://www.dr-qubit.org/undo-tree/undo-tree.el</a> 和 <a href="http://itindex.net/detail/32008-emacs-undo-tree">emacs 新手必看: undo-tree</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline33" class="outline-4">
+<h4 id="orgheadline33"><span class="section-number-4">9.4.2</span> 标准操作</h4>
+<div class="outline-text-4" id="text-9-4-2">
+<p>
+对撤销的撤销便是重做（或者向前撤销）
+</p>
+<pre class="example">
+第一，执行 C-x u 向后撤销
+第二，执行 C-g 然后 C-x u 就是向前撤销了。
+</pre>
+
+<p>
+参考：<a href="http://www.cnblogs.com/chaolong/archive/2013/07/11/3183241.html">Emacs中的撤销</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline34" class="outline-4">
+<h4 id="orgheadline34"><span class="section-number-4">9.4.3</span> 比较详细的解释</h4>
+<div class="outline-text-4" id="text-9-4-3">
+</div><div id="outline-container-orgheadline157" class="outline-5">
+<h5 id="orgheadline157"><span class="section-number-5">9.4.3.1</span> Emacs中所有命令均可undo</h5>
+<div class="outline-text-5" id="text-9-4-3-1">
+<p>
+所有命令均可undo, 包括undo本身，所有命令emacs都一视同仁，所以：undo+undo=redo
+</p>
+<pre class="example">
+emacs 把相同类型的操作，合并为一个事件。比如说往缓冲区里打字，也就是 self-insert-command，如果每次 undo ，只是撤消掉一个字符，那就太僵硬了，所以 self-insert-command 的操作，每20次合并为一个事件，一次 undo ，撤消掉20个字符。
+而 undo 的猥琐之处在于，只要连续的 undo ，无论多少个，都是一个事件……当然，这也是必需的，不然你 undo 了20次之后，又突然开始 redo ……而恰巧这时又是夜深人静的话……
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline158" class="outline-5">
+<h5 id="orgheadline158"><span class="section-number-5">9.4.3.2</span> Emacs中撤销操作序列的表示方式</h5>
+<div class="outline-text-5" id="text-9-4-3-2">
+<pre class="example">
+undo 之后想要 redo ，就要进行一个其它类型的操作，随便输入一个字符或者移动一下光标都可以，不过标准答案是 C-g 。
+
+s1--s2--s3--s4
+              )
+    s3  u3--u4
+   / | (
+  |   \ s5--s6--s7--s8--s9
+  |    \                  )
+  |     u5--u6--u7--u8--u9
+   \ 
+    s10----sn
+
+假设 u3 表示 undo s3 。从 s9 开始 undo，顺着 emacs 的“undo蛇”往回走，到了 u3 的时候，就是 undo undo s3，也就是 s3 了，而这一串 undo，也成了“undo贪吃蛇”的一部分。虽然 emacs 保留了全部的操作状态，但是从 s10 返回 s1 却要将近20步，而普通的编辑器只要两步。
+
+这个必需得动手实验后才能有一个直观的印象，按以下步骤操作: (g C-g) (u undo)
+
+1g2g3g4guu5g6g7g8g9guuuuuu10(可以把end-of-line绑到空格代替C-g)
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline159" class="outline-5">
+<h5 id="orgheadline159"><span class="section-number-5">9.4.3.3</span> 引入插件undo-tree来"改变"Emacs中的undo模式：</h5>
+<div class="outline-text-5" id="text-9-4-3-3">
+<pre class="example">
+其实这种“undo蛇”完全可以表示成 undo tree。s10 到 s1 ，两步;再到 s4，四步(有一步是切换分支)……
+
+          s10----sn
+         /
+s1--s2--s3--s4
+         \
+          s5--s6--s7--s8--s9
+
+不知道 emacs 为什么没有使用这种方式，可能是因为选择分支之类的操作很难描述吧。
+
+好了，不提这么伤感的事，现在有一个扩展叫作 undo-tree ，基本解决了这个问题。 undo-tree 安装使用都很简单:
+
+;放到load-path中，配置文件中添加
+(require 'undo-tree)
+(global-undo-tree-mode)
+
+由于篇幅所限，就不截图了
+
+C-x u 进入 undo-tree-visualizer-mode , p n 上下移动，在分支之前 b f 左右切换，t 显示时间戳，选定需要的状态后， q 退出。这是主要的操作，其它的自己摸索好了……
+</pre>
+
+<p>
+参考：<a href="http://itindex.net/detail/32008-emacs-undo-tree">emacs 新手必看: undo-tree</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline35" class="outline-4">
+<h4 id="orgheadline35"><span class="section-number-4">9.4.4</span> 官方文档</h4>
+<div class="outline-text-4" id="text-9-4-4">
+<p>
+查阅Emacs <code>C-h i</code> 信息中有关Undo的内容，如下：
+</p>
+<pre class="example">
+Any command other than an undo command breaks the sequence of undo commands. Starting from that moment, the entire sequence of undo commands that you have just performed are themselves placed into the undo record, as a single set of changes. Therefore, to re-apply changes you have undone, type C-f or any other command that harmlessly breaks the sequence of undoing; then type C-/ to undo the undo command.
+</pre>
+<p>
+亦可参考：<a href="http://www.cnblogs.com/wendellyi/archive/2013/08/29/3290366.html">http://www.cnblogs.com/wendellyi/archive/2013/08/29/3290366.html</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline36" class="outline-4">
+<h4 id="orgheadline36"><span class="section-number-4">9.4.5</span> 总结</h4>
+<div class="outline-text-4" id="text-9-4-5">
+<p>
+其实redo就是对undo的undo，undo会将本身当作被redo的对象，但是连续的undo之间不会被打断，（当然其中的每次undo仍然会视为一个change)，通过 <code>C-g</code> 打断连续的Undo操作，再 <code>C-/</code> 就实现了对上次的undo 进行 undo，其实感觉上，Emacs将一切操作线性化，即简化了设计，又符合人的思维次序，而通过undo-tree却将这个undo变成了树状结果，便于理解，但是实践上未必更实用。目前暂时不用相关的插件。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline37" class="outline-2">
+<h2 id="orgheadline37"><span class="section-number-2">10</span> 其他</h2>
+<div class="outline-text-2" id="text-10">
+<ul class="org-ul">
+<li><p>
+切换模式
+</p>
+
+<p>
+输入 <code>M-x &lt;mode name&gt;</code> 
+</p>
+
+<p>
+这里&lt;mode name&gt;是模式名称，自己输入，可以&lt;Tab&gt;补全。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+终止现在正在执行的命令
+</p>
+
+<p>
+输入 <code>C-g</code>
+</p>
+
+<p>
+这个命令只能终止本层编辑正在执行的指令，当你处于 <code>recursive edit level</code> 的时候，你就不能够利用 <code>C-g</code> 来取消命令了，那么你需要利用 <code>&lt;Esc&gt;&lt;Esc&gt;&lt;Esc&gt;</code> （或者更多次）来取消。
+</p></li>
+
+<li><p>
+交互执行lisp命令并插入结果
+</p>
+
+<p>
+输入如下命令序列:
+</p>
+<pre class="example">
+M-x lisp-interaction-mode
+&lt;lisp expressions&gt;
+C-j
+</pre>
+<p>
+切换 <code>lisp-interaction-mode</code> 模式之后，输入lisp表达式， <code>C-j</code> 计算并插入结果。千万注意 <code>C-j</code> 的光标位置。
+</p></li>
+
+<li><p>
+交互执行lisp命令不插入结果
+</p>
+
+<p>
+输入如下命令序列：
+</p>
+<pre class="example">
+M-x lisp-interaction-mode
+&lt;lisp expressions&gt;
+C-x C-e
+</pre>
+<p>
+切换 <code>lisp-interaction-mode</code> 模式之后，输入lisp表达式， <code>C-x C-e</code> 计算并将结果显示在底部mini buffer中。千万注意 <code>C-x C-e</code> 的光标位置。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+查看所有安装的包
+</p>
+
+<p>
+输入 <code>M-x list-packages</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+插入原样字符
+</p>
+
+<p>
+输入 <code>C-q &lt;待输入字符&gt;</code>
+</p>
+
+<p>
+输入之后将会插入相应字符（包括控制字符），而不是执行字符对应的按键绑定命令。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+进入elisp交互解释界面
+</p>
+
+<p>
+输入 <code>eilm</code>
+</p></li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline38" class="outline-3">
+<h3 id="orgheadline38"><span class="section-number-3">10.1</span> 意外操作</h3>
+<div class="outline-text-3" id="text-10-1">
+<p>
+这里列出平时意外操作发现的一些功能，可能会整理至合适位置。
+</p>
+
+<ul class="org-ul">
+<li><p>
+快速文本块选择
+</p>
+
+<p>
+输入 <code>C-S-n/p/a/e</code> 或者可以表达为 <code>C-N/P/A/E</code> 好像可以进行块选择，按其它的按键会导致退出“选择模式”。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+新开一行
+</p>
+
+<p>
+输入 <code>C-o</code>, 默认输入这个命令可以可以在当前位置上面新开一行。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+当前位置内容帮助
+</p>
+
+<p>
+在光标单词处输入 <code>C-h xxx</code> 直接回车默认会解释光标下的帮助内容。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+选择标记整个buffer
+</p>
+
+<p>
+输入 <code>C-x h</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+将选择的数据块按照上行缩进（上一行缩进几个空格，则此处也缩进几个空格，而不是tab?）
+</p>
+
+<p>
+选择后输入 =C-M-\=，如果上行没有缩进则自动缩进一个tabstop。其实选择块之后，直接Tab也会缩进。
+</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline39" class="outline-2">
+<h2 id="orgheadline39"><span class="section-number-2">11</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[15/107]</code>(<code>[14%]</code>)</h2>
+<div class="outline-text-2" id="text-11">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-27 五 15:07] </span></span> <br  />
+wait for all done</li>
+</ul>
+</div>
+<div id="outline-container-orgheadline40" class="outline-3">
+<h3 id="orgheadline40"><span class="section-number-3">11.1</span> <span class="todo NEXT">NEXT</span> 前进后退？</h3>
+<div class="outline-text-3" id="text-11-1">
+<ul class="org-ul">
+<li>State "NEXT"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2015-12-17 四 15:30]</span></span></li>
+<li>State "WAIT/FORWARD" from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 13:52] </span></span> <br  />
+前进后退的插件已经基本阅读完毕，使用自定义markring不会影响已有的系统markring；可行，其他前进后退的更多文档可能需要借助系统的mark以及使用的经验。</li>
+<li>State "LATER"      from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 11:41]</span></span></li>
+</ul>
+</div>
+<div id="outline-container-orgheadline41" class="outline-4">
+<h4 id="orgheadline41"><span class="section-number-4">11.1.1</span> 插件</h4>
+<div class="outline-text-4" id="text-11-1-1">
+<p>
+使用recent-jump插件。
+</p>
+</div>
+<div id="outline-container-orgheadline160" class="outline-5">
+<h5 id="orgheadline160"><span class="section-number-5">11.1.1.1</span> 配置举例</h5>
+<div class="outline-text-5" id="text-11-1-1-1">
+<div class="org-src-container">
+
+<pre class="src src-elisp">;; set recent-jump
+(setq recent-jump-threshold 4)
+(setq recent-jump-ring-length 10)
+(global-set-key (kbd "C-o") 'recent-jump-jump-backward)
+(global-set-key (kbd "M-o") 'recent-jump-jump-forward)
+(require 'recent-jump)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline161" class="outline-5">
+<h5 id="orgheadline161"><span class="section-number-5">11.1.1.2</span> 常用操作</h5>
+<div class="outline-text-5" id="text-11-1-1-2">
+<ul class="org-ul">
+<li>前进</li>
+</ul>
+
+<p>
+<code>C-o</code>
+</p>
+
+<ul class="org-ul">
+<li>后退</li>
+</ul>
+
+<p>
+<code>M-o</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline162" class="outline-5">
+<h5 id="orgheadline162"><span class="section-number-5">11.1.1.3</span> 其他</h5>
+<div class="outline-text-5" id="text-11-1-1-3">
+<p>
+对该插件可以自行修改其源代码，以定制什么情况下针对什么命令、多大举例进行跳转。具体参见插件的源码和文档。
+</p>
+<pre class="example">
+;;; Commentary:
+;; 
+;; sometimes, we start a big jump, e.g. go to the beginning of buffer, search,
+;; page down etc, it is handy that you can go back to where you start. For
+;; example, when we writing program source code, we ofter search for some
+;; reference and go back to where you start and continue writing. But how can we
+;; define "Big Jump". I can not find a proper hook for the big jump, so at last
+;; I choose the pre-command-hook. Now what my defination for "Big Jump" is :
+;; 
+;; 1. you issued some special command, it can be defined by
+;; recent-jump-hook-commands 
+;;
+;; 2. you jumped really much. that is you move more than `recent-jump-threshold'
+;; lines.
+</pre>
+
+<p>
+参考: <a href="http://blog.waterlin.org/articles/%E5%9C%A8emacs%E4%B8%AD%E5%BF%AB%E9%80%9F%E5%9C%B0%E8%B7%B3%E8%BD%AC%EF%BC%9Arecent-jumpel.html">http://blog.waterlin.org/articles/%E5%9C%A8emacs%E4%B8%AD%E5%BF%AB%E9%80%9F%E5%9C%B0%E8%B7%B3%E8%BD%AC%EF%BC%9Arecent-jumpel.html</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline42" class="outline-4">
+<h4 id="orgheadline42"><span class="section-number-4">11.1.2</span> 链接的后退</h4>
+<div class="outline-text-4" id="text-11-1-2">
+<p>
+跳转一次链接后，会记录上次链接。使用 <code>C-c &amp;</code> 可以后退。具体需要仔细确认。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline43" class="outline-4">
+<h4 id="orgheadline43"><span class="section-number-4">11.1.3</span> 查找的后退</h4>
+<div class="outline-text-4" id="text-11-1-3">
+<p>
+查找一个字符串，回车后，会记录开始查找时的位置。使用 <code>C-u C-@</code> 可以退回查找前的位置。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline44" class="outline-4">
+<h4 id="orgheadline44"><span class="section-number-4">11.1.4</span> 输入 <code>C-u C-@</code></h4>
+</div>
+</div>
+<div id="outline-container-orgheadline45" class="outline-3">
+<h3 id="orgheadline45"><span class="section-number-3">11.2</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> TAB标签栏?</h3>
+<div class="outline-text-3" id="text-11-2">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:38]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline46" class="outline-3">
+<h3 id="orgheadline46"><span class="section-number-3">11.3</span> <span class="done DONE">DONE</span> 如何删除一行</h3>
+<div class="outline-text-3" id="text-11-3">
+<ul class="org-ul">
+<li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 11:43]</span></span></li>
+</ul>
+<p>
+删除一行输入 <code>C-S &lt;BS&gt;</code>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline47" class="outline-3">
+<h3 id="orgheadline47"><span class="section-number-3">11.4</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 如何移动一行？</h3>
+<div class="outline-text-3" id="text-11-4">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:39]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 11:43]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline48" class="outline-3">
+<h3 id="orgheadline48"><span class="section-number-3">11.5</span> <span class="done DONE">DONE</span> 如何删除至行首？</h3>
+<div class="outline-text-3" id="text-11-5">
+<ul class="org-ul">
+<li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 11:53]</span></span></li>
+</ul>
+<p>
+输入 <code>C-0 C-k</code>
+</p>
+
+<p>
+或输入 <code>M-- C-k</code>
+</p>
+
+<p>
+或 <code>C-u 0 C-k</code>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline49" class="outline-3">
+<h3 id="orgheadline49"><span class="section-number-3">11.6</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何save all?</h3>
+<div class="outline-text-3" id="text-11-6">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 16:46] </span></span> <br  />
+待整理至合适的位置。</li>
+</ul>
+<p>
+输入 <code>C-x s</code>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline50" class="outline-3">
+<h3 id="orgheadline50"><span class="section-number-3">11.7</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 只读切换?</h3>
+<div class="outline-text-3" id="text-11-7">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 16:45] </span></span> <br  />
+需要转移到合适的位置。</li>
+<li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 16:45]</span></span></li>
+</ul>
+<p>
+输入 <code>C-x C-q</code>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline51" class="outline-3">
+<h3 id="orgheadline51"><span class="section-number-3">11.8</span> <span class="done DONE">DONE</span> 如何删除备份文件，或者不使用自动备份？</h3>
+<div class="outline-text-3" id="text-11-8">
+<ul class="org-ul">
+<li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 11:55]</span></span></li>
+</ul>
+<p>
+具体参考：<a href="#orgheadline27">关于自动临时保存和备份</a>
+;;disable auto backup file("xxx~") when save(default t).
+(setq make-backup-files nil)
+</p>
+
+<p>
+;; all backups goto ~/.backups instead in the current directory
+;;(setq backup-directory-alist (quote (("." . "~/.backups"))))
+</p>
+
+<p>
+;;disable recovery file("#xxx#") when modify(default t)
+;;(setq auto-save-default nil)
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline52" class="outline-3">
+<h3 id="orgheadline52"><span class="section-number-3">11.9</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 跳转到当前buffer工作目录？</h3>
+<div class="outline-text-3" id="text-11-9">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-12 一 09:23] </span></span> <br  />
+待整理到合适位置</li>
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-12 一 08:50]</span></span></li>
+</ul>
+<p>
+不知道在哪里看到的文章上讲 C-x C-j 可以用 dired mode 打开正在编辑的文件的所在目录，但是我的版本的 Emacs 居然没有这个快键，而且这个键没有绑定任何命令。 于是加了一段代码实现这个功能。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp">;; C-x C-j open the directory of current buffer
+(global-set-key (kbd "C-x C-j")
+(lambda ()
+(interactive)
+(if (buffer-file-name)
+(dired default-directory))))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline53" class="outline-3">
+<h3 id="orgheadline53"><span class="section-number-3">11.10</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> Emacs当前工作目录？</h3>
+<div class="outline-text-3" id="text-11-10">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-20 二 17:02] </span></span> <br  />
+等待整理到合适的位置。</li>
+</ul>
+<p>
+当前buffer的目录， 输入 <code>C-x d</code> 。 
+</p>
+
+<p>
+设置默认工作目录可以如下：
+</p>
+
+<p>
+<code>(setq default-directory "/home/quieheart")</code>
+</p>
+
+<p>
+但是=default-directory= 是buffer-local,
+</p>
+
+<p>
+参考：<a href="http://zhidao.baidu.com/link?url=ZDHfOcxIDLzxiCRDi2yEWusjiqu9NRag0IFU7J3KGYFMiibAGC_MVL5Tm-aFWaekODyF0uhXf0aDLVtyalqk74eKy6H_CoJWfNp1_mWD3Ci">http://zhidao.baidu.com/link?url=ZDHfOcxIDLzxiCRDi2yEWusjiqu9NRag0IFU7J3KGYFMiibAGC_MVL5Tm-aFWaekODyF0uhXf0aDLVtyalqk74eKy6H_CoJWfNp1_mWD3Ci</a>
+&gt;&gt; windows下的emacs怎么改按c-x c-f出现的路径。
+</p>
+
+<p>
+C-x C-f 使用的目录是 default-directory 的值。default-directory 是 buffer-local variable, 用 setq 写在 .emacs 里面没什么用。
+</p>
+
+<p>
+在没有与文件关联的buffer中default-directory 的值是启动emacs时的当前目录。所以你可以修改启动emacs时的当前目录(PWD)。
+</p>
+
+<p>
+修改启动emacs的当前目录，有多种方法：
+</p>
+<ol class="org-ol">
+<li>修改emacs快捷方式属性的起始位置为你希望的文件夹，路径有空格的要加双引号。</li>
+<li>写一个bat/cmd脚本来启动emacs，该脚本内容：先CD到目标路径，然后执行emacs</li>
+</ol>
+
+<p>
+如果当前buffer已经打开了文件，default-directory 会变成文件的所在路径。这个行为是不建议更改的。如果希望任何时候 C-x C-f 都是默认到某个目录，建议自己写一个函数来代替默认C-x C-f 绑定的函数。例如：
+(defun my-find-file ()
+  (interactive)
+  (let ((default-directory "<i>mnt</i>"))
+    (call-interactively #'find-file)))
+</p>
+
+<p>
+(global-set-key (kbd "C-x C-f") 'my-find-file)
+</p>
+
+<p>
+查看当前buffer所在的路径：
+<code>M-x pwd</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline54" class="outline-3">
+<h3 id="orgheadline54"><span class="section-number-3">11.11</span> <span class="todo LATER">LATER</span> 如何重做？</h3>
+<div class="outline-text-3" id="text-11-11">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:39]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline55" class="outline-3">
+<h3 id="orgheadline55"><span class="section-number-3">11.12</span> <span class="todo LATER">LATER</span> 如何成块缩进?</h3>
+<div class="outline-text-3" id="text-11-12">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:40]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline56" class="outline-3">
+<h3 id="orgheadline56"><span class="section-number-3">11.13</span> <span class="todo LATER">LATER</span> 如何创建空文件</h3>
+<div class="outline-text-3" id="text-11-13">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:40]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline57" class="outline-3">
+<h3 id="orgheadline57"><span class="section-number-3">11.14</span> <span class="todo NEXT">NEXT</span> 如何跳转至上次编辑内容？</h3>
+</div>
+<div id="outline-container-orgheadline58" class="outline-3">
+<h3 id="orgheadline58"><span class="section-number-3">11.15</span> <span class="done DONE">DONE</span> 如何save all？</h3>
+<div class="outline-text-3" id="text-11-15">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:40]</span></span></li>
+</ul>
+
+<p>
+输入 <code>C-x s</code> , 根据弹出的提示选择待保存的buffer, !表示保存剩余的全部。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline59" class="outline-3">
+<h3 id="orgheadline59"><a id="ID-8b88c6a5-0086-4ef0-88a9-7191d3d3eb6e"></a><span class="section-number-3">11.16</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> emacs如何加载插件？</h3>
+<div class="outline-text-3" id="text-11-16">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:41] </span></span> <br  />
+填写配置文件，待整理</li>
+</ul>
+<p>
+下载插件，插件都是elisp脚本，比如 <code>recent-jump.el</code>
+将加载语句写入配置文件：
+</p>
+<pre class="example">
+;;plugins
+(load "recent-jump.el")
+</pre>
+<p>
+或者
+</p>
+<pre class="example">
+(require 'recent-jump) ;; back/forward
+</pre>
+<p>
+或者直接执行加载语句（在相应的语句结尾输入 <code>C-x C-e</code> ）
+可参考：<a href="#orgheadline105">elisp library</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline60" class="outline-3">
+<h3 id="orgheadline60"><span class="section-number-3">11.17</span> <span class="todo LATER">LATER</span> TAB标签显示？</h3>
+<div class="outline-text-3" id="text-11-17">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:41]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline61" class="outline-3">
+<h3 id="orgheadline61"><span class="section-number-3">11.18</span> <span class="todo LATER">LATER</span> 跳至上次编辑的位置？</h3>
+<div class="outline-text-3" id="text-11-18">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:41]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline62" class="outline-3">
+<h3 id="orgheadline62"><span class="section-number-3">11.19</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 插件配置</h3>
+<div class="outline-text-3" id="text-11-19">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:41] </span></span> <br  />
+有emacs plugin相关文章，待整理。</li>
+</ul>
+<p>
+~/.emacs
+保存配置信息
+</p>
+
+<p>
+~/.emacs.d
+存放插件
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline63" class="outline-3">
+<h3 id="orgheadline63"><span class="section-number-3">11.20</span> <span class="done DONE">DONE</span> kill buffer?</h3>
+<div class="outline-text-3" id="text-11-20">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:42]</span></span></li>
+</ul>
+
+<p>
+输入 <code>C-x k</code>, 默认是当前buffer.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline64" class="outline-3">
+<h3 id="orgheadline64"><span class="section-number-3">11.21</span> <span class="done DONE">DONE</span> 直接执行lisp函数？</h3>
+<div class="outline-text-3" id="text-11-21">
+<ul class="org-ul">
+<li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 12:18]</span></span></li>
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 12:17]</span></span></li>
+</ul>
+
+<p>
+已有elisp函数： <code>M-x &lt;functionname&gt;</code>
+</p>
+
+<p>
+自定义函数，在函数体结尾后执行 <code>C-x C-e</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline65" class="outline-3">
+<h3 id="orgheadline65"><span class="section-number-3">11.22</span> <span class="todo LATER">LATER</span> 如何实现自动缩进？</h3>
+<div class="outline-text-3" id="text-11-22">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:43]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline66" class="outline-3">
+<h3 id="orgheadline66"><span class="section-number-3">11.23</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何插入确定的缩进TAB？</h3>
+<div class="outline-text-3" id="text-11-23">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-19 一 16:41] </span></span> <br  />
+如果有确定的答案，就直接给出一个简单的提示操作，或者关闭问题。</li>
+</ul>
+<p>
+参考：<a href="#orgheadline75">关于Tab缩进</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline67" class="outline-3">
+<h3 id="orgheadline67"><span class="section-number-3">11.24</span> <span class="todo NEXT">NEXT</span> 如何输入上次输入的内容或者重做？</h3>
+<div class="outline-text-3" id="text-11-24">
+<p>
+<code>C-x z</code>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline68" class="outline-3">
+<h3 id="orgheadline68"><span class="section-number-3">11.25</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 交换行</h3>
+<div class="outline-text-3" id="text-11-25">
+<p>
+输入： <code>C-x C-t</code>
+输入之后，会将当前行与前一行交换，并且将当前光标移动到两行的后面。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline69" class="outline-3">
+<h3 id="orgheadline69"><span class="section-number-3">11.26</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 动态加载配置立即生效？</h3>
+<div class="outline-text-3" id="text-11-26">
+<p>
+不重启 Emacs 让 .emacs 配置文件生效
+有四个函数可以做到：eval-last-sexp,eval-region,eval-buffer 和load-file
+M-x eval-last-sexp 使.emacs中光标前的那一条语句立刻生效。
+M-x eval-region 使.emacs中选中的region中的语句立刻生效。
+M-x eval-buffer 使当前的buffer中的设置语句立刻生效。
+M-x load-file ~/.emacs 载入.emacs文件，从而使其中的设置生效。
+用 emacs 打开 .emacs 文件，C-x C-e 光标前面的运行一条语句。立即生效。
+注意，有时候，需要重新载入当前buffer才能看见效果，有时候只对当前buffer起效果（可以查看相关配置的帮助说明）。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline70" class="outline-3">
+<h3 id="orgheadline70"><span class="section-number-3">11.27</span> <span class="done DONE">DONE</span> 如何执行命令时在回显区快速输入和删除？</h3>
+<div class="outline-text-3" id="text-11-27">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:00]</span></span></li>
+</ul>
+
+<p>
+回显区和正常buffer一样对待，它就是minibuffer.
+更多参考：<a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Minibuffer.html#Minibuffer">http://www.gnu.org/software/emacs/manual/html_node/emacs/Minibuffer.html#Minibuffer</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline71" class="outline-3">
+<h3 id="orgheadline71"><span class="section-number-3">11.28</span> <span class="done DONE">DONE</span> 如何查看某一配置变量的值？</h3>
+<div class="outline-text-3" id="text-11-28">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:01]</span></span></li>
+</ul>
+
+<p>
+查看该变量的帮助信息即可。输入 <code>C-h v</code> ,然后输入变量名称，默认为当前光标所在变量。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline72" class="outline-3">
+<h3 id="orgheadline72"><span class="section-number-3">11.29</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 如何恢复默认配置？</h3>
+<div class="outline-text-3" id="text-11-29">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:02]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline73" class="outline-3">
+<h3 id="orgheadline73"><span class="section-number-3">11.30</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何文件刷新？</h3>
+<div class="outline-text-3" id="text-11-30">
+<p>
+用于重新载入配置和文件变化。
+<a href="http://blog.csdn.net/horstlinux/article/details/7857123">http://blog.csdn.net/horstlinux/article/details/7857123</a>
+<a href="http://www.emacswiki.org/emacs/RevertBuffer">http://www.emacswiki.org/emacs/RevertBuffer</a>
+有四个可以revertbuffer的方法：
+    M-x revert-buffer RET yes RET
+    C-x C-v RET
+    (global-set-key [(control c) r] 'revert-buffer)
+    C-x RET r RET RET
+除了手动设置revert-buffer，我们还可以自动设置，加入如下配置：
+(global-auto-revert-mode 1)
+</p>
+
+<p>
+另外注意，
+<code>C-x C-v</code> 是打开一个文件，取代当前缓冲区，缓冲区名字也改变了，就算再次重新打开相应的缓冲区文件，其之前对应的Agenda View也不可用了。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline74" class="outline-3">
+<h3 id="orgheadline74"><span class="section-number-3">11.31</span> <span class="done DONE">DONE</span> 如何显示匹配括号？</h3>
+<div class="outline-text-3" id="text-11-31">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:03]</span></span></li>
+</ul>
+
+<p>
+输入如下配置：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">;;paren
+(show-paren-mode 1)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline75" class="outline-3">
+<h3 id="orgheadline75"><a id="ID-ac82c059-81c7-4b32-a15e-e9972294b86c"></a><span class="section-number-3">11.32</span> <span class="todo NEXT">NEXT</span> 关于Tab缩进</h3>
+<div class="outline-text-3" id="text-11-32">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 16:47]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 16:47]</span></span></li>
+</ul>
+</div>
+<div id="outline-container-orgheadline76" class="outline-4">
+<h4 id="orgheadline76"><a id="ID-94922fb6-e9f8-434c-b454-5526787c9f40"></a><span class="section-number-4">11.32.1</span> &#x2014;&#x2014;Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-09-30 三 15:19]</span></span>------</h4>
+<div class="outline-text-4" id="text-11-32-1">
+</div>
+
+<div id="outline-container-orgheadline167" class="outline-5">
+<h5 id="orgheadline167"><span class="section-number-5">11.32.1.1</span> 文档中的描述</h5>
+<div class="outline-text-5" id="text-11-32-1-1">
+<p>
+文档上关于indent的一些变量和函数，翻译过来大致意思如下：
+</p>
+</div>
+<ol class="org-ol"><li><a id="orgheadline163"></a><code>C-h f indent-for-tab-command</code><br  /><div class="outline-text-6" id="text-11-32-1-1-1">
+<blockquote>
+<p>
+依赖于 <code>tab-always-indent</code> 的设置，会为当前主模式的行或者区域进行合适的缩进，或者插入 <code>TAB</code> 。
+</p>
+
+<p>
+在大多数主模式中，如果光标在行缩进区域，它会在缩进后移动到第一个非空的字符上，否则光标会呆在当前文本的同样的位置。
+</p>
+
+<p>
+如果给定了一个前缀参数，也会严格缩进以当前行首开始的整个balanced expression，来反映当前行缩进的变化。
+</p>
+
+<p>
+如果 <code>transient-mark-mode</code> 被打开，并且当前region是active的，会将当前的区域缩进（这个时候，任何前缀参数都会被忽略）。
+</p>
+
+<p>
+实际上被调用来缩进行的函数取决与 <code>indent-line-function</code> 变量的设置。
+</p>
+</blockquote>
+</div></li>
+
+<li><a id="orgheadline164"></a><a id="ID-808ab67c-f402-439a-8cf6-be686fdccf03"></a><code>C-h v indent-line-function</code><br  /><div class="outline-text-6" id="text-11-32-1-1-2">
+<blockquote>
+<p>
+这个变量是buffer local的变量，表示用来缩进当前行的函数；
+</p>
+
+<p>
+这个函数被调用的时候没有任何参数，如果函数在一个auto-indentation无法发生的地方被调用了（比如一个字符串的中间），这个函数将只会返回 <code>noindent</code> ；
+</p>
+
+<p>
+我们可以设置这个函数来们组自己的需求，使得 <code>TAB</code> 能够合适的被缩进，如果并非必须，最好不要重新绑定 <code>TAB</code> 按键。
+</p>
+</blockquote>
+
+<p>
+关于这个变量的值，比如我当前打开一个 <code>emacs_tips.org</code> 文件，然后查看这个变量，可以看到如下：
+</p>
+<pre class="example">
+Local in buffer emacs_tips.org; global value is indent-relative
+</pre>
+<p>
+说明，在文件 <code>emacs_tips.org</code> 中它的值为 <code>org-indent-line</code> （这是orgmode的设置），其它位置默认为 <code>indent-relative</code> 。
+</p>
+</div></li>
+
+<li><a id="orgheadline165"></a><code>C-h v tab-always-indent</code><br  /><div class="outline-text-6" id="text-11-32-1-1-3">
+<blockquote>
+<p>
+如果为 <code>t</code> ，则键入 <code>TAB</code> 会缩进当前行；
+</p>
+
+<p>
+如果为 <code>nil</code> ，并且光标在左边的空白区或者行缩进区，则键入 <code>TAB</code> 会缩进当前行；
+</p>
+
+<p>
+如果为 <code>nil</code> ，并且光标没有在空白或缩进区，则键入 <code>TAB</code> 会直接插入 <code>TAB</code> 字符；
+</p>
+
+<p>
+如果为 <code>complete=，则键入 =TAB</code> 首先会缩进当前行，如果当前行已经缩进了，就尝试补全光标所在单词。
+</p>
+
+<p>
+有些编程语言有他们自己的变量控制这个行为，例如 <code>c-tab-always-indent</code> ，这时候不会考虑这个变量。
+</p>
+</blockquote>
+</div></li>
+
+<li><a id="orgheadline166"></a><code>C-h v indent-tabs-mode</code><br  /><div class="outline-text-6" id="text-11-32-1-1-4">
+<p>
+这个是在C语言代码中定义的变量，设置成任何内容都会编程buffer-local的变量，这个变量做为文件局部变量保存，是安全的。
+</p>
+
+<p>
+如果 <code>non-nil</code> ，将会插入 <code>TAB</code> .
+</p>
+</div></li></ol>
+</div>
+
+<div id="outline-container-orgheadline168" class="outline-5">
+<h5 id="orgheadline168"><span class="section-number-5">11.32.1.2</span> 参考：</h5>
+<div class="outline-text-5" id="text-11-32-1-2">
+<ol class="org-ol">
+<li><p>
+关于emacs 缩进<br  />
+有一篇不错的文章<br  />
+参考：<a href="http://www.cnblogs.com/bamanzi/archive/2010/04/04/emacs-indent.html">http://www.cnblogs.com/bamanzi/archive/2010/04/04/emacs-indent.html</a><br  />
+主要包括了：默认的Tab行为、需要的行为、以及配置的方式<br  />
+摘抄一些部分<br  />
+</p>
+<blockquote>
+<ul class="org-ul">
+<li>不插入tab字符，不插入tab字符</li>
+<li>每次缩进4个空格(setq default-tab-width 4)</li>
+<li>缩进完全自行控制，不用syntax indentation来自动 （按语法格式化完全可以使用C-_）?</li>
+<li>按TAB键时
+如果选择多行，则缩进(行首插入多个空格)
+如果未选择多行，当前光标在行首（不管是indentation区还是第一个字符上)，则缩进
+光标不在行首，插入多个空格(如果要将代码补齐考虑进来，则:如果光标在一个单词的末尾，则TAB键需要激活补全函数,如果单词后有一个空格，再按TAB键则添加空格)</li>
+
+<li>按Shift-TAB键时
+如果选择多行，则反缩进(行首删除多个空格)
+如果未选择多行，光标在行首，反缩进
+光标不在行首，发向移动光标或者什么也不做</li>
+</ul>
+
+<p>
+从最后两条来看，原来的indent-for-tab-command不能满足需求，需要将TAB键绑定到别的函数才行。在网上搜了半天，找到这篇文章提供的方法正是我所要的：
+emacs, indent/unindent region as a block using the tab key
+<a href="http://ignaciopp.wordpress.com/2009/06/17/emacs-indentunindent-region-as-a-block-using-tab-key/">http://ignaciopp.wordpress.com/2009/06/17/emacs-indentunindent-region-as-a-block-using-tab-key/</a>
+</p>
+
+<p>
+上面链接中的实现也考虑了，如果要对接其它的代码补齐，只需要将(hippie-expand nil)换成其它的即可，比如auto-complete的ac-start
+</p>
+</blockquote></li>
+
+<li><p>
+缩进可能涉及到的配置可查阅<br  />
+参考：<a href="http://crushon.blog.163.com/blog/static/21440415520121117105642762/">http://crushon.blog.163.com/blog/static/21440415520121117105642762/</a><br  />
+一些变量：<br  />
+</p>
+<blockquote>
+<p>
+(setq indent-tabs-mode nil)
+(setq default-tab-width 4)
+(setq tab-width 4)
+(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40
+      44 48 52 56 60 64 68 72 76 80 84 88 92 96))    
+</p>
+</blockquote></li>
+
+<li><p>
+总结
+根据上面资料，默认的情况：
+</p>
+<ul class="org-ul">
+<li>选择块之后<br  />
+Tab会缩进相应的选择块</li>
+<li>如果没有选择块<br  />
+<ul class="org-ul">
+<li>tab-always-indent为t时<br  />
+会依据当前语法体系缩进，而不管光标是在行首还是其它；</li>
+<li>tab-always-indent为nil时<br  />
+根据光标三种情况：<br  />
+<ol class="org-ol">
+<li>行首空白区(即在indentation区内)，则取消所有缩进;</li>
+<li>行首第一个非空白字符上， 则按第一次则语法缩进，第二次则插入tab字符或者空格(插入TAB还是空格则依赖于indent-tabs-mode设置);</li>
+<li>不在行首,插入tab字符或者空格</li>
+</ol></li>
+</ul></li>
+</ul>
+<p>
+另外，实践发现，默认情况下还有如下行为：
+Tab对应的空格长度，需要设置：tab-width
+如果Tab缩进长度达到Tab长度，是否自动将达到Tab长度的部分转换为Tab字符，需要设置：indent-tabs-mode
+多次tab时，光标依次缩进（前进）的长度，需要设置：tab-stop-list
+每次tab会缩进上行缩进的长度（无论是否为Tab的整数倍）
+</p>
+
+<p>
+需求：
+每个人需求各不相同，大致需求如下：
+orgmode下，采用其默认行为即可，缩进方面可以？
+</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline77" class="outline-3">
+<h3 id="orgheadline77"><span class="section-number-3">11.33</span> <span class="todo LATER">LATER</span> 如何显示空白字符？</h3>
+<div class="outline-text-3" id="text-11-33">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:05]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline78" class="outline-3">
+<h3 id="orgheadline78"><span class="section-number-3">11.34</span> <span class="todo LATER">LATER</span> 如何复制一行？</h3>
+<div class="outline-text-3" id="text-11-34">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:07]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline79" class="outline-3">
+<h3 id="orgheadline79"><span class="section-number-3">11.35</span> <span class="todo LATER">LATER</span> 缩进提示线？</h3>
+<div class="outline-text-3" id="text-11-35">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:07]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline80" class="outline-3">
+<h3 id="orgheadline80"><span class="section-number-3">11.36</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 重命名当前文件？</h3>
+<div class="outline-text-3" id="text-11-36">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:07] </span></span> <br  />
+参考dired相关命令</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline81" class="outline-3">
+<h3 id="orgheadline81"><span class="section-number-3">11.37</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 宏录制</h3>
+<div class="outline-text-3" id="text-11-37">
+<p>
+开始录制宏，用 <code>C-x (</code> 
+结束录制宏，用 <code>C-x )</code>
+使用宏，用 <code>C-x e</code> 来使用宏。
+可以利用C-u来重复使用100次这个宏，即命令C-u 100 C-x e。 C-x e e e &#x2026;将宏重复。
+</p>
+
+<p>
+命名宏
+输入: <code>M-x name-last-kbd-macro</code>
+输入之后，提示输入名称，输入名称后即可完成宏命名。
+</p>
+
+<p>
+使用已命名的宏
+输入: <code>M-x yourmacroname</code>
+输入之后，便执行之前保存的"yourmacroname"对应的宏了，输入时候，输入的宏名支持Tab补全。
+</p>
+
+<p>
+保存宏实现
+输入： <code>M-x insert-kbd-macro</code>
+输入之后，提示输入宏名，输入宏名称后（这里支持Tab补全），就会将宏的实现以文本的形式插入到你的当前文本中。
+例如：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">(fset 'ins_4spc_nextline
+   "\C-n\C-a    ")
+</pre>
+</div>
+<p>
+这个宏实现是之前录制的，命名为"ins_4spc_nextline"的宏，如果将这个实现插入到你的emacs配置文件中，那么就可以通过 <code>M-x yourmacroname</code> 的方式来进行调用了。
+n
+重命名宏？
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline82" class="outline-3">
+<h3 id="orgheadline82"><span class="section-number-3">11.38</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何块缩进？</h3>
+<div class="outline-text-3" id="text-11-38">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-19 一 16:42] </span></span> <br  />
+如果有确定的答案就简单给出操作提示，或者直接关闭问题。</li>
+</ul>
+<p>
+参考：<a href="#orgheadline75">关于Tab缩进</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline83" class="outline-3">
+<h3 id="orgheadline83"><span class="section-number-3">11.39</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> C-/是Undo</h3>
+<div class="outline-text-3" id="text-11-39">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-16 五 16:58] </span></span> <br  />
+wait for move</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline84" class="outline-3">
+<h3 id="orgheadline84"><span class="section-number-3">11.40</span> <span class="done DONE">DONE</span> 如何操作目录</h3>
+<div class="outline-text-3" id="text-11-40">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 13:57]</span></span></li>
+</ul>
+
+<p>
+参考：<a href="#orgheadline2">文件管理</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline85" class="outline-3">
+<h3 id="orgheadline85"><span class="section-number-3">11.41</span> <span class="done CANCEL">CANCEL</span> 如何管理配置目录</h3>
+<div class="outline-text-3" id="text-11-41">
+<ul class="org-ul">
+<li>State "CANCEL"     from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:10] </span></span> <br  />
+因人而异，可能会在将来整理相关文档。这里暂时不做深入回答。</li>
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:09]</span></span></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline86" class="outline-3">
+<h3 id="orgheadline86"><span class="section-number-3">11.42</span> <span class="todo LATER">LATER</span> 如何定位光标下路径的文件？</h3>
+<div class="outline-text-3" id="text-11-42">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:11]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline87" class="outline-3">
+<h3 id="orgheadline87"><span class="section-number-3">11.43</span> <span class="todo LATER">LATER</span> 如何按项目组织目录</h3>
+<div class="outline-text-3" id="text-11-43">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:11]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline88" class="outline-3">
+<h3 id="orgheadline88"><span class="section-number-3">11.44</span> <span class="todo NEXT">NEXT</span> 如何让Emacs在光标到达当前Buffer最后一行尾部不自动recenter?</h3>
+<div class="outline-text-3" id="text-11-44">
+<ul class="org-ul">
+<li>State "NEXT"       from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:11]</span></span></li>
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:11]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline89" class="outline-3">
+<h3 id="orgheadline89"><span class="section-number-3">11.45</span> <span class="todo LATER">LATER</span> 考虑一下用el-get插件管理插件</h3>
+<div class="outline-text-3" id="text-11-45">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:11]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline90" class="outline-3">
+<h3 id="orgheadline90"><a id="ID-9f59b61a-59b9-497f-8973-f1ae976a84a7"></a><span class="section-number-3">11.46</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> eshell如何操作？</h3>
+<div class="outline-text-3" id="text-11-46">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:11]</span></span></li>
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:11]</span></span></li>
+</ul>
+<p>
+Time:<span class="timestamp-wrapper"><span class="timestamp">&lt;2015-10-02 五 09:53&gt;</span></span>
+From:/media/sda6/study/mygitrepo/quietheart/misc/mylinux_home/home.user/_emacs.d/elisp/plugins.el
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline91" class="outline-3">
+<h3 id="orgheadline91"><a id="ID-9d0e2058-c620-4b0b-a4b6-a68d7b9bc7c6"></a><span class="section-number-3">11.47</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何配置自动新开“弹出”窗口的分割方向？</h3>
+<div class="outline-text-3" id="text-11-47">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-05 四 11:02] </span></span> <br  />
+等待整理至合适的位置。</li>
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-05 四 10:49]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-10-09 五 15:10]</span></span></li>
+</ul>
+
+<p>
+查看 <code>M-x info</code> 获取到帮助信息。
+</p>
+
+<p>
+默认查看帮助信息的的时候，窗口会分割成左右两个，如果我们想要分割成上下，那么配置如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp">;; perfer split 'pop' window vertically(whole-&gt;up+lower).
+(setq split-height-threshold 0)
+(setq split-width-threshold nil)
+</pre>
+</div>
+<p>
+这里我们需要注意的是， <code>split vertically</code> 意思是将窗口分割成上下两个部分； <code>split horizontally</code> 意思是将窗口分割成左右两个部分。具体查看 <code>C-h f split-window-sensibly</code> 。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline92" class="outline-3">
+<h3 id="orgheadline92"><span class="section-number-3">11.48</span> <span class="todo LATER">LATER</span> Emacs如何控制Pop分割窗口的大小？</h3>
+<div class="outline-text-3" id="text-11-48">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:12]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-05 四 11:05]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline93" class="outline-3">
+<h3 id="orgheadline93"><span class="section-number-3">11.49</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> emacs如何进行会话保存？</h3>
+<div class="outline-text-3" id="text-11-49">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 11:08] </span></span> <br  />
+等待整理到合适的位置。</li>
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 11:05]</span></span></li>
+</ul>
+<p>
+Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 10:19]</span></span>
+暂时参考：<a href="http://lifegoo.pluskid.org/wiki/EmacsSession.html">保存和恢复工作环境</a>
+大致如下：
+可借助desktop.el来完成buffer等缓存文件、位置等加载的保存和恢复。
+自动恢复与保存相关的配置：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp">(desktop-save-mode 1)
+</pre>
+</div>
+
+<p>
+手动保存会话：
+输入 <code>M-x desktop-save</code>
+输入之后，选择保存的目录。
+</p>
+
+<p>
+手动恢复以前的会话：
+输入 <code>M-x desktop-change-dir</code>
+输入之后，选择之前会话所在目录，之后即可加载。
+</p>
+
+<p>
+退回之前的会话：
+输入 <code>M-x desktop-revert</code>
+输入之后，可以退回之前加载的会话。
+</p>
+
+<p>
+如果保存变量之类的信息，需要额外的插件：session.el，插件可能有些问题暂不考虑。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline94" class="outline-3">
+<h3 id="orgheadline94"><span class="section-number-3">11.50</span> <span class="done DONE">DONE</span> Emacs背景配色设置？</h3>
+<div class="outline-text-3" id="text-11-50">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:14]</span></span></li>
+</ul>
+<p>
+Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-09 五 16:07]</span></span>
+</p>
+
+<p>
+关于对emacs的颜色主题配置，有相关的插件：
+</p>
+</div>
+<div id="outline-container-orgheadline95" class="outline-4">
+<h4 id="orgheadline95"><span class="section-number-4">11.50.1</span> 下载地址：</h4>
+<div class="outline-text-4" id="text-11-50-1">
+<p>
+<a href="http://ftp.twaren.net/Unix/NonGNU/color-theme/color-theme-6.6.0.tar.gz">http://ftp.twaren.net/Unix/NonGNU/color-theme/color-theme-6.6.0.tar.gz</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline96" class="outline-4">
+<h4 id="orgheadline96"><span class="section-number-4">11.50.2</span> 配置默认主题</h4>
+<div class="outline-text-4" id="text-11-50-2">
+<p>
+当把主题下载下来后 解压，然后将文件夹整个复制到到我们的load-path中
+然后添加如下配置：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp">;;================================ 
+;;为我的emacs配置主题色彩 (color-theme-色彩名称) 
+;;================================ 
+(require 'color-theme) 
+(color-theme-initialize) 
+(color-theme-calm-forest)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline97" class="outline-3">
+<h3 id="orgheadline97"><span class="section-number-3">11.51</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> emacs的光标滚动如何让其不在屏幕尾部自动滚屏到中间？</h3>
+<div class="outline-text-3" id="text-11-51">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2016-01-18 一 16:44] </span></span> <br  />
+等待整理</li>
+<li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-01-16 六 17:18]</span></span></li>
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:14]</span></span></li>
+</ul>
+<p>
+Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-09 五 16:16]</span></span>
+</p>
+
+<p>
+依照优先级别，依次可以设置如下三类变量，具体参见变量文档，
+</p>
+
+<p>
+这里设置 <code>scroll-step</code>, 默认0表示光标到达屏幕顶或者尾之后就立即自动滚动到屏幕中心，其它值表示滚动的行数。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">;;auto scroll behavior, '0' is center point while outof screen, or don't center.
+;;(setq scroll-conservatively)
+(setq scroll-step 1)
+;;(setq scroll-up-aggressively)
+;;(setq scroll-down-aggressively)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline98" class="outline-3">
+<h3 id="orgheadline98"><span class="section-number-3">11.52</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何控制鼠标滚轮滚动的行数</h3>
+<div class="outline-text-3" id="text-11-52">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-01-18 一 16:44] </span></span> <br  />
+等待整理</li>
+</ul>
+
+<p>
+可以通过设置 <code>mouse-wheel-scroll-amount</code> 实现，具体可以通过 <code>C-h v mouse-wheel-scroll-amount</code> 查看其文档。
+</p>
+
+<p>
+大致含义是：该变量是一个列表，列表元素是 ("行数" . “控制按键”) 表示按下特定控制按键时滚轮滚动的行数；如果没有 “控制按键” 那么表示单纯滚轮滚动行数；如果没有指定行数，那么按下控制按键滚轮滚动将近一个屏幕。
+下面是一个例子：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">;;wheel scroll step
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 5) (control)))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline99" class="outline-3">
+<h3 id="orgheadline99"><span class="section-number-3">11.53</span> <span class="todo LATER">LATER</span> emacs如何清除所有buffer?</h3>
+<div class="outline-text-3" id="text-11-53">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:14]</span></span></li>
+</ul>
+<p>
+Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 10:21]</span></span>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline100" class="outline-3">
+<h3 id="orgheadline100"><a id="ID-5296166d-4b89-44b8-8994-d46b8ef1c4d1"></a><span class="section-number-3">11.54</span> <span class="todo LATER">LATER</span> 配置调试</h3>
+<div class="outline-text-3" id="text-11-54">
+<ul class="org-ul">
+<li>State "LATER"      from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-14 三 13:27]</span></span></li>
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-14 三 13:27]</span></span></li>
+</ul>
+<p>
+如果某项没有生效的话，可以尝试 =emacs &#x2013;init-debug- 启动，看看哪错了
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline101" class="outline-3">
+<h3 id="orgheadline101"><span class="section-number-3">11.55</span> <span class="todo NEXT">NEXT</span> 不喜欢emacs新开"提示窗口"是垂直方向</h3>
+<div class="outline-text-3" id="text-11-55">
+<ul class="org-ul">
+<li>State "NEXT"       from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:14]</span></span></li>
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:14]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-10-19 一 09:37]</span></span></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline102" class="outline-3">
+<h3 id="orgheadline102"><span class="section-number-3">11.56</span> <span class="done DONE">DONE</span> Emacs如何定制颜色？</h3>
+<div class="outline-text-3" id="text-11-56">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 12:14]</span></span></li>
+</ul>
+<p>
+Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-12 一 11:12]</span></span>
+</p>
+<hr  />
+<p>
+可以使用特定插件，例如
+</p>
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;color themes
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'color-theme)
+(color-theme-initialize) 
+(color-theme-calm-forest)
+;;we can also select and preview with 'M-x color-theme-select'.
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline103" class="outline-3">
+<h3 id="orgheadline103"><span class="section-number-3">11.57</span> <span class="todo LATER">LATER</span> 如何设置撤销的次数？目前貌似撤销只有有限的几次</h3>
+<div class="outline-text-3" id="text-11-57">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:14]</span></span></li>
+</ul>
+<p>
+Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-14 三 14:53]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline104" class="outline-3">
+<h3 id="orgheadline104"><span class="section-number-3">11.58</span> <span class="todo LATER">LATER</span> 重复最近的命令</h3>
+<div class="outline-text-3" id="text-11-58">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:14]</span></span></li>
+</ul>
+<p>
+输入 <code>C-x z</code>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline105" class="outline-3">
+<h3 id="orgheadline105"><a id="ID-963d4006-2a37-493d-a714-f5a2fcaf2538"></a><span class="section-number-3">11.59</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> elisp library</h3>
+<div class="outline-text-3" id="text-11-59">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 17:45] </span></span> <br  />
+等待移动到合适的位置</li>
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 12:13]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-10-21 三 09:23]</span></span><br  /></li>
+</ul>
+<p>
+整理至原理部分。
+</p>
+
+<p>
+主要介绍：library, package, features的区别，以及 <code>load-file, load, require, autoload</code> 的区别。
+</p>
+</div>
+
+<div id="outline-container-orgheadline106" class="outline-4">
+<h4 id="orgheadline106"><span class="section-number-4">11.59.1</span> 关于 <code>load-file, load, require, autoload</code></h4>
+<div class="outline-text-4" id="text-11-59-1">
+<ul class="org-ul">
+<li><p>
+load-file
+</p>
+
+<p>
+加载特定文件。
+</p>
+
+<p>
+加载特定的文件（".el", ".elc"文件扩展名不会自动加载，但是".gz"会被自动加载）。档不想让emacs猜测文件扩展名".el", ".elc" 或者没有扩展名的时候使用这个函数。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+load
+</p>
+
+<p>
+加载一个文件。
+</p>
+
+<p>
+通过搜索变量 <code>load-path</code> 加载一个文件，参数可以是一个文件名称（不用是全路径）， 比如 <code>(load "undo")</code> 。如果有".elc"编译版本的内容，这个命令将会自动加载之， 否则会自动加载".el", 或者".gz"的文件。当不需要知道文件的具体路径的时候不，使用这个函数加载。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+require
+</p>
+
+<p>
+如果一个package没有被加载的时候，加载一个package。
+</p>
+
+<p>
+检测 features变量， 如果没有相应的标号，那么调用 <code>load</code> 进行加载， 文件名是根据feature 名进行猜测的， 也可通过一个选项参数进行。最好在elisp库或者脚本中使用这个函数，这个和其他语言的 "require"或者"import"类似。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+autoload
+</p>
+
+<p>
+在函数被调用的时候加载文件。将一个函数名称和一个文件路径相关联，档这个功能被调用的时候，会加载这个文件，并且执行函数。如果你正在写一个major mode，尽可能将你的package安装使用autoload完成，因为这样可以节省启动的时间。
+</p></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline107" class="outline-4">
+<h4 id="orgheadline107"><span class="section-number-4">11.59.2</span> 关于 Library, Package, Feature</h4>
+<div class="outline-text-4" id="text-11-59-2">
+</div><div id="outline-container-orgheadline169" class="outline-5">
+<h5 id="orgheadline169"><span class="section-number-5">11.59.2.1</span> Emacs lisp没有命名空间</h5>
+<div class="outline-text-5" id="text-11-59-2-1">
+<p>
+所有的东西都是全局的动态的作用域，它只有一些隐藏的机制，所以，不能将library或者module当作像perl、python、java类似的具有命名空间的语言的Package系统。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline170" class="outline-5">
+<h5 id="orgheadline170"><span class="section-number-5">11.59.2.2</span> Package和Library的区别是什么呢？</h5>
+<div class="outline-text-5" id="text-11-59-2-2">
+<p>
+其实，这些概念在elisp中没有专门的定义，我们只能大致这样来看待它们：
+</p>
+
+<ul class="org-ul">
+<li><p>
+Library
+</p>
+
+<p>
+包含许多组建的elisp文件，比如 <code>comment-dwim</code> 命令定义在 <code>newcomment.el</code> 中，它是一个包含众多函数的库。
+</p></li>
+
+<li><p>
+Package
+</p>
+
+<p>
+任何对emacs用户有用的elisp库，无论是在major还是在minor模式下。
+</p></li>
+</ul>
+<p>
+另外在emacs中，不使用 "module"这个概念。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline171" class="outline-5">
+<h5 id="orgheadline171"><span class="section-number-5">11.59.2.3</span> Package/Library/Feature不会被管理</h5>
+<div class="outline-text-5" id="text-11-59-2-3">
+<p>
+在package/library/feature/autoload的概念和文件名称之间没有绝对的对应关系。默认来说，如果一个elisp文件名称是xyz-mode.el，那么它会提供一个"xyz-mode"的lisp标号做为feature名称，然后用来执行这个mode的命令一般都是 <code>xyz-mode</code> 。 有时候， <code>-mode</code> 部分在任何 <code>{file name, feature symbol name, command name}</code> 中被忽略。
+</p>
+
+<p>
+这只是一个松散的规则，有许多不按照这个规则的例子，比如：
+文件 <code>lisp-mode.el</code> 会提供一个 <code>lisp-mode</code> 的标记做为feature，激活的命令可能是 <code>emacs-lisp-mode</code> 。
+文件 <code>cua-base.el</code> 提供一个 <code>cua-base</code> 的标记，feature名称为 <code>cua</code>, 并且激活的命令是 <code>cua-mode</code> 。
+文件 <code>text-mode.el</code> 没有提供任何标记做为feaure, 它通过命令 <code>text-mode</code> 被激活。
+文件 <code>desktop.el</code> 提供一个 <code>desktop</code> 标记做为feature， 并且激活的命令是 <code>desktop-save-mode</code> 。
+从以上即可看出，你可以有一个文件名称为 <code>Joe-xyz-mode-v2.1.el</code>, 它提供了名为 <code>abc</code> 的feature, 同时用来激活它的命令可能是 <code>opq</code>, 在 mode line中可能会被显示为 <code>OPQ helper</code> 。 这个文件可以被看作是一个package或者libaray。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline172" class="outline-5">
+<h5 id="orgheadline172"><span class="section-number-5">11.59.2.4</span> 其它</h5>
+<div class="outline-text-5" id="text-11-59-2-4">
+<p>
+没有 "name space" "不被管理"的 module系统并不一定非常糟糕，这只是做为一个软件状态存在，许多流行的语言例如 C, C++, PHP 表现的更差，他们没有module系统，并且通过 <code>include</code> 来包含文件。我们需要注意的是，Scheme lisp也没有module系统，在2007年发布的R6RS添加了严格的module系统控制，但是这导致了Scheme社区的分裂。
+</p>
+
+<p>
+更多内容参考：<a href="http://ergoemacs.org/emacs/elisp_library_system.html">http://ergoemacs.org/emacs/elisp_library_system.html</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline108" class="outline-3">
+<h3 id="orgheadline108"><span class="section-number-3">11.60</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> Emacs自定义配置</h3>
+<div class="outline-text-3" id="text-11-60">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-21 三 15:08] </span></span> <br  />
+待整理到合适的位置</li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-21 三 14:22]</span></span>
+</p>
+<hr  />
+<p>
+在帮助菜单里配置，而非手动修改配置文件时产生的配置信息，会以类似如下的形式写到~/.emacs中：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp">(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(ecb-options-version "2.40")
+ '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2)))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline109" class="outline-3">
+<h3 id="orgheadline109"><span class="section-number-3">11.61</span> <span class="todo LATER">LATER</span> 默认启动xemacs的窗口大小</h3>
+<div class="outline-text-3" id="text-11-61">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-21 三 15:09]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-21 三 09:46]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline110" class="outline-3">
+<h3 id="orgheadline110"><span class="section-number-3">11.62</span> <span class="todo NEXT">NEXT</span> emacs-desktop的会话存储默认位置</h3>
+<div class="outline-text-3" id="text-11-62">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-21 三 15:09]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-21 三 09:39]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline111" class="outline-3">
+<h3 id="orgheadline111"><span class="section-number-3">11.63</span> <span class="todo NEXT">NEXT</span> 如何高亮？</h3>
+<div class="outline-text-3" id="text-11-63">
+<p>
+参考：
+<a href="http://www.xuebuyuan.com/729481.html">http://www.xuebuyuan.com/729481.html</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline112" class="outline-3">
+<h3 id="orgheadline112"><span class="section-number-3">11.64</span> <span class="todo NEXT">NEXT</span> Emacs如何进行特定模式下的按键绑定映射？</h3>
+<div class="outline-text-3" id="text-11-64">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-21 三 15:09]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-21 三 08:39]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline113" class="outline-3">
+<h3 id="orgheadline113"><span class="section-number-3">11.65</span> <span class="todo LATER">LATER</span> 如何为当前的Emacs编辑器升级？</h3>
+<div class="outline-text-3" id="text-11-65">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-21 三 15:10]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-20 二 11:51]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline114" class="outline-3">
+<h3 id="orgheadline114"><span class="section-number-3">11.66</span> <span class="done DONE">DONE</span> Emacs撤销、重做和重复</h3>
+<div class="outline-text-3" id="text-11-66">
+<ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2015-12-10 四 17:24]</span></span></li>
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-12-10 四 16:45] </span></span> <br  />
+等待进一步整理</li>
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:14]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-23 五 11:03]</span></span>
+</p>
+<hr  />
+
+<p>
+撤销是取消上次的操作，重做是对撤销的撤销，重复是对上次命令进行重做。大致如下：
+</p>
+
+<ul class="org-ul">
+<li><p>
+撤销（undo）
+</p>
+
+<p>
+输入 <code>C-x u</code> 或 <code>C-/</code>
+</p></li>
+
+<li><p>
+重做（redo）
+</p>
+
+<p>
+输入 <code>C-g C-x u</code>  或 <code>C-g C-/</code> 
+</p></li>
+
+<li><p>
+重复（repeat）
+</p>
+
+<p>
+输入 <code>C-x z</code>
+</p></li>
+</ul>
+<p>
+具体参考：<a href="#orgheadline31">Emacs撤销、重做和重复</a> 和 <a href="#orgheadline11">编辑</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline115" class="outline-3">
+<h3 id="orgheadline115"><span class="section-number-3">11.67</span> <span class="todo NEXT">NEXT</span> Emacs 如何远程访问？</h3>
+<div class="outline-text-3" id="text-11-67">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-23 五 12:03]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-22 四 15:02]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline116" class="outline-3">
+<h3 id="orgheadline116"><span class="section-number-3">11.68</span> <span class="todo LATER">LATER</span> 将emacs custom config变成手动的config</h3>
+<div class="outline-text-3" id="text-11-68">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:15]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-23 五 13:11]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline117" class="outline-3">
+<h3 id="orgheadline117"><span class="section-number-3">11.69</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 恢复文件</h3>
+<div class="outline-text-3" id="text-11-69">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-23 五 15:22] </span></span> <br  />
+等待转移至合适的位置。</li>
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-23 五 15:21]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-10-23 五 15:21]</span></span></li>
+</ul>
+
+<p>
+回复上次崩溃之时没有来得及修改的文件。
+输入 <code>M-x recover-file</code>
+输入之后，可以补全，输入文件路径即可。如果文件已经保存，则不存在恢复文件，如果文件上次没有保存，就会有一个 <code>.#filename#</code> 之类的文件，通过它来恢复上次没有来得及保存的内容。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline118" class="outline-3">
+<h3 id="orgheadline118"><span class="section-number-3">11.70</span> <span class="todo LATER">LATER</span> 无需远端安装emacs，用本地emacs直接访问远端，可否？</h3>
+<div class="outline-text-3" id="text-11-70">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:15]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-26 一 11:46]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline119" class="outline-3">
+<h3 id="orgheadline119"><span class="section-number-3">11.71</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> Emacs 任务管理？</h3>
+<div class="outline-text-3" id="text-11-71">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:15]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-27 二 10:14]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline120" class="outline-3">
+<h3 id="orgheadline120"><span class="section-number-3">11.72</span> <span class="todo LATER">LATER</span> 崩溃后下次启动自动提示回复文件的方式？</h3>
+<div class="outline-text-3" id="text-11-72">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:15]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-27 二 14:19]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline121" class="outline-3">
+<h3 id="orgheadline121"><span class="section-number-3">11.73</span> <span class="todo LATER">LATER</span> Emacs如何粘帖复制文本到X剪切板中？</h3>
+<div class="outline-text-3" id="text-11-73">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:15]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-28 三 11:02]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline122" class="outline-3">
+<h3 id="orgheadline122"><span class="section-number-3">11.74</span> <span class="todo LATER">LATER</span> Emacs中如何在require后卸载插件？</h3>
+<div class="outline-text-3" id="text-11-74">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:15]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-04 三 09:36]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline123" class="outline-3">
+<h3 id="orgheadline123"><span class="section-number-3">11.75</span> <span class="todo LATER">LATER</span> 拼音输入法</h3>
+<div class="outline-text-3" id="text-11-75">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:15]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-30 五 09:35]</span></span>
+</p>
+<hr  />
+
+<p>
+意外发现的情况： <code>C-\</code> 会切换Emacs的输入法。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline124" class="outline-3">
+<h3 id="orgheadline124"><span class="section-number-3">11.76</span> <span class="todo NEXT">NEXT</span> Emacs为什么有时候缩进无法删除？</h3>
+<div class="outline-text-3" id="text-11-76">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:17]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 09:50]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline125" class="outline-3">
+<h3 id="orgheadline125"><span class="section-number-3">11.77</span> <span class="todo NEXT">NEXT</span> Emacs如何搜索光标下的内容</h3>
+<div class="outline-text-3" id="text-11-77">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-05 四 09:18]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-05 四 08:56]</span></span>
+</p>
+<hr  />
+
+<p>
+目前是先 <code>M-b</code> 到单词首，再 <code>C-s C-w</code> 搜索光标后至单词尾的内容。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline126" class="outline-3">
+<h3 id="orgheadline126"><span class="section-number-3">11.78</span> <span class="todo LATER">LATER</span> Emacs如何格式化全部代码？</h3>
+<div class="outline-text-3" id="text-11-78">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:17]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-05 四 16:01]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline127" class="outline-3">
+<h3 id="orgheadline127"><span class="section-number-3">11.79</span> <span class="todo NEXT">NEXT</span> 为什么Emacs有时候无法删除缩进？</h3>
+<div class="outline-text-3" id="text-11-79">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:17]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-09 一 11:06]</span></span>
+</p>
+<hr  />
+<p>
+tt
+bb
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline128" class="outline-3">
+<h3 id="orgheadline128"><span class="section-number-3">11.80</span> <span class="todo NEXT">NEXT</span> Emacs如何反撤销重做？</h3>
+<div class="outline-text-3" id="text-11-80">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-16 一 10:33]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-13 五 14:13]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline129" class="outline-3">
+<h3 id="orgheadline129"><span class="section-number-3">11.81</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> emacs剪切板和x剪切板共享</h3>
+<div class="outline-text-3" id="text-11-81">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-12-21 一 15:22] </span></span> <br  />
+有待进一步整理</li>
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-16 一 10:33]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-10 二 11:35]</span></span>
+</p>
+<hr  />
+
+<div class="org-src-container">
+
+<pre class="src src-elisp">;;clipboard share for gui emacs
+(setq x-select-enable-clipboard t)
+</pre>
+</div>
+
+<p>
+参考：<a href="http://www.th7.cn/system/lin/201410/72664.shtml">http://www.th7.cn/system/lin/201410/72664.shtml</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline130" class="outline-3">
+<h3 id="orgheadline130"><span class="section-number-3">11.82</span> <span class="done DONE">DONE</span> 完善自己的开发环境，代码跳转、扫描、定位等，不用每次都要手动配置</h3>
+<div class="outline-text-3" id="text-11-82">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 14:10]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-20 五 15:35]</span></span>
+</p>
+<hr  />
+
+<p>
+需要借助插件： <code>cedet</code> 和 <code>ecb</code> 。 <code>cedet</code> 主要用于建立索引已经提供跳转等功能, <code>ecb</code> 主要提供方便的窗口布局。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline131" class="outline-3">
+<h3 id="orgheadline131"><span class="section-number-3">11.83</span> <span class="todo LATER">LATER</span> Emacs 括号跳转</h3>
+<div class="outline-text-3" id="text-11-83">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 14:10]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-23 一 14:38]</span></span>
+</p>
+<hr  />
+
+<p>
+`C-M-n‘
+Move forward over a parenthetical group (`forward-list‘).
+</p>
+
+<p>
+`C-M-p‘
+Move backward over a parenthetical group (`backward-list‘).
+</p>
+
+<p>
+`C-M-u‘
+Move up in parenthesis structure (`backward-up-list‘).
+</p>
+
+<p>
+`C-M-d‘
+Move down in parenthesis structure (`down-list‘).
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline132" class="outline-3">
+<h3 id="orgheadline132"><span class="section-number-3">11.84</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 关于Narrow</h3>
+<div class="outline-text-3" id="text-11-84">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 14:10] </span></span> <br  />
+等待移动到合适的位置。</li>
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-24 二 17:32]</span></span></li>
+</ul>
+<p>
+Narrowing的意思是将焦点集中到buffer的指定区域上, 有助于集中精力到特定的段落上，而将无关信息屏蔽掉。
+</p>
+
+<p>
+Narrow后，你能看到的内容就是被Narrow的部分，但是并非删除了其他的内容，而是将相应的内容隐藏了。
+</p>
+
+<p>
+Narrow后，其他内容好像不存在了一样，正常的跳转/搜索操作也被限制在Narrow范围内。
+</p>
+
+<p>
+Narrow后，能够看见的区域被称作可访问区域，当取消narrow的时候，其他不可见的区域也变回可见了。
+</p>
+
+<p>
+主要命令：
+</p>
+<dl class="org-dl">
+<dt>将Narrow范围设定在光标与Mark范围之间</dt><dd>输入 <code>C-x n n</code> ，其实一般也就是被选区域。</dd>
+<dt>取消Narrow</dt><dd>输入 <code>C-x n w</code></dd>
+<dt>将Narrow范围设定为当前页</dt><dd>输入 <code>C-x n p</code></dd>
+<dt>将Narrow范围设定为当前函数</dt><dd>输入 <code>C-x n d</code></dd>
+</dl>
+
+<p>
+具体可以参考：<a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Narrowing.html">http://www.gnu.org/software/emacs/manual/html_node/emacs/Narrowing.html</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline133" class="outline-3">
+<h3 id="orgheadline133"><span class="section-number-3">11.85</span> <span class="todo NEXT">NEXT</span> emacs如何搜索光标所在字符的内容</h3>
+<div class="outline-text-3" id="text-11-85">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-24 二 11:53]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-24 二 10:06]</span></span>
+</p>
+<hr  />
+
+<p>
+<a href="http://emacser.com/next-pre-word.htm">http://emacser.com/next-pre-word.htm</a>
+</p>
+
+<p>
+如果图个简单，可以
+<code>C-&lt;left&gt;</code> 定位到单词首，然后 <code>C-s C-w</code> 将当前单词搜索，连续 <code>C-w</code> 可以扩展搜索的单词
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline134" class="outline-3">
+<h3 id="orgheadline134"><span class="section-number-3">11.86</span> <span class="todo LATER">LATER</span> C-x =</h3>
+<div class="outline-text-3" id="text-11-86">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:17]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 14:09]</span></span></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline135" class="outline-3">
+<h3 id="orgheadline135"><span class="section-number-3">11.87</span> <span class="todo NEXT">NEXT</span> 定义自己的Emacs环境</h3>
+<div class="outline-text-3" id="text-11-87">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 14:15]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 14:15]</span></span></li>
+</ul>
+
+<p>
+最好兼容，与将要拥有以及已有的插件快捷键不冲突
+</p>
+
+<p>
+高亮当前光标单词
+</p>
+
+<p>
+搜索当前光标单词
+<a href="http://emacser.com/next-pre-word.htm">http://emacser.com/next-pre-word.htm</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline136" class="outline-3">
+<h3 id="orgheadline136"><span class="section-number-3">11.88</span> <span class="todo LATER">LATER</span> 将emacs插件分层整理一下，最好能尝试一下新版本的emacs</h3>
+<div class="outline-text-3" id="text-11-88">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-01 二 17:02]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-26 四 16:57]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline137" class="outline-3">
+<h3 id="orgheadline137"><span class="section-number-3">11.89</span> <span class="todo NEXT">NEXT</span> Emacs如何撤销以及反撤销？</h3>
+<div class="outline-text-3" id="text-11-89">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 14:36]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 14:35]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline138" class="outline-3">
+<h3 id="orgheadline138"><span class="section-number-3">11.90</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-12-02 三 15:06] </span></span> Emacs标签跳转------</h3>
+<div class="outline-text-3" id="text-11-90">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 14:15] </span></span> <br  />
+wait for move</li>
+</ul>
+<p>
+From:/home/miracle/mydata/orgmode/gtd/output/emacs_tips.org
+</p>
+
+<p>
+主要有如下功能
+</p>
+
+<ul class="org-ul">
+<li><p>
+设置书签
+</p>
+
+<p>
+输入 <code>C-x r m</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+跳转到指定书签
+</p>
+
+<p>
+输入 <code>C-x r b</code> , 输入之后，提示跳转的书签，可以 <code>TAB</code> 补全。
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+列出书签
+</p>
+
+<p>
+输入 <code>C-x r l</code>
+</p></li>
+</ul>
+
+<p>
+另外获取帮助信息输入 <code>C-x r C-h</code> , 其中的m/l/b子项和书签有关。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline139" class="outline-3">
+<h3 id="orgheadline139"><span class="section-number-3">11.91</span> <span class="todo LATER">LATER</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-12-02 三 16:58] </span></span> Emacs mark ring------</h3>
+<div class="outline-text-3" id="text-11-91">
+<ul class="org-ul">
+<li>State "LATER"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 14:15]</span></span></li>
+</ul>
+<p>
+From:/home/miracle/work/androidL/gitlocalcode/device/tpvision/tvsoc/tvsoc_mtk/test/tpapi_pvr_test.cpp
+</p>
+
+<p>
+<code>C-x C-x</code> 在上次Mark和光标之间切换，并且高亮
+</p>
+
+<p>
+<code>C-u C-x C-x</code> 同上，但是不高亮,效果类似在上次位置和下次位置来回切换
+</p>
+
+
+<p>
+<code>C-@ C-@</code> 将记录mark到mark ring, 实际是activate，再deactivate
+</p>
+
+<p>
+除了这个命令，许多命令在操作后，会自动保存操作之前的mark位置到mark ring(有当前buffer的、和全局的两种mark ring)， 这样的命令运行之后，在回显区域有 <code>Mark set</code> 提示， 便于回到之前的位置。例如：使用 <code>C-y</code> 粘帖之时,使用 <code>M-&lt;</code> / <code>M-&gt;</code> 跳转buffer首尾之时，退出增量搜索之时， 插入buffer/file之时……
+</p>
+
+<p>
+<code>C-u C-@</code> 跳到上一次记录的mark, 范围是当前buffer
+<code>C-x C-@</code> 范围是global mark ring.
+参考：
+<a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Setting-Mark.html#DOCF5">http://www.gnu.org/software/emacs/manual/html_node/emacs/Setting-Mark.html#DOCF5</a>
+</p>
+
+<p>
+<a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Mark-Ring.html#Mark-Ring">http://www.gnu.org/software/emacs/manual/html_node/emacs/Mark-Ring.html#Mark-Ring</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline140" class="outline-3">
+<h3 id="orgheadline140"><span class="section-number-3">11.92</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 意外发现 <code>ESC-`</code> 在minibuf打开菜单栏</h3>
+<div class="outline-text-3" id="text-11-92">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:19]</span></span></li>
+<li>State "WAIT/FORWARD" from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:19]</span></span></li>
+<li>State "LATER"      from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:19]</span></span></li>
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:19]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:19]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline141" class="outline-3">
+<h3 id="orgheadline141"><span class="section-number-3">11.93</span> <span class="todo NEXT">NEXT</span> 学习资源</h3>
+<div class="outline-text-3" id="text-11-93">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-04 五 10:38]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-04 五 10:38]</span></span></li>
+</ul>
+
+<p>
+如何在官方网址上或者邮件上提问？
+<a href="http://blog.gmane.org/gmane.emacs.orgmode">http://blog.gmane.org/gmane.emacs.orgmode</a>
+</p>
+
+<p>
+官网
+<a href="http://www.gnu.org/software/emacs/">http://www.gnu.org/software/emacs/</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline142" class="outline-3">
+<h3 id="orgheadline142"><span class="section-number-3">11.94</span> <span class="todo NEXT">NEXT</span> Emacs如何自定义按键映射不冲突</h3>
+<div class="outline-text-3" id="text-11-94">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-04 五 15:36]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-02 三 14:59]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline143" class="outline-3">
+<h3 id="orgheadline143"><span class="section-number-3">11.95</span> <span class="todo NEXT">NEXT</span> Emacs高级搜索</h3>
+<div class="outline-text-3" id="text-11-95">
+<ul class="org-ul">
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-14 一 17:47]</span></span></li>
+</ul>
+
+<p>
+在当前文件列出所有匹配行
+<code>M-x list-maching-lines</code>
+</p>
+
+<p>
+在多个文件和目录中搜索
+<code>M-x grep</code> 或 <code>M-x rgrep</code> , 后者交互性更好。
+</p>
+
+<p>
+在目录中查找文件
+<code>M-x find-name-dired</code>
+</p>
+
+<p>
+参考：<a href="http://www.cnblogs.com/cobbliu/p/3745474.html">http://www.cnblogs.com/cobbliu/p/3745474.html</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline144" class="outline-3">
+<h3 id="orgheadline144"><span class="section-number-3">11.96</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> Emacs如何括号匹配？如何显示行号？</h3>
+<div class="outline-text-3" id="text-11-96">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2015-12-17 四 10:58] </span></span> <br  />
+等待整理</li>
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-17 四 10:57]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-02 三 17:46]</span></span>
+</p>
+<hr  />
+<div class="org-src-container">
+
+<pre class="src src-elisp">;;paren
+(show-paren-mode 1)
+
+;;line number
+(global-linum-mode t)
+</pre>
+</div>
+
+<p>
+启动后,显示行号输入 <code>M-x  global-linum-mode</code>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline145" class="outline-3">
+<h3 id="orgheadline145"><span class="section-number-3">11.97</span> 设置输入</h3>
+<div class="outline-text-3" id="text-11-97">
+<p>
+<code>M-x set-input-method</code>
+<code>C-x Ret C-\</code>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline146" class="outline-3">
+<h3 id="orgheadline146"><span class="section-number-3">11.98</span> <span class="todo LATER">LATER</span> 使用Emacs阅读代码</h3>
+<div class="outline-text-3" id="text-11-98">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-18 五 13:37]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-15 二 16:42]</span></span>
+</p>
+<hr  />
+<p>
+主要涉及到的工具包括：cedet+ecb+global
+</p>
+
+
+<p>
+参考：
+</p>
+
+<p>
+<a href="http://www.newsmth.net/nForum/#!article/Emacs/84691">http://www.newsmth.net/nForum/#!article/Emacs/84691</a>
+</p>
+
+<p>
+<a href="http://blog.csdn.net/bigmarco/article/details/6934502">http://blog.csdn.net/bigmarco/article/details/6934502</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline147" class="outline-3">
+<h3 id="orgheadline147"><span class="section-number-3">11.99</span> <span class="todo LATER">LATER</span> emacs自动保存间隔</h3>
+<div class="outline-text-3" id="text-11-99">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-18 五 13:38]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-16 三 10:07]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline148" class="outline-3">
+<h3 id="orgheadline148"><span class="section-number-3">11.100</span> <span class="todo NEXT">NEXT</span> emacs如何替换文本?</h3>
+<div class="outline-text-3" id="text-11-100">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-18 五 13:38]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-17 四 09:25]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline149" class="outline-3">
+<h3 id="orgheadline149"><span class="section-number-3">11.101</span> <span class="todo LATER">LATER</span> Emacs如何设置多重功能的按键?</h3>
+<div class="outline-text-3" id="text-11-101">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-18 五 13:38]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-17 四 15:16]</span></span>
+</p>
+<hr  />
+
+<p>
+例如我想在按下鼠标后,先定位到对应位置,然后再执行特定的函数(这里是 <code>gtags-find-tag-from-here</code> )
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">(local-set-key (kbd "C-M-&lt;mouse-1&gt;") 
+'(lambda ()
+(interactive)
+;;(mouse-set-point &lt;mouse-1&gt;) ;; how to position at first?
+(gtags-find-tag-from-here)
+)
+)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline150" class="outline-3">
+<h3 id="orgheadline150"><span class="section-number-3">11.102</span> <span class="todo NEXT">NEXT</span> Emacs如何切换最近buffer,而非只有一个最近buffer?</h3>
+<div class="outline-text-3" id="text-11-102">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-18 五 13:38]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-17 四 15:24]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline151" class="outline-3">
+<h3 id="orgheadline151"><span class="section-number-3">11.103</span> <span class="todo NEXT">NEXT</span> Emacs如何高亮多个单词?</h3>
+<div class="outline-text-3" id="text-11-103">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-18 五 13:38]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-17 四 15:42]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline152" class="outline-3">
+<h3 id="orgheadline152"><span class="section-number-3">11.104</span> <span class="todo LATER">LATER</span> 如何在Emacs直接预览markdown效果？</h3>
+<div class="outline-text-3" id="text-11-104">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-21 一 15:57]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-18 五 14:54]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline153" class="outline-3">
+<h3 id="orgheadline153"><span class="section-number-3">11.105</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> </h3>
+<div class="outline-text-3" id="text-11-105">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-22 二 16:36]</span></span></li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$emacs -batch -l ~/.emacs -eval '(org-batch-agenda "t")' | lpr
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline154" class="outline-3">
+<h3 id="orgheadline154"><span class="section-number-3">11.106</span> <span class="todo NEXT">NEXT</span> Emacs崩溃后的恢复策略</h3>
+<div class="outline-text-3" id="text-11-106">
+<ul class="org-ul">
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-31 四 14:50]</span></span></li>
+</ul>
+
+<p>
+输入 <code>M-x recover-session</code> 之后根据时间，选择需要恢复的会话情况。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline155" class="outline-3">
+<h3 id="orgheadline155"><span class="section-number-3">11.107</span> <span class="todo NEXT">NEXT</span> emacs如何跳转到匹配的括号？</h3>
+<div class="outline-text-3" id="text-11-107">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-01-05 二 15:36]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-22 二 17:08]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline156" class="outline-3">
+<h3 id="orgheadline156"><span class="section-number-3">11.108</span> <span class="todo NEXT">NEXT</span> 一些基本操作</h3>
+<div class="outline-text-3" id="text-11-108">
+<ul class="org-ul">
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-02-04 四 13:54]</span></span></li>
+<li>前进</li>
+
+<li>后退</li>
+
+<li>跳转至光标下的路径</li>
+
+<li>关闭所有buffer</li>
+
+<li>跳至指定百分比</li>
+</ul>
+</div>
+</div>
+</div>
+<br>
+<div id="mypostamble" align="right" style="float:right" class="status">
+    <table> <tbody> 
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Author</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">QuietHeart</td>	  
+	</tr>
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Email</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">
+	    <a href="mailto:quiet_heart000@126.com">quiet_heart000@126.com</a>
+	  </td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Date</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2015-09-09 三 14:08]</td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-02-04 四 16:44:38></td>
+	</tr>
+    </tbody></table>
+</div>
+<br>
+
+  </div>
+</article>
+
+		  <!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="/categories/study/emacs/emacs_tips" data-title="Emacs学习笔记" data-url="http://vaqeteart.github.io//categories/study/emacs/emacs_tips.html"></div>
+<!-- 多说评论框 end -->
+<script src="/assets/js/comment.js"></script>
+		</td>
+             </tr>
+            <tr>
+                <td id="td_page_footer" colspan="6">
+<footer>
+  &copy 2015
+</footer>
+<a id="bottom"></a>
+</td>
+
+
+            </tr>
+        </tbody>
+    </table>
+  </body>
+</html>

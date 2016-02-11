@@ -9,7 +9,7 @@ $(function(){
 		$('span.tree_switch', this).html("▽");
 	    }
 	});
-	$('.categories_item_tree').mouseleave(function(){
+	$('.categories_item_tree').delay(800).mouseleave(function(){
 	    $('ul',this).slideUp("slow");
 	    if ($('span.tree_switch', this).html() == "▽")
 	    {
@@ -17,7 +17,7 @@ $(function(){
 	    }
 	});
       },function(){
-	  $('.second',this).fadeOut("slow");	  
+	  $('.second',this).delay(1200).fadeOut("slow");	  
       });
 })
 

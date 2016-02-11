@@ -7,9 +7,10 @@
 <!--theme-->
 <link rel="stylesheet" type="text/css"
   href="/assets/css/common_green_black.css" media="screen" />
+<script src="/assets/js/jquery-1.11.3.min.js"></script>
 <script src="/assets/js/common.js"></script>
 <script src="/assets/js/category_list.js"></script>
-<script src="/assets/js/jquery-1.11.3.min.js"></script>
+
 
     <link rel="stylesheet" type="text/css"
       href="/assets/css/posts.css" media="screen" />
@@ -35,10 +36,27 @@
   	      	   
 
 		   <script>
-		       var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"books":{"id":"categories_study_books","path":"/categories/study/books","title":"books","parent":"categories_study","children":{"apue":{"id":"categories_study_books_apue","path":"/categories/study/books/apue","title":"APUE","parent":"categories_study_books","children":null}}},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+		       var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"os":{"id":"categories_study_os","path":"/categories/study/os","title":"操作系统","parent":"categories_study","children":null},"books":{"id":"categories_study_books","path":"/categories/study/books","title":"books","parent":"categories_study","children":{"apue":{"id":"categories_study_books_apue","path":"/categories/study/books/apue","title":"APUE","parent":"categories_study_books","children":null}}},"linux":{"id":"categories_study_linux","path":"/categories/study/linux","title":"linux","parent":"categories_study","children":{"misc":{"id":"categories_study_linux_misc","path":"/categories/study/linux/misc","title":"杂乱","parent":"categories_study_linux","children":null},"command":{"id":"categories_study_linux_command","path":"/categories/study/linux/command","title":"命令","parent":"categories_study_linux","children":null}}},"jekyll":{"id":"categories_study_jekyll","path":"/categories/study/jekyll","title":"jekyll","parent":"categories_study","children":null},"kits":{"id":"categories_study_kits","path":"/categories/study/kits","title":"工具","parent":"categories_study","children":null},"emacs":{"id":"categories_study_emacs","path":"/categories/study/emacs","title":"emacs","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
 		       var categories_count = JSON.parse('{"/categories":0}');
 
   		       
+    		       var post_categories = '/categories/study/os';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
     		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -107,7 +125,41 @@
         			}
     			}
     			
+    		       var post_categories = '/categories/study/emacs';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
     		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/emacs';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -420,9 +472,6 @@
 	      </div>
 	</th>
 
-	<th class="navblank">
-	</th>
-
         <th class="navitm">
 	      <a href='#'>标签</a>
 	      <div id="tag_menus" class="second">
@@ -440,16 +489,38 @@
 	      </div>
         </th>
 
-	<th class="navblank" style="width:35%;">
+	<th class="navblank">
 	</th>
 
-        <th class="navitm">
-	      <a href='more.html'>更多</a>
+	<th class="navitm">
+	      <a href=/more.html>更多</a>
         </th>
 
         <th class="navitm">
-	      <a href='about.html'>关于</a>
+	      <a href=/about.html>关于</a>
         </th>
+
+	<th class="navblank" style="width:25%;">
+	</th>
+
+	<th class="navitm" style="margin:0; padding:0;border:none;">
+	    <form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+	    	  Q
+	    	  <span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+				<input value="Search......" name="s" class="s" 
+		  	 	onfocus="if (this.value == 'Search......') {this.value = '';}" 
+		  	 	onblur="if (this.value == '') {this.value = 'Search......';}"
+			 	style="margin:0;padding:0;border:none;background: #000000; color:#00FF00;" 
+			 	type="text">
+		  </span>
+		  <!--input type="submit" value="Q" style="width:20%;"-->
+	    </form>
+	</th>
+
+	<th class="navblank">
+	</th>
 
 	<th class="navblank">
 	</th>
@@ -480,10 +551,27 @@
   <h2> 分类 </h2>
   
   <script>
-    var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"books":{"id":"categories_study_books","path":"/categories/study/books","title":"books","parent":"categories_study","children":{"apue":{"id":"categories_study_books_apue","path":"/categories/study/books/apue","title":"APUE","parent":"categories_study_books","children":null}}},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+    var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"os":{"id":"categories_study_os","path":"/categories/study/os","title":"操作系统","parent":"categories_study","children":null},"books":{"id":"categories_study_books","path":"/categories/study/books","title":"books","parent":"categories_study","children":{"apue":{"id":"categories_study_books_apue","path":"/categories/study/books/apue","title":"APUE","parent":"categories_study_books","children":null}}},"linux":{"id":"categories_study_linux","path":"/categories/study/linux","title":"linux","parent":"categories_study","children":{"misc":{"id":"categories_study_linux_misc","path":"/categories/study/linux/misc","title":"杂乱","parent":"categories_study_linux","children":null},"command":{"id":"categories_study_linux_command","path":"/categories/study/linux/command","title":"命令","parent":"categories_study_linux","children":null}}},"jekyll":{"id":"categories_study_jekyll","path":"/categories/study/jekyll","title":"jekyll","parent":"categories_study","children":null},"kits":{"id":"categories_study_kits","path":"/categories/study/kits","title":"工具","parent":"categories_study","children":null},"emacs":{"id":"categories_study_emacs","path":"/categories/study/emacs","title":"emacs","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
     var categories_count = JSON.parse('{"/categories":0}');
 
     
+    var post_categories = '/categories/study/os';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
     var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
@@ -552,7 +640,41 @@
         }
     }
     
+    var post_categories = '/categories/study/emacs';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
     var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/emacs';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1019,32 +1141,7 @@
     margin-top: -1.5em; 
 }
 
-</style><br>
-<div id="mypreamble" align="right" style="float:right" class="status">
-    <table> <tbody> 
-	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Author</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;">QuietHeart</td>	  
-	</tr>
-	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Email</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;">
-	    <a href="mailto:quiet_heart000@126.com">quiet_heart000@126.com</a>
-	  </td>
-	  
-	</tr>
-    	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Date</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2015-11-27 五]</td>
-	  
-	</tr>
-    	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2015-12-25 五 15:42:09></td>
-	</tr>
-    </tbody></table>
-</div>
-<br>
+</style>
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
@@ -1106,7 +1203,7 @@
 </li>
 </ul>
 </li>
-<li><a href="#orgheadline33">5. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[8/9]</code>(<code>[88%]</code>)</a>
+<li><a href="#orgheadline33">5. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[8/11]</code>(<code>[72%]</code>)</a>
 <ul>
 <li><a href="#orgheadline34">5.1. <span class="done nilDONE">DONE</span> 如何划分任务状态以及存放的文件？</a></li>
 <li><a href="#orgheadline35">5.2. <span class="done nilDONE">DONE</span> 如何实现任务管理的基本管理？</a></li>
@@ -1117,6 +1214,8 @@
 <li><a href="#orgheadline40">5.7. <span class="done nilDONE">DONE</span> 便于整理周回顾?</a></li>
 <li><a href="#orgheadline41">5.8. <span class="done nilDONE">DONE</span> 如何将PC与移动端的orgmode整合?</a></li>
 <li><a href="#orgheadline42">5.9. <span class="todo nilLATER">LATER</span> 杂乱问题</a></li>
+<li><a href="#orgheadline43">5.10. <span class="todo nilNEXT">NEXT</span> 改善归档与done/cancel策略</a></li>
+<li><a href="#orgheadline44">5.11. <span class="todo nilNEXT">NEXT</span> 改善refile的配置方式</a></li>
 </ul>
 </li>
 </ul>
@@ -1310,8 +1409,8 @@
 <div id="outline-container-orgheadline7" class="outline-4">
 <h4 id="orgheadline7"><span class="section-number-4">3.2.2</span> 回顾内容：</h4>
 <div class="outline-text-4" id="text-3-2-2">
-</div><div id="outline-container-orgheadline43" class="outline-5">
-<h5 id="orgheadline43"><span class="section-number-5">3.2.2.1</span> 短期回顾</h5>
+</div><div id="outline-container-orgheadline45" class="outline-5">
+<h5 id="orgheadline45"><span class="section-number-5">3.2.2.1</span> 短期回顾</h5>
 <div class="outline-text-5" id="text-3-2-2-1">
 <p>
 在"短期回顾"中，定期处理inbox中的内容使得收集状态的内容及时被处理。根据情况，可能有如下类型：
@@ -1332,8 +1431,8 @@
 </div>
 </div>
 
-<div id="outline-container-orgheadline44" class="outline-5">
-<h5 id="orgheadline44"><span class="section-number-5">3.2.2.2</span> 中期回顾</h5>
+<div id="outline-container-orgheadline46" class="outline-5">
+<h5 id="orgheadline46"><span class="section-number-5">3.2.2.2</span> 中期回顾</h5>
 <div class="outline-text-5" id="text-3-2-2-2">
 <p>
 在"周"回顾中，梳理各种任务状态中的内容，将相关的内容关联起来，将相应的状态内容移动到对应的文件等等。处理方式类似对于inbox的处理，可能有如下类型：
@@ -1651,8 +1750,8 @@ Refile以特定的命令，用来将之前Capture的内容直接转移到特定�
 <div id="outline-container-orgheadline20" class="outline-4">
 <h4 id="orgheadline20"><span class="section-number-4">4.4.2</span> 配置</h4>
 <div class="outline-text-4" id="text-4-4-2">
-</div><div id="outline-container-orgheadline45" class="outline-5">
-<h5 id="orgheadline45"><span class="section-number-5">4.4.2.1</span> Capture的配置</h5>
+</div><div id="outline-container-orgheadline47" class="outline-5">
+<h5 id="orgheadline47"><span class="section-number-5">4.4.2.1</span> Capture的配置</h5>
 <div class="outline-text-5" id="text-4-4-2-1">
 <p>
 不同的管理方式可能会导致不同的配置，但是一般都包含两个方面：首先设置好一个启动Capture的快捷方式，再配置用于存储Capture信息的目的地。
@@ -1687,8 +1786,8 @@ Refile以特定的命令，用来将之前Capture的内容直接转移到特定�
 </div>
 </div>
 
-<div id="outline-container-orgheadline46" class="outline-5">
-<h5 id="orgheadline46"><span class="section-number-5">4.4.2.2</span> Refile的配置</h5>
+<div id="outline-container-orgheadline48" class="outline-5">
+<h5 id="orgheadline48"><span class="section-number-5">4.4.2.2</span> Refile的配置</h5>
 <div class="outline-text-5" id="text-4-4-2-2">
 <p>
 主要配置两个方面的内容：
@@ -1897,8 +1996,8 @@ MobileOrg是Mobile端的一个应用程序，运行在Android（也有IOS的Mobi
 假设我们想要使PC上的Org与移动设备上的MobileOrg保持内容同步（底层通过git机制，也可以是云存储、ssh、ftp等机制）。这里给出为实现这个目的，在PC需要做的配置工作(移动端的MobileOrg做为辅助工具，其配置和操作非常简单，在适当的时候会提及)。
 </p>
 </div>
-<div id="outline-container-orgheadline47" class="outline-5">
-<h5 id="orgheadline47"><span class="section-number-5">4.7.1.1</span> 在PC上添加使用MobileOrg的emacs配置</h5>
+<div id="outline-container-orgheadline49" class="outline-5">
+<h5 id="orgheadline49"><span class="section-number-5">4.7.1.1</span> 在PC上添加使用MobileOrg的emacs配置</h5>
 <div class="outline-text-5" id="text-4-7-1-1">
 <p>
 主要包括对Emacs中org-mode模块的加载以及与MobileOrg同步的路径。
@@ -1919,15 +2018,15 @@ MobileOrg是Mobile端的一个应用程序，运行在Android（也有IOS的Mobi
 </div>
 </div>
 
-<div id="outline-container-orgheadline51" class="outline-5">
-<h5 id="orgheadline51"><span class="section-number-5">4.7.1.2</span> 在PC上添加同步orgmode和MobileOrg的emacs配置</h5>
+<div id="outline-container-orgheadline53" class="outline-5">
+<h5 id="orgheadline53"><span class="section-number-5">4.7.1.2</span> 在PC上添加同步orgmode和MobileOrg的emacs配置</h5>
 <div class="outline-text-5" id="text-4-7-1-2">
 <p>
 主要包括PC端和MobileOrg端状态与标记的设置，PC上被推送orgmode内容的源文件路径，以及PC上接收MobileOrg修改的缓存路径设置。
 </p>
 </div>
 
-<ol class="org-ol"><li><a id="orgheadline48"></a>为被推送文件定义只属于该文件的状态和标记<br  /><div class="outline-text-6" id="text-4-7-1-2-1">
+<ol class="org-ol"><li><a id="orgheadline50"></a>为被推送文件定义只属于该文件的状态和标记<br  /><div class="outline-text-6" id="text-4-7-1-2-1">
 <p>
 被推送的文件可使用文件选项定义相关的状态和标签（实践发现不用定义文件的状态和标签也行），定义内容最好和PC上的相关状态变量(即 <code>setq org-todo-keywords</code> )一致，或者是其子集。如果使用文件定义状态，那么可以将用于push到MobileOrg的文件中的状态设置选项如下：
 </p>
@@ -1939,7 +2038,7 @@ MobileOrg是Mobile端的一个应用程序，运行在Android（也有IOS的Mobi
 </p>
 </div></li>
 
-<li><a id="orgheadline49"></a>设置状态关键字和被推送至MobileOrg的文件列表路径<br  /><div class="outline-text-6" id="text-4-7-1-2-2">
+<li><a id="orgheadline51"></a>设置状态关键字和被推送至MobileOrg的文件列表路径<br  /><div class="outline-text-6" id="text-4-7-1-2-2">
 <p>
 如下
 </p>
@@ -1965,7 +2064,7 @@ MobileOrg是Mobile端的一个应用程序，运行在Android（也有IOS的Mobi
 </div>
 </div></li>
 
-<li><a id="orgheadline50"></a>设置接收来自MobileOrg内容的“缓存”目标文件路径<br  /><div class="outline-text-6" id="text-4-7-1-2-3">
+<li><a id="orgheadline52"></a>设置接收来自MobileOrg内容的“缓存”目标文件路径<br  /><div class="outline-text-6" id="text-4-7-1-2-3">
 <p>
 如下
 </p>
@@ -1984,8 +2083,8 @@ MobileOrg是Mobile端的一个应用程序，运行在Android（也有IOS的Mobi
 <div id="outline-container-orgheadline29" class="outline-4">
 <h4 id="orgheadline29"><span class="section-number-4">4.7.2</span> 原理</h4>
 <div class="outline-text-4" id="text-4-7-2">
-</div><div id="outline-container-orgheadline52" class="outline-5">
-<h5 id="orgheadline52"><span class="section-number-5">4.7.2.1</span> Mobile端的Mobile Org与PC端的Org同步</h5>
+</div><div id="outline-container-orgheadline54" class="outline-5">
+<h5 id="orgheadline54"><span class="section-number-5">4.7.2.1</span> Mobile端的Mobile Org与PC端的Org同步</h5>
 <div class="outline-text-5" id="text-4-7-2-1">
 <p>
 当我们在MobileOrg中与PC端的Org同步时，需要知道它不仅仅是从PC端获取（mobile端的pull）相应org文件用于浏览，同时也会追加(mobile端的push)被captured的entries，并且指向被标记和修改的entries，这些内容被汇总在同步目录( <code>org-mobile-directory</code> )中的 <code>mobileorg.org</code> 文件里。
@@ -1993,10 +2092,10 @@ MobileOrg是Mobile端的一个应用程序，运行在Android（也有IOS的Mobi
 </div>
 </div>
 
-<div id="outline-container-orgheadline55" class="outline-5">
-<h5 id="orgheadline55"><span class="section-number-5">4.7.2.2</span> PC端的Org与Mobile端的MobileOrg同步</h5>
+<div id="outline-container-orgheadline57" class="outline-5">
+<h5 id="orgheadline57"><span class="section-number-5">4.7.2.2</span> PC端的Org与Mobile端的MobileOrg同步</h5>
 <div class="outline-text-5" id="text-4-7-2-2">
-</div><ol class="org-ol"><li><a id="orgheadline53"></a>PC端的Pull<br  /><div class="outline-text-6" id="text-4-7-2-2-1">
+</div><ol class="org-ol"><li><a id="orgheadline55"></a>PC端的Pull<br  /><div class="outline-text-6" id="text-4-7-2-2-1">
 <p>
 获取MobileOrg修改内容(PC端的pull)的时候，会将这些信息从 <code>mobileorg.org</code> 先转移到到 <code>org-mobile-inbox-for-pull</code> 对应的文件中，并对指向的被标记的内容进行进一步操作，进而将能够自动处理内容同步到对应的文件中。
 Pull的过程大致过程如下:
@@ -2010,7 +2109,7 @@ Pull的过程大致过程如下:
 </ol>
 </div></li>
 
-<li><a id="orgheadline54"></a>PC端的Push<br  /><div class="outline-text-6" id="text-4-7-2-2-2">
+<li><a id="orgheadline56"></a>PC端的Push<br  /><div class="outline-text-6" id="text-4-7-2-2-2">
 <p>
 推送内容到MobileOrg端(PC端的push)的时候，会推送PC上设置的 <code>org-mobile-files</code> 对应的文件，该变量对应的文件路径是相对 <code>org-directory</code> 的路径，默认使用 <code>org-agenda-files</code> ,被退送的目标是 <code>org-mobile-directory</code> 设定的位置。
 Push的过程大致如下：
@@ -2023,8 +2122,8 @@ Push的过程大致如下：
 </div></li></ol>
 </div>
 
-<div id="outline-container-orgheadline56" class="outline-5">
-<h5 id="orgheadline56"><span class="section-number-5">4.7.2.3</span> Org与MobileOrg的同步目录</h5>
+<div id="outline-container-orgheadline58" class="outline-5">
+<h5 id="orgheadline58"><span class="section-number-5">4.7.2.3</span> Org与MobileOrg的同步目录</h5>
 <div class="outline-text-5" id="text-4-7-2-3">
 <p>
 我们需要注意，在前面的讲述中所涉及到的同步，其实暗含了两种同步：
@@ -2053,8 +2152,8 @@ Push的过程大致如下：
 <div id="outline-container-orgheadline30" class="outline-4">
 <h4 id="orgheadline30"><span class="section-number-4">4.7.3</span> 同步操作</h4>
 <div class="outline-text-4" id="text-4-7-3">
-</div><div id="outline-container-orgheadline57" class="outline-5">
-<h5 id="orgheadline57"><span class="section-number-5">4.7.3.1</span> PC端的Org推送（Pull）</h5>
+</div><div id="outline-container-orgheadline59" class="outline-5">
+<h5 id="orgheadline59"><span class="section-number-5">4.7.3.1</span> PC端的Org推送（Pull）</h5>
 <div class="outline-text-5" id="text-4-7-3-1">
 <p>
 命令如下：<br  />
@@ -2064,8 +2163,8 @@ Push的过程大致如下：
 </div>
 </div>
 
-<div id="outline-container-orgheadline58" class="outline-5">
-<h5 id="orgheadline58"><span class="section-number-5">4.7.3.2</span> PC端的Org拉取（Push）</h5>
+<div id="outline-container-orgheadline60" class="outline-5">
+<h5 id="orgheadline60"><span class="section-number-5">4.7.3.2</span> PC端的Org拉取（Push）</h5>
 <div class="outline-text-5" id="text-4-7-3-2">
 <p>
 命令如下：<br  />
@@ -2075,8 +2174,8 @@ Push的过程大致如下：
 </div>
 </div>
 
-<div id="outline-container-orgheadline59" class="outline-5">
-<h5 id="orgheadline59"><span class="section-number-5">4.7.3.3</span> Mobile端的MobileOrg同步（Sync）</h5>
+<div id="outline-container-orgheadline61" class="outline-5">
+<h5 id="orgheadline61"><span class="section-number-5">4.7.3.3</span> Mobile端的MobileOrg同步（Sync）</h5>
 <div class="outline-text-5" id="text-4-7-3-3">
 <p>
 这里使用Android版本的MobileOrg，大致如下：<br  />
@@ -2119,8 +2218,8 @@ Push的过程大致如下：
 </p>
 </div>
 
-<div id="outline-container-orgheadline60" class="outline-5">
-<h5 id="orgheadline60"><span class="section-number-5">4.7.5.1</span> 改进</h5>
+<div id="outline-container-orgheadline62" class="outline-5">
+<h5 id="orgheadline62"><span class="section-number-5">4.7.5.1</span> 改进</h5>
 <div class="outline-text-5" id="text-4-7-5-1">
 <ul class="org-ul">
 <li>已经将状态文件冠以 <code>_</code> 前缀，便于在Agenda View中集中浏览，例如: <code>_inbox.org</code>, <code>_next.org</code> &#x2026;。</li>
@@ -2148,7 +2247,7 @@ Push的过程大致如下：
 </div>
 
 <div id="outline-container-orgheadline33" class="outline-2">
-<h2 id="orgheadline33"><span class="section-number-2">5</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[8/9]</code>(<code>[88%]</code>)</h2>
+<h2 id="orgheadline33"><span class="section-number-2">5</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[8/11]</code>(<code>[72%]</code>)</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-27 五 15:07] </span></span> <br  />
@@ -2291,7 +2390,84 @@ wait for more</li>
 </ul>
 </div>
 </div>
+<div id="outline-container-orgheadline43" class="outline-3">
+<h3 id="orgheadline43"><span class="section-number-3">5.10</span> <span class="todo NEXT">NEXT</span> 改善归档与done/cancel策略</h3>
+<div class="outline-text-3" id="text-5-10">
+<ul class="org-ul">
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-02-03 三 09:43]</span></span></li>
+</ul>
+
+<p>
+之前都是将done和cancel状态的内容放置目录中，按照月份存放相应状态内容，原因是相应状态的内容是属于不断积累增多的，不可能只放在一个文件中。
+</p>
+
+<p>
+考虑到归档的功能，其实将done/cancel内容放置在一个文件也可，只需要定期进行归档即可，积累的内容会不断地移动到归档中，而归档又可根据日期来进行划分。
+</p>
+
+<p>
+而wait/forward中的内容，需要再考虑如何进行，目前暂不设定归档， 设置的方式也仍然采用目录的方式，以便学习时能够知道目录目标的设置方式。
+</p>
 </div>
+</div>
+<div id="outline-container-orgheadline44" class="outline-3">
+<h3 id="orgheadline44"><span class="section-number-3">5.11</span> <span class="todo NEXT">NEXT</span> 改善refile的配置方式</h3>
+<div class="outline-text-3" id="text-5-11">
+<ul class="org-ul">
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-02-03 三 09:46]</span></span></li>
+</ul>
+
+<p>
+将refile目标放置到一个文件中，有时候会出现问题，目前不再使用这个方法。直接将refile的目标配置到配置文件中，这样更为保险。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-elisp">;;set agenda files
+(setq org-agenda-files (list 
+                        (concat org-directory "gtd/_next.org") 
+                        (concat org-directory "gtd/_later.org") 
+                        (concat org-directory "gtd/_wait_forward.org") 
+                        (concat org-directory "gtd/_maybe_future/") 
+                        (concat org-directory "gtd/_cancel.org")
+                        (concat org-directory "gtd/_done.org") 
+                        (concat org-directory "gtd/mobile_org/_mobile_inbox.org") 
+                        (concat org-directory "gtd/_active") 
+                        (concat org-directory "gtd/_review") 
+                        (concat org-directory "gtd/output/")
+                       )
+)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<br>
+<div id="mypostamble" align="right" style="float:right" class="status">
+    <table> <tbody> 
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Author</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">QuietHeart</td>	  
+	</tr>
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Email</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">
+	    <a href="mailto:quiet_heart000@126.com">quiet_heart000@126.com</a>
+	  </td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Date</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2015-11-27 五]</td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-02-03 三 16:42:04></td>
+	</tr>
+    </tbody></table>
+</div>
+<br>
 
   </div>
 </article>
