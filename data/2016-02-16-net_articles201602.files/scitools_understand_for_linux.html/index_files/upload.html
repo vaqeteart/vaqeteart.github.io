@@ -1,0 +1,40 @@
+<!DOCTYPE html><html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>上传图片</title>
+    <meta name="author" content="CSDN">
+    <meta name="Copyright" content="CSDN">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link href="favicon-1.ico" rel="SHORTCUT ICON">
+    <script src="jquery-1.11.1.min.js"></script>
+    <script src="jquery.form.js"></script>
+<style><!--
+/* Effective stylesheet produced by snapshot save */
+body { margin: 0px; }
+* { font: 12px/20px 'microsoft yahei'; }
+.up_img_loading { display: none; }
+.markdown_file_name { width: 100%; height: 30px; border: 1px solid rgb(221, 221, 221); margin: 25px 0px; padding: 5px; white-space: nowrap; overflow: hidden; color: rgb(153, 153, 153); }
+.markdown_file_msg { color: rgb(102, 102, 102); position: absolute; margin-top: -25px; }
+.btn { text-align: right; }
+.btn span { background: none repeat scroll 0% 0% rgb(153, 153, 153); color: rgb(255, 255, 255); padding: 3px 10px; cursor: pointer; }
+label { position: absolute; right: 1px; top: 26px; background: none repeat scroll 0% 0% rgb(238, 238, 238); color: rgb(102, 102, 102); padding: 4px 8px; border-left: 1px solid rgb(221, 221, 221); }
+form { width: 1px; height: 1px; position: absolute; overflow: hidden; }
+--></style>
+</head>
+<body>
+<div class="markdown_file_name"></div>
+<div class="markdown_file_msg"></div>
+<label for="markdown_file">浏览..</label>
+<div class="up_img_loading">上传中...</div>
+<div class="btn" onclick=""><span>上传图片</span></div>
+
+<form action="http://ask.csdn.net/upload_picture.json" id="picture_dialog_form" method="post">
+    <input name="markdown_file" id="markdown_file" accept="image/gif, image/jpeg, image/png" type="file">
+</form>
+<script><!--
+/* Script removed by snapshot save */
+--></script>
+
+
+</body></html>

@@ -1,0 +1,680 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>pkg-config的用法_xiaochao_新浪博客</title>
+<meta name="keywords" content="pkg-config的用法_xiaochao_新浪博客,xiaochao,">
+<meta name="description" content="pkg-config的用法_xiaochao_新浪博客,xiaochao,">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<meta http-equiv="mobile-agent" content="format=html5; url=http://blog.sina.cn/dpool/blog/s/blog_8af6bbd10101hfdj.html?vt=4">
+<meta http-equiv="mobile-agent" content="format=wml; url=http://blog.sina.cn/dpool/blog/ArtRead.php?nid=8af6bbd10101hfdj&amp;vt=1">
+<!--–[if lte IE 6]-->
+<script src="index_files/sinaads_ck.js" charset="utf-8" id="sinaads-ck-script"></script><script type="text/javascript"><!--
+/* Script removed by snapshot save */
+--></script>
+<!--[endif]–-->
+<script type="text/javascript"><!--
+/* Script removed by snapshot save */
+--></script>
+<link rel="pingback" href="http://upload.move.blog.sina.com.cn/blog_rebuild/blog/xmlrpc.php">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://upload.move.blog.sina.com.cn/blog_rebuild/blog/xmlrpc.php?rsd">
+<link href="http://blog.sina.com.cn/blog_rebuild/blog/wlwmanifest.xml" type="application/wlwmanifest+xml" rel="wlwmanifest">
+<link rel="alternate" type="application/rss+xml" href="http://blog.sina.com.cn/rss/2331425745.xml" title="RSS">
+<link href="index_files/article.css" type="text/css" rel="stylesheet"><link href="index_files/common.css" type="text/css" rel="stylesheet"><link href="index_files/blog.css" type="text/css" rel="stylesheet"><link href="index_files/blog-1.css" type="text/css" rel="stylesheet"><style id="tplstyle" type="text/css"><!--
+@charset "utf-8";
+/* Effective stylesheet produced by snapshot save */
+@import url("index_files/t.css");
+--></style>
+<style id="positionstyle" type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+.sinabloghead .blogtoparea { left: 250px; top: 35%; }
+.sinabloghead .blognav { left: 230px; top: 82%; }
+--></style>
+<style id="bgtyle" type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+--></style>
+<style id="headtyle" type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+--></style>
+<style id="navtyle" type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+--></style>
+<script type="text/javascript" src="index_files/sspnew.js"></script><script async="" charset="utf-8" src="index_files/ssologin.js"></script><script charset="utf-8" src="index_files/article.js"></script><script charset="utf-8" type="text/javascript" src="index_files/bsStatic.js"></script><script charset="utf-8" src="index_files/sinaads-1.js"></script><script charset="utf-8" type="text/javascript" src="index_files/fingerprint2.min.js"></script><script charset="utf-8" type="text/javascript" src="index_files/bs-engine.js"></script><style type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+a.bshareDiv, #bsPanel, #bsMorePanel, #bshareF { border: medium none; background: none repeat scroll 0% 0% transparent; padding: 0px; margin: 0px; font: 12px/14px Helvetica,Calibri,Tahoma,Arial,\5B8B \4F53 ,sans-serif; }
+#bsPanel div, #bsMorePanel div, #bshareF div { display: block; }
+div.buzzButton { cursor: pointer; font-weight: bold; }
+a.bshareDiv .bsPromo, div.bshare-custom .bsPromo { display: none; position: absolute; z-index: 100; }
+div.bshare-custom .bsPromo.bsPromo2 { background: url("urn:not-loaded:http://static.bshare.cn/frame/images/bshare_promo_sprite.gif") no-repeat scroll 0% 0% transparent; cursor: pointer; }
+--></style><style type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+.bsBox { display: none; z-index: 100000001; font-size: 12px; background: url("urn:not-loaded:http://static.bshare.cn/frame/images//background-opaque-dark.gif") repeat scroll 0% 0% transparent ! important; padding: 6px ! important; border-radius: 5px; }
+.bsClose { cursor: pointer; position: absolute; z-index: 10000000; color: rgb(102, 102, 102); font-weight: bold; font-family: Helvetica,Arial; font-size: 14px; line-height: 20px; }
+.bsTop { color: rgb(102, 102, 102); background: none repeat scroll 0% 0% rgb(242, 242, 242); height: 24px; line-height: 24px; border-bottom: 1px solid rgb(232, 232, 232); }
+.bsTop span { float: left; }
+.bsFrameDiv, #bsMorePanel { border: medium none; background: none repeat scroll 0% 0% rgb(255, 255, 255); }
+.bsReturn { float: right; margin-right: 36px; text-align: right; cursor: pointer; line-height: 24px; color: rgb(102, 102, 102); opacity: 0.5; }
+--></style><script charset="utf-8" type="text/javascript" src="index_files/bsMore.js"></script><script charset="utf-8" type="text/javascript" src="index_files/bshare_share_count.js"></script><style type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+.bshare-custom { font-size: 13px; line-height: 16px ! important; }
+.bshare-custom a { padding-left: 19px; height: 16px; text-decoration: none; display: none; vertical-align: middle; cursor: pointer; color: rgb(51, 51, 51); margin-right: 3px; opacity: 1; }
+.bshare-custom a:hover { text-decoration: underline; opacity: 0.75; }
+.bshare-custom .bshare-more { padding-left: 0px ! important; color: rgb(51, 51, 51) ! important; display: inline-block; }
+.bshare-custom .bshare-douban { background: url("index_files/top_logos_sprite.png") no-repeat scroll 0px -36px transparent; display: inline-block; }
+.bshare-custom .bshare-qzone { background: url("index_files/top_logos_sprite.png") no-repeat scroll 0px -234px transparent; display: inline-block; }
+.bshare-custom .bshare-sinaminiblog { background: url("index_files/top_logos_sprite.png") no-repeat scroll 0px -270px transparent; display: inline-block; }
+.bshare-custom .bshare-weixin { background: url("index_files/weixin.png") no-repeat scroll 0% 0% transparent; display: inline-block; }
+.bshare-custom #bshare-more-icon, .bshare-custom .bshare-more-icon { background: url("urn:not-loaded:http://static.bshare.cn/frame/images/logos/s4/more.png") no-repeat scroll 0% 0% transparent; padding-left: 19px ! important; }
+.bshare-custom .bshare-more.more-style-addthis { background: url("index_files/more-style-addthis.png") no-repeat scroll 0% 0% transparent; }
+--></style><script charset="utf-8" type="text/javascript" src="index_files/bshareS887.js"></script><style type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+div.bsClear { clear: both; height: 0px; line-height: 0; overflow: hidden; font-size: 0px; }
+.bsLogoLink:hover { text-decoration: underline; }
+--></style><style type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+.bshare-custom { font-size: 13px; line-height: 16px ! important; }
+.bshare-custom a { padding-left: 19px; height: 16px; text-decoration: none; display: none; vertical-align: middle; cursor: pointer; color: rgb(51, 51, 51); margin-right: 3px; opacity: 1; }
+.bshare-custom a:hover { text-decoration: underline; opacity: 0.75; }
+.bshare-custom .bshare-more { padding-left: 0px ! important; color: rgb(51, 51, 51) ! important; display: inline-block; }
+.bshare-custom .bshare-douban { background: url("index_files/top_logos_sprite.png") no-repeat scroll 0px -36px transparent; display: inline-block; }
+.bshare-custom .bshare-qzone { background: url("index_files/top_logos_sprite.png") no-repeat scroll 0px -234px transparent; display: inline-block; }
+.bshare-custom .bshare-sinaminiblog { background: url("index_files/top_logos_sprite.png") no-repeat scroll 0px -270px transparent; display: inline-block; }
+.bshare-custom .bshare-weixin { background: url("index_files/weixin.png") no-repeat scroll 0% 0% transparent; display: inline-block; }
+.bshare-custom #bshare-more-icon, .bshare-custom .bshare-more-icon { background: url("urn:not-loaded:http://static.bshare.cn/frame/images/logos/s4/more.png") no-repeat scroll 0% 0% transparent; padding-left: 19px ! important; }
+.bshare-custom .bshare-more.more-style-addthis { background: url("index_files/more-style-addthis.png") no-repeat scroll 0% 0% transparent; }
+--></style><script charset="utf-8" src="index_files/suda_s_v851c.js"></script><iframe style="height: 0px; width: 1px; overflow: hidden;" id="ckctlFrame" src="index_files/ckctl.html" scrolling="no"></iframe><script src="index_files/get.php.js" charset="UTF-8"></script><script charset="utf-8" src="index_files/di_yuan_xin.js"></script><link href="index_files/style.3.0.20.css" rel="stylesheet"><script charset="utf-8" src="index_files/tmp_clone.js"></script><style id="stylefix" type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+#bsPanelHolder, #sinaads_pdps54771 { display: none; }
+--></style><script charset="utf-8" src="index_files/getSinaadsExParamsForBlog.js"></script><script charset="gb2312" src="index_files/collect.js"></script><style type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+a.bsSiteLink { text-decoration: none; color: rgb(102, 102, 102); }
+a.bsSiteLink:hover { text-decoration: underline; }
+div.bsTitle { padding: 0px 8px; border-bottom: 1px solid rgb(232, 232, 232); color: rgb(102, 102, 102); background: none repeat scroll 0% 0% rgb(242, 242, 242); text-align: left; }
+div.buzzButton { cursor: pointer; }
+div.bsRlogo, div.bsRlogoSel { width: 68px; float: left; margin: 0px; padding: 2px 0px; }
+div.bsRlogo a, div.bsRlogoSel a { float: left; }
+div.bsLogo, div.bsLogoSel { float: left; width: 111px; text-align: left; height: auto; padding: 2px 4px; margin: 2px 0px; white-space: nowrap; overflow: hidden; }
+div.bsLogo, div.bsRlogo { border: 1px solid rgb(255, 255, 255); background: none repeat scroll 0% 0% rgb(255, 255, 255); }
+div.bsLogo a, div.bsLogoSel a { display: block; height: 16px; line-height: 16px; padding: 0px 0px 0px 24px; text-decoration: none; float: left; overflow: hidden; }
+div.bsLogo a, div.bsRlogo a { color: rgb(102, 102, 102); border: medium none; }
+div.bsLogoLink { width: 121px; overflow: hidden; background: none repeat scroll 0% 0% rgb(255, 255, 255); float: left; margin: 3px 0px; }
+#bsPanel { position: absolute; z-index: 100000000; font-size: 12px; width: 258px; background: url("urn:not-loaded:http://static.bshare.cn/frame/images/background-opaque-dark.png") repeat scroll 0% 0% transparent; padding: 6px; border-radius: 5px; }
+div.bsClear { clear: both; height: 0px; line-height: 0; font-size: 0px; overflow: hidden; }
+--></style><script charset="utf-8" src="index_files/blog_bottom_float.js"></script><script charset="utf-8" type="text/javascript" src="index_files/bsPlatforms.js"></script><script charset="utf-8" type="text/javascript" src="index_files/bshare_view.js"></script><style type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+a.bsSiteLink { text-decoration: none; color: rgb(102, 102, 102); }
+a.bsSiteLink:hover { text-decoration: underline; }
+div.bsTitle { padding: 0px 8px; border-bottom: 1px solid rgb(232, 232, 232); color: rgb(102, 102, 102); background: none repeat scroll 0% 0% rgb(242, 242, 242); text-align: left; }
+div.buzzButton { cursor: pointer; }
+div.bsRlogo, div.bsRlogoSel { width: 68px; float: left; margin: 0px; padding: 2px 0px; }
+div.bsRlogo a, div.bsRlogoSel a { float: left; }
+div.bsLogo, div.bsLogoSel { float: left; width: 111px; text-align: left; height: auto; padding: 2px 4px; margin: 2px 0px; white-space: nowrap; overflow: hidden; }
+div.bsLogo, div.bsRlogo { border: 1px solid rgb(255, 255, 255); background: none repeat scroll 0% 0% rgb(255, 255, 255); }
+div.bsLogo a, div.bsLogoSel a { display: block; height: 16px; line-height: 16px; padding: 0px 0px 0px 24px; text-decoration: none; float: left; overflow: hidden; }
+div.bsLogo a, div.bsRlogo a { color: rgb(102, 102, 102); border: medium none; }
+div.bsLogoLink { width: 121px; overflow: hidden; background: none repeat scroll 0% 0% rgb(255, 255, 255); float: left; margin: 3px 0px; }
+#bsPanel { position: absolute; z-index: 100000000; font-size: 12px; width: 258px; background: url("urn:not-loaded:http://static.bshare.cn/frame/images/background-opaque-dark.png") repeat scroll 0% 0% transparent; padding: 6px; border-radius: 5px; }
+div.bsClear { clear: both; height: 0px; line-height: 0; font-size: 0px; overflow: hidden; }
+--></style></head>
+<body><div style="position: fixed; width: 120px; height: 288px; z-index: 99999; display: block; left: 0px; top: 120px;" class="sinaad-toolkit-box" id="sinaadToolkitBox0"><div style="width: 120px; height: 18px; position: absolute; right: 0px; top: 270px; z-index: 10000; background: url(&quot;index_files/60x18_1_close.gif&quot;) no-repeat scroll right center rgb(235, 235, 235); margin: 0px; padding: 0px; cursor: pointer;"></div><div style="width: 120px; height: 270px; position: absolute; right: 0px; top: 0px;"><a href="http://sax.sina.com.cn/mfp/click?type=3&amp;t=MjAxNi0wMi0xNiAxNzo0NDoyMwkxODMuNjIuMjI2LjE3OAkxODMuNjIuMjI2LjE3OF8xNDUwOTIzMzEzLjE2MDk5OAlodHRwOi8vYmxvZy5zaW5hLmNvbS5jbi9zL2Jsb2dfOGFmNmJiZDEwMTAxaGZkai5odG1sCVBEUFMwMDAwMDAwNTQ3NzEJMzExNmNjNzQtMmVjNC00YmJlLWExZTktZDA3YTgyYTQ4ZjQ2CTQ0MDA0ZjIyYzJmMAk0NDAwNGYyMmMyZjAJX3Zfem9uZTozMDYwMDAsMzA2MDAyfHVzZXJfZ2VuZGVyOjUwMnx1c2VyX2dyb3VwOjkwMyw5MDEsOTA4LDkwNyw5MDJ8dl96b25lOjMwNjAwMCwzMDYwMDJ8dXNlcl90YWc6MjAyMTIsMjA0MjUsMjA2MzQsMjA5NTYsMjEyNzB8bW9iaWxlX2JyYW5kOjEyMDl8bW9iaWxlX2Jyb3dzZXI6ODA3fHZfaXNwOjEzMDB8d2FwX29zOjcwNHx1c2VyX2FnZTo2MDIsNjA0LDYwM3xwb3M6UERQUzAwMDAwMDA1NDc3MXx2ZXJzaW9uOnBjOjYuMF9hZ2VfZ2VuZGVyX29yaWdpbl8yCS0JMzA2MDAwfDMwNjAwMgk0NDAwNGYyMmMyZjAJ5Y2a5a6i5q2j5paH6aG15bem5L6nMTIwKjI3MOaCrOWBnOaMiemSruWGheW5vzHova4JCTNmMGNkYzViMjk2NwlBRQktCTUJLQktCS0JLQktCS0JLQktCTIJMQktCTAJMAkt&amp;url=http%3A%2F%2Fblog.sina.com.cn%2Flm%2Fz%2Fapp%2F&amp;captcha=-6610265722932370164&amp;viewlog=false" target="_blank"><img src="index_files/1404746.png" style="width:120px;height:270px;border:0" alt="http://d1.sina.com.cn/201601/07/1404746.png" border="0"></a></div></div>
+<!--$sinatopbar-->
+<ins data-ad-offset-top="0" data-ad-offset-left="0" data-ad-status="done" class="sinaads sinaads-done" data-ad-pdps="PDPS000000049439" style="display: block; overflow: hidden; text-decoration: none;"><ins style="text-decoration:none;margin:0px auto;width:950px;display:block;position:relative;"><a href="http://sax.sina.com.cn/dsp/click?t=MjAxNi0wMi0xNiAxNzo0NDoyNAkxODMuNjIuMjI2LjE3OAkxODMuNjIuMjI2LjE3OF8xNDUwOTIzMzEzLjE2MDk5OAk1MmM3YjRmNi0zMTRjLTQwZmYtYjVjYy1jMTkzY2FkODdhYjIJMzQ3NjMyCTM5MDAxMjEzODdfUElOUEFJLUNQQwkxMDY5NDAJODM2MzgJNS4yMDgzMzM2RS00CTEJdHJ1ZQlQRFBTMDAwMDAwMDQ5NDM5CTk4OTcxMwlQQwlpbWFnZQkwCW51bGwJMQky&amp;userid=183.62.226.178_1450923313.160998&amp;p=smylplfMSBuXurax9pgn%2BCQKLioab7gEZb%2BtEg%3D%3D&amp;url=http%3A%2F%2Fsax.sina.com.cn%2Fclick%3Ftype%3D2%26t%3DYjI2Y2E1YTYtNTdjYy00ODFiLTk3YmEtYjZiMWY2OTgyN2Y4CTE3CVBEUFMwMDAwMDAwNDk0MzkJOTg5NzEzCTEJUlRCCS0%253D%26id%3D17%26url%3Dhttp%253A%252F%252Fcp.lvya.com%252Fproduct%252Fart%252Fzsh%252Fstandard%252F%253Fsrc%253Dsina-image-zzs-95090%26sina_sign%3D19c4256bac607a3e&amp;sign=97b97b9c9c482365" target="_blank"><img src="index_files/d4f6d7eb8f3944b980bea4b1d3425fb6.jpg" style="width:950px;height:90px;border:0" alt="http://d2.sina.com.cn/pfpghc2/201601/27/d4f6d7eb8f3944b980bea4b1d3425fb6.jpg" border="0"></a></ins></ins><div style="z-index:512;" class="nsinatopbar">
+  <div style="position:absolute;left:0;top:0;" id="trayFlashConnetion"><embed pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" src="index_files/scache.swf" style="undefined" id="scache" name="scache" bgcolor="#00ff00" quality="high" wmode="transparent" allowscriptaccess="always" height="1" width="1"></div>
+  <div class="ntopbar_main"><div style="display: none;" id="_4881455615863274_panel" class="horn"><div id="_4881455615863274_tj" class="horn_con" style="">推荐：<a suda-uatrack="key=blog_notice&amp;value=h_SLOT_58_84_N" title="老炮儿尴尬到底预示着什么" id="_4881455615863274_noticeAd1" target="_blank" href="http://blog.sina.com.cn/lm/ruiblog">老炮儿尴尬到底预示着什么</a><a suda-uatrack="key=blog_notice&amp;value=h_SLOT_59_84_N" title="媒体讨伐的索罗斯是何方神圣" id="_4881455615863274_noticeAd2" target="_blank" href="http://blog.sina.com.cn/s/blog_a5357a3e0102wbux.html?tj=1">媒体讨伐的索罗斯是何方神圣</a></div><div id="_4881455615863274_announce" class="horn_con" style="display:none;"><p id="_4881455615863274_announceCon">公告：<em>请您及时更换请请请您正在使用的模版将于2周后被下线，请您及时更换</em></p></div><a class="close" title="关闭" id="_4881455615863274_close" style="float:none;">×</a></div> 
+    <a id="login_bar_logo_link_350" href="http://blog.sina.com.cn/" target="_blank"><img class="ntopbar_logo" src="index_files/topbar_logo.gif" alt="新浪博客" width="100"></a>
+    <div class="ntopbar_floatL">
+      <div class="ntopbar_search" id="traySearchBar"><div style="" class="ntopbar_input" id="_5061455615863262_panel"><form id="_5061455615863262_searchForm" method="get" target="_blank" action="http://search.sina.com.cn/"><input id="_5061455615863262_queryTxt" class="ntopbar_txt" name="q" autocomplete="off" type="text"><input id="_5061455615863262_submit" onclick="" class="ntopbar_searchBtn" value="" type="submit"><input name="ie" value="utf-8" type="hidden"><input name="e" value="utf-8" type="hidden"><input id="_5061455615863262_range" name="range" value="article" type="hidden"><input id="_5061455615863262_t" name="t" value="" type="hidden"><input id="_5061455615863262_s" name="s" value="sup" type="hidden"><input id="_5061455615863262_by" name="by" value="all" type="hidden"><input id="_5061455615863262_type" name="type" value="" type="hidden"><input id="_5061455615863262_stype" name="stype" value="1" type="hidden"><input id="_5061455615863262_c" name="c" value="blog" type="hidden"></form></div></div>
+	  <div class="ntopbar_ad" id="loginBarActivity" style=""><a onmousedown="" style="color: red;" title="普京财产外界究竟知多少" href="http://blog.sina.com.cn/s/blog_537f026d0102wjoj.html?tj=1" suda-uatrack="key=blog_topbar&amp;value=h_SLOT_48_84_N" target="_blank">普京财产外界究竟知多少</a><ins data-ad-offset-top="99" data-ad-offset-left="464" data-ad-status="done" class="sinaads sinaads-fail" data-ad-pdps="PDPS000000033238" style="display:block;"></ins></div>
+    </div>
+    <div style="display: none;" class="ntopbar_loading"><img src="index_files/loading.gif">加载中…</div>
+  <div login="1" style="" id="_9231455615863261_panel" class="ntopbar_login"><a class="login" onclick="" href="###" action-type="tray-login-btn"><span>登录</span></a><a class="register" onclick="" target="_blank" href="http://login.sina.com.cn/signup/signupmail.php?entry=blog&amp;srcuid=2331425745&amp;src=blogicp">注册</a></div></div>
+</div>
+<!--$end sinatopbar-->
+
+<div class="sinabloga" id="sinabloga">
+	<div id="sinablogb" class="sinablogb">
+
+	   
+ <div id="sinablogHead" class="sinabloghead">
+     <div style="display: none;" id="headflash" class="headflash"></div>
+	   <div id="headarea" class="headarea">
+      <div id="blogTitle" class="blogtoparea">
+      <h1 id="blogname" class="blogtitle"><a href="http://blog.sina.com.cn/u/2331425745"><span id="blognamespan">xiaochao的博客</span></a></h1>
+	  		
+					<div id="bloglink" class="bloglink"><a href="http://blog.sina.com.cn/u/2331425745">http://blog.sina.com.cn/u/2331425745</a>  <a onclick="" class="CP_a_fuc" href="#" id="SubscribeNewRss">[<cite>订阅</cite>]</a><a class="CP_a_fuc" href="javascript:void(0);">[<cite>手机订阅</cite>]</a></div>
+      </div>
+      <div class="blognav" id="blognav">
+      			  <div id="blognavBg" class="blognavBg"></div> <div class="blognavInfo"> 
+		<span><a href="http://blog.sina.com.cn/u/2331425745">首页</a></span>
+      <span><a class="on" href="http://blog.sina.com.cn/s/articlelist_2331425745_0_1.html">博文目录</a></span>
+      <span><a href="http://photo.blog.sina.com.cn/u/2331425745">图片</a></span>
+      <span class="last"><a href="http://blog.sina.com.cn/s/profile_2331425745.html">关于我</a></span></div>
+      </div>      		      		 	
+      
+             <div class="autoskin" id="auto_skin">
+       </div>
+
+<div class="adsarea">
+     <a href="#"><div id="template_clone_pic" class="pic"></div></a>
+     <div id="template_clone_link" class="link wdc_HInf"></div>
+     <div id="template_clone_other" class="other"></div>        
+</div>
+    </div>
+    </div>
+    
+    <!--主题内容开始 -->
+    <div class="sinablogbody" id="sinablogbody">
+		
+	<!--第一列start-->
+    <div id="column_1" class="SG_colW21 SG_colFirst"><div class="SG_conn" id="module_901">
+    <div class="SG_connHead">
+            <span class="title" comp_title="个人资料">个人资料</span>
+            <span class="edit">
+                        </span>
+    </div>
+    <div class="SG_connBody">
+        <div class="info">
+                         
+            <div class="info_img" id="comp_901_head"><img src="index_files/180.gif" real_src="http://portrait2.sinaimg.cn/2331425745/blog/180" id="comp_901_head_image" alt="xiaochao" title="xiaochao" height="180" width="180"></div>
+            
+            <div class="info_txt">
+              <div class="info_nm">
+                <img id="comp_901_online_icon" style="display:none;" class="SG_icon SG_icon1" src="index_files/sg_trans.gif" align="absmiddle" height="15" width="15">
+                <span class="SG_txtb"><strong id="ownernick">xiaochao</strong></span>
+                
+                <div class="clearit"></div>
+              </div>
+              <div class="info_btn1">
+                <a target="_blank" href="http://weibo.com/u/2331425745?source=blog" class="SG_aBtn SG_aBtn_ico"><cite><img class="SG_icon SG_icon51" src="index_files/sg_trans.gif" align="absmiddle" height="15" width="15">微博</cite></a>
+                <div class="clearit"></div>
+              </div>
+    <div class="SG_j_linedot"></div>        <div class="info_locate" id="info_locate_id">
+<div class="SG_j_linedot"></div>
+<div class="info_btn2">
+    <p>
+    <a href="javascript:void(0);" class="SG_aBtn " id="comp901_btn_invite"><cite>加好友</cite></a>
+    <a href="javascript:void(0);" class="SG_aBtn" id="comp901_btn_sendpaper"><cite>发纸条</cite></a>
+    </p>
+    <p>
+    <a href="http://blog.sina.com.cn/s/profile_2331425745.html#write" class="SG_aBtn" id="comp901_btn_msninfo"><cite>写留言</cite></a>
+    <a href="#" onclick="" class="SG_aBtn" id="comp901_btn_follow"><cite>加关注</cite></a>
+    </p>
+    <div class="clearit"></div>
+</div>
+<div class="SG_j_linedot"></div>
+</div>
+                  <div class="info_list"><a href="http://blog.sina.com.cn/lm/ten" target="_blank" title=""><img src="index_files/ten_182_48.png" alt="博客十周年"></a></div><div class="info_list"><a href="http://blog.sina.com.cn/lm/map/" target="_blank" title=""><img src="index_files/ten_map.png" alt="博客十周年地图"></a></div><div class="info_list">     
+                                   <ul class="info_list1">
+                    <li><span class="SG_txtc">博客等级：</span><span id="comp_901_grade"><img src="index_files/1.gif"><img src="index_files/3.gif"></span></li>
+                    <li><span class="SG_txtc">博客积分：</span><span id="comp_901_score"><a href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_action.php" title="积分"><strong>229</strong><img title="积分" alt="积分" src="index_files/sg_trans.gif" class="SG_icon SG_icon11" align="top" height="15" width="15"></a></span></li>
+                    </ul>
+                    <ul class="info_list2">
+                    <li><span class="SG_txtc">博客访问：</span><span id="comp_901_pv"><strong>28,321</strong></span></li>
+                    <li><span class="SG_txtc">关注人气：</span><span id="comp_901_attention"><strong>8</strong></span></li>
+                    <li><span class="SG_txtc">获赠金笔：</span><strong id="comp_901_d_goldpen">2</strong></li>
+                    <li><span class="SG_txtc">赠出金笔：</span><strong id="comp_901_r_goldpen">0</strong></li>
+					<li class="lisp" id="comp_901_badge"><span class="SG_txtc">荣誉徽章：</span><a href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_action.php" title="点亮荣誉勋章"><img title="点亮荣誉勋章" alt="点亮荣誉勋章" src="index_files/sg_trans.gif" class="badge" style="background-image:url(index_files/badge08.png);_background-image: url(urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/badge/badge08.gif);"></a><a href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_action.php" title="兑换图片博主服务"><img title="兑换图片博主服务" alt="兑换图片博主服务" src="index_files/sg_trans.gif" class="badge" style="background-image:url(index_files/badge11.png);_background-image: url(urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/badge/badge11.gif);"></a><a href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_action.php" title="兑换私密博文"><img title="兑换私密博文" alt="兑换私密博文" src="index_files/sg_trans.gif" class="badge" style="background-image:url(index_files/badge13.png);_background-image: url(urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/badge/badge13.gif);"></a><a href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_action.php" title="兑换金笔"><img title="兑换金笔" alt="兑换金笔" src="index_files/sg_trans.gif" class="badge" style="background-image:url(index_files/badge15.png);_background-image: url(urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/badge/badge15.gif);"></a></li>
+                    </ul>
+                  </div>
+<div class="clearit"></div>
+    </div>
+    <div class="clearit"></div>
+</div>
+            </div>       
+            <div class="SG_connFoot"></div>
+</div>
+<div class="SG_conn" suda-uatrack="key=blog_article&amp;value=h_article53" id="hotShangPin"><ins data-ad-offset-top="978" data-ad-offset-left="201" data-ad-status="done" class="sinaads sinaads-done" data-ad-pdps="PDPS000000057414" style="display: block; overflow: hidden; text-decoration: none;"><ins style="text-decoration:none;margin:0px auto;width:210px;display:block;position:relative;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" src="index_files/exsites.html" name="clickTAG=http%3A%2F%2Fsax.sina.com.cn%2Fmfp%2Fclick%3Ftype%3D3%26t%3DMjAxNi0wMi0xNiAxNzo0NDoyNAkxODMuNjIuMjI2LjE3OAkxODMuNjIuMjI2LjE3OF8xNDUwOTIzMzEzLjE2MDk5OAlodHRwOi8vYmxvZy5zaW5hLmNvbS5jbi9zL2Jsb2dfOGFmNmJiZDEwMTAxaGZkai5odG1sCVBEUFMwMDAwMDAwNTc0MTQJYjIzNjI2ODktYmNjYS00YTM5LTg3NTAtYmFhOTdmMDAxMjJkCUY4RkRCNzdGM0UyMwlGOEZEQjc3RjNFMjMJX3Zfem9uZTozMDYwMDAsMzA2MDAyfHVzZXJfZ2VuZGVyOjUwMnx1c2VyX2dyb3VwOjkwMyw5MDEsOTA4LDkwNyw5MDJ8dl96b25lOjMwNjAwMCwzMDYwMDJ8dXNlcl90YWc6MjAyMTIsMjA0MjUsMjA2MzQsMjA5NTYsMjEyNzB8bW9iaWxlX2JyYW5kOjEyMDl8bW9iaWxlX2Jyb3dzZXI6ODA3fHZfaXNwOjEzMDB8d2FwX29zOjcwNHx1c2VyX2FnZTo2MDIsNjA0LDYwM3xwb3M6UERQUzAwMDAwMDA1NzQxNHx2ZXJzaW9uOnBjOjYuMF9hZ2VfZ2VuZGVyX29yaWdpbl8yCS0JMzA2MDAwfDMwNjAwMglGOEZEQjc3RjNFMjMJTkIxNTEyMDU2OQlQRFBTMDAwMDAwMDU3NDE0CUY4RkRCNzdGM0UyMwlBRQktCTUJLQktCS0JLQktCS0JLQktCTIJMTQJLQkwCTAJLQ%253D%253D&amp;viewTAG=http%3A%2F%2Fsax.sina.com.cn%2Fmfp%2Fview%3Ftype%3D3%26t%3DMjAxNi0wMi0xNiAxNzo0NDoyNAkxODMuNjIuMjI2LjE3OAkxODMuNjIuMjI2LjE3OF8xNDUwOTIzMzEzLjE2MDk5OAlodHRwOi8vYmxvZy5zaW5hLmNvbS5jbi9zL2Jsb2dfOGFmNmJiZDEwMTAxaGZkai5odG1sCVBEUFMwMDAwMDAwNTc0MTQJYjIzNjI2ODktYmNjYS00YTM5LTg3NTAtYmFhOTdmMDAxMjJkCUY4RkRCNzdGM0UyMwlGOEZEQjc3RjNFMjMJX3Zfem9uZTozMDYwMDAsMzA2MDAyfHVzZXJfZ2VuZGVyOjUwMnx1c2VyX2dyb3VwOjkwMyw5MDEsOTA4LDkwNyw5MDJ8dl96b25lOjMwNjAwMCwzMDYwMDJ8dXNlcl90YWc6MjAyMTIsMjA0MjUsMjA2MzQsMjA5NTYsMjEyNzB8bW9iaWxlX2JyYW5kOjEyMDl8bW9iaWxlX2Jyb3dzZXI6ODA3fHZfaXNwOjEzMDB8d2FwX29zOjcwNHx1c2VyX2FnZTo2MDIsNjA0LDYwM3xwb3M6UERQUzAwMDAwMDA1NzQxNHx2ZXJzaW9uOnBjOjYuMF9hZ2VfZ2VuZGVyX29yaWdpbl8yCS0JMzA2MDAwfDMwNjAwMglGOEZEQjc3RjNFMjMJTkIxNTEyMDU2OQlQRFBTMDAwMDAwMDU3NDE0CUY4RkRCNzdGM0UyMwlBRQktCTUJLQktCS0JLQktCS0JLQktCTIJMTQJLQkwCTAJLQ%253D%253D%26userid%3D183.62.226.178_1450923313.160998%26viewlog%3Dfalse" height="220px" scrolling="no" width="210px" frameborder="0"></iframe></ins></ins></div><div id="module_903" class="SG_conn ">
+    <div class="SG_connHead">
+    <span comp_title="相关博文" class="title">相关博文</span>
+    <span class="edit"> </span>
+    </div>
+    <div class="SG_connBody">
+    <div class="atcTitList relaList">        <ul class="">
+
+                <li class="SG_j_linedot1" style=""><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_SLOT_41_84_N" href="http://blog.sina.com.cn/s/blog_5059bb1d0102wfcw.html" target="_blank" title="实拍：面纱下的印度女人">实拍：面纱下的印度女人</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_SLOT_41_84_N" href="http://blog.sina.com.cn/s/blog_5059bb1d0102wfcw.html" class="SG_linkb" target="_blank">行走的强子</a></p></li>
+        <li class="SG_j_linedot1" style=""><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_SLOT_42_84_N" href="http://blog.sina.com.cn/s/blog_5dcf3a360102wco0.html" target="_blank" title="北京纯爷们挑战冬泳极限">北京纯爷们挑战冬泳极限</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_SLOT_42_84_N" href="http://blog.sina.com.cn/s/blog_5dcf3a360102wco0.html" class="SG_linkb" target="_blank">夏风秋云</a></p></li>
+        
+                	<li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_62bde6c80101ard7.html" target="_blank" title="Packageglib-2.0wasnotfoundinthepkg-configsearch&amp;">Packageglib-2.0wasnotfoundinthepkg-configsearch&amp;</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1656612552" class="SG_linkb" target="_blank">Acegoal</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_6fd2f5e00100p9o3.html" target="_blank" title="Linux命令——pkg-config">Linux命令——pkg-config</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1876096480" class="SG_linkb" target="_blank">Linuxn</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_628bebe401010mdr.html" target="_blank" title="QT环境搭建常见的bug解决">QT环境搭建常见的bug解决</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1653337060" class="SG_linkb" target="_blank">crazylinuxer</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_8173506f0100x95v.html" target="_blank" title="./autogen.sh:4:autoreconf:notfound">./autogen.sh:4:autoreconf:notfound</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/2171818095" class="SG_linkb" target="_blank">Sonic</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_701768b70101hqjz.html" target="_blank" title="[转载]CentOS下安装QT5">[转载]CentOS下安装QT5</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1880582327" class="SG_linkb" target="_blank">追逐梦想的少年</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_5922b3960101s5j9.html" target="_blank" title="如何在windows平台下编译比特币bitcoin客户端">如何在windows平台下编译比特币bitcoin客户端</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1495446422" class="SG_linkb" target="_blank">糊三哥</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_48d5933f0100p747.html" target="_blank" title="使用Boost.Asio库(出现连接错误undefinedreferencetoXXX)">使用Boost.Asio库(出现连接错误undefinedreferencetoXXX)</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1221956415" class="SG_linkb" target="_blank">ruilinxiang</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_7530db6f0100qrbx.html" target="_blank" title="Cygwin下配置GTK+编程环境">Cygwin下配置GTK+编程环境</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1966136175" class="SG_linkb" target="_blank">songlye</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_4d8cf3140101mt6y.html" target="_blank" title="[转载]mongoDB的go语言驱动mgo介绍、使用">[转载]mongoDB的go语言驱动mgo介绍、使用</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1301082900" class="SG_linkb" target="_blank">iProg</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_630c58cb0101gnuf.html" target="_blank" title="golangraceconditiondetection">golangraceconditiondetection</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1661753547" class="SG_linkb" target="_blank">funkygao</a></p></li></ul>
+    <div class="atcTit_more"><span class="SG_more"><a href="http://blog.sina.com.cn/" target="_blank">更多&gt;&gt;</a></span></div></div>    </div>
+    <div class="SG_connFoot"></div>
+  </div><ins data-ad-offset-top="1900" data-ad-offset-left="201" data-ad-status="done" class="sinaads sinaads-done" data-ad-pdps="PDPS000000055124" style="display: block; overflow: hidden; text-decoration: none; margin-bottom: 10px;"><ins style="text-decoration:none;margin:0px auto;width:210px;display:block;position:relative;"><a href="http://sax.sina.com.cn/dsp/click?t=MjAxNi0wMi0xNiAxNzo0NDoyNAkxODMuNjIuMjI2LjE3OAkxODMuNjIuMjI2LjE3OF8xNDUwOTIzMzEzLjE2MDk5OAkyZjRhOWRjMS1hODYwLTQxMjItYmM2OS1jNGYxYTViYjY4MjcJMTI2MjIwCTM5MDAwNzMyMjNfUElOUEFJLUNQQwk0Nzc0NgkxMDQ2NTUJNC41NDU0NTQ2RS00CTEJdHJ1ZQlQRFBTMDAwMDAwMDU1MTI0CTUzMTcxNglQQwlpbWFnZQkwCW51bGwJMQkxNg==&amp;userid=183.62.226.178_1450923313.160998&amp;p=TuApLCQ8Re6Ezp453wDVH43HlEcYx7tbyDXhNg%3D%3D&amp;url=http%3A%2F%2Fsax.sina.com.cn%2Fclick%3Ftype%3D2%26t%3DNGVlMDI5MmMtMjQzYy00NWVlLTg0Y2UtOWUzOWRmMDBkNTFmCTE3CVBEUFMwMDAwMDAwNTUxMjQJNTMxNzE2CTEJUlRCCS0%253D%26id%3D17%26url%3Dhttp%253A%252F%252Ffozhu.guojiyu.cn%252Fproduct%252Fart%252Fcxsc%252Fstandard%252F%253Fsrc%253Dsina-image-721b-Q210220-bk%26sina_sign%3D51ac1cf5d25ac40e&amp;sign=23c44efe953a9521" target="_blank"><img src="index_files/61052d8bfecb4e69b2a47a7d713daa1c.jpg" style="width:210px;height:220px;border:0" alt="http://d4.sina.com.cn/pfpghc2/201508/24/61052d8bfecb4e69b2a47a7d713daa1c.jpg" border="0"></a></ins></ins><div class="SG_conn"><!--博客左侧推荐商讯210*220按钮(扶翼) Start--><ins style="display: block; overflow: hidden; text-decoration: none;" data-ad-offset-top="0" data-ad-offset-left="0" data-ad-status="done" class="sinaads sinaads-done" data-ad-pdps="PDPS000000057669"><ins style="text-decoration:none;margin:0px auto;width:210px;display:block;position:relative;"><a href="http://sax.sina.com.cn/click?type=bottom&amp;t=UERQUzAwMDAwMDA1NzY2OQ%3D%3D&amp;url=http%3A%2F%2Fyangfanbook.sina.com.cn%2F&amp;sign=565feca9870c0ef9" target="_blank"><img src="index_files/523500.jpg" style="width:210px;height:220px;border:0" alt="http://d1.sina.com.cn/201311/21/523500.jpg" border="0"></a></ins></ins><script><!--
+/* Script removed by snapshot save */
+--></script><!--博客左侧推荐商讯210*220按钮(扶翼) End—></div>--></div>
+<ins data-ad-offset-top="941" data-ad-offset-left="201" data-ad-status="done" class="sinaads sinaads-done" data-ad-pdps="PDPS000000033239" style="display: block; overflow: hidden; text-decoration: none; margin-bottom: 10px;"><ins style="text-decoration:none;margin:0px auto;width:210px;display:block;position:relative;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" src="index_files/tanx.html" name="clickTAG=http%3A%2F%2Fsax.sina.com.cn%2Fmfp%2Fclick%3Ftype%3D3%26t%3DMjAxNi0wMi0xNiAxNzo0NDoyMwkxODMuNjIuMjI2LjE3OAkxODMuNjIuMjI2LjE3OF8xNDUwOTIzMzEzLjE2MDk5OAlodHRwOi8vYmxvZy5zaW5hLmNvbS5jbi9zL2Jsb2dfOGFmNmJiZDEwMTAxaGZkai5odG1sCVBEUFMwMDAwMDAwMzMyMzkJMmU5NGRhODQtMzUxYi00ODFlLTllZjMtYjViOGRlMTQ3NzJkCUFFNjYwMzg5Mjk4NglBRTY2MDM4OTI5ODYJX3Zfem9uZTozMDYwMDAsMzA2MDAyfHVzZXJfZ2VuZGVyOjUwMnx1c2VyX2dyb3VwOjkwMyw5MDEsOTA4LDkwNyw5MDJ8dl96b25lOjMwNjAwMCwzMDYwMDJ8dXNlcl90YWc6MjAyMTIsMjA0MjUsMjA2MzQsMjA5NTYsMjEyNzB8bW9iaWxlX2JyYW5kOjEyMDl8bW9iaWxlX2Jyb3dzZXI6ODA3fHZfaXNwOjEzMDB8d2FwX29zOjcwNHx1c2VyX2FnZTo2MDIsNjA0LDYwM3xwb3M6UERQUzAwMDAwMDAzMzIzOXx2ZXJzaW9uOnBjOjYuMF9hZ2VfZ2VuZGVyX29yaWdpbl8yCS0JMzA2MDAwfDMwNjAwMglBRTY2MDM4OTI5ODYJTkIxNTEyMDA1NgkJQUU2NjAzODkyOTg2CUFFCS0JNQktCS0JLQktCS0JLQktCS0JMgkxNAktCTAJMAkt&amp;viewTAG=http%3A%2F%2Fsax.sina.com.cn%2Fmfp%2Fview%3Ftype%3D3%26t%3DMjAxNi0wMi0xNiAxNzo0NDoyMwkxODMuNjIuMjI2LjE3OAkxODMuNjIuMjI2LjE3OF8xNDUwOTIzMzEzLjE2MDk5OAlodHRwOi8vYmxvZy5zaW5hLmNvbS5jbi9zL2Jsb2dfOGFmNmJiZDEwMTAxaGZkai5odG1sCVBEUFMwMDAwMDAwMzMyMzkJMmU5NGRhODQtMzUxYi00ODFlLTllZjMtYjViOGRlMTQ3NzJkCUFFNjYwMzg5Mjk4NglBRTY2MDM4OTI5ODYJX3Zfem9uZTozMDYwMDAsMzA2MDAyfHVzZXJfZ2VuZGVyOjUwMnx1c2VyX2dyb3VwOjkwMyw5MDEsOTA4LDkwNyw5MDJ8dl96b25lOjMwNjAwMCwzMDYwMDJ8dXNlcl90YWc6MjAyMTIsMjA0MjUsMjA2MzQsMjA5NTYsMjEyNzB8bW9iaWxlX2JyYW5kOjEyMDl8bW9iaWxlX2Jyb3dzZXI6ODA3fHZfaXNwOjEzMDB8d2FwX29zOjcwNHx1c2VyX2FnZTo2MDIsNjA0LDYwM3xwb3M6UERQUzAwMDAwMDAzMzIzOXx2ZXJzaW9uOnBjOjYuMF9hZ2VfZ2VuZGVyX29yaWdpbl8yCS0JMzA2MDAwfDMwNjAwMglBRTY2MDM4OTI5ODYJTkIxNTEyMDA1NgkJQUU2NjAzODkyOTg2CUFFCS0JNQktCS0JLQktCS0JLQktCS0JMgkxNAktCTAJMAkt%26userid%3D183.62.226.178_1450923313.160998%26viewlog%3Dfalse" height="220px" scrolling="no" width="210px" frameborder="0"></iframe></ins></ins><div class="SG_conn " id="module_904">
+<div class="SG_connHead">
+<span class="title">推荐博文</span>
+</div>
+<div class="SG_connBody ">
+	<div class="atcTitList relaList">		<ul class="">
+			<li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="不靠谱的PPMM-- " target="_blank" href="http://blog.sina.com.cn/s/blog_476745f60102w6ba.html?tj=2?tj=2">不靠谱的PPMM-- </a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1197950454" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="解读｜习近平亲授旗 " target="_blank" href="http://blog.sina.com.cn/s/blog_6321a0f30102w6vw.html?tj=2?tj=2">解读｜习近平亲授旗 </a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1663148275" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="张召忠：折翅的几只“鹰”和日本" target="_blank" href="http://blog.sina.com.cn/s/blog_1536b7d050102wfs5.html?tj=2?tj=2">张召忠：折翅的几只“鹰”和日本</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/5694520581" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="哪个国家生活太安逸导致自杀率高" target="_blank" href="http://blog.sina.com.cn/s/blog_538268a00102w318.html?tj=2?tj=2">哪个国家生活太安逸导致自杀率高</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1401055392" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="陈满23年后改判无罪的三大看点" target="_blank" href="http://blog.sina.com.cn/s/blog_5643b6050102w5uh.html?tj=2?tj=2">陈满23年后改判无罪的三大看点</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1447278085" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="“阿玛尼”怎么成了另一种“品牌" target="_blank" href="http://blog.sina.com.cn/s/blog_612a923f0102xau1.html?tj=2?tj=2">“阿玛尼”怎么成了另一种“品牌</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1630179903" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="“饮鸩止渴”的日本“负利率”" target="_blank" href="http://blog.sina.com.cn/s/blog_6011cb260102w2xd.html?tj=2?tj=2">“饮鸩止渴”的日本“负利率”</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1611778854" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="被忽视的性别压迫——姐姐的牺牲" target="_blank" href="http://blog.sina.com.cn/s/blog_4b423c430102wds2.html?tj=2?tj=2">被忽视的性别压迫——姐姐的牺牲</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1262632003" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="​蘇嘉全夠格擔任新" target="_blank" href="http://blog.sina.com.cn/s/blog_6e46faed0102wa0f.html?tj=2?tj=2">​蘇嘉全夠格擔任新</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1850145517" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="13岁少年“参政”有何不可？" target="_blank" href="http://blog.sina.com.cn/s/blog_3eac66f90102w4or.html?tj=2?tj=2">13岁少年“参政”有何不可？</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1051485945" class="SG_linkb"></a></p>
+		</li>		</ul>
+		<div id="atcPicList">
+		</div>
+	<div class="atcTit_more"><span class="SG_more"><a target="_blank" href="http://blog.sina.com.cn/">查看更多</a>&gt;&gt;</span></div></div></div>
+<div class="SG_connFoot"></div>
+</div>
+        <div class="SG_conn" id="module_47"><div class="SG_connHead">
+                <span class="title" comp_title="谁看过这篇博文">谁看过这篇博文</span>
+                                <span class="edit"></span>
+            </div>
+            <div class="SG_connBody">
+            	<div class="wdtLoading"><img src="index_files/loading.gif">加载中…</div>            </div>
+            <div class="SG_connFoot"></div>
+                  </div></div>
+	<!--第一列end-->
+	
+	<!--第二列start-->
+	<div id="column_2" class="SG_colW73">	
+<div id="module_920" class="SG_conn">
+	<div class="SG_connHead">
+	    <span comp_title="正文" class="title">正文</span>
+	    <span class="edit"><span id="articleFontManage" class="fontSize">字体大小：<a href="javascript:void(0);" onclick="">大</a> <strong>中</strong> <a href="javascript:void(0);" onclick="">小</a></span></span>
+	</div>
+    <div id="module_920_SG_connBody" class="SG_connBody">
+<!--博文正文 begin -->
+	<div id="articlebody" class="artical" favmd5="{&quot;8af6bbd10101hfdj&quot;:&quot;c7427634d53f4a76df522120935cfa79&quot;}">
+		<div class="articalTitle"> 
+			
+								<h2 id="t_8af6bbd10101hfdj" class="titName SG_txta">pkg-config的用法</h2>
+			
+					<span class="time SG_txtc">(2014-02-24 19:02:53)</span><div class="turnBoxzz"><a href="javascript:void(0);" class="SG_aBtn SG_aBtn_ico SG_turn" action-type="reblog" action-data="{srcBlog:1, blogId:'8af6bbd10101hfdj'}"><cite><img class="SG_icon SG_icon111" src="index_files/sg_trans.gif" align="absmiddle" height="15" width="15">转载<em class="arrow">▼</em></cite></a></div>		</div>
+		<div class="articalTag" id="sina_keyword_ad_area">
+			<table>
+				<tbody><tr>
+					<td class="blog_tag">
+					<script><!--
+/* Script removed by snapshot save */
+--></script>
+										</td>
+					<td class="blog_class">
+											<span class="SG_txtb">分类：</span>
+						<a target="_blank" href="http://blog.sina.com.cn/s/articlelist_2331425745_6_1.html">Linux</a>
+										</td>
+				</tr>
+			</tbody></table>
+		</div>
+						<!-- 正文开始 -->
+		<div id="sina_keyword_ad_area2" class="articalContent   ">
+			<div style="TexT-ALiGn: left; WiDoWs: 2; TexT-TrAnsForM: none; BACKGroUnD-CoLor: rgb(255,255,255); TexT-inDenT: 0px; FonT: 12px 'Hiragino sans GB W3', 'Hiragino sans GB', Arial, Helvetica, simsun, u5b8bu4f53; WHiTe-spACe: normal; orpHAns: 2; LeTTer-spACinG: normal; CoLor: rgb(51,51,51); WorD-spACinG: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px">
+<div>
+<div><span style="Line-HeiGHT: 28px"> <wbr></span></div>
+</div>
+</div>
+<div style="TexT-ALiGn: left; pADDinG-BoTToM: 5px; WiDoWs: 2; TexT-TrAnsForM: none; BACKGroUnD-CoLor: rgb(255,255,255); TexT-inDenT: 0px; MArGin: 15px 0px; pADDinG-LeFT: 0px; pADDinG-riGHT: 0px; FonT: 16px/28px 'Hiragino sans GB W3', 'Hiragino sans GB', Arial, Helvetica, simsun, u5b8bu4f53; WorD-WrAp: break-word; WHiTe-spACe: normal; orpHAns: 2; LeTTer-spACinG: normal; CoLor: rgb(51,51,51); oVerFLoW: hidden; WorD-spACinG: 0px; pADDinG-Top: 5px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px">
+<h4 style="Line-HeiGHT: 28px"><b style="Line-HeiGHT: 28px; BACKGroUnD-CoLor: rgb(255,255,102); CoLor: black">
+pkg-config</b></h4>
+<div style="Line-HeiGHT: 28px">
+<div style="Line-HeiGHT: 28px; FonT-WeiGHT: bold"><font style="Line-HeiGHT: 22px" size="2"><span style="Line-HeiGHT: 22px; BACKGroUnD-CoLor: rgb(255,255,102); CoLor: black">
+pkg-config</span>程序是干什么用的？简单的说就是向用户向程序提供相应库的路径、版本号等信息的程序。</font></div>
+<div style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2">譬如说我们运行以下命令：<br style="Line-HeiGHT: 22px">
+<span style="Line-HeiGHT: 22px; CoLor: rgb(0,0,255); FonT-WeiGHT: bold">pkg-config <wbr>
+查看gcc的CFLAGS参数</span><br style="Line-HeiGHT: 22px"></font></div>
+<div style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2">$<b style="Line-HeiGHT: 22px; BACKGroUnD-CoLor: rgb(255,255,102); CoLor: rgb(255,0,0); FonT-WeiGHT: bold">pkg-config</b><span style="Line-HeiGHT: 22px; CoLor: rgb(255,0,0); FonT-WeiGHT: bold"><span> <wbr></span>--libs
+--cflags opencv</span></font></div>
+<div style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2">会显示如下信息：</font></div>
+<div style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2">-I/usr/include/opencv -lcxcore -lcv -lhighgui
+-lcvaux</font></div>
+<div style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2">各位看官，你看这不就是我们用gcc编译连接时CFLAGS的参数吗？</font></div>
+<div style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2">因此当我们需要编译连接某个库时，我们只需要把上面那行加入gcc 的参数里面即可。</font></div>
+<div style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2">这也是configure的作用，它会检查你需要的包，产生相应的信息。</font></div>
+<div style="Line-HeiGHT: 28px; FonT-WeiGHT: bold"><font style="Line-HeiGHT: 22px" size="2">那<span style="Line-HeiGHT: 22px; BACKGroUnD-CoLor: rgb(255,255,102); CoLor: black">pkg-config</span>从哪儿知道这些信息的呢？它是从包名为xxx.pc这个文件中查找到的。拿上面那个例子说，它是从opencv.pc这个文件中查知的。</font></div>
+<div style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2">那<b style="Line-HeiGHT: 22px; BACKGroUnD-CoLor: rgb(255,255,102); CoLor: black">pkg-config</b><span> <wbr></span>又怎么会知道opencv.pc这个文件呢？</font></div>
+<div style="Line-HeiGHT: 28px; FonT-WeiGHT: bold"><font style="Line-HeiGHT: 22px" size="2">下面我们看一下<span style="Line-HeiGHT: 22px; BACKGroUnD-CoLor: rgb(255,255,102); CoLor: black">pkg-config</span>是怎样工作的。</font></div>
+<div style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2"><span style="Line-HeiGHT: 22px; CoLor: rgb(128,0,0); FonT-WeiGHT: bold">缺省情况下，</span><b style="Line-HeiGHT: 22px; BACKGroUnD-CoLor: rgb(255,255,102); CoLor: rgb(128,0,0); FonT-WeiGHT: bold">pkg-config</b><span style="Line-HeiGHT: 22px; CoLor: rgb(128,0,0); FonT-WeiGHT: bold">首
+先在prefix/lib/pkgconfig/中查找相关包（譬如opencv）对应的相应的文件（opencv.pc）。在linux上上述路径名为
+/usr/lib/pkconfig/。若是没有找到，它也会到PKG_CONFIG_PATH这个环境变量所指定的路径下去找。若是没有找到，它就会报
+错</span>，例如：</font></div>
+<div style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2">Package opencv was not found in the<span> <wbr></span><b style="Line-HeiGHT: 22px; BACKGroUnD-CoLor: rgb(255,255,102); CoLor: black">pkg-config</b><span> <wbr></span>search
+path.<br style="Line-HeiGHT: 22px">
+Perhaps you should add the directory containing
+`opencv.pc'<br style="Line-HeiGHT: 22px">
+to the PKG_CONFIG_PATH environment variable<br style="Line-HeiGHT: 22px">
+No package 'opencv' found</font></div>
+<br style="Line-HeiGHT: 28px">
+<div style="Line-HeiGHT: 28px; FonT-WeiGHT: bold"><font style="Line-HeiGHT: 22px" size="2">设置环境变量PKG_CONFIG_PATH方法举例如下：</font></div>
+<div style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2"><span style="Line-HeiGHT: 22px; FonT-WeiGHT: bold">export
+PKG_CONFIG_PATH=/cv/lib:$PKG_CONFIG_PATH</span><br style="Line-HeiGHT: 22px">
+<br style="Line-HeiGHT: 22px">
+================================================================<br style="Line-HeiGHT: 22px">
+
+<span style="Line-HeiGHT: 22px; FonT-WeiGHT: bold">查看一个.pc文件的内容：</span><br style="Line-HeiGHT: 22px">
+
+[root@yx pkgconfig]#<span style="Line-HeiGHT: 22px; FonT-WeiGHT: bold"><span> <wbr></span>cat
+glib-2.0.pc<span> <wbr></span></span><br style="Line-HeiGHT: 22px">
+prefix=/usr<br style="Line-HeiGHT: 22px">
+exec_prefix=/usr<br style="Line-HeiGHT: 22px">
+libdir=/lib<br style="Line-HeiGHT: 22px">
+includedir=/usr/include<br style="Line-HeiGHT: 22px">
+configexecincludedir=/usr/lib/glib-2.0/include<br style="Line-HeiGHT: 22px">
+<br style="Line-HeiGHT: 22px">
+glib_genmarshal=glib-genmarshal<br style="Line-HeiGHT: 22px">
+gobject_query=gobject-query<br style="Line-HeiGHT: 22px">
+glib_mkenums=glib-mkenums<br style="Line-HeiGHT: 22px">
+<br style="Line-HeiGHT: 22px">
+Name: GLib<br style="Line-HeiGHT: 22px">
+Description: C Utility Library<br style="Line-HeiGHT: 22px">
+Version: 2.12.3<br style="Line-HeiGHT: 22px">
+Libs: -L${libdir} -lglib-2.0 <wbr><span> <wbr></span><br style="Line-HeiGHT: 22px">
+Cflags: -I${includedir}/glib-2.0
+-I${configexecincludedir}<br style="Line-HeiGHT: 22px">
+<br style="Line-HeiGHT: 22px">
+[root@yx pkgconfig]# pwd<br style="Line-HeiGHT: 22px">
+/usr/lib/pkgconfig<br style="Line-HeiGHT: 22px">
+<br style="Line-HeiGHT: 22px; FonT-WeiGHT: bold">
+<span style="Line-HeiGHT: 22px; FonT-WeiGHT: bold">可见.pc文件
+是对其的库文件路径，头</span></font><span style="Line-HeiGHT: 28px; FonT-WeiGHT: bold"><font style="Line-HeiGHT: 22px" size="2">文件路径，</font></span><font style="Line-HeiGHT: 22px" size="2"><span style="Line-HeiGHT: 22px; FonT-WeiGHT: bold">版本号，Cflags等一些参数进行封装。<br style="Line-HeiGHT: 22px">
+
+<br style="Line-HeiGHT: 22px">
+<span style="Line-HeiGHT: 22px; CoLor: rgb(0,0,255)">再来看看第一个Gtk+程序里的</span></span></font><span style="Line-HeiGHT: 28px"><span style="Line-HeiGHT: 28px; CoLor: rgb(0,0,255); FonT-WeiGHT: bold"><span> <wbr></span>`pkg-config <wbr> <wbr>
+--cflags <wbr> <wbr>
+--libs <wbr> gtk+-2.0`意思：</span><span style="Line-HeiGHT: 28px; CoLor: rgb(0,0,0)"><span> <wbr></span></span></span><br style="Line-HeiGHT: 28px">
+
+<span style="Line-HeiGHT: 28px"><span style="Line-HeiGHT: 28px"><span style="Line-HeiGHT: 28px; CoLor: rgb(0,0,255); FonT-WeiGHT: bold">`pkg-config <wbr> <wbr>
+--cflags <wbr> <wbr>
+--libs <wbr> gtk+-2.0`
+是pkg-config从路径/usr/lib/pkgconfig<br style="Line-HeiGHT: 28px">
+/gtk+-2.0.pc中提取出来的用于编译用的。</span></span></span><br style="Line-HeiGHT: 28px">
+<font style="Line-HeiGHT: 22px" size="2">[root@yx pkgconfig]#
+cat <wbr> gtk+-2.0.pc<span> <wbr></span><br style="Line-HeiGHT: 22px">
+prefix=/usr<br style="Line-HeiGHT: 22px">
+exec_prefix=/usr<br style="Line-HeiGHT: 22px">
+libdir=/usr/lib<br style="Line-HeiGHT: 22px">
+includedir=/usr/include<br style="Line-HeiGHT: 22px">
+target=x11<br style="Line-HeiGHT: 22px">
+<br style="Line-HeiGHT: 22px">
+gtk_binary_version=2.10.0<br style="Line-HeiGHT: 22px">
+gtk_host=i686-redhat-linux-gnu<br style="Line-HeiGHT: 22px">
+<br style="Line-HeiGHT: 22px">
+Name: GTK+<br style="Line-HeiGHT: 22px">
+Description: GIMP Tool Kit (${target} target)<br style="Line-HeiGHT: 22px">
+Version: 2.10.4<br style="Line-HeiGHT: 22px">
+Requires: gdk-${target}-2.0 atk cairo<br style="Line-HeiGHT: 22px">
+<span style="Line-HeiGHT: 22px; FonT-WeiGHT: bold">Libs:
+-L${libdir} -lgtk-${target}-2.0<span> <wbr></span></span><br style="Line-HeiGHT: 22px; FonT-WeiGHT: bold">
+<span style="Line-HeiGHT: 22px; FonT-WeiGHT: bold">Cflags:
+-I${includedir}/gtk-2.0<span> <wbr></span></span><br style="Line-HeiGHT: 22px">
+<span style="Line-HeiGHT: 22px; FonT-WeiGHT: bold"><br style="Line-HeiGHT: 22px">
+显然，出可以自己来指定为：-L/usr/lib <wbr>
+-lgtk-{target}-2.0 <wbr>
+-I/usr/include/gtk-2.0</span><br style="Line-HeiGHT: 22px; FonT-WeiGHT: bold"></font><span style="Line-HeiGHT: 28px; FonT-WeiGHT: bold">下面来看一下{target}该是多少：</span><br style="Line-HeiGHT: 28px">
+
+<br style="Line-HeiGHT: 28px">
+[root@yx lib]# ls gt<br style="Line-HeiGHT: 28px">
+gthumb/ <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr><span> <wbr></span><span style="Line-HeiGHT: 28px; FonT-WeiGHT: bold">gtk-2.0/</span> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr>
+gtkhtml/ <wbr> <wbr> <wbr> <wbr> <wbr> <wbr><span> <wbr></span><br style="Line-HeiGHT: 28px">
+
+gtk/ <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr><span> <wbr></span><span style="Line-HeiGHT: 28px; FonT-WeiGHT: bold">gtk-sharp-2.0/<span> <wbr></span></span>gtkmm-2.4/ <wbr> <wbr> <wbr> <wbr><span> <wbr></span><br style="Line-HeiGHT: 28px">
+
+<br style="Line-HeiGHT: 28px">
+[root@yx lib]# ls gtk-2.0/<br style="Line-HeiGHT: 28px">
+2.10.0 <wbr> 2.4.0 <wbr>
+immodules <wbr> include <wbr>
+modules<br style="Line-HeiGHT: 28px">
+<br style="Line-HeiGHT: 28px">
+[root@yx lib]# ls gtk-sharp-2.0/<br style="Line-HeiGHT: 28px">
+gconfsharp-schemagen.exe<br style="Line-HeiGHT: 28px">
+<br style="Line-HeiGHT: 28px">
+[root@yx lib]# pwd<br style="Line-HeiGHT: 28px">
+/usr/lib<br style="Line-HeiGHT: 28px">
+所以认为<span style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2"><span style="Line-HeiGHT: 22px; FonT-WeiGHT: bold">-lgtk-{target}-2.0中的</span></font></span><span style="Line-HeiGHT: 28px"><span style="Line-HeiGHT: 28px; FonT-WeiGHT: bold">{target}该是空字符: <wbr><span> <wbr></span><br style="Line-HeiGHT: 28px">
+</span></span><span style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2"><span style="Line-HeiGHT: 22px; FonT-WeiGHT: bold">-lgtk-{target}-2.0====&gt;</span></font></span><span style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2"><span style="Line-HeiGHT: 22px; FonT-WeiGHT: bold">-lgtk--2.0<br style="Line-HeiGHT: 22px">
+<br style="Line-HeiGHT: 22px">
+At Last So:（理论大致上：）<br style="Line-HeiGHT: 22px"></span></font></span><span style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2"><span style="Line-HeiGHT: 22px; FonT-WeiGHT: bold">-L/usr/lib <wbr>
+-lgtk-{target}-2.0 <wbr>
+-I/usr/include/gtk-2.0 <wbr> ====&gt;<br style="Line-HeiGHT: 22px"></span></font></span><span style="Line-HeiGHT: 28px; CoLor: rgb(255,102,0)"><font style="Line-HeiGHT: 22px" size="2">-L/usr/lib <wbr>
+-lgtk--</font><span style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2">2.0</font></span></span><span style="Line-HeiGHT: 28px"><font style="Line-HeiGHT: 22px" size="2"><span style="Line-HeiGHT: 22px; FonT-WeiGHT: bold"> <wbr><span> <wbr></span><span style="Line-HeiGHT: 22px; CoLor: rgb(128,0,0)">-I/usr/include/gtk-2.0</span></span></font></span><br style="Line-HeiGHT: 28px">
+
+<span style="Line-HeiGHT: 28px; FonT-WeiGHT: bold">而实际上更多些：<br style="Line-HeiGHT: 28px">
+对比pkg-config对gtk+-2.0看实际效果：<br style="Line-HeiGHT: 28px"></span>[yuxu@yx base]$
+pkg-config <wbr> --cflags <wbr>
+--libs <wbr> gtk+-2.0<br style="Line-HeiGHT: 28px">
+<span style="Line-HeiGHT: 28px; CoLor: rgb(128,0,0); FonT-WeiGHT: bold">-I/usr/include/gtk-2.0</span> <wbr><span> <wbr></span><span style="Line-HeiGHT: 28px; CoLor: rgb(255,102,0); FonT-WeiGHT: bold">-I/usr/lib/gtk-2.0/include</span><span> <wbr></span>-I/usr/include/atk-1.0
+-I/usr/include/cairo -I/usr/include/pango-1.0
+-I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include
+-I/usr/include/freetype2 -I/usr/include/libpng12 <wbr>
+-L/lib -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm
+-lpangocairo-1.0 -lpango-1.0 -lcairo -lgobject-2.0 -lgmodule-2.0
+-ldl -lglib-2.0 <wbr><span> <wbr></span><br style="Line-HeiGHT: 28px">
+后面还有很多的路径哦。<br style="Line-HeiGHT: 28px">
+<br style="Line-HeiGHT: 28px">
+<span style="Line-HeiGHT: 28px; FonT-WeiGHT: bold"><br style="Line-HeiGHT: 28px">
+<br style="Line-HeiGHT: 28px">
+<br style="Line-HeiGHT: 28px"></span><span style="Line-HeiGHT: 28px; FonT-WeiGHT: bold">gtk_base.c:</span><br style="Line-HeiGHT: 28px">
+#include<br style="Line-HeiGHT: 28px">
+int main(int argc,char *argv[])<br style="Line-HeiGHT: 28px">
+{<br style="Line-HeiGHT: 28px">
+ <wbr> <wbr>
+ <wbr>GtkWidget <wbr> *window;<br style="Line-HeiGHT: 28px">
+ <wbr> <wbr>
+ <wbr>gtk_init(&amp;argc,&amp;argv);<br style="Line-HeiGHT: 28px">
+ <wbr> <wbr>  <wbr>window =
+gtk_window_new(GTK_WINDOW_TOPLEVEL);<br style="Line-HeiGHT: 28px">
+ <wbr> <wbr>
+ <wbr>gtk_widget_show(window);<br style="Line-HeiGHT: 28px">
+ <wbr> <wbr>
+ <wbr>gtk_main();<br style="Line-HeiGHT: 28px">
+ <wbr> <wbr>  <wbr>return
+FALSE;<br style="Line-HeiGHT: 28px">
+}<br style="Line-HeiGHT: 28px">
+<br style="Line-HeiGHT: 28px">
+<span style="Line-HeiGHT: 28px; FonT-WeiGHT: bold">gcc <wbr> <wbr>
+-o <wbr> <wbr> <wbr> <wbr>
+gtk_base <wbr>
+ <wbr> <wbr> <wbr>
+gtk_base.c <wbr> <wbr> <wbr><span style="Line-HeiGHT: 28px; CoLor: rgb(255,0,0)"><span> <wbr></span><span style="Line-HeiGHT: 28px; CoLor: rgb(0,0,0)">`</span></span>pkg-config <wbr> <wbr>
+--cflags <wbr> <wbr>
+--libs <wbr> gtk+-2.0<span style="Line-HeiGHT: 28px; CoLor: rgb(0,0,255)">`</span></span><span style="Line-HeiGHT: 28px; CoLor: rgb(0,0,0)"><span> <wbr></span></span></div>
+</div>
+</div>							
+		</div>
+						<!-- 正文结束 -->
+		<div id="share" class="shareUp">
+        	<div class="share SG_txtb">
+			分享： 
+			<div class="bshare-custom" style="display:inline;margin-left:5px;"><div class="bsPromo bsPromo2"></div><a title="分享到新浪微博" class="bshare-sinaminiblog" href="javascript:void(0);"></a><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+			</div>
+			</div>
+            <div class="up">
+	        	<div title="喜欢后让更多人看到" id="dbox_8af6bbd10101hfdj" class="upBox upBox_click" style="cursor: pointer;">
+	            	<p mnum="0" ti_title="pkg-config的用法" id="dbox2_8af6bbd10101hfdj" class="count">0</p>
+	                <p class="link"><img src="index_files/sg_trans.gif" class="SG_icon SG_icon34" align="absmiddle" height="15" width="15">喜欢</p>
+	            </div>
+<!--
+                <div class="upBox upBox_add">
+                    <p class="count">0</p>
+                    <p class="link"><img width="20" height="16" align="absmiddle" title="推荐" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" class="SG_icon SG_icon214">赠金笔</p>
+                </div>
+-->
+                                <div class="upBox upBox_add">
+                    <p class="count" id="goldPan-num">0</p>
+                    <p class="link" id="goldPan-give"><img class="SG_icon SG_icon214" src="index_files/sg_trans.gif" title="赠金笔" align="absmiddle" height="16" width="20">赠金笔</p>
+                </div>
+                
+	        </div>
+            <div class="clearit"></div>
+		</div>
+		<div class="articalInfo">
+			<!-- 分享到微博 {$t_blog} -->
+			<div class="IL">
+				阅读<span id="r_8af6bbd10101hfdj" class="SG_txtb">(1761)</span><em class="SG_txtb">┊</em> 
+				<a href="#commonComment">评论</a> <span id="c_8af6bbd10101hfdj" class="SG_txtb">(0)</span><em class="SG_txtb">┊</em>				<a href="javascript:void(0);" onclick="">收藏</a><span id="f_8af6bbd10101hfdj" class="SG_txtb">(0)</span>
+				<em class="SG_txtb">┊</em><a href="#" id="quote_set_sign" onclick="">转载</a><a href="#" id="z_8af6bbd10101hfdj" onclick="" class="zznum">(2)</a>				<span id="fn_pkg-config的用法" class="SG_txtb"></span><em class="SG_txtb">┊</em>
+				<a onclick="" href="javascript:void(0);"><cite id="d1_digg_8af6bbd10101hfdj">喜欢</cite></a><a id="d1_digg_down_8af6bbd10101hfdj" href="javascript:void(0);"><b>▼</b></a>
+									<em class="SG_txtb">┊</em><a href="http://blog.sina.com.cn/main_v5/ria/print.html?blog_id=blog_8af6bbd10101hfdj" target="_blank">打印</a><em class="SG_txtb">┊</em><a id="q_8af6bbd10101hfdj" onclick="" href="#">举报</a>
+											</div>
+			<div class="IR">
+				<table>
+					<tbody><tr>
+										</tr>
+									</tbody></table>
+			</div>
+		</div>
+		<div class="clearit"></div>
+		<div class="blogzz_zzlist borderc" id="blog_quote" style="display:none"><h3><a href="#" onclick="" title="关闭" id="ql_close8af6bbd10101hfdj" class="blogzz_closepic SG_floatR"></a>转载列表：</h3>                <ul class="ul_zzlist" id="ql_content8af6bbd10101hfdj">                </ul>				<ul style="display:none"><li id="ql_tip8af6bbd10101hfdj"></li></ul>                <div class="SG_clearB"></div>                <div class="blogzz_btn">					<a id="btnArticleQuote8af6bbd10101hfdj" href="#" onclick="" class="SG_aBtn SG_aBtn_ico SG_turn"><cite><img class="SG_icon SG_icon111" id="quoteList_quote8af6bbd10101hfdj" src="index_files/sg_trans.gif" align="absmiddle" height="15" width="15">转载</cite></a>					<p style="display: none;" id="quoteDescription8af6bbd10101hfdj" class="SG_turntxt">转载是分享博文的一种常用方式...</p>				</div>				<div id="ql_page8af6bbd10101hfdj" class="blogzz_paged"></div>				<div class="clearit"></div></div>
+		<div class="articalfrontback SG_j_linedot1 clearfix" id="new_nextprev_8af6bbd10101hfdj">
+							<div><span class="SG_txtb">前一篇：</span><a href="http://blog.sina.com.cn/s/blog_8af6bbd10101hbhz.html">图像格式中的Alpha通道是指什么？</a></div>
+										<div><span class="SG_txtb">后一篇：</span><a href="http://blog.sina.com.cn/s/blog_8af6bbd10101hgg2.html">Ubuntu12.04安装Opencv2.4.8</a></div>
+					</div>
+		<div class="clearit"></div>
+							
+		<div id="loginFollow"></div>
+				<div class="allComm">
+			<div class="allCommTit">
+				<div class="SG_floatL">
+				    <strong>评论</strong>
+				    <span id="commAd_1" style="display: inline-block;">
+				        <span style="margin-left:15px; width:220px; display:inline-block;"><a target="_blank" href="http://blog.sina.com.cn/lm/8/2009/0325/105340.html">重要提示：警惕虚假中奖信息</a></span>
+				    </span>
+				</div>
+				<div class="SG_floatR"><a class="CP_a_fuc" href="#post">[<cite>发评论</cite>]</a></div>
+			</div>
+			<ul id="article_comment_list" class="SG_cmp_revert"><!-- 循环始 --><li>评论加载中，请稍候...</li><!-- 循环终  --></ul>
+			<div class="clearit"></div>
+			<div class="myCommPages SG_j_linedot1">
+				<div class="SG_page" id="commentPaging" style="display:none;">
+					<ul class="SG_pages">
+					</ul>
+				</div>
+				<div class="clearit"></div>
+			</div>
+			<a name="post"></a>
+			<div class="writeComm">
+				<div class="allCommTit">
+					<div class="SG_floatL">
+					    <strong>发评论</strong>
+					    <span></span>
+					</div>
+					<div class="SG_floatR"></div>
+				</div>
+				<div class="wrCommTit">
+					<div class="SG_floatL" id="commentNick" style="display:none;"></div>
+				</div>
+				<div class="formTextarea">
+					<div style="float:left;" id="commonComment">
+					<iframe id="postCommentIframe" style="border:1px solid #C7C7C7;
+		height:158px;width:448px;maring-top:1px;background-color:white;" src="index_files/blank2.html" frameborder="0"></iframe>
+					<textarea id="commentArea" tabindex="1" style="display:none;"></textarea>
+					</div>
+					<div id="mobileComment" style="float:left;display:none;">
+						<textarea id="mbCommentTa" style="width:438px;height:150px;border:1px solid #C7C7C7;line-height:18px;padding:5px;"></textarea>
+					</div>
+					<div class="faceblk" id="faceWrap">
+						<div id="smilesSortShow" class="faceline1">
+						</div>
+						<ul id="smilesRecommended" class="faceline01"><li><a href="#"><img src="index_files/E___0173EN00SIGT.gif" alt="灌水" title="灌水" height="50" width="50"></a></li><li><a href="#"><img src="index_files/E___0480ZH00SIGT.gif" alt="赞" title="赞" height="50" width="50"></a></li><li><a href="#"><img src="index_files/E___0305EN00SIGT.gif" alt="美好" title="美好" height="50" width="50"></a></li><li><a href="#"><img src="index_files/E___0022EN00SIGT.gif" alt="顶" title="顶" height="50" width="50"></a></li><li><a href="#"><img src="index_files/E___0088EN00SIGT.gif" alt="顶" title="顶" height="50" width="50"></a></li><li><a href="#"><img src="index_files/E___0472ZH00SIGT.gif" alt="顶" title="顶" height="50" width="50"></a></li><li><a href="#"><img src="index_files/E___0092EN00SIGT.gif" alt="开心" title="开心" height="50" width="50"></a></li><li><a href="#"><img src="index_files/E___0177EN00SIGT.gif" alt="路过" title="路过" height="50" width="50"></a></li></ul>
+					</div>
+					<div class="clearit"></div>
+				</div>
+				<div class="formLogin">
+					<div class="SG_floatL"> 
+					<p id="commentlogin" style="display: block;"><span>登录名：</span><input style="width: 115px;" id="login_name" tabindex="2" type="text">   <span>密码：</span><input style="width: 115px;" id="login_pass" tabindex="3" type="password">   <a href="http://login.sina.com.cn/getpass.html" target="_blank">找回密码</a>   <a href="http://login.sina.com.cn/signup/signup.php?entry=blog&amp;src=blogicp&amp;srcuid=2331425745" target="_blank">注册</a>	<input checked="checked" id="login_remember" type="checkbox"><label for="login_remember" style="display:inline-block;" title="建议在网吧/公用电脑上取消该选项">记住登录状态</label></p><p id="commentloginM" style="display:none;"><span>昵   称：</span><input style="width: 115px;" id="comment_anonyous" value="新浪网友" tabindex="2" disabled="disabled" type="text"></p><p id="quote_comment_p"><input checked="checked" id="bb" type="checkbox"> <label for="bb"><img title="" src="index_files/sg_trans.gif" class="SG_icon SG_icon110" align="absmiddle" height="18" width="18">分享到微博 <img title="新" src="index_files/sg_trans.gif" class="SG_icon SG_icon11" align="absmiddle" height="15" width="15"></label>   <input id="cbCommentQuote" type="checkbox"><label for="cbCommentQuote">评论并转载此博文</label><img class="SG_icon SG_icon11" src="index_files/sg_trans.gif" title="新" align="absmiddle" height="15" width="15"></p>
+					<p id="geetest-box"><div class="gt_holder float zh-cn" id="geetest_1455615872477"><div class="gt_input"><input name="geetest_challenge" class="geetest_challenge" type="hidden"><input name="geetest_validate" class="geetest_validate" type="hidden"><input name="geetest_seccode" class="geetest_seccode" type="hidden"></div><div class="gt_slider"><div class="gt_guide_tip gt_show">按住左边滑块，拖动完成上方拼图</div><div style="transform: translate(0px, 0px);" class="gt_slider_knob gt_show"></div><div class="gt_curtain_tip gt_hide">点击上图按钮并沿道路拖动到终点处</div><div class="gt_curtain_knob gt_hide">移动到此开始验证</div><div class="gt_ajax_tip ready"></div></div></div></p>
+					</div>
+
+					<span style="display: none; color: rgb(153, 153, 153); margin-left: 10px;" id="login_remember_caution"></span>
+
+											<div style="display: none;" class="SG_floatR" id="anonymity_cont"><input id="anonymity" type="checkbox"><label for="anonymity">匿名评论</label></div>
+									</div>
+				<div class="formBtn">
+					<a href="javascript:void(0);" onclick="" class="SG_aBtn" tabindex="5"><cite id="postcommentid">发评论</cite></a>
+					<p class="SG_txtc">以上网友发言只代表其个人观点，不代表新浪网的观点或立场。</p>
+				</div>
+			</div>
+		</div>
+				<div class="clearit"></div>
+		
+				<div class="articalfrontback articalfrontback2 clearfix">
+						  <div class="SG_floatL"><span class="SG_txtb">&lt; 前一篇</span><a href="http://blog.sina.com.cn/s/blog_8af6bbd10101hbhz.html">图像格式中的Alpha通道是指什么？</a></div>
+									  <div class="SG_floatR"><span class="SG_txtb">后一篇 &gt;</span><a href="http://blog.sina.com.cn/s/blog_8af6bbd10101hgg2.html">Ubuntu12.04安装Opencv2.4.8</a></div>
+					</div>
+		<div class="clearit"></div>
+				
+	</div>
+	<!--博文正文 end -->
+		<script type="text/javascript"><!--
+/* Script removed by snapshot save */
+--></script>
+
+            </div>       
+            <div class="SG_connFoot"></div>
+          </div>
+</div>
+	<!--第二列start-->
+	
+	<!--第三列start-->
+	<div id="column_3" class="SG_colWnone"><div style="width:0px;height:0.1px;margin:0px;">  </div></div>
+	<!--第三列end-->
+
+	
+    </div>
+   <!--主题内容结束 -->
+  
+
+	<div id="diggerFla" style="position:absolute;left:0px;top:0px;width:0px"><embed pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" src="index_files/digger.swf" style="undefined" id="digger" name="digger" bgcolor="#00ff00" quality="high" wmode="transparent" allowscriptaccess="always" height="1" width="1"></div>
+    <div class="sinablogfooter" id="sinablogfooter" style="position:relative;">
+      
+      <p class="SG_linka"><a href="http://control.blog.sina.com.cn/admin/advice/advice_list.php" target="_blank">新浪BLOG意见反馈留言板</a>　<a href="javascript:void(0);" onclick="">不良信息反馈</a>　电话：4006900000 提示音后按1键（按当地市话标准计费）　欢迎批评指正</p>
+   
+      <p class="SG_linka"><a href="http://corp.sina.com.cn/chn/" target="_blank">新浪简介</a> | <a href="http://corp.sina.com.cn/eng/" target="_blank">About Sina</a> | <a href="http://emarketing.sina.com.cn/" target="_blank">广告服务</a> | <a href="http://www.sina.com.cn/contactus.html" target="_blank">联系我们</a> | <a href="http://corp.sina.com.cn/chn/sina_job.html" target="_blank">招聘信息</a> | <a href="http://www.sina.com.cn/intro/lawfirm.shtml" target="_blank">网站律师</a> | <a href="http://english.sina.com/" target="_blank">SINA English</a> | <a href="http://members.sina.com.cn/apply/" target="_blank">会员注册</a> | <a href="http://help.sina.com.cn/" target="_blank">产品答疑</a> </p>
+      <p class="copyright SG_linka"> Copyright © 1996 - 2016 SINA Corporation,  All Rights Reserved</p>
+      <p class="SG_linka"> 新浪公司 <a href="http://www.sina.com.cn/intro/copyright.shtml" target="_blank">版权所有</a></p>
+	  <a href="http://www.bj.cyberpolice.cn/index.jsp" target="_blank" class="gab_link"></a>
+    </div>
+  </div>
+</div>
+<div id="swfbox"><embed pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" src="index_files/voteCookie.swf" style="undefined" id="swfId" name="swfId" bgcolor="#00ff00" quality="high" allowscriptaccess="always" flashvars="readyFun=readyFun&amp;realfull=1&amp;moz=1&quot;/" height="1" width="1"></div>
+<script id="PVCOUNTER_FORIE" type="text/javascript"></script>
+
+<script type="text/javascript"><!--
+/* Script removed by snapshot save */
+--></script>
+
+<script type="text/javascript" src="index_files/boot.js"></script>
+<script type="text/javascript"><!--
+/* Script removed by snapshot save */
+--></script>
+<script type="text/javascript"><!--
+/* Script removed by snapshot save */
+--></script>
+
+
+<script type="text/javascript" charset="utf-8" src="index_files/buttonLite.js#style=-1&amp;uuid=b436f96b-ce3c-469f-93ca-9c0c406fcf10&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="index_files/bshareC0.js"></script>
+<script type="text/javascript" charset="utf-8"><!--
+/* Script removed by snapshot save */
+--></script>
+<script type="text/javascript" src="index_files/blog680-min.js"></script>
+<script type="text/javascript"><!--
+/* Script removed by snapshot save */
+--></script>
+
+<div class="bsBox" id="bsBox"><div class="bsClose">X</div><div class="bsTop"><div class="bsReturn">选择其他平台 &gt;&gt;</div><span style="margin-left:15px;">分享到</span><span class="bsPlatName"></span></div><div class="bsFrameDiv"><iframe src="index_files/generated-content-1.html" class="bShareFrame" name="bsFrame422" allowtransparency="true" scrolling="no" frameborder="0"></iframe></div><div id="bsMorePanel" style="display: none;"></div></div><div id="sinaads_pdps54771"> <ins data-ad-offset-top="0" data-ad-offset-left="0" data-ad-status="done" class="sinaads sinaads-done" data-ad-pdps="PDPS000000054771"></ins>  </div><div style="position: absolute; display: none; z-index: 512;" id="_2381455615863263_panel" class="mCatSearch"><ul><li action-type="tray-search" onclick="" action-data="article" class="current">含“<span id="_2381455615863263_article"></span>”的博文</li><li action-type="tray-search" onclick="" action-data="bloger">含“<span id="_2381455615863263_bloger"></span>”的博主</li><li action-type="tray-search" onclick="" action-data="music">含“<span id="_2381455615863263_music"></span>”的音乐</li><li action-type="tray-search" onclick="" action-data="video">含“<span id="_2381455615863263_video"></span>”的视频</li></ul></div><iframe src="index_files/generated-content-2.html" style="border: medium none; z-index: -1; opacity: 0; position: absolute; width: 0px; height: 0px;"></iframe><iframe style="display: none;" src="index_files/sinaads_ck.html" id="sinaads-ck-iframe"></iframe><div style="z-index: 511; position: absolute; display: none; width: 160px;" class="tb_layer_Y tb_layer_w3"><div class="tb_layer_arrow"></div><div style="width: auto;" class="tb_layer_Y_main tip_ps"><a style="margin-top: 5px;" title="关闭" class="tb_friend_inputDel" href="javascript:void(0);"></a>						<div style="text-align:left;color:#999999">最近喜欢了的博主：</div>						<div style="white-space: nowrap;"><div style="text-align:center;"><img src="index_files/loading.gif">加载中…</div></div></div></div><div id="reblog_1455615863378" class="turnList" style="display:none;position:absolute;z-index:20;"><ul class=""><li><a suda-uatrack="key=blog_article&amp;value=h_article17" action-type="click_reblog" action-data="{action:'toBlog'}" href="javascript:void(0);" title="转载到博客"><img src="index_files/sg_trans.gif" class="SG_icon SG_icon141" align="absmiddle" height="18" width="18">博客</a></li><li style="display:none;"><a suda-uatrack="key=blog_article&amp;value=h_article17" action-type="click_reblog" action-data="{action:'toBlog'}" href="javascript:void(0);" title="转载原文"><img src="index_files/sg_trans.gif" class="SG_icon SG_icon141" align="absmiddle" height="18" width="18">转载原文</a></li><li><a suda-uatrack="key=blog_article&amp;value=h_article17" action-type="click_reblog" action-data="{action:'cwb'}" href="javascript:void(0);" title="发布长微博"><img src="index_files/sg_trans.gif" class="SG_icon SG_icon143" align="absmiddle" height="18" width="18">长微博</a></li></ul></div><div class="godreply" id="_5891455615863382_panel" style="z-index: 999; position: fixed; left: 849px; top: 296px;">
+                              <div class="btn"><span node-data="btn-golgreply" style="display:none;">神回复</span></div>
+                              <div class="reply_con" node-data="reply-conlist" style="display:none;">
+                                <div class="txt">神回复，只要<span>1积分</span>就可以了哦</div>
+                                <ul class="reply_pic_s"><li title="贱人就是矫情" data-num="0"><img src="index_files/E___0101GD00SIGT.gif" title="贱人就是矫情" alt="贱人就是矫情"></li><li title="人艰不拆" data-num="1"><img src="index_files/E___0102GD00SIGT.gif" title="人艰不拆" alt="人艰不拆"></li><li title="朕知道了" data-num="2"><img src="index_files/E___0103GD00SIGT.gif" title="朕知道了" alt="朕知道了"></li><li title="不明觉厉" data-num="3"><img src="index_files/E___0104GD00SIGT.gif" title="不明觉厉" alt="不明觉厉"></li><li title="这真是极好的" data-num="4"><img src="index_files/E___0105GD00SIGT.gif" title="这真是极好的" alt="这真是极好的"></li><li title="也真是醉了" data-num="5"><img src="index_files/E___0106GD00SIGT.gif" title="也真是醉了" alt="也真是醉了"></li><li title="点个赞" data-num="6"><img src="index_files/E___0107GD00SIGT.gif" title="点个赞" alt="点个赞"></li><li title="你那么萌你家人造吗" data-num="7"><img src="index_files/E___0108GD00SIGT.gif" title="你那么萌你家人造吗" alt="你那么萌你家人造吗"></li><li title="涨姿势" data-num="8"><img src="index_files/E___0109GD00SIGT.gif" title="涨姿势" alt="涨姿势"></li></ul>
+                              </div>
+                            </div><iframe src="index_files/generated-content-3.html" style="border: medium none; z-index: 998; opacity: 0; position: fixed; width: 308px; height: 0px; left: 849px; top: 296px;"></iframe><div class="godreply_show" id="_5831455615863382_panel" style="z-index: 1001; position: fixed; display: none; left: 368px; top: 77px;">
+                               <div class="reply_pic_l" node-data="facebox">
+                                 <img node-data="faceimg" title="" alt="" src="">
+                               </div>
+                               <div class="btn_group" node-data="action" style="display:none;"><a href="#" class="a1" action-type="ok">发表</a><a href="#" class="a2" action-type="cancel">取消</a></div>
+                               <div class="jgimg" node-data="success" style="display:none;"><img src="index_files/jf.gif"><div class="txt">发表成功</div></div>
+                           </div><div style="position: fixed; width: 1353px; height: 614px; left: 0px; top: 0px; z-index: 1024; background-color: black; opacity: 0.4; display: none;"></div><table class="CP_w" id="_2871455615863439_panel" style="z-index: 5000; position: fixed; display: none; left: 348.5px; top: 81px;"><thead><tr><th class="tLeft"><span></span></th><th class="tMid"><div class="bLyTop"><strong>赠金笔</strong><cite><a node-data="btn-close" href="#" class="CP_w_shut" title="关闭">关闭</a></cite></div></th><th class="tRight"><span></span></th></tr></thead><tfoot><tr><td class="tLeft"><span></span></td><td class="tMid"><span></span></td><td class="tRight"><span></span></td></tr></tfoot><tbody><tr><td class="tLeft"><span></span></td><td class="tMid"><div class="CP_layercon3 jiben"><div class="SG_tag tag_h"><ul><li class="current"><span><strong><a node-data="gold-exchange" href="javascript:void(0);">金笔兑换</a></strong></span><span class="tagR"></span></li><li><span><strong><a node-data="tyrant-standings" href="javascript:void(0);">今日土豪榜</a></strong></span><span class="tagR"></span></li><li><span><strong><a node-data="nomination-list" href="javascript:void(0);">今日提名榜</a></strong></span><span class="tagR"></span></li></ul></div><div name="jiben_tab" class="jiben_tab"><ul class="denPicRow denPicRow01 clearfix" name="radioAll"><li><span class="a">兑换服务：</span><span class="b">金笔道具</span></li><li><span class="a"><span class="CP_w_star"></span>赠送数量：</span><span class="b rlist"><input checked="checked" name="num" value="1" id="jb1" type="radio"><label for="jb1">1支</label><input name="num" value="10" id="jb2" type="radio"><label for="jb2">10支</label><input name="num" value="20" id="jb3" type="radio"><label for="jb3">20支</label><input name="num" value="50" id="jb4" type="radio"><label for="jb4">50支</label><input name="num" value="100" id="jb5" type="radio"><label for="jb5">100支</label><br><input name="num" value="0" id="jb5" type="radio"><label for="jb6">其他</label><input maxlength="4" class="SG_input" id="jb6" node-data="other-num" value="请输入1~100整数" type="text"></span></li><li><span class="a cold">现有金笔：</span><span class="b cold" node-data="own-num">0支</span></li><li><span class="a cold">还需兑换：</span><span class="b cold" node-data="need-num">1支 x 1=1(积分)</span></li></ul><div id="hidden"></div><div class="butt01" id="button01"><a node-data="btn-ok" href="#" class="SG_aBtn SG_aBtnB "><cite>确认</cite></a><a target="_blank" href="http://blog.sina.com.cn/s/blog_4b0f52990102v0dd.html" class="jf_rule">点击了解更多规则</a></div></div><div class="clearit"></div></div></td><td class="tRight"><span></span></td></tr></tbody></table><iframe src="index_files/generated-content-4.html" style="border: medium none; z-index: 4999; opacity: 0; position: fixed; width: 0px; height: 0px; left: 348.5px; top: 81px;"></iframe><script src="index_files/get.php-1.js"></script><div id="_761455615863580_panel" style="z-index: 512; width: 200px; position: absolute; display: none;" class="tb_layer_Y tb_layer_w5"><div class="tb_layer_Y_main tip_layer_main"><div class="tip_ps" style="width:auto;float:right"><a id="closeBindEmail" title="关闭提示" class="tb_friend_inputDel" href="#" onclick=""></a></div><div style="padding:6px">为了您的账号安全，请<a id="linkBindEmail" href="#" target="_blank">绑定邮箱</a></div></div><div class="tb_layer_arrow tip_arrow"></div></div><iframe src="index_files/generated-content-5.html" style="border: medium none; z-index: 511; opacity: 0; position: absolute; width: 0px; height: 0px;"></iframe><div id="sharePhoto" style="display:none;width:120px;position:absolute;"><div class="picShareFlt"><div class="share SG_txtb" style="margin-top:5px;"><span>分享到新浪微博</span></div></div></div><ins data-ad-offset-top="4477" data-ad-offset-left="0" data-ad-status="done" class="sinaads sinaads-fail" data-ad-pdps="PDPS000000054727" style="display:block;"></ins><div style="display: none; position: absolute; cursor: pointer;" id="selectionShare"><img src="index_files/share.gif" title="将选中内容分享到新浪微博"></div><div style="top: 3899px; left: 445px;" class="gt_holder float zh-cn gt_clone"><div class="gt_widget gt_hide"><div class="gt_holder_top"></div><div style="height: 116px;" class="gt_box_holder"><div class="gt_box"><div class="gt_loading"></div><a style="background-image: none;" class="gt_bg gt_show"><div class="gt_cut_bg gt_show"><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -157px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -145px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -265px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -277px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -181px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -169px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -241px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -253px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -109px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -97px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -289px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -301px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -85px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -73px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -25px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -37px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -13px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -1px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -121px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -133px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -61px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -49px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -217px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -229px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -205px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -193px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -145px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -157px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -277px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -265px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -169px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -181px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -253px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -241px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -97px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -109px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -301px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -289px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -73px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -85px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -37px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -25px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -1px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -13px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -133px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -121px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -49px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -61px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -229px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -217px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -193px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/8d28a0d2.jpg&quot;); background-position: -205px 0px;" class="gt_cut_bg_slice"></div></div><div style="transform: translate(0px, 0px); background-image: url(&quot;index_files/8d28a0d2.png&quot;); width: 59px; height: 52px; left: 0px; top: 23px;" class="gt_slice gt_show"></div></a><a style="cursor: default; background-image: none;" class="gt_fullbg gt_show"><div class="gt_cut_fullbg gt_show"><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -157px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -145px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -265px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -277px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -181px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -169px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -241px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -253px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -109px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -97px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -289px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -301px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -85px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -73px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -25px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -37px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -13px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -1px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -121px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -133px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -61px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -49px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -217px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -229px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -205px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -193px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -145px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -157px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -277px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -265px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -169px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -181px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -253px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -241px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -97px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -109px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -301px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -289px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -73px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -85px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -37px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -25px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -1px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -13px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -133px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -121px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -49px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -61px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -229px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -217px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -193px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/7ed8940e0.jpg&quot;); background-position: -205px 0px;" class="gt_cut_fullbg_slice"></div></div><div style="height: 94px;" class="gt_flash"></div><div class="gt_ie_success"></div></a><a style="background-image: none;" class="gt_curtain gt_hide"><div class="gt_curtain_bg_wrap"><div class="gt_curtain_bg"><div class="gt_cut_curtain"></div></div></div><div class="gt_curtain_button gt_hide"></div></a><a style="display: none;" class="gt_box_tips"></a></div><div class="gt_info"><div class="gt_info_tip"><div class="gt_info_icon"></div><div class="gt_info_text"></div></div></div></div><div class="gt_bottom"><a class="gt_refresh_button"><div class="gt_refresh_tips">刷新验证</div></a><a target="_blank" href="http://www.geetest.com/contact#report" class="gt_help_button"><div class="gt_help_tips">帮助反馈</div></a><a target="_blank" href="http://www.geetest.com/" class="gt_logo_button"></a></div></div></div><div id="ramdomVisitDiv" style="position: absolute; width: 140px; z-index: 101; top: 120px; right: 0px;"><embed pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" src="index_files/lookViewSpring.swf" style="undefined" id="map" name="map" bgcolor="#000" quality="high" scale="noscale" allowscriptaccess="always" wmode="transparent" flashvars="url=http://blog.sina.com.cn/lm/top/ent/day.html&amp;realfull=1&amp;moz=1&quot;/" height="87" width="140"></div><ins data-ad-offset-top="0" data-ad-offset-left="0" data-ad-status="done" class="sinaads sinaads-fail" data-ad-pdps="PDPS000000051781" style="display: none;"></ins><div style="left: -1000px; top: -1000px;position:absolute;" class="picSlideBtn" action-type="show-slide" action-data="http%3A%2F%2Fww4.sinaimg.cn%2Flarge%2F697db644jw1dw1s1zljvaj.jpg"><a href="javascript:void(0);">幻灯播放</a></div><div style="overflow: hidden; height: 210px; position: absolute;"><div uniqueid="moz__id7_1455615864719" style="left: 1093px; top: 404px; z-index: 100; position: fixed; margin-top: 0px;" class="blogreco" id="_7881455615864705_panel"><div id="_7881455615864705_frame"><div class="TB" id="_7881455615864705_titleBar"><a id="blogNorAd_Cls" class="btnClose" style="position:absolute;left:240px;" href="javascript:void(0);"> </a><a class="btnMin" style="position:absolute;left:220px;" id="_7881455615864705_btnMin" href="javascript:void(0);"> </a></div><div id="_7881455615864705_content"><iframe class="IF" src="index_files/01.html" scrolling="no" frameborder="0"></iframe></div></div></div></div><div id="ads"></div><ins data-ad-offset-top="4603" data-ad-offset-left="0" data-ad-status="done" class="sinaads sinaads-done" data-ad-pdps="PDPS000000052950" style="display:block;"></ins><div id="bsPanelHolder"><div id="bsPanel" style="display:none;"><div class="bsTitle"><a style="float:left;height:20px;line-height:20px;font-weight:bold;" class="bsSiteLink" target="_blank" href="http://www.bshare.cn/intro">分享到</a><a class="bsSiteLink" style="cursor:pointer;float:right;height:20px;line-height:20px;font-weight:bold;" onclick="">X</a><div class="bsClear"></div></div><div class="bsClear"></div><div style="padding-left:8px;background:#fff;*height:244px;"><div style="height:47px;border-bottom:1px #ccc solid;padding:4px 0 4px 16px;margin-right:8px;_padding-left:12px;"><div class="bsRlogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" onclick="" style="text-decoration:none;line-height:120%;"><div style="cursor:pointer;width:24px;height:24px;margin:0 18px 2px;background:url(urn:not-loaded:http://static.bshare.cn/frame/images//logos/m2/qqmb.gif) no-repeat;"></div><div style="cursor:pointer;text-align:center;width:60px;height:16px !important;overflow:hidden;color:inherit;white-space:nowrap;line-height:120% !important">腾讯微博</div></a></div><div class="bsRlogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" onclick="" style="text-decoration:none;line-height:120%;"><div style="cursor:pointer;width:24px;height:24px;margin:0 18px 2px;background:url(urn:not-loaded:http://static.bshare.cn/frame/images//logos/m2/bsharesync.gif) no-repeat;"></div><div style="cursor:pointer;text-align:center;width:60px;height:16px !important;overflow:hidden;color:inherit;white-space:nowrap;line-height:120% !important">一键通</div></a></div><div class="bsRlogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" onclick="" style="text-decoration:none;line-height:120%;"><div style="cursor:pointer;width:24px;height:24px;margin:0 18px 2px;background:url(urn:not-loaded:http://static.bshare.cn/frame/images//logos/m2/sinaminiblog.gif) no-repeat;"></div><div style="cursor:pointer;text-align:center;width:60px;height:16px !important;overflow:hidden;color:inherit;white-space:nowrap;line-height:120% !important">新浪微博</div></a></div></div><div class="bsLogoLink"><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="QQ空间" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1566px;">QQ空间</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="搜狐微博" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1800px;">搜狐微博</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="新华微博" onclick="" style="color:red;background:url(urn:not-loaded:http://static.bshare.cn/frame/images//logos/s4/xinhuamb.png) no-repeat;">新华微博</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="手机" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1710px;">手机</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="网易微博" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1332px;">网易微博</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="开心网" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1008px;">开心网</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="豆瓣网" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -540px;">豆瓣网</a></div></div><div class="bsLogoLink"><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="手机快传" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//logos/s4/189share.png) no-repeat;">手机快传</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="人人网" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1674px;">人人网</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="天涯" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1890px;">天涯</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="凤凰微博" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -918px;">凤凰微博</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="朋友网" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1548px;">朋友网</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="微信" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//logos/s4/weixin.png) no-repeat;">微信</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="QQ好友" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//logos/s4/qqim.png) no-repeat;">QQ好友</a></div></div><div class="bsClear"></div></div><div style="height:20px;line-height:20px;padding:0 8px;border-top:1px solid #e8e8e8;color:#666;background:#f2f2f2;"><div class="buzzButton" style="float:left;">更多平台... <font style="font-weight:normal;">(133)</font></div><div id="bsPower" style="float:right;text-align:right;overflow:hidden;height:100%;"><a class="bsSiteLink" style="font-size:10px;vertical-align:text-bottom;line-height:24px;cursor:pointer;" href="http://www.bshare.cn/" target="_blank"><span style="font-size:10px;vertical-align:text-bottom;"><span style="color:#f60;">b</span>Share</span></a></div></div></div></div></body></html>

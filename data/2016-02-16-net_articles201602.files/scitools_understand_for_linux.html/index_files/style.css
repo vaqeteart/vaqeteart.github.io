@@ -1,0 +1,114 @@
+/* Effective stylesheet produced by snapshot save */
+@import url("common.css");
+body { background: url("body_bg.gif") repeat-x scroll 0px 20px transparent; color: rgb(51, 51, 51); text-align: center; font-size: 12px; font-family: Arial,Console,Verdana,Courier New; }
+a { color: rgb(51, 102, 153); text-decoration: none; }
+a:hover { text-decoration: none; color: rgb(34, 0, 0); }
+#container { background: url("head_bg.jpg") no-repeat scroll center top transparent; }
+#header { width: 980px; height: 30px; margin: 0px auto; padding: 70px 0px 0px; text-align: left; }
+.header {  }
+#blog_title {  }
+#blog_title h2 { display: inline-block; float: left; margin: 0px 20px 0px 0px; color: rgb(255, 255, 255); font: bold 30px/30px 'Microsoft YaHei'; }
+#blog_title h3 { display: inline-block; float: left; padding: 2px 0px 0px; color: rgb(255, 255, 255); font: 18px/30px 'Microsoft YaHei'; }
+#blog_title a { color: rgb(255, 255, 255); }
+#blog_title a:hover { color: rgb(221, 238, 255); text-decoration: none; }
+#navigator { display: block; clear: both; width: 980px; height: 42px; margin: 0px auto; padding: 22px 0px 0px; text-align: left; }
+.navigator { text-align: right; }
+.navigator:after { content: "."; display: block; height: 0px; clear: both; visibility: hidden; }
+.navigator ul { float: right; }
+.navigator li { display: inline; float: left; margin: 0px 5px; }
+.navigator li a { display: inline-block; height: 26px; padding: 0px 0px 0px 10px; color: rgb(102, 102, 102); background: url("btn_pub_nav.gif") no-repeat scroll left 0px transparent; font: 12px/26px Arial,Helvetica,sans-serif; text-decoration: none; cursor: pointer; }
+.navigator li a span { display: inline-block; height: 16px; padding: 5px 10px 5px 0px; background: url("btn_pub_nav.gif") no-repeat scroll right -26px transparent; line-height: 16px; }
+.navigator li a span img { margin: 0px 4px 0px 0px; vertical-align: middle; }
+#container { width: 100%; clear: both; }
+#body { display: block; clear: both; overflow: hidden; width: 960px; margin: 0px auto; padding: 9px; border: 1px solid rgb(221, 221, 221); background: none repeat scroll 0% 0% rgb(255, 255, 255); border-radius: 8px; text-align: left; }
+#body:after { content: "."; display: block; height: 0px; clear: both; visibility: hidden; }
+.panel_head { clear: both; height: 30px; padding: 0px 10px; border-radius: 4px; background: url("tit_bg.gif") repeat-x scroll center top transparent; color: rgb(51, 51, 51); font: bold 12px/30px Arial; text-indent: 5px; }
+.panel { margin: 0px 0px 10px; padding: 7px; border: 1px solid rgb(221, 221, 221); border-radius: 5px; }
+.side .panel_body { padding: 4px 5px; }
+.panel_body li { color: rgb(102, 102, 102); margin: 8px 0px; }
+.panel_body li span {  }
+.panel_body li a {  }
+#main { float: right; width: 748px; overflow: hidden; padding: 7px 0px; border: 1px solid rgb(221, 221, 221); border-radius: 4px; }
+.notice { margin: 10px 2px; padding: 2px 4px 2px 20px; border: 1px dashed rgb(248, 204, 126); background: url("ico_notice.png") no-repeat scroll 5px center rgb(255, 252, 231); font: 12px/22px Arial; }
+.notice a { color: rgb(255, 90, 0); }
+.article_title { display: block; margin: 5px 0px; color: rgb(0, 0, 0); font: 20px/30px 'Microsoft YaHei'; }
+.article_title:after { content: "."; display: block; height: 0px; clear: both; visibility: hidden; }
+.article_title a { color: rgb(0, 0, 0); }
+.article_title a:hover { color: rgb(102, 102, 102); }
+.article_title .ico { display: inline-block; width: 19px; height: 19px; margin: 0px 2px 0px 0px; }
+.article_title .ico_type_Original { background: url("ico_Original.gif") no-repeat scroll 0px 0px transparent; vertical-align: middle; }
+.article_title h1 { display: inline; font: 20px/30px 'Microsoft YaHei'; vertical-align: middle; }
+.article_manage { padding: 5px 0px; color: rgb(153, 153, 153); font: 12px/24px Arial; text-align: right; }
+.article_manage span { margin: 0px 5px; }
+.article_manage .link_postdate { margin: 0px 5px 0px 0px; }
+.article_manage .link_view { padding: 0px 0px 0px 14px; background: url("ico_view.png") no-repeat scroll left center transparent; }
+.article_manage .link_comments { padding: 0px 0px 0px 14px; background: url("ico_comm.png") no-repeat scroll left center transparent; }
+.article_manage .link_categories { float: left; }
+.details { margin: 20px; }
+.details .article_content { margin: 20px 0px 0px; font: 14px/26px Arial; }
+.article_next_prev { display: block; color: rgb(102, 102, 102); font: 14px/24px "Microsoft YaHei",Arial,Helvetica,sans-serif; clear: both; float: left; margin: 0px 0px 5px; padding: 10px 0px 0px; }
+.article_next_prev li { list-style-type: none; clear: both; padding: 0px 0px 3px; overflow: hidden; }
+.article_next_prev:after { content: "."; display: block; height: 0px; clear: both; visibility: hidden; }
+.article_next_prev li span { display: block; float: left; width: 52px; padding: 0px 0px 0px 27px; height: 26px; background-color: rgb(153, 153, 153); color: rgb(255, 255, 255); font-size: 14px; margin-right: 7px; }
+.article_next_prev li:hover span { background-color: rgb(204, 0, 0); }
+.article_next_prev li.prev_article span { background-image: url("blog-page-arr.png"); background-repeat: no-repeat; background-position: 9px 8px; }
+.article_next_prev li.next_article span { background-image: url("blog-page-arr.png"); background-repeat: no-repeat; background-position: 9px -22px; }
+.article_next_prev li a { display: block; float: left; font-size: 14px; color: rgb(51, 51, 51); }
+.article_next_prev li a:link, .article_next_prev li a:visited, .article_next_prev li a:hover { color: rgb(51, 51, 51); }
+.article_next_prev li:hover a, .article_next_prev li:hover a:link, .article_next_prev li:hover a:visited, .article_next_prev li:hover a:hover { color: rgb(204, 0, 0); }
+.commentform ul { margin: 0px; }
+.commentform li { margin: 0px; list-style-type: none; }
+#digg { display: block; clear: both; width: 182px; margin: 0px auto; padding: 30px 0px 15px; text-align: center; }
+#digg:after { content: "."; display: block; height: 0px; clear: both; visibility: hidden; }
+.digg { display: inline-block; float: left; width: 72px; height: 72px; overflow: hidden; margin: 0px 2px; background: none repeat scroll 0% 0% rgb(255, 121, 0); text-align: center; }
+.digg dt { margin: 0px; padding: 12px 0px 3px; color: rgb(255, 255, 255); font: 27px/30px 'Microsoft YaHei'; }
+.digg dd { margin: 0px; color: rgb(255, 255, 255); font: 12px/22px Arial; }
+.digg_disable { color: rgb(255, 255, 255); background: none repeat scroll 0% 0% rgb(153, 153, 153); }
+.digg_disable dd { color: rgb(255, 255, 255); }
+#side { float: left; width: 200px; overflow: hidden; line-height: 120%; }
+#side a { color: rgb(51, 102, 153); }
+#side a:hover { color: rgb(34, 0, 0); }
+#panel_Profile {  }
+#panel_Profile span { color: rgb(51, 51, 51); }
+#blog_userface { margin: 0px 0px 5px; padding: 10px; text-align: center; }
+#blog_userface img { max-width: 160px; padding: 2px; border: 1px solid rgb(221, 221, 221); }
+#blog_userface span { display: block; font-weight: bold; text-align: center; }
+#blog_medal { text-align: center; }
+#blog_rank { display: block; margin: 5px; padding: 0px 0px 5px; background: url("line_1.gif") repeat-x scroll center bottom transparent; }
+#blog_rank:after { content: "."; display: block; height: 0px; clear: both; visibility: hidden; }
+#blog_rank li {  }
+#blog_rank li span {  }
+#blog_statistics { display: block; margin: 0px 5px; }
+#blog_statistics:after { content: "."; display: block; height: 0px; clear: both; visibility: hidden; }
+#blog_statistics li { float: left; width: 50%; margin: 4px 0px; }
+#blog_statistics li span {  }
+#panel_Search {  }
+#panel_Search form { display: block; height: 24px; padding: 0px 3px; overflow: hidden; margin-top: 10px; border: 1px solid rgb(204, 204, 204); background: url("search_bg.gif") repeat-x scroll center top transparent; }
+#panel_Search .panel_body:after { content: "."; display: block; height: 0px; clear: both; visibility: hidden; }
+#panel_Search .panel_body span { float: left; }
+#panel_Search .panel_body .blogsearch { width: 140px; height: 20px; margin: 2px 5px 0px 0px; border: medium none; color: rgb(102, 102, 102); }
+#panel_Search .panel_body #btnSubmit { text-indent: -1000px; border: medium none; display: inline-block; width: 16px; height: 16px; overflow: hidden; margin: 5px 0px 0px; background: url("ico_sear.gif") no-repeat scroll 0px 0px transparent; line-height: 999px; cursor: pointer; }
+#panel_Category {  }
+#newcomments {  }
+#panel_Archive {  }
+#panel_Archive li { display: block; }
+#panel_Archive li:after { content: "."; display: block; height: 0px; clear: both; visibility: hidden; }
+#panel_Archive .list_closed { float: right; padding: 0px 0px 0px 12px; background: url("arrow_down.gif") no-repeat scroll left center transparent; color: rgb(102, 102, 102); cursor: pointer; }
+#archive_list { display: block; }
+#archive_list:after { content: "."; display: block; height: 0px; clear: both; visibility: hidden; }
+.comment_head, .commentform_title { border-radius: 5px; clear: both; background: none repeat scroll 0% 0% rgb(241, 241, 241); color: rgb(136, 136, 136); padding: 1px 4px; }
+.commentform .comment_btn { width: 85px; height: 26px; margin: 10px 0px 0px 90px; border: medium none; background: url("submit_bg.gif") no-repeat scroll 0px 0px transparent; color: rgb(102, 102, 102); font: 12px/26px Arial,Helvetica,sans-serif; text-align: center; }
+.blog-associat-tag { clear: both; overflow: hidden; padding: 25px 20px 10px; margin: 10px 0px 0px; background: none repeat scroll 0% 0% rgb(245, 245, 245); }
+.blog-associat-tag dt, .blog-associat-tag dd { float: left; margin: 0px; padding: 0px; line-height: 23px; }
+.blog-associat-tag dt { font: 16px/23px "Microsoft YaHei"; width: 86px; }
+.blog-tage-red { display: block; float: left; height: 20px; line-height: 20px; color: rgb(51, 51, 51); padding: 0px 14px; border-radius: 10px; margin: 2px 5px 0px; background: none repeat scroll 0% 0% rgb(231, 231, 231); }
+.blog-tage-red:link, .blog-tage-red:visited { color: rgb(51, 51, 51); }
+.blog-tage-red:hover { background: none repeat scroll 0% 0% rgb(204, 0, 0); color: rgb(255, 255, 255); }
+.blog-ass-articl { clear: both; overflow: hidden; margin: 0px 0px 10px; padding: 0px 20px 20px; background: none repeat scroll 0% 0% rgb(245, 245, 245); }
+.blog-ass-articl dt { clear: both; overflow: visible; font: 16px/35px "Microsoft YaHei"; padding: 0px; height: 35px; margin: 10px 0px 15px; border-bottom: 2px solid rgb(204, 204, 204); }
+.blog-ass-articl dt span { display: block; float: left; height: 35px; border-bottom: 2px solid rgb(204, 0, 0); }
+.blog-ass-articl dd { color: rgb(51, 102, 153); width: 42%; float: left; overflow: hidden; font: 12px/23px "SimSun"; height: 23px; margin: 0px 30px 0px 0px; padding: 0px 0px 0px 10px; background: url("blog-dot-red3.gif") no-repeat scroll 0px 10px transparent; }
+.blog-ass-articl dd a:link, .blog-ass-articl dd a:visited, .blog-ass-articl dd a:hover { color: rgb(0, 0, 0); }
+.blog-ass-articl dd a:hover { text-decoration: underline; color: rgb(204, 0, 0); }
+.q-reply { cursor: pointer; border: 0px none; bottom: 35px; min-width: 40px; height: 40px; margin: 0px; padding: 0px; position: fixed; right: 40px; border-radius: 0px; line-height: 16px; color: rgb(255, 255, 255); }
+.backtop { cursor: pointer; border: 0px none; bottom: 80px; min-width: 40px; height: 40px; margin: 0px; padding: 0px; position: fixed; right: 40px; border-radius: 0px; line-height: 16px; color: rgb(255, 255, 255); }

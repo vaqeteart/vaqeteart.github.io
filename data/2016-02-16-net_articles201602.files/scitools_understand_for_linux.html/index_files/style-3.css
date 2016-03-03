@@ -1,0 +1,5 @@
+/* Effective stylesheet produced by snapshot save */
+body {  }
+.loading { padding: 20px; height: 60px; text-align: center; font-size: 16px; background: url("urn:not-loaded:http://passport.csdn.net/content/loginbox/images/wait.gif") no-repeat scroll center bottom rgb(255, 255, 255); }
+.clearfix { display: block; }
+.clearfix:after { content: "."; display: block; height: 0px; clear: both; visibility: hidden; }

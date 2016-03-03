@@ -40,6 +40,108 @@
 		       var categories_count = JSON.parse('{"/categories":0}');
 
   		       
+    		       var post_categories = '/categories/study/linux/misc/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/kits';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/misc';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
     		       var post_categories = '/categories/study/os';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -465,6 +567,74 @@
         			}
     			}
     			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
 
     			create_category_menu(categories, 0, categories_count);
     			//document.write("hello")
@@ -505,14 +675,14 @@
 
 	<th class="navitm" style="margin:0; padding:0;border:none;">
 	    <form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
-	    	  Q
+	    	  <span style= "color:#00FF00;">Q</span>
 	    	  <span style="border-style:solid; border-width:1px; border-color:#00FF00;
 		  		border-top:0px; border-left:0px;border-right:0px; 
 				margin:0;padding:0;height:100%;">
-				<input value="Search......" name="s" class="s" 
-		  	 	onfocus="if (this.value == 'Search......') {this.value = '';}" 
-		  	 	onblur="if (this.value == '') {this.value = 'Search......';}"
-			 	style="margin:0;padding:0;border:none;background: #000000; color:#00FF00;" 
+				<input value="Search in title..." name="s" class="s" 
+		  	 	onfocus="if (this.value == 'Search in title...') {this.value = '';}" 
+		  	 	onblur="if (this.value == '') {this.value = 'Search in title...';}"
+			 	style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" 
 			 	type="text">
 		  </span>
 		  <!--input type="submit" value="Q" style="width:20%;"-->
@@ -538,7 +708,9 @@
                   <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
     <header style="text-align: center;">
 	<h1>
-	       <a href="/" title="Home Page">QuietHeart's Site</a>
+	       <a href="/" title="Home Page">
+	       QuietHeart's Site
+	       </a>
 	</h1>
     </header>
 </td>
@@ -554,6 +726,108 @@
     var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"os":{"id":"categories_study_os","path":"/categories/study/os","title":"操作系统","parent":"categories_study","children":null},"books":{"id":"categories_study_books","path":"/categories/study/books","title":"books","parent":"categories_study","children":{"apue":{"id":"categories_study_books_apue","path":"/categories/study/books/apue","title":"APUE","parent":"categories_study_books","children":null}}},"linux":{"id":"categories_study_linux","path":"/categories/study/linux","title":"linux","parent":"categories_study","children":{"misc":{"id":"categories_study_linux_misc","path":"/categories/study/linux/misc","title":"杂乱","parent":"categories_study_linux","children":null},"command":{"id":"categories_study_linux_command","path":"/categories/study/linux/command","title":"命令","parent":"categories_study_linux","children":null}}},"jekyll":{"id":"categories_study_jekyll","path":"/categories/study/jekyll","title":"jekyll","parent":"categories_study","children":null},"kits":{"id":"categories_study_kits","path":"/categories/study/kits","title":"工具","parent":"categories_study","children":null},"emacs":{"id":"categories_study_emacs","path":"/categories/study/emacs","title":"emacs","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
     var categories_count = JSON.parse('{"/categories":0}');
 
+    
+    var post_categories = '/categories/study/linux/misc/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/kits';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/misc';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
     
     var post_categories = '/categories/study/os';
     if (typeof(categories_count[post_categories]) == "undefined")
@@ -980,6 +1254,74 @@
         }
     }
     
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
 
     create_categories(categories, 0, categories_count);
     //document.write("hello")
@@ -1169,177 +1511,201 @@
 <li><a href="#orgheadline13">3.2. 撤销与重复</a></li>
 <li><a href="#orgheadline14">3.3. 标记</a></li>
 <li><a href="#orgheadline15">3.4. 删除、移除、复制、粘帖</a></li>
+<li><a href="#orgheadline16">3.5. 杂乱编辑</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline16">4. 窗口操作</a></li>
-<li><a href="#orgheadline17">5. 跳转操作</a>
+<li><a href="#orgheadline17">4. 窗口操作</a></li>
+<li><a href="#orgheadline18">5. 跳转操作</a>
 <ul>
-<li><a href="#orgheadline18">5.1. 搜索</a></li>
-<li><a href="#orgheadline19">5.2. 基本跳转</a></li>
-<li><a href="#orgheadline20">5.3. 书签</a></li>
+<li><a href="#orgheadline19">5.1. 搜索</a></li>
+<li><a href="#orgheadline20">5.2. 基本跳转</a></li>
+<li><a href="#orgheadline21">5.3. 书签</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline21">6. Buffer操作</a></li>
-<li><a href="#orgheadline22">7. 编程相关</a></li>
-<li><a href="#orgheadline23">8. 帮助</a></li>
-<li><a href="#orgheadline24">9. 原理</a>
+<li><a href="#orgheadline22">6. Buffer操作</a></li>
+<li><a href="#orgheadline23">7. 基本配置</a></li>
+<li><a href="#orgheadline24">8. 编程相关</a></li>
+<li><a href="#orgheadline25">9. 帮助</a></li>
+<li><a href="#orgheadline26">10. 原理</a>
 <ul>
-<li><a href="#orgheadline25">9.1. 关于递归编辑</a></li>
-<li><a href="#orgheadline26">9.2. 关于mark/region/active region/transient-mark-mode/Text Selection</a></li>
-<li><a href="#orgheadline27">9.3. 关于自动临时保存和备份</a>
+<li><a href="#orgheadline27">10.1. 关于递归编辑</a></li>
+<li><a href="#orgheadline28">10.2. 关于mark/region/active region/transient-mark-mode/Text Selection</a></li>
+<li><a href="#orgheadline29">10.3. 关于自动临时保存和备份</a>
 <ul>
-<li><a href="#orgheadline28">9.3.1. 临时文件</a></li>
-<li><a href="#orgheadline29">9.3.2. 自动备份</a></li>
-<li><a href="#orgheadline30">9.3.3. 其他</a></li>
+<li><a href="#orgheadline30">10.3.1. 临时文件</a></li>
+<li><a href="#orgheadline31">10.3.2. 自动备份</a></li>
+<li><a href="#orgheadline32">10.3.3. 其他</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline31">9.4. Emacs撤销、重做和重复</a>
+<li><a href="#orgheadline33">10.4. Emacs撤销、重做和重复</a>
 <ul>
-<li><a href="#orgheadline32">9.4.1. 插件</a></li>
-<li><a href="#orgheadline33">9.4.2. 标准操作</a></li>
-<li><a href="#orgheadline34">9.4.3. 比较详细的解释</a></li>
-<li><a href="#orgheadline35">9.4.4. 官方文档</a></li>
-<li><a href="#orgheadline36">9.4.5. 总结</a></li>
+<li><a href="#orgheadline34">10.4.1. 插件</a></li>
+<li><a href="#orgheadline35">10.4.2. 标准操作</a></li>
+<li><a href="#orgheadline36">10.4.3. 比较详细的解释</a></li>
+<li><a href="#orgheadline37">10.4.4. 官方文档</a></li>
+<li><a href="#orgheadline38">10.4.5. 总结</a></li>
 </ul>
 </li>
+<li><a href="#orgheadline39">10.5. 关于Narrow</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline37">10. 其他</a>
+<li><a href="#orgheadline40">11. 其他</a>
 <ul>
-<li><a href="#orgheadline38">10.1. 意外操作</a></li>
+<li><a href="#orgheadline41">11.1. 意外操作</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline39">11. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[15/107]</code>(<code>[14%]</code>)</a>
+<li><a href="#orgheadline42">12. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[27/114]</code>(<code>[23%]</code>)</a>
 <ul>
-<li><a href="#orgheadline40">11.1. <span class="todo nilNEXT">NEXT</span> 前进后退？</a>
+<li><a href="#orgheadline43">12.1. <span class="todo nilNEXT">NEXT</span> 前进后退？</a>
 <ul>
-<li><a href="#orgheadline41">11.1.1. 插件</a></li>
-<li><a href="#orgheadline42">11.1.2. 链接的后退</a></li>
-<li><a href="#orgheadline43">11.1.3. 查找的后退</a></li>
-<li><a href="#orgheadline44">11.1.4. 输入 <code>C-u C-@</code></a></li>
+<li><a href="#orgheadline44">12.1.1. 插件</a></li>
+<li><a href="#orgheadline45">12.1.2. 链接的后退</a></li>
+<li><a href="#orgheadline46">12.1.3. 查找的后退</a></li>
+<li><a href="#orgheadline47">12.1.4. 输入 <code>C-u C-@</code></a></li>
 </ul>
 </li>
-<li><a href="#orgheadline45">11.2. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> TAB标签栏?</a></li>
-<li><a href="#orgheadline46">11.3. <span class="done nilDONE">DONE</span> 如何删除一行</a></li>
-<li><a href="#orgheadline47">11.4. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 如何移动一行？</a></li>
-<li><a href="#orgheadline48">11.5. <span class="done nilDONE">DONE</span> 如何删除至行首？</a></li>
-<li><a href="#orgheadline49">11.6. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何save all?</a></li>
-<li><a href="#orgheadline50">11.7. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 只读切换?</a></li>
-<li><a href="#orgheadline51">11.8. <span class="done nilDONE">DONE</span> 如何删除备份文件，或者不使用自动备份？</a></li>
-<li><a href="#orgheadline52">11.9. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 跳转到当前buffer工作目录？</a></li>
-<li><a href="#orgheadline53">11.10. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> Emacs当前工作目录？</a></li>
-<li><a href="#orgheadline54">11.11. <span class="todo nilLATER">LATER</span> 如何重做？</a></li>
-<li><a href="#orgheadline55">11.12. <span class="todo nilLATER">LATER</span> 如何成块缩进?</a></li>
-<li><a href="#orgheadline56">11.13. <span class="todo nilLATER">LATER</span> 如何创建空文件</a></li>
-<li><a href="#orgheadline57">11.14. <span class="todo nilNEXT">NEXT</span> 如何跳转至上次编辑内容？</a></li>
-<li><a href="#orgheadline58">11.15. <span class="done nilDONE">DONE</span> 如何save all？</a></li>
-<li><a href="#orgheadline59">11.16. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> emacs如何加载插件？</a></li>
-<li><a href="#orgheadline60">11.17. <span class="todo nilLATER">LATER</span> TAB标签显示？</a></li>
-<li><a href="#orgheadline61">11.18. <span class="todo nilLATER">LATER</span> 跳至上次编辑的位置？</a></li>
-<li><a href="#orgheadline62">11.19. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 插件配置</a></li>
-<li><a href="#orgheadline63">11.20. <span class="done nilDONE">DONE</span> kill buffer?</a></li>
-<li><a href="#orgheadline64">11.21. <span class="done nilDONE">DONE</span> 直接执行lisp函数？</a></li>
-<li><a href="#orgheadline65">11.22. <span class="todo nilLATER">LATER</span> 如何实现自动缩进？</a></li>
-<li><a href="#orgheadline66">11.23. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何插入确定的缩进TAB？</a></li>
-<li><a href="#orgheadline67">11.24. <span class="todo nilNEXT">NEXT</span> 如何输入上次输入的内容或者重做？</a></li>
-<li><a href="#orgheadline68">11.25. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 交换行</a></li>
-<li><a href="#orgheadline69">11.26. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 动态加载配置立即生效？</a></li>
-<li><a href="#orgheadline70">11.27. <span class="done nilDONE">DONE</span> 如何执行命令时在回显区快速输入和删除？</a></li>
-<li><a href="#orgheadline71">11.28. <span class="done nilDONE">DONE</span> 如何查看某一配置变量的值？</a></li>
-<li><a href="#orgheadline72">11.29. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 如何恢复默认配置？</a></li>
-<li><a href="#orgheadline73">11.30. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何文件刷新？</a></li>
-<li><a href="#orgheadline74">11.31. <span class="done nilDONE">DONE</span> 如何显示匹配括号？</a></li>
-<li><a href="#orgheadline75">11.32. <span class="todo nilNEXT">NEXT</span> 关于Tab缩进</a>
+<li><a href="#orgheadline48">12.2. <span class="done nilDONE">DONE</span> TAB标签栏?</a>
 <ul>
-<li><a href="#orgheadline76">11.32.1. &#x2014;&#x2014;Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-09-30 三 15:19]</span></span>------</a></li>
+<li><a href="#orgheadline49">12.2.1. 下载地址</a></li>
+<li><a href="#orgheadline50">12.2.2. 关键配置</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline77">11.33. <span class="todo nilLATER">LATER</span> 如何显示空白字符？</a></li>
-<li><a href="#orgheadline78">11.34. <span class="todo nilLATER">LATER</span> 如何复制一行？</a></li>
-<li><a href="#orgheadline79">11.35. <span class="todo nilLATER">LATER</span> 缩进提示线？</a></li>
-<li><a href="#orgheadline80">11.36. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 重命名当前文件？</a></li>
-<li><a href="#orgheadline81">11.37. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 宏录制</a></li>
-<li><a href="#orgheadline82">11.38. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何块缩进？</a></li>
-<li><a href="#orgheadline83">11.39. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> C-/是Undo</a></li>
-<li><a href="#orgheadline84">11.40. <span class="done nilDONE">DONE</span> 如何操作目录</a></li>
-<li><a href="#orgheadline85">11.41. <span class="done nilCANCEL">CANCEL</span> 如何管理配置目录</a></li>
-<li><a href="#orgheadline86">11.42. <span class="todo nilLATER">LATER</span> 如何定位光标下路径的文件？</a></li>
-<li><a href="#orgheadline87">11.43. <span class="todo nilLATER">LATER</span> 如何按项目组织目录</a></li>
-<li><a href="#orgheadline88">11.44. <span class="todo nilNEXT">NEXT</span> 如何让Emacs在光标到达当前Buffer最后一行尾部不自动recenter?</a></li>
-<li><a href="#orgheadline89">11.45. <span class="todo nilLATER">LATER</span> 考虑一下用el-get插件管理插件</a></li>
-<li><a href="#orgheadline90">11.46. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> eshell如何操作？</a></li>
-<li><a href="#orgheadline91">11.47. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何配置自动新开“弹出”窗口的分割方向？</a></li>
-<li><a href="#orgheadline92">11.48. <span class="todo nilLATER">LATER</span> Emacs如何控制Pop分割窗口的大小？</a></li>
-<li><a href="#orgheadline93">11.49. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> emacs如何进行会话保存？</a></li>
-<li><a href="#orgheadline94">11.50. <span class="done nilDONE">DONE</span> Emacs背景配色设置？</a>
+<li><a href="#orgheadline51">12.3. <span class="done nilDONE">DONE</span> 如何删除一行</a></li>
+<li><a href="#orgheadline52">12.4. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 如何移动一行？</a></li>
+<li><a href="#orgheadline53">12.5. <span class="done nilDONE">DONE</span> 如何删除至行首？</a></li>
+<li><a href="#orgheadline54">12.6. <span class="done nilDONE">DONE</span> 如何save all?</a></li>
+<li><a href="#orgheadline55">12.7. <span class="done nilDONE">DONE</span> 只读切换?</a></li>
+<li><a href="#orgheadline56">12.8. <span class="done nilDONE">DONE</span> 如何删除备份文件，或者不使用自动备份？</a></li>
+<li><a href="#orgheadline57">12.9. <span class="done nilDONE">DONE</span> 跳转到当前buffer工作目录？</a></li>
+<li><a href="#orgheadline58">12.10. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> Emacs当前工作目录？</a></li>
+<li><a href="#orgheadline59">12.11. <span class="todo nilLATER">LATER</span> 如何重做？</a></li>
+<li><a href="#orgheadline60">12.12. <span class="todo nilLATER">LATER</span> 如何成块缩进?</a></li>
+<li><a href="#orgheadline61">12.13. <span class="todo nilLATER">LATER</span> 如何创建空文件</a></li>
+<li><a href="#orgheadline62">12.14. <span class="todo nilNEXT">NEXT</span> 如何跳转至上次编辑内容？</a></li>
+<li><a href="#orgheadline63">12.15. <span class="done nilDONE">DONE</span> 如何save all？</a></li>
+<li><a href="#orgheadline64">12.16. <span class="done nilDONE">DONE</span> emacs如何加载插件？</a></li>
+<li><a href="#orgheadline65">12.17. <span class="todo nilLATER">LATER</span> TAB标签显示？</a></li>
+<li><a href="#orgheadline66">12.18. <span class="todo nilLATER">LATER</span> 跳至上次编辑的位置？</a></li>
+<li><a href="#orgheadline67">12.19. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 插件在哪配置</a></li>
+<li><a href="#orgheadline68">12.20. <span class="done nilDONE">DONE</span> kill buffer?</a></li>
+<li><a href="#orgheadline69">12.21. <span class="done nilDONE">DONE</span> 直接执行lisp函数？</a></li>
+<li><a href="#orgheadline70">12.22. <span class="todo nilLATER">LATER</span> 如何实现自动缩进？</a></li>
+<li><a href="#orgheadline71">12.23. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何插入确定的缩进TAB？</a></li>
+<li><a href="#orgheadline72">12.24. <span class="todo nilNEXT">NEXT</span> 如何输入上次输入的内容或者重做？</a></li>
+<li><a href="#orgheadline73">12.25. <span class="done nilDONE">DONE</span> 交换行</a></li>
+<li><a href="#orgheadline74">12.26. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 动态加载配置立即生效？</a></li>
+<li><a href="#orgheadline75">12.27. <span class="done nilDONE">DONE</span> 如何执行命令时在回显区快速输入和删除？</a></li>
+<li><a href="#orgheadline76">12.28. <span class="done nilDONE">DONE</span> 如何查看某一配置变量的值？</a></li>
+<li><a href="#orgheadline77">12.29. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 如何恢复默认配置？</a></li>
+<li><a href="#orgheadline78">12.30. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何文件刷新？</a></li>
+<li><a href="#orgheadline79">12.31. <span class="done nilDONE">DONE</span> 如何显示匹配括号？</a></li>
+<li><a href="#orgheadline80">12.32. <span class="todo nilNEXT">NEXT</span> 关于Tab缩进</a>
 <ul>
-<li><a href="#orgheadline95">11.50.1. 下载地址：</a></li>
-<li><a href="#orgheadline96">11.50.2. 配置默认主题</a></li>
+<li><a href="#orgheadline81">12.32.1. &#x2014;&#x2014;Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-09-30 三 15:19]</span></span>------</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline97">11.51. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> emacs的光标滚动如何让其不在屏幕尾部自动滚屏到中间？</a></li>
-<li><a href="#orgheadline98">11.52. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何控制鼠标滚轮滚动的行数</a></li>
-<li><a href="#orgheadline99">11.53. <span class="todo nilLATER">LATER</span> emacs如何清除所有buffer?</a></li>
-<li><a href="#orgheadline100">11.54. <span class="todo nilLATER">LATER</span> 配置调试</a></li>
-<li><a href="#orgheadline101">11.55. <span class="todo nilNEXT">NEXT</span> 不喜欢emacs新开"提示窗口"是垂直方向</a></li>
-<li><a href="#orgheadline102">11.56. <span class="done nilDONE">DONE</span> Emacs如何定制颜色？</a></li>
-<li><a href="#orgheadline103">11.57. <span class="todo nilLATER">LATER</span> 如何设置撤销的次数？目前貌似撤销只有有限的几次</a></li>
-<li><a href="#orgheadline104">11.58. <span class="todo nilLATER">LATER</span> 重复最近的命令</a></li>
-<li><a href="#orgheadline105">11.59. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> elisp library</a>
+<li><a href="#orgheadline82">12.33. <span class="todo nilLATER">LATER</span> 如何显示空白字符？</a></li>
+<li><a href="#orgheadline83">12.34. <span class="todo nilLATER">LATER</span> 如何复制一行？</a></li>
+<li><a href="#orgheadline84">12.35. <span class="todo nilLATER">LATER</span> 缩进提示线？</a></li>
+<li><a href="#orgheadline85">12.36. <span class="done nilDONE">DONE</span> 重命名当前文件？</a></li>
+<li><a href="#orgheadline86">12.37. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 如何表示当前文件名？</a></li>
+<li><a href="#orgheadline87">12.38. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 宏录制</a></li>
+<li><a href="#orgheadline88">12.39. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何块缩进？</a></li>
+<li><a href="#orgheadline89">12.40. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> C-/是Undo</a></li>
+<li><a href="#orgheadline90">12.41. <span class="done nilDONE">DONE</span> 如何操作目录</a></li>
+<li><a href="#orgheadline91">12.42. <span class="done nilCANCEL">CANCEL</span> 如何管理配置目录</a></li>
+<li><a href="#orgheadline92">12.43. <span class="todo nilLATER">LATER</span> 如何定位光标下路径的文件？</a></li>
+<li><a href="#orgheadline93">12.44. <span class="todo nilLATER">LATER</span> 如何按项目组织目录</a></li>
+<li><a href="#orgheadline94">12.45. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何让Emacs在光标到达当前Buffer最后一行尾部不自动recenter?</a></li>
+<li><a href="#orgheadline95">12.46. <span class="todo nilLATER">LATER</span> 考虑一下用el-get插件管理插件</a></li>
+<li><a href="#orgheadline96">12.47. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> eshell如何操作？</a></li>
+<li><a href="#orgheadline97">12.48. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何配置自动新开“弹出”窗口的分割方向？</a></li>
+<li><a href="#orgheadline98">12.49. <span class="todo nilLATER">LATER</span> Emacs如何控制Pop分割窗口的大小？</a></li>
+<li><a href="#orgheadline99">12.50. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> emacs如何进行会话保存？</a></li>
+<li><a href="#orgheadline100">12.51. <span class="done nilDONE">DONE</span> Emacs背景配色设置？</a>
 <ul>
-<li><a href="#orgheadline106">11.59.1. 关于 <code>load-file, load, require, autoload</code></a></li>
-<li><a href="#orgheadline107">11.59.2. 关于 Library, Package, Feature</a></li>
+<li><a href="#orgheadline101">12.51.1. 下载地址：</a></li>
+<li><a href="#orgheadline102">12.51.2. 配置默认主题</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline108">11.60. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> Emacs自定义配置</a></li>
-<li><a href="#orgheadline109">11.61. <span class="todo nilLATER">LATER</span> 默认启动xemacs的窗口大小</a></li>
-<li><a href="#orgheadline110">11.62. <span class="todo nilNEXT">NEXT</span> emacs-desktop的会话存储默认位置</a></li>
-<li><a href="#orgheadline111">11.63. <span class="todo nilNEXT">NEXT</span> 如何高亮？</a></li>
-<li><a href="#orgheadline112">11.64. <span class="todo nilNEXT">NEXT</span> Emacs如何进行特定模式下的按键绑定映射？</a></li>
-<li><a href="#orgheadline113">11.65. <span class="todo nilLATER">LATER</span> 如何为当前的Emacs编辑器升级？</a></li>
-<li><a href="#orgheadline114">11.66. <span class="done nilDONE">DONE</span> Emacs撤销、重做和重复</a></li>
-<li><a href="#orgheadline115">11.67. <span class="todo nilNEXT">NEXT</span> Emacs 如何远程访问？</a></li>
-<li><a href="#orgheadline116">11.68. <span class="todo nilLATER">LATER</span> 将emacs custom config变成手动的config</a></li>
-<li><a href="#orgheadline117">11.69. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 恢复文件</a></li>
-<li><a href="#orgheadline118">11.70. <span class="todo nilLATER">LATER</span> 无需远端安装emacs，用本地emacs直接访问远端，可否？</a></li>
-<li><a href="#orgheadline119">11.71. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> Emacs 任务管理？</a></li>
-<li><a href="#orgheadline120">11.72. <span class="todo nilLATER">LATER</span> 崩溃后下次启动自动提示回复文件的方式？</a></li>
-<li><a href="#orgheadline121">11.73. <span class="todo nilLATER">LATER</span> Emacs如何粘帖复制文本到X剪切板中？</a></li>
-<li><a href="#orgheadline122">11.74. <span class="todo nilLATER">LATER</span> Emacs中如何在require后卸载插件？</a></li>
-<li><a href="#orgheadline123">11.75. <span class="todo nilLATER">LATER</span> 拼音输入法</a></li>
-<li><a href="#orgheadline124">11.76. <span class="todo nilNEXT">NEXT</span> Emacs为什么有时候缩进无法删除？</a></li>
-<li><a href="#orgheadline125">11.77. <span class="todo nilNEXT">NEXT</span> Emacs如何搜索光标下的内容</a></li>
-<li><a href="#orgheadline126">11.78. <span class="todo nilLATER">LATER</span> Emacs如何格式化全部代码？</a></li>
-<li><a href="#orgheadline127">11.79. <span class="todo nilNEXT">NEXT</span> 为什么Emacs有时候无法删除缩进？</a></li>
-<li><a href="#orgheadline128">11.80. <span class="todo nilNEXT">NEXT</span> Emacs如何反撤销重做？</a></li>
-<li><a href="#orgheadline129">11.81. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> emacs剪切板和x剪切板共享</a></li>
-<li><a href="#orgheadline130">11.82. <span class="done nilDONE">DONE</span> 完善自己的开发环境，代码跳转、扫描、定位等，不用每次都要手动配置</a></li>
-<li><a href="#orgheadline131">11.83. <span class="todo nilLATER">LATER</span> Emacs 括号跳转</a></li>
-<li><a href="#orgheadline132">11.84. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 关于Narrow</a></li>
-<li><a href="#orgheadline133">11.85. <span class="todo nilNEXT">NEXT</span> emacs如何搜索光标所在字符的内容</a></li>
-<li><a href="#orgheadline134">11.86. <span class="todo nilLATER">LATER</span> C-x =</a></li>
-<li><a href="#orgheadline135">11.87. <span class="todo nilNEXT">NEXT</span> 定义自己的Emacs环境</a></li>
-<li><a href="#orgheadline136">11.88. <span class="todo nilLATER">LATER</span> 将emacs插件分层整理一下，最好能尝试一下新版本的emacs</a></li>
-<li><a href="#orgheadline137">11.89. <span class="todo nilNEXT">NEXT</span> Emacs如何撤销以及反撤销？</a></li>
-<li><a href="#orgheadline138">11.90. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-12-02 三 15:06] </span></span> Emacs标签跳转------</a></li>
-<li><a href="#orgheadline139">11.91. <span class="todo nilLATER">LATER</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-12-02 三 16:58] </span></span> Emacs mark ring------</a></li>
-<li><a href="#orgheadline140">11.92. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 意外发现 <code>ESC-`</code> 在minibuf打开菜单栏</a></li>
-<li><a href="#orgheadline141">11.93. <span class="todo nilNEXT">NEXT</span> 学习资源</a></li>
-<li><a href="#orgheadline142">11.94. <span class="todo nilNEXT">NEXT</span> Emacs如何自定义按键映射不冲突</a></li>
-<li><a href="#orgheadline143">11.95. <span class="todo nilNEXT">NEXT</span> Emacs高级搜索</a></li>
-<li><a href="#orgheadline144">11.96. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> Emacs如何括号匹配？如何显示行号？</a></li>
-<li><a href="#orgheadline145">11.97. 设置输入</a></li>
-<li><a href="#orgheadline146">11.98. <span class="todo nilLATER">LATER</span> 使用Emacs阅读代码</a></li>
-<li><a href="#orgheadline147">11.99. <span class="todo nilLATER">LATER</span> emacs自动保存间隔</a></li>
-<li><a href="#orgheadline148">11.100. <span class="todo nilNEXT">NEXT</span> emacs如何替换文本?</a></li>
-<li><a href="#orgheadline149">11.101. <span class="todo nilLATER">LATER</span> Emacs如何设置多重功能的按键?</a></li>
-<li><a href="#orgheadline150">11.102. <span class="todo nilNEXT">NEXT</span> Emacs如何切换最近buffer,而非只有一个最近buffer?</a></li>
-<li><a href="#orgheadline151">11.103. <span class="todo nilNEXT">NEXT</span> Emacs如何高亮多个单词?</a></li>
-<li><a href="#orgheadline152">11.104. <span class="todo nilLATER">LATER</span> 如何在Emacs直接预览markdown效果？</a></li>
-<li><a href="#orgheadline153">11.105. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> </a></li>
-<li><a href="#orgheadline154">11.106. <span class="todo nilNEXT">NEXT</span> Emacs崩溃后的恢复策略</a></li>
-<li><a href="#orgheadline155">11.107. <span class="todo nilNEXT">NEXT</span> emacs如何跳转到匹配的括号？</a></li>
-<li><a href="#orgheadline156">11.108. <span class="todo nilNEXT">NEXT</span> 一些基本操作</a></li>
+<li><a href="#orgheadline103">12.52. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> emacs的光标滚动如何让其不在屏幕尾部自动滚屏到中间？</a></li>
+<li><a href="#orgheadline104">12.53. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何控制鼠标滚轮滚动的行数</a></li>
+<li><a href="#orgheadline105">12.54. <span class="todo nilLATER">LATER</span> emacs如何清除所有buffer?</a></li>
+<li><a href="#orgheadline106">12.55. <span class="todo nilLATER">LATER</span> 配置调试</a></li>
+<li><a href="#orgheadline107">12.56. <span class="todo nilNEXT">NEXT</span> 不喜欢emacs新开"提示窗口"是垂直方向</a></li>
+<li><a href="#orgheadline108">12.57. <span class="done nilDONE">DONE</span> Emacs如何定制颜色？</a></li>
+<li><a href="#orgheadline109">12.58. <span class="todo nilLATER">LATER</span> 如何设置撤销的次数？目前貌似撤销只有有限的几次</a></li>
+<li><a href="#orgheadline110">12.59. <span class="todo nilLATER">LATER</span> 重复最近的命令</a></li>
+<li><a href="#orgheadline111">12.60. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> elisp library</a>
+<ul>
+<li><a href="#orgheadline112">12.60.1. 关于 <code>load-file, load, require, autoload</code></a></li>
+<li><a href="#orgheadline113">12.60.2. 关于 Library, Package, Feature</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline114">12.61. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> Emacs自定义配置</a></li>
+<li><a href="#orgheadline115">12.62. <span class="todo nilLATER">LATER</span> 默认启动xemacs的窗口大小</a></li>
+<li><a href="#orgheadline116">12.63. <span class="todo nilNEXT">NEXT</span> emacs-desktop的会话存储默认位置</a></li>
+<li><a href="#orgheadline117">12.64. <span class="todo nilNEXT">NEXT</span> 如何高亮？</a></li>
+<li><a href="#orgheadline118">12.65. <span class="todo nilNEXT">NEXT</span> Emacs如何进行特定模式下的按键绑定映射？</a></li>
+<li><a href="#orgheadline119">12.66. <span class="todo nilLATER">LATER</span> 如何为当前的Emacs编辑器升级？</a></li>
+<li><a href="#orgheadline120">12.67. <span class="done nilDONE">DONE</span> Emacs撤销、重做和重复</a></li>
+<li><a href="#orgheadline121">12.68. <span class="todo nilNEXT">NEXT</span> Emacs 如何远程访问？</a></li>
+<li><a href="#orgheadline122">12.69. <span class="todo nilLATER">LATER</span> 将emacs custom config变成手动的config</a></li>
+<li><a href="#orgheadline123">12.70. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 恢复文件</a></li>
+<li><a href="#orgheadline124">12.71. <span class="todo nilLATER">LATER</span> 无需远端安装emacs，用本地emacs直接访问远端，可否？</a></li>
+<li><a href="#orgheadline125">12.72. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> Emacs 任务管理？</a></li>
+<li><a href="#orgheadline126">12.73. <span class="todo nilLATER">LATER</span> 崩溃后下次启动自动提示回复文件的方式？</a></li>
+<li><a href="#orgheadline127">12.74. <span class="todo nilLATER">LATER</span> Emacs如何粘帖复制文本到X剪切板中？</a></li>
+<li><a href="#orgheadline128">12.75. <span class="todo nilLATER">LATER</span> Emacs中如何在require后卸载插件？</a></li>
+<li><a href="#orgheadline129">12.76. <span class="todo nilLATER">LATER</span> 拼音输入法</a></li>
+<li><a href="#orgheadline130">12.77. <span class="todo nilNEXT">NEXT</span> Emacs为什么有时候缩进无法删除？</a></li>
+<li><a href="#orgheadline131">12.78. <span class="todo nilNEXT">NEXT</span> Emacs如何搜索光标下的内容</a></li>
+<li><a href="#orgheadline132">12.79. <span class="todo nilLATER">LATER</span> Emacs如何格式化全部代码？</a></li>
+<li><a href="#orgheadline133">12.80. <span class="todo nilNEXT">NEXT</span> 为什么Emacs有时候无法删除缩进？</a></li>
+<li><a href="#orgheadline134">12.81. <span class="done nilDONE">DONE</span> Emacs如何反撤销重做？</a></li>
+<li><a href="#orgheadline135">12.82. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> emacs剪切板和x剪切板共享</a></li>
+<li><a href="#orgheadline136">12.83. <span class="done nilDONE">DONE</span> 完善自己的开发环境，代码跳转、扫描、定位等，不用每次都要手动配置</a></li>
+<li><a href="#orgheadline137">12.84. <span class="todo nilLATER">LATER</span> Emacs 括号跳转</a></li>
+<li><a href="#orgheadline138">12.85. <span class="done nilDONE">DONE</span> 关于Narrow</a></li>
+<li><a href="#orgheadline139">12.86. <span class="todo nilLATER">LATER</span> emacs如何搜索光标所在字符的内容</a></li>
+<li><a href="#orgheadline140">12.87. <span class="todo nilLATER">LATER</span> C-x =</a></li>
+<li><a href="#orgheadline141">12.88. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 定义自己的Emacs环境</a></li>
+<li><a href="#orgheadline142">12.89. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 将emacs插件分层整理一下，最好能尝试一下新版本的emacs</a></li>
+<li><a href="#orgheadline143">12.90. <span class="todo nilNEXT">NEXT</span> Emacs如何撤销以及反撤销？</a></li>
+<li><a href="#orgheadline144">12.91. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-12-02 三 15:06] </span></span> Emacs标签跳转------</a></li>
+<li><a href="#orgheadline145">12.92. <span class="todo nilLATER">LATER</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-12-02 三 16:58] </span></span> Emacs mark ring------</a></li>
+<li><a href="#orgheadline146">12.93. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 意外发现 <code>ESC-`</code> 在minibuf打开菜单栏</a></li>
+<li><a href="#orgheadline147">12.94. <span class="todo nilNEXT">NEXT</span> 学习资源</a></li>
+<li><a href="#orgheadline148">12.95. <span class="todo nilLATER">LATER</span> Emacs如何自定义按键映射不冲突</a></li>
+<li><a href="#orgheadline149">12.96. <span class="todo nilNEXT">NEXT</span> Emacs高级搜索</a></li>
+<li><a href="#orgheadline150">12.97. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> Emacs如何显示括号匹配？如何显示行号？</a></li>
+<li><a href="#orgheadline151">12.98. <span class="todo nilLATER">LATER</span> 设置输入法</a></li>
+<li><a href="#orgheadline152">12.99. <span class="done nilDONE">DONE</span> 使用Emacs阅读代码</a></li>
+<li><a href="#orgheadline153">12.100. <span class="todo nilLATER">LATER</span> emacs自动保存间隔</a></li>
+<li><a href="#orgheadline154">12.101. <span class="todo nilNEXT">NEXT</span> emacs如何替换文本?</a></li>
+<li><a href="#orgheadline155">12.102. <span class="todo nilLATER">LATER</span> Emacs如何设置多重功能的按键?</a></li>
+<li><a href="#orgheadline156">12.103. <span class="todo nilNEXT">NEXT</span> Emacs如何切换最近buffer,而非只有一个最近buffer?</a></li>
+<li><a href="#orgheadline157">12.104. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> Emacs如何高亮多个单词?</a>
+<ul>
+<li><a href="#orgheadline158">12.104.1. 利用emacs自带的 <code>hi-lock-mode</code></a></li>
+<li><a href="#orgheadline159">12.104.2. 利用插件</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline160">12.105. <span class="done nilDONE">DONE</span> 如何在Emacs直接预览markdown效果？</a></li>
+<li><a href="#orgheadline161">12.106. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 如何执行脚本</a></li>
+<li><a href="#orgheadline162">12.107. <span class="todo nilNEXT">NEXT</span> Emacs崩溃后的恢复策略</a></li>
+<li><a href="#orgheadline163">12.108. <span class="todo nilNEXT">NEXT</span> emacs如何跳转到匹配的括号？</a></li>
+<li><a href="#orgheadline164">12.109. <span class="todo nilNEXT">NEXT</span> 一些基本操作</a></li>
+<li><a href="#orgheadline165">12.110. <span class="todo nilNEXT">NEXT</span> emacs如何返回上次编辑的位置</a></li>
+<li><a href="#orgheadline166">12.111. <span class="todo nilNEXT">NEXT</span> Emacs如何定期自动保存文件?</a></li>
+<li><a href="#orgheadline167">12.112. <span class="done nilDONE">DONE</span> emacs打开文件等，如何实现部分匹配文件或者命令而非精确开头匹配</a>
+<ul>
+<li><a href="#orgheadline168">12.112.1. ido</a></li>
+<li><a href="#orgheadline169">12.112.2. smex</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline170">12.113. <span class="todo nilLATER">LATER</span> 意外发现的 <code>M-*</code> 和 <code>M-.</code> 是做什么的？</a></li>
+<li><a href="#orgheadline171">12.114. <span class="todo nilNEXT">NEXT</span> Emacs代码折叠</a></li>
 </ul>
 </li>
 </ul>
@@ -1360,7 +1726,7 @@ M可以是&lt;ALT&gt;或者&lt;ESC&gt;。
 </p>
 
 <div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1"><span class="section-number-2">1</span> 文件操作</h2>
+<h2 id="orgheadline1"><a id="ID-9c4bb263-88af-40da-b701-d84d1d56fc8c"></a><span class="section-number-2">1</span> 文件操作</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><p>
@@ -1415,6 +1781,14 @@ $emacs -nw
 </p></li>
 
 <li><p>
+查看当前buffer所在的路径
+</p>
+
+<p>
+<code>M-x pwd</code>
+</p></li>
+
+<li><p>
 重新载入当前buffer对应文件
 </p>
 
@@ -1435,7 +1809,7 @@ $emacs -nw
 </p>
 
 <p>
-输入 <code>C-c s</code> 
+输入 <code>C-x s</code> 
 </p>
 
 <p>
@@ -1481,7 +1855,7 @@ Emacs自带一个文件管理器，为dired模式。
 </p>
 
 <p>
-进入目录后，可以输入 <code>h</code> 查看帮助信息，查看回显区简洁帮助输入 <code>?</code> 
+输入之后，可键入要进入的目录，如果不选择直接 <code>Ret</code> 那么会直接进入当前buffer所在目录。进入目录后，可以输入 <code>h</code> 查看帮助信息，查看回显区简洁帮助输入 <code>?</code> 
 </p>
 
 <p>
@@ -1993,7 +2367,7 @@ copy
 <h3 id="orgheadline13"><span class="section-number-3">3.2</span> 撤销与重复</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
-这里列出最基本的，具体可以参考：<a href="#orgheadline31">Emacs撤销、重做和重复</a>
+这里列出最基本的，具体可以参考：<a href="#orgheadline33">Emacs撤销、重做和重复</a>
 </p>
 
 
@@ -2215,10 +2589,29 @@ copy
 </ul>
 </div>
 </div>
+
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16"><span class="section-number-3">3.5</span> 杂乱编辑</h3>
+<div class="outline-text-3" id="text-3-5">
+<ul class="org-ul">
+<li><p>
+交换当前行与上一行的位置
+</p>
+
+<p>
+输入 <code>C-x C-t</code>
+</p>
+
+<p>
+输入之后，会将当前行与前一行交换，并且将当前光标移动到两行的后面。
+</p></li>
+</ul>
+</div>
+</div>
 </div>
 
-<div id="outline-container-orgheadline16" class="outline-2">
-<h2 id="orgheadline16"><span class="section-number-2">4</span> 窗口操作</h2>
+<div id="outline-container-orgheadline17" class="outline-2">
+<h2 id="orgheadline17"><span class="section-number-2">4</span> 窗口操作</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><p>
@@ -2276,11 +2669,11 @@ copy
 </div>
 </div>
 
-<div id="outline-container-orgheadline17" class="outline-2">
-<h2 id="orgheadline17"><span class="section-number-2">5</span> 跳转操作</h2>
+<div id="outline-container-orgheadline18" class="outline-2">
+<h2 id="orgheadline18"><span class="section-number-2">5</span> 跳转操作</h2>
 <div class="outline-text-2" id="text-5">
-</div><div id="outline-container-orgheadline18" class="outline-3">
-<h3 id="orgheadline18"><span class="section-number-3">5.1</span> 搜索</h3>
+</div><div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="section-number-3">5.1</span> 搜索</h3>
 <div class="outline-text-3" id="text-5-1">
 <ul class="org-ul">
 <li><p>
@@ -2315,8 +2708,8 @@ C-s
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline19" class="outline-3">
-<h3 id="orgheadline19"><span class="section-number-3">5.2</span> 基本跳转</h3>
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="section-number-3">5.2</span> 基本跳转</h3>
 <div class="outline-text-3" id="text-5-2">
 <ul class="org-ul">
 <li><p>
@@ -2397,11 +2790,8 @@ C-s
 </div>
 
 
-
-
-
-<div id="outline-container-orgheadline20" class="outline-3">
-<h3 id="orgheadline20"><span class="section-number-3">5.3</span> 书签</h3>
+<div id="outline-container-orgheadline21" class="outline-3">
+<h3 id="orgheadline21"><span class="section-number-3">5.3</span> 书签</h3>
 <div class="outline-text-3" id="text-5-3">
 <ul class="org-ul">
 <li><p>
@@ -2427,8 +2817,8 @@ C-s
 </div>
 </div>
 
-<div id="outline-container-orgheadline21" class="outline-2">
-<h2 id="orgheadline21"><span class="section-number-2">6</span> Buffer操作</h2>
+<div id="outline-container-orgheadline22" class="outline-2">
+<h2 id="orgheadline22"><span class="section-number-2">6</span> Buffer操作</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><p>
@@ -2490,12 +2880,35 @@ C-s
 </div>
 </div>
 
-<div id="outline-container-orgheadline22" class="outline-2">
-<h2 id="orgheadline22"><span class="section-number-2">7</span> 编程相关</h2>
-</div>
 <div id="outline-container-orgheadline23" class="outline-2">
-<h2 id="orgheadline23"><span class="section-number-2">8</span> 帮助</h2>
-<div class="outline-text-2" id="text-8">
+<h2 id="orgheadline23"><span class="section-number-2">7</span> 基本配置</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+这里给出Emacs基本使用时可能需要配置的一些内容，不涉及复杂插件的相关内容。
+</p>
+
+<p>
+这里配置文件大致做如下布局：
+</p>
+
+<p>
+<code>~/.emacs</code>
+是emacs配置文件的入口，一般保存整体配置信息，
+</p>
+
+<p>
+<code>~/.emacs.d</code>
+存放插件等具体配置子脚本。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline24" class="outline-2">
+<h2 id="orgheadline24"><span class="section-number-2">8</span> 编程相关</h2>
+</div>
+<div id="outline-container-orgheadline25" class="outline-2">
+<h2 id="orgheadline25"><span class="section-number-2">9</span> 帮助</h2>
+<div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li><p>
 查看帮助信息的帮助
@@ -2633,20 +3046,20 @@ Emacs FAQ
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline24" class="outline-2">
-<h2 id="orgheadline24"><span class="section-number-2">9</span> 原理</h2>
-<div class="outline-text-2" id="text-9">
-</div><div id="outline-container-orgheadline25" class="outline-3">
-<h3 id="orgheadline25"><span class="section-number-3">9.1</span> 关于递归编辑</h3>
-<div class="outline-text-3" id="text-9-1">
+<div id="outline-container-orgheadline26" class="outline-2">
+<h2 id="orgheadline26"><span class="section-number-2">10</span> 原理</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-orgheadline27" class="outline-3">
+<h3 id="orgheadline27"><span class="section-number-3">10.1</span> 关于递归编辑</h3>
+<div class="outline-text-3" id="text-10-1">
 <p>
 所谓的“递归编辑”是指递归编辑状态，由位于状态栏的方括号所指示，其中包含了用小括号来指明的模式名称。比如说，你有时可能会看到[(Fundamental)]，而不是 (Fundamental)。（比如在用 <code>M-%</code> 进行交互式替换的时候你又用了 <code>C-s</code> 进行搜索，这时替换模式并没有结束，但你又进入了搜索模式，这就是所谓的递归编辑。）
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline26" class="outline-3">
-<h3 id="orgheadline26"><span class="section-number-3">9.2</span> 关于mark/region/active region/transient-mark-mode/Text Selection</h3>
-<div class="outline-text-3" id="text-9-2">
+<div id="outline-container-orgheadline28" class="outline-3">
+<h3 id="orgheadline28"><span class="section-number-3">10.2</span> 关于mark/region/active region/transient-mark-mode/Text Selection</h3>
+<div class="outline-text-3" id="text-10-2">
 <p>
 内容主要参考 <a href="http://ergoemacs.org/emacs/emacs_region.html">Emacs: What's Region, Active Region, transient-mark-mode?</a> 大致如下：
 </p>
@@ -2702,13 +3115,13 @@ Text Selection就是被选择的文本，一般与active region同义。Text Sel
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline27" class="outline-3">
-<h3 id="orgheadline27"><a id="ID-4306b46a-6e55-4dd3-943f-beb64f0a909b"></a><span class="section-number-3">9.3</span> 关于自动临时保存和备份</h3>
-<div class="outline-text-3" id="text-9-3">
+<div id="outline-container-orgheadline29" class="outline-3">
+<h3 id="orgheadline29"><a id="ID-4306b46a-6e55-4dd3-943f-beb64f0a909b"></a><span class="section-number-3">10.3</span> 关于自动临时保存和备份</h3>
+<div class="outline-text-3" id="text-10-3">
 </div>
-<div id="outline-container-orgheadline28" class="outline-4">
-<h4 id="orgheadline28"><span class="section-number-4">9.3.1</span> 临时文件</h4>
-<div class="outline-text-4" id="text-9-3-1">
+<div id="outline-container-orgheadline30" class="outline-4">
+<h4 id="orgheadline30"><span class="section-number-4">10.3.1</span> 临时文件</h4>
+<div class="outline-text-4" id="text-10-3-1">
 <p>
 一般是在Emacs中编辑时,在编辑文件的同一个目录内生成一个以#file-name#这样的文件，这个文件会在我们保存文件之后被emacs删除。这个文件的作用是为了防止在进行编辑的时候异常退出造成的损失。
 </p>
@@ -2747,9 +3160,9 @@ Text Selection就是被选择的文本，一般与active region同义。Text Sel
 </div>
 </div>
 
-<div id="outline-container-orgheadline29" class="outline-4">
-<h4 id="orgheadline29"><span class="section-number-4">9.3.2</span> 自动备份</h4>
-<div class="outline-text-4" id="text-9-3-2">
+<div id="outline-container-orgheadline31" class="outline-4">
+<h4 id="orgheadline31"><span class="section-number-4">10.3.2</span> 自动备份</h4>
+<div class="outline-text-4" id="text-10-3-2">
 <p>
 第一次保存的时候，如果保存的文件已经存在，Emacs会自动将保存前的文件重命名作为备份文件，而备份文件使用的是一个“～”作为后缀(如：file-name~)。
 </p>
@@ -2786,9 +3199,9 @@ Text Selection就是被选择的文本，一般与active region同义。Text Sel
 </div>
 </div>
 
-<div id="outline-container-orgheadline30" class="outline-4">
-<h4 id="orgheadline30"><span class="section-number-4">9.3.3</span> 其他</h4>
-<div class="outline-text-4" id="text-9-3-3">
+<div id="outline-container-orgheadline32" class="outline-4">
+<h4 id="orgheadline32"><span class="section-number-4">10.3.3</span> 其他</h4>
+<div class="outline-text-4" id="text-10-3-3">
 <p>
 参考：
 <a href="http://blog.useasp.net/archive/2014/07/18/emacs-temporary-files-and-backup-files-for-edited-file.aspx">http://blog.useasp.net/archive/2014/07/18/emacs-temporary-files-and-backup-files-for-edited-file.aspx</a>
@@ -2800,9 +3213,9 @@ Text Selection就是被选择的文本，一般与active region同义。Text Sel
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline31" class="outline-3">
-<h3 id="orgheadline31"><a id="ID-fea6db6c-78ed-4689-b32e-edc960161039"></a><span class="section-number-3">9.4</span> Emacs撤销、重做和重复</h3>
-<div class="outline-text-3" id="text-9-4">
+<div id="outline-container-orgheadline33" class="outline-3">
+<h3 id="orgheadline33"><a id="ID-fea6db6c-78ed-4689-b32e-edc960161039"></a><span class="section-number-3">10.4</span> Emacs撤销、重做和重复</h3>
+<div class="outline-text-3" id="text-10-4">
 <p>
 简单说来，撤销是取消上次的操作，重做是对撤销的撤销，重复是对上次命令进行重做。下面重点对撤销和重做进行叙述。
 </p>
@@ -2816,9 +3229,9 @@ Text Selection就是被选择的文本，一般与active region同义。Text Sel
 </p>
 </div>
 
-<div id="outline-container-orgheadline32" class="outline-4">
-<h4 id="orgheadline32"><span class="section-number-4">9.4.1</span> 插件</h4>
-<div class="outline-text-4" id="text-9-4-1">
+<div id="outline-container-orgheadline34" class="outline-4">
+<h4 id="orgheadline34"><span class="section-number-4">10.4.1</span> 插件</h4>
+<div class="outline-text-4" id="text-10-4-1">
 <p>
 通过undo-tree插件选择需要恢复的操作
 </p>
@@ -2832,9 +3245,9 @@ C-x u 进入 undo-tree-visualizer-mode , p n 上下移动，在分支之前 b f 
 </div>
 </div>
 
-<div id="outline-container-orgheadline33" class="outline-4">
-<h4 id="orgheadline33"><span class="section-number-4">9.4.2</span> 标准操作</h4>
-<div class="outline-text-4" id="text-9-4-2">
+<div id="outline-container-orgheadline35" class="outline-4">
+<h4 id="orgheadline35"><span class="section-number-4">10.4.2</span> 标准操作</h4>
+<div class="outline-text-4" id="text-10-4-2">
 <p>
 对撤销的撤销便是重做（或者向前撤销）
 </p>
@@ -2849,12 +3262,12 @@ C-x u 进入 undo-tree-visualizer-mode , p n 上下移动，在分支之前 b f 
 </div>
 </div>
 
-<div id="outline-container-orgheadline34" class="outline-4">
-<h4 id="orgheadline34"><span class="section-number-4">9.4.3</span> 比较详细的解释</h4>
-<div class="outline-text-4" id="text-9-4-3">
-</div><div id="outline-container-orgheadline157" class="outline-5">
-<h5 id="orgheadline157"><span class="section-number-5">9.4.3.1</span> Emacs中所有命令均可undo</h5>
-<div class="outline-text-5" id="text-9-4-3-1">
+<div id="outline-container-orgheadline36" class="outline-4">
+<h4 id="orgheadline36"><span class="section-number-4">10.4.3</span> 比较详细的解释</h4>
+<div class="outline-text-4" id="text-10-4-3">
+</div><div id="outline-container-orgheadline172" class="outline-5">
+<h5 id="orgheadline172"><span class="section-number-5">10.4.3.1</span> Emacs中所有命令均可undo</h5>
+<div class="outline-text-5" id="text-10-4-3-1">
 <p>
 所有命令均可undo, 包括undo本身，所有命令emacs都一视同仁，所以：undo+undo=redo
 </p>
@@ -2865,9 +3278,9 @@ emacs 把相同类型的操作，合并为一个事件。比如说往缓冲区�
 </div>
 </div>
 
-<div id="outline-container-orgheadline158" class="outline-5">
-<h5 id="orgheadline158"><span class="section-number-5">9.4.3.2</span> Emacs中撤销操作序列的表示方式</h5>
-<div class="outline-text-5" id="text-9-4-3-2">
+<div id="outline-container-orgheadline173" class="outline-5">
+<h5 id="orgheadline173"><span class="section-number-5">10.4.3.2</span> Emacs中撤销操作序列的表示方式</h5>
+<div class="outline-text-5" id="text-10-4-3-2">
 <pre class="example">
 undo 之后想要 redo ，就要进行一个其它类型的操作，随便输入一个字符或者移动一下光标都可以，不过标准答案是 C-g 。
 
@@ -2890,9 +3303,9 @@ s1--s2--s3--s4
 </div>
 </div>
 
-<div id="outline-container-orgheadline159" class="outline-5">
-<h5 id="orgheadline159"><span class="section-number-5">9.4.3.3</span> 引入插件undo-tree来"改变"Emacs中的undo模式：</h5>
-<div class="outline-text-5" id="text-9-4-3-3">
+<div id="outline-container-orgheadline174" class="outline-5">
+<h5 id="orgheadline174"><span class="section-number-5">10.4.3.3</span> 引入插件undo-tree来"改变"Emacs中的undo模式：</h5>
+<div class="outline-text-5" id="text-10-4-3-3">
 <pre class="example">
 其实这种“undo蛇”完全可以表示成 undo tree。s10 到 s1 ，两步;再到 s4，四步(有一步是切换分支)……
 
@@ -2922,9 +3335,9 @@ C-x u 进入 undo-tree-visualizer-mode , p n 上下移动，在分支之前 b f 
 </div>
 </div>
 
-<div id="outline-container-orgheadline35" class="outline-4">
-<h4 id="orgheadline35"><span class="section-number-4">9.4.4</span> 官方文档</h4>
-<div class="outline-text-4" id="text-9-4-4">
+<div id="outline-container-orgheadline37" class="outline-4">
+<h4 id="orgheadline37"><span class="section-number-4">10.4.4</span> 官方文档</h4>
+<div class="outline-text-4" id="text-10-4-4">
 <p>
 查阅Emacs <code>C-h i</code> 信息中有关Undo的内容，如下：
 </p>
@@ -2937,19 +3350,54 @@ Any command other than an undo command breaks the sequence of undo commands. Sta
 </div>
 </div>
 
-<div id="outline-container-orgheadline36" class="outline-4">
-<h4 id="orgheadline36"><span class="section-number-4">9.4.5</span> 总结</h4>
-<div class="outline-text-4" id="text-9-4-5">
+<div id="outline-container-orgheadline38" class="outline-4">
+<h4 id="orgheadline38"><span class="section-number-4">10.4.5</span> 总结</h4>
+<div class="outline-text-4" id="text-10-4-5">
 <p>
 其实redo就是对undo的undo，undo会将本身当作被redo的对象，但是连续的undo之间不会被打断，（当然其中的每次undo仍然会视为一个change)，通过 <code>C-g</code> 打断连续的Undo操作，再 <code>C-/</code> 就实现了对上次的undo 进行 undo，其实感觉上，Emacs将一切操作线性化，即简化了设计，又符合人的思维次序，而通过undo-tree却将这个undo变成了树状结果，便于理解，但是实践上未必更实用。目前暂时不用相关的插件。
 </p>
 </div>
 </div>
 </div>
+<div id="outline-container-orgheadline39" class="outline-3">
+<h3 id="orgheadline39"><a id="ID-155b159a-2dcb-42e9-a428-60d8a022fbfa"></a><span class="section-number-3">10.5</span> 关于Narrow</h3>
+<div class="outline-text-3" id="text-10-5">
+<p>
+Narrowing的意思是将焦点集中到buffer的指定区域上, 有助于集中精力到特定的段落上，而将无关信息屏蔽掉。
+</p>
+
+<p>
+Narrow后，你能看到的内容就是被Narrow的部分，但是并非删除了其他的内容，而是将相应的内容隐藏了。
+</p>
+
+<p>
+Narrow后，其他内容好像不存在了一样，正常的跳转/搜索操作也被限制在Narrow范围内。
+</p>
+
+<p>
+Narrow后，能够看见的区域被称作可访问区域，当取消narrow的时候，其他不可见的区域也变回可见了。
+</p>
+
+<p>
+主要命令：
+</p>
+<dl class="org-dl">
+<dt>将Narrow范围设定在光标与Mark范围之间</dt><dd>输入 <code>C-x n n</code> ，其实一般也就是被选区域。</dd>
+<dt>取消Narrow</dt><dd>输入 <code>C-x n w</code></dd>
+<dt>将Narrow范围设定为当前页</dt><dd>输入 <code>C-x n p</code></dd>
+<dt>将Narrow范围设定为当前函数</dt><dd>输入 <code>C-x n d</code></dd>
+</dl>
+
+<p>
+具体可以参考 <code>C-x n C-h</code> 或 <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Narrowing.html">http://www.gnu.org/software/emacs/manual/html_node/emacs/Narrowing.html</a>
+</p>
 </div>
-<div id="outline-container-orgheadline37" class="outline-2">
-<h2 id="orgheadline37"><span class="section-number-2">10</span> 其他</h2>
-<div class="outline-text-2" id="text-10">
+</div>
+</div>
+
+<div id="outline-container-orgheadline40" class="outline-2">
+<h2 id="orgheadline40"><a id="ID-62b81dae-5ab4-4fe2-9092-68bc51c35a75"></a><span class="section-number-2">11</span> 其他</h2>
+<div class="outline-text-2" id="text-11">
 <ul class="org-ul">
 <li><p>
 切换模式
@@ -2962,10 +3410,19 @@ Any command other than an undo command breaks the sequence of undo commands. Sta
 <p>
 这里&lt;mode name&gt;是模式名称，自己输入，可以&lt;Tab&gt;补全。
 </p></li>
-</ul>
 
+<li><p>
+只读切换
+</p>
 
-<ul class="org-ul">
+<p>
+输入 <code>C-x C-q</code>
+</p>
+
+<p>
+输入之后，当前buffer会在只读以及可读写之间切换。
+</p></li>
+
 <li><p>
 终止现在正在执行的命令
 </p>
@@ -3049,9 +3506,9 @@ C-x C-e
 </ul>
 </div>
 
-<div id="outline-container-orgheadline38" class="outline-3">
-<h3 id="orgheadline38"><span class="section-number-3">10.1</span> 意外操作</h3>
-<div class="outline-text-3" id="text-10-1">
+<div id="outline-container-orgheadline41" class="outline-3">
+<h3 id="orgheadline41"><span class="section-number-3">11.1</span> 意外操作</h3>
+<div class="outline-text-3" id="text-11-1">
 <p>
 这里列出平时意外操作发现的一些功能，可能会整理至合适位置。
 </p>
@@ -3114,17 +3571,17 @@ C-x C-e
 </div>
 
 
-<div id="outline-container-orgheadline39" class="outline-2">
-<h2 id="orgheadline39"><span class="section-number-2">11</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[15/107]</code>(<code>[14%]</code>)</h2>
-<div class="outline-text-2" id="text-11">
+<div id="outline-container-orgheadline42" class="outline-2">
+<h2 id="orgheadline42"><span class="section-number-2">12</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[27/114]</code>(<code>[23%]</code>)</h2>
+<div class="outline-text-2" id="text-12">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-27 五 15:07] </span></span> <br  />
 wait for all done</li>
 </ul>
 </div>
-<div id="outline-container-orgheadline40" class="outline-3">
-<h3 id="orgheadline40"><span class="section-number-3">11.1</span> <span class="todo NEXT">NEXT</span> 前进后退？</h3>
-<div class="outline-text-3" id="text-11-1">
+<div id="outline-container-orgheadline43" class="outline-3">
+<h3 id="orgheadline43"><span class="section-number-3">12.1</span> <span class="todo NEXT">NEXT</span> 前进后退？</h3>
+<div class="outline-text-3" id="text-12-1">
 <ul class="org-ul">
 <li>State "NEXT"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2015-12-17 四 15:30]</span></span></li>
 <li>State "WAIT/FORWARD" from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 13:52] </span></span> <br  />
@@ -3132,16 +3589,16 @@ wait for all done</li>
 <li>State "LATER"      from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 11:41]</span></span></li>
 </ul>
 </div>
-<div id="outline-container-orgheadline41" class="outline-4">
-<h4 id="orgheadline41"><span class="section-number-4">11.1.1</span> 插件</h4>
-<div class="outline-text-4" id="text-11-1-1">
+<div id="outline-container-orgheadline44" class="outline-4">
+<h4 id="orgheadline44"><span class="section-number-4">12.1.1</span> 插件</h4>
+<div class="outline-text-4" id="text-12-1-1">
 <p>
 使用recent-jump插件。
 </p>
 </div>
-<div id="outline-container-orgheadline160" class="outline-5">
-<h5 id="orgheadline160"><span class="section-number-5">11.1.1.1</span> 配置举例</h5>
-<div class="outline-text-5" id="text-11-1-1-1">
+<div id="outline-container-orgheadline175" class="outline-5">
+<h5 id="orgheadline175"><span class="section-number-5">12.1.1.1</span> 配置举例</h5>
+<div class="outline-text-5" id="text-12-1-1-1">
 <div class="org-src-container">
 
 <pre class="src src-elisp">;; set recent-jump
@@ -3155,9 +3612,9 @@ wait for all done</li>
 </div>
 </div>
 
-<div id="outline-container-orgheadline161" class="outline-5">
-<h5 id="orgheadline161"><span class="section-number-5">11.1.1.2</span> 常用操作</h5>
-<div class="outline-text-5" id="text-11-1-1-2">
+<div id="outline-container-orgheadline176" class="outline-5">
+<h5 id="orgheadline176"><span class="section-number-5">12.1.1.2</span> 常用操作</h5>
+<div class="outline-text-5" id="text-12-1-1-2">
 <ul class="org-ul">
 <li>前进</li>
 </ul>
@@ -3176,9 +3633,9 @@ wait for all done</li>
 </div>
 </div>
 
-<div id="outline-container-orgheadline162" class="outline-5">
-<h5 id="orgheadline162"><span class="section-number-5">11.1.1.3</span> 其他</h5>
-<div class="outline-text-5" id="text-11-1-1-3">
+<div id="outline-container-orgheadline177" class="outline-5">
+<h5 id="orgheadline177"><span class="section-number-5">12.1.1.3</span> 其他</h5>
+<div class="outline-text-5" id="text-12-1-1-3">
 <p>
 对该插件可以自行修改其源代码，以定制什么情况下针对什么命令、多大举例进行跳转。具体参见插件的源码和文档。
 </p>
@@ -3206,38 +3663,67 @@ wait for all done</li>
 </div>
 </div>
 
-<div id="outline-container-orgheadline42" class="outline-4">
-<h4 id="orgheadline42"><span class="section-number-4">11.1.2</span> 链接的后退</h4>
-<div class="outline-text-4" id="text-11-1-2">
+<div id="outline-container-orgheadline45" class="outline-4">
+<h4 id="orgheadline45"><span class="section-number-4">12.1.2</span> 链接的后退</h4>
+<div class="outline-text-4" id="text-12-1-2">
 <p>
 跳转一次链接后，会记录上次链接。使用 <code>C-c &amp;</code> 可以后退。具体需要仔细确认。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline43" class="outline-4">
-<h4 id="orgheadline43"><span class="section-number-4">11.1.3</span> 查找的后退</h4>
-<div class="outline-text-4" id="text-11-1-3">
+<div id="outline-container-orgheadline46" class="outline-4">
+<h4 id="orgheadline46"><span class="section-number-4">12.1.3</span> 查找的后退</h4>
+<div class="outline-text-4" id="text-12-1-3">
 <p>
 查找一个字符串，回车后，会记录开始查找时的位置。使用 <code>C-u C-@</code> 可以退回查找前的位置。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline44" class="outline-4">
-<h4 id="orgheadline44"><span class="section-number-4">11.1.4</span> 输入 <code>C-u C-@</code></h4>
+<div id="outline-container-orgheadline47" class="outline-4">
+<h4 id="orgheadline47"><span class="section-number-4">12.1.4</span> 输入 <code>C-u C-@</code></h4>
 </div>
 </div>
-<div id="outline-container-orgheadline45" class="outline-3">
-<h3 id="orgheadline45"><span class="section-number-3">11.2</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> TAB标签栏?</h3>
-<div class="outline-text-3" id="text-11-2">
+<div id="outline-container-orgheadline48" class="outline-3">
+<h3 id="orgheadline48"><span class="section-number-3">12.2</span> <span class="done DONE">DONE</span> TAB标签栏?</h3>
+<div class="outline-text-3" id="text-12-2">
 <ul class="org-ul">
+<li>State "DONE"       from "MAYBE/FUTURE" <span class="timestamp-wrapper"><span class="timestamp">[2016-03-03 四 11:02]</span></span></li>
 <li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:38]</span></span></li>
 </ul>
+<p>
+使用 <code>tabbar</code> 插件。具体参考相关文档。
+</p>
+</div>
+
+<div id="outline-container-orgheadline49" class="outline-4">
+<h4 id="orgheadline49"><span class="section-number-4">12.2.1</span> 下载地址</h4>
+<div class="outline-text-4" id="text-12-2-1">
+<p>
+<code>wget https://www.emacswiki.org/emacs/download/tabbar.el</code>
+</p>
 </div>
 </div>
-<div id="outline-container-orgheadline46" class="outline-3">
-<h3 id="orgheadline46"><span class="section-number-3">11.3</span> <span class="done DONE">DONE</span> 如何删除一行</h3>
-<div class="outline-text-3" id="text-11-3">
+
+<div id="outline-container-orgheadline50" class="outline-4">
+<h4 id="orgheadline50"><span class="section-number-4">12.2.2</span> 关键配置</h4>
+<div class="outline-text-4" id="text-12-2-2">
+<div class="org-src-container">
+
+<pre class="src src-elisp">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;tabbar
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'tabbar)
+(tabbar-mode t)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline51" class="outline-3">
+<h3 id="orgheadline51"><span class="section-number-3">12.3</span> <span class="done DONE">DONE</span> 如何删除一行</h3>
+<div class="outline-text-3" id="text-12-3">
 <ul class="org-ul">
 <li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 11:43]</span></span></li>
 </ul>
@@ -3246,18 +3732,18 @@ wait for all done</li>
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline47" class="outline-3">
-<h3 id="orgheadline47"><span class="section-number-3">11.4</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 如何移动一行？</h3>
-<div class="outline-text-3" id="text-11-4">
+<div id="outline-container-orgheadline52" class="outline-3">
+<h3 id="orgheadline52"><span class="section-number-3">12.4</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 如何移动一行？</h3>
+<div class="outline-text-3" id="text-12-4">
 <ul class="org-ul">
 <li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:39]</span></span></li>
 <li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 11:43]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline48" class="outline-3">
-<h3 id="orgheadline48"><span class="section-number-3">11.5</span> <span class="done DONE">DONE</span> 如何删除至行首？</h3>
-<div class="outline-text-3" id="text-11-5">
+<div id="outline-container-orgheadline53" class="outline-3">
+<h3 id="orgheadline53"><span class="section-number-3">12.5</span> <span class="done DONE">DONE</span> 如何删除至行首？</h3>
+<div class="outline-text-3" id="text-12-5">
 <ul class="org-ul">
 <li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 11:53]</span></span></li>
 </ul>
@@ -3266,7 +3752,7 @@ wait for all done</li>
 </p>
 
 <p>
-或输入 <code>M-- C-k</code>
+n或输入 <code>M-- C-k</code>
 </p>
 
 <p>
@@ -3274,22 +3760,27 @@ wait for all done</li>
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline49" class="outline-3">
-<h3 id="orgheadline49"><span class="section-number-3">11.6</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何save all?</h3>
-<div class="outline-text-3" id="text-11-6">
+<div id="outline-container-orgheadline54" class="outline-3">
+<h3 id="orgheadline54"><span class="section-number-3">12.6</span> <span class="done DONE">DONE</span> 如何save all?</h3>
+<div class="outline-text-3" id="text-12-6">
 <ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-02-10 三 11:08]</span></span></li>
 <li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 16:46] </span></span> <br  />
 待整理至合适的位置。</li>
 </ul>
+
 <p>
 输入 <code>C-x s</code>
+参考: <a href="#orgheadline1">文件操作</a>
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline50" class="outline-3">
-<h3 id="orgheadline50"><span class="section-number-3">11.7</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 只读切换?</h3>
-<div class="outline-text-3" id="text-11-7">
+
+<div id="outline-container-orgheadline55" class="outline-3">
+<h3 id="orgheadline55"><span class="section-number-3">12.7</span> <span class="done DONE">DONE</span> 只读切换?</h3>
+<div class="outline-text-3" id="text-12-7">
 <ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-02-10 三 11:11]</span></span></li>
 <li>State "WAIT/FORWARD" from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 16:45] </span></span> <br  />
 需要转移到合适的位置。</li>
 <li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 16:45]</span></span></li>
@@ -3297,16 +3788,21 @@ wait for all done</li>
 <p>
 输入 <code>C-x C-q</code>
 </p>
+
+<p>
+参见 <a href="#orgheadline40">其他</a>
+</p>
 </div>
 </div>
-<div id="outline-container-orgheadline51" class="outline-3">
-<h3 id="orgheadline51"><span class="section-number-3">11.8</span> <span class="done DONE">DONE</span> 如何删除备份文件，或者不使用自动备份？</h3>
-<div class="outline-text-3" id="text-11-8">
+
+<div id="outline-container-orgheadline56" class="outline-3">
+<h3 id="orgheadline56"><span class="section-number-3">12.8</span> <span class="done DONE">DONE</span> 如何删除备份文件，或者不使用自动备份？</h3>
+<div class="outline-text-3" id="text-12-8">
 <ul class="org-ul">
 <li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 11:55]</span></span></li>
 </ul>
 <p>
-具体参考：<a href="#orgheadline27">关于自动临时保存和备份</a>
+具体参考：<a href="#orgheadline29">关于自动临时保存和备份</a>
 ;;disable auto backup file("xxx~") when save(default t).
 (setq make-backup-files nil)
 </p>
@@ -3322,16 +3818,26 @@ wait for all done</li>
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline52" class="outline-3">
-<h3 id="orgheadline52"><span class="section-number-3">11.9</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 跳转到当前buffer工作目录？</h3>
-<div class="outline-text-3" id="text-11-9">
+<div id="outline-container-orgheadline57" class="outline-3">
+<h3 id="orgheadline57"><span class="section-number-3">12.9</span> <span class="done DONE">DONE</span> 跳转到当前buffer工作目录？</h3>
+<div class="outline-text-3" id="text-12-9">
 <ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-02-10 三 11:14]</span></span></li>
 <li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-12 一 09:23] </span></span> <br  />
 待整理到合适位置</li>
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-12 一 08:50]</span></span></li>
 </ul>
+
 <p>
-不知道在哪里看到的文章上讲 C-x C-j 可以用 dired mode 打开正在编辑的文件的所在目录，但是我的版本的 Emacs 居然没有这个快键，而且这个键没有绑定任何命令。 于是加了一段代码实现这个功能。
+输入 <code>C-x d</code>
+</p>
+
+<p>
+参考： <a href="#orgheadline2">文件管理</a>
+</p>
+
+<p>
+另外，不知道在哪里看到的文章上讲 <code>C-x C-j</code> 可以用 dired mode 打开正在编辑的文件的所在目录，但是我的版本的 Emacs 居然没有这个快键，而且这个键没有绑定任何命令。 于是加了一段代码实现这个功能。
 </p>
 <div class="org-src-container">
 
@@ -3345,14 +3851,16 @@ wait for all done</li>
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline53" class="outline-3">
-<h3 id="orgheadline53"><span class="section-number-3">11.10</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> Emacs当前工作目录？</h3>
-<div class="outline-text-3" id="text-11-10">
+<div id="outline-container-orgheadline58" class="outline-3">
+<h3 id="orgheadline58"><span class="section-number-3">12.10</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> Emacs当前工作目录？</h3>
+<div class="outline-text-3" id="text-12-10">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-20 二 17:02] </span></span> <br  />
 等待整理到合适的位置。</li>
 </ul>
+
 <p>
+参考： <a href="#orgheadline2">文件管理</a>
 当前buffer的目录， 输入 <code>C-x d</code> 。 
 </p>
 
@@ -3408,36 +3916,36 @@ C-x C-f 使用的目录是 default-directory 的值。default-directory 是 buff
 </div>
 </div>
 
-<div id="outline-container-orgheadline54" class="outline-3">
-<h3 id="orgheadline54"><span class="section-number-3">11.11</span> <span class="todo LATER">LATER</span> 如何重做？</h3>
-<div class="outline-text-3" id="text-11-11">
+<div id="outline-container-orgheadline59" class="outline-3">
+<h3 id="orgheadline59"><span class="section-number-3">12.11</span> <span class="todo LATER">LATER</span> 如何重做？</h3>
+<div class="outline-text-3" id="text-12-11">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:39]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline55" class="outline-3">
-<h3 id="orgheadline55"><span class="section-number-3">11.12</span> <span class="todo LATER">LATER</span> 如何成块缩进?</h3>
-<div class="outline-text-3" id="text-11-12">
+<div id="outline-container-orgheadline60" class="outline-3">
+<h3 id="orgheadline60"><span class="section-number-3">12.12</span> <span class="todo LATER">LATER</span> 如何成块缩进?</h3>
+<div class="outline-text-3" id="text-12-12">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:40]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline56" class="outline-3">
-<h3 id="orgheadline56"><span class="section-number-3">11.13</span> <span class="todo LATER">LATER</span> 如何创建空文件</h3>
-<div class="outline-text-3" id="text-11-13">
+<div id="outline-container-orgheadline61" class="outline-3">
+<h3 id="orgheadline61"><span class="section-number-3">12.13</span> <span class="todo LATER">LATER</span> 如何创建空文件</h3>
+<div class="outline-text-3" id="text-12-13">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:40]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline57" class="outline-3">
-<h3 id="orgheadline57"><span class="section-number-3">11.14</span> <span class="todo NEXT">NEXT</span> 如何跳转至上次编辑内容？</h3>
+<div id="outline-container-orgheadline62" class="outline-3">
+<h3 id="orgheadline62"><span class="section-number-3">12.14</span> <span class="todo NEXT">NEXT</span> 如何跳转至上次编辑内容？</h3>
 </div>
-<div id="outline-container-orgheadline58" class="outline-3">
-<h3 id="orgheadline58"><span class="section-number-3">11.15</span> <span class="done DONE">DONE</span> 如何save all？</h3>
-<div class="outline-text-3" id="text-11-15">
+<div id="outline-container-orgheadline63" class="outline-3">
+<h3 id="orgheadline63"><span class="section-number-3">12.15</span> <span class="done DONE">DONE</span> 如何save all？</h3>
+<div class="outline-text-3" id="text-12-15">
 <ul class="org-ul">
 <li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:40]</span></span></li>
 </ul>
@@ -3447,72 +3955,85 @@ C-x C-f 使用的目录是 default-directory 的值。default-directory 是 buff
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline59" class="outline-3">
-<h3 id="orgheadline59"><a id="ID-8b88c6a5-0086-4ef0-88a9-7191d3d3eb6e"></a><span class="section-number-3">11.16</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> emacs如何加载插件？</h3>
-<div class="outline-text-3" id="text-11-16">
+
+<div id="outline-container-orgheadline64" class="outline-3">
+<h3 id="orgheadline64"><a id="ID-8b88c6a5-0086-4ef0-88a9-7191d3d3eb6e"></a><span class="section-number-3">12.16</span> <span class="done DONE">DONE</span> emacs如何加载插件？</h3>
+<div class="outline-text-3" id="text-12-16">
 <ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-03-03 四 11:19]</span></span></li>
 <li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:41] </span></span> <br  />
 填写配置文件，待整理</li>
 </ul>
+
 <p>
-下载插件，插件都是elisp脚本，比如 <code>recent-jump.el</code>
+下载插件，插件都是elisp脚本，一般自动加载都是修改配置文件，比如 <code>recent-jump.el</code> 
+</p>
+
+<p>
 将加载语句写入配置文件：
 </p>
 <pre class="example">
 ;;plugins
 (load "recent-jump.el")
 </pre>
+
 <p>
 或者
 </p>
 <pre class="example">
 (require 'recent-jump) ;; back/forward
 </pre>
+
 <p>
-或者直接执行加载语句（在相应的语句结尾输入 <code>C-x C-e</code> ）
-可参考：<a href="#orgheadline105">elisp library</a>
+或者如果直接在当前会话中加载插件，可以到 <code>*scratch*</code> buffer中或者其他地方将加载语句写下来，然后则直接执行加载语句（在相应的语句结尾输入 <code>C-x C-e</code> ）
+</p>
+
+<p>
+具体可参考：<a href="#orgheadline111">elisp library</a>
 </p>
 </div>
 </div>
 
 
-<div id="outline-container-orgheadline60" class="outline-3">
-<h3 id="orgheadline60"><span class="section-number-3">11.17</span> <span class="todo LATER">LATER</span> TAB标签显示？</h3>
-<div class="outline-text-3" id="text-11-17">
+<div id="outline-container-orgheadline65" class="outline-3">
+<h3 id="orgheadline65"><span class="section-number-3">12.17</span> <span class="todo LATER">LATER</span> TAB标签显示？</h3>
+<div class="outline-text-3" id="text-12-17">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:41]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline61" class="outline-3">
-<h3 id="orgheadline61"><span class="section-number-3">11.18</span> <span class="todo LATER">LATER</span> 跳至上次编辑的位置？</h3>
-<div class="outline-text-3" id="text-11-18">
+<div id="outline-container-orgheadline66" class="outline-3">
+<h3 id="orgheadline66"><span class="section-number-3">12.18</span> <span class="todo LATER">LATER</span> 跳至上次编辑的位置？</h3>
+<div class="outline-text-3" id="text-12-18">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:41]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline62" class="outline-3">
-<h3 id="orgheadline62"><span class="section-number-3">11.19</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 插件配置</h3>
-<div class="outline-text-3" id="text-11-19">
+<div id="outline-container-orgheadline67" class="outline-3">
+<h3 id="orgheadline67"><span class="section-number-3">12.19</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 插件在哪配置</h3>
+<div class="outline-text-3" id="text-12-19">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:41] </span></span> <br  />
-有emacs plugin相关文章，待整理。</li>
+有emacs plugin相关文章，待整理可能需要整理到原理中。</li>
 </ul>
+
 <p>
-~/.emacs
-保存配置信息
+<code>~/.emacs</code>
+是emacs配置文件的入口，一般保存整体配置信息，
 </p>
 
 <p>
-~/.emacs.d
-存放插件
+<code>~/.emacs.d</code>
+存放插件等具体配置子脚本。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline63" class="outline-3">
-<h3 id="orgheadline63"><span class="section-number-3">11.20</span> <span class="done DONE">DONE</span> kill buffer?</h3>
-<div class="outline-text-3" id="text-11-20">
+
+<div id="outline-container-orgheadline68" class="outline-3">
+<h3 id="orgheadline68"><span class="section-number-3">12.20</span> <span class="done DONE">DONE</span> kill buffer?</h3>
+<div class="outline-text-3" id="text-12-20">
 <ul class="org-ul">
 <li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:42]</span></span></li>
 </ul>
@@ -3523,9 +4044,9 @@ C-x C-f 使用的目录是 default-directory 的值。default-directory 是 buff
 </div>
 </div>
 
-<div id="outline-container-orgheadline64" class="outline-3">
-<h3 id="orgheadline64"><span class="section-number-3">11.21</span> <span class="done DONE">DONE</span> 直接执行lisp函数？</h3>
-<div class="outline-text-3" id="text-11-21">
+<div id="outline-container-orgheadline69" class="outline-3">
+<h3 id="orgheadline69"><span class="section-number-3">12.21</span> <span class="done DONE">DONE</span> 直接执行lisp函数？</h3>
+<div class="outline-text-3" id="text-12-21">
 <ul class="org-ul">
 <li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 12:18]</span></span></li>
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 12:17]</span></span></li>
@@ -3541,46 +4062,53 @@ C-x C-f 使用的目录是 default-directory 的值。default-directory 是 buff
 </div>
 </div>
 
-<div id="outline-container-orgheadline65" class="outline-3">
-<h3 id="orgheadline65"><span class="section-number-3">11.22</span> <span class="todo LATER">LATER</span> 如何实现自动缩进？</h3>
-<div class="outline-text-3" id="text-11-22">
+<div id="outline-container-orgheadline70" class="outline-3">
+<h3 id="orgheadline70"><span class="section-number-3">12.22</span> <span class="todo LATER">LATER</span> 如何实现自动缩进？</h3>
+<div class="outline-text-3" id="text-12-22">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 15:43]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline66" class="outline-3">
-<h3 id="orgheadline66"><span class="section-number-3">11.23</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何插入确定的缩进TAB？</h3>
-<div class="outline-text-3" id="text-11-23">
+<div id="outline-container-orgheadline71" class="outline-3">
+<h3 id="orgheadline71"><span class="section-number-3">12.23</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何插入确定的缩进TAB？</h3>
+<div class="outline-text-3" id="text-12-23">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-19 一 16:41] </span></span> <br  />
 如果有确定的答案，就直接给出一个简单的提示操作，或者关闭问题。</li>
 </ul>
 <p>
-参考：<a href="#orgheadline75">关于Tab缩进</a>
+参考：<a href="#orgheadline80">关于Tab缩进</a>
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline67" class="outline-3">
-<h3 id="orgheadline67"><span class="section-number-3">11.24</span> <span class="todo NEXT">NEXT</span> 如何输入上次输入的内容或者重做？</h3>
-<div class="outline-text-3" id="text-11-24">
+<div id="outline-container-orgheadline72" class="outline-3">
+<h3 id="orgheadline72"><span class="section-number-3">12.24</span> <span class="todo NEXT">NEXT</span> 如何输入上次输入的内容或者重做？</h3>
+<div class="outline-text-3" id="text-12-24">
 <p>
 <code>C-x z</code>
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline68" class="outline-3">
-<h3 id="orgheadline68"><span class="section-number-3">11.25</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 交换行</h3>
-<div class="outline-text-3" id="text-11-25">
+<div id="outline-container-orgheadline73" class="outline-3">
+<h3 id="orgheadline73"><span class="section-number-3">12.25</span> <span class="done DONE">DONE</span> 交换行</h3>
+<div class="outline-text-3" id="text-12-25">
+<ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-03-03 四 11:26]</span></span></li>
+</ul>
+<p>
+参考：<a href="#orgheadline11">编辑</a>
+</p>
+
 <p>
 输入： <code>C-x C-t</code>
-输入之后，会将当前行与前一行交换，并且将当前光标移动到两行的后面。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline69" class="outline-3">
-<h3 id="orgheadline69"><span class="section-number-3">11.26</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 动态加载配置立即生效？</h3>
-<div class="outline-text-3" id="text-11-26">
+
+<div id="outline-container-orgheadline74" class="outline-3">
+<h3 id="orgheadline74"><span class="section-number-3">12.26</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 动态加载配置立即生效？</h3>
+<div class="outline-text-3" id="text-12-26">
 <p>
 不重启 Emacs 让 .emacs 配置文件生效
 有四个函数可以做到：eval-last-sexp,eval-region,eval-buffer 和load-file
@@ -3593,9 +4121,9 @@ M-x load-file ~/.emacs 载入.emacs文件，从而使其中的设置生效。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline70" class="outline-3">
-<h3 id="orgheadline70"><span class="section-number-3">11.27</span> <span class="done DONE">DONE</span> 如何执行命令时在回显区快速输入和删除？</h3>
-<div class="outline-text-3" id="text-11-27">
+<div id="outline-container-orgheadline75" class="outline-3">
+<h3 id="orgheadline75"><span class="section-number-3">12.27</span> <span class="done DONE">DONE</span> 如何执行命令时在回显区快速输入和删除？</h3>
+<div class="outline-text-3" id="text-12-27">
 <ul class="org-ul">
 <li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:00]</span></span></li>
 </ul>
@@ -3607,9 +4135,9 @@ M-x load-file ~/.emacs 载入.emacs文件，从而使其中的设置生效。
 </div>
 </div>
 
-<div id="outline-container-orgheadline71" class="outline-3">
-<h3 id="orgheadline71"><span class="section-number-3">11.28</span> <span class="done DONE">DONE</span> 如何查看某一配置变量的值？</h3>
-<div class="outline-text-3" id="text-11-28">
+<div id="outline-container-orgheadline76" class="outline-3">
+<h3 id="orgheadline76"><span class="section-number-3">12.28</span> <span class="done DONE">DONE</span> 如何查看某一配置变量的值？</h3>
+<div class="outline-text-3" id="text-12-28">
 <ul class="org-ul">
 <li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:01]</span></span></li>
 </ul>
@@ -3619,17 +4147,17 @@ M-x load-file ~/.emacs 载入.emacs文件，从而使其中的设置生效。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline72" class="outline-3">
-<h3 id="orgheadline72"><span class="section-number-3">11.29</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 如何恢复默认配置？</h3>
-<div class="outline-text-3" id="text-11-29">
+<div id="outline-container-orgheadline77" class="outline-3">
+<h3 id="orgheadline77"><span class="section-number-3">12.29</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 如何恢复默认配置？</h3>
+<div class="outline-text-3" id="text-12-29">
 <ul class="org-ul">
 <li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:02]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline73" class="outline-3">
-<h3 id="orgheadline73"><span class="section-number-3">11.30</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何文件刷新？</h3>
-<div class="outline-text-3" id="text-11-30">
+<div id="outline-container-orgheadline78" class="outline-3">
+<h3 id="orgheadline78"><span class="section-number-3">12.30</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何文件刷新？</h3>
+<div class="outline-text-3" id="text-12-30">
 <p>
 用于重新载入配置和文件变化。
 <a href="http://blog.csdn.net/horstlinux/article/details/7857123">http://blog.csdn.net/horstlinux/article/details/7857123</a>
@@ -3649,9 +4177,9 @@ M-x load-file ~/.emacs 载入.emacs文件，从而使其中的设置生效。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline74" class="outline-3">
-<h3 id="orgheadline74"><span class="section-number-3">11.31</span> <span class="done DONE">DONE</span> 如何显示匹配括号？</h3>
-<div class="outline-text-3" id="text-11-31">
+<div id="outline-container-orgheadline79" class="outline-3">
+<h3 id="orgheadline79"><span class="section-number-3">12.31</span> <span class="done DONE">DONE</span> 如何显示匹配括号？</h3>
+<div class="outline-text-3" id="text-12-31">
 <ul class="org-ul">
 <li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:03]</span></span></li>
 </ul>
@@ -3668,27 +4196,27 @@ M-x load-file ~/.emacs 载入.emacs文件，从而使其中的设置生效。
 </div>
 </div>
 
-<div id="outline-container-orgheadline75" class="outline-3">
-<h3 id="orgheadline75"><a id="ID-ac82c059-81c7-4b32-a15e-e9972294b86c"></a><span class="section-number-3">11.32</span> <span class="todo NEXT">NEXT</span> 关于Tab缩进</h3>
-<div class="outline-text-3" id="text-11-32">
+<div id="outline-container-orgheadline80" class="outline-3">
+<h3 id="orgheadline80"><a id="ID-ac82c059-81c7-4b32-a15e-e9972294b86c"></a><span class="section-number-3">12.32</span> <span class="todo NEXT">NEXT</span> 关于Tab缩进</h3>
+<div class="outline-text-3" id="text-12-32">
 <ul class="org-ul">
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 16:47]</span></span></li>
 <li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 16:47]</span></span></li>
 </ul>
 </div>
-<div id="outline-container-orgheadline76" class="outline-4">
-<h4 id="orgheadline76"><a id="ID-94922fb6-e9f8-434c-b454-5526787c9f40"></a><span class="section-number-4">11.32.1</span> &#x2014;&#x2014;Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-09-30 三 15:19]</span></span>------</h4>
-<div class="outline-text-4" id="text-11-32-1">
+<div id="outline-container-orgheadline81" class="outline-4">
+<h4 id="orgheadline81"><a id="ID-94922fb6-e9f8-434c-b454-5526787c9f40"></a><span class="section-number-4">12.32.1</span> &#x2014;&#x2014;Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-09-30 三 15:19]</span></span>------</h4>
+<div class="outline-text-4" id="text-12-32-1">
 </div>
 
-<div id="outline-container-orgheadline167" class="outline-5">
-<h5 id="orgheadline167"><span class="section-number-5">11.32.1.1</span> 文档中的描述</h5>
-<div class="outline-text-5" id="text-11-32-1-1">
+<div id="outline-container-orgheadline182" class="outline-5">
+<h5 id="orgheadline182"><span class="section-number-5">12.32.1.1</span> 文档中的描述</h5>
+<div class="outline-text-5" id="text-12-32-1-1">
 <p>
 文档上关于indent的一些变量和函数，翻译过来大致意思如下：
 </p>
 </div>
-<ol class="org-ol"><li><a id="orgheadline163"></a><code>C-h f indent-for-tab-command</code><br  /><div class="outline-text-6" id="text-11-32-1-1-1">
+<ol class="org-ol"><li><a id="orgheadline178"></a><code>C-h f indent-for-tab-command</code><br  /><div class="outline-text-6" id="text-12-32-1-1-1">
 <blockquote>
 <p>
 依赖于 <code>tab-always-indent</code> 的设置，会为当前主模式的行或者区域进行合适的缩进，或者插入 <code>TAB</code> 。
@@ -3712,7 +4240,7 @@ M-x load-file ~/.emacs 载入.emacs文件，从而使其中的设置生效。
 </blockquote>
 </div></li>
 
-<li><a id="orgheadline164"></a><a id="ID-808ab67c-f402-439a-8cf6-be686fdccf03"></a><code>C-h v indent-line-function</code><br  /><div class="outline-text-6" id="text-11-32-1-1-2">
+<li><a id="orgheadline179"></a><a id="ID-808ab67c-f402-439a-8cf6-be686fdccf03"></a><code>C-h v indent-line-function</code><br  /><div class="outline-text-6" id="text-12-32-1-1-2">
 <blockquote>
 <p>
 这个变量是buffer local的变量，表示用来缩进当前行的函数；
@@ -3738,7 +4266,7 @@ Local in buffer emacs_tips.org; global value is indent-relative
 </p>
 </div></li>
 
-<li><a id="orgheadline165"></a><code>C-h v tab-always-indent</code><br  /><div class="outline-text-6" id="text-11-32-1-1-3">
+<li><a id="orgheadline180"></a><code>C-h v tab-always-indent</code><br  /><div class="outline-text-6" id="text-12-32-1-1-3">
 <blockquote>
 <p>
 如果为 <code>t</code> ，则键入 <code>TAB</code> 会缩进当前行；
@@ -3762,7 +4290,7 @@ Local in buffer emacs_tips.org; global value is indent-relative
 </blockquote>
 </div></li>
 
-<li><a id="orgheadline166"></a><code>C-h v indent-tabs-mode</code><br  /><div class="outline-text-6" id="text-11-32-1-1-4">
+<li><a id="orgheadline181"></a><code>C-h v indent-tabs-mode</code><br  /><div class="outline-text-6" id="text-12-32-1-1-4">
 <p>
 这个是在C语言代码中定义的变量，设置成任何内容都会编程buffer-local的变量，这个变量做为文件局部变量保存，是安全的。
 </p>
@@ -3773,9 +4301,9 @@ Local in buffer emacs_tips.org; global value is indent-relative
 </div></li></ol>
 </div>
 
-<div id="outline-container-orgheadline168" class="outline-5">
-<h5 id="orgheadline168"><span class="section-number-5">11.32.1.2</span> 参考：</h5>
-<div class="outline-text-5" id="text-11-32-1-2">
+<div id="outline-container-orgheadline183" class="outline-5">
+<h5 id="orgheadline183"><span class="section-number-5">12.32.1.2</span> 参考：</h5>
+<div class="outline-text-5" id="text-12-32-1-2">
 <ol class="org-ol">
 <li><p>
 关于emacs 缩进<br  />
@@ -3864,42 +4392,60 @@ orgmode下，采用其默认行为即可，缩进方面可以？
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline77" class="outline-3">
-<h3 id="orgheadline77"><span class="section-number-3">11.33</span> <span class="todo LATER">LATER</span> 如何显示空白字符？</h3>
-<div class="outline-text-3" id="text-11-33">
+<div id="outline-container-orgheadline82" class="outline-3">
+<h3 id="orgheadline82"><span class="section-number-3">12.33</span> <span class="todo LATER">LATER</span> 如何显示空白字符？</h3>
+<div class="outline-text-3" id="text-12-33">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:05]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline78" class="outline-3">
-<h3 id="orgheadline78"><span class="section-number-3">11.34</span> <span class="todo LATER">LATER</span> 如何复制一行？</h3>
-<div class="outline-text-3" id="text-11-34">
+<div id="outline-container-orgheadline83" class="outline-3">
+<h3 id="orgheadline83"><span class="section-number-3">12.34</span> <span class="todo LATER">LATER</span> 如何复制一行？</h3>
+<div class="outline-text-3" id="text-12-34">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:07]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline79" class="outline-3">
-<h3 id="orgheadline79"><span class="section-number-3">11.35</span> <span class="todo LATER">LATER</span> 缩进提示线？</h3>
-<div class="outline-text-3" id="text-11-35">
+<div id="outline-container-orgheadline84" class="outline-3">
+<h3 id="orgheadline84"><span class="section-number-3">12.35</span> <span class="todo LATER">LATER</span> 缩进提示线？</h3>
+<div class="outline-text-3" id="text-12-35">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:07]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline80" class="outline-3">
-<h3 id="orgheadline80"><span class="section-number-3">11.36</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 重命名当前文件？</h3>
-<div class="outline-text-3" id="text-11-36">
+<div id="outline-container-orgheadline85" class="outline-3">
+<h3 id="orgheadline85"><span class="section-number-3">12.36</span> <span class="done DONE">DONE</span> 重命名当前文件？</h3>
+<div class="outline-text-3" id="text-12-36">
 <ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-03-03 四 11:30]</span></span></li>
 <li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:07] </span></span> <br  />
 参考dired相关命令</li>
 </ul>
+
+<p>
+输入 <code>M-x rename-file</code>
+</p>
+
+<p>
+或参考 <a href="#orgheadline2">文件管理</a>
+</p>
 </div>
 </div>
-<div id="outline-container-orgheadline81" class="outline-3">
-<h3 id="orgheadline81"><span class="section-number-3">11.37</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 宏录制</h3>
-<div class="outline-text-3" id="text-11-37">
+
+<div id="outline-container-orgheadline86" class="outline-3">
+<h3 id="orgheadline86"><span class="section-number-3">12.37</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 如何表示当前文件名？</h3>
+<div class="outline-text-3" id="text-12-37">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-03-03 四 11:29]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline87" class="outline-3">
+<h3 id="orgheadline87"><span class="section-number-3">12.38</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 宏录制</h3>
+<div class="outline-text-3" id="text-12-38">
 <p>
 开始录制宏，用 <code>C-x (</code> 
 结束录制宏，用 <code>C-x )</code>
@@ -3939,30 +4485,30 @@ n
 </div>
 </div>
 
-<div id="outline-container-orgheadline82" class="outline-3">
-<h3 id="orgheadline82"><span class="section-number-3">11.38</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何块缩进？</h3>
-<div class="outline-text-3" id="text-11-38">
+<div id="outline-container-orgheadline88" class="outline-3">
+<h3 id="orgheadline88"><span class="section-number-3">12.39</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何块缩进？</h3>
+<div class="outline-text-3" id="text-12-39">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-19 一 16:42] </span></span> <br  />
 如果有确定的答案就简单给出操作提示，或者直接关闭问题。</li>
 </ul>
 <p>
-参考：<a href="#orgheadline75">关于Tab缩进</a>
+参考：<a href="#orgheadline80">关于Tab缩进</a>
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline83" class="outline-3">
-<h3 id="orgheadline83"><span class="section-number-3">11.39</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> C-/是Undo</h3>
-<div class="outline-text-3" id="text-11-39">
+<div id="outline-container-orgheadline89" class="outline-3">
+<h3 id="orgheadline89"><span class="section-number-3">12.40</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> C-/是Undo</h3>
+<div class="outline-text-3" id="text-12-40">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-16 五 16:58] </span></span> <br  />
 wait for move</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline84" class="outline-3">
-<h3 id="orgheadline84"><span class="section-number-3">11.40</span> <span class="done DONE">DONE</span> 如何操作目录</h3>
-<div class="outline-text-3" id="text-11-40">
+<div id="outline-container-orgheadline90" class="outline-3">
+<h3 id="orgheadline90"><span class="section-number-3">12.41</span> <span class="done DONE">DONE</span> 如何操作目录</h3>
+<div class="outline-text-3" id="text-12-41">
 <ul class="org-ul">
 <li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 13:57]</span></span></li>
 </ul>
@@ -3973,9 +4519,9 @@ wait for move</li>
 </div>
 </div>
 
-<div id="outline-container-orgheadline85" class="outline-3">
-<h3 id="orgheadline85"><span class="section-number-3">11.41</span> <span class="done CANCEL">CANCEL</span> 如何管理配置目录</h3>
-<div class="outline-text-3" id="text-11-41">
+<div id="outline-container-orgheadline91" class="outline-3">
+<h3 id="orgheadline91"><span class="section-number-3">12.42</span> <span class="done CANCEL">CANCEL</span> 如何管理配置目录</h3>
+<div class="outline-text-3" id="text-12-42">
 <ul class="org-ul">
 <li>State "CANCEL"     from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:10] </span></span> <br  />
 因人而异，可能会在将来整理相关文档。这里暂时不做深入回答。</li>
@@ -3984,42 +4530,61 @@ wait for move</li>
 </div>
 </div>
 
-<div id="outline-container-orgheadline86" class="outline-3">
-<h3 id="orgheadline86"><span class="section-number-3">11.42</span> <span class="todo LATER">LATER</span> 如何定位光标下路径的文件？</h3>
-<div class="outline-text-3" id="text-11-42">
+<div id="outline-container-orgheadline92" class="outline-3">
+<h3 id="orgheadline92"><span class="section-number-3">12.43</span> <span class="todo LATER">LATER</span> 如何定位光标下路径的文件？</h3>
+<div class="outline-text-3" id="text-12-43">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:11]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline87" class="outline-3">
-<h3 id="orgheadline87"><span class="section-number-3">11.43</span> <span class="todo LATER">LATER</span> 如何按项目组织目录</h3>
-<div class="outline-text-3" id="text-11-43">
+<div id="outline-container-orgheadline93" class="outline-3">
+<h3 id="orgheadline93"><span class="section-number-3">12.44</span> <span class="todo LATER">LATER</span> 如何按项目组织目录</h3>
+<div class="outline-text-3" id="text-12-44">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:11]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline88" class="outline-3">
-<h3 id="orgheadline88"><span class="section-number-3">11.44</span> <span class="todo NEXT">NEXT</span> 如何让Emacs在光标到达当前Buffer最后一行尾部不自动recenter?</h3>
-<div class="outline-text-3" id="text-11-44">
+<div id="outline-container-orgheadline94" class="outline-3">
+<h3 id="orgheadline94"><span class="section-number-3">12.45</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何让Emacs在光标到达当前Buffer最后一行尾部不自动recenter?</h3>
+<div class="outline-text-3" id="text-12-45">
 <ul class="org-ul">
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-03-03 四 11:04] </span></span> <br  />
+wait for arranged.</li>
 <li>State "NEXT"       from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:11]</span></span></li>
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:11]</span></span></li>
 </ul>
+
+<p>
+需设置滚动参数，具体参考如下配置以及文档 和 <a href="#orgheadline103">emacs的光标滚动如何让其不在屏幕尾部自动滚屏到中间？</a>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">;;auto scroll behavior, '0' is center point while outof screen, or don't center.
+;;(setq scroll-conservatively)
+(setq scroll-step 1)
+;;(setq scroll-up-aggressively)
+;;(setq scroll-down-aggressively)
+
+;;wheel scroll step
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 5) (control)))
+</pre>
 </div>
 </div>
-<div id="outline-container-orgheadline89" class="outline-3">
-<h3 id="orgheadline89"><span class="section-number-3">11.45</span> <span class="todo LATER">LATER</span> 考虑一下用el-get插件管理插件</h3>
-<div class="outline-text-3" id="text-11-45">
+</div>
+
+<div id="outline-container-orgheadline95" class="outline-3">
+<h3 id="orgheadline95"><span class="section-number-3">12.46</span> <span class="todo LATER">LATER</span> 考虑一下用el-get插件管理插件</h3>
+<div class="outline-text-3" id="text-12-46">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:11]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline90" class="outline-3">
-<h3 id="orgheadline90"><a id="ID-9f59b61a-59b9-497f-8973-f1ae976a84a7"></a><span class="section-number-3">11.46</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> eshell如何操作？</h3>
-<div class="outline-text-3" id="text-11-46">
+<div id="outline-container-orgheadline96" class="outline-3">
+<h3 id="orgheadline96"><a id="ID-9f59b61a-59b9-497f-8973-f1ae976a84a7"></a><span class="section-number-3">12.47</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> eshell如何操作？</h3>
+<div class="outline-text-3" id="text-12-47">
 <ul class="org-ul">
 <li>State "MAYBE/FUTURE" from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:11]</span></span></li>
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:11]</span></span></li>
@@ -4030,9 +4595,9 @@ From:/media/sda6/study/mygitrepo/quietheart/misc/mylinux_home/home.user/_emacs.d
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline91" class="outline-3">
-<h3 id="orgheadline91"><a id="ID-9d0e2058-c620-4b0b-a4b6-a68d7b9bc7c6"></a><span class="section-number-3">11.47</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何配置自动新开“弹出”窗口的分割方向？</h3>
-<div class="outline-text-3" id="text-11-47">
+<div id="outline-container-orgheadline97" class="outline-3">
+<h3 id="orgheadline97"><a id="ID-9d0e2058-c620-4b0b-a4b6-a68d7b9bc7c6"></a><span class="section-number-3">12.48</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何配置自动新开“弹出”窗口的分割方向？</h3>
+<div class="outline-text-3" id="text-12-48">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-05 四 11:02] </span></span> <br  />
 等待整理至合适的位置。</li>
@@ -4059,18 +4624,18 @@ From:/media/sda6/study/mygitrepo/quietheart/misc/mylinux_home/home.user/_emacs.d
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline92" class="outline-3">
-<h3 id="orgheadline92"><span class="section-number-3">11.48</span> <span class="todo LATER">LATER</span> Emacs如何控制Pop分割窗口的大小？</h3>
-<div class="outline-text-3" id="text-11-48">
+<div id="outline-container-orgheadline98" class="outline-3">
+<h3 id="orgheadline98"><span class="section-number-3">12.49</span> <span class="todo LATER">LATER</span> Emacs如何控制Pop分割窗口的大小？</h3>
+<div class="outline-text-3" id="text-12-49">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:12]</span></span></li>
 <li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-05 四 11:05]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline93" class="outline-3">
-<h3 id="orgheadline93"><span class="section-number-3">11.49</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> emacs如何进行会话保存？</h3>
-<div class="outline-text-3" id="text-11-49">
+<div id="outline-container-orgheadline99" class="outline-3">
+<h3 id="orgheadline99"><span class="section-number-3">12.50</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> emacs如何进行会话保存？</h3>
+<div class="outline-text-3" id="text-12-50">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 11:08] </span></span> <br  />
 等待整理到合适的位置。</li>
@@ -4112,9 +4677,9 @@ Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 10:
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline94" class="outline-3">
-<h3 id="orgheadline94"><span class="section-number-3">11.50</span> <span class="done DONE">DONE</span> Emacs背景配色设置？</h3>
-<div class="outline-text-3" id="text-11-50">
+<div id="outline-container-orgheadline100" class="outline-3">
+<h3 id="orgheadline100"><span class="section-number-3">12.51</span> <span class="done DONE">DONE</span> Emacs背景配色设置？</h3>
+<div class="outline-text-3" id="text-12-51">
 <ul class="org-ul">
 <li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:14]</span></span></li>
 </ul>
@@ -4126,18 +4691,18 @@ Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-09 五 16:
 关于对emacs的颜色主题配置，有相关的插件：
 </p>
 </div>
-<div id="outline-container-orgheadline95" class="outline-4">
-<h4 id="orgheadline95"><span class="section-number-4">11.50.1</span> 下载地址：</h4>
-<div class="outline-text-4" id="text-11-50-1">
+<div id="outline-container-orgheadline101" class="outline-4">
+<h4 id="orgheadline101"><span class="section-number-4">12.51.1</span> 下载地址：</h4>
+<div class="outline-text-4" id="text-12-51-1">
 <p>
 <a href="http://ftp.twaren.net/Unix/NonGNU/color-theme/color-theme-6.6.0.tar.gz">http://ftp.twaren.net/Unix/NonGNU/color-theme/color-theme-6.6.0.tar.gz</a>
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline96" class="outline-4">
-<h4 id="orgheadline96"><span class="section-number-4">11.50.2</span> 配置默认主题</h4>
-<div class="outline-text-4" id="text-11-50-2">
+<div id="outline-container-orgheadline102" class="outline-4">
+<h4 id="orgheadline102"><span class="section-number-4">12.51.2</span> 配置默认主题</h4>
+<div class="outline-text-4" id="text-12-51-2">
 <p>
 当把主题下载下来后 解压，然后将文件夹整个复制到到我们的load-path中
 然后添加如下配置：
@@ -4156,9 +4721,9 @@ Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-09 五 16:
 </div>
 </div>
 
-<div id="outline-container-orgheadline97" class="outline-3">
-<h3 id="orgheadline97"><span class="section-number-3">11.51</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> emacs的光标滚动如何让其不在屏幕尾部自动滚屏到中间？</h3>
-<div class="outline-text-3" id="text-11-51">
+<div id="outline-container-orgheadline103" class="outline-3">
+<h3 id="orgheadline103"><a id="ID-cecf2c9a-0947-4cfe-8cc3-d688559a8e21"></a><span class="section-number-3">12.52</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> emacs的光标滚动如何让其不在屏幕尾部自动滚屏到中间？</h3>
+<div class="outline-text-3" id="text-12-52">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2016-01-18 一 16:44] </span></span> <br  />
 等待整理</li>
@@ -4188,9 +4753,9 @@ Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-09 五 16:
 </div>
 </div>
 
-<div id="outline-container-orgheadline98" class="outline-3">
-<h3 id="orgheadline98"><span class="section-number-3">11.52</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何控制鼠标滚轮滚动的行数</h3>
-<div class="outline-text-3" id="text-11-52">
+<div id="outline-container-orgheadline104" class="outline-3">
+<h3 id="orgheadline104"><span class="section-number-3">12.53</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何控制鼠标滚轮滚动的行数</h3>
+<div class="outline-text-3" id="text-12-53">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-01-18 一 16:44] </span></span> <br  />
 等待整理</li>
@@ -4213,9 +4778,9 @@ Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-09 五 16:
 </div>
 </div>
 
-<div id="outline-container-orgheadline99" class="outline-3">
-<h3 id="orgheadline99"><span class="section-number-3">11.53</span> <span class="todo LATER">LATER</span> emacs如何清除所有buffer?</h3>
-<div class="outline-text-3" id="text-11-53">
+<div id="outline-container-orgheadline105" class="outline-3">
+<h3 id="orgheadline105"><span class="section-number-3">12.54</span> <span class="todo LATER">LATER</span> emacs如何清除所有buffer?</h3>
+<div class="outline-text-3" id="text-12-54">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:14]</span></span></li>
 </ul>
@@ -4224,9 +4789,9 @@ Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 10:
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline100" class="outline-3">
-<h3 id="orgheadline100"><a id="ID-5296166d-4b89-44b8-8994-d46b8ef1c4d1"></a><span class="section-number-3">11.54</span> <span class="todo LATER">LATER</span> 配置调试</h3>
-<div class="outline-text-3" id="text-11-54">
+<div id="outline-container-orgheadline106" class="outline-3">
+<h3 id="orgheadline106"><a id="ID-5296166d-4b89-44b8-8994-d46b8ef1c4d1"></a><span class="section-number-3">12.55</span> <span class="todo LATER">LATER</span> 配置调试</h3>
+<div class="outline-text-3" id="text-12-55">
 <ul class="org-ul">
 <li>State "LATER"      from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-14 三 13:27]</span></span></li>
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-14 三 13:27]</span></span></li>
@@ -4236,9 +4801,9 @@ Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 10:
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline101" class="outline-3">
-<h3 id="orgheadline101"><span class="section-number-3">11.55</span> <span class="todo NEXT">NEXT</span> 不喜欢emacs新开"提示窗口"是垂直方向</h3>
-<div class="outline-text-3" id="text-11-55">
+<div id="outline-container-orgheadline107" class="outline-3">
+<h3 id="orgheadline107"><span class="section-number-3">12.56</span> <span class="todo NEXT">NEXT</span> 不喜欢emacs新开"提示窗口"是垂直方向</h3>
+<div class="outline-text-3" id="text-12-56">
 <ul class="org-ul">
 <li>State "NEXT"       from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:14]</span></span></li>
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:14]</span></span></li>
@@ -4247,9 +4812,9 @@ Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-10 六 10:
 </div>
 </div>
 
-<div id="outline-container-orgheadline102" class="outline-3">
-<h3 id="orgheadline102"><span class="section-number-3">11.56</span> <span class="done DONE">DONE</span> Emacs如何定制颜色？</h3>
-<div class="outline-text-3" id="text-11-56">
+<div id="outline-container-orgheadline108" class="outline-3">
+<h3 id="orgheadline108"><span class="section-number-3">12.57</span> <span class="done DONE">DONE</span> Emacs如何定制颜色？</h3>
+<div class="outline-text-3" id="text-12-57">
 <ul class="org-ul">
 <li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-02 一 12:14]</span></span></li>
 </ul>
@@ -4273,9 +4838,9 @@ Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-12 一 11:
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline103" class="outline-3">
-<h3 id="orgheadline103"><span class="section-number-3">11.57</span> <span class="todo LATER">LATER</span> 如何设置撤销的次数？目前貌似撤销只有有限的几次</h3>
-<div class="outline-text-3" id="text-11-57">
+<div id="outline-container-orgheadline109" class="outline-3">
+<h3 id="orgheadline109"><span class="section-number-3">12.58</span> <span class="todo LATER">LATER</span> 如何设置撤销的次数？目前貌似撤销只有有限的几次</h3>
+<div class="outline-text-3" id="text-12-58">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:14]</span></span></li>
 </ul>
@@ -4285,9 +4850,9 @@ Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-14 三 14:
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline104" class="outline-3">
-<h3 id="orgheadline104"><span class="section-number-3">11.58</span> <span class="todo LATER">LATER</span> 重复最近的命令</h3>
-<div class="outline-text-3" id="text-11-58">
+<div id="outline-container-orgheadline110" class="outline-3">
+<h3 id="orgheadline110"><span class="section-number-3">12.59</span> <span class="todo LATER">LATER</span> 重复最近的命令</h3>
+<div class="outline-text-3" id="text-12-59">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:14]</span></span></li>
 </ul>
@@ -4296,9 +4861,9 @@ Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-14 三 14:
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline105" class="outline-3">
-<h3 id="orgheadline105"><a id="ID-963d4006-2a37-493d-a714-f5a2fcaf2538"></a><span class="section-number-3">11.59</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> elisp library</h3>
-<div class="outline-text-3" id="text-11-59">
+<div id="outline-container-orgheadline111" class="outline-3">
+<h3 id="orgheadline111"><a id="ID-963d4006-2a37-493d-a714-f5a2fcaf2538"></a><span class="section-number-3">12.60</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> elisp library</h3>
+<div class="outline-text-3" id="text-12-60">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 17:45] </span></span> <br  />
 等待移动到合适的位置</li>
@@ -4314,9 +4879,9 @@ Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-14 三 14:
 </p>
 </div>
 
-<div id="outline-container-orgheadline106" class="outline-4">
-<h4 id="orgheadline106"><span class="section-number-4">11.59.1</span> 关于 <code>load-file, load, require, autoload</code></h4>
-<div class="outline-text-4" id="text-11-59-1">
+<div id="outline-container-orgheadline112" class="outline-4">
+<h4 id="orgheadline112"><span class="section-number-4">12.60.1</span> 关于 <code>load-file, load, require, autoload</code></h4>
+<div class="outline-text-4" id="text-12-60-1">
 <ul class="org-ul">
 <li><p>
 load-file
@@ -4375,21 +4940,21 @@ autoload
 </div>
 
 
-<div id="outline-container-orgheadline107" class="outline-4">
-<h4 id="orgheadline107"><span class="section-number-4">11.59.2</span> 关于 Library, Package, Feature</h4>
-<div class="outline-text-4" id="text-11-59-2">
-</div><div id="outline-container-orgheadline169" class="outline-5">
-<h5 id="orgheadline169"><span class="section-number-5">11.59.2.1</span> Emacs lisp没有命名空间</h5>
-<div class="outline-text-5" id="text-11-59-2-1">
+<div id="outline-container-orgheadline113" class="outline-4">
+<h4 id="orgheadline113"><span class="section-number-4">12.60.2</span> 关于 Library, Package, Feature</h4>
+<div class="outline-text-4" id="text-12-60-2">
+</div><div id="outline-container-orgheadline184" class="outline-5">
+<h5 id="orgheadline184"><span class="section-number-5">12.60.2.1</span> Emacs lisp没有命名空间</h5>
+<div class="outline-text-5" id="text-12-60-2-1">
 <p>
 所有的东西都是全局的动态的作用域，它只有一些隐藏的机制，所以，不能将library或者module当作像perl、python、java类似的具有命名空间的语言的Package系统。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline170" class="outline-5">
-<h5 id="orgheadline170"><span class="section-number-5">11.59.2.2</span> Package和Library的区别是什么呢？</h5>
-<div class="outline-text-5" id="text-11-59-2-2">
+<div id="outline-container-orgheadline185" class="outline-5">
+<h5 id="orgheadline185"><span class="section-number-5">12.60.2.2</span> Package和Library的区别是什么呢？</h5>
+<div class="outline-text-5" id="text-12-60-2-2">
 <p>
 其实，这些概念在elisp中没有专门的定义，我们只能大致这样来看待它们：
 </p>
@@ -4417,9 +4982,9 @@ Package
 </div>
 </div>
 
-<div id="outline-container-orgheadline171" class="outline-5">
-<h5 id="orgheadline171"><span class="section-number-5">11.59.2.3</span> Package/Library/Feature不会被管理</h5>
-<div class="outline-text-5" id="text-11-59-2-3">
+<div id="outline-container-orgheadline186" class="outline-5">
+<h5 id="orgheadline186"><span class="section-number-5">12.60.2.3</span> Package/Library/Feature不会被管理</h5>
+<div class="outline-text-5" id="text-12-60-2-3">
 <p>
 在package/library/feature/autoload的概念和文件名称之间没有绝对的对应关系。默认来说，如果一个elisp文件名称是xyz-mode.el，那么它会提供一个"xyz-mode"的lisp标号做为feature名称，然后用来执行这个mode的命令一般都是 <code>xyz-mode</code> 。 有时候， <code>-mode</code> 部分在任何 <code>{file name, feature symbol name, command name}</code> 中被忽略。
 </p>
@@ -4435,9 +5000,9 @@ Package
 </div>
 </div>
 
-<div id="outline-container-orgheadline172" class="outline-5">
-<h5 id="orgheadline172"><span class="section-number-5">11.59.2.4</span> 其它</h5>
-<div class="outline-text-5" id="text-11-59-2-4">
+<div id="outline-container-orgheadline187" class="outline-5">
+<h5 id="orgheadline187"><span class="section-number-5">12.60.2.4</span> 其它</h5>
+<div class="outline-text-5" id="text-12-60-2-4">
 <p>
 没有 "name space" "不被管理"的 module系统并不一定非常糟糕，这只是做为一个软件状态存在，许多流行的语言例如 C, C++, PHP 表现的更差，他们没有module系统，并且通过 <code>include</code> 来包含文件。我们需要注意的是，Scheme lisp也没有module系统，在2007年发布的R6RS添加了严格的module系统控制，但是这导致了Scheme社区的分裂。
 </p>
@@ -4450,9 +5015,9 @@ Package
 </div>
 </div>
 
-<div id="outline-container-orgheadline108" class="outline-3">
-<h3 id="orgheadline108"><span class="section-number-3">11.60</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> Emacs自定义配置</h3>
-<div class="outline-text-3" id="text-11-60">
+<div id="outline-container-orgheadline114" class="outline-3">
+<h3 id="orgheadline114"><span class="section-number-3">12.61</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> Emacs自定义配置</h3>
+<div class="outline-text-3" id="text-12-61">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-21 三 15:08] </span></span> <br  />
 待整理到合适的位置</li>
@@ -4477,9 +5042,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-21
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline109" class="outline-3">
-<h3 id="orgheadline109"><span class="section-number-3">11.61</span> <span class="todo LATER">LATER</span> 默认启动xemacs的窗口大小</h3>
-<div class="outline-text-3" id="text-11-61">
+<div id="outline-container-orgheadline115" class="outline-3">
+<h3 id="orgheadline115"><span class="section-number-3">12.62</span> <span class="todo LATER">LATER</span> 默认启动xemacs的窗口大小</h3>
+<div class="outline-text-3" id="text-12-62">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-21 三 15:09]</span></span></li>
 </ul>
@@ -4489,9 +5054,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-21
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline110" class="outline-3">
-<h3 id="orgheadline110"><span class="section-number-3">11.62</span> <span class="todo NEXT">NEXT</span> emacs-desktop的会话存储默认位置</h3>
-<div class="outline-text-3" id="text-11-62">
+<div id="outline-container-orgheadline116" class="outline-3">
+<h3 id="orgheadline116"><span class="section-number-3">12.63</span> <span class="todo NEXT">NEXT</span> emacs-desktop的会话存储默认位置</h3>
+<div class="outline-text-3" id="text-12-63">
 <ul class="org-ul">
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-21 三 15:09]</span></span></li>
 </ul>
@@ -4501,9 +5066,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-21
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline111" class="outline-3">
-<h3 id="orgheadline111"><span class="section-number-3">11.63</span> <span class="todo NEXT">NEXT</span> 如何高亮？</h3>
-<div class="outline-text-3" id="text-11-63">
+<div id="outline-container-orgheadline117" class="outline-3">
+<h3 id="orgheadline117"><span class="section-number-3">12.64</span> <span class="todo NEXT">NEXT</span> 如何高亮？</h3>
+<div class="outline-text-3" id="text-12-64">
 <p>
 参考：
 <a href="http://www.xuebuyuan.com/729481.html">http://www.xuebuyuan.com/729481.html</a>
@@ -4511,9 +5076,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-21
 </div>
 </div>
 
-<div id="outline-container-orgheadline112" class="outline-3">
-<h3 id="orgheadline112"><span class="section-number-3">11.64</span> <span class="todo NEXT">NEXT</span> Emacs如何进行特定模式下的按键绑定映射？</h3>
-<div class="outline-text-3" id="text-11-64">
+<div id="outline-container-orgheadline118" class="outline-3">
+<h3 id="orgheadline118"><span class="section-number-3">12.65</span> <span class="todo NEXT">NEXT</span> Emacs如何进行特定模式下的按键绑定映射？</h3>
+<div class="outline-text-3" id="text-12-65">
 <ul class="org-ul">
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-21 三 15:09]</span></span></li>
 </ul>
@@ -4523,9 +5088,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-21
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline113" class="outline-3">
-<h3 id="orgheadline113"><span class="section-number-3">11.65</span> <span class="todo LATER">LATER</span> 如何为当前的Emacs编辑器升级？</h3>
-<div class="outline-text-3" id="text-11-65">
+<div id="outline-container-orgheadline119" class="outline-3">
+<h3 id="orgheadline119"><span class="section-number-3">12.66</span> <span class="todo LATER">LATER</span> 如何为当前的Emacs编辑器升级？</h3>
+<div class="outline-text-3" id="text-12-66">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-21 三 15:10]</span></span></li>
 </ul>
@@ -4535,9 +5100,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-20
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline114" class="outline-3">
-<h3 id="orgheadline114"><span class="section-number-3">11.66</span> <span class="done DONE">DONE</span> Emacs撤销、重做和重复</h3>
-<div class="outline-text-3" id="text-11-66">
+<div id="outline-container-orgheadline120" class="outline-3">
+<h3 id="orgheadline120"><a id="ID-bf32ac8e-bc47-41fe-875d-45b4dbec83bc"></a><span class="section-number-3">12.67</span> <span class="done DONE">DONE</span> Emacs撤销、重做和重复</h3>
+<div class="outline-text-3" id="text-12-67">
 <ul class="org-ul">
 <li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2015-12-10 四 17:24]</span></span></li>
 <li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-12-10 四 16:45] </span></span> <br  />
@@ -4579,14 +5144,14 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-23
 </p></li>
 </ul>
 <p>
-具体参考：<a href="#orgheadline31">Emacs撤销、重做和重复</a> 和 <a href="#orgheadline11">编辑</a>
+具体参考：<a href="#orgheadline33">Emacs撤销、重做和重复</a> 和 <a href="#orgheadline11">编辑</a>
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline115" class="outline-3">
-<h3 id="orgheadline115"><span class="section-number-3">11.67</span> <span class="todo NEXT">NEXT</span> Emacs 如何远程访问？</h3>
-<div class="outline-text-3" id="text-11-67">
+<div id="outline-container-orgheadline121" class="outline-3">
+<h3 id="orgheadline121"><span class="section-number-3">12.68</span> <span class="todo NEXT">NEXT</span> Emacs 如何远程访问？</h3>
+<div class="outline-text-3" id="text-12-68">
 <ul class="org-ul">
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-23 五 12:03]</span></span></li>
 </ul>
@@ -4596,9 +5161,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-22
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline116" class="outline-3">
-<h3 id="orgheadline116"><span class="section-number-3">11.68</span> <span class="todo LATER">LATER</span> 将emacs custom config变成手动的config</h3>
-<div class="outline-text-3" id="text-11-68">
+<div id="outline-container-orgheadline122" class="outline-3">
+<h3 id="orgheadline122"><span class="section-number-3">12.69</span> <span class="todo LATER">LATER</span> 将emacs custom config变成手动的config</h3>
+<div class="outline-text-3" id="text-12-69">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:15]</span></span></li>
 </ul>
@@ -4608,9 +5173,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-23
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline117" class="outline-3">
-<h3 id="orgheadline117"><span class="section-number-3">11.69</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 恢复文件</h3>
-<div class="outline-text-3" id="text-11-69">
+<div id="outline-container-orgheadline123" class="outline-3">
+<h3 id="orgheadline123"><span class="section-number-3">12.70</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 恢复文件</h3>
+<div class="outline-text-3" id="text-12-70">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-10-23 五 15:22] </span></span> <br  />
 等待转移至合适的位置。</li>
@@ -4625,9 +5190,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-23
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline118" class="outline-3">
-<h3 id="orgheadline118"><span class="section-number-3">11.70</span> <span class="todo LATER">LATER</span> 无需远端安装emacs，用本地emacs直接访问远端，可否？</h3>
-<div class="outline-text-3" id="text-11-70">
+<div id="outline-container-orgheadline124" class="outline-3">
+<h3 id="orgheadline124"><span class="section-number-3">12.71</span> <span class="todo LATER">LATER</span> 无需远端安装emacs，用本地emacs直接访问远端，可否？</h3>
+<div class="outline-text-3" id="text-12-71">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:15]</span></span></li>
 </ul>
@@ -4637,9 +5202,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-26
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline119" class="outline-3">
-<h3 id="orgheadline119"><span class="section-number-3">11.71</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> Emacs 任务管理？</h3>
-<div class="outline-text-3" id="text-11-71">
+<div id="outline-container-orgheadline125" class="outline-3">
+<h3 id="orgheadline125"><span class="section-number-3">12.72</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> Emacs 任务管理？</h3>
+<div class="outline-text-3" id="text-12-72">
 <ul class="org-ul">
 <li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:15]</span></span></li>
 </ul>
@@ -4649,9 +5214,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-27
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline120" class="outline-3">
-<h3 id="orgheadline120"><span class="section-number-3">11.72</span> <span class="todo LATER">LATER</span> 崩溃后下次启动自动提示回复文件的方式？</h3>
-<div class="outline-text-3" id="text-11-72">
+<div id="outline-container-orgheadline126" class="outline-3">
+<h3 id="orgheadline126"><span class="section-number-3">12.73</span> <span class="todo LATER">LATER</span> 崩溃后下次启动自动提示回复文件的方式？</h3>
+<div class="outline-text-3" id="text-12-73">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:15]</span></span></li>
 </ul>
@@ -4661,9 +5226,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-27
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline121" class="outline-3">
-<h3 id="orgheadline121"><span class="section-number-3">11.73</span> <span class="todo LATER">LATER</span> Emacs如何粘帖复制文本到X剪切板中？</h3>
-<div class="outline-text-3" id="text-11-73">
+<div id="outline-container-orgheadline127" class="outline-3">
+<h3 id="orgheadline127"><span class="section-number-3">12.74</span> <span class="todo LATER">LATER</span> Emacs如何粘帖复制文本到X剪切板中？</h3>
+<div class="outline-text-3" id="text-12-74">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:15]</span></span></li>
 </ul>
@@ -4673,18 +5238,18 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-28
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline122" class="outline-3">
-<h3 id="orgheadline122"><span class="section-number-3">11.74</span> <span class="todo LATER">LATER</span> Emacs中如何在require后卸载插件？</h3>
-<div class="outline-text-3" id="text-11-74">
+<div id="outline-container-orgheadline128" class="outline-3">
+<h3 id="orgheadline128"><span class="section-number-3">12.75</span> <span class="todo LATER">LATER</span> Emacs中如何在require后卸载插件？</h3>
+<div class="outline-text-3" id="text-12-75">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:15]</span></span></li>
 <li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-04 三 09:36]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline123" class="outline-3">
-<h3 id="orgheadline123"><span class="section-number-3">11.75</span> <span class="todo LATER">LATER</span> 拼音输入法</h3>
-<div class="outline-text-3" id="text-11-75">
+<div id="outline-container-orgheadline129" class="outline-3">
+<h3 id="orgheadline129"><span class="section-number-3">12.76</span> <span class="todo LATER">LATER</span> 拼音输入法</h3>
+<div class="outline-text-3" id="text-12-76">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:15]</span></span></li>
 </ul>
@@ -4698,9 +5263,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-30
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline124" class="outline-3">
-<h3 id="orgheadline124"><span class="section-number-3">11.76</span> <span class="todo NEXT">NEXT</span> Emacs为什么有时候缩进无法删除？</h3>
-<div class="outline-text-3" id="text-11-76">
+<div id="outline-container-orgheadline130" class="outline-3">
+<h3 id="orgheadline130"><span class="section-number-3">12.77</span> <span class="todo NEXT">NEXT</span> Emacs为什么有时候缩进无法删除？</h3>
+<div class="outline-text-3" id="text-12-77">
 <ul class="org-ul">
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:17]</span></span></li>
 </ul>
@@ -4710,9 +5275,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-02
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline125" class="outline-3">
-<h3 id="orgheadline125"><span class="section-number-3">11.77</span> <span class="todo NEXT">NEXT</span> Emacs如何搜索光标下的内容</h3>
-<div class="outline-text-3" id="text-11-77">
+<div id="outline-container-orgheadline131" class="outline-3">
+<h3 id="orgheadline131"><span class="section-number-3">12.78</span> <span class="todo NEXT">NEXT</span> Emacs如何搜索光标下的内容</h3>
+<div class="outline-text-3" id="text-12-78">
 <ul class="org-ul">
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-05 四 09:18]</span></span></li>
 </ul>
@@ -4726,9 +5291,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-05
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline126" class="outline-3">
-<h3 id="orgheadline126"><span class="section-number-3">11.78</span> <span class="todo LATER">LATER</span> Emacs如何格式化全部代码？</h3>
-<div class="outline-text-3" id="text-11-78">
+<div id="outline-container-orgheadline132" class="outline-3">
+<h3 id="orgheadline132"><span class="section-number-3">12.79</span> <span class="todo LATER">LATER</span> Emacs如何格式化全部代码？</h3>
+<div class="outline-text-3" id="text-12-79">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:17]</span></span></li>
 </ul>
@@ -4738,9 +5303,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-05
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline127" class="outline-3">
-<h3 id="orgheadline127"><span class="section-number-3">11.79</span> <span class="todo NEXT">NEXT</span> 为什么Emacs有时候无法删除缩进？</h3>
-<div class="outline-text-3" id="text-11-79">
+<div id="outline-container-orgheadline133" class="outline-3">
+<h3 id="orgheadline133"><span class="section-number-3">12.80</span> <span class="todo NEXT">NEXT</span> 为什么Emacs有时候无法删除缩进？</h3>
+<div class="outline-text-3" id="text-12-80">
 <ul class="org-ul">
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:17]</span></span></li>
 </ul>
@@ -4754,21 +5319,27 @@ bb
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline128" class="outline-3">
-<h3 id="orgheadline128"><span class="section-number-3">11.80</span> <span class="todo NEXT">NEXT</span> Emacs如何反撤销重做？</h3>
-<div class="outline-text-3" id="text-11-80">
+<div id="outline-container-orgheadline134" class="outline-3">
+<h3 id="orgheadline134"><span class="section-number-3">12.81</span> <span class="done DONE">DONE</span> Emacs如何反撤销重做？</h3>
+<div class="outline-text-3" id="text-12-81">
 <ul class="org-ul">
+<li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-03-03 四 11:11]</span></span></li>
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-16 一 10:33]</span></span></li>
 </ul>
 <p>
 Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-13 五 14:13]</span></span>
 </p>
 <hr  />
+
+<p>
+参考：<a href="#orgheadline120">Emacs撤销、重做和重复</a>
+</p>
 </div>
 </div>
-<div id="outline-container-orgheadline129" class="outline-3">
-<h3 id="orgheadline129"><span class="section-number-3">11.81</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> emacs剪切板和x剪切板共享</h3>
-<div class="outline-text-3" id="text-11-81">
+
+<div id="outline-container-orgheadline135" class="outline-3">
+<h3 id="orgheadline135"><span class="section-number-3">12.82</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> emacs剪切板和x剪切板共享</h3>
+<div class="outline-text-3" id="text-12-82">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-12-21 一 15:22] </span></span> <br  />
 有待进一步整理</li>
@@ -4792,9 +5363,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-10
 </div>
 </div>
 
-<div id="outline-container-orgheadline130" class="outline-3">
-<h3 id="orgheadline130"><span class="section-number-3">11.82</span> <span class="done DONE">DONE</span> 完善自己的开发环境，代码跳转、扫描、定位等，不用每次都要手动配置</h3>
-<div class="outline-text-3" id="text-11-82">
+<div id="outline-container-orgheadline136" class="outline-3">
+<h3 id="orgheadline136"><span class="section-number-3">12.83</span> <span class="done DONE">DONE</span> 完善自己的开发环境，代码跳转、扫描、定位等，不用每次都要手动配置</h3>
+<div class="outline-text-3" id="text-12-83">
 <ul class="org-ul">
 <li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 14:10]</span></span></li>
 </ul>
@@ -4806,12 +5377,16 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-20
 <p>
 需要借助插件： <code>cedet</code> 和 <code>ecb</code> 。 <code>cedet</code> 主要用于建立索引已经提供跳转等功能, <code>ecb</code> 主要提供方便的窗口布局。
 </p>
+
+<p>
+当然，最好还是用 <code>understand</code> 或者 <code>sourceinsight</code> 之类的工具，简易点的也可用 <code>geany</code> 。
+</p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline131" class="outline-3">
-<h3 id="orgheadline131"><span class="section-number-3">11.83</span> <span class="todo LATER">LATER</span> Emacs 括号跳转</h3>
-<div class="outline-text-3" id="text-11-83">
+<div id="outline-container-orgheadline137" class="outline-3">
+<h3 id="orgheadline137"><span class="section-number-3">12.84</span> <span class="todo LATER">LATER</span> Emacs 括号跳转</h3>
+<div class="outline-text-3" id="text-12-84">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 14:10]</span></span></li>
 </ul>
@@ -4841,50 +5416,27 @@ Move down in parenthesis structure (`down-list‘).
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline132" class="outline-3">
-<h3 id="orgheadline132"><span class="section-number-3">11.84</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 关于Narrow</h3>
-<div class="outline-text-3" id="text-11-84">
+<div id="outline-container-orgheadline138" class="outline-3">
+<h3 id="orgheadline138"><span class="section-number-3">12.85</span> <span class="done DONE">DONE</span> 关于Narrow</h3>
+<div class="outline-text-3" id="text-12-85">
 <ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 16:02]</span></span></li>
 <li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 14:10] </span></span> <br  />
 等待移动到合适的位置。</li>
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-24 二 17:32]</span></span></li>
 </ul>
-<p>
-Narrowing的意思是将焦点集中到buffer的指定区域上, 有助于集中精力到特定的段落上，而将无关信息屏蔽掉。
-</p>
 
 <p>
-Narrow后，你能看到的内容就是被Narrow的部分，但是并非删除了其他的内容，而是将相应的内容隐藏了。
-</p>
-
-<p>
-Narrow后，其他内容好像不存在了一样，正常的跳转/搜索操作也被限制在Narrow范围内。
-</p>
-
-<p>
-Narrow后，能够看见的区域被称作可访问区域，当取消narrow的时候，其他不可见的区域也变回可见了。
-</p>
-
-<p>
-主要命令：
-</p>
-<dl class="org-dl">
-<dt>将Narrow范围设定在光标与Mark范围之间</dt><dd>输入 <code>C-x n n</code> ，其实一般也就是被选区域。</dd>
-<dt>取消Narrow</dt><dd>输入 <code>C-x n w</code></dd>
-<dt>将Narrow范围设定为当前页</dt><dd>输入 <code>C-x n p</code></dd>
-<dt>将Narrow范围设定为当前函数</dt><dd>输入 <code>C-x n d</code></dd>
-</dl>
-
-<p>
-具体可以参考：<a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Narrowing.html">http://www.gnu.org/software/emacs/manual/html_node/emacs/Narrowing.html</a>
+可参考：<a href="#orgheadline39">关于Narrow</a>
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline133" class="outline-3">
-<h3 id="orgheadline133"><span class="section-number-3">11.85</span> <span class="todo NEXT">NEXT</span> emacs如何搜索光标所在字符的内容</h3>
-<div class="outline-text-3" id="text-11-85">
+<div id="outline-container-orgheadline139" class="outline-3">
+<h3 id="orgheadline139"><span class="section-number-3">12.86</span> <span class="todo LATER">LATER</span> emacs如何搜索光标所在字符的内容</h3>
+<div class="outline-text-3" id="text-12-86">
 <ul class="org-ul">
+<li>State "LATER"      from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 16:02]</span></span></li>
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-24 二 11:53]</span></span></li>
 </ul>
 <p>
@@ -4903,9 +5455,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-24
 </div>
 </div>
 
-<div id="outline-container-orgheadline134" class="outline-3">
-<h3 id="orgheadline134"><span class="section-number-3">11.86</span> <span class="todo LATER">LATER</span> C-x =</h3>
-<div class="outline-text-3" id="text-11-86">
+<div id="outline-container-orgheadline140" class="outline-3">
+<h3 id="orgheadline140"><span class="section-number-3">12.87</span> <span class="todo LATER">LATER</span> C-x =</h3>
+<div class="outline-text-3" id="text-12-87">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:17]</span></span></li>
 <li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 14:09]</span></span></li>
@@ -4913,10 +5465,11 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-24
 </div>
 </div>
 
-<div id="outline-container-orgheadline135" class="outline-3">
-<h3 id="orgheadline135"><span class="section-number-3">11.87</span> <span class="todo NEXT">NEXT</span> 定义自己的Emacs环境</h3>
-<div class="outline-text-3" id="text-11-87">
+<div id="outline-container-orgheadline141" class="outline-3">
+<h3 id="orgheadline141"><span class="section-number-3">12.88</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 定义自己的Emacs环境</h3>
+<div class="outline-text-3" id="text-12-88">
 <ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 16:02]</span></span></li>
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 14:15]</span></span></li>
 <li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 14:15]</span></span></li>
 </ul>
@@ -4929,6 +5482,7 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-24
 高亮当前光标单词
 </p>
 
+
 <p>
 搜索当前光标单词
 <a href="http://emacser.com/next-pre-word.htm">http://emacser.com/next-pre-word.htm</a>
@@ -4937,10 +5491,11 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-24
 </div>
 
 
-<div id="outline-container-orgheadline136" class="outline-3">
-<h3 id="orgheadline136"><span class="section-number-3">11.88</span> <span class="todo LATER">LATER</span> 将emacs插件分层整理一下，最好能尝试一下新版本的emacs</h3>
-<div class="outline-text-3" id="text-11-88">
+<div id="outline-container-orgheadline142" class="outline-3">
+<h3 id="orgheadline142"><span class="section-number-3">12.89</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 将emacs插件分层整理一下，最好能尝试一下新版本的emacs</h3>
+<div class="outline-text-3" id="text-12-89">
 <ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 16:03]</span></span></li>
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-01 二 17:02]</span></span></li>
 </ul>
 <p>
@@ -4949,9 +5504,10 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-26
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline137" class="outline-3">
-<h3 id="orgheadline137"><span class="section-number-3">11.89</span> <span class="todo NEXT">NEXT</span> Emacs如何撤销以及反撤销？</h3>
-<div class="outline-text-3" id="text-11-89">
+
+<div id="outline-container-orgheadline143" class="outline-3">
+<h3 id="orgheadline143"><span class="section-number-3">12.90</span> <span class="todo NEXT">NEXT</span> Emacs如何撤销以及反撤销？</h3>
+<div class="outline-text-3" id="text-12-90">
 <ul class="org-ul">
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 14:36]</span></span></li>
 </ul>
@@ -4961,9 +5517,10 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-30
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline138" class="outline-3">
-<h3 id="orgheadline138"><span class="section-number-3">11.90</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-12-02 三 15:06] </span></span> Emacs标签跳转------</h3>
-<div class="outline-text-3" id="text-11-90">
+
+<div id="outline-container-orgheadline144" class="outline-3">
+<h3 id="orgheadline144"><span class="section-number-3">12.91</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-12-02 三 15:06] </span></span> Emacs标签跳转------</h3>
+<div class="outline-text-3" id="text-12-91">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 14:15] </span></span> <br  />
 wait for move</li>
@@ -5013,9 +5570,10 @@ From:/home/miracle/mydata/orgmode/gtd/output/emacs_tips.org
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline139" class="outline-3">
-<h3 id="orgheadline139"><span class="section-number-3">11.91</span> <span class="todo LATER">LATER</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-12-02 三 16:58] </span></span> Emacs mark ring------</h3>
-<div class="outline-text-3" id="text-11-91">
+
+<div id="outline-container-orgheadline145" class="outline-3">
+<h3 id="orgheadline145"><span class="section-number-3">12.92</span> <span class="todo LATER">LATER</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-12-02 三 16:58] </span></span> Emacs mark ring------</h3>
+<div class="outline-text-3" id="text-12-92">
 <ul class="org-ul">
 <li>State "LATER"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 14:15]</span></span></li>
 </ul>
@@ -5052,9 +5610,10 @@ From:/home/miracle/work/androidL/gitlocalcode/device/tpvision/tvsoc/tvsoc_mtk/te
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline140" class="outline-3">
-<h3 id="orgheadline140"><span class="section-number-3">11.92</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 意外发现 <code>ESC-`</code> 在minibuf打开菜单栏</h3>
-<div class="outline-text-3" id="text-11-92">
+
+<div id="outline-container-orgheadline146" class="outline-3">
+<h3 id="orgheadline146"><span class="section-number-3">12.93</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 意外发现 <code>ESC-`</code> 在minibuf打开菜单栏</h3>
+<div class="outline-text-3" id="text-12-93">
 <ul class="org-ul">
 <li>State "MAYBE/FUTURE" from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:19]</span></span></li>
 <li>State "WAIT/FORWARD" from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:19]</span></span></li>
@@ -5064,9 +5623,9 @@ From:/home/miracle/work/androidL/gitlocalcode/device/tpvision/tvsoc/tvsoc_mtk/te
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline141" class="outline-3">
-<h3 id="orgheadline141"><span class="section-number-3">11.93</span> <span class="todo NEXT">NEXT</span> 学习资源</h3>
-<div class="outline-text-3" id="text-11-93">
+<div id="outline-container-orgheadline147" class="outline-3">
+<h3 id="orgheadline147"><span class="section-number-3">12.94</span> <span class="todo NEXT">NEXT</span> 学习资源</h3>
+<div class="outline-text-3" id="text-12-94">
 <ul class="org-ul">
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-04 五 10:38]</span></span></li>
 <li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-04 五 10:38]</span></span></li>
@@ -5081,14 +5640,18 @@ From:/home/miracle/work/androidL/gitlocalcode/device/tpvision/tvsoc/tvsoc_mtk/te
 官网
 <a href="http://www.gnu.org/software/emacs/">http://www.gnu.org/software/emacs/</a>
 </p>
+
+<p>
+对于每个插件，找到该插件发布的地方（如github），然后以报告bug的形式，或者查看前人报告的问题。
+</p>
 </div>
 </div>
 
-
-<div id="outline-container-orgheadline142" class="outline-3">
-<h3 id="orgheadline142"><span class="section-number-3">11.94</span> <span class="todo NEXT">NEXT</span> Emacs如何自定义按键映射不冲突</h3>
-<div class="outline-text-3" id="text-11-94">
+<div id="outline-container-orgheadline148" class="outline-3">
+<h3 id="orgheadline148"><span class="section-number-3">12.95</span> <span class="todo LATER">LATER</span> Emacs如何自定义按键映射不冲突</h3>
+<div class="outline-text-3" id="text-12-95">
 <ul class="org-ul">
+<li>State "LATER"      from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 16:03]</span></span></li>
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-04 五 15:36]</span></span></li>
 </ul>
 <p>
@@ -5097,9 +5660,10 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-02
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline143" class="outline-3">
-<h3 id="orgheadline143"><span class="section-number-3">11.95</span> <span class="todo NEXT">NEXT</span> Emacs高级搜索</h3>
-<div class="outline-text-3" id="text-11-95">
+
+<div id="outline-container-orgheadline149" class="outline-3">
+<h3 id="orgheadline149"><span class="section-number-3">12.96</span> <span class="todo NEXT">NEXT</span> Emacs高级搜索</h3>
+<div class="outline-text-3" id="text-12-96">
 <ul class="org-ul">
 <li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-14 一 17:47]</span></span></li>
 </ul>
@@ -5125,9 +5689,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-02
 </div>
 </div>
 
-<div id="outline-container-orgheadline144" class="outline-3">
-<h3 id="orgheadline144"><span class="section-number-3">11.96</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> Emacs如何括号匹配？如何显示行号？</h3>
-<div class="outline-text-3" id="text-11-96">
+<div id="outline-container-orgheadline150" class="outline-3">
+<h3 id="orgheadline150"><span class="section-number-3">12.97</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> Emacs如何显示括号匹配？如何显示行号？</h3>
+<div class="outline-text-3" id="text-12-97">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2015-12-17 四 10:58] </span></span> <br  />
 等待整理</li>
@@ -5152,19 +5716,25 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-02
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline145" class="outline-3">
-<h3 id="orgheadline145"><span class="section-number-3">11.97</span> 设置输入</h3>
-<div class="outline-text-3" id="text-11-97">
+
+<div id="outline-container-orgheadline151" class="outline-3">
+<h3 id="orgheadline151"><span class="section-number-3">12.98</span> <span class="todo LATER">LATER</span> 设置输入法</h3>
+<div class="outline-text-3" id="text-12-98">
+<ul class="org-ul">
+<li>State "LATER"      from              <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 16:11]</span></span></li>
+</ul>
 <p>
 <code>M-x set-input-method</code>
 <code>C-x Ret C-\</code>
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline146" class="outline-3">
-<h3 id="orgheadline146"><span class="section-number-3">11.98</span> <span class="todo LATER">LATER</span> 使用Emacs阅读代码</h3>
-<div class="outline-text-3" id="text-11-98">
+
+<div id="outline-container-orgheadline152" class="outline-3">
+<h3 id="orgheadline152"><span class="section-number-3">12.99</span> <span class="done DONE">DONE</span> 使用Emacs阅读代码</h3>
+<div class="outline-text-3" id="text-12-99">
 <ul class="org-ul">
+<li>State "DONE"       from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 16:14]</span></span></li>
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-18 五 13:37]</span></span></li>
 </ul>
 <p>
@@ -5172,9 +5742,20 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-15
 </p>
 <hr  />
 <p>
-主要涉及到的工具包括：cedet+ecb+global
+主要涉及到的插件包括：cedet+ecb+global
 </p>
 
+<p>
+cedet 是一个代码索引后端
+</p>
+
+<p>
+ecb 可以操作显示方式
+</p>
+
+<p>
+global 是代码索引生成和查找的工具，类似ctags
+</p>
 
 <p>
 参考：
@@ -5189,9 +5770,10 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-15
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline147" class="outline-3">
-<h3 id="orgheadline147"><span class="section-number-3">11.99</span> <span class="todo LATER">LATER</span> emacs自动保存间隔</h3>
-<div class="outline-text-3" id="text-11-99">
+
+<div id="outline-container-orgheadline153" class="outline-3">
+<h3 id="orgheadline153"><span class="section-number-3">12.100</span> <span class="todo LATER">LATER</span> emacs自动保存间隔</h3>
+<div class="outline-text-3" id="text-12-100">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-18 五 13:38]</span></span></li>
 </ul>
@@ -5201,9 +5783,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-16
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline148" class="outline-3">
-<h3 id="orgheadline148"><span class="section-number-3">11.100</span> <span class="todo NEXT">NEXT</span> emacs如何替换文本?</h3>
-<div class="outline-text-3" id="text-11-100">
+<div id="outline-container-orgheadline154" class="outline-3">
+<h3 id="orgheadline154"><span class="section-number-3">12.101</span> <span class="todo NEXT">NEXT</span> emacs如何替换文本?</h3>
+<div class="outline-text-3" id="text-12-101">
 <ul class="org-ul">
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-18 五 13:38]</span></span></li>
 </ul>
@@ -5213,9 +5795,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-17
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline149" class="outline-3">
-<h3 id="orgheadline149"><span class="section-number-3">11.101</span> <span class="todo LATER">LATER</span> Emacs如何设置多重功能的按键?</h3>
-<div class="outline-text-3" id="text-11-101">
+<div id="outline-container-orgheadline155" class="outline-3">
+<h3 id="orgheadline155"><span class="section-number-3">12.102</span> <span class="todo LATER">LATER</span> Emacs如何设置多重功能的按键?</h3>
+<div class="outline-text-3" id="text-12-102">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-18 五 13:38]</span></span></li>
 </ul>
@@ -5240,9 +5822,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-17
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline150" class="outline-3">
-<h3 id="orgheadline150"><span class="section-number-3">11.102</span> <span class="todo NEXT">NEXT</span> Emacs如何切换最近buffer,而非只有一个最近buffer?</h3>
-<div class="outline-text-3" id="text-11-102">
+<div id="outline-container-orgheadline156" class="outline-3">
+<h3 id="orgheadline156"><span class="section-number-3">12.103</span> <span class="todo NEXT">NEXT</span> Emacs如何切换最近buffer,而非只有一个最近buffer?</h3>
+<div class="outline-text-3" id="text-12-103">
 <ul class="org-ul">
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-18 五 13:38]</span></span></li>
 </ul>
@@ -5252,10 +5834,14 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-17
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline151" class="outline-3">
-<h3 id="orgheadline151"><span class="section-number-3">11.103</span> <span class="todo NEXT">NEXT</span> Emacs如何高亮多个单词?</h3>
-<div class="outline-text-3" id="text-11-103">
+
+
+<div id="outline-container-orgheadline157" class="outline-3">
+<h3 id="orgheadline157"><span class="section-number-3">12.104</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> Emacs如何高亮多个单词?</h3>
+<div class="outline-text-3" id="text-12-104">
 <ul class="org-ul">
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 19:17] </span></span> <br  />
+等待进一步整理。</li>
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-18 五 13:38]</span></span></li>
 </ul>
 <p>
@@ -5263,22 +5849,93 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-17
 </p>
 <hr  />
 </div>
-</div>
-<div id="outline-container-orgheadline152" class="outline-3">
-<h3 id="orgheadline152"><span class="section-number-3">11.104</span> <span class="todo LATER">LATER</span> 如何在Emacs直接预览markdown效果？</h3>
-<div class="outline-text-3" id="text-11-104">
+
+<div id="outline-container-orgheadline158" class="outline-4">
+<h4 id="orgheadline158"><span class="section-number-4">12.104.1</span> 利用emacs自带的 <code>hi-lock-mode</code></h4>
+<div class="outline-text-4" id="text-12-104-1">
 <ul class="org-ul">
+<li><p>
+高亮指定单词 
+</p>
+
+<p>
+<code>M-s h p</code> 输入之后，再输入待高亮的单词，以及高亮的颜色（可补全），即可。
+</p></li>
+
+<li><p>
+高亮特定正则表达式
+</p>
+
+<p>
+<code>M-s h r</code> 类似前面，输入之后输入正则表达式以及颜色即可。
+</p></li>
+
+<li><p>
+高亮匹配正则表达式的行
+</p>
+
+<p>
+<code>M-s h l</code> 类似前面。
+</p></li>
+
+<li><p>
+取消高亮
+</p>
+
+<p>
+<code>M-s h u</code> 输入之后，默认自动取消刚刚设置的高亮，或者输入想要取消高亮的正则表达式来进行取消。
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline159" class="outline-4">
+<h4 id="orgheadline159"><span class="section-number-4">12.104.2</span> 利用插件</h4>
+<div class="outline-text-4" id="text-12-104-2">
+<p>
+主要有 <code>highlight-symbol</code> 和 <code>idle-highlight</code>
+</p>
+
+<p>
+可实现光标处自动高亮，以及类似 vim 中的 <code>*</code> 和 <code>#</code> 搜索。
+</p>
+
+<p>
+参考：<a href="http://www.cnblogs.com/bamanzi/archive/2012/12/03/emacs-find-modify-all-occurences.html">http://www.cnblogs.com/bamanzi/archive/2012/12/03/emacs-find-modify-all-occurences.html</a>
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline160" class="outline-3">
+<h3 id="orgheadline160"><span class="section-number-3">12.105</span> <span class="done DONE">DONE</span> 如何在Emacs直接预览markdown效果？</h3>
+<div class="outline-text-3" id="text-12-105">
+<ul class="org-ul">
+<li>State "DONE"       from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 16:10]</span></span></li>
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-21 一 15:57]</span></span></li>
 </ul>
 <p>
 Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-18 五 14:54]</span></span>
 </p>
 <hr  />
+
+<p>
+可以使用 <code>markdown-mode</code> 插件。
+</p>
+
+<p>
+参考网址：
+<a href="http://jblevins.org/projects/markdown-mode/">官方网址</a>
+<a href="https://linuxtoy.org/archives/emacs-markdown-mode.html">LinuxToy的文档</a>
+</p>
 </div>
 </div>
-<div id="outline-container-orgheadline153" class="outline-3">
-<h3 id="orgheadline153"><span class="section-number-3">11.105</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> </h3>
-<div class="outline-text-3" id="text-11-105">
+
+
+<div id="outline-container-orgheadline161" class="outline-3">
+<h3 id="orgheadline161"><span class="section-number-3">12.106</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 如何执行脚本</h3>
+<div class="outline-text-3" id="text-12-106">
 <ul class="org-ul">
 <li>State "MAYBE/FUTURE" from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-22 二 16:36]</span></span></li>
 </ul>
@@ -5290,9 +5947,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-18
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline154" class="outline-3">
-<h3 id="orgheadline154"><span class="section-number-3">11.106</span> <span class="todo NEXT">NEXT</span> Emacs崩溃后的恢复策略</h3>
-<div class="outline-text-3" id="text-11-106">
+<div id="outline-container-orgheadline162" class="outline-3">
+<h3 id="orgheadline162"><span class="section-number-3">12.107</span> <span class="todo NEXT">NEXT</span> Emacs崩溃后的恢复策略</h3>
+<div class="outline-text-3" id="text-12-107">
 <ul class="org-ul">
 <li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-12-31 四 14:50]</span></span></li>
 </ul>
@@ -5303,9 +5960,9 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-18
 </div>
 </div>
 
-<div id="outline-container-orgheadline155" class="outline-3">
-<h3 id="orgheadline155"><span class="section-number-3">11.107</span> <span class="todo NEXT">NEXT</span> emacs如何跳转到匹配的括号？</h3>
-<div class="outline-text-3" id="text-11-107">
+<div id="outline-container-orgheadline163" class="outline-3">
+<h3 id="orgheadline163"><span class="section-number-3">12.108</span> <span class="todo NEXT">NEXT</span> emacs如何跳转到匹配的括号？</h3>
+<div class="outline-text-3" id="text-12-108">
 <ul class="org-ul">
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-01-05 二 15:36]</span></span></li>
 </ul>
@@ -5315,9 +5972,10 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-22
 <hr  />
 </div>
 </div>
-<div id="outline-container-orgheadline156" class="outline-3">
-<h3 id="orgheadline156"><span class="section-number-3">11.108</span> <span class="todo NEXT">NEXT</span> 一些基本操作</h3>
-<div class="outline-text-3" id="text-11-108">
+
+<div id="outline-container-orgheadline164" class="outline-3">
+<h3 id="orgheadline164"><span class="section-number-3">12.109</span> <span class="todo NEXT">NEXT</span> 一些基本操作</h3>
+<div class="outline-text-3" id="text-12-109">
 <ul class="org-ul">
 <li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-02-04 四 13:54]</span></span></li>
 <li>前进</li>
@@ -5330,6 +5988,143 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-22
 
 <li>跳至指定百分比</li>
 </ul>
+</div>
+</div>
+<div id="outline-container-orgheadline165" class="outline-3">
+<h3 id="orgheadline165"><span class="section-number-3">12.110</span> <span class="todo NEXT">NEXT</span> emacs如何返回上次编辑的位置</h3>
+<div class="outline-text-3" id="text-12-110">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-01-31 日 16:56]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-01-31 日 16:56]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline166" class="outline-3">
+<h3 id="orgheadline166"><span class="section-number-3">12.111</span> <span class="todo NEXT">NEXT</span> Emacs如何定期自动保存文件?</h3>
+<div class="outline-text-3" id="text-12-111">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-01-21 四 10:28]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-01-21 四 10:27]</span></span>
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-orgheadline167" class="outline-3">
+<h3 id="orgheadline167"><span class="section-number-3">12.112</span> <span class="done DONE">DONE</span> emacs打开文件等，如何实现部分匹配文件或者命令而非精确开头匹配</h3>
+<div class="outline-text-3" id="text-12-112">
+<ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-03-03 四 11:34]</span></span></li>
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-02-10 三 11:22] </span></span> <br  />
+等待整理至合适位置。</li>
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 11:45]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 10:52]</span></span>
+</p>
+<hr  />
+
+<p>
+对打开buffer的 <code>C-x b</code> 以及打开文件的 <code>C-x C-f</code> 实现增加部分匹配可使用 <code>ido</code> 插件。
+</p>
+
+<p>
+对于运行Emacs命令 <code>M-x xxx</code> 可以使用基于 <code>ido</code> 的 <code>smex</code> 插件实现部分匹配，省去了记忆许多快捷键的麻烦。
+</p>
+
+<p>
+另外 <code>helm</code> 也是另外一套替换 <code>ido</code> 的补全方案，也可支持命令输入补全。
+</p>
+</div>
+
+<div id="outline-container-orgheadline168" class="outline-4">
+<h4 id="orgheadline168"><span class="section-number-4">12.112.1</span> ido</h4>
+<div class="outline-text-4" id="text-12-112-1">
+<p>
+具体参考相关文档。
+</p>
+</div>
+<div id="outline-container-orgheadline188" class="outline-5">
+<h5 id="orgheadline188"><span class="section-number-5">12.112.1.1</span> 下载</h5>
+<div class="outline-text-5" id="text-12-112-1-1">
+<p>
+<a href="http://repo.or.cz/w/emacs.git/blob_plain/HEAD:/lisp/ido.el">http://repo.or.cz/w/emacs.git/blob_plain/HEAD:/lisp/ido.el</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline189" class="outline-5">
+<h5 id="orgheadline189"><span class="section-number-5">12.112.1.2</span> 配置</h5>
+<div class="outline-text-5" id="text-12-112-1-2">
+<div class="org-src-container">
+
+<pre class="src src-elisp">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;ido
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'ido)
+(ido-mode t)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline169" class="outline-4">
+<h4 id="orgheadline169"><span class="section-number-4">12.112.2</span> smex</h4>
+<div class="outline-text-4" id="text-12-112-2">
+</div><div id="outline-container-orgheadline190" class="outline-5">
+<h5 id="orgheadline190"><span class="section-number-5">12.112.2.1</span> 下载</h5>
+<div class="outline-text-5" id="text-12-112-2-1">
+<p>
+<a href="https://github.com/nonsequitur/smex">https://github.com/nonsequitur/smex</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline191" class="outline-5">
+<h5 id="orgheadline191"><span class="section-number-5">12.112.2.2</span> 配置</h5>
+<div class="outline-text-5" id="text-12-112-2-2">
+<div class="org-src-container">
+
+<pre class="src src-elisp">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;smex
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'smex)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline170" class="outline-3">
+<h3 id="orgheadline170"><span class="section-number-3">12.113</span> <span class="todo LATER">LATER</span> 意外发现的 <code>M-*</code> 和 <code>M-.</code> 是做什么的？</h3>
+<div class="outline-text-3" id="text-12-113">
+<ul class="org-ul">
+<li>State "LATER"      from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-02-11 四 14:41]</span></span></li>
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 19:19]</span></span></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline171" class="outline-3">
+<h3 id="orgheadline171"><span class="section-number-3">12.114</span> <span class="todo NEXT">NEXT</span> Emacs代码折叠</h3>
+<div class="outline-text-3" id="text-12-114">
+<ul class="org-ul">
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-02-10 三 12:15]</span></span></li>
+</ul>
+<p>
+<a href="http://www.cnblogs.com/bamanzi/archive/2011/10/09/2203866.html">http://www.cnblogs.com/bamanzi/archive/2011/10/09/2203866.html</a>
+</p>
 </div>
 </div>
 </div>
@@ -5354,7 +6149,7 @@ Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-22
 	</tr>
     	<tr>
 	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-02-04 四 16:44:38></td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-03-03 四 11:35:36></td>
 	</tr>
     </tbody></table>
 </div>
