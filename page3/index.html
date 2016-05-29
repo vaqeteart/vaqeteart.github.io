@@ -57,6 +57,23 @@
         			}
     			}
     			
+    		       var post_categories = '/categories/study/linux/misc';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
     		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -635,6 +652,23 @@
         			}
     			}
     			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
 
     			create_category_menu(categories, 0, categories_count);
     			//document.write("hello")
@@ -740,16 +774,21 @@
       <em>3</em>
     
   
+    
+      <a href="/page4">4</a>
+      <!--a href="/">4</a-->
+    
+  
 
   
-    <span>|</span>
+    <a href="/page4">下一页 &raquo;</a>
   
 </div>
 
 
 <!--div id="pagination">
      <div class="pagenavi">
-	<span class="page_number">第3页/共3页</span>
+	<span class="page_number">第3页/共4页</span>
 	<a href="/">第一页</a>
 	
 		
@@ -766,12 +805,16 @@
 	      <span class="current-page">3</span>
 	   
 	
+	   
+	      <a href="/page4">4</a>
+	   
+	
 
 	
-	   <span>后一页>></span>
+	   <a href="/page4">后一页>></a>
 	
 	
-	<a href="/page3">最后一页</a>
+	<a href="/page4">最后一页</a>
      </div>
 </div-->
 
@@ -784,6 +827,34 @@
   <hr id='title_line'>
   <div>
     <ul id="post-list" class="post-list">
+      
+        <div>
+            [2010-04-02]<a href="/categories/study/vim/vim_use_tutor_08Config.html">Vim实践与学习-08配置相关</a> <br>
+            ||<a href="/categories/study/vim" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  学习/
+  
+  
+
+  
+  
+  vim/
+  
+  
+
+
+            </a>
+            <hr id='article_line'>
+        </div>
       
         <div>
             [2010-04-02]<a href="/categories/study/vim/vim_use_tutor_07View.html">Vim实践与学习-07显示相关</a> <br>
@@ -1016,6 +1087,40 @@
         </div>
       
         <div>
+            [2009-11-23]<a href="/categories/study/linux/command/linux_command_diff.html">Linux命令学习手册-diff</a> <br>
+            ||<a href="/categories/study/linux/command" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  学习/
+  
+  
+
+  
+  
+  linux/
+  
+  
+
+  
+  
+  命令/
+  
+  
+
+
+            </a>
+            <hr id='article_line'>
+        </div>
+      
+        <div>
             [2009-11-23]<a href="/categories/study/linux/command/linux_command_df.html">Linux命令学习手册-df</a> <br>
             ||<a href="/categories/study/linux/command" style="color:#0066CC; font-size:75%;">
             
@@ -1083,40 +1188,6 @@
             <hr id='article_line'>
         </div>
       
-        <div>
-            [2009-11-23]<a href="/categories/study/linux/command/linux_command_00Introduce.html">Linux命令学习手册-0前言</a> <br>
-            ||<a href="/categories/study/linux/command" style="color:#0066CC; font-size:75%;">
-            
-
-  
-  
-  分类:
-  
-  
-
-  
-  
-  学习/
-  
-  
-
-  
-  
-  linux/
-  
-  
-
-  
-  
-  命令/
-  
-  
-
-
-            </a>
-            <hr id='article_line'>
-        </div>
-      
     </ul>
   </div>
 </article>
@@ -1141,16 +1212,21 @@
       <em>3</em>
     
   
+    
+      <a href="/page4">4</a>
+      <!--a href="/">4</a-->
+    
+  
 
   
-    <span>|</span>
+    <a href="/page4">下一页 &raquo;</a>
   
 </div>
 
 
 <!--div id="pagination">
      <div class="pagenavi">
-	<span class="page_number">第3页/共3页</span>
+	<span class="page_number">第3页/共4页</span>
 	<a href="/">第一页</a>
 	
 		
@@ -1167,12 +1243,16 @@
 	      <span class="current-page">3</span>
 	   
 	
+	   
+	      <a href="/page4">4</a>
+	   
+	
 
 	
-	   <span>后一页>></span>
+	   <a href="/page4">后一页>></a>
 	
 	
-	<a href="/page3">最后一页</a>
+	<a href="/page4">最后一页</a>
      </div>
 </div-->
 

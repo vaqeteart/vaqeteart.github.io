@@ -57,6 +57,23 @@
         			}
     			}
     			
+    		       var post_categories = '/categories/study/linux/misc';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
     		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -635,6 +652,23 @@
         			}
     			}
     			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
 
     			create_category_menu(categories, 0, categories_count);
     			//document.write("hello")
@@ -726,6 +760,23 @@
     var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"os":{"id":"categories_study_os","path":"/categories/study/os","title":"操作系统","parent":"categories_study","children":null},"books":{"id":"categories_study_books","path":"/categories/study/books","title":"books","parent":"categories_study","children":{"apue":{"id":"categories_study_books_apue","path":"/categories/study/books/apue","title":"APUE","parent":"categories_study_books","children":null}}},"linux":{"id":"categories_study_linux","path":"/categories/study/linux","title":"linux","parent":"categories_study","children":{"misc":{"id":"categories_study_linux_misc","path":"/categories/study/linux/misc","title":"杂乱","parent":"categories_study_linux","children":null},"command":{"id":"categories_study_linux_command","path":"/categories/study/linux/command","title":"命令","parent":"categories_study_linux","children":null}}},"jekyll":{"id":"categories_study_jekyll","path":"/categories/study/jekyll","title":"jekyll","parent":"categories_study","children":null},"kits":{"id":"categories_study_kits","path":"/categories/study/kits","title":"工具","parent":"categories_study","children":null},"emacs":{"id":"categories_study_emacs","path":"/categories/study/emacs","title":"emacs","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
     var categories_count = JSON.parse('{"/categories":0}');
 
+    
+    var post_categories = '/categories/study/linux/misc';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
     
     var post_categories = '/categories/study/linux/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
@@ -1322,6 +1373,23 @@
         }
     }
     
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
 
     create_categories(categories, 0, categories_count);
     //document.write("hello")
@@ -1497,8 +1565,14 @@
 <li><a href="#orgheadline5">1.4. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> tref可查看windows邮件中的dat文件</a></li>
 <li><a href="#orgheadline6">1.5. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> jfbterm &amp; fbterm</a></li>
 <li><a href="#orgheadline7">1.6. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> complete</a></li>
-<li><a href="#orgheadline8">1.7. update-alternatives</a></li>
-<li><a href="#orgheadline9">1.8. ps</a></li>
+<li><a href="#orgheadline8">1.7. update-alternatives</a>
+<ul>
+<li><a href="#orgheadline9">1.7.1. java配置举例</a></li>
+<li><a href="#orgheadline10">1.7.2. 添加举例：</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline11">1.8. ps</a></li>
+<li><a href="#orgheadline12">1.9. sudo</a></li>
 </ul>
 </li>
 </ul>
@@ -1635,9 +1709,12 @@ kmem_alloc_pageable  kmem_free_wakeup     kmem_suballoc
 <h3 id="orgheadline8"><span class="section-number-3">1.7</span> update-alternatives</h3>
 <div class="outline-text-3" id="text-1-7">
 <p>
-确定多版本命令之时的默认命令。
+当ubuntu中某个软件有多个版本共存与系统之中时，默认采用哪个软件，可以通过 <code>update-alternatives</code> 进行管理。
 </p>
-
+</div>
+<div id="outline-container-orgheadline9" class="outline-4">
+<h4 id="orgheadline9"><span class="section-number-4">1.7.1</span> java配置举例</h4>
+<div class="outline-text-4" id="text-1-7-1">
 <p>
 设置默认java环境
 输入 <code>sudo update-alternatives --display java</code> 可查看信息默认的jdk信息。
@@ -1663,12 +1740,44 @@ $sudo update-alternatives --config javac
 </pre>
 </div>
 <p>
-将会提示：要维持当前值[*]请安回车键或者输入选择的编号,输入自己设置的优先级的编号(300)，按回车就可以了，再输入display查看，确定默认版本信息。会更新 <code>/etc/alternatives</code> 中的内容。
+将会提示：要维持当前值[*]请安回车键或者输入选择的编号,输入自己设置的优先级(300)对应的编号，按回车就可以了，再输入display查看，确定默认版本信息。会更新 <code>/etc/alternatives</code> 中的内容。
+</p>
+
+<p>
+参考:
+<a href="http://blog.csdn.net/gobitan/article/details/24322561">http://blog.csdn.net/gobitan/article/details/24322561</a> 
+</p>
+
+<p>
+<a href="http://www.linuxidc.com/Linux/2014-11/109216.htm">http://www.linuxidc.com/Linux/2014-11/109216.htm</a> 
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline9" class="outline-3">
-<h3 id="orgheadline9"><span class="section-number-3">1.8</span> ps</h3>
+
+<div id="outline-container-orgheadline10" class="outline-4">
+<h4 id="orgheadline10"><span class="section-number-4">1.7.2</span> 添加举例：</h4>
+<div class="outline-text-4" id="text-1-7-2">
+<p>
+假设源代码安装php在 <code>/usr/local/develop/php-5.6.19</code>, 那么
+<code>sudo update-alternatives --install /usr/bin/php5.6.19 php5.6.19 /usr/local/develop/php-5.6.19/bin/php 49</code>
+</p>
+
+<p>
+会导致： <code>/usr/bin/php5.6.19</code> 链接被创建，指向 <code>/etc/alternatives/php5.6.19</code>, 而 <code>/etc/alternatives/php5.6.19</code> 指向 <code>/usr/local/develop/php-5.6.19/bin/php</code>.
+</p>
+
+<p>
+<a href="http://blog.csdn.net/baggio1006/article/details/6338623">http://blog.csdn.net/baggio1006/article/details/6338623</a>
+</p>
+
+<p>
+<a href="http://persevere.iteye.com/blog/1479524">http://persevere.iteye.com/blog/1479524</a>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11"><span class="section-number-3">1.8</span> ps</h3>
 <div class="outline-text-3" id="text-1-8">
 <p>
 支持三种类型的选项：
@@ -1730,6 +1839,14 @@ USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 </p>
 </div>
 </div>
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><span class="section-number-3">1.9</span> sudo</h3>
+<div class="outline-text-3" id="text-1-9">
+<p>
+以 <code>user</code> 用户而非 <code>root</code> 运行 <code>xxx</code> ， <code>sudo -u user xxx</code>
+</p>
+</div>
+</div>
 </div>
 <br>
 <div id="mypostamble" align="right" style="float:right" class="status">
@@ -1752,7 +1869,7 @@ USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 	</tr>
     	<tr>
 	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-02-16 二 17:36:54></td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-04-16 六 20:15:21></td>
 	</tr>
     </tbody></table>
 </div>

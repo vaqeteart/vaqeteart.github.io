@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+<title>小米路由器DIY</title>
+
+<!--theme-->
+<link rel="stylesheet" type="text/css"
+  href="/assets/css/common_green_black.css" media="screen" />
+<script src="/assets/js/jquery-1.11.3.min.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/category_list.js"></script>
+
+
+    <link rel="stylesheet" type="text/css"
+      href="/assets/css/posts.css" media="screen" />
+  </head>
+
+   <body onload="change_categories('categories_study_linux_misc')">
+     <table class="container">
+        <tbody>
+	      <tr>
+		<script src="/assets/js/nav.js"></script>
+<th id="th_navbar">
+    <table class="navbar"> <tbody> <tr>
+	<th class="navitm">
+	    <a href='/'>主页</a>
+	</th>
+
+	<th class="navblank">
+	</th>
+
+	<th class="navitm">
+	      <a href=/categories/study/linux/misc/xiaomi_router_tips.html>分类</a>
+	      <div id="category_menus" class="second">
+  	      	   
+
+		   <script>
+		       var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"os":{"id":"categories_study_os","path":"/categories/study/os","title":"操作系统","parent":"categories_study","children":null},"books":{"id":"categories_study_books","path":"/categories/study/books","title":"books","parent":"categories_study","children":{"apue":{"id":"categories_study_books_apue","path":"/categories/study/books/apue","title":"APUE","parent":"categories_study_books","children":null}}},"linux":{"id":"categories_study_linux","path":"/categories/study/linux","title":"linux","parent":"categories_study","children":{"misc":{"id":"categories_study_linux_misc","path":"/categories/study/linux/misc","title":"杂乱","parent":"categories_study_linux","children":null},"command":{"id":"categories_study_linux_command","path":"/categories/study/linux/command","title":"命令","parent":"categories_study_linux","children":null}}},"jekyll":{"id":"categories_study_jekyll","path":"/categories/study/jekyll","title":"jekyll","parent":"categories_study","children":null},"kits":{"id":"categories_study_kits","path":"/categories/study/kits","title":"工具","parent":"categories_study","children":null},"emacs":{"id":"categories_study_emacs","path":"/categories/study/emacs","title":"emacs","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+		       var categories_count = JSON.parse('{"/categories":0}');
+
+  		       
+    		       var post_categories = '/categories/study/linux/misc';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/misc';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/kits';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/misc';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/os';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/emacs';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/emacs';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/life';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/git';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others/rambles';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others/rambles';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+
+    			create_category_menu(categories, 0, categories_count);
+    			//document.write("hello")
+		    </script>
+	      </div>
+	</th>
+
+        <th class="navitm">
+	      <a href='#'>标签</a>
+	      <div id="tag_menus" class="second">
+	          
+		      <a id="gtd_next" href="#"> gtd_next(13)</a>
+		  
+		      <a id="study" href="#"> study(10)</a>
+		  
+		      <a id="gtd_done" href="#"> gtd_done(4)</a>
+		  
+		      <a id="others" href="#"> others(3)</a>
+		  
+		      <a id="life" href="#"> life(1)</a>
+		  
+	      </div>
+        </th>
+
+	<th class="navblank">
+	</th>
+
+	<th class="navitm">
+	      <a href=/more.html>更多</a>
+        </th>
+
+        <th class="navitm">
+	      <a href=/about.html>关于</a>
+        </th>
+
+	<th class="navblank" style="width:25%;">
+	</th>
+
+	<th class="navitm" style="margin:0; padding:0;border:none;">
+	    <form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+	    	  <span style= "color:#00FF00;">Q</span>
+	    	  <span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+				<input value="Search in title..." name="s" class="s" 
+		  	 	onfocus="if (this.value == 'Search in title...') {this.value = '';}" 
+		  	 	onblur="if (this.value == '') {this.value = 'Search in title...';}"
+			 	style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" 
+			 	type="text">
+		  </span>
+		  <!--input type="submit" value="Q" style="width:20%;"-->
+	    </form>
+	</th>
+
+	<th class="navblank">
+	</th>
+
+	<th class="navblank">
+	</th>
+
+	<a href='#' id="topbtn">⇑</a>
+
+	<a href='#bottom' id="bottombtn">⇓</a>
+	<!--⇐⇑⇒⇓-->
+
+  <tr> </tbody> </table>
+</th>
+
+	      </tr>
+	      <tr>
+                  <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+    <header style="text-align: center;">
+	<h1>
+	       <a href="/" title="Home Page">
+	       QuietHeart's Site
+	       </a>
+	</h1>
+    </header>
+</td>
+
+
+
+	      </tr>
+             <tr>
+                <!--td id="td_category_list"  colspan="1" valign="top"><aside id="left-side" >
+  <h2> 分类 </h2>
+  
+  <script>
+    var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"os":{"id":"categories_study_os","path":"/categories/study/os","title":"操作系统","parent":"categories_study","children":null},"books":{"id":"categories_study_books","path":"/categories/study/books","title":"books","parent":"categories_study","children":{"apue":{"id":"categories_study_books_apue","path":"/categories/study/books/apue","title":"APUE","parent":"categories_study_books","children":null}}},"linux":{"id":"categories_study_linux","path":"/categories/study/linux","title":"linux","parent":"categories_study","children":{"misc":{"id":"categories_study_linux_misc","path":"/categories/study/linux/misc","title":"杂乱","parent":"categories_study_linux","children":null},"command":{"id":"categories_study_linux_command","path":"/categories/study/linux/command","title":"命令","parent":"categories_study_linux","children":null}}},"jekyll":{"id":"categories_study_jekyll","path":"/categories/study/jekyll","title":"jekyll","parent":"categories_study","children":null},"kits":{"id":"categories_study_kits","path":"/categories/study/kits","title":"工具","parent":"categories_study","children":null},"emacs":{"id":"categories_study_emacs","path":"/categories/study/emacs","title":"emacs","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+    var categories_count = JSON.parse('{"/categories":0}');
+
+    
+    var post_categories = '/categories/study/linux/misc';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/misc';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/kits';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/misc';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/os';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/emacs';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/emacs';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/life';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/git';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others/rambles';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others/rambles';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+
+    create_categories(categories, 0, categories_count);
+    //document.write("hello")
+  </script>
+</aside>
+</td-->
+                <td id="td_posts" colspan="6" valign="top">
+		  <article>
+  <h1 id='header1' style="text-align: center;">
+      小米路由器DIY
+  </h1>
+  <hr id='title_line'>
+  <div>
+    <style type="text/css">
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #0c0;
+    box-shadow: 1px 1px 1px #0e0;
+    padding: 8pt;
+    font-family: italic monospace;
+    color: #C7EDCC;
+    background-color: #111111;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+    code {
+        border:groove #555555;
+	border-width:thin;
+        background-color: #111111;
+	color: #C7EDCC;
+    }
+
+
+#table-of-contents {
+    font-size: 9pt;
+    position: fixed;
+    right: 10px;
+    top: 14em;
+    margin:0;
+    padding:0;
+    border-width:1px;
+    border-style:solid;
+    background: #000000;
+    -webkit-box-shadow: 0 0 1em #777777;
+    -moz-box-shadow: 0 0 1em #777777;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    text-align: right;
+    /* ensure doesn't flow off the screen when expanded */
+    max-height: 60%;
+    overflow: auto; 
+    z-index: 200;
+}
+
+#table-of-contents h2 {
+    font-size: 9pt;
+    max-width: 8em;
+    font-weight: normal;
+    padding-left: 0.5em;
+    padding-top: 0.05em;
+    padding-bottom: 0.05em; 
+}
+
+#table-of-contents ul {
+    margin-left: 14pt; 
+    margin-bottom: 10pt;
+    padding: 0
+}
+
+#table-of-contents li {
+    padding: 0;
+    margin: 1px;
+    list-style: none;
+}
+
+#table-of-contents ul>:first-child {
+    color: blue;
+}
+
+#table-of-contents #text-table-of-contents {
+    display: none;
+    text-align: left;
+}
+
+#table-of-contents:hover #text-table-of-contents {
+    display: block;
+    padding: 0.5em;
+    margin-top: -1.5em; 
+}
+
+</style>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. Misc</a>
+<ul>
+<li><a href="#orgheadline2">1.1. 小米路由器ssh开启</a>
+<ul>
+<li><a href="#orgheadline3">1.1.1. 烧写开发板</a></li>
+<li><a href="#orgheadline4">1.1.2. 烧写ssh</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline5">1.2. 小米路由器防火墙配置</a>
+<ul>
+<li><a href="#orgheadline6">1.2.1. 开启端口</a></li>
+<li><a href="#orgheadline7">1.2.2. 端口转发</a></li>
+<li><a href="#orgheadline8">1.2.3. 禁用端口</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline9">1.3. 小米路由器添加ddns</a></li>
+<li><a href="#orgheadline10">1.4. 使用opkg在小米路由器软件管理</a>
+<ul>
+<li><a href="#orgheadline11">1.4.1. 配置软件源地址</a></li>
+<li><a href="#orgheadline12">1.4.2. 用opkg在小米路由器(openwrt)上进行软件管理</a></li>
+<li><a href="#orgheadline13">1.4.3. 软件管理中遇到的问题</a></li>
+<li><a href="#orgheadline14">1.4.4. 参考资料</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline15">2. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[4/4]</code> <code>[100%]</code></a>
+<ul>
+<li><a href="#orgheadline16">2.1. <span class="done nilDONE">DONE</span> 小米路由如何开启ssh?</a>
+<ul>
+<li><a href="#orgheadline17">2.1.1. 下面内容仅参考暂不用</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline18">2.2. <span class="done nilDONE">DONE</span> 小米路由器防火墙如何配置?</a></li>
+<li><a href="#orgheadline19">2.3. <span class="done nilDONE">DONE</span> 小米路由如何添加域名访问？</a></li>
+<li><a href="#orgheadline20">2.4. <span class="done nilDONE">DONE</span> 如何使用软件管理工具管理小米路由上的软件?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<p>
+这里主要介绍配置小米路由器方面的问题。
+</p>
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> Misc</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><a id="ID-e920b849-4dc8-4385-8644-9ba243894764"></a><span class="section-number-3">1.1</span> 小米路由器ssh开启</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+开启ssh访问，小米路由器需升级到开发版0.5.28及以上，小米路由器mini需升级到开发版0.3.84及以上。注意：稳定版不支持。
+</p>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-4">
+<h4 id="orgheadline3"><span class="section-number-4">1.1.1</span> 烧写开发板</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2016-03-14 一 17:17&gt;</span></span>
+</p>
+</div>
+
+<div id="outline-container-orgheadline21" class="outline-5">
+<h5 id="orgheadline21"><span class="section-number-5">1.1.1.1</span> 网址：<a href="http://www1.miwifi.com/miwifi_download.html">ROM 2.0 开发版</a></h5>
+<div class="outline-text-5" id="text-1-1-1-1">
+<p>
+下载：<a href="http://bigota.miwifi.com/xiaoqiang/rom/r2d/brcm4709_r2d_all_6c01b_2.11.67.bin">http://bigota.miwifi.com/xiaoqiang/rom/r2d/brcm4709_r2d_all_6c01b_2.11.67.bin</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline22" class="outline-5">
+<h5 id="orgheadline22"><span class="section-number-5">1.1.1.2</span> 烧写：</h5>
+<div class="outline-text-5" id="text-1-1-1-2">
+<pre class="example">
+U盘刷机步骤：
+1、准备一个系统格式为FAT或FAT32的U盘；
+2、到小米路由器的官网miwifi.com下载用来进行刷机的ROM包；
+重要的事情再说三遍：U盘刷机会清空硬盘上的数据！会清空硬盘上的数据！！会清空硬盘上的数据！！！
+3、将下载好的ROM包放到U盘的根目录下，并命名为“miwifi.bin”；
+4、对于指示灯为红色闪烁或者红色常亮的情况，直接将U盘插入路由器的USB接口，用细长的工具按住reset，待路由器指示灯变为黄灯闪烁时，松开reset；对于指示灯为其他状态的情况，需要先断开路由器的电源后，将U盘插入路由器的USB接口，用细长的工具按住reset，接通电源，待路由器指示灯变为黄灯闪烁时，松开reset
+5、大约3-5分钟后，指示灯变成黄色常亮状态时可以拔掉U盘，此时刷机已经完成正在重启，稍等片刻路由器指示灯变蓝就可以正常使用了。
+如果在刷机过程中，指示灯黄灯闪烁几秒后变为黄灯常亮状态，说明此次U盘刷机过程失败，请检查以上的刷机过程并重新进行刷机操作。
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline23" class="outline-5">
+<h5 id="orgheadline23"><span class="section-number-5">1.1.1.3</span> 总结：</h5>
+<div class="outline-text-5" id="text-1-1-1-3">
+<ol class="org-ol">
+<li>下载rom</li>
+<li>拷贝到u盘</li>
+<li>路由器断电、插入u盘(fat32格式)</li>
+<li>按住reset上电</li>
+<li>等待黄灯闪烁，松开reset</li>
+<li>一直等待，直至蓝灯。</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline4" class="outline-4">
+<h4 id="orgheadline4"><span class="section-number-4">1.1.2</span> 烧写ssh</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2016-03-14 一 17:16&gt;</span></span>
+</p>
+</div>
+
+<div id="outline-container-orgheadline24" class="outline-5">
+<h5 id="orgheadline24"><span class="section-number-5">1.1.2.1</span> 网址：<a href="http://www.miwifi.com/miwifi_open.html">MiWiFi开放平台</a></h5>
+</div>
+
+<div id="outline-container-orgheadline25" class="outline-5">
+<h5 id="orgheadline25"><span class="section-number-5">1.1.2.2</span> 下载：<a href="https://d.miwifi.com/rom/ssh">https://d.miwifi.com/rom/ssh</a></h5>
+</div>
+
+<div id="outline-container-orgheadline26" class="outline-5">
+<h5 id="orgheadline26"><span class="section-number-5">1.1.2.3</span> 烧写：</h5>
+<div class="outline-text-5" id="text-1-1-2-3">
+<pre class="example">
+工具包使用方法：小米路由器需升级到开发版0.5.28及以上，小米路由器mini需升级到开发版0.3.84及以上。注意：稳定版不支持。
+    请将下载的工具包bin文件复制到U盘（FAT/FAT32格式）的根目录下，保证文件名为miwifi_ssh.bin；
+    断开小米路由器的电源，将U盘插入USB接口；
+    按住reset按钮之后重新接入电源，指示灯变为黄色闪烁状态即可松开reset键；
+    等待3-5秒后安装完成之后，小米路由器会自动重启，之后您就可以尽情折腾啦 ：）
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline27" class="outline-5">
+<h5 id="orgheadline27"><span class="section-number-5">1.1.2.4</span> 总结：</h5>
+<div class="outline-text-5" id="text-1-1-2-4">
+<ol class="org-ol">
+<li>下载rom</li>
+<li>拷贝到u盘</li>
+<li>路由器断电、插入u盘(fat32格式)</li>
+<li>按住reset上电</li>
+<li>等待黄灯闪烁，松开reset</li>
+<li>一直等待，直至蓝灯。</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><a id="ID-8ba30038-f09d-4780-81ce-54f2c062f789"></a><span class="section-number-3">1.2</span> 小米路由器防火墙配置</h3>
+<div class="outline-text-3" id="text-1-2">
+</div>
+<div id="outline-container-orgheadline6" class="outline-4">
+<h4 id="orgheadline6"><span class="section-number-4">1.2.1</span> 开启端口</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<pre class="example">
+使用WinSCP软件进入192.168.31.1 端口22，用户名 root 密码 admin 文件协议改为SCP进入,进入后打开/etc/config/firewall
+这个文件的尾部增加：
+
+    config rule 'httpdwan'      
+    	option src 'wan'     
+    	option dest_port '8088'
+    	option proto 'tcp'
+    	option target 'ACCEPT'
+    	option name ''\''httpd wan accept tcp port 8088'\'''
+
+保存后，SSH到路由的22端口执行 /etc/init.d/firewall restart 重启防火墙。
+</pre>
+
+<p>
+参考：<a href="http://www.laohao.info/xiao-mi-lu-you-qi-fang-huo-qiang-kai-qi-duan-kou-rang-wai-bu-wang-luo-fang-wen-ni-di-xiao-mi-lu-you/">小米路由器防火墙开启端口，让外部网络访问你的小米路由</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-4">
+<h4 id="orgheadline7"><span class="section-number-4">1.2.2</span> 端口转发</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<p>
+修改 <code>/etc/config/firewall</code>
+</p>
+<pre class="example">
+# port redirect of remapped ssh port (22001) on wan
+config redirect 'myssh'
+option src wan
+option src_dport 10022
+option dest lan
+option dest_port 22
+option proto tcp
+</pre>
+
+<p>
+重启防火墙 <code>/etc/init.d/firewall restart</code>
+</p>
+
+<p>
+参考 <a href="http://jingyan.baidu.com/article/9113f81b3a5d982b3314c74a.html?st=3&amp;net_type=2&amp;bd_page_type=1&amp;os=0&amp;showimg=1&amp;rst=6">小米路由器mini如何设置外网访问ssh</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-4">
+<h4 id="orgheadline8"><a id="ID-302570f5-16c1-4874-90df-b413b2dca2f0"></a><span class="section-number-4">1.2.3</span> 禁用端口</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<p>
+默认端口不对外开放。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><a id="ID-96bd1991-9c0f-4869-b406-c6eced64bd6b"></a><span class="section-number-3">1.3</span> 小米路由器添加ddns</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+ddns可以实现当ip地址不固定的时候，也能通过域名正确访问到相应的路由器。
+</p>
+
+<p>
+大致原理是需要有一个ddns服务提供商，然后路由器定时、及时地将ip地址变化信息及时更新给ddns服务商，ddns服务商将域名与最新的ip地址相对应。
+</p>
+
+<p>
+在路由器web管理界面上有相应的选项，建议用花生壳提供的动态路由。现在花生壳注册用户名和密码，获取到一个免费的域名，再将账户信息填写到路由器中ddns的相应位置即可。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><a id="ID-1beeb842-72bd-4682-b3b0-cabca3dd0b6c"></a><span class="section-number-3">1.4</span> 使用opkg在小米路由器软件管理</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+小米路由器系统是openwrt系统，该系统基于linux，使用 <code>opkg</code> 工具实现软件管理，该工具类似ubuntu中的 <code>apt-get</code> 或者centeros 中的 <code>yum</code> 工具。
+</p>
+
+<p>
+目前的现状其实是：找不到适合xiaomi路由器架构的合适的软件源，通过openwrt的所有软件源中相应交叉工具链的信息，发现很难找到和小米路由器相符的软件。这样的结果是，即使使用某一个软件源，强行配置将对应软件安装到小米路由器中，也无法运行。 最稳妥的方式还是使用小米路由器提供的交叉编译工具链，通过源代码交叉编译要使用的软件包，这需要一些专业技术（例如如何通过autotools 配置交叉编译选项等等）， 所以对于小米路由器，普通用户其实也很难自由的安装所需软件。下面给出的信息，也算为遇到相关问题的同仁提供一个参考。
+</p>
+
+<p>
+使用opkg管理软件的大致方式如下
+</p>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-4">
+<h4 id="orgheadline11"><span class="section-number-4">1.4.1</span> 配置软件源地址</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<p>
+配置文件为 <code>/etc/opkg.conf</code>, 下面是一个配置文件完整的例子：
+</p>
+<pre class="example">
+#src/gz attitude_adjustment http://downloads.openwrt.org/attitude_adjustment/12.09/brcm4709/R2D/packages
+#src/gz attitude_adjustment http://downloads.openwrt.org/attitude_adjustment/12.09/brcm63xx/generic/packages
+src/gz attitude_adjustment http://downloads.openwrt.org/attitude_adjustment/12.09/brcm47xx/generic/packages
+#src/gz attitude_adjustment http://downloads.openwrt.org/attitude_adjustment/12.09/omap4/generic/packages
+dest root /data
+dest ram /tmp
+lists_dir ext /data/var/opkg-lists
+option overlay_root /data
+
+arch all 1
+arch noarch 1
+arch brcm4709 10
+arch brcm47xx 100
+arch brcm53xx 110
+arch brcm63xx 120
+arch omap4 130
+</pre>
+<p>
+这里的含义不言而喻，最关键的还是最开始列出的地址信息，指明了软件源中所包括的软件从哪里下载。这里为 <code>http://downloads.openwrt.org/attitude_adjustment/12.09/brcm47xx/generic/packages</code> 。其它为安装时的路径和架构信息，用到之时自然会明白。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-4">
+<h4 id="orgheadline12"><span class="section-number-4">1.4.2</span> 用opkg在小米路由器(openwrt)上进行软件管理</h4>
+<div class="outline-text-4" id="text-1-4-2">
+<p>
+<code>opkg</code> 使用方法类似 ubuntu下的 <code>apt-get</code>, 具体如下：
+</p>
+<ul class="org-ul">
+<li><p>
+更新软件源
+当我们修改软件元配置文件 <code>/etc/opkg.conf</code> 中的软件源信息之后，需要更新本地软件源索引，才能继续后面的使用。命令如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">#opkg update
+</pre>
+</div></li>
+
+<li><p>
+查看当前系统支持安装的架构
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$opkg print-architecture
+</pre>
+</div>
+<p>
+只有符合这里列出的架构的软件包，才能被安装。
+</p></li>
+
+<li><p>
+直接下载 <code>*.ipk</code> 安装
+我们可以直接下载相应的 <code>*.ipk</code> 文件进行安装， 例如安装screen
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$wget -c http://downloads.openwrt.org/attitude_adjustment/12.09/brcm47xx/generic/packages/screen_4.0.3-3_brcm47xx.ipk
+#opkg install screen_4.2.1-2_ralink.ipk
+</pre>
+</div>
+<p>
+这里， <code>ipk</code> 文件的地址，通过软件源配置文件可以猜到。
+</p></li>
+
+<li><p>
+通过软件源配置文件中的软件源库进行安装
+配置好软件源库，并且更新后，不用将 <code>.ipk</code> 文件下载，直接可以如下安装：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">#opkg install libgcc
+#opkg install ./libc_0.9.33.2-1_brcm47xx.ipk 
+#opkg install ./screen_4.0.3-3_brcm47xx.ipk
+</pre>
+</div>
+<p>
+安装之后，工具会在 <code>/data/usr/</code> 相关的子目录中。
+</p></li>
+
+<li><p>
+查找软件源库中是否存在某软件
+假设我们查找是否存在包含 <code>screen</code> 字样的软件，可如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">#opkg find screen
+</pre>
+</div></li>
+
+<li><p>
+查看软件源库中所有的软件
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">#opkg list
+</pre>
+</div></li>
+
+<li><p>
+查看已经安装的软件
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">#opkg list-installed
+</pre>
+</div></li>
+
+<li><p>
+卸载
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">#opkg remove --autoremove screen
+#opkg remove --autoremove --force-removal-of-essential-packages libc
+#opkg remove --autoremove --force-removal-of-essential-packages libgcc
+</pre>
+</div>
+<p>
+这里对screen这样的普通程序，卸载之时可以加上 <code>--autoremove</code> 同时卸载掉无用的依赖。而对于 <code>libc</code> 这样的特殊库，需要再加额外选项才能强制卸载。
+</p></li>
+
+<li><p>
+更多卸载的命令可以查看帮助信息：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$opkg
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-4">
+<h4 id="orgheadline13"><span class="section-number-4">1.4.3</span> 软件管理中遇到的问题</h4>
+<div class="outline-text-4" id="text-1-4-3">
+</div><div id="outline-container-orgheadline28" class="outline-5">
+<h5 id="orgheadline28"><span class="section-number-5">1.4.3.1</span> 找不到软件，则需更换软件源</h5>
+<div class="outline-text-5" id="text-1-4-3-1">
+<p>
+我们想安装某软件之前，只需找到包含该软件的相应软件源地址后，填入 <code>opkg.conf</code> 中即可，例如你可能会找到如下的源：
+</p>
+<pre class="example">
+#src/gz attitude_adjustment http://downloads.openwrt.org/attitude_adjustment/12.09/brcm4709/R2D/packages
+#src/gz attitude_adjustment http://downloads.openwrt.org.cn/PandoraBox/ralink/packages/packages
+#src/gz attitude_adjustment http://downloads.openwrt.org/attitude_adjustment/12.09/brcm47xx/generic/packages
+#src/gz attitude_adjustment http://downloads.openwrt.org/attitude_adjustment/12.09/brcm63xx/generic/packages
+src/gz attitude_adjustment http://downloads.openwrt.org/snapshots/trunk/bcm53xx/generic/packages/packages
+</pre>
+<p>
+使用其中一个即可。软件源中实际的软件包文件都是*.ipk格式，是事先用交叉编译方式编译好的二进制程序。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline29" class="outline-5">
+<h5 id="orgheadline29"><span class="section-number-5">1.4.3.2</span> 无法安装，则需配置架构信息</h5>
+<div class="outline-text-5" id="text-1-4-3-2">
+<p>
+如果无法安装，可能是由于架构不匹配导致，需要通过命令 <code>opkg print-architecture</code> 查看当前系统支持的架构，再根据被安装的安装包名称，确定需支持的架构。
+</p>
+
+<p>
+如果当前系统不支持被安装软件包所需支持的架构，那么则修改/etc/opkg.conf 添加类似如下：
+</p>
+<pre class="example">
+arch all 100
+arch brcm4716 200
+arch brcm47xx 300
+arch bcm53xx 310
+</pre>
+<p>
+这里安装的软件包为 <code>screen_4.0.3-3_brcm47xx.ipk</code>, 通过名字可知其架构为 <code>brcm47xx</code>; 而添加的 <code>arch brcm47xx</code> 与该软件包的架构匹配。 添加之后，所以即可安装成功。
+</p>
+
+<p>
+注意：
+安装成功不代表可以成功运行，参见后面。
+</p>
+
+<p>
+修改 <code>/etc/opkg.conf</code> 的操作会修改 <code>opkg print-architecture</code> 默认配置。根据列出的结果，依次按照优先级匹配相应的内容。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline30" class="outline-5">
+<h5 id="orgheadline30"><span class="section-number-5">1.4.3.3</span> 安装成功，无法运行，需要更换二进制文件，使之支持当前路由器 cpu 架构</h5>
+<div class="outline-text-5" id="text-1-4-3-3">
+<p>
+前面配置好架构之后虽然能够安装软件，但是不一定能够运行。这里仍以 <code>screen</code> 为例，如果仍然无法运行 <code>screen</code> 。则需要确认一下其二进制文件中的cpu架构信息。
+</p>
+
+<ol class="org-ol">
+<li><p>
+将安装好的二进制文件 <code>screen</code>, 以及小米路由器上可运行的原生的 <code>busybox</code> 二进制文件拷贝到linux上，用 <code>file</code> 查看其架构是否一样。
+这里如下，
+</p>
+
+<p>
+<code>screen</code> 中的架构信息为：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$file screen
+screen: ELF 32-bit LSB executable, MIPS, MIPS32 version 1, dynamically linked (uses shared libs), corrupted section header size
+</pre>
+</div>
+
+<p>
+而 <code>busybox</code> 中的架构信息为：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">busybox: ELF 32-bit LSB executable, ARM, version 1 (SYSV), dynamically linked (uses shared libs), stripped
+</pre>
+</div>
+
+<p>
+可见 <code>screen</code> 无法运行，是由于实际cpu架构不一致问题（注意，这里的架构不是前面配置的架构，而是运行所需的实际架构），导致无法运行。
+</p></li>
+
+<li>解决方法有二：
+<ul class="org-ul">
+<li>直接用小米官网上提供的小米路由器对应的交叉编译工具链，结合相应软件（screen）源代码，编译出一个可执行的程序。</li>
+<li>在openwrt相关软件源网站中，寻找能够和当前主机架构一致（或最接近）的架构的软件源。</li>
+</ul></li>
+</ol>
+
+
+<ol class="org-ol">
+<li>寻找匹配架构的软件源
+这里不讲交叉编译的方法（事实上交叉编译的方法各个软件各不相同）。讲述当软件无法运行之时，如何找到可以运行的软件。
+
+<ul class="org-ul">
+<li>首先，需要确定当前小米路由器上的 <code>busybox</code> 支持的cpu架构。
+如前所述，通过 <code>file</code> 命令，可以看到是 <code>ARM, version 1 (SYSV),...</code> 。只有二进制文件中的信息和此相一致之时，才可能运行得起来。</li>
+
+<li><p>
+其次，确认配置文件中，软件源中软件所支持的cpu架构。
+当然，我们可以先配置好架构信息，将软件安装上，然后类似前面，通过 <code>file</code> 命令查看相应的软件程序所支持的架构。但是这样做，太麻烦了，每检查一个软件源，就需要安装该源的软件，并且查看。其实有更简单的方法。
+</p>
+
+<p>
+我们前面配置中使用的是如下软件源： <code>src/gz attitude_adjustment http://downloads.openwrt.org/attitude_adjustment/12.09/brcm47xx/generic/packages</code>, 所以到 <code>http://downloads.openwrt.org/attitude_adjustment/12.09/brcm47xx/generic/</code> 中，看到如下类似的链接：
+</p>
+<pre class="example">
+Parent directory/	-	-
+packages/	-	09-Jul-2014 08:05
+OpenWrt-ImageBuilder-brcm47xx-for-linux-i486.tar.bz2	355705874	03-Apr-2013 08:39
+OpenWrt-SDK-brcm47xx-for-linux-i486-gcc-4.6-linaro_uClibc-0.9.33.2.tar.bz2	629822123	03-Apr-2013 08:39
+OpenWrt-Toolchain-brcm47xx-for-mipsel-gcc-4.6-linaro_uClibc-0.9.33.2.tar.bz2
+</pre>
+<p>
+这里，注意 <code>xxxToolchainxxx</code>, 由此可知，之前软件源配置中指定的软件源是mipsel相关的架构（这也和前面我们通过file命令中看到的结果一致），和我们的arm不一致。
+</p>
+
+<p>
+用类似的方法可以找到合适的架构，比如我们看到 <code>http://downloads.openwrt.org/attitude_adjustment/12.09/omap4/generic/</code> 中的信息：
+</p>
+<pre class="example">
+OpenWrt-Toolchain-omap4-for-arm_v7-a-gcc-4.6-linaro_uClibc-0.9.33.2_eabi.tar.bz2
+</pre>
+<p>
+发现这个软件源采用的arm架构，大致上和我们小米路由器上显示的 <code>busybox</code> 的架构更为接近，所以这个软件源中的软件可能会在小米路由器上运行起来。当然这里只是一个例子，还需实践一下（重新配置软件源、添加omap4的架构配置、更新软件源、安装软件、运行），才能确定。
+</p></li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline14" class="outline-4">
+<h4 id="orgheadline14"><span class="section-number-4">1.4.4</span> 参考资料</h4>
+<div class="outline-text-4" id="text-1-4-4">
+<ul class="org-ul">
+<li><p>
+关于软件源的问题参考
+</p>
+
+<p>
+<a href="http://www.right.com.cn/FORUM/thread-158625-1-1.html">http://www.right.com.cn/FORUM/thread-158625-1-1.html</a>
+</p>
+
+<p>
+<a href="http://bbs.xiaomi.cn/t-9915018">http://bbs.xiaomi.cn/t-9915018</a>
+</p></li>
+
+<li><p>
+关于适用与openwrt系统的已有软件源网址，可到如下网站结合自己机器实际情况比对寻找：
+</p>
+
+<p>
+<a href="https://wiki.openwrt.org/doc/techref/opkg">https://wiki.openwrt.org/doc/techref/opkg</a>
+</p>
+
+<p>
+<a href="http://downloads.openwrt.org/snapshots/trunk/bcm53xx/generic/packages/packages">http://downloads.openwrt.org/snapshots/trunk/bcm53xx/generic/packages/packages</a>
+</p>
+
+<p>
+<a href="http://downloads.openwrt.org.cn/PandoraBox/ralink/packages/packages/">http://downloads.openwrt.org.cn/PandoraBox/ralink/packages/packages/</a>
+</p>
+
+<p>
+<a href="http://downloads.openwrt.org/attitude_adjustment/12.09/brcm47xx/generic/packages/">http://downloads.openwrt.org/attitude_adjustment/12.09/brcm47xx/generic/packages/</a>
+</p>
+
+<p>
+<a href="https://downloads.openwrt.org/chaos_calmer/15.05.1/bcm53xx/generic/packages/">https://downloads.openwrt.org/chaos_calmer/15.05.1/bcm53xx/generic/packages/</a>
+</p></li>
+
+<li><p>
+关于配置软件架构参考
+</p>
+
+<p>
+<a href="https://wiki.openwrt.org/doc/techref/opkg">https://wiki.openwrt.org/doc/techref/opkg</a> <code>Adjust Architecturesn</code> 部分的内容。
+</p></li>
+
+<li><p>
+关于安装最新ipk包提示postinst出错解决方法参见
+</p>
+
+<p>
+<a href="http://www.ddhow.com/blog/postinst.html">http://www.ddhow.com/blog/postinst.html</a>
+</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline15" class="outline-2">
+<h2 id="orgheadline15"><span class="section-number-2">2</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[4/4]</code> <code>[100%]</code></h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-04-07 四 18:52] </span></span> <br  />
+wait for all resolved.</li>
+</ul>
+</div>
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16"><span class="section-number-3">2.1</span> <span class="done DONE">DONE</span> 小米路由如何开启ssh?</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 18:21]</span></span></li>
+<li>State "WAIT/FORWARD" from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2016-04-07 四 18:58] </span></span> <br  />
+等待整理。</li>
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-03-14 一 17:12]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-02 三 14:56]</span></span>
+</p>
+<hr  />
+<p>
+开启ssh可以本地局域网登录的方法，参考：<a href="#orgheadline2">小米路由器ssh开启</a>
+</p>
+
+<p>
+官网：
+<a href="http://www.miwifi.com/miwifi_open.html">http://www.miwifi.com/miwifi_open.html</a>
+</p>
+
+<p>
+外网访问参考：
+<a href="http://jingyan.baidu.com/article/9113f81b3a5d982b3314c74a.html?st=3&amp;net_type=2&amp;bd_page_type=1&amp;os=0&amp;showimg=1&amp;rst=6">http://jingyan.baidu.com/article/9113f81b3a5d982b3314c74a.html?st=3&amp;net_type=2&amp;bd_page_type=1&amp;os=0&amp;showimg=1&amp;rst=6</a>
+</p>
+
+<p>
+如果实现公网访问，需要开启防火墙端口。
+</p>
+</div>
+
+<div id="outline-container-orgheadline17" class="outline-4">
+<h4 id="orgheadline17"><span class="section-number-4">2.1.1</span> 下面内容仅参考暂不用</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+小米路由器mini如何设置外网访问ssh
+</p>
+
+<p>
+关键是
+修改 <code>/etc/config/firewall</code>
+</p>
+<pre class="example">
+# port redirect of remapped ssh port (22001) on wan
+config redirect 'myssh'       
+option src              wan       
+option src_dport        22001       
+option dest             lan       
+option dest_port        22       
+option proto            tcp
+</pre>
+
+<p>
+重启防火墙 <code>/etc/init.d/firewall restart</code>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18"><span class="section-number-3">2.2</span> <span class="done DONE">DONE</span> 小米路由器防火墙如何配置?</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-04-13 三 19:35]</span></span></li>
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-03-28 一 11:27] </span></span> <br  />
+wait for more organize.</li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2016-03-15 二 09:38]</span></span></li>
+</ul>
+
+<p>
+参见：<a href="#orgheadline5">小米路由器防火墙配置</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="section-number-3">2.3</span> <span class="done DONE">DONE</span> 小米路由如何添加域名访问？</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-04-13 三 19:42]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-02 三 14:56]</span></span>
+</p>
+<hr  />
+<p>
+首先申请dns域名，然后将之与ip关联，但是由于ip地址不固定，所以需要使用ddns服务。参见：<a href="#orgheadline9">小米路由器添加ddns</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="section-number-3">2.4</span> <span class="done DONE">DONE</span> 如何使用软件管理工具管理小米路由上的软件?</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 18:19]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-04 五 18:28]</span></span>
+</p>
+<hr  />
+<p>
+小米路由器是openwrt的系统，可借助opkg工具，参考：<a href="#orgheadline10">使用opkg在小米路由器软件管理</a>
+</p>
+</div>
+</div>
+</div>
+<br>
+<div id="mypostamble" align="right" style="float:right" class="status">
+    <table> <tbody> 
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Author</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">QuietHeart</td>	  
+	</tr>
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Email</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">
+	    <a href="mailto:quiet_heart000@126.com">quiet_heart000@126.com</a>
+	  </td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Date</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2016-04-07 四 18:52]</td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-04-16 六 20:27:54></td>
+	</tr>
+    </tbody></table>
+</div>
+<br>
+
+  </div>
+</article>
+
+		  <!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="/categories/study/linux/misc/xiaomi_router_tips" data-title="小米路由器DIY" data-url="http://vaqeteart.github.io//categories/study/linux/misc/xiaomi_router_tips.html"></div>
+<!-- 多说评论框 end -->
+<script src="/assets/js/comment.js"></script>
+		</td>
+             </tr>
+            <tr>
+                <td id="td_page_footer" colspan="6">
+<footer>
+  &copy 2015
+</footer>
+<a id="bottom"></a>
+</td>
+
+
+            </tr>
+        </tbody>
+    </table>
+  </body>
+</html>
