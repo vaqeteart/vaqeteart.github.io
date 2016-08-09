@@ -1559,110 +1559,161 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgheadline1">1. Misc</a>
+<li><a href="#orgheadline1">1. 小米路由器ssh开启</a>
 <ul>
-<li><a href="#orgheadline2">1.1. 小米路由器ssh开启</a>
+<li><a href="#orgheadline2">1.1. 烧写开发板</a>
 <ul>
-<li><a href="#orgheadline3">1.1.1. 烧写开发板</a></li>
-<li><a href="#orgheadline4">1.1.2. 烧写ssh</a></li>
-<li><a href="#orgheadline5">1.1.3. 访问文件系统权限</a></li>
+<li><a href="#orgheadline3">1.1.1. 网址：ROM 2.0 开发版</a></li>
+<li><a href="#orgheadline4">1.1.2. 烧写：</a></li>
+<li><a href="#orgheadline5">1.1.3. 总结：</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline6">1.2. 小米路由器防火墙配置</a>
+<li><a href="#orgheadline6">1.2. 烧写ssh</a>
 <ul>
-<li><a href="#orgheadline7">1.2.1. 开启端口</a></li>
-<li><a href="#orgheadline8">1.2.2. 端口转发</a></li>
-<li><a href="#orgheadline9">1.2.3. 禁用端口</a></li>
+<li><a href="#orgheadline7">1.2.1. 网址：MiWiFi开放平台</a></li>
+<li><a href="#orgheadline8">1.2.2. 下载：</a></li>
+<li><a href="#orgheadline9">1.2.3. 烧写：</a></li>
+<li><a href="#orgheadline10">1.2.4. 总结：</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline10">1.3. 小米路由器添加ddns</a></li>
-<li><a href="#orgheadline11">1.4. 小米路由器修改ssh启动的欢迎语</a></li>
-<li><a href="#orgheadline12">1.5. 使用opkg在小米路由器软件管理</a>
-<ul>
-<li><a href="#orgheadline13">1.5.1. 配置软件源地址</a></li>
-<li><a href="#orgheadline14">1.5.2. 用opkg在小米路由器(openwrt)上进行软件管理</a></li>
-<li><a href="#orgheadline15">1.5.3. 软件管理中遇到的问题</a></li>
-<li><a href="#orgheadline16">1.5.4. 参考资料</a></li>
+<li><a href="#orgheadline11">1.3. 访问文件系统权限</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline17">1.6. 小米路由器交叉编译环境配置</a></li>
-<li><a href="#orgheadline18">1.7. 在小米路由器上搭建基于LNMP的Owncloud云平台</a>
+<li><a href="#orgheadline12">2. 小米路由器防火墙配置</a>
 <ul>
-<li><a href="#orgheadline19">1.7.1. PC上搭建Owncloud</a></li>
-<li><a href="#orgheadline20">1.7.2. 小米路由器上搭建Owncloud</a></li>
-<li><a href="#orgheadline21">1.7.3. 参考资料</a></li>
+<li><a href="#orgheadline13">2.1. 开启端口</a></li>
+<li><a href="#orgheadline14">2.2. 端口转发</a></li>
+<li><a href="#orgheadline15">2.3. 禁用端口</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline16">3. 使用opkg在小米路由器软件管理</a>
+<ul>
+<li><a href="#orgheadline17">3.1. 配置软件源地址</a></li>
+<li><a href="#orgheadline18">3.2. 用opkg在小米路由器(openwrt)上进行软件管理</a></li>
+<li><a href="#orgheadline19">3.3. 软件管理中遇到的问题</a>
+<ul>
+<li><a href="#orgheadline20">3.3.1. 找不到软件，则需更换软件源</a></li>
+<li><a href="#orgheadline21">3.3.2. 无法安装，则需配置架构信息</a></li>
+<li><a href="#orgheadline22">3.3.3. 安装成功，无法运行，需要更换二进制文件，使之支持当前路由器 cpu 架构</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline23">3.4. 参考资料</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline24">4. 小米路由器交叉编译环境配置</a></li>
+<li><a href="#orgheadline25">5. 在小米路由器上搭建基于LNMP的Owncloud云平台</a>
+<ul>
+<li><a href="#orgheadline26">5.1. PC上搭建Owncloud</a>
+<ul>
+<li><a href="#orgheadline27">5.1.1. 安装openssl</a></li>
+<li><a href="#orgheadline28">5.1.2. 安装php所需依赖</a></li>
+<li><a href="#orgheadline29">5.1.3. 编译、安装php</a></li>
+<li><a href="#orgheadline30">5.1.4. 安装nginx所需依赖</a></li>
+<li><a href="#orgheadline31">5.1.5. 编译、安装nginx</a></li>
+<li><a href="#orgheadline32">5.1.6. Mysql的root帐号建立</a></li>
+<li><a href="#orgheadline33">5.1.7. php的配置和运行</a></li>
+<li><a href="#orgheadline34">5.1.8. ssl key文件的生成</a></li>
+<li><a href="#orgheadline35">5.1.9. nginx的配置和运行</a></li>
+<li><a href="#orgheadline36">5.1.10. 搭建owncloud网站</a></li>
+<li><a href="#orgheadline37">5.1.11. 安装Owncloud</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline38">5.2. 小米路由器上搭建Owncloud</a>
+<ul>
+<li><a href="#orgheadline39">5.2.1. 准备交叉编译环境</a></li>
+<li><a href="#orgheadline40">5.2.2. 下载相关软件包</a></li>
+<li><a href="#orgheadline41">5.2.3. 交叉编译安装MySql</a></li>
+<li><a href="#orgheadline42">5.2.4. 交叉编译安装PHP</a></li>
+<li><a href="#orgheadline43">5.2.5. 交叉编译安装nginx</a></li>
+<li><a href="#orgheadline44">5.2.6. 部署到小米路由器上的内容</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline45">5.3. 参考资料</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline46">6. 小米路由器上使用 <code>git</code> 版本控制系统</a>
+<ul>
+<li><a href="#orgheadline47">6.1. 下载 <code>git</code> 源码</a></li>
+<li><a href="#orgheadline48">6.2. 非交叉编译 <code>git</code> 过程</a></li>
+<li><a href="#orgheadline49">6.3. 交叉编译 <code>git</code></a>
+<ul>
+<li><a href="#orgheadline50">6.3.1. 配置交叉编译环境路径</a></li>
+<li><a href="#orgheadline51">6.3.2. 生成配置脚本</a></li>
+<li><a href="#orgheadline52">6.3.3. 编译、安装</a></li>
+<li><a href="#orgheadline53">6.3.4. 部署与配置</a></li>
+<li><a href="#orgheadline54">6.3.5. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[%]</code><code>[/]</code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgheadline22">2. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[11/19]</code> <code>[57%]</code></a>
+<li><a href="#orgheadline55">7. Misc</a>
 <ul>
-<li><a href="#orgheadline23">2.1. <span class="done nilDONE">DONE</span> 小米路由如何开启ssh?</a>
-<ul>
-<li><a href="#orgheadline24">2.1.1. 下面内容仅参考暂不用</a></li>
+<li><a href="#orgheadline56">7.1. 小米路由器添加ddns</a></li>
+<li><a href="#orgheadline57">7.2. 小米路由器修改ssh启动的欢迎语</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline25">2.2. <span class="done nilDONE">DONE</span> 小米路由器防火墙如何配置?</a></li>
-<li><a href="#orgheadline26">2.3. <span class="done nilDONE">DONE</span> 小米路由如何添加域名访问？</a></li>
-<li><a href="#orgheadline27">2.4. <span class="done nilDONE">DONE</span> 小米路由器交叉编译环境配置</a></li>
-<li><a href="#orgheadline28">2.5. <span class="done nilDONE">DONE</span> 如何使用软件管理工具管理小米路由上的软件?</a></li>
-<li><a href="#orgheadline29">2.6. <span class="done nilDONE">DONE</span> 开启ssh后无法获得系统文件夹写入权限?</a></li>
-<li><a href="#orgheadline30">2.7. <span class="done nilDONE">DONE</span> 在小米路由器上搭建基于LNMP的Owncloud云平台</a></li>
-<li><a href="#orgheadline31">2.8. <span class="done nilCANCEL">CANCEL</span> Myowncloud</a>
+<li><a href="#orgheadline58">8. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[12/19]</code> <code>[63%]</code></a>
 <ul>
-<li><a href="#orgheadline32">2.8.1. site: &lt;暂不可用&gt;</a></li>
-<li><a href="#orgheadline33">2.8.2. step</a></li>
-<li><a href="#orgheadline34">2.8.3. refer</a></li>
+<li><a href="#orgheadline59">8.1. <span class="done nilDONE">DONE</span> 小米路由如何开启ssh?</a>
+<ul>
+<li><a href="#orgheadline60">8.1.1. 下面内容仅参考暂不用</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline35">2.9. <span class="done nilCANCEL">CANCEL</span> owncloud升级</a></li>
-<li><a href="#orgheadline36">2.10. <span class="done nilCANCEL">CANCEL</span> owncloud issue</a></li>
-<li><a href="#orgheadline37">2.11. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 小米路由器 <code>git</code> 源码交叉编译</a>
+<li><a href="#orgheadline61">8.2. <span class="done nilDONE">DONE</span> 小米路由器防火墙如何配置?</a></li>
+<li><a href="#orgheadline62">8.3. <span class="done nilDONE">DONE</span> 小米路由如何添加域名访问？</a></li>
+<li><a href="#orgheadline63">8.4. <span class="done nilDONE">DONE</span> 小米路由器交叉编译环境配置</a></li>
+<li><a href="#orgheadline64">8.5. <span class="done nilDONE">DONE</span> 如何使用软件管理工具管理小米路由上的软件?</a></li>
+<li><a href="#orgheadline65">8.6. <span class="done nilDONE">DONE</span> 开启ssh后无法获得系统文件夹写入权限?</a></li>
+<li><a href="#orgheadline66">8.7. <span class="done nilDONE">DONE</span> 在小米路由器上搭建基于LNMP的Owncloud云平台</a></li>
+<li><a href="#orgheadline67">8.8. <span class="done nilCANCEL">CANCEL</span> Myowncloud</a>
 <ul>
-<li><a href="#orgheadline38">2.11.1. 下载 <code>git</code> 源码</a></li>
-<li><a href="#orgheadline39">2.11.2. 非交叉编译过程</a></li>
-<li><a href="#orgheadline40">2.11.3. 交叉编译</a></li>
+<li><a href="#orgheadline68">8.8.1. site: &lt;暂不可用&gt;</a></li>
+<li><a href="#orgheadline69">8.8.2. step</a></li>
+<li><a href="#orgheadline70">8.8.3. refer</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline41">2.12. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 交叉编译mysql-5.7.11</a>
+<li><a href="#orgheadline71">8.9. <span class="done nilCANCEL">CANCEL</span> owncloud升级</a></li>
+<li><a href="#orgheadline72">8.10. <span class="done nilCANCEL">CANCEL</span> owncloud issue</a></li>
+<li><a href="#orgheadline73">8.11. <span class="done nilDONE">DONE</span> 如何小米路由器上使用 <code>git</code> 版本控制系统?</a></li>
+<li><a href="#orgheadline74">8.12. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 交叉编译mysql-5.7.11</a>
 <ul>
-<li><a href="#orgheadline42">2.12.1. 自带文档</a></li>
+<li><a href="#orgheadline75">8.12.1. 自带文档</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline43">2.13. <span class="todo nilLATER">LATER</span> 小米路由器搭建ftp服务</a>
+<li><a href="#orgheadline76">8.13. <span class="todo nilLATER">LATER</span> 小米路由器搭建ftp服务</a>
 <ul>
-<li><a href="#orgheadline44">2.13.1. 交叉编译环境</a></li>
-<li><a href="#orgheadline45">2.13.2. 源代码下载：</a></li>
-<li><a href="#orgheadline46">2.13.3. 编译libcrypt</a></li>
-<li><a href="#orgheadline47">2.13.4. 修改Makefile</a></li>
-<li><a href="#orgheadline48">2.13.5. 编译</a></li>
-<li><a href="#orgheadline49">2.13.6. 开启防火墙</a></li>
-<li><a href="#orgheadline50">2.13.7. 如何运行？</a></li>
-<li><a href="#orgheadline51">2.13.8. </a></li>
+<li><a href="#orgheadline77">8.13.1. 交叉编译环境</a></li>
+<li><a href="#orgheadline78">8.13.2. 源代码下载：</a></li>
+<li><a href="#orgheadline79">8.13.3. 编译libcrypt</a></li>
+<li><a href="#orgheadline80">8.13.4. 修改Makefile</a></li>
+<li><a href="#orgheadline81">8.13.5. 编译</a></li>
+<li><a href="#orgheadline82">8.13.6. 开启防火墙</a></li>
+<li><a href="#orgheadline83">8.13.7. 如何运行？</a></li>
+<li><a href="#orgheadline84">8.13.8. </a></li>
 </ul>
 </li>
-<li><a href="#orgheadline52">2.14. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 交叉编译vim</a></li>
-<li><a href="#orgheadline53">2.15. <span class="todo nilNEXT">NEXT</span> Seafile</a>
+<li><a href="#orgheadline85">8.14. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 交叉编译vim</a></li>
+<li><a href="#orgheadline86">8.15. <span class="todo nilNEXT">NEXT</span> Seafile</a>
 <ul>
-<li><a href="#orgheadline54">2.15.1. <span class="done nilDONE">DONE</span> PC 上安装Seafile</a></li>
-<li><a href="#orgheadline55">2.15.2. 参考资料</a></li>
+<li><a href="#orgheadline87">8.15.1. <span class="done nilDONE">DONE</span> PC 上安装Seafile</a></li>
+<li><a href="#orgheadline88">8.15.2. 参考资料</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline56">2.16. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> SparkleShare</a>
+<li><a href="#orgheadline89">8.16. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> SparkleShare</a>
 <ul>
-<li><a href="#orgheadline57">2.16.1. <span class="done nilCANCEL">CANCEL</span> PC上的编译安装</a></li>
-<li><a href="#orgheadline58">2.16.2. Ubuntu上直接安装</a></li>
-<li><a href="#orgheadline59">2.16.3. 参考网址：</a></li>
+<li><a href="#orgheadline90">8.16.1. <span class="done nilCANCEL">CANCEL</span> PC上的编译安装</a></li>
+<li><a href="#orgheadline91">8.16.2. Ubuntu上直接安装</a></li>
+<li><a href="#orgheadline92">8.16.3. 参考网址：</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline60">2.17. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> dvcs-autosync</a></li>
-<li><a href="#orgheadline61">2.18. <span class="done nilCANCEL">CANCEL</span> git annex</a>
+<li><a href="#orgheadline93">8.17. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> dvcs-autosync</a></li>
+<li><a href="#orgheadline94">8.18. <span class="done nilCANCEL">CANCEL</span> git annex</a>
 <ul>
-<li><a href="#orgheadline62">2.18.1. 源代码</a></li>
-<li><a href="#orgheadline63">2.18.2. 参考资料</a></li>
+<li><a href="#orgheadline95">8.18.1. 源代码</a></li>
+<li><a href="#orgheadline96">8.18.2. 参考资料</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline64">2.19. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> git lfs</a></li>
+<li><a href="#orgheadline97">8.19. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> git lfs</a></li>
 </ul>
 </li>
 </ul>
@@ -1670,40 +1721,86 @@
 </div>
 
 <p>
-这里主要介绍配置小米路由器方面的问题。
+曾经还以为自己是一枚成长迅速的米粉，但是渐渐却发现，我不适合做为米粉。
+</p>
+
+<p>
+尽管购买过红米手机、但是我现在觉得目前使用魅蓝更好用。
+</p>
+
+<p>
+尽管之前购买了小米路由、小蚁摄像机、小米插排……现在也正在使用着，
+</p>
+
+<p>
+但这并不表示我忠爱小米，只能说我是一个小米“受害者”，宣传的力量真是不可忽视。
+</p>
+
+<p>
+我相信小米也有它自己的好处，但是真的觉得它不适合我，
+</p>
+
+<p>
+在这台路由器上如此折腾，只是不得不使用已经花钱用买过的东西，很大程度上也可能是因为对Linux的兴趣。
+</p>
+
+<p>
+这个文章没有贬低小米的意思，更无意与人争执，只是最开始表达一些个人的情绪，不喜者，可以略过。
+</p>
+
+<p>
+分享此文出来供喜欢和不喜欢小米的朋友们参考，以及自己记录。
+</p>
+
+<p>
+通过此文，可以让专业和有些专业背景的朋友们了解如下内容：
+</p>
+
+<ul class="org-ul">
+<li>如何在特定平台上进行交叉编译，实现源码跨平台运行</li>
+<li>如何在特定平台上搭建自己的云存储体系</li>
+<li>如何在特定平台上搭建 <code>php/nginx</code> 提供web服务</li>
+<li>如何在特定平台上搭建 <code>mysql</code> 数据库</li>
+<li>如何在特定平台上搭建基于 <code>git</code> 的管理代码仓库服务</li>
+<li>其它，待更新</li>
+</ul>
+
+<p>
+这里的特定平台，小米路由器上实践，在其它 <code>openwrt</code> 或者 <code>linux</code> 系统上，应当能够类似实现。
+</p>
+
+<p>
+接下来主要介绍在小米路由器上面讲述有关这些方面的问题。
 </p>
 
 <div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1"><span class="section-number-2">1</span> Misc</h2>
+<h2 id="orgheadline1"><a id="ID-e920b849-4dc8-4385-8644-9ba243894764"></a><span class="section-number-2">1</span> 小米路由器ssh开启</h2>
 <div class="outline-text-2" id="text-1">
-</div><div id="outline-container-orgheadline2" class="outline-3">
-<h3 id="orgheadline2"><a id="ID-e920b849-4dc8-4385-8644-9ba243894764"></a><span class="section-number-3">1.1</span> 小米路由器ssh开启</h3>
-<div class="outline-text-3" id="text-1-1">
 <p>
 开启ssh访问，小米路由器需升级到开发版0.5.28及以上，小米路由器mini需升级到开发版0.3.84及以上。注意：稳定版不支持。
 </p>
 </div>
 
-<div id="outline-container-orgheadline3" class="outline-4">
-<h4 id="orgheadline3"><span class="section-number-4">1.1.1</span> 烧写开发板</h4>
-<div class="outline-text-4" id="text-1-1-1">
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><span class="section-number-3">1.1</span> 烧写开发板</h3>
+<div class="outline-text-3" id="text-1-1">
 <p>
 <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-03-14 一 17:17&gt;</span></span>
 </p>
 </div>
 
-<div id="outline-container-orgheadline65" class="outline-5">
-<h5 id="orgheadline65"><span class="section-number-5">1.1.1.1</span> 网址：<a href="http://www1.miwifi.com/miwifi_download.html">ROM 2.0 开发版</a></h5>
-<div class="outline-text-5" id="text-1-1-1-1">
+<div id="outline-container-orgheadline3" class="outline-4">
+<h4 id="orgheadline3"><span class="section-number-4">1.1.1</span> 网址：<a href="http://www1.miwifi.com/miwifi_download.html">ROM 2.0 开发版</a></h4>
+<div class="outline-text-4" id="text-1-1-1">
 <p>
 下载：<a href="http://bigota.miwifi.com/xiaoqiang/rom/r2d/brcm4709_r2d_all_6c01b_2.11.67.bin">http://bigota.miwifi.com/xiaoqiang/rom/r2d/brcm4709_r2d_all_6c01b_2.11.67.bin</a>
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline66" class="outline-5">
-<h5 id="orgheadline66"><span class="section-number-5">1.1.1.2</span> 烧写：</h5>
-<div class="outline-text-5" id="text-1-1-1-2">
+<div id="outline-container-orgheadline4" class="outline-4">
+<h4 id="orgheadline4"><span class="section-number-4">1.1.2</span> 烧写：</h4>
+<div class="outline-text-4" id="text-1-1-2">
 <pre class="example">
 U盘刷机步骤：
 1、准备一个系统格式为FAT或FAT32的U盘；
@@ -1717,9 +1814,9 @@ U盘刷机步骤：
 </div>
 </div>
 
-<div id="outline-container-orgheadline67" class="outline-5">
-<h5 id="orgheadline67"><span class="section-number-5">1.1.1.3</span> 总结：</h5>
-<div class="outline-text-5" id="text-1-1-1-3">
+<div id="outline-container-orgheadline5" class="outline-4">
+<h4 id="orgheadline5"><span class="section-number-4">1.1.3</span> 总结：</h4>
+<div class="outline-text-4" id="text-1-1-3">
 <ol class="org-ol">
 <li>下载rom</li>
 <li>拷贝到u盘</li>
@@ -1731,25 +1828,25 @@ U盘刷机步骤：
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline4" class="outline-4">
-<h4 id="orgheadline4"><span class="section-number-4">1.1.2</span> 烧写ssh</h4>
-<div class="outline-text-4" id="text-1-1-2">
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">1.2</span> 烧写ssh</h3>
+<div class="outline-text-3" id="text-1-2">
 <p>
 <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-03-14 一 17:16&gt;</span></span>
 </p>
 </div>
 
-<div id="outline-container-orgheadline68" class="outline-5">
-<h5 id="orgheadline68"><span class="section-number-5">1.1.2.1</span> 网址：<a href="http://www.miwifi.com/miwifi_open.html">MiWiFi开放平台</a></h5>
+<div id="outline-container-orgheadline7" class="outline-4">
+<h4 id="orgheadline7"><span class="section-number-4">1.2.1</span> 网址：<a href="http://www.miwifi.com/miwifi_open.html">MiWiFi开放平台</a></h4>
 </div>
 
-<div id="outline-container-orgheadline69" class="outline-5">
-<h5 id="orgheadline69"><span class="section-number-5">1.1.2.2</span> 下载：<a href="https://d.miwifi.com/rom/ssh">https://d.miwifi.com/rom/ssh</a></h5>
+<div id="outline-container-orgheadline8" class="outline-4">
+<h4 id="orgheadline8"><span class="section-number-4">1.2.2</span> 下载：<a href="https://d.miwifi.com/rom/ssh">https://d.miwifi.com/rom/ssh</a></h4>
 </div>
 
-<div id="outline-container-orgheadline70" class="outline-5">
-<h5 id="orgheadline70"><span class="section-number-5">1.1.2.3</span> 烧写：</h5>
-<div class="outline-text-5" id="text-1-1-2-3">
+<div id="outline-container-orgheadline9" class="outline-4">
+<h4 id="orgheadline9"><span class="section-number-4">1.2.3</span> 烧写：</h4>
+<div class="outline-text-4" id="text-1-2-3">
 <pre class="example">
 工具包使用方法：小米路由器需升级到开发版0.5.28及以上，小米路由器mini需升级到开发版0.3.84及以上。注意：稳定版不支持。
     请将下载的工具包bin文件复制到U盘（FAT/FAT32格式）的根目录下，保证文件名为miwifi_ssh.bin；
@@ -1760,9 +1857,9 @@ U盘刷机步骤：
 </div>
 </div>
 
-<div id="outline-container-orgheadline71" class="outline-5">
-<h5 id="orgheadline71"><span class="section-number-5">1.1.2.4</span> 总结：</h5>
-<div class="outline-text-5" id="text-1-1-2-4">
+<div id="outline-container-orgheadline10" class="outline-4">
+<h4 id="orgheadline10"><span class="section-number-4">1.2.4</span> 总结：</h4>
+<div class="outline-text-4" id="text-1-2-4">
 <ol class="org-ol">
 <li>下载rom</li>
 <li>拷贝到u盘</li>
@@ -1774,9 +1871,9 @@ U盘刷机步骤：
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline5" class="outline-4">
-<h4 id="orgheadline5"><a id="ID-438b20dc-9055-47e1-98f3-bb98d31183fa"></a><span class="section-number-4">1.1.3</span> 访问文件系统权限</h4>
-<div class="outline-text-4" id="text-1-1-3">
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11"><a id="ID-438b20dc-9055-47e1-98f3-bb98d31183fa"></a><span class="section-number-3">1.3</span> 访问文件系统权限</h3>
+<div class="outline-text-3" id="text-1-3">
 <p>
 开启ssh后无法获得系统文件夹写入权限，只能读写外接硬盘的内容。这对有时候系统级别的配置不太方便。
 </p>
@@ -1793,13 +1890,13 @@ U盘刷机步骤：
 </div>
 </div>
 
-<div id="outline-container-orgheadline6" class="outline-3">
-<h3 id="orgheadline6"><a id="ID-8ba30038-f09d-4780-81ce-54f2c062f789"></a><span class="section-number-3">1.2</span> 小米路由器防火墙配置</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-orgheadline12" class="outline-2">
+<h2 id="orgheadline12"><a id="ID-8ba30038-f09d-4780-81ce-54f2c062f789"></a><span class="section-number-2">2</span> 小米路由器防火墙配置</h2>
+<div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orgheadline7" class="outline-4">
-<h4 id="orgheadline7"><span class="section-number-4">1.2.1</span> 开启端口</h4>
-<div class="outline-text-4" id="text-1-2-1">
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"><span class="section-number-3">2.1</span> 开启端口</h3>
+<div class="outline-text-3" id="text-2-1">
 <pre class="example">
 使用WinSCP软件进入192.168.31.1 端口22，用户名 root 密码 admin 文件协议改为SCP进入,进入后打开/etc/config/firewall
 这个文件的尾部增加：
@@ -1820,9 +1917,9 @@ U盘刷机步骤：
 </div>
 </div>
 
-<div id="outline-container-orgheadline8" class="outline-4">
-<h4 id="orgheadline8"><span class="section-number-4">1.2.2</span> 端口转发</h4>
-<div class="outline-text-4" id="text-1-2-2">
+<div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14"><span class="section-number-3">2.2</span> 端口转发</h3>
+<div class="outline-text-3" id="text-2-2">
 <p>
 修改 <code>/etc/config/firewall</code>
 </p>
@@ -1846,9 +1943,9 @@ option proto tcp
 </div>
 </div>
 
-<div id="outline-container-orgheadline9" class="outline-4">
-<h4 id="orgheadline9"><a id="ID-302570f5-16c1-4874-90df-b413b2dca2f0"></a><span class="section-number-4">1.2.3</span> 禁用端口</h4>
-<div class="outline-text-4" id="text-1-2-3">
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><a id="ID-302570f5-16c1-4874-90df-b413b2dca2f0"></a><span class="section-number-3">2.3</span> 禁用端口</h3>
+<div class="outline-text-3" id="text-2-3">
 <p>
 默认端口不对外开放。
 </p>
@@ -1856,34 +1953,9 @@ option proto tcp
 </div>
 </div>
 
-<div id="outline-container-orgheadline10" class="outline-3">
-<h3 id="orgheadline10"><a id="ID-96bd1991-9c0f-4869-b406-c6eced64bd6b"></a><span class="section-number-3">1.3</span> 小米路由器添加ddns</h3>
-<div class="outline-text-3" id="text-1-3">
-<p>
-ddns可以实现当ip地址不固定的时候，也能通过域名正确访问到相应的路由器。
-</p>
-
-<p>
-大致原理是需要有一个ddns服务提供商，然后路由器定时、及时地将ip地址变化信息及时更新给ddns服务商，ddns服务商将域名与最新的ip地址相对应。
-</p>
-
-<p>
-在路由器web管理界面上有相应的选项，建议用花生壳提供的动态路由。现在花生壳注册用户名和密码，获取到一个免费的域名，再将账户信息填写到路由器中ddns的相应位置即可。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgheadline11" class="outline-3">
-<h3 id="orgheadline11"><a id="ID-f5bb8834-de46-4077-bddc-e0a15b1dc790"></a><span class="section-number-3">1.4</span> 小米路由器修改ssh启动的欢迎语</h3>
-<div class="outline-text-3" id="text-1-4">
-<p>
-修改 <code>/etc/banner</code> 文件。
-</p>
-</div>
-</div>
-<div id="outline-container-orgheadline12" class="outline-3">
-<h3 id="orgheadline12"><a id="ID-1beeb842-72bd-4682-b3b0-cabca3dd0b6c"></a><span class="section-number-3">1.5</span> 使用opkg在小米路由器软件管理</h3>
-<div class="outline-text-3" id="text-1-5">
+<div id="outline-container-orgheadline16" class="outline-2">
+<h2 id="orgheadline16"><a id="ID-1beeb842-72bd-4682-b3b0-cabca3dd0b6c"></a><span class="section-number-2">3</span> 使用opkg在小米路由器软件管理</h2>
+<div class="outline-text-2" id="text-3">
 <p>
 小米路由器系统是openwrt系统，该系统基于linux，使用 <code>opkg</code> 工具实现软件管理，该工具类似ubuntu中的 <code>apt-get</code> 或者centeros 中的 <code>yum</code> 工具。
 </p>
@@ -1897,9 +1969,9 @@ ddns可以实现当ip地址不固定的时候，也能通过域名正确访问�
 </p>
 </div>
 
-<div id="outline-container-orgheadline13" class="outline-4">
-<h4 id="orgheadline13"><span class="section-number-4">1.5.1</span> 配置软件源地址</h4>
-<div class="outline-text-4" id="text-1-5-1">
+<div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17"><span class="section-number-3">3.1</span> 配置软件源地址</h3>
+<div class="outline-text-3" id="text-3-1">
 <p>
 配置文件为 <code>/etc/opkg.conf</code>, 下面是一个配置文件完整的例子：
 </p>
@@ -1927,9 +1999,9 @@ arch omap4 130
 </div>
 </div>
 
-<div id="outline-container-orgheadline14" class="outline-4">
-<h4 id="orgheadline14"><span class="section-number-4">1.5.2</span> 用opkg在小米路由器(openwrt)上进行软件管理</h4>
-<div class="outline-text-4" id="text-1-5-2">
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18"><span class="section-number-3">3.2</span> 用opkg在小米路由器(openwrt)上进行软件管理</h3>
+<div class="outline-text-3" id="text-3-2">
 <p>
 <code>opkg</code> 使用方法类似 ubuntu下的 <code>apt-get</code>, 具体如下：
 </p>
@@ -2040,12 +2112,12 @@ arch omap4 130
 </div>
 </div>
 
-<div id="outline-container-orgheadline15" class="outline-4">
-<h4 id="orgheadline15"><span class="section-number-4">1.5.3</span> 软件管理中遇到的问题</h4>
-<div class="outline-text-4" id="text-1-5-3">
-</div><div id="outline-container-orgheadline72" class="outline-5">
-<h5 id="orgheadline72"><span class="section-number-5">1.5.3.1</span> 找不到软件，则需更换软件源</h5>
-<div class="outline-text-5" id="text-1-5-3-1">
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="section-number-3">3.3</span> 软件管理中遇到的问题</h3>
+<div class="outline-text-3" id="text-3-3">
+</div><div id="outline-container-orgheadline20" class="outline-4">
+<h4 id="orgheadline20"><span class="section-number-4">3.3.1</span> 找不到软件，则需更换软件源</h4>
+<div class="outline-text-4" id="text-3-3-1">
 <p>
 我们想安装某软件之前，只需找到包含该软件的相应软件源地址后，填入 <code>opkg.conf</code> 中即可，例如你可能会找到如下的源：
 </p>
@@ -2063,9 +2135,9 @@ src/gz attitude_adjustment http://downloads.openwrt.org/snapshots/trunk/bcm53xx/
 </div>
 
 
-<div id="outline-container-orgheadline73" class="outline-5">
-<h5 id="orgheadline73"><span class="section-number-5">1.5.3.2</span> 无法安装，则需配置架构信息</h5>
-<div class="outline-text-5" id="text-1-5-3-2">
+<div id="outline-container-orgheadline21" class="outline-4">
+<h4 id="orgheadline21"><span class="section-number-4">3.3.2</span> 无法安装，则需配置架构信息</h4>
+<div class="outline-text-4" id="text-3-3-2">
 <p>
 如果无法安装，可能是由于架构不匹配导致，需要通过命令 <code>opkg print-architecture</code> 查看当前系统支持的架构，再根据被安装的安装包名称，确定需支持的架构。
 </p>
@@ -2094,9 +2166,9 @@ arch bcm53xx 310
 </div>
 </div>
 
-<div id="outline-container-orgheadline74" class="outline-5">
-<h5 id="orgheadline74"><span class="section-number-5">1.5.3.3</span> 安装成功，无法运行，需要更换二进制文件，使之支持当前路由器 cpu 架构</h5>
-<div class="outline-text-5" id="text-1-5-3-3">
+<div id="outline-container-orgheadline22" class="outline-4">
+<h4 id="orgheadline22"><span class="section-number-4">3.3.3</span> 安装成功，无法运行，需要更换二进制文件，使之支持当前路由器 cpu 架构</h4>
+<div class="outline-text-4" id="text-3-3-3">
 <p>
 前面配置好架构之后虽然能够安装软件，但是不一定能够运行。这里仍以 <code>screen</code> 为例，如果仍然无法运行 <code>screen</code> 。则需要确认一下其二进制文件中的cpu架构信息。
 </p>
@@ -2180,9 +2252,9 @@ OpenWrt-Toolchain-omap4-for-arm_v7-a-gcc-4.6-linaro_uClibc-0.9.33.2_eabi.tar.bz2
 </div>
 </div>
 
-<div id="outline-container-orgheadline16" class="outline-4">
-<h4 id="orgheadline16"><span class="section-number-4">1.5.4</span> 参考资料</h4>
-<div class="outline-text-4" id="text-1-5-4">
+<div id="outline-container-orgheadline23" class="outline-3">
+<h3 id="orgheadline23"><span class="section-number-3">3.4</span> 参考资料</h3>
+<div class="outline-text-3" id="text-3-4">
 <ul class="org-ul">
 <li><p>
 关于软件源的问题参考
@@ -2239,9 +2311,10 @@ OpenWrt-Toolchain-omap4-for-arm_v7-a-gcc-4.6-linaro_uClibc-0.9.33.2_eabi.tar.bz2
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline17" class="outline-3">
-<h3 id="orgheadline17"><a id="ID-812a4b1a-4b1b-4521-9dd1-34e0371d07f9"></a><span class="section-number-3">1.6</span> 小米路由器交叉编译环境配置</h3>
-<div class="outline-text-3" id="text-1-6">
+
+<div id="outline-container-orgheadline24" class="outline-2">
+<h2 id="orgheadline24"><a id="ID-812a4b1a-4b1b-4521-9dd1-34e0371d07f9"></a><span class="section-number-2">4</span> 小米路由器交叉编译环境配置</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 配置好小米交叉编译环境，所有的软件基本上从源码级别上原生即可编译生成，无需上网寻找各种人家做好的软件包。是最理想安装软件的方法。
 </p>
@@ -2284,9 +2357,9 @@ $export PATH=/home/miracle/work/1_inbox/xiaomirouter/test/sdk_package/toolchain/
 </div>
 </div>
 
-<div id="outline-container-orgheadline18" class="outline-3">
-<h3 id="orgheadline18"><a id="ID-d116ddc3-b3c0-4a82-93e9-628e0ecc2f69"></a><span class="section-number-3">1.7</span> 在小米路由器上搭建基于LNMP的Owncloud云平台</h3>
-<div class="outline-text-3" id="text-1-7">
+<div id="outline-container-orgheadline25" class="outline-2">
+<h2 id="orgheadline25"><a id="ID-d116ddc3-b3c0-4a82-93e9-628e0ecc2f69"></a><span class="section-number-2">5</span> 在小米路由器上搭建基于LNMP的Owncloud云平台</h2>
+<div class="outline-text-2" id="text-5">
 <p>
 Mega Sync、Box、DropBox、苹果icloud、微软Sky Driver、Google的GDriver、腾讯微云、百度云、新浪微盘、坚果云、金山快盘、七牛、115网盘、华为网盘、Ubuntu One、
 </p>
@@ -2327,17 +2400,17 @@ Web Server：云存储一般都基于Web Server后端，对于Web服务器，考
 由于小米路由器Cpu架构与传统PC机不同，所以这里先介绍在PC上搭建LNMP环境以及安装Own Cloud的方法，了解到与平台无关的核心过程后，然后再具体介绍在小米路由器上进行。
 </p>
 </div>
-<div id="outline-container-orgheadline19" class="outline-4">
-<h4 id="orgheadline19"><span class="section-number-4">1.7.1</span> PC上搭建Owncloud</h4>
-<div class="outline-text-4" id="text-1-7-1">
+<div id="outline-container-orgheadline26" class="outline-3">
+<h3 id="orgheadline26"><span class="section-number-3">5.1</span> PC上搭建Owncloud</h3>
+<div class="outline-text-3" id="text-5-1">
 <p>
 PC上的Owncloud在两个系统上进行过，即：Ubuntu和Center OS。除个别依赖库外，尽量采用源代码编译的方式进行，这样的过程比较“通用”，在各个平台上过程大同小异。过程大致如下：
 </p>
 </div>
 
-<div id="outline-container-orgheadline75" class="outline-5">
-<h5 id="orgheadline75"><span class="section-number-5">1.7.1.1</span> 安装openssl</h5>
-<div class="outline-text-5" id="text-1-7-1-1">
+<div id="outline-container-orgheadline27" class="outline-4">
+<h4 id="orgheadline27"><span class="section-number-4">5.1.1</span> 安装openssl</h4>
+<div class="outline-text-4" id="text-5-1-1">
 <p>
 下载： <code>$wget -c http://www.openssl.org/source/openssl-1.0.2g.tar.gz</code>
 </p>
@@ -2357,11 +2430,13 @@ $sudo make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline78" class="outline-5">
-<h5 id="orgheadline78"><a id="ID-ec1983bd-1420-45b1-b21a-9353e0b9015e"></a><span class="section-number-5">1.7.1.2</span> 安装php所需依赖</h5>
-<div class="outline-text-5" id="text-1-7-1-2">
+<div id="outline-container-orgheadline28" class="outline-4">
+<h4 id="orgheadline28"><a id="ID-ec1983bd-1420-45b1-b21a-9353e0b9015e"></a><span class="section-number-4">5.1.2</span> 安装php所需依赖</h4>
+<div class="outline-text-4" id="text-5-1-2">
 </div>
-<ol class="org-ol"><li><a id="orgheadline76"></a>在 Ubuntu 12.04 上：<br  /><div class="outline-text-6" id="text-1-7-1-2-1">
+<div id="outline-container-orgheadline98" class="outline-5">
+<h5 id="orgheadline98"><span class="section-number-5">5.1.2.1</span> 在 Ubuntu 12.04 上：</h5>
+<div class="outline-text-5" id="text-5-1-2-1">
 <div class="org-src-container">
 
 <pre class="src src-sh">$sudo apt-get install libxml2
@@ -2375,9 +2450,12 @@ $sudo apt-get install libpng-dev
 $sudo apt-get install libmcrypt-dev
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline77"></a>在 Center OS 上：<br  /><div class="outline-text-6" id="text-1-7-1-2-2">
+<div id="outline-container-orgheadline99" class="outline-5">
+<h5 id="orgheadline99"><span class="section-number-5">5.1.2.2</span> 在 Center OS 上：</h5>
+<div class="outline-text-5" id="text-5-1-2-2">
 <div class="org-src-container">
 
 <pre class="src src-sh">$sudo yum install libxml2
@@ -2399,12 +2477,13 @@ $sudo yum install libfreetype-devel
 $systemctl start mariadb.service
 </pre>
 </div>
-</div></li></ol>
+</div>
+</div>
 </div>
 
-<div id="outline-container-orgheadline79" class="outline-5">
-<h5 id="orgheadline79"><span class="section-number-5">1.7.1.3</span> 编译、安装php</h5>
-<div class="outline-text-5" id="text-1-7-1-3">
+<div id="outline-container-orgheadline29" class="outline-4">
+<h4 id="orgheadline29"><span class="section-number-4">5.1.3</span> 编译、安装php</h4>
+<div class="outline-text-4" id="text-5-1-3">
 <p>
 下载：<a href="http://php.net/get/php-5.6.19.tar.bz2/from/a/mirror">http://php.net/get/php-5.6.19.tar.bz2/from/a/mirror</a>
 </p>
@@ -2441,9 +2520,9 @@ ext/openssl/.libs/xp_ssl.o: In function `php_select_crypto_method':
 </div>
 </div>
 
-<div id="outline-container-orgheadline80" class="outline-5">
-<h5 id="orgheadline80"><span class="section-number-5">1.7.1.4</span> 安装nginx所需依赖</h5>
-<div class="outline-text-5" id="text-1-7-1-4">
+<div id="outline-container-orgheadline30" class="outline-4">
+<h4 id="orgheadline30"><span class="section-number-4">5.1.4</span> 安装nginx所需依赖</h4>
+<div class="outline-text-4" id="text-5-1-4">
 <p>
 下载：
 </p>
@@ -2479,9 +2558,9 @@ $sudo make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline81" class="outline-5">
-<h5 id="orgheadline81"><span class="section-number-5">1.7.1.5</span> 编译、安装nginx</h5>
-<div class="outline-text-5" id="text-1-7-1-5">
+<div id="outline-container-orgheadline31" class="outline-4">
+<h4 id="orgheadline31"><span class="section-number-4">5.1.5</span> 编译、安装nginx</h4>
+<div class="outline-text-4" id="text-5-1-5">
 <p>
 下载： <code>wget http://nginx.org/download/nginx-1.8.1.tar.gz</code>
 </p>
@@ -2499,9 +2578,9 @@ $sudo make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline82" class="outline-5">
-<h5 id="orgheadline82"><span class="section-number-5">1.7.1.6</span> Mysql的root帐号建立</h5>
-<div class="outline-text-5" id="text-1-7-1-6">
+<div id="outline-container-orgheadline32" class="outline-4">
+<h4 id="orgheadline32"><span class="section-number-4">5.1.6</span> Mysql的root帐号建立</h4>
+<div class="outline-text-4" id="text-5-1-6">
 <ol class="org-ol">
 <li><p>
 启动mysqld服务
@@ -2556,10 +2635,12 @@ $sudo make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline85" class="outline-5">
-<h5 id="orgheadline85"><span class="section-number-5">1.7.1.7</span> php的配置和运行</h5>
-<div class="outline-text-5" id="text-1-7-1-7">
-</div><ol class="org-ol"><li><a id="orgheadline83"></a>对mysql的配置<br  /><div class="outline-text-6" id="text-1-7-1-7-1">
+<div id="outline-container-orgheadline33" class="outline-4">
+<h4 id="orgheadline33"><span class="section-number-4">5.1.7</span> php的配置和运行</h4>
+<div class="outline-text-4" id="text-5-1-7">
+</div><div id="outline-container-orgheadline100" class="outline-5">
+<h5 id="orgheadline100"><span class="section-number-5">5.1.7.1</span> 对mysql的配置</h5>
+<div class="outline-text-5" id="text-5-1-7-1">
 <p>
 为了能够安装owncloud，需要做php对mysql支持的配置，将源代码解压包中的 <code>php.ini-development</code> 拷贝到安装好的目录中（ <code>/usr/local/develop/php-5.6.19/etc</code> ），命名为 <code>php.ini</code> 修改如下： <code>pdo_mysql.default_socket=/var/run/mysqld/mysqld.sock</code> 。
 </p>
@@ -2576,9 +2657,12 @@ ownCloud is not installed - only a limited number of commands are available
 Error while trying to create admin user: Failed to connect to the database: An exception occured in driver: SQLSTATE[HY000] [2002] No such file or directory
  -&gt;
 </pre>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline84"></a>运行php<br  /><div class="outline-text-6" id="text-1-7-1-7-2">
+<div id="outline-container-orgheadline101" class="outline-5">
+<h5 id="orgheadline101"><span class="section-number-5">5.1.7.2</span> 运行php</h5>
+<div class="outline-text-5" id="text-5-1-7-2">
 <p>
 运行 <code>./php-fpm.sh start</code>
 </p>
@@ -2637,12 +2721,13 @@ esac
 exit 0
 </pre>
 </div>
-</div></li></ol>
+</div>
+</div>
 </div>
 
-<div id="outline-container-orgheadline86" class="outline-5">
-<h5 id="orgheadline86"><span class="section-number-5">1.7.1.8</span> ssl key文件的生成</h5>
-<div class="outline-text-5" id="text-1-7-1-8">
+<div id="outline-container-orgheadline34" class="outline-4">
+<h4 id="orgheadline34"><span class="section-number-4">5.1.8</span> ssl key文件的生成</h4>
+<div class="outline-text-4" id="text-5-1-8">
 <p>
 因为要使用https方式访问搭建的网站，需要生成ssl的认证文件，在后面配置nginx之时会用到。
 </p>
@@ -2658,10 +2743,12 @@ $openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
 </div>
 </div>
 
-<div id="outline-container-orgheadline89" class="outline-5">
-<h5 id="orgheadline89"><span class="section-number-5">1.7.1.9</span> nginx的配置和运行</h5>
-<div class="outline-text-5" id="text-1-7-1-9">
-</div><ol class="org-ol"><li><a id="orgheadline87"></a>运行脚本<br  /><div class="outline-text-6" id="text-1-7-1-9-1">
+<div id="outline-container-orgheadline35" class="outline-4">
+<h4 id="orgheadline35"><span class="section-number-4">5.1.9</span> nginx的配置和运行</h4>
+<div class="outline-text-4" id="text-5-1-9">
+</div><div id="outline-container-orgheadline102" class="outline-5">
+<h5 id="orgheadline102"><span class="section-number-5">5.1.9.1</span> 运行脚本</h5>
+<div class="outline-text-5" id="text-5-1-9-1">
 <p>
 先给出运行nginx的脚本，后面会用到（根据自己的情况，将开头定义的 <code>$NGINX_BIN</code> 等变量做相应修改）。
 </p>
@@ -2714,8 +2801,11 @@ case "$1" in
 esac
 </pre>
 </div>
-</div></li>
-<li><a id="orgheadline88"></a>测试网站<br  /><div class="outline-text-6" id="text-1-7-1-9-2">
+</div>
+</div>
+<div id="outline-container-orgheadline103" class="outline-5">
+<h5 id="orgheadline103"><span class="section-number-5">5.1.9.2</span> 测试网站</h5>
+<div class="outline-text-5" id="text-5-1-9-2">
 <ol class="org-ol">
 <li><p>
 先写一个测试的php脚本，用来检测是否正确。
@@ -2769,16 +2859,19 @@ $/etc/init.d/nginx.sh start
 经过前面配置之后，打开浏览器，输入 <code>http://localhost:18080</code> 若打开对应的测试站点并运行 <code>index.php</code> 脚本成功，说明配置成功。
 </p></li>
 </ol>
-</div></li></ol>
 </div>
-<div id="outline-container-orgheadline92" class="outline-5">
-<h5 id="orgheadline92"><span class="section-number-5">1.7.1.10</span> 搭建owncloud网站</h5>
-<div class="outline-text-5" id="text-1-7-1-10">
+</div>
+</div>
+<div id="outline-container-orgheadline36" class="outline-4">
+<h4 id="orgheadline36"><span class="section-number-4">5.1.10</span> 搭建owncloud网站</h4>
+<div class="outline-text-4" id="text-5-1-10">
 <p>
 对前面LNMP环境建立并且测试完成之后，搭建owncloud网站其主要工作就是修改 <code>nginx.conf</code> 配置文件了。在owncloud官网上有一个对nginx的配置说明，这里给出当前实践过，并且好用的配置。不做过多解释,根据自身情况，做相应修改应当不难。
 </p>
 </div>
-<ol class="org-ol"><li><a id="orgheadline90"></a>OwnCloud相关软件和文档获取<br  /><div class="outline-text-6" id="text-1-7-1-10-1">
+<div id="outline-container-orgheadline104" class="outline-5">
+<h5 id="orgheadline104"><span class="section-number-5">5.1.10.1</span> OwnCloud相关软件和文档获取</h5>
+<div class="outline-text-5" id="text-5-1-10-1">
 <ol class="org-ol">
 <li><p>
 服务端：
@@ -2804,9 +2897,12 @@ https://software.opensuse.org/download/package?project=isv:ownCloud:desktop&amp;
 <li>文档
 文档的下载和在线版本，可在如下网站获取： <code>https://doc.owncloud.org/</code></li>
 </ol>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline91"></a>配置用于OwnCloud的Nginx配置选项<br  /><div class="outline-text-6" id="text-1-7-1-10-2">
+<div id="outline-container-orgheadline105" class="outline-5">
+<h5 id="orgheadline105"><span class="section-number-5">5.1.10.2</span> 配置用于OwnCloud的Nginx配置选项</h5>
+<div class="outline-text-5" id="text-5-1-10-2">
 <div class="org-src-container">
 
 <pre class="src src-sh">$cat /usr/local/develop/nginx-1.8.1/conf/nginx.conf
@@ -2911,16 +3007,19 @@ https://software.opensuse.org/download/package?project=isv:ownCloud:desktop&amp;
 ...后面省略
 </pre>
 </div>
-</div></li></ol>
 </div>
-<div id="outline-container-orgheadline97" class="outline-5">
-<h5 id="orgheadline97"><span class="section-number-5">1.7.1.11</span> 安装Owncloud</h5>
-<div class="outline-text-5" id="text-1-7-1-11">
+</div>
+</div>
+<div id="outline-container-orgheadline37" class="outline-4">
+<h4 id="orgheadline37"><span class="section-number-4">5.1.11</span> 安装Owncloud</h4>
+<div class="outline-text-4" id="text-5-1-11">
 <p>
 具体安装过程以及期间遇到的问题，可参考文档进行，下面给出大致过程。
 </p>
 </div>
-<ol class="org-ol"><li><a id="orgheadline93"></a>设置OwnCloud的安装目录<br  /><div class="outline-text-6" id="text-1-7-1-11-1">
+<div id="outline-container-orgheadline106" class="outline-5">
+<h5 id="orgheadline106"><span class="section-number-5">5.1.11.1</span> 设置OwnCloud的安装目录</h5>
+<div class="outline-text-5" id="text-5-1-11-1">
 <p>
 先将Owncloud解压，然后设置文件权限。需要设置owncloud中data和config目录等的用户和组为 <code>www-data</code> 。在文档中具体介绍了为什么要这样设置。这里简化起见，设置之后，再将权限设置为777，并不是最优方案。
 </p>
@@ -2936,9 +3035,13 @@ $sudo chown -R www-data.www-data oc_data
 $sudo chmod 777 -R oc_data
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline96"></a>配置Owncloud添加管理员账户<br  /><ol class="org-ol"><li><a id="orgheadline94"></a>基本配置<br  /><div class="outline-text-7" id="text-1-7-1-11-2-1">
+<div id="outline-container-orgheadline109" class="outline-5">
+<h5 id="orgheadline109"><span class="section-number-5">5.1.11.2</span> 配置Owncloud添加管理员账户</h5>
+<div class="outline-text-5" id="text-5-1-11-2">
+</div><ol class="org-ol"><li><a id="orgheadline107"></a>基本配置<br  /><div class="outline-text-6" id="text-5-1-11-2-1">
 <p>
 我们可以根据前面的 <code>nginx.conf</code> 设置，直接使用 <code>https://localhost</code> 访问，进入Owncloud初始设置界面。为便于描述，这里直接用命令行方式对其进行设置，效果相同。
 </p>
@@ -2958,7 +3061,7 @@ $ sudo -u www-data php occ maintenance:install --database "mysql" --database-nam
 </p>
 </div></li>
 
-<li><a id="orgheadline95"></a>额外配置<br  /><div class="outline-text-7" id="text-1-7-1-11-2-2">
+<li><a id="orgheadline108"></a>额外配置<br  /><div class="outline-text-6" id="text-5-1-11-2-2">
 <p>
 如上配置之后，可以本地访问owncloud，但是如果想要实现远程其它机器也能访问，还需修改 <code>owncloud/config/config.php</code> 如下：
 将
@@ -2981,13 +3084,14 @@ array (
 <p>
 这里， <code>112.74.19.38</code> 是本地机器对外的ip地址，也可使用DNS域名。
 </p>
-</div></li></ol></li></ol>
+</div></li></ol>
+</div>
 </div>
 </div>
 
-<div id="outline-container-orgheadline20" class="outline-4">
-<h4 id="orgheadline20"><span class="section-number-4">1.7.2</span> 小米路由器上搭建Owncloud</h4>
-<div class="outline-text-4" id="text-1-7-2">
+<div id="outline-container-orgheadline38" class="outline-3">
+<h3 id="orgheadline38"><span class="section-number-3">5.2</span> 小米路由器上搭建Owncloud</h3>
+<div class="outline-text-3" id="text-5-2">
 <p>
 网上找到过别人搭建的Nginx环境，但是不能直接使用（还是需要php和mysql等其他环境），也用opkg 工具尝试过安装相关的工具，基本没有适用于自己架构的软件源（或者很难找到）。
 </p>
@@ -2996,18 +3100,18 @@ array (
 最终还是完全从源代码开始，交叉编译、安装了所需的所有软件包和依赖库，完成LNMP下Own cloud环境的搭建，还是自给自足可靠，当前期间也参考了许多其他人的过程。
 </p>
 </div>
-<div id="outline-container-orgheadline98" class="outline-5">
-<h5 id="orgheadline98"><span class="section-number-5">1.7.2.1</span> 准备交叉编译环境</h5>
-<div class="outline-text-5" id="text-1-7-2-1">
+<div id="outline-container-orgheadline39" class="outline-4">
+<h4 id="orgheadline39"><span class="section-number-4">5.2.1</span> 准备交叉编译环境</h4>
+<div class="outline-text-4" id="text-5-2-1">
 <p>
-参考：<a href="#orgheadline27">小米路由器交叉编译环境配置</a>
+参考：<a href="#orgheadline63">小米路由器交叉编译环境配置</a>
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline99" class="outline-5">
-<h5 id="orgheadline99"><span class="section-number-5">1.7.2.2</span> 下载相关软件包</h5>
-<div class="outline-text-5" id="text-1-7-2-2">
+<div id="outline-container-orgheadline40" class="outline-4">
+<h4 id="orgheadline40"><span class="section-number-4">5.2.2</span> 下载相关软件包</h4>
+<div class="outline-text-4" id="text-5-2-2">
 <ul class="org-ul">
 <li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2016-04-27 三 11:15]</span></span></li>
 </ul>
@@ -3037,23 +3141,28 @@ owncloud-8.2.2.tgz
 </div>
 </div>
 
-<div id="outline-container-orgheadline104" class="outline-5">
-<h5 id="orgheadline104"><span class="section-number-5">1.7.2.3</span> 交叉编译安装MySql</h5>
-<div class="outline-text-5" id="text-1-7-2-3">
+<div id="outline-container-orgheadline41" class="outline-4">
+<h4 id="orgheadline41"><span class="section-number-4">5.2.3</span> 交叉编译安装MySql</h4>
+<div class="outline-text-4" id="text-5-2-3">
 <p>
 注意，这里编译的是 <code>mysql-5.1.72</code> 其它更新的版本可能没有相应的configure文件。
 </p>
 </div>
-<ol class="org-ol"><li><a id="orgheadline100"></a>下载相关软件包<br  /><div class="outline-text-6" id="text-1-7-2-3-1">
+<div id="outline-container-orgheadline110" class="outline-5">
+<h5 id="orgheadline110"><span class="section-number-5">5.2.3.1</span> 下载相关软件包</h5>
+<div class="outline-text-5" id="text-5-2-3-1">
 <div class="org-src-container">
 
 <pre class="src src-sh">$wget -c http://mirror.hust.edu.cn/gnu/ncurses/ncurses-5.6.tar.gz
 $wget -c http://cdn.mysql.com/archives/mysql-5.1/mysql-5.1.72.tar.gz
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline101"></a>编译PC板的MySql<br  /><div class="outline-text-6" id="text-1-7-2-3-2">
+<div id="outline-container-orgheadline111" class="outline-5">
+<h5 id="orgheadline111"><span class="section-number-5">5.2.3.2</span> 编译PC板的MySql</h5>
+<div class="outline-text-5" id="text-5-2-3-2">
 <div class="org-src-container">
 
 <pre class="src src-sh">$tar -xzvf mysql-5.1.72.tar.gz 
@@ -3066,9 +3175,12 @@ $make
 <p>
 目的是为交叉编译过程顺利进行，这里先生成一个特殊的只能在pc上运行的工具。
 </p>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline103"></a>交叉编译安装ncurses<br  /><div class="outline-text-6" id="text-1-7-2-3-3">
+<div id="outline-container-orgheadline113" class="outline-5">
+<h5 id="orgheadline113"><span class="section-number-5">5.2.3.3</span> 交叉编译安装ncurses</h5>
+<div class="outline-text-5" id="text-5-2-3-3">
 <p>
 这个工具需要先编译，这样后面的MySql和php对gettext的交叉编译才不会出现问题。
 </p>
@@ -3084,7 +3196,7 @@ $make install
 </div>
 
 
-<ol class="org-ol"><li><a id="orgheadline102"></a>交叉编译的MySql<br  /><div class="outline-text-7" id="text-1-7-2-3-3-1">
+<ol class="org-ol"><li><a id="orgheadline112"></a>交叉编译的MySql<br  /><div class="outline-text-6" id="text-5-2-3-3-1">
 <ol class="org-ol">
 <li><p>
 首先修改configure文件，使之不会在交叉编译的时候运行测试软件
@@ -3213,13 +3325,16 @@ $make install
 至此，交叉编译版本的MySql编译安装完毕。
 </p></li>
 </ol>
-</div></li></ol></li></ol>
+</div></li></ol>
+</div>
 </div>
 
-<div id="outline-container-orgheadline131" class="outline-5">
-<h5 id="orgheadline131"><span class="section-number-5">1.7.2.4</span> 交叉编译安装PHP</h5>
-<div class="outline-text-5" id="text-1-7-2-4">
-</div><ol class="org-ol"><li><a id="orgheadline105"></a>交叉编译安装libxml<br  /><div class="outline-text-6" id="text-1-7-2-4-1">
+<div id="outline-container-orgheadline42" class="outline-4">
+<h4 id="orgheadline42"><span class="section-number-4">5.2.4</span> 交叉编译安装PHP</h4>
+<div class="outline-text-4" id="text-5-2-4">
+</div><div id="outline-container-orgheadline114" class="outline-5">
+<h5 id="orgheadline114"><span class="section-number-5">5.2.4.1</span> 交叉编译安装libxml</h5>
+<div class="outline-text-5" id="text-5-2-4-1">
 <p>
 需要编译的版本是libxml2-2.7.8，更高的版本需要编译python。
 </p>
@@ -3232,9 +3347,12 @@ $make
 $make install
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline106"></a>交叉编译安装zlib<br  /><div class="outline-text-6" id="text-1-7-2-4-2">
+<div id="outline-container-orgheadline115" class="outline-5">
+<h5 id="orgheadline115"><span class="section-number-5">5.2.4.2</span> 交叉编译安装zlib</h5>
+<div class="outline-text-5" id="text-5-2-4-2">
 <div class="org-src-container">
 
 <pre class="src src-sh">$export CC=arm-xiaomi-linux-uclibcgnueabi-gcc
@@ -3243,9 +3361,12 @@ $make
 $make install
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline107"></a>交叉编译安装pcre<br  /><div class="outline-text-6" id="text-1-7-2-4-3">
+<div id="outline-container-orgheadline116" class="outline-5">
+<h5 id="orgheadline116"><span class="section-number-5">5.2.4.3</span> 交叉编译安装pcre</h5>
+<div class="outline-text-5" id="text-5-2-4-3">
 <div class="org-src-container">
 
 <pre class="src src-sh">$export CC=
@@ -3256,9 +3377,12 @@ $make
 $make install
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline108"></a>交叉编译安装openssl<br  /><div class="outline-text-6" id="text-1-7-2-4-4">
+<div id="outline-container-orgheadline117" class="outline-5">
+<h5 id="orgheadline117"><span class="section-number-5">5.2.4.4</span> 交叉编译安装openssl</h5>
+<div class="outline-text-5" id="text-5-2-4-4">
 <div class="org-src-container">
 
 <pre class="src src-sh">$tar -xzvf openssl-1.0.2g.tar.gz 
@@ -3268,9 +3392,12 @@ $make
 $make install
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline109"></a>交叉编译安装libcurl<br  /><div class="outline-text-6" id="text-1-7-2-4-5">
+<div id="outline-container-orgheadline118" class="outline-5">
+<h5 id="orgheadline118"><span class="section-number-5">5.2.4.5</span> 交叉编译安装libcurl</h5>
+<div class="outline-text-5" id="text-5-2-4-5">
 <div class="org-src-container">
 
 <pre class="src src-sh">$tar -xzvf curl-7.48.0.tar.gz 
@@ -3280,9 +3407,12 @@ $make
 $make install
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline110"></a>交叉编译安装libjpeg<br  /><div class="outline-text-6" id="text-1-7-2-4-6">
+<div id="outline-container-orgheadline119" class="outline-5">
+<h5 id="orgheadline119"><span class="section-number-5">5.2.4.6</span> 交叉编译安装libjpeg</h5>
+<div class="outline-text-5" id="text-5-2-4-6">
 <div class="org-src-container">
 
 <pre class="src src-sh">$unzip libjpeg-master.zip 
@@ -3292,9 +3422,12 @@ $make
 $make install
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline111"></a>交叉编译安装libpng<br  /><div class="outline-text-6" id="text-1-7-2-4-7">
+<div id="outline-container-orgheadline120" class="outline-5">
+<h5 id="orgheadline120"><span class="section-number-5">5.2.4.7</span> 交叉编译安装libpng</h5>
+<div class="outline-text-5" id="text-5-2-4-7">
 <div class="org-src-container">
 
 <pre class="src src-sh">$tar -xJvf libpng-1.6.21.tar.xz 
@@ -3304,9 +3437,12 @@ $make
 $make install
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline112"></a>交叉编译安装libfreetype<br  /><div class="outline-text-6" id="text-1-7-2-4-8">
+<div id="outline-container-orgheadline121" class="outline-5">
+<h5 id="orgheadline121"><span class="section-number-5">5.2.4.8</span> 交叉编译安装libfreetype</h5>
+<div class="outline-text-5" id="text-5-2-4-8">
 <div class="org-src-container">
 
 <pre class="src src-sh">$tar -xzvf freetype-2.6.3.tar.gz
@@ -3316,9 +3452,12 @@ $make
 $make install
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline113"></a>交叉编译安装libmhash<br  /><div class="outline-text-6" id="text-1-7-2-4-9">
+<div id="outline-container-orgheadline122" class="outline-5">
+<h5 id="orgheadline122"><span class="section-number-5">5.2.4.9</span> 交叉编译安装libmhash</h5>
+<div class="outline-text-5" id="text-5-2-4-9">
 <div class="org-src-container">
 
 <pre class="src src-sh">$tar -xzvf mhash-0.9.9.9.tar.gz
@@ -3352,9 +3491,12 @@ $./configure --host=arm-xiaomi-linux-uclibcgnueabi --enable-static --with-zlib-p
 $make install
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline114"></a>交叉编译安装libmcrypt-2.5.8<br  /><div class="outline-text-6" id="text-1-7-2-4-10">
+<div id="outline-container-orgheadline123" class="outline-5">
+<h5 id="orgheadline123"><span class="section-number-5">5.2.4.10</span> 交叉编译安装libmcrypt-2.5.8</h5>
+<div class="outline-text-5" id="text-5-2-4-10">
 <div class="org-src-container">
 
 <pre class="src src-sh">$tar -xjvf libmcrypt-2.5.8.tar.bz2
@@ -3424,9 +3566,12 @@ $cd libmcrypt-2.5.8
 $make install
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline115"></a>交叉编译安装mcrypt<br  /><div class="outline-text-6" id="text-1-7-2-4-11">
+<div id="outline-container-orgheadline124" class="outline-5">
+<h5 id="orgheadline124"><span class="section-number-5">5.2.4.11</span> 交叉编译安装mcrypt</h5>
+<div class="outline-text-5" id="text-5-2-4-11">
 <p>
 这个貌似不用安装，但是保险起见还是把它安装上去。
 配置如下：
@@ -3463,9 +3608,12 @@ $vim src/Makefile
 $make install
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline116"></a>交叉编译安装gettext<br  /><div class="outline-text-6" id="text-1-7-2-4-12">
+<div id="outline-container-orgheadline125" class="outline-5">
+<h5 id="orgheadline125"><span class="section-number-5">5.2.4.12</span> 交叉编译安装gettext</h5>
+<div class="outline-text-5" id="text-5-2-4-12">
 <p>
 这个也貌似不需要安装，但是为保险起见也将其安装如下：
 </p>
@@ -3490,9 +3638,12 @@ $make
 $make install
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline117"></a>交叉编译安装libodbc<br  /><div class="outline-text-6" id="text-1-7-2-4-13">
+<div id="outline-container-orgheadline126" class="outline-5">
+<h5 id="orgheadline126"><span class="section-number-5">5.2.4.13</span> 交叉编译安装libodbc</h5>
+<div class="outline-text-5" id="text-5-2-4-13">
 <p>
 似乎无用，保险起见，编译安装如下：
 </p>
@@ -3505,9 +3656,12 @@ $make
 $make install
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline130"></a>交叉编译安装php<br  /><div class="outline-text-6" id="text-1-7-2-4-14">
+<div id="outline-container-orgheadline139" class="outline-5">
+<h5 id="orgheadline139"><span class="section-number-5">5.2.4.14</span> 交叉编译安装php</h5>
+<div class="outline-text-5" id="text-5-2-4-14">
 <p>
 这个部分是最关键，也最复杂。前面一切都是为了这个php做准备，有了php后面的nginx也才能够正常支持php的网站。
 </p>
@@ -3521,7 +3675,7 @@ $make install
 </p>
 </div>
 
-<ol class="org-ol"><li><a id="orgheadline118"></a>代码与依赖<br  /><div class="outline-text-7" id="text-1-7-2-4-14-1">
+<ol class="org-ol"><li><a id="orgheadline127"></a>代码与依赖<br  /><div class="outline-text-6" id="text-5-2-4-14-1">
 <div class="org-src-container">
 
 <pre class="src src-sh">$tar -xzvf php-5.6.19.tar.gz
@@ -3539,7 +3693,7 @@ $cp /home/miracle/work/1_inbox/xiaomirouter/test/sdk_package/toolchain/arm-xiaom
 </div>
 </div></li>
 
-<li><a id="orgheadline119"></a>配置前的修改<br  /><div class="outline-text-7" id="text-1-7-2-4-14-2">
+<li><a id="orgheadline128"></a>配置前的修改<br  /><div class="outline-text-6" id="text-5-2-4-14-2">
 <p>
 使用configure脚本配置，会导致测试test的时候报错，错误原因类似mysql的配置，是因为交叉编译产生的测试程序不能直接运行，进而无法通过测试，修改configure脚本如下：
 </p>
@@ -3575,7 +3729,7 @@ else
 </pre>
 </div></li>
 
-<li><a id="orgheadline120"></a>配置1&#x2013;用于确认导出变量的配置<br  /><div class="outline-text-7" id="text-1-7-2-4-14-3">
+<li><a id="orgheadline129"></a>配置1&#x2013;用于确认导出变量的配置<br  /><div class="outline-text-6" id="text-5-2-4-14-3">
 <p>
 经过如上修改之后， <code>./configure</code> 脚本能够运行通过。但是，仅仅如此还是不够，这样配置后，即使后面的编译过程通过了，所得到的php也有许多的问题，这些问题只有在运行时才可能会被发现，那样我们有需要重新交叉编译、配置php了。过程比较麻烦，这里给出一些需要修改的地方，希望能够尽量避免日后重新配置安装。但是如果不得不重新配置安装的话，这里也为将来出现问题时如何解决给出了一个参考。
 </p>
@@ -3590,12 +3744,12 @@ else
 </div>
 </div></li>
 
-<li><a id="orgheadline124"></a>确定需要额外修改的配置信息<br  /><div class="outline-text-7" id="text-1-7-2-4-14-4">
+<li><a id="orgheadline133"></a>确定需要额外修改的配置信息<br  /><div class="outline-text-6" id="text-5-2-4-14-4">
 <p>
 这里需要修改的内容比较复杂，不可能完全将修改的内容在这里给出。但是相信进行到这里的朋友肯定也对自己所做的事情很清楚了，不需要详细的描述，通过这里给出的方法，应当能够自己根据实际情况将configure修改成适合自己的样子。
 </p>
 </div>
-<ol class="org-ol"><li><a id="orgheadline122"></a>配置支持的函数开关<br  /><div class="outline-text-8" id="text-1-7-2-4-14-4-1">
+<ol class="org-ol"><li><a id="orgheadline131"></a>配置支持的函数开关<br  /><div class="outline-text-7" id="text-5-2-4-14-4-1">
 <p>
 上述配置完成之后，会生成一个 <code>config.log</code>, 其中包含了配置时的信息。对比在pc上配置、编译php后生成的 <code>config.log</code> 与该交叉配置、编译php的 <code>config.log</code> ，找到 <code>ac_cv_func_xxx</code> 变量的配置结果，会发现，有些pc版上为 <code>yes</code> ，而交叉编译版本时变成了 <code>no</code> 的变量，在交叉编译的configure中，根据自身路由器的情况，一般会将相应位置修改回 <code>yes</code> 。
 </p>
@@ -3616,7 +3770,7 @@ else
 </pre>
 </div>
 
-<ol class="org-ol"><li><a id="orgheadline121"></a>例子<br  /><div class="outline-text-9" id="text-1-7-2-4-14-4-1-1">
+<ol class="org-ol"><li><a id="orgheadline130"></a>例子<br  /><div class="outline-text-8" id="text-5-2-4-14-4-1-1">
 <p>
 下面的例子，展示了我们为什么要添加这些函数变量。
 </p>
@@ -3678,7 +3832,7 @@ phpinfo()
 </p>
 </div></li></ol></li>
 
-<li><a id="orgheadline123"></a>配置其它选项参数<br  /><div class="outline-text-8" id="text-1-7-2-4-14-4-2">
+<li><a id="orgheadline132"></a>配置其它选项参数<br  /><div class="outline-text-7" id="text-5-2-4-14-4-2">
 <p>
 参照类似前面的方式，对比pc版本和交叉编译版本 <code>config.log</code> 文件，找到其它看起来比较重要的、却在pc上打开，交叉编译版本关闭的一些选项参数，进行类似修改。
 比如：
@@ -3698,7 +3852,7 @@ ac_cv_crypt_sha512=yes
 </p>
 </div></li></ol></li>
 
-<li><a id="orgheadline125"></a>配置2&#x2013;最终配置<br  /><div class="outline-text-7" id="text-1-7-2-4-14-5">
+<li><a id="orgheadline134"></a>配置2&#x2013;最终配置<br  /><div class="outline-text-6" id="text-5-2-4-14-5">
 <p>
 经过上述修改后，我们应该可以直接运行如下配置命令，生成Makefile了。
 </p>
@@ -3709,7 +3863,7 @@ ac_cv_crypt_sha512=yes
 </div>
 </div></li>
 
-<li><a id="orgheadline126"></a>Makefile修改<br  /><div class="outline-text-7" id="text-1-7-2-4-14-6">
+<li><a id="orgheadline135"></a>Makefile修改<br  /><div class="outline-text-6" id="text-5-2-4-14-6">
 <div class="org-src-container">
 
 <pre class="src src-sh">$vim Makefile
@@ -3724,7 +3878,7 @@ ac_cv_crypt_sha512=yes
 </ol>
 </div></li>
 
-<li><a id="orgheadline127"></a>代码修改<br  /><div class="outline-text-7" id="text-1-7-2-4-14-7">
+<li><a id="orgheadline136"></a>代码修改<br  /><div class="outline-text-6" id="text-5-2-4-14-7">
 <p>
 经过前面对Makefile修改之后，还需对源代码进行一些修改，以避免出现编译错误。大致如下：
 </p>
@@ -3868,7 +4022,7 @@ collect2: error: ld returned 1 exit status
 </ol>
 </div></li>
 
-<li><a id="orgheadline128"></a>交叉编译1-生成主要的二进制文件<br  /><div class="outline-text-7" id="text-1-7-2-4-14-8">
+<li><a id="orgheadline137"></a>交叉编译1-生成主要的二进制文件<br  /><div class="outline-text-6" id="text-5-2-4-14-8">
 <p>
 经过如上修改之后，即可以编译代码，如下：
 </p>
@@ -3892,7 +4046,7 @@ make: *** [ext/phar/phar.php] 错误 126
 </p>
 </div></li>
 
-<li><a id="orgheadline129"></a>交叉编译2-借助pc版本的php完成最终编译<br  /><div class="outline-text-7" id="text-1-7-2-4-14-9">
+<li><a id="orgheadline138"></a>交叉编译2-借助pc版本的php完成最终编译<br  /><div class="outline-text-6" id="text-5-2-4-14-9">
 <p>
 前面也提到了，前面出现的错误不需要修改什么，但是需要事先编译好一个pc版本的php。pc上php的编译在前面有所介绍。
 </p>
@@ -3933,22 +4087,28 @@ $cp php /home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/bin
 <p>
 至此，Php的交叉编译过程完成。
 </p>
-</div></li></ol></li></ol>
+</div></li></ol>
+</div>
 </div>
 
-<div id="outline-container-orgheadline137" class="outline-5">
-<h5 id="orgheadline137"><span class="section-number-5">1.7.2.5</span> 交叉编译安装nginx</h5>
-<div class="outline-text-5" id="text-1-7-2-5">
-</div><ol class="org-ol"><li><a id="orgheadline132"></a>代码解压<br  /><div class="outline-text-6" id="text-1-7-2-5-1">
+<div id="outline-container-orgheadline43" class="outline-4">
+<h4 id="orgheadline43"><span class="section-number-4">5.2.5</span> 交叉编译安装nginx</h4>
+<div class="outline-text-4" id="text-5-2-5">
+</div><div id="outline-container-orgheadline140" class="outline-5">
+<h5 id="orgheadline140"><span class="section-number-5">5.2.5.1</span> 代码解压</h5>
+<div class="outline-text-5" id="text-5-2-5-1">
 <div class="org-src-container">
 
 <pre class="src src-sh">$tar -xzvf nginx-1.8.1.tar.gz
 $cd nginx-1.8.1
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline133"></a>修改配置文件<br  /><div class="outline-text-6" id="text-1-7-2-5-2">
+<div id="outline-container-orgheadline141" class="outline-5">
+<h5 id="orgheadline141"><span class="section-number-5">5.2.5.2</span> 修改配置文件</h5>
+<div class="outline-text-5" id="text-5-2-5-2">
 <p>
 源代码中的 <code>auto</code> 目录修改会影响后面用 <code>configure</code> 生成的 <code>objs/ngx_auto_config.h</code> 的内容。如果没有修改相应的配置文件，则在后面编译之时修改该头文件中相应的定义也行。保险起见，最好从配置文件上进行修改。
 </p>
@@ -4051,17 +4211,23 @@ nginx: [emerg] "worker_processes" directive invalid value in /userdisk/data/opt/
 ...
 </pre></li>
 </ol>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline134"></a>配置<br  /><div class="outline-text-6" id="text-1-7-2-5-3">
+<div id="outline-container-orgheadline142" class="outline-5">
+<h5 id="orgheadline142"><span class="section-number-5">5.2.5.3</span> 配置</h5>
+<div class="outline-text-5" id="text-5-2-5-3">
 <div class="org-src-container">
 
 <pre class="src src-sh">$./configure  --with-openssl=/home/miracle/work/1_inbox/xiaomirouter/test/openssl-1.0.2g --with-pcre=/home/miracle/work/1_inbox/xiaomirouter/test/openssl-1.0.2g --with-http_ssl_module --with-http_dav_module --prefix=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline135"></a>修改Makefile<br  /><div class="outline-text-6" id="text-1-7-2-5-4">
+<div id="outline-container-orgheadline143" class="outline-5">
+<h5 id="orgheadline143"><span class="section-number-5">5.2.5.4</span> 修改Makefile</h5>
+<div class="outline-text-5" id="text-5-2-5-4">
 <div class="org-src-container">
 
 <pre class="src src-sh">$vim objs/Makefile
@@ -4168,9 +4334,12 @@ objs/ngx_modules.o \
 #&amp;&amp; $(MAKE) install LIBDIR=lib
 </pre></li>
 </ol>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline136"></a>交叉编译、安装<br  /><div class="outline-text-6" id="text-1-7-2-5-5">
+<div id="outline-container-orgheadline144" class="outline-5">
+<h5 id="orgheadline144"><span class="section-number-5">5.2.5.5</span> 交叉编译、安装</h5>
+<div class="outline-text-5" id="text-5-2-5-5">
 <div class="org-src-container">
 
 <pre class="src src-sh">$make
@@ -4181,13 +4350,16 @@ $make install
 <p>
 至此，nginx交叉编译、安装完成。
 </p>
-</div></li></ol>
+</div>
+</div>
 </div>
 
-<div id="outline-container-orgheadline143" class="outline-5">
-<h5 id="orgheadline143"><span class="section-number-5">1.7.2.6</span> 部署到小米路由器上的内容</h5>
-<div class="outline-text-5" id="text-1-7-2-6">
-</div><ol class="org-ol"><li><a id="orgheadline138"></a>安装包部署<br  /><div class="outline-text-6" id="text-1-7-2-6-1">
+<div id="outline-container-orgheadline44" class="outline-4">
+<h4 id="orgheadline44"><span class="section-number-4">5.2.6</span> 部署到小米路由器上的内容</h4>
+<div class="outline-text-4" id="text-5-2-6">
+</div><div id="outline-container-orgheadline145" class="outline-5">
+<h5 id="orgheadline145"><span class="section-number-5">5.2.6.1</span> 安装包部署</h5>
+<div class="outline-text-5" id="text-5-2-6-1">
 <p>
 每次升级路由器,都需要重新部署配置文件.
 </p>
@@ -4208,8 +4380,11 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/userdisk/data/opt/usr/local/develop/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/userdisk/data/opt/usr/local/develop/lib/mysql
 </pre>
 </div>
-</div></li>
-<li><a id="orgheadline139"></a>配置文件以及数据库的部署<br  /><div class="outline-text-6" id="text-1-7-2-6-2">
+</div>
+</div>
+<div id="outline-container-orgheadline146" class="outline-5">
+<h5 id="orgheadline146"><span class="section-number-5">5.2.6.2</span> 配置文件以及数据库的部署</h5>
+<div class="outline-text-5" id="text-5-2-6-2">
 <p>
 先给出一个脚本 <code>install.sh</code>, 用来集中描述对配置文件的部署：
 </p>
@@ -4583,9 +4758,12 @@ $chmod 777 -R $PREFIX/tmp
 </pre>
 </div></li>
 </ol>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline140"></a>编写运行脚本<br  /><div class="outline-text-6" id="text-1-7-2-6-3">
+<div id="outline-container-orgheadline147" class="outline-5">
+<h5 id="orgheadline147"><span class="section-number-5">5.2.6.3</span> 编写运行脚本</h5>
+<div class="outline-text-5" id="text-5-2-6-3">
 <p>
 启动脚本主要包括：MySql启动脚本、Php环境启动脚本、以及nginx启动脚本。
 </p>
@@ -5103,9 +5281,12 @@ exit 0
 </pre>
 </div></li>
 </ol>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline141"></a>创建数据库根用户帐号与http帐号<br  /><div class="outline-text-6" id="text-1-7-2-6-4">
+<div id="outline-container-orgheadline148" class="outline-5">
+<h5 id="orgheadline148"><span class="section-number-5">5.2.6.4</span> 创建数据库根用户帐号与http帐号</h5>
+<div class="outline-text-5" id="text-5-2-6-4">
 <p>
 数据库帐号用于登录和操作数据库，http帐号是访问某些Owncloud安装目录子目录数据所需要的帐号。
 </p>
@@ -5126,8 +5307,11 @@ $vim /etc/group
 www-data:x:1024:
 </pre>
 </div>
-</div></li>
-<li><a id="orgheadline142"></a>readme<br  /><div class="outline-text-6" id="text-1-7-2-6-5">
+</div>
+</div>
+<div id="outline-container-orgheadline149" class="outline-5">
+<h5 id="orgheadline149"><span class="section-number-5">5.2.6.5</span> readme</h5>
+<div class="outline-text-5" id="text-5-2-6-5">
 <pre class="example">
 (one time)1. ./install.sh
 3. ./mysql.server start
@@ -5153,13 +5337,14 @@ mkdir /userdisk/data/web/mycloud/oc_data
 mkdir /userdisk/data/usr/local/develop/tmp
 chmod -R 777 /userdisk/data/usr/local/develop/tmp
 </pre>
-</div></li></ol>
+</div>
+</div>
 </div>
 </div>
 
-<div id="outline-container-orgheadline21" class="outline-4">
-<h4 id="orgheadline21"><a id="ID-8a9f336b-8b34-4a69-966d-d8b33c3d9e60"></a><span class="section-number-4">1.7.3</span> 参考资料</h4>
-<div class="outline-text-4" id="text-1-7-3">
+<div id="outline-container-orgheadline45" class="outline-3">
+<h3 id="orgheadline45"><a id="ID-8a9f336b-8b34-4a69-966d-d8b33c3d9e60"></a><span class="section-number-3">5.3</span> 参考资料</h3>
+<div class="outline-text-3" id="text-5-3">
 <p>
 云存储相关：
 seafile:开源，部分收费（比如目录选择性同步、搜索、文件读写控制）,服务还不错，界面比较简陋。
@@ -5233,632 +5418,16 @@ nginx配置相关
 </div>
 </div>
 </div>
+
+
+<div id="outline-container-orgheadline46" class="outline-2">
+<h2 id="orgheadline46"><a id="ID-41a0f28c-65fa-4092-93e1-1562271e1702"></a><span class="section-number-2">6</span> 小米路由器上使用 <code>git</code> 版本控制系统</h2>
+<div class="outline-text-2" id="text-6">
 </div>
 
-
-<div id="outline-container-orgheadline22" class="outline-2">
-<h2 id="orgheadline22"><span class="section-number-2">2</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[11/19]</code> <code>[57%]</code></h2>
-<div class="outline-text-2" id="text-2">
-<ul class="org-ul">
-<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-04-07 四 18:52] </span></span> <br  />
-wait for all resolved.</li>
-</ul>
-</div>
-<div id="outline-container-orgheadline23" class="outline-3">
-<h3 id="orgheadline23"><span class="section-number-3">2.1</span> <span class="done DONE">DONE</span> 小米路由如何开启ssh?</h3>
-<div class="outline-text-3" id="text-2-1">
-<ul class="org-ul">
-<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 18:21]</span></span></li>
-<li>State "WAIT/FORWARD" from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2016-04-07 四 18:58] </span></span> <br  />
-等待整理。</li>
-<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-03-14 一 17:12]</span></span></li>
-</ul>
-<p>
-Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-02 三 14:56]</span></span>
-</p>
-<hr  />
-<p>
-开启ssh可以本地局域网登录的方法，参考：<a href="#orgheadline2">小米路由器ssh开启</a>
-</p>
-
-<p>
-官网：
-<a href="http://www.miwifi.com/miwifi_open.html">http://www.miwifi.com/miwifi_open.html</a>
-</p>
-
-<p>
-外网访问参考：
-<a href="http://jingyan.baidu.com/article/9113f81b3a5d982b3314c74a.html?st=3&amp;net_type=2&amp;bd_page_type=1&amp;os=0&amp;showimg=1&amp;rst=6">http://jingyan.baidu.com/article/9113f81b3a5d982b3314c74a.html?st=3&amp;net_type=2&amp;bd_page_type=1&amp;os=0&amp;showimg=1&amp;rst=6</a>
-</p>
-
-<p>
-如果实现公网访问，需要开启防火墙端口。
-</p>
-</div>
-
-<div id="outline-container-orgheadline24" class="outline-4">
-<h4 id="orgheadline24"><span class="section-number-4">2.1.1</span> 下面内容仅参考暂不用</h4>
-<div class="outline-text-4" id="text-2-1-1">
-<p>
-小米路由器mini如何设置外网访问ssh
-</p>
-
-<p>
-关键是
-修改 <code>/etc/config/firewall</code>
-</p>
-<pre class="example">
-# port redirect of remapped ssh port (22001) on wan
-config redirect 'myssh'       
-option src              wan       
-option src_dport        22001       
-option dest             lan       
-option dest_port        22       
-option proto            tcp
-</pre>
-
-<p>
-重启防火墙 <code>/etc/init.d/firewall restart</code>
-</p>
-
-<p>
-登录： <code>ssh -p 10022 root@&lt;ip&gt;</code>
-</p>
-
-<p>
-远程传输： <code>scp -P 10022 &lt;file&gt; root@&lt;ip&gt;:&lt;path&gt;</code>
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgheadline25" class="outline-3">
-<h3 id="orgheadline25"><span class="section-number-3">2.2</span> <span class="done DONE">DONE</span> 小米路由器防火墙如何配置?</h3>
-<div class="outline-text-3" id="text-2-2">
-<ul class="org-ul">
-<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-04-13 三 19:35]</span></span></li>
-<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-03-28 一 11:27] </span></span> <br  />
-wait for more organize.</li>
-<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2016-03-15 二 09:38]</span></span></li>
-</ul>
-
-<p>
-参见：<a href="#orgheadline6">小米路由器防火墙配置</a>
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgheadline26" class="outline-3">
-<h3 id="orgheadline26"><span class="section-number-3">2.3</span> <span class="done DONE">DONE</span> 小米路由如何添加域名访问？</h3>
-<div class="outline-text-3" id="text-2-3">
-<ul class="org-ul">
-<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-04-13 三 19:42]</span></span></li>
-</ul>
-<p>
-Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-02 三 14:56]</span></span>
-</p>
-<hr  />
-<p>
-首先申请dns域名，然后将之与ip关联，但是由于ip地址不固定，所以需要使用ddns服务。参见：<a href="#orgheadline10">小米路由器添加ddns</a>
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgheadline27" class="outline-3">
-<h3 id="orgheadline27"><a id="ID-c3532fb4-fe93-448b-be0c-a7f443999174"></a><span class="section-number-3">2.4</span> <span class="done DONE">DONE</span> 小米路由器交叉编译环境配置</h3>
-<div class="outline-text-3" id="text-2-4">
-<ul class="org-ul">
-<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:23]</span></span></li>
-<li>State "WAIT/FORWARD" from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 11:42] </span></span> <br  />
-wait for arrange.</li>
-<li>State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-07-26 二 16:59]</span></span></li>
-</ul>
-
-<p>
-参考：<a href="#orgheadline17">小米路由器交叉编译环境配置</a>
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgheadline28" class="outline-3">
-<h3 id="orgheadline28"><span class="section-number-3">2.5</span> <span class="done DONE">DONE</span> 如何使用软件管理工具管理小米路由上的软件?</h3>
-<div class="outline-text-3" id="text-2-5">
-<ul class="org-ul">
-<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 18:19]</span></span></li>
-</ul>
-<p>
-Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-04 五 18:28]</span></span>
-</p>
-<hr  />
-<p>
-小米路由器是openwrt的系统，可借助opkg工具，参考：<a href="#orgheadline12">使用opkg在小米路由器软件管理</a>
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgheadline29" class="outline-3">
-<h3 id="orgheadline29"><a id="ID-c4e46793-af9e-4f13-ba43-f609a121c196"></a><span class="section-number-3">2.6</span> <span class="done DONE">DONE</span> 开启ssh后无法获得系统文件夹写入权限?</h3>
-<div class="outline-text-3" id="text-2-6">
-<ul class="org-ul">
-<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:25]</span></span></li>
-<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-05 五 17:21] </span></span> <br  />
-wait for more.</li>
-</ul>
-
-<p>
-参考：<a href="#orgheadline5">访问文件系统权限</a>
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgheadline30" class="outline-3">
-<h3 id="orgheadline30"><span class="section-number-3">2.7</span> <span class="done DONE">DONE</span> 在小米路由器上搭建基于LNMP的Owncloud云平台</h3>
-<div class="outline-text-3" id="text-2-7">
-<ul class="org-ul">
-<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:37]</span></span></li>
-<li>State "WAIT/FORWARD" from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 16:45] </span></span> <br  />
-wait for arrange.</li>
-<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 16:45]</span></span></li>
-</ul>
-<p>
-Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-04 五 19:55]</span></span>
-</p>
-<hr  />
-
-<p>
-注，Owncloud功能比较全面，但是也相对不是很稳定，而且感觉消耗资源。对于资源紧张的小米路由器，目前已经不考虑用其做为主要云服务器。暂时用git来满足分布访问的需求。直接考虑的方式，获取有更好的能替代Owncloud的方式。
-</p>
-
-<p>
-参考：<a href="#orgheadline18">在小米路由器上搭建基于LNMP的Owncloud云平台</a>
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgheadline31" class="outline-3">
-<h3 id="orgheadline31"><span class="section-number-3">2.8</span> <span class="done CANCEL">CANCEL</span> Myowncloud</h3>
-<div class="outline-text-3" id="text-2-8">
-<ul class="org-ul">
-<li>State "CANCEL"     from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:33] </span></span> <br  />
-Owncloud不稳定，数据虽然不会丢失，但是有时也很麻烦，已经不采用，此处仅供参考。</li>
-<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:32] </span></span> <br  />
-wait for arrange.</li>
-</ul>
-
-<p>
-注，Owncloud功能比较全面，但是也相对不是很稳定，而且感觉消耗资源。对于资源紧张的小米路由器，目前已经不考虑用其做为主要云服务器。暂时用git来满足分布访问的需求。直接考虑的方式，获取有更好的能替代Owncloud的方式。
-</p>
-</div>
-
-<div id="outline-container-orgheadline32" class="outline-4">
-<h4 id="orgheadline32"><span class="section-number-4">2.8.1</span> site: &lt;暂不可用&gt;</h4>
-</div>
-<div id="outline-container-orgheadline33" class="outline-4">
-<h4 id="orgheadline33"><span class="section-number-4">2.8.2</span> step</h4>
-<div class="outline-text-4" id="text-2-8-2">
-</div><div id="outline-container-orgheadline150" class="outline-5">
-<h5 id="orgheadline150"><span class="section-number-5">2.8.2.1</span> 安装apache(pc)</h5>
-<div class="outline-text-5" id="text-2-8-2-1">
-<p>
-这里，安装apache之前需要安装组件：apr,apr-util,pcre，最后再安装httpd。
-</p>
-
-<p>
-这里，发现nginx更适合，所以不用apache了。
-</p>
-</div>
-
-<ol class="org-ol"><li><a id="orgheadline144"></a>下载<br  /><div class="outline-text-6" id="text-2-8-2-1-1">
-<div class="org-src-container">
-
-<pre class="src src-sh">$ wget -c http://apache.opencas.org//httpd/httpd-2.4.18.tar.bz2
-$ wget -c http://mirrors.cnnic.cn/apache//apr/apr-1.5.2.tar.bz2
-$ wget -c http://apache.opencas.org//apr/apr-util-1.5.4.tar.gz
-$ wget -c ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
-</pre>
-</div>
-</div></li>
-
-<li><a id="orgheadline145"></a>安装<br  /><div class="outline-text-6" id="text-2-8-2-1-2">
-<div class="org-src-container">
-
-<pre class="src src-sh">$sudo ./configure --prefix=/usr/local/development/apr-1.5.2
-$sudo make
-$sudo make install
-
-$sudo ./configure --prefix=/usr/local/development/apr-util-1.5.4 --with-apr=/usr/local/development/apr-1.5.2
-$sudo make
-$sudo make install
-
-$sudo ./configure --prefix=/usr/local/development/pcre-8.38 --with-apr=/usr/local/development/apr-1.5.2 --with-apr-util=/usr/local/development/apr-util-1.5.4
-$sudo make
-$sudo make install
-
-$sudo ./configure --prefix=/usr/local/development/httpd-2.4.18 --enable-so --enable-mods-shared=all --with-apr=/usr/local/development/apr-1.5.2 --with-apr-util=/usr/local/development/apr-util-1.5.4 --with-pcre=/usr/local/development/pcre-8.38
-$sudo make
-$sudo make install
-$sudo ln -s /usr/local/development/httpd-2.4.18/bin/apachectl /etc/init.d
-</pre>
-</div>
-</div></li>
-
-<li><a id="orgheadline146"></a>启动<br  /><div class="outline-text-6" id="text-2-8-2-1-3">
-<div class="org-src-container">
-
-<pre class="src src-sh">$sudo /etc/init.d/apachectl start
-</pre>
-</div>
-</div></li>
-
-<li><a id="orgheadline147"></a>调试<br  /><div class="outline-text-6" id="text-2-8-2-1-4">
-<p>
-如果启动出现如下两个错误：
-</p>
-<pre class="example">
-miracle@miracle-Zhaoyang-E49:~/myinstalled/httpd-2.4.18$ sudo /etc/init.d/apachectl start
-AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to sup
-press this message
-(98)Address already in use: AH00072: make_sock: could not bind to address 0.0.0.0:80
-no listening sockets available, shutting down
-AH00015: Unable to open logs
-</pre>
-
-<p>
-那么
-第一个问题：修改 <code>/usr/local/development/httpd-2.4.18/conf/httpd.conf</code>, 添加 <code>ServerName localhost:80</code>.
-第二个问题：应该是端口被占用，可能启动了其他apache，可以如下修改  <code>/usr/local/development/httpd-2.4.18/conf/httpd.conf</code>
-</p>
-<pre class="example">
-Listen 90
-ServerName localhost:90
-</pre>
-</div></li>
-
-<li><a id="orgheadline148"></a>访问<br  /><div class="outline-text-6" id="text-2-8-2-1-5">
-<p>
-基于如上配置，打开浏览器，地址栏键入 <code>localhost:90</code> 看到 "It works!" 即表示成功。
-</p>
-</div></li>
-
-<li><a id="orgheadline149"></a>配置<br  /></li></ol>
-</div>
-
-<div id="outline-container-orgheadline161" class="outline-5">
-<h5 id="orgheadline161"><span class="section-number-5">2.8.2.2</span> 安装nginx(xiaomirouter)</h5>
-<div class="outline-text-5" id="text-2-8-2-2">
-<p>
-<code>cd ~/xiaomirouter</code>
-</p>
-</div>
-<ol class="org-ol"><li><a id="orgheadline151"></a>下载<br  /><div class="outline-text-6" id="text-2-8-2-2-1">
-<div class="org-src-container">
-
-<pre class="src src-sh">$wget -c http://bigota.miwifi.com/xiaoqiang/sdk/tools/package/sdk_package.zip
-$wget -c http://nginx.org/download/nginx-1.8.1.tar.gz
-$wget -c http://www.openssl.org/source/openssl-1.0.2g.tar.gz
-$wget -c http://mirrors.cnnic.cn/apache//apr/apr-1.5.2.tar.bz2
-$wget -c http://apache.opencas.org//apr/apr-util-1.5.4.tar.gz
-$wget -c ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
-#$wget -c http://nchc.dl.sourceforge.net/project/libpng/zlib/1.2.8/zlib-1.2.8.tar.gz
-</pre>
-</div>
-</div></li>
-
-<li><a id="orgheadline152"></a>配置交叉编译工具环境<br  /><div class="outline-text-6" id="text-2-8-2-2-2">
-<div class="org-src-container">
-
-<pre class="src src-sh">$export PATH=~/xiaomirouter/test/sdk_package/toolchain/bin:$PATH
-$export CUSTOM_PREFIX=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop
-</pre>
-</div>
-</div></li>
-
-<li><a id="orgheadline154"></a>交叉编译<br  /><ol class="org-ol"><li><a id="orgheadline153"></a>openssl<br  /><div class="outline-text-7" id="text-2-8-2-2-3-1">
-<div class="org-src-container">
-
-<pre class="src src-sh">$tar -xzvf openssl-1.0.2g.tar.gz
-$export CROSS_COMPILE=arm-xiaomi-linux-uclibcgnueabi-
-$cd openssl-1.0.2g
-./config no-asm shared --prefix=$CUSTOM_PREFIX/openssl-1.0.2g
-$vim Makefile
-...
-#SHARED_LDFLAGS=-m64
-...
-#CC= gcc
-CC= arm-xiaomi-linux-uclibcgnueabi-gcc
-#CFLAG= -fPIC -DOPENSSL_PIC -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -m64 -DL_ENDIAN -O3 -Wall
-CFLAG= -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -DOPENSSL_NO_KRB5 -DL_ENDIAN -O3 -Wall
-DEPFLAG= -DOPENSSL_NO_EC_NISTP_64_GCC_128 -DOPENSSL_NO_GMP -DOPENSSL_NO_JPAKE -DOPENSSL_NO_LIBUNBOUND -DOPENSSL_NO_MD2 -DOPENSSL_NO_RC5 -DOPENSSL_NO_RFC3779 -DOPENSSL_NO_SCTP -DOPENSSL_NO_SSL_TRACE -DOPENSSL_NO_SSL2 -DOPENSSL_NO_STORE -DOPENSSL_NO_UNIT_TEST -DOPENSSL_NO_WEAK_SSL_CIPHERS
-PEX_LIBS= 
-EX_LIBS= -ldl
-EXE_EXT= 
-ARFLAGS= 
-#AR= ar $(ARFLAGS) r
-AR= arm-xiaomi-linux-uclibcgnueabi-ar $(ARFLAGS) r
-#RANLIB= /usr/bin/ranlib
-RANLIB= arm-xiaomi-linux-uclibcgnueabi-ranlib
-#NM= nm
-NM= arm-xiaomi-linux-uclibcgnueabi-nm
-PERL= /usr/bin/perl
-TAR= tar
-TARFLAGS= --no-recursion
-MAKEDEPPROG= gcc
-LIBDIR=lib
-...
-$make depend
-$make
-$make install
-</pre>
-</div>
-
-<p>
-<a href="http://blog.csdn.net/zy799894671/article/details/22289039">http://blog.csdn.net/zy799894671/article/details/22289039</a>
-</p>
-</div></li></ol></li>
-<li><a id="orgheadline156"></a>其他<br  /><ol class="org-ol"><li><a id="orgheadline155"></a>安装<br  /><div class="outline-text-7" id="text-2-8-2-2-4-1">
-<p>
-只指定安装路径，没有其他选项
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-sh">$sudo ./configure --prefix=/usr/local/development/nginx-1.8.1
-$sudo make
-$sudo make install
-</pre>
-</div>
-
-<p>
-加入 <code>openssl</code> 的编译：
-</p>
-<div class="org-src-container">
-
-<pre class="src src-sh">$./configure --prefix=/usr/local/development/nginx-1.8.1 --with-openssl=/home/miracle/myinstalled/openssl-1.0.2g --with-http_ssl_module
-$sudo make
-</pre>
-</div>
-
-<p>
-这里做 <code>sudo make</code> 的时候会自动编译ssl，如果手动编译ssl的话，那么大致如下：
-</p>
-<div class="org-src-container">
-
-<pre class="src src-sh">$sudo ./config --prefix=/usr/local/development/openssl-1.0.2g
-$sudo make depend
-$sudo make
-$sudo make install
-</pre>
-</div>
-
-<p>
-参考：<a href="http://www.cnblogs.com/skynet/p/4146083.html">http://www.cnblogs.com/skynet/p/4146083.html</a>
-卸载只需要将 <code>/usr/local/develop/nginx-1.8.1</code> 删除即可。
-</p>
-</div></li></ol></li>
-<li><a id="orgheadline157"></a>配置<br  /><div class="outline-text-6" id="text-2-8-2-2-5">
-<ul class="org-ul">
-<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2016-03-29 二 18:37]</span></span></li>
-</ul>
-<p>
-配置文件在 <code>/usr/local/development/nginx-1.8.1/conf</code> 下。
-</p>
-</div></li>
-
-<li><a id="orgheadline158"></a>启动<br  /><div class="outline-text-6" id="text-2-8-2-2-6">
-<p>
-直接运行 <code>./nginx</code>
-</p>
-
-<p>
-修改配置后 <code>./nginx -s reload</code>
-</p>
-
-<p>
-更多内容 <code>./nginx -h</code>
-</p>
-</div></li>
-
-<li><a id="orgheadline159"></a>文档<br  /><div class="outline-text-6" id="text-2-8-2-2-7">
-<p>
-<a href="http://nginx.org/en/docs/">http://nginx.org/en/docs/</a>
-</p>
-</div></li>
-
-<li><a id="orgheadline160"></a>Misc<br  /><div class="outline-text-6" id="text-2-8-2-2-8">
-<p>
-openssl
-</p>
-<div class="org-src-container">
-
-<pre class="src src-sh">$sudo ./config --prefix=/usr/local/development/openssl-1.0.2g
-$sudo make depend
-$sudo make install
-</pre>
-</div>
-</div></li></ol>
-</div>
-<div id="outline-container-orgheadline162" class="outline-5">
-<h5 id="orgheadline162"><span class="section-number-5">2.8.2.3</span> 安装php5.4</h5>
-<div class="outline-text-5" id="text-2-8-2-3">
-<p>
-这一步要放在安装完apache之后。
-</p>
-<div class="org-src-container">
-
-<pre class="src src-sh">$ sudo add-apt-repository ppa:ondrej/php5
-$ sudo apt-get update
-$ sudo apt-get install php5-cli php5-fpm php-pear php5-mysql libcurl4-openssl-dev
-#$ sudo pecl install pecl_http  # Update /etc/php5/fpm/php.ini and /etc/php5/cli/php.ini with http.so
-$ php -v
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-orgheadline166" class="outline-5">
-<h5 id="orgheadline166"><span class="section-number-5">2.8.2.4</span> 源码安装php</h5>
-<div class="outline-text-5" id="text-2-8-2-4">
-</div><ol class="org-ol"><li><a id="orgheadline163"></a>openssl<br  /><div class="outline-text-6" id="text-2-8-2-4-1">
-<p>
-<a href="http://www.openssl.org/source/openssl-1.0.2g.tar.gz">http://www.openssl.org/source/openssl-1.0.2g.tar.gz</a>
-./config &#x2013;prefix=/usr/local/develop/openssl-1.0.2g
-sudo make depend
-sudo make 
-sudo make install
-</p>
-</div></li>
-<li><a id="orgheadline164"></a>depend library<br  /><div class="outline-text-6" id="text-2-8-2-4-2">
-<p>
-sudo apt-get install libxml2
-sudo apt-get install libxml2-dev
-sudo apt-get install libxml2-utils
-sudo apt-get install libcurl3
-sudo apt-get install libcurl
-sudo apt-get install libcurl4-gnutls-dev
-</p>
-</div></li>
-<li><a id="orgheadline165"></a>php<br  /><div class="outline-text-6" id="text-2-8-2-4-3">
-<p>
-<a href="http://php.net/downloads.php">http://php.net/downloads.php</a>
-./configure &#x2013;prefix=/usr/local/develop/php-5.6.19 &#x2013;with-config-file-path=/usr/local/develop/php-5.6.19/etc &#x2013;enable-fpm &#x2013;with-fpm-user=www-data &#x2013;with-fpm-group=www-data &#x2013;with-mysql=mysqlnd &#x2013;with-mysqli=mysqlnd &#x2013;with-pdo-mysql=mysqlnd &#x2013;with-iconv-dir &#x2013;with-freetype-dir &#x2013;with-jpeg-dir &#x2013;with-png-dir &#x2013;with-zlib &#x2013;with-libxml-dir=/usr &#x2013;enable-xml &#x2013;disable-rpath &#x2013;enable-magic-quotes &#x2013;enable-safe-mode &#x2013;enable-bcmath &#x2013;enable-shmop &#x2013;enable-sysvsem &#x2013;enable-inline-optimization &#x2013;with-curl &#x2013;with-curlwrappers &#x2013;enable-mbregex &#x2013;enable-mbstring &#x2013;with-mcrypt &#x2013;enable-ftp &#x2013;with-gd &#x2013;enable-gd-native-ttf &#x2013;with-openssl=/usr/local/develop/openssl-1.0.2g &#x2013;with-mhash &#x2013;enable-pcntl &#x2013;enable-sockets &#x2013;with-xmlrpc &#x2013;enable-zip &#x2013;enable-soap &#x2013;without-pear &#x2013;with-gettext &#x2013;disable-fileinfo
-</p>
-
-<p>
-sudo make
-sudo make install
-</p>
-</div></li></ol>
-</div>
-</div>
-<div id="outline-container-orgheadline34" class="outline-4">
-<h4 id="orgheadline34"><span class="section-number-4">2.8.3</span> refer</h4>
-<div class="outline-text-4" id="text-2-8-3">
-<p>
-<a href="http://wiki.openwrt.org/doc/howto/owncloud">ownCloud on OpenWrt</a>
-</p>
-
-<p>
-<a href="http://www.cnblogs.com/qkcan/archive/2012/08/05/2623994.html">ubuntu 12.04 PHP5.4安装</a>
-</p>
-
-<p>
-<a href="http://www.linuxidc.com/Linux/2012-09/70518.htm">Ubuntu 12.04 下安装Apache 2.4.2</a>
-</p>
-
-<p>
-<a href="http://blog.sina.com.cn/s/blog_61d0b6cd010119a8.html">Ubuntu10.04下编译安装apache-2.4.2版本</a>
-</p>
-</div>
-</div>
-</div>
-<div id="outline-container-orgheadline35" class="outline-3">
-<h3 id="orgheadline35"><span class="section-number-3">2.9</span> <span class="done CANCEL">CANCEL</span> owncloud升级</h3>
-<div class="outline-text-3" id="text-2-9">
-<ul class="org-ul">
-<li>State "CANCEL"     from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:34] </span></span> <br  />
-Owncloud不稳定，数据虽然不会丢失，但是有时也很麻烦，已经不采用，此处仅供参考。</li>
-<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:29] </span></span> <br  />
-wait for try.</li>
-<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:29]</span></span></li>
-</ul>
-<p>
-下载,注意将 <code>https://</code> 改成 <code>http://</code>
-</p>
-<div class="org-src-container">
-
-<pre class="src src-sh">$wget -c http://download.owncloud.org/community/owncloud-9.0.2.tar.bz2
-</pre>
-</div>
-
-<ol class="org-ol">
-<li>停用所有第三方app.</li>
-<li><code>rsync --inplace -rtv owncloud_latest/owncloud/ owncloud/</code></li>
-</ol>
-
-<p>
-php -c <i>userdisk/opt/usr/local/develop/etc</i> occ maintenance:mimetype:update-db
-php -c <i>userdisk/opt/usr/local/develop/etc</i> occ maintenance:mimetype:update-js
-php -c <i>userdisk/opt/usr/local/develop/etc</i> occ upgrade
-</p>
-
-<p>
-参考:
-</p>
-
-<p>
-<a href="https://teddysun.com/211.html">https://teddysun.com/211.html</a>
-</p>
-
-<p>
-<a href="https://www.librehat.com/the-owncloud-upgrade-prolonged-stagnation-maintance-solution/">https://www.librehat.com/the-owncloud-upgrade-prolonged-stagnation-maintance-solution/</a>
-</p>
-</div>
-</div>
-
-
-<div id="outline-container-orgheadline36" class="outline-3">
-<h3 id="orgheadline36"><span class="section-number-3">2.10</span> <span class="done CANCEL">CANCEL</span> owncloud issue</h3>
-<div class="outline-text-3" id="text-2-10">
-<ul class="org-ul">
-<li>State "CANCEL"     from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:34] </span></span> <br  />
-Owncloud不稳定，数据虽然不会丢失，但是有时也很麻烦，已经不采用，此处仅供参考。</li>
-<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:29]</span></span></li>
-</ul>
-<p>
-Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-04-28 四 13:46]</span></span>
-</p>
-<hr  />
-<p>
-同步总是发生错误,其中之一是文件大小过大.
-</p>
-
-<p>
-无法上传大文件的错误:
-上传大文件的错误:
-</p>
-<pre class="example">
-Request Entity Too Large
-</pre>
-<p>
-<a href="https://forum.owncloud.org/viewtopic.php?f=17&amp;t=7733">https://forum.owncloud.org/viewtopic.php?f=17&amp;t=7733</a>
-</p>
-
-<p>
-无法上传文件的错误:
-上传文件出现类似如下错误:
-</p>
-<pre class="example">
-An exception occurred while executing 'INSERT INTO `oc_filecache` (`mimepart`,`mimetype`,`mtime`,`size`,`etag`,`storage_mtime`,`permissions`,`parent`,`path_hash`,`path`,`name`,`storage`) SELECT ?,?,?,?,?,?,?,?,?,?,?,? FROM `oc_filecache` WHERE `storage` = ? AND `path_hash` = ? HAVING COUNT(*) = 0' with params ["8", "18", 1461910752, 1250, "d73b2a5f54292c00fbe81872c61e9381", 1461910752, 27, "19", "04cf4abd8d26a455196d8cf88cab5fe0", "files\/Documents\/\u6587\u4ef6\u7ba1\u7406.md", "\u6587\u4ef6\u7ba1\u7406.md", "3", "3", "04cf4abd8d26a455196d8cf88cab5fe0"]: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '17101' for key 'PRIMARY'
-</pre>
-<p>
-网上说是因为某些用户垃圾箱文件太多导致,清空垃圾箱即可,最好定时清空垃圾箱.?貌似还是不行?
- <a href="http://github.com/owncloud/core/issues/12591">http://github.com/owncloud/core/issues/12591</a>
-</p>
-
-<pre class="example">
-i've tracked the files down in this message, and it belongs to a user who has about 6500 files in his trashbin.
-Retention was at 30 days, I've lowered it to 7, to see if that helps, but it deletes only 1 file every 10 seconds or so, so that will take weeks...
-I had to restart the mysql server twice now to prevent bigger problems.
-</pre>
-
-<p>
-<a href="https://github.com/owncloud/core/issues/17887">https://github.com/owncloud/core/issues/17887</a>
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgheadline37" class="outline-3">
-<h3 id="orgheadline37"><a id="ID-41a0f28c-65fa-4092-93e1-1562271e1702"></a><span class="section-number-3">2.11</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 小米路由器 <code>git</code> 源码交叉编译</h3>
-<div class="outline-text-3" id="text-2-11">
-<ul class="org-ul">
-<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-07-26 二 17:05] </span></span> <br  />
-wait for refile.</li>
-<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2016-06-12 日 16:59]</span></span></li>
-</ul>
-</div>
-
-<div id="outline-container-orgheadline38" class="outline-4">
-<h4 id="orgheadline38"><span class="section-number-4">2.11.1</span> 下载 <code>git</code> 源码</h4>
-<div class="outline-text-4" id="text-2-11-1">
+<div id="outline-container-orgheadline47" class="outline-3">
+<h3 id="orgheadline47"><span class="section-number-3">6.1</span> 下载 <code>git</code> 源码</h3>
+<div class="outline-text-3" id="text-6-1">
 <div class="org-src-container">
 
 <pre class="src src-sh">$wget --no-check-certificate -c https://codeload.github.com/git/git/tar.gz/v2.8.2
@@ -5867,9 +5436,9 @@ wait for refile.</li>
 </div>
 </div>
 
-<div id="outline-container-orgheadline39" class="outline-4">
-<h4 id="orgheadline39"><span class="section-number-4">2.11.2</span> 非交叉编译过程</h4>
-<div class="outline-text-4" id="text-2-11-2">
+<div id="outline-container-orgheadline48" class="outline-3">
+<h3 id="orgheadline48"><span class="section-number-3">6.2</span> 非交叉编译 <code>git</code> 过程</h3>
+<div class="outline-text-3" id="text-6-2">
 <p>
 先了解一下非交叉编译的过程，再进行交叉编译。
 </p>
@@ -5918,21 +5487,21 @@ $make all
 </div>
 </div>
 
-<div id="outline-container-orgheadline40" class="outline-4">
-<h4 id="orgheadline40"><span class="section-number-4">2.11.3</span> 交叉编译</h4>
-<div class="outline-text-4" id="text-2-11-3">
-</div><div id="outline-container-orgheadline167" class="outline-5">
-<h5 id="orgheadline167"><span class="section-number-5">2.11.3.1</span> 配置交叉编译环境路径</h5>
-<div class="outline-text-5" id="text-2-11-3-1">
+<div id="outline-container-orgheadline49" class="outline-3">
+<h3 id="orgheadline49"><span class="section-number-3">6.3</span> 交叉编译 <code>git</code></h3>
+<div class="outline-text-3" id="text-6-3">
+</div><div id="outline-container-orgheadline50" class="outline-4">
+<h4 id="orgheadline50"><span class="section-number-4">6.3.1</span> 配置交叉编译环境路径</h4>
+<div class="outline-text-4" id="text-6-3-1">
 <p>
-参考：<a href="#orgheadline27">小米路由器交叉编译环境配置</a>
+参考：<a href="#orgheadline63">小米路由器交叉编译环境配置</a>
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline168" class="outline-5">
-<h5 id="orgheadline168"><span class="section-number-5">2.11.3.2</span> 生成配置脚本</h5>
-<div class="outline-text-5" id="text-2-11-3-2">
+<div id="outline-container-orgheadline51" class="outline-4">
+<h4 id="orgheadline51"><span class="section-number-4">6.3.2</span> 生成配置脚本</h4>
+<div class="outline-text-4" id="text-6-3-2">
 <div class="org-src-container">
 
 <pre class="src src-sh">$tar -xzvf git-2.8.2.tar.gz
@@ -5972,9 +5541,9 @@ $./configure --host=arm-xiaomi-linux-uclibcgnueabi --prefix=/home/miracle/work/1
 </div>
 </div>
 
-<div id="outline-container-orgheadline169" class="outline-5">
-<h5 id="orgheadline169"><span class="section-number-5">2.11.3.3</span> 编译、安装</h5>
-<div class="outline-text-5" id="text-2-11-3-3">
+<div id="outline-container-orgheadline52" class="outline-4">
+<h4 id="orgheadline52"><span class="section-number-4">6.3.3</span> 编译、安装</h4>
+<div class="outline-text-4" id="text-6-3-3">
 <div class="org-src-container">
 
 <pre class="src src-sh">$make all
@@ -6000,9 +5569,9 @@ $make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline170" class="outline-5">
-<h5 id="orgheadline170"><span class="section-number-5">2.11.3.4</span> 部署与配置</h5>
-<div class="outline-text-5" id="text-2-11-3-4">
+<div id="outline-container-orgheadline53" class="outline-4">
+<h4 id="orgheadline53"><span class="section-number-4">6.3.4</span> 部署与配置</h4>
+<div class="outline-text-4" id="text-6-3-4">
 <p>
 由于编译、安装时本地目录与部署的目录不同，运行的时候可能会出现各种问题。建议本地安装的目录和部署目录尽量一致。(考虑 <code>chroot</code> ?)
 </p>
@@ -6088,7 +5657,7 @@ $git config init.templatedir /userdisk/data/opt/usr/local/develop/share/git-core
 </div>
 
 <p>
-参考：<a href="#orgheadline29">开启ssh后无法获得系统文件夹写入权限?</a>
+参考：<a href="#orgheadline65">开启ssh后无法获得系统文件夹写入权限?</a>
 </p></li>
 </ol>
 
@@ -6114,19 +5683,29 @@ $git config --global user.email "vaqeteart@qq.com"
 </div>
 </div>
 
-<div id="outline-container-orgheadline180" class="outline-5">
-<h5 id="orgheadline180"><span class="section-number-5">2.11.3.5</span> FAQ</h5>
-<div class="outline-text-5" id="text-2-11-3-5">
-</div><ol class="org-ol"><li><a id="orgheadline171"></a><span class="done DONE">DONE</span> fatal: Unable to find remote helper for 'https'<br  /><div class="outline-text-6" id="text-2-11-3-5-1">
+<div id="outline-container-orgheadline54" class="outline-4">
+<h4 id="orgheadline54"><span class="section-number-4">6.3.5</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[%]</code><code>[/]</code></h4>
+<div class="outline-text-4" id="text-6-3-5">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-09 二 15:36] </span></span> <br  />
+wait for all done.</li>
+</ul>
+</div>
+<div id="outline-container-orgheadline150" class="outline-5">
+<h5 id="orgheadline150"><span class="section-number-5">6.3.5.1</span> <span class="done DONE">DONE</span> fatal: Unable to find remote helper for 'https'</h5>
+<div class="outline-text-5" id="text-6-3-5-1">
 <ul class="org-ul">
 <li>State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-07-27 三 09:24]</span></span></li>
 </ul>
 <p>
 添加路径: <code>export PATH=$PATH:/userdisk/data/opt/usr/local/develop/libexec/git-core</code>
 </p>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline172"></a><span class="done DONE">DONE</span> warning: templates not found /home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/share/git-core/templates<br  /><div class="outline-text-6" id="text-2-11-3-5-2">
+<div id="outline-container-orgheadline151" class="outline-5">
+<h5 id="orgheadline151"><span class="section-number-5">6.3.5.2</span> <span class="done DONE">DONE</span> warning: templates not found /home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/share/git-core/templates</h5>
+<div class="outline-text-5" id="text-6-3-5-2">
 <ul class="org-ul">
 <li>State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-07-27 三 09:24]</span></span></li>
 </ul>
@@ -6139,9 +5718,12 @@ or in config file:
 [init]
      templatedir = /userdisk/data/opt/usr/local/develop/share/git-core/templates
 </pre>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline173"></a><a id="ID-c7960eeb-4799-49d8-93f6-53c696cb1303"></a><span class="done DONE">DONE</span> Protocol "https" not supported or disabled in libcurl<br  /><div class="outline-text-6" id="text-2-11-3-5-3">
+<div id="outline-container-orgheadline152" class="outline-5">
+<h5 id="orgheadline152"><a id="ID-c7960eeb-4799-49d8-93f6-53c696cb1303"></a><span class="section-number-5">6.3.5.3</span> <span class="done DONE">DONE</span> Protocol "https" not supported or disabled in libcurl</h5>
+<div class="outline-text-5" id="text-6-3-5-3">
 <ul class="org-ul">
 <li>State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-07-27 三 09:24]</span></span></li>
 </ul>
@@ -6161,9 +5743,12 @@ or in config file:
 <p>
 注意，编译 <code>libcurl</code> 如果出现无法链接 <code>libssl.a</code>, 需要加入 <code>-fPIC</code> 重新编译 <code>openssl</code>, 编译完成之后，运行 <code>curl --version</code> 即可看到支持不支持 <code>https</code> 。
 </p>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline174"></a>xiaomi路由器上建立一个本地仓库后，最好用什么配置做为默认的本地仓库配置？<br  /><div class="outline-text-6" id="text-2-11-3-5-4">
+<div id="outline-container-orgheadline153" class="outline-5">
+<h5 id="orgheadline153"><span class="section-number-5">6.3.5.4</span> xiaomi路由器上建立一个本地仓库后，最好用什么配置做为默认的本地仓库配置？</h5>
+<div class="outline-text-5" id="text-6-3-5-4">
 <p>
 如下：
 </p>
@@ -6174,9 +5759,14 @@ $git config http.sslVerify false
 $git config receive.denycurrentbranch ignore
 </pre>
 </div>
-</div></li>
-<li><a id="orgheadline175"></a><span class="todo NEXT">NEXT</span> SSL certificate problem: unable to get local issuer certificate<br  /><div class="outline-text-6" id="text-2-11-3-5-5">
+</div>
+</div>
+<div id="outline-container-orgheadline154" class="outline-5">
+<h5 id="orgheadline154"><span class="section-number-5">6.3.5.5</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> SSL certificate problem: unable to get local issuer certificate</h5>
+<div class="outline-text-5" id="text-6-3-5-5">
 <ul class="org-ul">
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-09 二 15:34] </span></span> <br  />
+wair for more secury method.</li>
 <li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-07-27 三 09:24]</span></span></li>
 
 <li><p>
@@ -6200,10 +5790,14 @@ $git -c init.templatedir=/userdisk/data/opt/usr/local/develop/share/git-core/tem
 
 <li>方法3：ssh-keygen??</li>
 </ul>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline176"></a><span class="todo NEXT">NEXT</span> 其他主机如何clone库？<br  /><div class="outline-text-6" id="text-2-11-3-5-6">
+<div id="outline-container-orgheadline155" class="outline-5">
+<h5 id="orgheadline155"><span class="section-number-5">6.3.5.6</span> <span class="done DONE">DONE</span> 其他主机如何clone库？</h5>
+<div class="outline-text-5" id="text-6-3-5-6">
 <ul class="org-ul">
+<li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-09 二 15:35]</span></span></li>
 <li>State "NEXT"       from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-03 三 19:37]</span></span></li>
 <li>State "DONE"       from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-03 三 19:37]</span></span></li>
 <li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-07-28 四 17:04]</span></span></li>
@@ -6230,10 +5824,23 @@ User user
 Port &lt;被映射的端口&gt;
 IdentityFile ~/.ssh/id_rsa
 </pre>
-</div></li>
 
-<li><a id="orgheadline177"></a><span class="todo NEXT">NEXT</span> <code>ash: git-upload-pack: not found</code><br  /><div class="outline-text-6" id="text-2-11-3-5-7">
+<p>
+之后只需如下进行：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$git clond ssh://xiaomi:&lt;path&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline156" class="outline-5">
+<h5 id="orgheadline156"><span class="section-number-5">6.3.5.7</span> <span class="done DONE">DONE</span> <code>ash: git-upload-pack: not found</code></h5>
+<div class="outline-text-5" id="text-6-3-5-7">
 <ul class="org-ul">
+<li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-09 二 15:35]</span></span></li>
 <li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-03 三 19:37]</span></span></li>
 </ul>
 
@@ -6270,10 +5877,14 @@ IdentityFile ~/.ssh/id_rsa
 <p>
 <a href="http://www.linuxidc.com/Linux/2012-07/66270.htm">http://www.linuxidc.com/Linux/2012-07/66270.htm</a>
 </p>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline178"></a><span class="todo NEXT">NEXT</span> error: cannot run pack-objects: No such file or directory<br  /><div class="outline-text-6" id="text-2-11-3-5-8">
+<div id="outline-container-orgheadline157" class="outline-5">
+<h5 id="orgheadline157"><span class="section-number-5">6.3.5.8</span> <span class="done DONE">DONE</span> error: cannot run pack-objects: No such file or directory</h5>
+<div class="outline-text-5" id="text-6-3-5-8">
 <ul class="org-ul">
+<li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-09 二 15:35]</span></span></li>
 <li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 14:17]</span></span></li>
 </ul>
 <p>
@@ -6285,10 +5896,14 @@ IdentityFile ~/.ssh/id_rsa
 <pre class="src src-sh">$ln -s /userdisk/data/opt/usr/local/develop/libexec/git-core/* /usr/bin
 </pre>
 </div>
-</div></li>
+</div>
+</div>
 
-<li><a id="orgheadline179"></a><span class="todo NEXT">NEXT</span> <code>error: failed to push some refs to 'ssh://xiaomi</code><br  /><div class="outline-text-6" id="text-2-11-3-5-9">
+<div id="outline-container-orgheadline158" class="outline-5">
+<h5 id="orgheadline158"><span class="section-number-5">6.3.5.9</span> <span class="done DONE">DONE</span> <code>error: failed to push some refs to 'ssh://xiaomi</code></h5>
+<div class="outline-text-5" id="text-6-3-5-9">
 <ul class="org-ul">
+<li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-09 二 15:35]</span></span></li>
 <li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 14:17]</span></span></li>
 </ul>
 
@@ -6313,13 +5928,669 @@ IdentityFile ~/.ssh/id_rsa
 <pre class="src src-sh">$git reset --hard
 </pre>
 </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline55" class="outline-2">
+<h2 id="orgheadline55"><span class="section-number-2">7</span> Misc</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-orgheadline56" class="outline-3">
+<h3 id="orgheadline56"><a id="ID-96bd1991-9c0f-4869-b406-c6eced64bd6b"></a><span class="section-number-3">7.1</span> 小米路由器添加ddns</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+ddns可以实现当ip地址不固定的时候，也能通过域名正确访问到相应的路由器。
+</p>
+
+<p>
+大致原理是需要有一个ddns服务提供商，然后路由器定时、及时地将ip地址变化信息及时更新给ddns服务商，ddns服务商将域名与最新的ip地址相对应。
+</p>
+
+<p>
+在路由器web管理界面上有相应的选项，建议用花生壳提供的动态路由。现在花生壳注册用户名和密码，获取到一个免费的域名，再将账户信息填写到路由器中ddns的相应位置即可。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline57" class="outline-3">
+<h3 id="orgheadline57"><a id="ID-f5bb8834-de46-4077-bddc-e0a15b1dc790"></a><span class="section-number-3">7.2</span> 小米路由器修改ssh启动的欢迎语</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+修改 <code>/etc/banner</code> 文件。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline58" class="outline-2">
+<h2 id="orgheadline58"><span class="section-number-2">8</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[12/19]</code> <code>[63%]</code></h2>
+<div class="outline-text-2" id="text-8">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-04-07 四 18:52] </span></span> <br  />
+wait for all resolved.</li>
+</ul>
+</div>
+<div id="outline-container-orgheadline59" class="outline-3">
+<h3 id="orgheadline59"><span class="section-number-3">8.1</span> <span class="done DONE">DONE</span> 小米路由如何开启ssh?</h3>
+<div class="outline-text-3" id="text-8-1">
+<ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 18:21]</span></span></li>
+<li>State "WAIT/FORWARD" from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2016-04-07 四 18:58] </span></span> <br  />
+等待整理。</li>
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-03-14 一 17:12]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-02 三 14:56]</span></span>
+</p>
+<hr  />
+<p>
+开启ssh可以本地局域网登录的方法，参考：<a href="#orgheadline1">小米路由器ssh开启</a>
+</p>
+
+<p>
+官网：
+<a href="http://www.miwifi.com/miwifi_open.html">http://www.miwifi.com/miwifi_open.html</a>
+</p>
+
+<p>
+外网访问参考：
+<a href="http://jingyan.baidu.com/article/9113f81b3a5d982b3314c74a.html?st=3&amp;net_type=2&amp;bd_page_type=1&amp;os=0&amp;showimg=1&amp;rst=6">http://jingyan.baidu.com/article/9113f81b3a5d982b3314c74a.html?st=3&amp;net_type=2&amp;bd_page_type=1&amp;os=0&amp;showimg=1&amp;rst=6</a>
+</p>
+
+<p>
+如果实现公网访问，需要开启防火墙端口。
+</p>
+</div>
+
+<div id="outline-container-orgheadline60" class="outline-4">
+<h4 id="orgheadline60"><span class="section-number-4">8.1.1</span> 下面内容仅参考暂不用</h4>
+<div class="outline-text-4" id="text-8-1-1">
+<p>
+小米路由器mini如何设置外网访问ssh
+</p>
+
+<p>
+关键是
+修改 <code>/etc/config/firewall</code>
+</p>
+<pre class="example">
+# port redirect of remapped ssh port (22001) on wan
+config redirect 'myssh'       
+option src              wan       
+option src_dport        22001       
+option dest             lan       
+option dest_port        22       
+option proto            tcp
+</pre>
+
+<p>
+重启防火墙 <code>/etc/init.d/firewall restart</code>
+</p>
+
+<p>
+登录： <code>ssh -p 10022 root@&lt;ip&gt;</code>
+</p>
+
+<p>
+远程传输： <code>scp -P 10022 &lt;file&gt; root@&lt;ip&gt;:&lt;path&gt;</code>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline61" class="outline-3">
+<h3 id="orgheadline61"><span class="section-number-3">8.2</span> <span class="done DONE">DONE</span> 小米路由器防火墙如何配置?</h3>
+<div class="outline-text-3" id="text-8-2">
+<ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-04-13 三 19:35]</span></span></li>
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-03-28 一 11:27] </span></span> <br  />
+wait for more organize.</li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2016-03-15 二 09:38]</span></span></li>
+</ul>
+
+<p>
+参见：<a href="#orgheadline12">小米路由器防火墙配置</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline62" class="outline-3">
+<h3 id="orgheadline62"><span class="section-number-3">8.3</span> <span class="done DONE">DONE</span> 小米路由如何添加域名访问？</h3>
+<div class="outline-text-3" id="text-8-3">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-04-13 三 19:42]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-02 三 14:56]</span></span>
+</p>
+<hr  />
+<p>
+首先申请dns域名，然后将之与ip关联，但是由于ip地址不固定，所以需要使用ddns服务。参见：<a href="#orgheadline56">小米路由器添加ddns</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline63" class="outline-3">
+<h3 id="orgheadline63"><a id="ID-c3532fb4-fe93-448b-be0c-a7f443999174"></a><span class="section-number-3">8.4</span> <span class="done DONE">DONE</span> 小米路由器交叉编译环境配置</h3>
+<div class="outline-text-3" id="text-8-4">
+<ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:23]</span></span></li>
+<li>State "WAIT/FORWARD" from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 11:42] </span></span> <br  />
+wait for arrange.</li>
+<li>State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-07-26 二 16:59]</span></span></li>
+</ul>
+
+<p>
+参考：<a href="#orgheadline24">小米路由器交叉编译环境配置</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline64" class="outline-3">
+<h3 id="orgheadline64"><span class="section-number-3">8.5</span> <span class="done DONE">DONE</span> 如何使用软件管理工具管理小米路由上的软件?</h3>
+<div class="outline-text-3" id="text-8-5">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 18:19]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-04 五 18:28]</span></span>
+</p>
+<hr  />
+<p>
+小米路由器是openwrt的系统，可借助opkg工具，参考：<a href="#orgheadline16">使用opkg在小米路由器软件管理</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline65" class="outline-3">
+<h3 id="orgheadline65"><a id="ID-c4e46793-af9e-4f13-ba43-f609a121c196"></a><span class="section-number-3">8.6</span> <span class="done DONE">DONE</span> 开启ssh后无法获得系统文件夹写入权限?</h3>
+<div class="outline-text-3" id="text-8-6">
+<ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:25]</span></span></li>
+<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-05 五 17:21] </span></span> <br  />
+wait for more.</li>
+</ul>
+
+<p>
+参考：<a href="#orgheadline11">访问文件系统权限</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline66" class="outline-3">
+<h3 id="orgheadline66"><span class="section-number-3">8.7</span> <span class="done DONE">DONE</span> 在小米路由器上搭建基于LNMP的Owncloud云平台</h3>
+<div class="outline-text-3" id="text-8-7">
+<ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:37]</span></span></li>
+<li>State "WAIT/FORWARD" from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 16:45] </span></span> <br  />
+wait for arrange.</li>
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 16:45]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-04 五 19:55]</span></span>
+</p>
+<hr  />
+
+<p>
+注，Owncloud功能比较全面，但是也相对不是很稳定，而且感觉消耗资源。对于资源紧张的小米路由器，目前已经不考虑用其做为主要云服务器。暂时用git来满足分布访问的需求。直接考虑的方式，获取有更好的能替代Owncloud的方式。
+</p>
+
+<p>
+参考：<a href="#orgheadline25">在小米路由器上搭建基于LNMP的Owncloud云平台</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline67" class="outline-3">
+<h3 id="orgheadline67"><span class="section-number-3">8.8</span> <span class="done CANCEL">CANCEL</span> Myowncloud</h3>
+<div class="outline-text-3" id="text-8-8">
+<ul class="org-ul">
+<li>State "CANCEL"     from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:33] </span></span> <br  />
+Owncloud不稳定，数据虽然不会丢失，但是有时也很麻烦，已经不采用，此处仅供参考。</li>
+<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:32] </span></span> <br  />
+wait for arrange.</li>
+</ul>
+
+<p>
+注，Owncloud功能比较全面，但是也相对不是很稳定，而且感觉消耗资源。对于资源紧张的小米路由器，目前已经不考虑用其做为主要云服务器。暂时用git来满足分布访问的需求。直接考虑的方式，获取有更好的能替代Owncloud的方式。
+</p>
+</div>
+
+<div id="outline-container-orgheadline68" class="outline-4">
+<h4 id="orgheadline68"><span class="section-number-4">8.8.1</span> site: &lt;暂不可用&gt;</h4>
+</div>
+<div id="outline-container-orgheadline69" class="outline-4">
+<h4 id="orgheadline69"><span class="section-number-4">8.8.2</span> step</h4>
+<div class="outline-text-4" id="text-8-8-2">
+</div><div id="outline-container-orgheadline165" class="outline-5">
+<h5 id="orgheadline165"><span class="section-number-5">8.8.2.1</span> 安装apache(pc)</h5>
+<div class="outline-text-5" id="text-8-8-2-1">
+<p>
+这里，安装apache之前需要安装组件：apr,apr-util,pcre，最后再安装httpd。
+</p>
+
+<p>
+这里，发现nginx更适合，所以不用apache了。
+</p>
+</div>
+
+<ol class="org-ol"><li><a id="orgheadline159"></a>下载<br  /><div class="outline-text-6" id="text-8-8-2-1-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$ wget -c http://apache.opencas.org//httpd/httpd-2.4.18.tar.bz2
+$ wget -c http://mirrors.cnnic.cn/apache//apr/apr-1.5.2.tar.bz2
+$ wget -c http://apache.opencas.org//apr/apr-util-1.5.4.tar.gz
+$ wget -c ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
+</pre>
+</div>
+</div></li>
+
+<li><a id="orgheadline160"></a>安装<br  /><div class="outline-text-6" id="text-8-8-2-1-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">$sudo ./configure --prefix=/usr/local/development/apr-1.5.2
+$sudo make
+$sudo make install
+
+$sudo ./configure --prefix=/usr/local/development/apr-util-1.5.4 --with-apr=/usr/local/development/apr-1.5.2
+$sudo make
+$sudo make install
+
+$sudo ./configure --prefix=/usr/local/development/pcre-8.38 --with-apr=/usr/local/development/apr-1.5.2 --with-apr-util=/usr/local/development/apr-util-1.5.4
+$sudo make
+$sudo make install
+
+$sudo ./configure --prefix=/usr/local/development/httpd-2.4.18 --enable-so --enable-mods-shared=all --with-apr=/usr/local/development/apr-1.5.2 --with-apr-util=/usr/local/development/apr-util-1.5.4 --with-pcre=/usr/local/development/pcre-8.38
+$sudo make
+$sudo make install
+$sudo ln -s /usr/local/development/httpd-2.4.18/bin/apachectl /etc/init.d
+</pre>
+</div>
+</div></li>
+
+<li><a id="orgheadline161"></a>启动<br  /><div class="outline-text-6" id="text-8-8-2-1-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">$sudo /etc/init.d/apachectl start
+</pre>
+</div>
+</div></li>
+
+<li><a id="orgheadline162"></a>调试<br  /><div class="outline-text-6" id="text-8-8-2-1-4">
+<p>
+如果启动出现如下两个错误：
+</p>
+<pre class="example">
+miracle@miracle-Zhaoyang-E49:~/myinstalled/httpd-2.4.18$ sudo /etc/init.d/apachectl start
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to sup
+press this message
+(98)Address already in use: AH00072: make_sock: could not bind to address 0.0.0.0:80
+no listening sockets available, shutting down
+AH00015: Unable to open logs
+</pre>
+
+<p>
+那么
+第一个问题：修改 <code>/usr/local/development/httpd-2.4.18/conf/httpd.conf</code>, 添加 <code>ServerName localhost:80</code>.
+第二个问题：应该是端口被占用，可能启动了其他apache，可以如下修改  <code>/usr/local/development/httpd-2.4.18/conf/httpd.conf</code>
+</p>
+<pre class="example">
+Listen 90
+ServerName localhost:90
+</pre>
+</div></li>
+
+<li><a id="orgheadline163"></a>访问<br  /><div class="outline-text-6" id="text-8-8-2-1-5">
+<p>
+基于如上配置，打开浏览器，地址栏键入 <code>localhost:90</code> 看到 "It works!" 即表示成功。
+</p>
+</div></li>
+
+<li><a id="orgheadline164"></a>配置<br  /></li></ol>
+</div>
+
+<div id="outline-container-orgheadline176" class="outline-5">
+<h5 id="orgheadline176"><span class="section-number-5">8.8.2.2</span> 安装nginx(xiaomirouter)</h5>
+<div class="outline-text-5" id="text-8-8-2-2">
+<p>
+<code>cd ~/xiaomirouter</code>
+</p>
+</div>
+<ol class="org-ol"><li><a id="orgheadline166"></a>下载<br  /><div class="outline-text-6" id="text-8-8-2-2-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$wget -c http://bigota.miwifi.com/xiaoqiang/sdk/tools/package/sdk_package.zip
+$wget -c http://nginx.org/download/nginx-1.8.1.tar.gz
+$wget -c http://www.openssl.org/source/openssl-1.0.2g.tar.gz
+$wget -c http://mirrors.cnnic.cn/apache//apr/apr-1.5.2.tar.bz2
+$wget -c http://apache.opencas.org//apr/apr-util-1.5.4.tar.gz
+$wget -c ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
+#$wget -c http://nchc.dl.sourceforge.net/project/libpng/zlib/1.2.8/zlib-1.2.8.tar.gz
+</pre>
+</div>
+</div></li>
+
+<li><a id="orgheadline167"></a>配置交叉编译工具环境<br  /><div class="outline-text-6" id="text-8-8-2-2-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">$export PATH=~/xiaomirouter/test/sdk_package/toolchain/bin:$PATH
+$export CUSTOM_PREFIX=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop
+</pre>
+</div>
+</div></li>
+
+<li><a id="orgheadline169"></a>交叉编译<br  /><ol class="org-ol"><li><a id="orgheadline168"></a>openssl<br  /><div class="outline-text-7" id="text-8-8-2-2-3-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$tar -xzvf openssl-1.0.2g.tar.gz
+$export CROSS_COMPILE=arm-xiaomi-linux-uclibcgnueabi-
+$cd openssl-1.0.2g
+./config no-asm shared --prefix=$CUSTOM_PREFIX/openssl-1.0.2g
+$vim Makefile
+...
+#SHARED_LDFLAGS=-m64
+...
+#CC= gcc
+CC= arm-xiaomi-linux-uclibcgnueabi-gcc
+#CFLAG= -fPIC -DOPENSSL_PIC -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -m64 -DL_ENDIAN -O3 -Wall
+CFLAG= -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -DOPENSSL_NO_KRB5 -DL_ENDIAN -O3 -Wall
+DEPFLAG= -DOPENSSL_NO_EC_NISTP_64_GCC_128 -DOPENSSL_NO_GMP -DOPENSSL_NO_JPAKE -DOPENSSL_NO_LIBUNBOUND -DOPENSSL_NO_MD2 -DOPENSSL_NO_RC5 -DOPENSSL_NO_RFC3779 -DOPENSSL_NO_SCTP -DOPENSSL_NO_SSL_TRACE -DOPENSSL_NO_SSL2 -DOPENSSL_NO_STORE -DOPENSSL_NO_UNIT_TEST -DOPENSSL_NO_WEAK_SSL_CIPHERS
+PEX_LIBS= 
+EX_LIBS= -ldl
+EXE_EXT= 
+ARFLAGS= 
+#AR= ar $(ARFLAGS) r
+AR= arm-xiaomi-linux-uclibcgnueabi-ar $(ARFLAGS) r
+#RANLIB= /usr/bin/ranlib
+RANLIB= arm-xiaomi-linux-uclibcgnueabi-ranlib
+#NM= nm
+NM= arm-xiaomi-linux-uclibcgnueabi-nm
+PERL= /usr/bin/perl
+TAR= tar
+TARFLAGS= --no-recursion
+MAKEDEPPROG= gcc
+LIBDIR=lib
+...
+$make depend
+$make
+$make install
+</pre>
+</div>
+
+<p>
+<a href="http://blog.csdn.net/zy799894671/article/details/22289039">http://blog.csdn.net/zy799894671/article/details/22289039</a>
+</p>
+</div></li></ol></li>
+<li><a id="orgheadline171"></a>其他<br  /><ol class="org-ol"><li><a id="orgheadline170"></a>安装<br  /><div class="outline-text-7" id="text-8-8-2-2-4-1">
+<p>
+只指定安装路径，没有其他选项
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$sudo ./configure --prefix=/usr/local/development/nginx-1.8.1
+$sudo make
+$sudo make install
+</pre>
+</div>
+
+<p>
+加入 <code>openssl</code> 的编译：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$./configure --prefix=/usr/local/development/nginx-1.8.1 --with-openssl=/home/miracle/myinstalled/openssl-1.0.2g --with-http_ssl_module
+$sudo make
+</pre>
+</div>
+
+<p>
+这里做 <code>sudo make</code> 的时候会自动编译ssl，如果手动编译ssl的话，那么大致如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$sudo ./config --prefix=/usr/local/development/openssl-1.0.2g
+$sudo make depend
+$sudo make
+$sudo make install
+</pre>
+</div>
+
+<p>
+参考：<a href="http://www.cnblogs.com/skynet/p/4146083.html">http://www.cnblogs.com/skynet/p/4146083.html</a>
+卸载只需要将 <code>/usr/local/develop/nginx-1.8.1</code> 删除即可。
+</p>
+</div></li></ol></li>
+<li><a id="orgheadline172"></a>配置<br  /><div class="outline-text-6" id="text-8-8-2-2-5">
+<ul class="org-ul">
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2016-03-29 二 18:37]</span></span></li>
+</ul>
+<p>
+配置文件在 <code>/usr/local/development/nginx-1.8.1/conf</code> 下。
+</p>
+</div></li>
+
+<li><a id="orgheadline173"></a>启动<br  /><div class="outline-text-6" id="text-8-8-2-2-6">
+<p>
+直接运行 <code>./nginx</code>
+</p>
+
+<p>
+修改配置后 <code>./nginx -s reload</code>
+</p>
+
+<p>
+更多内容 <code>./nginx -h</code>
+</p>
+</div></li>
+
+<li><a id="orgheadline174"></a>文档<br  /><div class="outline-text-6" id="text-8-8-2-2-7">
+<p>
+<a href="http://nginx.org/en/docs/">http://nginx.org/en/docs/</a>
+</p>
+</div></li>
+
+<li><a id="orgheadline175"></a>Misc<br  /><div class="outline-text-6" id="text-8-8-2-2-8">
+<p>
+openssl
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$sudo ./config --prefix=/usr/local/development/openssl-1.0.2g
+$sudo make depend
+$sudo make install
+</pre>
+</div>
+</div></li></ol>
+</div>
+<div id="outline-container-orgheadline177" class="outline-5">
+<h5 id="orgheadline177"><span class="section-number-5">8.8.2.3</span> 安装php5.4</h5>
+<div class="outline-text-5" id="text-8-8-2-3">
+<p>
+这一步要放在安装完apache之后。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$ sudo add-apt-repository ppa:ondrej/php5
+$ sudo apt-get update
+$ sudo apt-get install php5-cli php5-fpm php-pear php5-mysql libcurl4-openssl-dev
+#$ sudo pecl install pecl_http  # Update /etc/php5/fpm/php.ini and /etc/php5/cli/php.ini with http.so
+$ php -v
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline181" class="outline-5">
+<h5 id="orgheadline181"><span class="section-number-5">8.8.2.4</span> 源码安装php</h5>
+<div class="outline-text-5" id="text-8-8-2-4">
+</div><ol class="org-ol"><li><a id="orgheadline178"></a>openssl<br  /><div class="outline-text-6" id="text-8-8-2-4-1">
+<p>
+<a href="http://www.openssl.org/source/openssl-1.0.2g.tar.gz">http://www.openssl.org/source/openssl-1.0.2g.tar.gz</a>
+./config &#x2013;prefix=/usr/local/develop/openssl-1.0.2g
+sudo make depend
+sudo make 
+sudo make install
+</p>
+</div></li>
+<li><a id="orgheadline179"></a>depend library<br  /><div class="outline-text-6" id="text-8-8-2-4-2">
+<p>
+sudo apt-get install libxml2
+sudo apt-get install libxml2-dev
+sudo apt-get install libxml2-utils
+sudo apt-get install libcurl3
+sudo apt-get install libcurl
+sudo apt-get install libcurl4-gnutls-dev
+</p>
+</div></li>
+<li><a id="orgheadline180"></a>php<br  /><div class="outline-text-6" id="text-8-8-2-4-3">
+<p>
+<a href="http://php.net/downloads.php">http://php.net/downloads.php</a>
+./configure &#x2013;prefix=/usr/local/develop/php-5.6.19 &#x2013;with-config-file-path=/usr/local/develop/php-5.6.19/etc &#x2013;enable-fpm &#x2013;with-fpm-user=www-data &#x2013;with-fpm-group=www-data &#x2013;with-mysql=mysqlnd &#x2013;with-mysqli=mysqlnd &#x2013;with-pdo-mysql=mysqlnd &#x2013;with-iconv-dir &#x2013;with-freetype-dir &#x2013;with-jpeg-dir &#x2013;with-png-dir &#x2013;with-zlib &#x2013;with-libxml-dir=/usr &#x2013;enable-xml &#x2013;disable-rpath &#x2013;enable-magic-quotes &#x2013;enable-safe-mode &#x2013;enable-bcmath &#x2013;enable-shmop &#x2013;enable-sysvsem &#x2013;enable-inline-optimization &#x2013;with-curl &#x2013;with-curlwrappers &#x2013;enable-mbregex &#x2013;enable-mbstring &#x2013;with-mcrypt &#x2013;enable-ftp &#x2013;with-gd &#x2013;enable-gd-native-ttf &#x2013;with-openssl=/usr/local/develop/openssl-1.0.2g &#x2013;with-mhash &#x2013;enable-pcntl &#x2013;enable-sockets &#x2013;with-xmlrpc &#x2013;enable-zip &#x2013;enable-soap &#x2013;without-pear &#x2013;with-gettext &#x2013;disable-fileinfo
+</p>
+
+<p>
+sudo make
+sudo make install
+</p>
 </div></li></ol>
 </div>
 </div>
+<div id="outline-container-orgheadline70" class="outline-4">
+<h4 id="orgheadline70"><span class="section-number-4">8.8.3</span> refer</h4>
+<div class="outline-text-4" id="text-8-8-3">
+<p>
+<a href="http://wiki.openwrt.org/doc/howto/owncloud">ownCloud on OpenWrt</a>
+</p>
+
+<p>
+<a href="http://www.cnblogs.com/qkcan/archive/2012/08/05/2623994.html">ubuntu 12.04 PHP5.4安装</a>
+</p>
+
+<p>
+<a href="http://www.linuxidc.com/Linux/2012-09/70518.htm">Ubuntu 12.04 下安装Apache 2.4.2</a>
+</p>
+
+<p>
+<a href="http://blog.sina.com.cn/s/blog_61d0b6cd010119a8.html">Ubuntu10.04下编译安装apache-2.4.2版本</a>
+</p>
 </div>
-<div id="outline-container-orgheadline41" class="outline-3">
-<h3 id="orgheadline41"><span class="section-number-3">2.12</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 交叉编译mysql-5.7.11</h3>
-<div class="outline-text-3" id="text-2-12">
+</div>
+</div>
+<div id="outline-container-orgheadline71" class="outline-3">
+<h3 id="orgheadline71"><span class="section-number-3">8.9</span> <span class="done CANCEL">CANCEL</span> owncloud升级</h3>
+<div class="outline-text-3" id="text-8-9">
+<ul class="org-ul">
+<li>State "CANCEL"     from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:34] </span></span> <br  />
+Owncloud不稳定，数据虽然不会丢失，但是有时也很麻烦，已经不采用，此处仅供参考。</li>
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:29] </span></span> <br  />
+wait for try.</li>
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:29]</span></span></li>
+</ul>
+<p>
+下载,注意将 <code>https://</code> 改成 <code>http://</code>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$wget -c http://download.owncloud.org/community/owncloud-9.0.2.tar.bz2
+</pre>
+</div>
+
+<ol class="org-ol">
+<li>停用所有第三方app.</li>
+<li><code>rsync --inplace -rtv owncloud_latest/owncloud/ owncloud/</code></li>
+</ol>
+
+<p>
+php -c <i>userdisk/opt/usr/local/develop/etc</i> occ maintenance:mimetype:update-db
+php -c <i>userdisk/opt/usr/local/develop/etc</i> occ maintenance:mimetype:update-js
+php -c <i>userdisk/opt/usr/local/develop/etc</i> occ upgrade
+</p>
+
+<p>
+参考:
+</p>
+
+<p>
+<a href="https://teddysun.com/211.html">https://teddysun.com/211.html</a>
+</p>
+
+<p>
+<a href="https://www.librehat.com/the-owncloud-upgrade-prolonged-stagnation-maintance-solution/">https://www.librehat.com/the-owncloud-upgrade-prolonged-stagnation-maintance-solution/</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline72" class="outline-3">
+<h3 id="orgheadline72"><span class="section-number-3">8.10</span> <span class="done CANCEL">CANCEL</span> owncloud issue</h3>
+<div class="outline-text-3" id="text-8-10">
+<ul class="org-ul">
+<li>State "CANCEL"     from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:34] </span></span> <br  />
+Owncloud不稳定，数据虽然不会丢失，但是有时也很麻烦，已经不采用，此处仅供参考。</li>
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:29]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-04-28 四 13:46]</span></span>
+</p>
+<hr  />
+<p>
+同步总是发生错误,其中之一是文件大小过大.
+</p>
+
+<p>
+无法上传大文件的错误:
+上传大文件的错误:
+</p>
+<pre class="example">
+Request Entity Too Large
+</pre>
+<p>
+<a href="https://forum.owncloud.org/viewtopic.php?f=17&amp;t=7733">https://forum.owncloud.org/viewtopic.php?f=17&amp;t=7733</a>
+</p>
+
+<p>
+无法上传文件的错误:
+上传文件出现类似如下错误:
+</p>
+<pre class="example">
+An exception occurred while executing 'INSERT INTO `oc_filecache` (`mimepart`,`mimetype`,`mtime`,`size`,`etag`,`storage_mtime`,`permissions`,`parent`,`path_hash`,`path`,`name`,`storage`) SELECT ?,?,?,?,?,?,?,?,?,?,?,? FROM `oc_filecache` WHERE `storage` = ? AND `path_hash` = ? HAVING COUNT(*) = 0' with params ["8", "18", 1461910752, 1250, "d73b2a5f54292c00fbe81872c61e9381", 1461910752, 27, "19", "04cf4abd8d26a455196d8cf88cab5fe0", "files\/Documents\/\u6587\u4ef6\u7ba1\u7406.md", "\u6587\u4ef6\u7ba1\u7406.md", "3", "3", "04cf4abd8d26a455196d8cf88cab5fe0"]: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '17101' for key 'PRIMARY'
+</pre>
+<p>
+网上说是因为某些用户垃圾箱文件太多导致,清空垃圾箱即可,最好定时清空垃圾箱.?貌似还是不行?
+ <a href="http://github.com/owncloud/core/issues/12591">http://github.com/owncloud/core/issues/12591</a>
+</p>
+
+<pre class="example">
+i've tracked the files down in this message, and it belongs to a user who has about 6500 files in his trashbin.
+Retention was at 30 days, I've lowered it to 7, to see if that helps, but it deletes only 1 file every 10 seconds or so, so that will take weeks...
+I had to restart the mysql server twice now to prevent bigger problems.
+</pre>
+
+<p>
+<a href="https://github.com/owncloud/core/issues/17887">https://github.com/owncloud/core/issues/17887</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline73" class="outline-3">
+<h3 id="orgheadline73"><span class="section-number-3">8.11</span> <span class="done DONE">DONE</span> 如何小米路由器上使用 <code>git</code> 版本控制系统?</h3>
+<div class="outline-text-3" id="text-8-11">
+<ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-08-09 二 15:33]</span></span></li>
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-07-26 二 17:05] </span></span> <br  />
+wait for refile.</li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2016-06-12 日 16:59]</span></span></li>
+</ul>
+
+<p>
+参考：<a href="#orgheadline46">小米路由器上使用 <code>git</code> 版本控制系统</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline74" class="outline-3">
+<h3 id="orgheadline74"><span class="section-number-3">8.12</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 交叉编译mysql-5.7.11</h3>
+<div class="outline-text-3" id="text-8-12">
 <ul class="org-ul">
 <li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:34]</span></span></li>
 <li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2016-06-12 日 16:59]</span></span></li>
@@ -6364,9 +6635,9 @@ arm版本的编译:
 </p>
 </div>
 
-<div id="outline-container-orgheadline42" class="outline-4">
-<h4 id="orgheadline42"><span class="section-number-4">2.12.1</span> 自带文档</h4>
-<div class="outline-text-4" id="text-2-12-1">
+<div id="outline-container-orgheadline75" class="outline-4">
+<h4 id="orgheadline75"><span class="section-number-4">8.12.1</span> 自带文档</h4>
+<div class="outline-text-4" id="text-8-12-1">
 <p>
 INSTALL-SOURCE
 </p>
@@ -6381,9 +6652,9 @@ shell&gt; ccmake .     # interactive display
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline43" class="outline-3">
-<h3 id="orgheadline43"><span class="section-number-3">2.13</span> <span class="todo LATER">LATER</span> 小米路由器搭建ftp服务</h3>
-<div class="outline-text-3" id="text-2-13">
+<div id="outline-container-orgheadline76" class="outline-3">
+<h3 id="orgheadline76"><span class="section-number-3">8.13</span> <span class="todo LATER">LATER</span> 小米路由器搭建ftp服务</h3>
+<div class="outline-text-3" id="text-8-13">
 <ul class="org-ul">
 <li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:35]</span></span></li>
 </ul>
@@ -6399,13 +6670,13 @@ vsftp官方网址：
 vsftpd.beasts.org
 </p>
 </div>
-<div id="outline-container-orgheadline44" class="outline-4">
-<h4 id="orgheadline44"><span class="section-number-4">2.13.1</span> 交叉编译环境</h4>
+<div id="outline-container-orgheadline77" class="outline-4">
+<h4 id="orgheadline77"><span class="section-number-4">8.13.1</span> 交叉编译环境</h4>
 </div>
 
-<div id="outline-container-orgheadline45" class="outline-4">
-<h4 id="orgheadline45"><span class="section-number-4">2.13.2</span> 源代码下载：</h4>
-<div class="outline-text-4" id="text-2-13-2">
+<div id="outline-container-orgheadline78" class="outline-4">
+<h4 id="orgheadline78"><span class="section-number-4">8.13.2</span> 源代码下载：</h4>
+<div class="outline-text-4" id="text-8-13-2">
 <div class="org-src-container">
 
 <pre class="src src-sh">$wget https://security.appspot.com/downloads/vsftpd-3.0.3.tar.gz
@@ -6414,12 +6685,12 @@ vsftpd.beasts.org
 </div>
 </div>
 
-<div id="outline-container-orgheadline46" class="outline-4">
-<h4 id="orgheadline46"><span class="section-number-4">2.13.3</span> 编译libcrypt</h4>
+<div id="outline-container-orgheadline79" class="outline-4">
+<h4 id="orgheadline79"><span class="section-number-4">8.13.3</span> 编译libcrypt</h4>
 </div>
-<div id="outline-container-orgheadline47" class="outline-4">
-<h4 id="orgheadline47"><span class="section-number-4">2.13.4</span> 修改Makefile</h4>
-<div class="outline-text-4" id="text-2-13-4">
+<div id="outline-container-orgheadline80" class="outline-4">
+<h4 id="orgheadline80"><span class="section-number-4">8.13.4</span> 修改Makefile</h4>
+<div class="outline-text-4" id="text-8-13-4">
 <p>
 /home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/lib
 </p>
@@ -6451,13 +6722,13 @@ LIBS	=	-L/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/lib -lcr
 </div>
 </div>
 
-<div id="outline-container-orgheadline48" class="outline-4">
-<h4 id="orgheadline48"><span class="section-number-4">2.13.5</span> 编译</h4>
+<div id="outline-container-orgheadline81" class="outline-4">
+<h4 id="orgheadline81"><span class="section-number-4">8.13.5</span> 编译</h4>
 </div>
 
-<div id="outline-container-orgheadline49" class="outline-4">
-<h4 id="orgheadline49"><span class="section-number-4">2.13.6</span> 开启防火墙</h4>
-<div class="outline-text-4" id="text-2-13-6">
+<div id="outline-container-orgheadline82" class="outline-4">
+<h4 id="orgheadline82"><span class="section-number-4">8.13.6</span> 开启防火墙</h4>
+<div class="outline-text-4" id="text-8-13-6">
 <pre class="example">
 config rule                                           
         option name 'myftp'                           
@@ -6469,9 +6740,9 @@ config rule
 </pre>
 </div>
 </div>
-<div id="outline-container-orgheadline50" class="outline-4">
-<h4 id="orgheadline50"><span class="section-number-4">2.13.7</span> 如何运行？</h4>
-<div class="outline-text-4" id="text-2-13-7">
+<div id="outline-container-orgheadline83" class="outline-4">
+<h4 id="orgheadline83"><span class="section-number-4">8.13.7</span> 如何运行？</h4>
+<div class="outline-text-4" id="text-8-13-7">
 <p>
 查看代码后发现，是不是 <code>vsftpd /userdisk/data/opt/usr/local/develop/etc/vsftpd.conf</code> 
 参考：
@@ -6491,22 +6762,22 @@ config rule
 </div>
 </div>
 
-<div id="outline-container-orgheadline51" class="outline-4">
-<h4 id="orgheadline51"><span class="section-number-4">2.13.8</span> </h4>
+<div id="outline-container-orgheadline84" class="outline-4">
+<h4 id="orgheadline84"><span class="section-number-4">8.13.8</span> </h4>
 </div>
 </div>
-<div id="outline-container-orgheadline52" class="outline-3">
-<h3 id="orgheadline52"><span class="section-number-3">2.14</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 交叉编译vim</h3>
-<div class="outline-text-3" id="text-2-14">
+<div id="outline-container-orgheadline85" class="outline-3">
+<h3 id="orgheadline85"><span class="section-number-3">8.14</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 交叉编译vim</h3>
+<div class="outline-text-3" id="text-8-14">
 <ul class="org-ul">
 <li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:35]</span></span></li>
 <li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-03 三 19:05]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline53" class="outline-3">
-<h3 id="orgheadline53"><span class="section-number-3">2.15</span> <span class="todo NEXT">NEXT</span> Seafile</h3>
-<div class="outline-text-3" id="text-2-15">
+<div id="outline-container-orgheadline86" class="outline-3">
+<h3 id="orgheadline86"><span class="section-number-3">8.15</span> <span class="todo NEXT">NEXT</span> Seafile</h3>
+<div class="outline-text-3" id="text-8-15">
 <ul class="org-ul">
 <li>State "NEXT"       from "MAYBE/FUTURE" <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:35]</span></span></li>
 <li>State "MAYBE/FUTURE" from "CANCEL"     <span class="timestamp-wrapper"><span class="timestamp">[2016-07-29 五 12:05]</span></span></li>
@@ -6527,9 +6798,9 @@ config rule
 </p>
 </div>
 
-<div id="outline-container-orgheadline54" class="outline-4">
-<h4 id="orgheadline54"><span class="section-number-4">2.15.1</span> <span class="done DONE">DONE</span> PC 上安装Seafile</h4>
-<div class="outline-text-4" id="text-2-15-1">
+<div id="outline-container-orgheadline87" class="outline-4">
+<h4 id="orgheadline87"><span class="section-number-4">8.15.1</span> <span class="done DONE">DONE</span> PC 上安装Seafile</h4>
+<div class="outline-text-4" id="text-8-15-1">
 <ul class="org-ul">
 <li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-07-26 二 15:35]</span></span></li>
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-07-26 二 15:35]</span></span></li>
@@ -6675,9 +6946,9 @@ Enter the password again:
 </div>
 </div>
 
-<div id="outline-container-orgheadline55" class="outline-4">
-<h4 id="orgheadline55"><span class="section-number-4">2.15.2</span> 参考资料</h4>
-<div class="outline-text-4" id="text-2-15-2">
+<div id="outline-container-orgheadline88" class="outline-4">
+<h4 id="orgheadline88"><span class="section-number-4">8.15.2</span> 参考资料</h4>
+<div class="outline-text-4" id="text-8-15-2">
 <p>
 官网：<a href="https://github.com/haiwen/seafile">https://github.com/haiwen/seafile</a>
 </p>
@@ -6689,9 +6960,9 @@ Enter the password again:
 </div>
 </div>
 
-<div id="outline-container-orgheadline56" class="outline-3">
-<h3 id="orgheadline56"><span class="section-number-3">2.16</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> SparkleShare</h3>
-<div class="outline-text-3" id="text-2-16">
+<div id="outline-container-orgheadline89" class="outline-3">
+<h3 id="orgheadline89"><span class="section-number-3">8.16</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> SparkleShare</h3>
+<div class="outline-text-3" id="text-8-16">
 <ul class="org-ul">
 <li><p>
 State "WAIT/FORWARD" from "CANCEL"     <span class="timestamp-wrapper"><span class="timestamp">[2016-08-03 三 09:15] </span></span> <br  />
@@ -6715,30 +6986,30 @@ is it available as a git client?
 </p>
 </div>
 
-<div id="outline-container-orgheadline57" class="outline-4">
-<h4 id="orgheadline57"><span class="section-number-4">2.16.1</span> <span class="done CANCEL">CANCEL</span> PC上的编译安装</h4>
-<div class="outline-text-4" id="text-2-16-1">
+<div id="outline-container-orgheadline90" class="outline-4">
+<h4 id="orgheadline90"><span class="section-number-4">8.16.1</span> <span class="done CANCEL">CANCEL</span> PC上的编译安装</h4>
+<div class="outline-text-4" id="text-8-16-1">
 <ul class="org-ul">
 <li>State "CANCEL"     from "MAYBE/FUTURE" <span class="timestamp-wrapper"><span class="timestamp">[2016-08-03 三 11:56] </span></span> <br  />
 没有必要在PC上源码安装，只需在使用的机器上有一个sparkleshare客户端即可，因为服务端就是git服务器。没有必要考虑交叉编译。</li>
 <li>State "MAYBE/FUTURE" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-03 三 09:38]</span></span></li>
 </ul>
 </div>
-<div id="outline-container-orgheadline186" class="outline-5">
-<h5 id="orgheadline186"><span class="section-number-5">2.16.1.1</span> 依赖</h5>
-<div class="outline-text-5" id="text-2-16-1-1">
-</div><ol class="org-ol"><li><a id="orgheadline181"></a>安装curl<br  /><div class="outline-text-6" id="text-2-16-1-1-1">
+<div id="outline-container-orgheadline187" class="outline-5">
+<h5 id="orgheadline187"><span class="section-number-5">8.16.1.1</span> 依赖</h5>
+<div class="outline-text-5" id="text-8-16-1-1">
+</div><ol class="org-ol"><li><a id="orgheadline182"></a>安装curl<br  /><div class="outline-text-6" id="text-8-16-1-1-1">
 <p>
-参考： <a href="#orgheadline78">安装php所需依赖</a>
+参考： <a href="#orgheadline28">安装php所需依赖</a>
 </p>
 </div></li>
-<li><a id="orgheadline182"></a>安装git<br  /><div class="outline-text-6" id="text-2-16-1-1-2">
+<li><a id="orgheadline183"></a>安装git<br  /><div class="outline-text-6" id="text-8-16-1-1-2">
 <p>
-参考： <a href="#orgheadline37">小米路由器 <code>git</code> 源码交叉编译</a>
+参考： <a href="#orgheadline46">小米路由器 <code>git</code> 源码交叉编译</a>
 </p>
 </div></li>
 
-<li><a id="orgheadline183"></a><span class="done CANCEL">CANCEL</span> 安装git-lfs<br  /><div class="outline-text-6" id="text-2-16-1-1-3">
+<li><a id="orgheadline184"></a><span class="done CANCEL">CANCEL</span> 安装git-lfs<br  /><div class="outline-text-6" id="text-8-16-1-1-3">
 <ul class="org-ul">
 <li>State "CANCEL"     from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-07-28 四 18:32] </span></span> <br  />
 取消，考虑git-annex.</li>
@@ -6758,7 +7029,7 @@ is it available as a git client?
 </div>
 </div></li>
 
-<li><a id="orgheadline184"></a>libtool<br  /><div class="outline-text-6" id="text-2-16-1-1-4">
+<li><a id="orgheadline185"></a>libtool<br  /><div class="outline-text-6" id="text-8-16-1-1-4">
 <div class="org-src-container">
 
 <pre class="src src-sh">$sudo apt-get install libtool
@@ -6766,12 +7037,12 @@ is it available as a git client?
 </div>
 </div></li>
 
-<li><a id="orgheadline185"></a>mono<br  /></li></ol>
+<li><a id="orgheadline186"></a>mono<br  /></li></ol>
 </div>
 
-<div id="outline-container-orgheadline187" class="outline-5">
-<h5 id="orgheadline187"><span class="section-number-5">2.16.1.2</span> 下载：</h5>
-<div class="outline-text-5" id="text-2-16-1-2">
+<div id="outline-container-orgheadline188" class="outline-5">
+<h5 id="orgheadline188"><span class="section-number-5">8.16.1.2</span> 下载：</h5>
+<div class="outline-text-5" id="text-8-16-1-2">
 <div class="org-src-container">
 
 <pre class="src src-sh">$wget -c https://github.com/hbons/SparkleShare/archive/1.5.0.tar.gz
@@ -6782,12 +7053,12 @@ $./autogen.sh
 </div>
 </div>
 
-<div id="outline-container-orgheadline58" class="outline-4">
-<h4 id="orgheadline58"><span class="section-number-4">2.16.2</span> Ubuntu上直接安装</h4>
-<div class="outline-text-4" id="text-2-16-2">
-</div><div id="outline-container-orgheadline188" class="outline-5">
-<h5 id="orgheadline188"><span class="section-number-5">2.16.2.1</span> 安装</h5>
-<div class="outline-text-5" id="text-2-16-2-1">
+<div id="outline-container-orgheadline91" class="outline-4">
+<h4 id="orgheadline91"><span class="section-number-4">8.16.2</span> Ubuntu上直接安装</h4>
+<div class="outline-text-4" id="text-8-16-2">
+</div><div id="outline-container-orgheadline189" class="outline-5">
+<h5 id="orgheadline189"><span class="section-number-5">8.16.2.1</span> 安装</h5>
+<div class="outline-text-5" id="text-8-16-2-1">
 <p>
 因为服务端就是git服务器，只需在使用的机器上有一个sparkleshare客户端即可，没有必要在PC上源码安装，也没有必要考虑交叉编译。
 </p>
@@ -6809,9 +7080,9 @@ $sudo apt-get install sparkleshare libwebkit1.1-cil git-core
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline189" class="outline-5">
-<h5 id="orgheadline189"><span class="section-number-5">2.16.2.2</span> 运行</h5>
-<div class="outline-text-5" id="text-2-16-2-2">
+<div id="outline-container-orgheadline190" class="outline-5">
+<h5 id="orgheadline190"><span class="section-number-5">8.16.2.2</span> 运行</h5>
+<div class="outline-text-5" id="text-8-16-2-2">
 <div class="org-src-container">
 
 <pre class="src src-sh">$sparkleshare start
@@ -6820,9 +7091,9 @@ $sudo apt-get install sparkleshare libwebkit1.1-cil git-core
 </div>
 </div>
 
-<div id="outline-container-orgheadline190" class="outline-5">
-<h5 id="orgheadline190"><span class="section-number-5">2.16.2.3</span> 添加已托管的git项目（位于ssh主机上）</h5>
-<div class="outline-text-5" id="text-2-16-2-3">
+<div id="outline-container-orgheadline191" class="outline-5">
+<h5 id="orgheadline191"><span class="section-number-5">8.16.2.3</span> 添加已托管的git项目（位于ssh主机上）</h5>
+<div class="outline-text-5" id="text-8-16-2-3">
 <p>
 选择已有的一个git服务器下的git目录添加, 经常会出现无法同步文件的情况。
 </p>
@@ -6840,9 +7111,9 @@ sparkleshare目录中有key文件，.ssh中也有。
 </div>
 </div>
 
-<div id="outline-container-orgheadline193" class="outline-5">
-<h5 id="orgheadline193"><span class="section-number-5">2.16.2.4</span> 服务端的配置</h5>
-<div class="outline-text-5" id="text-2-16-2-4">
+<div id="outline-container-orgheadline194" class="outline-5">
+<h5 id="orgheadline194"><span class="section-number-5">8.16.2.4</span> 服务端的配置</h5>
+<div class="outline-text-5" id="text-8-16-2-4">
 <p>
 Sparkle shared其实就是一个 git 图形客户端。自动定期同步其管辖目录下的git文件。服务端的配置非常简单，只需要有一个git仓库即可。
 </p>
@@ -6855,14 +7126,14 @@ Sparkle shared其实就是一个 git 图形客户端。自动定期同步其管�
 常见的用于sparkle的比较重要的git配置如下：
 </p>
 </div>
-<ol class="org-ol"><li><a id="orgheadline191"></a>允许push<br  /><div class="outline-text-6" id="text-2-16-2-4-1">
+<ol class="org-ol"><li><a id="orgheadline192"></a>允许push<br  /><div class="outline-text-6" id="text-8-16-2-4-1">
 <p>
 服务端git仓库需要配置成允许push, 修改配置文件修改其 <code>receive.denyCurrentBranch</code> 的值为 <code>ignore</code> ，
 或者在具有工作目录的仓库中运行 <code>git config receive.denyCurrentBranch ignore</code> .
 </p>
 </div></li>
 
-<li><a id="orgheadline192"></a>使用裸库替代有工作目录的git库<br  /><div class="outline-text-6" id="text-2-16-2-4-2">
+<li><a id="orgheadline193"></a>使用裸库替代有工作目录的git库<br  /><div class="outline-text-6" id="text-8-16-2-4-2">
 <p>
 如果服务端git仓库中包含一个工作目录，那么客户端的Sparkleshare 完成 push之后，服务端会看不到变化的文件。原因是服务端如果在被push的分支上，就无法在实时更新其工作目录结构，需要在服务端手动运行 <code>git reset --hard</code> 才行。
 </p>
@@ -6874,9 +7145,9 @@ Sparkle shared其实就是一个 git 图形客户端。自动定期同步其管�
 </div>
 </div>
 
-<div id="outline-container-orgheadline59" class="outline-4">
-<h4 id="orgheadline59"><span class="section-number-4">2.16.3</span> 参考网址：</h4>
-<div class="outline-text-4" id="text-2-16-3">
+<div id="outline-container-orgheadline92" class="outline-4">
+<h4 id="orgheadline92"><span class="section-number-4">8.16.3</span> 参考网址：</h4>
+<div class="outline-text-4" id="text-8-16-3">
 <p>
 官方网址：<a href="https://www.sparkleshare.org/">https://www.sparkleshare.org/</a>
 </p>
@@ -6904,17 +7175,17 @@ git-annex:  <a href="http://git-annex.branchable.com/">http://git-annex.branchab
 </div>
 </div>
 
-<div id="outline-container-orgheadline60" class="outline-3">
-<h3 id="orgheadline60"><span class="section-number-3">2.17</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> dvcs-autosync</h3>
-<div class="outline-text-3" id="text-2-17">
+<div id="outline-container-orgheadline93" class="outline-3">
+<h3 id="orgheadline93"><span class="section-number-3">8.17</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> dvcs-autosync</h3>
+<div class="outline-text-3" id="text-8-17">
 <ul class="org-ul">
 <li>State "MAYBE/FUTURE" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-07-28 四 19:53]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline61" class="outline-3">
-<h3 id="orgheadline61"><span class="section-number-3">2.18</span> <span class="done CANCEL">CANCEL</span> git annex</h3>
-<div class="outline-text-3" id="text-2-18">
+<div id="outline-container-orgheadline94" class="outline-3">
+<h3 id="orgheadline94"><span class="section-number-3">8.18</span> <span class="done CANCEL">CANCEL</span> git annex</h3>
+<div class="outline-text-3" id="text-8-18">
 <ul class="org-ul">
 <li>State "CANCEL"     from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-07-29 五 11:57] </span></span> <br  />
 语言太奇葩：Haskell.</li>
@@ -6932,9 +7203,9 @@ git-annex is Free Software, written in Haskell. You can contribute!
 </pre>
 </div>
 
-<div id="outline-container-orgheadline62" class="outline-4">
-<h4 id="orgheadline62"><span class="section-number-4">2.18.1</span> 源代码</h4>
-<div class="outline-text-4" id="text-2-18-1">
+<div id="outline-container-orgheadline95" class="outline-4">
+<h4 id="orgheadline95"><span class="section-number-4">8.18.1</span> 源代码</h4>
+<div class="outline-text-4" id="text-8-18-1">
 <div class="org-src-container">
 
 <pre class="src src-sh">git clone https://github.com/joeyh/git-annex.git
@@ -6943,9 +7214,9 @@ git-annex is Free Software, written in Haskell. You can contribute!
 </div>
 </div>
 
-<div id="outline-container-orgheadline63" class="outline-4">
-<h4 id="orgheadline63"><span class="section-number-4">2.18.2</span> 参考资料</h4>
-<div class="outline-text-4" id="text-2-18-2">
+<div id="outline-container-orgheadline96" class="outline-4">
+<h4 id="orgheadline96"><span class="section-number-4">8.18.2</span> 参考资料</h4>
+<div class="outline-text-4" id="text-8-18-2">
 <p>
 官方网站：
 <a href="http://git-annex.branchable.com/">http://git-annex.branchable.com/</a>
@@ -6978,9 +7249,9 @@ git-annex is Free Software, written in Haskell. You can contribute!
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline64" class="outline-3">
-<h3 id="orgheadline64"><span class="section-number-3">2.19</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> git lfs</h3>
-<div class="outline-text-3" id="text-2-19">
+<div id="outline-container-orgheadline97" class="outline-3">
+<h3 id="orgheadline97"><span class="section-number-3">8.19</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> git lfs</h3>
+<div class="outline-text-3" id="text-8-19">
 <ul class="org-ul">
 <li>State "MAYBE/FUTURE" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-03 三 19:02]</span></span></li>
 <li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-07-29 五 12:05]</span></span></li>
@@ -7014,7 +7285,7 @@ git-annex is Free Software, written in Haskell. You can contribute!
 	</tr>
     	<tr>
 	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-08-09 二 14:36:12></td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-08-09 二 16:45:11></td>
 	</tr>
     </tbody></table>
 </div>
