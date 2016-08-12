@@ -1,0 +1,65 @@
+/* Effective stylesheet produced by snapshot save */
+.clearfix::after, .clearfix::before { display: table; line-height: 0; content: ""; }
+.clearfix::after { clear: both; }
+@media (min-width: 1200px) {
+  .row-fluid::after, .row-fluid::before, .row::after, .row::before { display: table; line-height: 0; content: ""; }
+  .row-fluid::after, .row::after { clear: both; }
+  [class*="span"] { float: left; min-height: 1px; margin-left: 30px; }
+  .container, .navbar-fixed-bottom .container, .navbar-fixed-top .container, .navbar-static-top .container, .span12 { width: 1170px; }
+  .span9 { width: 870px; }
+  .span3 { width: 270px; }
+  .row-fluid, .row-fluid .span12 { width: 100%; }
+  .row-fluid [class*="span"] { display: block; float: left; width: 100%; min-height: 30px; margin-left: 2.5641%; box-sizing: border-box; }
+  .row-fluid [class*="span"]:first-child { margin-left: 0px; }
+  .row-fluid .span9 { width: 74.359%; }
+  .row-fluid .span3 { width: 23.0769%; }
+  .uneditable-input, input, textarea { margin-left: 0px; }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+  .row-fluid::after, .row-fluid::before, .row::after, .row::before { display: table; line-height: 0; content: ""; }
+  .row-fluid::after, .row::after { clear: both; }
+  [class*="span"] { float: left; min-height: 1px; margin-left: 20px; }
+  .container, .navbar-fixed-bottom .container, .navbar-fixed-top .container, .navbar-static-top .container, .span12 { width: 724px; }
+  .span9 { width: 538px; }
+  .span3 { width: 166px; }
+  .row-fluid, .row-fluid .span12 { width: 100%; }
+  .row-fluid [class*="span"] { display: block; float: left; width: 100%; min-height: 30px; margin-left: 2.76243%; box-sizing: border-box; }
+  .row-fluid [class*="span"]:first-child { margin-left: 0px; }
+  .row-fluid .span9 { width: 74.3094%; }
+  .row-fluid .span3 { width: 22.9282%; }
+  .uneditable-input, input, textarea { margin-left: 0px; }
+}
+@media (max-width: 767px) {
+  body { padding-right: 20px; padding-left: 20px; }
+  .navbar-fixed-bottom, .navbar-fixed-top, .navbar-static-top { margin-right: -20px; margin-left: -20px; }
+  .container { width: auto; }
+  .row-fluid { width: 100%; }
+  .row-fluid [class*="span"], .uneditable-input[class*="span"], [class*="span"] { display: block; float: none; width: 100%; margin-left: 0px; box-sizing: border-box; }
+}
+@media (max-width: 480px) {
+  .nav-collapse {  }
+}
+@media (max-width: 979px) {
+  body { padding-top: 0px; }
+  .navbar-fixed-bottom, .navbar-fixed-top { position: static; }
+  .navbar-fixed-top { margin-bottom: 20px; }
+  .navbar-fixed-bottom .navbar-inner, .navbar-fixed-top .navbar-inner { padding: 5px; }
+  .navbar .container { width: auto; padding: 0px; }
+  .navbar .brand { padding-right: 10px; padding-left: 10px; margin: 0px 0px 0px -5px; }
+  .nav-collapse { clear: both; }
+  .nav-collapse .nav { float: none; margin: 0px 0px 10px; }
+  .nav-collapse .dropdown-menu li + li a, .nav-collapse .nav > li > a { margin-bottom: 2px; }
+  .nav-collapse .nav > li { float: none; }
+  .nav-collapse .nav > .divider-vertical { display: none; }
+  .nav-collapse .dropdown-menu a, .nav-collapse .nav > li > a { padding: 9px 15px; font-weight: 700; color: rgb(119, 119, 119); border-radius: 3px; }
+  .nav-collapse .dropdown-menu a:focus, .nav-collapse .dropdown-menu a:hover, .nav-collapse .nav > li > a:focus, .nav-collapse .nav > li > a:hover { background-color: rgb(242, 242, 242); }
+  .navbar-inverse .nav-collapse .dropdown-menu a, .navbar-inverse .nav-collapse .nav > li > a { color: rgb(153, 153, 153); }
+  .navbar-inverse .nav-collapse .dropdown-menu a:focus, .navbar-inverse .nav-collapse .dropdown-menu a:hover, .navbar-inverse .nav-collapse .nav > li > a:focus, .navbar-inverse .nav-collapse .nav > li > a:hover { background-color: rgb(17, 17, 17); }
+  .nav-collapse .dropdown-menu { position: static; top: auto; left: auto; display: none; float: none; max-width: none; padding: 0px; margin: 0px 15px; background-color: transparent; border: medium none; border-radius: 0px; box-shadow: none; }
+  .nav-collapse .dropdown-menu .divider, .nav-collapse .dropdown-menu::after, .nav-collapse .dropdown-menu::before, .nav-collapse .nav > li > .dropdown-menu::after, .nav-collapse .nav > li > .dropdown-menu::before { display: none; }
+  .nav-collapse, .nav-collapse.collapse { height: 0px; overflow: hidden; }
+  .navbar .btn-navbar { display: block; }
+}
+@media (min-width: 980px) {
+  .nav-collapse.collapse { height: auto ! important; overflow: visible ! important; }
+}
