@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
 <title>首页</title>
 
 <!--theme-->
@@ -669,6 +669,23 @@
         			}
     			}
     			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
 
     			create_category_menu(categories, 0, categories_count);
     			//document.write("hello")
@@ -713,9 +730,9 @@
 	    	  <span style="border-style:solid; border-width:1px; border-color:#00FF00;
 		  		border-top:0px; border-left:0px;border-right:0px; 
 				margin:0;padding:0;height:100%;">
-				<input value="Search in title..." name="s" class="s" 
-		  	 	onfocus="if (this.value == 'Search in title...') {this.value = '';}" 
-		  	 	onblur="if (this.value == '') {this.value = 'Search in title...';}"
+				<input value="Search by title (canbe regex)..." name="s" class="s" 
+		  	 	onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" 
+		  	 	onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}"
 			 	style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" 
 			 	type="text">
 		  </span>
@@ -858,7 +875,7 @@
 
 
             </a>
-            <hr id='article_line'>
+            <hr class='article_line'>
         </div>
       
         <div>
@@ -892,7 +909,7 @@
 
 
             </a>
-            <hr id='article_line'>
+            <hr class='article_line'>
         </div>
       
         <div>
@@ -914,7 +931,7 @@
 
 
             </a>
-            <hr id='article_line'>
+            <hr class='article_line'>
         </div>
       
         <div>
@@ -936,7 +953,7 @@
 
 
             </a>
-            <hr id='article_line'>
+            <hr class='article_line'>
         </div>
       
         <div>
@@ -964,7 +981,7 @@
 
 
             </a>
-            <hr id='article_line'>
+            <hr class='article_line'>
         </div>
       
         <div>
@@ -998,7 +1015,7 @@
 
 
             </a>
-            <hr id='article_line'>
+            <hr class='article_line'>
         </div>
       
         <div>
@@ -1032,7 +1049,7 @@
 
 
             </a>
-            <hr id='article_line'>
+            <hr class='article_line'>
         </div>
       
         <div>
@@ -1060,7 +1077,7 @@
 
 
             </a>
-            <hr id='article_line'>
+            <hr class='article_line'>
         </div>
       
         <div>
@@ -1082,7 +1099,7 @@
 
 
             </a>
-            <hr id='article_line'>
+            <hr class='article_line'>
         </div>
       
         <div>
@@ -1104,7 +1121,7 @@
 
 
             </a>
-            <hr id='article_line'>
+            <hr class='article_line'>
         </div>
       
         <div>
@@ -1126,7 +1143,7 @@
 
 
             </a>
-            <hr id='article_line'>
+            <hr class='article_line'>
         </div>
       
         <div>
@@ -1148,7 +1165,7 @@
 
 
             </a>
-            <hr id='article_line'>
+            <hr class='article_line'>
         </div>
       
     </ul>

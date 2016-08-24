@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
 <title>命令</title>
 
 <!--theme-->
@@ -670,6 +670,23 @@
         			}
     			}
     			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
 
     			create_category_menu(categories, 0, categories_count);
     			//document.write("hello")
@@ -714,9 +731,9 @@
 	    	  <span style="border-style:solid; border-width:1px; border-color:#00FF00;
 		  		border-top:0px; border-left:0px;border-right:0px; 
 				margin:0;padding:0;height:100%;">
-				<input value="Search in title..." name="s" class="s" 
-		  	 	onfocus="if (this.value == 'Search in title...') {this.value = '';}" 
-		  	 	onblur="if (this.value == '') {this.value = 'Search in title...';}"
+				<input value="Search by title (canbe regex)..." name="s" class="s" 
+		  	 	onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" 
+		  	 	onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}"
 			 	style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" 
 			 	type="text">
 		  </span>
@@ -1391,6 +1408,23 @@
         }
     }
     
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
 
     create_categories(categories, 0, categories_count);
     //document.write("hello")
@@ -1475,7 +1509,7 @@ Table of Contents
 
 1.1. MAYBE/FUTU...
           </div>
-          <hr id='article_line'>
+          <hr class='article_line'>
         
 
       
@@ -1596,7 +1630,30 @@ Table of Contents
 4. 其它
 ...
           </div>
-          <hr id='article_line'>
+          <hr class='article_line'>
+        
+
+      
+        
+        
+          [2009-11-23]<a href="/categories/study/linux/command/linux_command_fsck.html"> Linux命令学习手册-fsck  </a> <br>
+
+          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
+          
+
+
+
+
+Table of Contents
+
+
+1. 功能
+2. 举例
+3. 描述
+
+3.1...
+          </div>
+          <hr class='article_line'>
         
 
       
@@ -1617,7 +1674,7 @@ Table of Contents
 4. 其它
 ...
           </div>
-          <hr id='article_line'>
+          <hr class='article_line'>
         
 
       
@@ -1638,7 +1695,7 @@ Table of Contents
 4. 其它
 ...
           </div>
-          <hr id='article_line'>
+          <hr class='article_line'>
         
 
       
@@ -1658,7 +1715,7 @@ Table of Contents
 
 2.1. awk 的处...
           </div>
-          <hr id='article_line'>
+          <hr class='article_line'>
         
 
       
@@ -1678,7 +1735,7 @@ Table of Contents
 3. 本文约定
 ...
           </div>
-          <hr id='article_line'>
+          <hr class='article_line'>
         
 
       

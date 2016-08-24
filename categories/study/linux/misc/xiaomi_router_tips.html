@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
 <title>小米路由器DIY</title>
 
 <!--theme-->
@@ -669,6 +669,23 @@
         			}
     			}
     			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
 
     			create_category_menu(categories, 0, categories_count);
     			//document.write("hello")
@@ -713,9 +730,9 @@
 	    	  <span style="border-style:solid; border-width:1px; border-color:#00FF00;
 		  		border-top:0px; border-left:0px;border-right:0px; 
 				margin:0;padding:0;height:100%;">
-				<input value="Search in title..." name="s" class="s" 
-		  	 	onfocus="if (this.value == 'Search in title...') {this.value = '';}" 
-		  	 	onblur="if (this.value == '') {this.value = 'Search in title...';}"
+				<input value="Search by title (canbe regex)..." name="s" class="s" 
+		  	 	onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" 
+		  	 	onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}"
 			 	style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" 
 			 	type="text">
 		  </span>
@@ -1390,6 +1407,23 @@
         }
     }
     
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
 
     create_categories(categories, 0, categories_count);
     //document.write("hello")
@@ -1677,7 +1711,7 @@
 <li><a href="#orgheadline73">8.11. <span class="done nilDONE">DONE</span> 如何小米路由器上使用 <code>git</code> 版本控制系统?</a></li>
 <li><a href="#orgheadline74">8.12. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 交叉编译mysql-5.7.11</a>
 <ul>
-<li><a href="#orgheadline75">8.12.1. 自带文档</a></li>
+<li><a href="#orgheadline75">8.12.1. try cmake</a></li>
 </ul>
 </li>
 <li><a href="#orgheadline76">8.13. <span class="todo nilLATER">LATER</span> 小米路由器搭建ftp服务</a>
@@ -1696,29 +1730,35 @@
 <li><a href="#orgheadline86">8.15. <span class="todo nilNEXT">NEXT</span> Seafile</a>
 <ul>
 <li><a href="#orgheadline87">8.15.1. <span class="done nilDONE">DONE</span> PC 上安装Seafile</a></li>
-<li><a href="#orgheadline88">8.15.2. 参考资料</a></li>
+<li><a href="#orgheadline88">8.15.2. 编译Seafile</a></li>
+<li><a href="#orgheadline89">8.15.3. 交叉编译Seafile</a></li>
+<li><a href="#orgheadline90">8.15.4. 参考资料</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline89">8.16. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> SparkleShare</a>
+<li><a href="#orgheadline91">8.16. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> SparkleShare</a>
 <ul>
-<li><a href="#orgheadline90">8.16.1. <span class="done nilCANCEL">CANCEL</span> PC上的编译安装</a></li>
-<li><a href="#orgheadline91">8.16.2. Ubuntu上直接安装</a></li>
-<li><a href="#orgheadline92">8.16.3. 参考网址：</a></li>
+<li><a href="#orgheadline92">8.16.1. <span class="done nilCANCEL">CANCEL</span> PC上的编译安装</a></li>
+<li><a href="#orgheadline93">8.16.2. Ubuntu上直接安装</a></li>
+<li><a href="#orgheadline94">8.16.3. 参考网址：</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline93">8.17. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> dvcs-autosync</a></li>
-<li><a href="#orgheadline94">8.18. <span class="done nilCANCEL">CANCEL</span> git annex</a>
+<li><a href="#orgheadline95">8.17. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> dvcs-autosync</a></li>
+<li><a href="#orgheadline96">8.18. <span class="done nilCANCEL">CANCEL</span> git annex</a>
 <ul>
-<li><a href="#orgheadline95">8.18.1. 源代码</a></li>
-<li><a href="#orgheadline96">8.18.2. 参考资料</a></li>
+<li><a href="#orgheadline97">8.18.1. 源代码</a></li>
+<li><a href="#orgheadline98">8.18.2. 参考资料</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline97">8.19. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> git lfs</a></li>
+<li><a href="#orgheadline99">8.19. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> git lfs</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
+
+<p>
+原文参考：<a href="http://vaqeteart.github.io/categories/study/linux/misc/xiaomi_router_tips.html">小米路由器DIY</a>
+</p>
 
 <p>
 曾经还以为自己是一枚成长迅速的米粉，但是渐渐却发现，我不适合做为米粉。
@@ -1785,7 +1825,7 @@
 <h3 id="orgheadline2"><span class="section-number-3">1.1</span> 烧写开发板</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-<span class="timestamp-wrapper"><span class="timestamp">&lt;2016-03-14 一 17:17&gt;</span></span>
+
 </p>
 </div>
 
@@ -1832,7 +1872,7 @@ U盘刷机步骤：
 <h3 id="orgheadline6"><span class="section-number-3">1.2</span> 烧写ssh</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
-<span class="timestamp-wrapper"><span class="timestamp">&lt;2016-03-14 一 17:16&gt;</span></span>
+
 </p>
 </div>
 
@@ -2434,8 +2474,8 @@ $sudo make install
 <h4 id="orgheadline28"><a id="ID-ec1983bd-1420-45b1-b21a-9353e0b9015e"></a><span class="section-number-4">5.1.2</span> 安装php所需依赖</h4>
 <div class="outline-text-4" id="text-5-1-2">
 </div>
-<div id="outline-container-orgheadline98" class="outline-5">
-<h5 id="orgheadline98"><span class="section-number-5">5.1.2.1</span> 在 Ubuntu 12.04 上：</h5>
+<div id="outline-container-orgheadline100" class="outline-5">
+<h5 id="orgheadline100"><span class="section-number-5">5.1.2.1</span> 在 Ubuntu 12.04 上：</h5>
 <div class="outline-text-5" id="text-5-1-2-1">
 <div class="org-src-container">
 
@@ -2453,8 +2493,8 @@ $sudo apt-get install libmcrypt-dev
 </div>
 </div>
 
-<div id="outline-container-orgheadline99" class="outline-5">
-<h5 id="orgheadline99"><span class="section-number-5">5.1.2.2</span> 在 Center OS 上：</h5>
+<div id="outline-container-orgheadline101" class="outline-5">
+<h5 id="orgheadline101"><span class="section-number-5">5.1.2.2</span> 在 Center OS 上：</h5>
 <div class="outline-text-5" id="text-5-1-2-2">
 <div class="org-src-container">
 
@@ -2638,8 +2678,8 @@ $sudo make install
 <div id="outline-container-orgheadline33" class="outline-4">
 <h4 id="orgheadline33"><span class="section-number-4">5.1.7</span> php的配置和运行</h4>
 <div class="outline-text-4" id="text-5-1-7">
-</div><div id="outline-container-orgheadline100" class="outline-5">
-<h5 id="orgheadline100"><span class="section-number-5">5.1.7.1</span> 对mysql的配置</h5>
+</div><div id="outline-container-orgheadline102" class="outline-5">
+<h5 id="orgheadline102"><span class="section-number-5">5.1.7.1</span> 对mysql的配置</h5>
 <div class="outline-text-5" id="text-5-1-7-1">
 <p>
 为了能够安装owncloud，需要做php对mysql支持的配置，将源代码解压包中的 <code>php.ini-development</code> 拷贝到安装好的目录中（ <code>/usr/local/develop/php-5.6.19/etc</code> ），命名为 <code>php.ini</code> 修改如下： <code>pdo_mysql.default_socket=/var/run/mysqld/mysqld.sock</code> 。
@@ -2660,8 +2700,8 @@ Error while trying to create admin user: Failed to connect to the database: An e
 </div>
 </div>
 
-<div id="outline-container-orgheadline101" class="outline-5">
-<h5 id="orgheadline101"><span class="section-number-5">5.1.7.2</span> 运行php</h5>
+<div id="outline-container-orgheadline103" class="outline-5">
+<h5 id="orgheadline103"><span class="section-number-5">5.1.7.2</span> 运行php</h5>
 <div class="outline-text-5" id="text-5-1-7-2">
 <p>
 运行 <code>./php-fpm.sh start</code>
@@ -2746,8 +2786,8 @@ $openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
 <div id="outline-container-orgheadline35" class="outline-4">
 <h4 id="orgheadline35"><span class="section-number-4">5.1.9</span> nginx的配置和运行</h4>
 <div class="outline-text-4" id="text-5-1-9">
-</div><div id="outline-container-orgheadline102" class="outline-5">
-<h5 id="orgheadline102"><span class="section-number-5">5.1.9.1</span> 运行脚本</h5>
+</div><div id="outline-container-orgheadline104" class="outline-5">
+<h5 id="orgheadline104"><span class="section-number-5">5.1.9.1</span> 运行脚本</h5>
 <div class="outline-text-5" id="text-5-1-9-1">
 <p>
 先给出运行nginx的脚本，后面会用到（根据自己的情况，将开头定义的 <code>$NGINX_BIN</code> 等变量做相应修改）。
@@ -2803,8 +2843,8 @@ esac
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline103" class="outline-5">
-<h5 id="orgheadline103"><span class="section-number-5">5.1.9.2</span> 测试网站</h5>
+<div id="outline-container-orgheadline105" class="outline-5">
+<h5 id="orgheadline105"><span class="section-number-5">5.1.9.2</span> 测试网站</h5>
 <div class="outline-text-5" id="text-5-1-9-2">
 <ol class="org-ol">
 <li><p>
@@ -2869,8 +2909,8 @@ $/etc/init.d/nginx.sh start
 对前面LNMP环境建立并且测试完成之后，搭建owncloud网站其主要工作就是修改 <code>nginx.conf</code> 配置文件了。在owncloud官网上有一个对nginx的配置说明，这里给出当前实践过，并且好用的配置。不做过多解释,根据自身情况，做相应修改应当不难。
 </p>
 </div>
-<div id="outline-container-orgheadline104" class="outline-5">
-<h5 id="orgheadline104"><span class="section-number-5">5.1.10.1</span> OwnCloud相关软件和文档获取</h5>
+<div id="outline-container-orgheadline106" class="outline-5">
+<h5 id="orgheadline106"><span class="section-number-5">5.1.10.1</span> OwnCloud相关软件和文档获取</h5>
 <div class="outline-text-5" id="text-5-1-10-1">
 <ol class="org-ol">
 <li><p>
@@ -2900,8 +2940,8 @@ https://software.opensuse.org/download/package?project=isv:ownCloud:desktop&amp;
 </div>
 </div>
 
-<div id="outline-container-orgheadline105" class="outline-5">
-<h5 id="orgheadline105"><span class="section-number-5">5.1.10.2</span> 配置用于OwnCloud的Nginx配置选项</h5>
+<div id="outline-container-orgheadline107" class="outline-5">
+<h5 id="orgheadline107"><span class="section-number-5">5.1.10.2</span> 配置用于OwnCloud的Nginx配置选项</h5>
 <div class="outline-text-5" id="text-5-1-10-2">
 <div class="org-src-container">
 
@@ -3017,8 +3057,8 @@ https://software.opensuse.org/download/package?project=isv:ownCloud:desktop&amp;
 具体安装过程以及期间遇到的问题，可参考文档进行，下面给出大致过程。
 </p>
 </div>
-<div id="outline-container-orgheadline106" class="outline-5">
-<h5 id="orgheadline106"><span class="section-number-5">5.1.11.1</span> 设置OwnCloud的安装目录</h5>
+<div id="outline-container-orgheadline108" class="outline-5">
+<h5 id="orgheadline108"><span class="section-number-5">5.1.11.1</span> 设置OwnCloud的安装目录</h5>
 <div class="outline-text-5" id="text-5-1-11-1">
 <p>
 先将Owncloud解压，然后设置文件权限。需要设置owncloud中data和config目录等的用户和组为 <code>www-data</code> 。在文档中具体介绍了为什么要这样设置。这里简化起见，设置之后，再将权限设置为777，并不是最优方案。
@@ -3038,10 +3078,10 @@ $sudo chmod 777 -R oc_data
 </div>
 </div>
 
-<div id="outline-container-orgheadline109" class="outline-5">
-<h5 id="orgheadline109"><span class="section-number-5">5.1.11.2</span> 配置Owncloud添加管理员账户</h5>
+<div id="outline-container-orgheadline111" class="outline-5">
+<h5 id="orgheadline111"><span class="section-number-5">5.1.11.2</span> 配置Owncloud添加管理员账户</h5>
 <div class="outline-text-5" id="text-5-1-11-2">
-</div><ol class="org-ol"><li><a id="orgheadline107"></a>基本配置<br  /><div class="outline-text-6" id="text-5-1-11-2-1">
+</div><ol class="org-ol"><li><a id="orgheadline109"></a>基本配置<br  /><div class="outline-text-6" id="text-5-1-11-2-1">
 <p>
 我们可以根据前面的 <code>nginx.conf</code> 设置，直接使用 <code>https://localhost</code> 访问，进入Owncloud初始设置界面。为便于描述，这里直接用命令行方式对其进行设置，效果相同。
 </p>
@@ -3061,7 +3101,7 @@ $ sudo -u www-data php occ maintenance:install --database "mysql" --database-nam
 </p>
 </div></li>
 
-<li><a id="orgheadline108"></a>额外配置<br  /><div class="outline-text-6" id="text-5-1-11-2-2">
+<li><a id="orgheadline110"></a>额外配置<br  /><div class="outline-text-6" id="text-5-1-11-2-2">
 <p>
 如上配置之后，可以本地访问owncloud，但是如果想要实现远程其它机器也能访问，还需修改 <code>owncloud/config/config.php</code> 如下：
 将
@@ -3148,8 +3188,8 @@ owncloud-8.2.2.tgz
 注意，这里编译的是 <code>mysql-5.1.72</code> 其它更新的版本可能没有相应的configure文件。
 </p>
 </div>
-<div id="outline-container-orgheadline110" class="outline-5">
-<h5 id="orgheadline110"><span class="section-number-5">5.2.3.1</span> 下载相关软件包</h5>
+<div id="outline-container-orgheadline112" class="outline-5">
+<h5 id="orgheadline112"><span class="section-number-5">5.2.3.1</span> 下载相关软件包</h5>
 <div class="outline-text-5" id="text-5-2-3-1">
 <div class="org-src-container">
 
@@ -3160,8 +3200,8 @@ $wget -c http://cdn.mysql.com/archives/mysql-5.1/mysql-5.1.72.tar.gz
 </div>
 </div>
 
-<div id="outline-container-orgheadline111" class="outline-5">
-<h5 id="orgheadline111"><span class="section-number-5">5.2.3.2</span> 编译PC板的MySql</h5>
+<div id="outline-container-orgheadline113" class="outline-5">
+<h5 id="orgheadline113"><span class="section-number-5">5.2.3.2</span> 编译PC板的MySql</h5>
 <div class="outline-text-5" id="text-5-2-3-2">
 <div class="org-src-container">
 
@@ -3178,8 +3218,8 @@ $make
 </div>
 </div>
 
-<div id="outline-container-orgheadline113" class="outline-5">
-<h5 id="orgheadline113"><span class="section-number-5">5.2.3.3</span> 交叉编译安装ncurses</h5>
+<div id="outline-container-orgheadline115" class="outline-5">
+<h5 id="orgheadline115"><span class="section-number-5">5.2.3.3</span> 交叉编译安装ncurses</h5>
 <div class="outline-text-5" id="text-5-2-3-3">
 <p>
 这个工具需要先编译，这样后面的MySql和php对gettext的交叉编译才不会出现问题。
@@ -3196,7 +3236,7 @@ $make install
 </div>
 
 
-<ol class="org-ol"><li><a id="orgheadline112"></a>交叉编译的MySql<br  /><div class="outline-text-6" id="text-5-2-3-3-1">
+<ol class="org-ol"><li><a id="orgheadline114"></a>交叉编译的MySql<br  /><div class="outline-text-6" id="text-5-2-3-3-1">
 <ol class="org-ol">
 <li><p>
 首先修改configure文件，使之不会在交叉编译的时候运行测试软件
@@ -3332,8 +3372,8 @@ $make install
 <div id="outline-container-orgheadline42" class="outline-4">
 <h4 id="orgheadline42"><span class="section-number-4">5.2.4</span> 交叉编译安装PHP</h4>
 <div class="outline-text-4" id="text-5-2-4">
-</div><div id="outline-container-orgheadline114" class="outline-5">
-<h5 id="orgheadline114"><span class="section-number-5">5.2.4.1</span> 交叉编译安装libxml</h5>
+</div><div id="outline-container-orgheadline116" class="outline-5">
+<h5 id="orgheadline116"><span class="section-number-5">5.2.4.1</span> 交叉编译安装libxml</h5>
 <div class="outline-text-5" id="text-5-2-4-1">
 <p>
 需要编译的版本是libxml2-2.7.8，更高的版本需要编译python。
@@ -3350,8 +3390,8 @@ $make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline115" class="outline-5">
-<h5 id="orgheadline115"><span class="section-number-5">5.2.4.2</span> 交叉编译安装zlib</h5>
+<div id="outline-container-orgheadline117" class="outline-5">
+<h5 id="orgheadline117"><span class="section-number-5">5.2.4.2</span> 交叉编译安装zlib</h5>
 <div class="outline-text-5" id="text-5-2-4-2">
 <div class="org-src-container">
 
@@ -3364,8 +3404,8 @@ $make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline116" class="outline-5">
-<h5 id="orgheadline116"><span class="section-number-5">5.2.4.3</span> 交叉编译安装pcre</h5>
+<div id="outline-container-orgheadline118" class="outline-5">
+<h5 id="orgheadline118"><span class="section-number-5">5.2.4.3</span> 交叉编译安装pcre</h5>
 <div class="outline-text-5" id="text-5-2-4-3">
 <div class="org-src-container">
 
@@ -3380,8 +3420,8 @@ $make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline117" class="outline-5">
-<h5 id="orgheadline117"><span class="section-number-5">5.2.4.4</span> 交叉编译安装openssl</h5>
+<div id="outline-container-orgheadline119" class="outline-5">
+<h5 id="orgheadline119"><span class="section-number-5">5.2.4.4</span> 交叉编译安装openssl</h5>
 <div class="outline-text-5" id="text-5-2-4-4">
 <div class="org-src-container">
 
@@ -3395,8 +3435,8 @@ $make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline118" class="outline-5">
-<h5 id="orgheadline118"><span class="section-number-5">5.2.4.5</span> 交叉编译安装libcurl</h5>
+<div id="outline-container-orgheadline120" class="outline-5">
+<h5 id="orgheadline120"><span class="section-number-5">5.2.4.5</span> 交叉编译安装libcurl</h5>
 <div class="outline-text-5" id="text-5-2-4-5">
 <div class="org-src-container">
 
@@ -3410,8 +3450,8 @@ $make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline119" class="outline-5">
-<h5 id="orgheadline119"><span class="section-number-5">5.2.4.6</span> 交叉编译安装libjpeg</h5>
+<div id="outline-container-orgheadline121" class="outline-5">
+<h5 id="orgheadline121"><span class="section-number-5">5.2.4.6</span> 交叉编译安装libjpeg</h5>
 <div class="outline-text-5" id="text-5-2-4-6">
 <div class="org-src-container">
 
@@ -3425,8 +3465,8 @@ $make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline120" class="outline-5">
-<h5 id="orgheadline120"><span class="section-number-5">5.2.4.7</span> 交叉编译安装libpng</h5>
+<div id="outline-container-orgheadline122" class="outline-5">
+<h5 id="orgheadline122"><span class="section-number-5">5.2.4.7</span> 交叉编译安装libpng</h5>
 <div class="outline-text-5" id="text-5-2-4-7">
 <div class="org-src-container">
 
@@ -3440,8 +3480,8 @@ $make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline121" class="outline-5">
-<h5 id="orgheadline121"><span class="section-number-5">5.2.4.8</span> 交叉编译安装libfreetype</h5>
+<div id="outline-container-orgheadline123" class="outline-5">
+<h5 id="orgheadline123"><span class="section-number-5">5.2.4.8</span> 交叉编译安装libfreetype</h5>
 <div class="outline-text-5" id="text-5-2-4-8">
 <div class="org-src-container">
 
@@ -3455,8 +3495,8 @@ $make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline122" class="outline-5">
-<h5 id="orgheadline122"><span class="section-number-5">5.2.4.9</span> 交叉编译安装libmhash</h5>
+<div id="outline-container-orgheadline124" class="outline-5">
+<h5 id="orgheadline124"><span class="section-number-5">5.2.4.9</span> 交叉编译安装libmhash</h5>
 <div class="outline-text-5" id="text-5-2-4-9">
 <div class="org-src-container">
 
@@ -3494,8 +3534,8 @@ $make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline123" class="outline-5">
-<h5 id="orgheadline123"><span class="section-number-5">5.2.4.10</span> 交叉编译安装libmcrypt-2.5.8</h5>
+<div id="outline-container-orgheadline125" class="outline-5">
+<h5 id="orgheadline125"><span class="section-number-5">5.2.4.10</span> 交叉编译安装libmcrypt-2.5.8</h5>
 <div class="outline-text-5" id="text-5-2-4-10">
 <div class="org-src-container">
 
@@ -3569,8 +3609,8 @@ $make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline124" class="outline-5">
-<h5 id="orgheadline124"><span class="section-number-5">5.2.4.11</span> 交叉编译安装mcrypt</h5>
+<div id="outline-container-orgheadline126" class="outline-5">
+<h5 id="orgheadline126"><span class="section-number-5">5.2.4.11</span> 交叉编译安装mcrypt</h5>
 <div class="outline-text-5" id="text-5-2-4-11">
 <p>
 这个貌似不用安装，但是保险起见还是把它安装上去。
@@ -3611,8 +3651,8 @@ $make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline125" class="outline-5">
-<h5 id="orgheadline125"><span class="section-number-5">5.2.4.12</span> 交叉编译安装gettext</h5>
+<div id="outline-container-orgheadline127" class="outline-5">
+<h5 id="orgheadline127"><span class="section-number-5">5.2.4.12</span> 交叉编译安装gettext</h5>
 <div class="outline-text-5" id="text-5-2-4-12">
 <p>
 这个也貌似不需要安装，但是为保险起见也将其安装如下：
@@ -3641,8 +3681,8 @@ $make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline126" class="outline-5">
-<h5 id="orgheadline126"><span class="section-number-5">5.2.4.13</span> 交叉编译安装libodbc</h5>
+<div id="outline-container-orgheadline128" class="outline-5">
+<h5 id="orgheadline128"><span class="section-number-5">5.2.4.13</span> 交叉编译安装libodbc</h5>
 <div class="outline-text-5" id="text-5-2-4-13">
 <p>
 似乎无用，保险起见，编译安装如下：
@@ -3659,8 +3699,8 @@ $make install
 </div>
 </div>
 
-<div id="outline-container-orgheadline139" class="outline-5">
-<h5 id="orgheadline139"><span class="section-number-5">5.2.4.14</span> 交叉编译安装php</h5>
+<div id="outline-container-orgheadline141" class="outline-5">
+<h5 id="orgheadline141"><span class="section-number-5">5.2.4.14</span> 交叉编译安装php</h5>
 <div class="outline-text-5" id="text-5-2-4-14">
 <p>
 这个部分是最关键，也最复杂。前面一切都是为了这个php做准备，有了php后面的nginx也才能够正常支持php的网站。
@@ -3675,7 +3715,7 @@ $make install
 </p>
 </div>
 
-<ol class="org-ol"><li><a id="orgheadline127"></a>代码与依赖<br  /><div class="outline-text-6" id="text-5-2-4-14-1">
+<ol class="org-ol"><li><a id="orgheadline129"></a>代码与依赖<br  /><div class="outline-text-6" id="text-5-2-4-14-1">
 <div class="org-src-container">
 
 <pre class="src src-sh">$tar -xzvf php-5.6.19.tar.gz
@@ -3693,7 +3733,7 @@ $cp /home/miracle/work/1_inbox/xiaomirouter/test/sdk_package/toolchain/arm-xiaom
 </div>
 </div></li>
 
-<li><a id="orgheadline128"></a>配置前的修改<br  /><div class="outline-text-6" id="text-5-2-4-14-2">
+<li><a id="orgheadline130"></a>配置前的修改<br  /><div class="outline-text-6" id="text-5-2-4-14-2">
 <p>
 使用configure脚本配置，会导致测试test的时候报错，错误原因类似mysql的配置，是因为交叉编译产生的测试程序不能直接运行，进而无法通过测试，修改configure脚本如下：
 </p>
@@ -3729,7 +3769,7 @@ else
 </pre>
 </div></li>
 
-<li><a id="orgheadline129"></a>配置1&#x2013;用于确认导出变量的配置<br  /><div class="outline-text-6" id="text-5-2-4-14-3">
+<li><a id="orgheadline131"></a>配置1&#x2013;用于确认导出变量的配置<br  /><div class="outline-text-6" id="text-5-2-4-14-3">
 <p>
 经过如上修改之后， <code>./configure</code> 脚本能够运行通过。但是，仅仅如此还是不够，这样配置后，即使后面的编译过程通过了，所得到的php也有许多的问题，这些问题只有在运行时才可能会被发现，那样我们有需要重新交叉编译、配置php了。过程比较麻烦，这里给出一些需要修改的地方，希望能够尽量避免日后重新配置安装。但是如果不得不重新配置安装的话，这里也为将来出现问题时如何解决给出了一个参考。
 </p>
@@ -3744,12 +3784,12 @@ else
 </div>
 </div></li>
 
-<li><a id="orgheadline133"></a>确定需要额外修改的配置信息<br  /><div class="outline-text-6" id="text-5-2-4-14-4">
+<li><a id="orgheadline135"></a>确定需要额外修改的配置信息<br  /><div class="outline-text-6" id="text-5-2-4-14-4">
 <p>
 这里需要修改的内容比较复杂，不可能完全将修改的内容在这里给出。但是相信进行到这里的朋友肯定也对自己所做的事情很清楚了，不需要详细的描述，通过这里给出的方法，应当能够自己根据实际情况将configure修改成适合自己的样子。
 </p>
 </div>
-<ol class="org-ol"><li><a id="orgheadline131"></a>配置支持的函数开关<br  /><div class="outline-text-7" id="text-5-2-4-14-4-1">
+<ol class="org-ol"><li><a id="orgheadline133"></a>配置支持的函数开关<br  /><div class="outline-text-7" id="text-5-2-4-14-4-1">
 <p>
 上述配置完成之后，会生成一个 <code>config.log</code>, 其中包含了配置时的信息。对比在pc上配置、编译php后生成的 <code>config.log</code> 与该交叉配置、编译php的 <code>config.log</code> ，找到 <code>ac_cv_func_xxx</code> 变量的配置结果，会发现，有些pc版上为 <code>yes</code> ，而交叉编译版本时变成了 <code>no</code> 的变量，在交叉编译的configure中，根据自身路由器的情况，一般会将相应位置修改回 <code>yes</code> 。
 </p>
@@ -3770,7 +3810,7 @@ else
 </pre>
 </div>
 
-<ol class="org-ol"><li><a id="orgheadline130"></a>例子<br  /><div class="outline-text-8" id="text-5-2-4-14-4-1-1">
+<ol class="org-ol"><li><a id="orgheadline132"></a>例子<br  /><div class="outline-text-8" id="text-5-2-4-14-4-1-1">
 <p>
 下面的例子，展示了我们为什么要添加这些函数变量。
 </p>
@@ -3832,7 +3872,7 @@ phpinfo()
 </p>
 </div></li></ol></li>
 
-<li><a id="orgheadline132"></a>配置其它选项参数<br  /><div class="outline-text-7" id="text-5-2-4-14-4-2">
+<li><a id="orgheadline134"></a>配置其它选项参数<br  /><div class="outline-text-7" id="text-5-2-4-14-4-2">
 <p>
 参照类似前面的方式，对比pc版本和交叉编译版本 <code>config.log</code> 文件，找到其它看起来比较重要的、却在pc上打开，交叉编译版本关闭的一些选项参数，进行类似修改。
 比如：
@@ -3852,7 +3892,7 @@ ac_cv_crypt_sha512=yes
 </p>
 </div></li></ol></li>
 
-<li><a id="orgheadline134"></a>配置2&#x2013;最终配置<br  /><div class="outline-text-6" id="text-5-2-4-14-5">
+<li><a id="orgheadline136"></a>配置2&#x2013;最终配置<br  /><div class="outline-text-6" id="text-5-2-4-14-5">
 <p>
 经过上述修改后，我们应该可以直接运行如下配置命令，生成Makefile了。
 </p>
@@ -3863,7 +3903,7 @@ ac_cv_crypt_sha512=yes
 </div>
 </div></li>
 
-<li><a id="orgheadline135"></a>Makefile修改<br  /><div class="outline-text-6" id="text-5-2-4-14-6">
+<li><a id="orgheadline137"></a>Makefile修改<br  /><div class="outline-text-6" id="text-5-2-4-14-6">
 <div class="org-src-container">
 
 <pre class="src src-sh">$vim Makefile
@@ -3878,7 +3918,7 @@ ac_cv_crypt_sha512=yes
 </ol>
 </div></li>
 
-<li><a id="orgheadline136"></a>代码修改<br  /><div class="outline-text-6" id="text-5-2-4-14-7">
+<li><a id="orgheadline138"></a>代码修改<br  /><div class="outline-text-6" id="text-5-2-4-14-7">
 <p>
 经过前面对Makefile修改之后，还需对源代码进行一些修改，以避免出现编译错误。大致如下：
 </p>
@@ -4022,7 +4062,7 @@ collect2: error: ld returned 1 exit status
 </ol>
 </div></li>
 
-<li><a id="orgheadline137"></a>交叉编译1-生成主要的二进制文件<br  /><div class="outline-text-6" id="text-5-2-4-14-8">
+<li><a id="orgheadline139"></a>交叉编译1-生成主要的二进制文件<br  /><div class="outline-text-6" id="text-5-2-4-14-8">
 <p>
 经过如上修改之后，即可以编译代码，如下：
 </p>
@@ -4046,7 +4086,7 @@ make: *** [ext/phar/phar.php] 错误 126
 </p>
 </div></li>
 
-<li><a id="orgheadline138"></a>交叉编译2-借助pc版本的php完成最终编译<br  /><div class="outline-text-6" id="text-5-2-4-14-9">
+<li><a id="orgheadline140"></a>交叉编译2-借助pc版本的php完成最终编译<br  /><div class="outline-text-6" id="text-5-2-4-14-9">
 <p>
 前面也提到了，前面出现的错误不需要修改什么，但是需要事先编译好一个pc版本的php。pc上php的编译在前面有所介绍。
 </p>
@@ -4094,8 +4134,8 @@ $cp php /home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/bin
 <div id="outline-container-orgheadline43" class="outline-4">
 <h4 id="orgheadline43"><span class="section-number-4">5.2.5</span> 交叉编译安装nginx</h4>
 <div class="outline-text-4" id="text-5-2-5">
-</div><div id="outline-container-orgheadline140" class="outline-5">
-<h5 id="orgheadline140"><span class="section-number-5">5.2.5.1</span> 代码解压</h5>
+</div><div id="outline-container-orgheadline142" class="outline-5">
+<h5 id="orgheadline142"><span class="section-number-5">5.2.5.1</span> 代码解压</h5>
 <div class="outline-text-5" id="text-5-2-5-1">
 <div class="org-src-container">
 
@@ -4106,8 +4146,8 @@ $cd nginx-1.8.1
 </div>
 </div>
 
-<div id="outline-container-orgheadline141" class="outline-5">
-<h5 id="orgheadline141"><span class="section-number-5">5.2.5.2</span> 修改配置文件</h5>
+<div id="outline-container-orgheadline143" class="outline-5">
+<h5 id="orgheadline143"><span class="section-number-5">5.2.5.2</span> 修改配置文件</h5>
 <div class="outline-text-5" id="text-5-2-5-2">
 <p>
 源代码中的 <code>auto</code> 目录修改会影响后面用 <code>configure</code> 生成的 <code>objs/ngx_auto_config.h</code> 的内容。如果没有修改相应的配置文件，则在后面编译之时修改该头文件中相应的定义也行。保险起见，最好从配置文件上进行修改。
@@ -4214,8 +4254,8 @@ nginx: [emerg] "worker_processes" directive invalid value in /userdisk/data/opt/
 </div>
 </div>
 
-<div id="outline-container-orgheadline142" class="outline-5">
-<h5 id="orgheadline142"><span class="section-number-5">5.2.5.3</span> 配置</h5>
+<div id="outline-container-orgheadline144" class="outline-5">
+<h5 id="orgheadline144"><span class="section-number-5">5.2.5.3</span> 配置</h5>
 <div class="outline-text-5" id="text-5-2-5-3">
 <div class="org-src-container">
 
@@ -4225,8 +4265,8 @@ nginx: [emerg] "worker_processes" directive invalid value in /userdisk/data/opt/
 </div>
 </div>
 
-<div id="outline-container-orgheadline143" class="outline-5">
-<h5 id="orgheadline143"><span class="section-number-5">5.2.5.4</span> 修改Makefile</h5>
+<div id="outline-container-orgheadline145" class="outline-5">
+<h5 id="orgheadline145"><span class="section-number-5">5.2.5.4</span> 修改Makefile</h5>
 <div class="outline-text-5" id="text-5-2-5-4">
 <div class="org-src-container">
 
@@ -4337,8 +4377,8 @@ objs/ngx_modules.o \
 </div>
 </div>
 
-<div id="outline-container-orgheadline144" class="outline-5">
-<h5 id="orgheadline144"><span class="section-number-5">5.2.5.5</span> 交叉编译、安装</h5>
+<div id="outline-container-orgheadline146" class="outline-5">
+<h5 id="orgheadline146"><span class="section-number-5">5.2.5.5</span> 交叉编译、安装</h5>
 <div class="outline-text-5" id="text-5-2-5-5">
 <div class="org-src-container">
 
@@ -4357,8 +4397,8 @@ $make install
 <div id="outline-container-orgheadline44" class="outline-4">
 <h4 id="orgheadline44"><span class="section-number-4">5.2.6</span> 部署到小米路由器上的内容</h4>
 <div class="outline-text-4" id="text-5-2-6">
-</div><div id="outline-container-orgheadline145" class="outline-5">
-<h5 id="orgheadline145"><span class="section-number-5">5.2.6.1</span> 安装包部署</h5>
+</div><div id="outline-container-orgheadline147" class="outline-5">
+<h5 id="orgheadline147"><span class="section-number-5">5.2.6.1</span> 安装包部署</h5>
 <div class="outline-text-5" id="text-5-2-6-1">
 <p>
 每次升级路由器,都需要重新部署配置文件.
@@ -4382,8 +4422,8 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/userdisk/data/opt/usr/local/develop/lib
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline146" class="outline-5">
-<h5 id="orgheadline146"><span class="section-number-5">5.2.6.2</span> 配置文件以及数据库的部署</h5>
+<div id="outline-container-orgheadline148" class="outline-5">
+<h5 id="orgheadline148"><span class="section-number-5">5.2.6.2</span> 配置文件以及数据库的部署</h5>
 <div class="outline-text-5" id="text-5-2-6-2">
 <p>
 先给出一个脚本 <code>install.sh</code>, 用来集中描述对配置文件的部署：
@@ -4761,8 +4801,8 @@ $chmod 777 -R $PREFIX/tmp
 </div>
 </div>
 
-<div id="outline-container-orgheadline147" class="outline-5">
-<h5 id="orgheadline147"><span class="section-number-5">5.2.6.3</span> 编写运行脚本</h5>
+<div id="outline-container-orgheadline149" class="outline-5">
+<h5 id="orgheadline149"><span class="section-number-5">5.2.6.3</span> 编写运行脚本</h5>
 <div class="outline-text-5" id="text-5-2-6-3">
 <p>
 启动脚本主要包括：MySql启动脚本、Php环境启动脚本、以及nginx启动脚本。
@@ -5284,8 +5324,8 @@ exit 0
 </div>
 </div>
 
-<div id="outline-container-orgheadline148" class="outline-5">
-<h5 id="orgheadline148"><span class="section-number-5">5.2.6.4</span> 创建数据库根用户帐号与http帐号</h5>
+<div id="outline-container-orgheadline150" class="outline-5">
+<h5 id="orgheadline150"><span class="section-number-5">5.2.6.4</span> 创建数据库根用户帐号与http帐号</h5>
 <div class="outline-text-5" id="text-5-2-6-4">
 <p>
 数据库帐号用于登录和操作数据库，http帐号是访问某些Owncloud安装目录子目录数据所需要的帐号。
@@ -5309,8 +5349,8 @@ www-data:x:1024:
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline149" class="outline-5">
-<h5 id="orgheadline149"><span class="section-number-5">5.2.6.5</span> readme</h5>
+<div id="outline-container-orgheadline151" class="outline-5">
+<h5 id="orgheadline151"><span class="section-number-5">5.2.6.5</span> readme</h5>
 <div class="outline-text-5" id="text-5-2-6-5">
 <pre class="example">
 (one time)1. ./install.sh
@@ -5691,8 +5731,8 @@ $git config --global user.email "vaqeteart@qq.com"
 wait for all done.</li>
 </ul>
 </div>
-<div id="outline-container-orgheadline150" class="outline-5">
-<h5 id="orgheadline150"><span class="section-number-5">6.3.5.1</span> <span class="done DONE">DONE</span> fatal: Unable to find remote helper for 'https'</h5>
+<div id="outline-container-orgheadline152" class="outline-5">
+<h5 id="orgheadline152"><span class="section-number-5">6.3.5.1</span> <span class="done DONE">DONE</span> fatal: Unable to find remote helper for 'https'</h5>
 <div class="outline-text-5" id="text-6-3-5-1">
 <ul class="org-ul">
 <li>State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-07-27 三 09:24]</span></span></li>
@@ -5703,8 +5743,8 @@ wait for all done.</li>
 </div>
 </div>
 
-<div id="outline-container-orgheadline151" class="outline-5">
-<h5 id="orgheadline151"><span class="section-number-5">6.3.5.2</span> <span class="done DONE">DONE</span> warning: templates not found /home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/share/git-core/templates</h5>
+<div id="outline-container-orgheadline153" class="outline-5">
+<h5 id="orgheadline153"><span class="section-number-5">6.3.5.2</span> <span class="done DONE">DONE</span> warning: templates not found /home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/share/git-core/templates</h5>
 <div class="outline-text-5" id="text-6-3-5-2">
 <ul class="org-ul">
 <li>State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-07-27 三 09:24]</span></span></li>
@@ -5721,8 +5761,8 @@ or in config file:
 </div>
 </div>
 
-<div id="outline-container-orgheadline152" class="outline-5">
-<h5 id="orgheadline152"><a id="ID-c7960eeb-4799-49d8-93f6-53c696cb1303"></a><span class="section-number-5">6.3.5.3</span> <span class="done DONE">DONE</span> Protocol "https" not supported or disabled in libcurl</h5>
+<div id="outline-container-orgheadline154" class="outline-5">
+<h5 id="orgheadline154"><a id="ID-c7960eeb-4799-49d8-93f6-53c696cb1303"></a><span class="section-number-5">6.3.5.3</span> <span class="done DONE">DONE</span> Protocol "https" not supported or disabled in libcurl</h5>
 <div class="outline-text-5" id="text-6-3-5-3">
 <ul class="org-ul">
 <li>State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-07-27 三 09:24]</span></span></li>
@@ -5746,8 +5786,8 @@ or in config file:
 </div>
 </div>
 
-<div id="outline-container-orgheadline153" class="outline-5">
-<h5 id="orgheadline153"><span class="section-number-5">6.3.5.4</span> xiaomi路由器上建立一个本地仓库后，最好用什么配置做为默认的本地仓库配置？</h5>
+<div id="outline-container-orgheadline155" class="outline-5">
+<h5 id="orgheadline155"><span class="section-number-5">6.3.5.4</span> xiaomi路由器上建立一个本地仓库后，最好用什么配置做为默认的本地仓库配置？</h5>
 <div class="outline-text-5" id="text-6-3-5-4">
 <p>
 如下：
@@ -5761,8 +5801,8 @@ $git config receive.denycurrentbranch ignore
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline154" class="outline-5">
-<h5 id="orgheadline154"><span class="section-number-5">6.3.5.5</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> SSL certificate problem: unable to get local issuer certificate</h5>
+<div id="outline-container-orgheadline156" class="outline-5">
+<h5 id="orgheadline156"><span class="section-number-5">6.3.5.5</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> SSL certificate problem: unable to get local issuer certificate</h5>
 <div class="outline-text-5" id="text-6-3-5-5">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-09 二 15:34] </span></span> <br  />
@@ -5793,8 +5833,8 @@ $git -c init.templatedir=/userdisk/data/opt/usr/local/develop/share/git-core/tem
 </div>
 </div>
 
-<div id="outline-container-orgheadline155" class="outline-5">
-<h5 id="orgheadline155"><span class="section-number-5">6.3.5.6</span> <span class="done DONE">DONE</span> 其他主机如何clone库？</h5>
+<div id="outline-container-orgheadline157" class="outline-5">
+<h5 id="orgheadline157"><span class="section-number-5">6.3.5.6</span> <span class="done DONE">DONE</span> 其他主机如何clone库？</h5>
 <div class="outline-text-5" id="text-6-3-5-6">
 <ul class="org-ul">
 <li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-09 二 15:35]</span></span></li>
@@ -5836,8 +5876,8 @@ IdentityFile ~/.ssh/id_rsa
 </div>
 </div>
 
-<div id="outline-container-orgheadline156" class="outline-5">
-<h5 id="orgheadline156"><span class="section-number-5">6.3.5.7</span> <span class="done DONE">DONE</span> <code>ash: git-upload-pack: not found</code></h5>
+<div id="outline-container-orgheadline158" class="outline-5">
+<h5 id="orgheadline158"><span class="section-number-5">6.3.5.7</span> <span class="done DONE">DONE</span> <code>ash: git-upload-pack: not found</code></h5>
 <div class="outline-text-5" id="text-6-3-5-7">
 <ul class="org-ul">
 <li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-09 二 15:35]</span></span></li>
@@ -5880,8 +5920,8 @@ IdentityFile ~/.ssh/id_rsa
 </div>
 </div>
 
-<div id="outline-container-orgheadline157" class="outline-5">
-<h5 id="orgheadline157"><span class="section-number-5">6.3.5.8</span> <span class="done DONE">DONE</span> error: cannot run pack-objects: No such file or directory</h5>
+<div id="outline-container-orgheadline159" class="outline-5">
+<h5 id="orgheadline159"><span class="section-number-5">6.3.5.8</span> <span class="done DONE">DONE</span> error: cannot run pack-objects: No such file or directory</h5>
 <div class="outline-text-5" id="text-6-3-5-8">
 <ul class="org-ul">
 <li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-09 二 15:35]</span></span></li>
@@ -5899,8 +5939,8 @@ IdentityFile ~/.ssh/id_rsa
 </div>
 </div>
 
-<div id="outline-container-orgheadline158" class="outline-5">
-<h5 id="orgheadline158"><span class="section-number-5">6.3.5.9</span> <span class="done DONE">DONE</span> <code>error: failed to push some refs to 'ssh://xiaomi</code></h5>
+<div id="outline-container-orgheadline160" class="outline-5">
+<h5 id="orgheadline160"><span class="section-number-5">6.3.5.9</span> <span class="done DONE">DONE</span> <code>error: failed to push some refs to 'ssh://xiaomi</code></h5>
 <div class="outline-text-5" id="text-6-3-5-9">
 <ul class="org-ul">
 <li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-09 二 15:35]</span></span></li>
@@ -6163,8 +6203,8 @@ wait for arrange.</li>
 <div id="outline-container-orgheadline69" class="outline-4">
 <h4 id="orgheadline69"><span class="section-number-4">8.8.2</span> step</h4>
 <div class="outline-text-4" id="text-8-8-2">
-</div><div id="outline-container-orgheadline165" class="outline-5">
-<h5 id="orgheadline165"><span class="section-number-5">8.8.2.1</span> 安装apache(pc)</h5>
+</div><div id="outline-container-orgheadline167" class="outline-5">
+<h5 id="orgheadline167"><span class="section-number-5">8.8.2.1</span> 安装apache(pc)</h5>
 <div class="outline-text-5" id="text-8-8-2-1">
 <p>
 这里，安装apache之前需要安装组件：apr,apr-util,pcre，最后再安装httpd。
@@ -6175,7 +6215,7 @@ wait for arrange.</li>
 </p>
 </div>
 
-<ol class="org-ol"><li><a id="orgheadline159"></a>下载<br  /><div class="outline-text-6" id="text-8-8-2-1-1">
+<ol class="org-ol"><li><a id="orgheadline161"></a>下载<br  /><div class="outline-text-6" id="text-8-8-2-1-1">
 <div class="org-src-container">
 
 <pre class="src src-sh">$ wget -c http://apache.opencas.org//httpd/httpd-2.4.18.tar.bz2
@@ -6186,7 +6226,7 @@ $ wget -c ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
 </div>
 </div></li>
 
-<li><a id="orgheadline160"></a>安装<br  /><div class="outline-text-6" id="text-8-8-2-1-2">
+<li><a id="orgheadline162"></a>安装<br  /><div class="outline-text-6" id="text-8-8-2-1-2">
 <div class="org-src-container">
 
 <pre class="src src-sh">$sudo ./configure --prefix=/usr/local/development/apr-1.5.2
@@ -6209,7 +6249,7 @@ $sudo ln -s /usr/local/development/httpd-2.4.18/bin/apachectl /etc/init.d
 </div>
 </div></li>
 
-<li><a id="orgheadline161"></a>启动<br  /><div class="outline-text-6" id="text-8-8-2-1-3">
+<li><a id="orgheadline163"></a>启动<br  /><div class="outline-text-6" id="text-8-8-2-1-3">
 <div class="org-src-container">
 
 <pre class="src src-sh">$sudo /etc/init.d/apachectl start
@@ -6217,7 +6257,7 @@ $sudo ln -s /usr/local/development/httpd-2.4.18/bin/apachectl /etc/init.d
 </div>
 </div></li>
 
-<li><a id="orgheadline162"></a>调试<br  /><div class="outline-text-6" id="text-8-8-2-1-4">
+<li><a id="orgheadline164"></a>调试<br  /><div class="outline-text-6" id="text-8-8-2-1-4">
 <p>
 如果启动出现如下两个错误：
 </p>
@@ -6241,23 +6281,23 @@ ServerName localhost:90
 </pre>
 </div></li>
 
-<li><a id="orgheadline163"></a>访问<br  /><div class="outline-text-6" id="text-8-8-2-1-5">
+<li><a id="orgheadline165"></a>访问<br  /><div class="outline-text-6" id="text-8-8-2-1-5">
 <p>
 基于如上配置，打开浏览器，地址栏键入 <code>localhost:90</code> 看到 "It works!" 即表示成功。
 </p>
 </div></li>
 
-<li><a id="orgheadline164"></a>配置<br  /></li></ol>
+<li><a id="orgheadline166"></a>配置<br  /></li></ol>
 </div>
 
-<div id="outline-container-orgheadline176" class="outline-5">
-<h5 id="orgheadline176"><span class="section-number-5">8.8.2.2</span> 安装nginx(xiaomirouter)</h5>
+<div id="outline-container-orgheadline178" class="outline-5">
+<h5 id="orgheadline178"><span class="section-number-5">8.8.2.2</span> 安装nginx(xiaomirouter)</h5>
 <div class="outline-text-5" id="text-8-8-2-2">
 <p>
 <code>cd ~/xiaomirouter</code>
 </p>
 </div>
-<ol class="org-ol"><li><a id="orgheadline166"></a>下载<br  /><div class="outline-text-6" id="text-8-8-2-2-1">
+<ol class="org-ol"><li><a id="orgheadline168"></a>下载<br  /><div class="outline-text-6" id="text-8-8-2-2-1">
 <div class="org-src-container">
 
 <pre class="src src-sh">$wget -c http://bigota.miwifi.com/xiaoqiang/sdk/tools/package/sdk_package.zip
@@ -6271,7 +6311,7 @@ $wget -c ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
 </div>
 </div></li>
 
-<li><a id="orgheadline167"></a>配置交叉编译工具环境<br  /><div class="outline-text-6" id="text-8-8-2-2-2">
+<li><a id="orgheadline169"></a>配置交叉编译工具环境<br  /><div class="outline-text-6" id="text-8-8-2-2-2">
 <div class="org-src-container">
 
 <pre class="src src-sh">$export PATH=~/xiaomirouter/test/sdk_package/toolchain/bin:$PATH
@@ -6280,7 +6320,7 @@ $export CUSTOM_PREFIX=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/dev
 </div>
 </div></li>
 
-<li><a id="orgheadline169"></a>交叉编译<br  /><ol class="org-ol"><li><a id="orgheadline168"></a>openssl<br  /><div class="outline-text-7" id="text-8-8-2-2-3-1">
+<li><a id="orgheadline171"></a>交叉编译<br  /><ol class="org-ol"><li><a id="orgheadline170"></a>openssl<br  /><div class="outline-text-7" id="text-8-8-2-2-3-1">
 <div class="org-src-container">
 
 <pre class="src src-sh">$tar -xzvf openssl-1.0.2g.tar.gz
@@ -6322,7 +6362,7 @@ $make install
 <a href="http://blog.csdn.net/zy799894671/article/details/22289039">http://blog.csdn.net/zy799894671/article/details/22289039</a>
 </p>
 </div></li></ol></li>
-<li><a id="orgheadline171"></a>其他<br  /><ol class="org-ol"><li><a id="orgheadline170"></a>安装<br  /><div class="outline-text-7" id="text-8-8-2-2-4-1">
+<li><a id="orgheadline173"></a>其他<br  /><ol class="org-ol"><li><a id="orgheadline172"></a>安装<br  /><div class="outline-text-7" id="text-8-8-2-2-4-1">
 <p>
 只指定安装路径，没有其他选项
 </p>
@@ -6362,7 +6402,7 @@ $sudo make install
 卸载只需要将 <code>/usr/local/develop/nginx-1.8.1</code> 删除即可。
 </p>
 </div></li></ol></li>
-<li><a id="orgheadline172"></a>配置<br  /><div class="outline-text-6" id="text-8-8-2-2-5">
+<li><a id="orgheadline174"></a>配置<br  /><div class="outline-text-6" id="text-8-8-2-2-5">
 <ul class="org-ul">
 <li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2016-03-29 二 18:37]</span></span></li>
 </ul>
@@ -6371,7 +6411,7 @@ $sudo make install
 </p>
 </div></li>
 
-<li><a id="orgheadline173"></a>启动<br  /><div class="outline-text-6" id="text-8-8-2-2-6">
+<li><a id="orgheadline175"></a>启动<br  /><div class="outline-text-6" id="text-8-8-2-2-6">
 <p>
 直接运行 <code>./nginx</code>
 </p>
@@ -6385,13 +6425,13 @@ $sudo make install
 </p>
 </div></li>
 
-<li><a id="orgheadline174"></a>文档<br  /><div class="outline-text-6" id="text-8-8-2-2-7">
+<li><a id="orgheadline176"></a>文档<br  /><div class="outline-text-6" id="text-8-8-2-2-7">
 <p>
 <a href="http://nginx.org/en/docs/">http://nginx.org/en/docs/</a>
 </p>
 </div></li>
 
-<li><a id="orgheadline175"></a>Misc<br  /><div class="outline-text-6" id="text-8-8-2-2-8">
+<li><a id="orgheadline177"></a>Misc<br  /><div class="outline-text-6" id="text-8-8-2-2-8">
 <p>
 openssl
 </p>
@@ -6404,8 +6444,8 @@ $sudo make install
 </div>
 </div></li></ol>
 </div>
-<div id="outline-container-orgheadline177" class="outline-5">
-<h5 id="orgheadline177"><span class="section-number-5">8.8.2.3</span> 安装php5.4</h5>
+<div id="outline-container-orgheadline179" class="outline-5">
+<h5 id="orgheadline179"><span class="section-number-5">8.8.2.3</span> 安装php5.4</h5>
 <div class="outline-text-5" id="text-8-8-2-3">
 <p>
 这一步要放在安装完apache之后。
@@ -6421,10 +6461,10 @@ $ php -v
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline181" class="outline-5">
-<h5 id="orgheadline181"><span class="section-number-5">8.8.2.4</span> 源码安装php</h5>
+<div id="outline-container-orgheadline183" class="outline-5">
+<h5 id="orgheadline183"><span class="section-number-5">8.8.2.4</span> 源码安装php</h5>
 <div class="outline-text-5" id="text-8-8-2-4">
-</div><ol class="org-ol"><li><a id="orgheadline178"></a>openssl<br  /><div class="outline-text-6" id="text-8-8-2-4-1">
+</div><ol class="org-ol"><li><a id="orgheadline180"></a>openssl<br  /><div class="outline-text-6" id="text-8-8-2-4-1">
 <p>
 <a href="http://www.openssl.org/source/openssl-1.0.2g.tar.gz">http://www.openssl.org/source/openssl-1.0.2g.tar.gz</a>
 ./config &#x2013;prefix=/usr/local/develop/openssl-1.0.2g
@@ -6433,7 +6473,7 @@ sudo make
 sudo make install
 </p>
 </div></li>
-<li><a id="orgheadline179"></a>depend library<br  /><div class="outline-text-6" id="text-8-8-2-4-2">
+<li><a id="orgheadline181"></a>depend library<br  /><div class="outline-text-6" id="text-8-8-2-4-2">
 <p>
 sudo apt-get install libxml2
 sudo apt-get install libxml2-dev
@@ -6443,7 +6483,7 @@ sudo apt-get install libcurl
 sudo apt-get install libcurl4-gnutls-dev
 </p>
 </div></li>
-<li><a id="orgheadline180"></a>php<br  /><div class="outline-text-6" id="text-8-8-2-4-3">
+<li><a id="orgheadline182"></a>php<br  /><div class="outline-text-6" id="text-8-8-2-4-3">
 <p>
 <a href="http://php.net/downloads.php">http://php.net/downloads.php</a>
 ./configure &#x2013;prefix=/usr/local/develop/php-5.6.19 &#x2013;with-config-file-path=/usr/local/develop/php-5.6.19/etc &#x2013;enable-fpm &#x2013;with-fpm-user=www-data &#x2013;with-fpm-group=www-data &#x2013;with-mysql=mysqlnd &#x2013;with-mysqli=mysqlnd &#x2013;with-pdo-mysql=mysqlnd &#x2013;with-iconv-dir &#x2013;with-freetype-dir &#x2013;with-jpeg-dir &#x2013;with-png-dir &#x2013;with-zlib &#x2013;with-libxml-dir=/usr &#x2013;enable-xml &#x2013;disable-rpath &#x2013;enable-magic-quotes &#x2013;enable-safe-mode &#x2013;enable-bcmath &#x2013;enable-shmop &#x2013;enable-sysvsem &#x2013;enable-inline-optimization &#x2013;with-curl &#x2013;with-curlwrappers &#x2013;enable-mbregex &#x2013;enable-mbstring &#x2013;with-mcrypt &#x2013;enable-ftp &#x2013;with-gd &#x2013;enable-gd-native-ttf &#x2013;with-openssl=/usr/local/develop/openssl-1.0.2g &#x2013;with-mhash &#x2013;enable-pcntl &#x2013;enable-sockets &#x2013;with-xmlrpc &#x2013;enable-zip &#x2013;enable-soap &#x2013;without-pear &#x2013;with-gettext &#x2013;disable-fileinfo
@@ -6595,6 +6635,15 @@ wait for refile.</li>
 <li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 17:34]</span></span></li>
 <li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2016-06-12 日 16:59]</span></span></li>
 </ul>
+
+<p>
+新版本的 <code>mysql</code> 不是用 <code>GNU Auto tools</code> 生成 <code>Makefile</code> 而是使用 <code>CMake</code>, 所以编译方法有所不同。
+</p>
+</div>
+
+<div id="outline-container-orgheadline75" class="outline-4">
+<h4 id="orgheadline75"><span class="section-number-4">8.12.1</span> try cmake</h4>
+<div class="outline-text-4" id="text-8-12-1">
 <div class="org-src-container">
 
 <pre class="src src-sh">$sudo apt-get install cmake
@@ -6604,7 +6653,11 @@ $cmake -DCMAKE_INSTALL_PREFIX=/home/miracle/work/1_inbox/xiaomirouter/test/usr/l
 </pre>
 </div>
 <p>
-参考:<a href="http://www.th7.cn/db/mysql/201603/178674.shtml">http://www.th7.cn/db/mysql/201603/178674.shtml</a>
+参考:
+</p>
+
+<p>
+<a href="http://www.th7.cn/db/mysql/201603/178674.shtml">http://www.th7.cn/db/mysql/201603/178674.shtml</a>
 </p>
 
 <p>
@@ -6635,9 +6688,12 @@ arm版本的编译:
 </p>
 </div>
 
-<div id="outline-container-orgheadline75" class="outline-4">
-<h4 id="orgheadline75"><span class="section-number-4">8.12.1</span> 自带文档</h4>
-<div class="outline-text-4" id="text-8-12-1">
+<div id="outline-container-orgheadline184" class="outline-5">
+<h5 id="orgheadline184"><span class="section-number-5">8.12.1.1</span> <span class="done DONE">DONE</span> 自带文档</h5>
+<div class="outline-text-5" id="text-8-12-1-1">
+<ul class="org-ul">
+<li>State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-17 三 12:04]</span></span></li>
+</ul>
 <p>
 INSTALL-SOURCE
 </p>
@@ -6651,7 +6707,163 @@ shell&gt; ccmake .     # interactive display
 </pre>
 </div>
 </div>
+
+
+<div id="outline-container-orgheadline185" class="outline-5">
+<h5 id="orgheadline185"><span class="section-number-5">8.12.1.2</span> <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-08-15 一 16:29&gt; </span></span> how to manage <code>cross compile</code>?</h5>
+<div class="outline-text-5" id="text-8-12-1-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">$sudo apt-get install cmake
+$cd usr/local/develop/include
+$ln -s ncurses/ncurses.h .
+$ln -s ncurses/curses.h .
+$cd mysql-5.7.11
+
+$vim Toolchain_xiaomi.cmake
+# this one is important
+SET(CMAKE_SYSTEM_NAME Linux)
+#this one not so much
+SET(CMAKE_SYSTEM_VERSION 1)
+
+# specify the cross compiler
+SET(CMAKE_C_COMPILER   /home/miracle/work/1_inbox/xiaomirouter/test/sdk_package/toolchain/bin/arm-xiaomi-linux-uclibcgnueabi-gcc)
+SET(CMAKE_CXX_COMPILER /home/miracle/work/1_inbox/xiaomirouter/test/sdk_package/toolchain/bin/arm-xiaomi-linux-uclibcgnueabi-g++)
+
+# where is the target environment 
+SET(CMAKE_FIND_ROOT_PATH  /home/miracle/work/1_inbox/xiaomirouter/test/sdk_package/lib)
+
+# search for programs in the build host directories
+SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+# for libraries and headers in the target directories
+SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+</pre>
 </div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">#$cmake -DCMAKE_TOOLCHAIN_FILE=`pwd`/Toolchain_xiaomi.cmake -DCMAKE_INSTALL_PREFIX=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop -DMYSQL_UNIX_ADDR=/var/run/mysql.sock -DDEFAULT_CHARSET=utf8 -DDEFAULT_COLLATION=utf8_general_ci -DWITH_EXTRA_CHARSETS=utf8,gbk -DWITH_INNOBASE_STORAGE_ENGINE=1 -DWITH_READLINE=1 -DENABLED_LOCAL_INFILE=1 -DMYSQL_DATADIR=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/data -DSTACK_DIRECTION=1 -DCURSES_LIBRARY=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/lib/libncurses.a -DCURSES_INCLUDE_PATH=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/include -DWITH_MYISAM_STORAGE_ENGINE=1 -DDOWNLOAD_BOOST=1 -DWITH_BOOST=../boost.arm .
+#$cmake -DCMAKE_INSTALL_PREFIX=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop -DWITH_DEBUG=0 -DDEFAULT_CHARSET=utf8 -DWITH_EXTRA_CHARSETS=all -DENABLED_LOCAL_INFILE=1 
+$cmake -DCMAKE_TOOLCHAIN_FILE=`pwd`/Toolchain_xiaomi.cmake -DCMAKE_INSTALL_PREFIX=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop -DMYSQL_UNIX_ADDR=/var/run/mysql.sock -DDEFAULT_CHARSET=utf8 -DDEFAULT_COLLATION=utf8_general_ci -DWITH_EXTRA_CHARSETS=utf8,gbk -DWITH_INNOBASE_STORAGE_ENGINE=1 -DWITH_READLINE=1 -DENABLED_LOCAL_INFILE=1 -DMYSQL_DATADIR=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/data -DSTACK_DIRECTION=1 -DCURSES_LIBRARY=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/lib/libncurses.a -DCURSES_INCLUDE_PATH=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/include -DWITH_MYISAM_STORAGE_ENGINE=1 -DWITH_BOOST=`pwd`/../boost.arm .
+</pre>
+</div>
+<p>
+运行两次cmake?
+</p>
+
+
+<p>
+how to translate from auto tools?
+</p>
+<pre class="example">
+$./configure --prefix=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop 
+--without-docs ??none??
+--without-man ??
+--without-debug 
+--with-charset=utf8 
+--with-extra-charsets=gbk,gb2312,utf8,ascii 
+--enable-local-infile 
+--with-mysqld-user=root ???none???
+--host=arm-xiaomi-linux-uclibcgnueabi ???none???
+--with-named-curses-libs=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/lib/libncurses.a ???
+
+CC=arm-xiaomi-linux-uclibcgnueabi-gcc ???
+</pre>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline186" class="outline-5">
+<h5 id="orgheadline186"><span class="section-number-5">8.12.1.3</span> <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-08-17 三 12:03&gt; </span></span> how to manage boost error?</h5>
+<div class="outline-text-5" id="text-8-12-1-3">
+<p>
+in <code>cmake/boost.cmake</code>
+</p>
+<pre class="example">
+...
+  ## Did we get a path name to the directory of the .tar.gz or .zip file?
+  FIND_FILE(LOCAL_BOOST_ZIP
+            NAMES "${BOOST_PACKAGE_NAME}.tar.gz" "${BOOST_PACKAGE_NAME}.zip"
+            PATHS ${WITH_BOOST}
+            NO_DEFAULT_PATH
+           )
+  MESSAGE(STATUS "@@@@@@NAMES: ${BOOST_PACKAGE_NAME}.tar.gz")
+  MESSAGE(STATUS "@@@@@@PATHS(WITH_BOOST): ${WITH_BOOST}")
+  MESSAGE(STATUS "@@@@@@LOCAL_BOOST_ZIP: ${LOCAL_BOOST_ZIP}")
+  ## Did we get a path name to the directory of an unzipped version?
+  FIND_FILE(LOCAL_BOOST_DIR
+            NAMES "${BOOST_PACKAGE_NAME}"
+            PATHS ${WITH_BOOST}
+            NO_DEFAULT_PATH
+           )
+  MESSAGE(STATUS "@@@@@@NAMES: ${BOOST_PACKAGE_NAME}")
+  MESSAGE(STATUS "@@@@@@PATHS(WITH_BOOST): ${WITH_BOOST}")
+  MESSAGE(STATUS "@@@@@@LOCAL_BOOST_DIR: ${LOCAL_BOOST_DIR}")
+  ## Did we get a path name to an unzippped version?
+  FIND_PATH(LOCAL_BOOST_DIR
+            NAMES "boost/version.hpp"
+            PATHS ${WITH_BOOST}
+            NO_DEFAULT_PATH
+           )
+  MESSAGE(STATUS "@@@@@@NAMES: boost/version.hpp")
+  MESSAGE(STATUS "@@@@@@PATHS(WITH_BOOST): ${WITH_BOOST}")
+  MESSAGE(STATUS "@@@@@@LOCAL_BOOST_DIR: ${LOCAL_BOOST_DIR}")
+...
+</pre>
+
+<p>
+output for cmake
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">miracle@miracle-Zhaoyang-E49:~/work/1_inbox/xiaomirouter/test/mysql-5.7.11$ cmake -DCMAKE_TOOLCHAIN_FILE=/home/miracle/work/1_inbox/xiaomirouter/test/mysql-5.7.11/Toolchain_xiaomi.cmake -DCMAKE_INSTALL_PREFIX=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop -DMYSQL_UNIX_ADDR=/var/run/mysql.sock -DDEFAULT_CHARSET=utf8 -DDEFAULT_COLLATION=utf8_general_ci -DWITH_EXTRA_CHARSETS=utf8,gbk -DWITH_INNOBASE_STORAGE_ENGINE=1 -DWITH_READLINE=1 -DENABLED_LOCAL_INFILE=1 -DMYSQL_DATADIR=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/data -DSTACK_DIRECTION=1 -DCURSES_LIBRARY=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/lib/libncurses.a -DCURSES_INCLUDE_PATH=/home/miracle/work/1_inbox/xiaomirouter/test/usr/local/develop/include -DWITH_MYISAM_STORAGE_ENGINE=1 -DWITH_BOOST="/home/miracle/work/1_inbox/xiaomirouter/test/boost.arm" .
+-- Running cmake version 2.8.7
+-- Configuring with MAX_INDEXES = 64U
+-- SIZEOF_VOIDP 4
+-- MySQL 5.7.11
+-- Packaging as: mysql-5.7.11-Linux-
+-- @@@@@@NAMES: boost_1_59_0.tar.gz
+-- @@@@@@PATHS(WITH_BOOST): /home/miracle/work/1_inbox/xiaomirouter/test/boost.arm
+-- @@@@@@LOCAL_BOOST_ZIP: LOCAL_BOOST_ZIP-NOTFOUND
+-- @@@@@@NAMES: boost_1_59_0
+-- @@@@@@PATHS(WITH_BOOST): /home/miracle/work/1_inbox/xiaomirouter/test/boost.arm
+-- @@@@@@LOCAL_BOOST_DIR: LOCAL_BOOST_DIR-NOTFOUND
+-- @@@@@@NAMES: boost/version.hpp
+-- @@@@@@PATHS(WITH_BOOST): /home/miracle/work/1_inbox/xiaomirouter/test/boost.arm
+-- @@@@@@LOCAL_BOOST_DIR: LOCAL_BOOST_DIR-NOTFOUND
+-- WITH_BOOST=/home/miracle/work/1_inbox/xiaomirouter/test/boost.arm
+-- BOOST_INCLUDE_DIR
+-- LOCAL_BOOST_DIR LOCAL_BOOST_DIR-NOTFOUND
+-- LOCAL_BOOST_ZIP LOCAL_BOOST_ZIP-NOTFOUND
+-- Could not find (the correct version of) boost.
+-- MySQL currently requires boost_1_59_0
+
+CMake Error at cmake/boost.cmake:81 (MESSAGE):
+  You can download it with -DDOWNLOAD_BOOST=1 -DWITH_BOOST=&lt;directory&gt;
+
+  This CMake script will look for boost in &lt;directory&gt;.  If it is not there,
+  it will download and unpack it (in that directory) for you.
+
+  If you are inside a firewall, you may need to use an http proxy:
+
+  export http_proxy=http://example.com:80
+
+Call Stack (most recent call first):
+cmake/boost.cmake:176 (COULD_NOT_FIND_BOOST)
+  CMakeLists.txt:443 (INCLUDE)
+
+
+-- Configuring incomplete, errors occurred!
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
 <div id="outline-container-orgheadline76" class="outline-3">
 <h3 id="orgheadline76"><span class="section-number-3">8.13</span> <span class="todo LATER">LATER</span> 小米路由器搭建ftp服务</h3>
 <div class="outline-text-3" id="text-8-13">
@@ -6947,8 +7159,211 @@ Enter the password again:
 </div>
 
 <div id="outline-container-orgheadline88" class="outline-4">
-<h4 id="orgheadline88"><span class="section-number-4">8.15.2</span> 参考资料</h4>
+<h4 id="orgheadline88"><span class="section-number-4">8.15.2</span> 编译Seafile</h4>
 <div class="outline-text-4" id="text-8-15-2">
+</div><div id="outline-container-orgheadline187" class="outline-5">
+<h5 id="orgheadline187"><span class="section-number-5">8.15.2.1</span> 编译libsearpc</h5>
+<div class="outline-text-5" id="text-8-15-2-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$./autogen.sh
+$./configure --prefix=`pwd`/../prefix
+</pre>
+</div>
+
+<pre class="example">
+checking for JANSSON... no
+configure: error: Package requirements (jansson &gt;= 2.2.1) were not met:
+
+No package 'jansson' found
+</pre>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$wget -c http://www.digip.org/jansson/releases/jansson-2.7.tar.gz
+$./configure --prefix=`pwd`/../prefix
+$make
+$make install
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$./configure --prefix=`pwd`/../prefix LDFLAGS=-L`pwd`/../prefix/lib JANSSON_CFLAGS=-I`pwd`/../prefix/include JANSSON_LIBS="-L`pwd`/../prefix/lib -ljansson"
+</pre>
+</div>
+
+<pre class="example">
+gcc -DHAVE_CONFIG_H -I. -I..    -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I../lib -g -O2 -MT searpc-demo-server.o -MD -MP -MF .deps/searpc-demo-server.Tpo -c -o searpc-demo-server.o searpc-demo-server.c
+In file included from ../lib/searpc.h:7:0,
+                 from searpc-demo-server.c:10:
+../lib/searpc-server.h:6:21: 致命错误： jansson.h：没有那个文件或目录
+编译中断。
+</pre>
+
+<p>
+添加 <code>JANSSON_CFLAGS</code>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$vim demo/Makefile
+70 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \                                                                          
+71     $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) $(JANSSON_CFLAGS)
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$./configure --prefix=`pwd`/../prefix LDFLAGS=-L`pwd`/../prefix/lib JANSSON_CFLAGS=-I`pwd`/../prefix/include JANSSON_LIBS="-L`pwd`/../prefix/lib -ljansson"
+$make
+$make install
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline188" class="outline-5">
+<h5 id="orgheadline188"><span class="section-number-5">8.15.2.2</span> 编译ccnet</h5>
+<div class="outline-text-5" id="text-8-15-2-2">
+<p>
+下载依赖
+</p>
+
+<p>
+编译依赖
+</p>
+
+
+<p>
+编译 <code>ccnet</code>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$cd ccnet-5.1.4-server
+$./autogen.sh
+./configure --prefix=`pwd`/../prefix --enable-server
+</pre>
+</div>
+
+<pre class="example">
+checking for uuid_generate in -luuid... no
+configure: error: *** Unable to find uuid library
+</pre>
+
+<p>
+<code>https://sourceforge.net/projects/libuuid/files/libuuid-1.0.3.tar.gz/download</code>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$cd libuuid-1.0.3/
+$./configure --prefix=`pwd`/../prefix
+$make
+$make install
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$cd ccnet-5.1.4-server
+$./configure --prefix=`pwd`/../prefix --enable-server LDFLAGS=-L`pwd`/../prefix/lib
+</pre>
+</div>
+
+<pre class="example">
+found library pthread
+checking for sqlite3_open in -lsqlite3... no
+configure: error: *** Unable to find sqlite3 library
+</pre>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$wget -c http://www.sqlite.org/2016/sqlite-amalgamation-3140100.zip
+$cd sqlite-autoconf-3140100
+$./configure --prefix=`pwd`/../prefix
+$make
+$make install
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$cd ccnet-5.1.4-server
+$export PKG_CONFIG_PATH=`pwd`/../prefix/lib/pkgconfig
+$./configure --prefix=`pwd`/../prefix --enable-server LDFLAGS=-L`pwd`/../prefix/lib
+</pre>
+</div>
+
+<pre class="example">
+configure: error: Package requirements (libevent &gt;= 2.0) were not met:
+No package 'libevent' found
+</pre>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$wget -c https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz
+$./configure --prefix=`pwd`/../prefix LDFLAGS=-L`pwd`/../prefix/lib
+$make
+$make install
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$./configure --prefix=`pwd`/../prefix --enable-server LDFLAGS=-L`pwd`/../prefix/lib
+...
+checking for ZDB... no
+configure: error: Package requirements (zdb &gt;= 2.10) were not met:
+No package 'zdb' found
+...
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$wget -c http://www.tildeslash.com/libzdb/dist/libzdb-3.1.tar.gz
+$./configure --prefix=`pwd`/../prefix --with-mysql LDFLAGS=-L`pwd`/../prefix/lib CFLAGS=-I`pwd`/../prefix/include
+$make
+$make install
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$./configure --prefix=`pwd`/../prefix --enable-server LDFLAGS=-L`pwd`/../prefix/lib
+$make
+...
+valac -C --pkg posix ccnetobj.vala
+/bin/bash: valac: 未找到命令
+make[2]: *** [ccnetobj.c] 错误 127
+...
+$sudo apt-get intall valac
+$make 
+...
+../common/rpc-service.c:40:30: 致命错误： searpc-signature.h：没有那个文件或目录
+编译中断。
+make[3]: *** [rpc-service.o] 错误 1
+make[3]:正在离开目录 `/home/miracle/下载/seafile/build/ccnet-5.1.4-server/net/daemon'
+make[2]: *** [all-recursive] 错误 1
+make[2]:正在离开目录 `/home/miracle/下载/seafile/build/ccnet-5.1.4-server/net'
+make[1]: *** [all-recursive] 错误 1
+make[1]:正在离开目录 `/home/miracle/下载/seafile/build/ccnet-5.1.4-server'
+make: *** [all] 错误 2
+...
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline89" class="outline-4">
+<h4 id="orgheadline89"><span class="section-number-4">8.15.3</span> 交叉编译Seafile</h4>
+</div>
+
+<div id="outline-container-orgheadline90" class="outline-4">
+<h4 id="orgheadline90"><span class="section-number-4">8.15.4</span> 参考资料</h4>
+<div class="outline-text-4" id="text-8-15-4">
 <p>
 官网：<a href="https://github.com/haiwen/seafile">https://github.com/haiwen/seafile</a>
 </p>
@@ -6960,8 +7375,8 @@ Enter the password again:
 </div>
 </div>
 
-<div id="outline-container-orgheadline89" class="outline-3">
-<h3 id="orgheadline89"><span class="section-number-3">8.16</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> SparkleShare</h3>
+<div id="outline-container-orgheadline91" class="outline-3">
+<h3 id="orgheadline91"><span class="section-number-3">8.16</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> SparkleShare</h3>
 <div class="outline-text-3" id="text-8-16">
 <ul class="org-ul">
 <li><p>
@@ -6986,8 +7401,8 @@ is it available as a git client?
 </p>
 </div>
 
-<div id="outline-container-orgheadline90" class="outline-4">
-<h4 id="orgheadline90"><span class="section-number-4">8.16.1</span> <span class="done CANCEL">CANCEL</span> PC上的编译安装</h4>
+<div id="outline-container-orgheadline92" class="outline-4">
+<h4 id="orgheadline92"><span class="section-number-4">8.16.1</span> <span class="done CANCEL">CANCEL</span> PC上的编译安装</h4>
 <div class="outline-text-4" id="text-8-16-1">
 <ul class="org-ul">
 <li>State "CANCEL"     from "MAYBE/FUTURE" <span class="timestamp-wrapper"><span class="timestamp">[2016-08-03 三 11:56] </span></span> <br  />
@@ -6995,21 +7410,21 @@ is it available as a git client?
 <li>State "MAYBE/FUTURE" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-03 三 09:38]</span></span></li>
 </ul>
 </div>
-<div id="outline-container-orgheadline187" class="outline-5">
-<h5 id="orgheadline187"><span class="section-number-5">8.16.1.1</span> 依赖</h5>
+<div id="outline-container-orgheadline194" class="outline-5">
+<h5 id="orgheadline194"><span class="section-number-5">8.16.1.1</span> 依赖</h5>
 <div class="outline-text-5" id="text-8-16-1-1">
-</div><ol class="org-ol"><li><a id="orgheadline182"></a>安装curl<br  /><div class="outline-text-6" id="text-8-16-1-1-1">
+</div><ol class="org-ol"><li><a id="orgheadline189"></a>安装curl<br  /><div class="outline-text-6" id="text-8-16-1-1-1">
 <p>
 参考： <a href="#orgheadline28">安装php所需依赖</a>
 </p>
 </div></li>
-<li><a id="orgheadline183"></a>安装git<br  /><div class="outline-text-6" id="text-8-16-1-1-2">
+<li><a id="orgheadline190"></a>安装git<br  /><div class="outline-text-6" id="text-8-16-1-1-2">
 <p>
 参考： <a href="#orgheadline46">小米路由器 <code>git</code> 源码交叉编译</a>
 </p>
 </div></li>
 
-<li><a id="orgheadline184"></a><span class="done CANCEL">CANCEL</span> 安装git-lfs<br  /><div class="outline-text-6" id="text-8-16-1-1-3">
+<li><a id="orgheadline191"></a><span class="done CANCEL">CANCEL</span> 安装git-lfs<br  /><div class="outline-text-6" id="text-8-16-1-1-3">
 <ul class="org-ul">
 <li>State "CANCEL"     from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-07-28 四 18:32] </span></span> <br  />
 取消，考虑git-annex.</li>
@@ -7029,7 +7444,7 @@ is it available as a git client?
 </div>
 </div></li>
 
-<li><a id="orgheadline185"></a>libtool<br  /><div class="outline-text-6" id="text-8-16-1-1-4">
+<li><a id="orgheadline192"></a>libtool<br  /><div class="outline-text-6" id="text-8-16-1-1-4">
 <div class="org-src-container">
 
 <pre class="src src-sh">$sudo apt-get install libtool
@@ -7037,11 +7452,11 @@ is it available as a git client?
 </div>
 </div></li>
 
-<li><a id="orgheadline186"></a>mono<br  /></li></ol>
+<li><a id="orgheadline193"></a>mono<br  /></li></ol>
 </div>
 
-<div id="outline-container-orgheadline188" class="outline-5">
-<h5 id="orgheadline188"><span class="section-number-5">8.16.1.2</span> 下载：</h5>
+<div id="outline-container-orgheadline195" class="outline-5">
+<h5 id="orgheadline195"><span class="section-number-5">8.16.1.2</span> 下载：</h5>
 <div class="outline-text-5" id="text-8-16-1-2">
 <div class="org-src-container">
 
@@ -7053,11 +7468,11 @@ $./autogen.sh
 </div>
 </div>
 
-<div id="outline-container-orgheadline91" class="outline-4">
-<h4 id="orgheadline91"><span class="section-number-4">8.16.2</span> Ubuntu上直接安装</h4>
+<div id="outline-container-orgheadline93" class="outline-4">
+<h4 id="orgheadline93"><span class="section-number-4">8.16.2</span> Ubuntu上直接安装</h4>
 <div class="outline-text-4" id="text-8-16-2">
-</div><div id="outline-container-orgheadline189" class="outline-5">
-<h5 id="orgheadline189"><span class="section-number-5">8.16.2.1</span> 安装</h5>
+</div><div id="outline-container-orgheadline196" class="outline-5">
+<h5 id="orgheadline196"><span class="section-number-5">8.16.2.1</span> 安装</h5>
 <div class="outline-text-5" id="text-8-16-2-1">
 <p>
 因为服务端就是git服务器，只需在使用的机器上有一个sparkleshare客户端即可，没有必要在PC上源码安装，也没有必要考虑交叉编译。
@@ -7080,8 +7495,8 @@ $sudo apt-get install sparkleshare libwebkit1.1-cil git-core
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline190" class="outline-5">
-<h5 id="orgheadline190"><span class="section-number-5">8.16.2.2</span> 运行</h5>
+<div id="outline-container-orgheadline197" class="outline-5">
+<h5 id="orgheadline197"><span class="section-number-5">8.16.2.2</span> 运行</h5>
 <div class="outline-text-5" id="text-8-16-2-2">
 <div class="org-src-container">
 
@@ -7091,8 +7506,8 @@ $sudo apt-get install sparkleshare libwebkit1.1-cil git-core
 </div>
 </div>
 
-<div id="outline-container-orgheadline191" class="outline-5">
-<h5 id="orgheadline191"><span class="section-number-5">8.16.2.3</span> 添加已托管的git项目（位于ssh主机上）</h5>
+<div id="outline-container-orgheadline198" class="outline-5">
+<h5 id="orgheadline198"><span class="section-number-5">8.16.2.3</span> 添加已托管的git项目（位于ssh主机上）</h5>
 <div class="outline-text-5" id="text-8-16-2-3">
 <p>
 选择已有的一个git服务器下的git目录添加, 经常会出现无法同步文件的情况。
@@ -7111,8 +7526,8 @@ sparkleshare目录中有key文件，.ssh中也有。
 </div>
 </div>
 
-<div id="outline-container-orgheadline194" class="outline-5">
-<h5 id="orgheadline194"><span class="section-number-5">8.16.2.4</span> 服务端的配置</h5>
+<div id="outline-container-orgheadline201" class="outline-5">
+<h5 id="orgheadline201"><span class="section-number-5">8.16.2.4</span> 服务端的配置</h5>
 <div class="outline-text-5" id="text-8-16-2-4">
 <p>
 Sparkle shared其实就是一个 git 图形客户端。自动定期同步其管辖目录下的git文件。服务端的配置非常简单，只需要有一个git仓库即可。
@@ -7126,14 +7541,14 @@ Sparkle shared其实就是一个 git 图形客户端。自动定期同步其管�
 常见的用于sparkle的比较重要的git配置如下：
 </p>
 </div>
-<ol class="org-ol"><li><a id="orgheadline192"></a>允许push<br  /><div class="outline-text-6" id="text-8-16-2-4-1">
+<ol class="org-ol"><li><a id="orgheadline199"></a>允许push<br  /><div class="outline-text-6" id="text-8-16-2-4-1">
 <p>
 服务端git仓库需要配置成允许push, 修改配置文件修改其 <code>receive.denyCurrentBranch</code> 的值为 <code>ignore</code> ，
 或者在具有工作目录的仓库中运行 <code>git config receive.denyCurrentBranch ignore</code> .
 </p>
 </div></li>
 
-<li><a id="orgheadline193"></a>使用裸库替代有工作目录的git库<br  /><div class="outline-text-6" id="text-8-16-2-4-2">
+<li><a id="orgheadline200"></a>使用裸库替代有工作目录的git库<br  /><div class="outline-text-6" id="text-8-16-2-4-2">
 <p>
 如果服务端git仓库中包含一个工作目录，那么客户端的Sparkleshare 完成 push之后，服务端会看不到变化的文件。原因是服务端如果在被push的分支上，就无法在实时更新其工作目录结构，需要在服务端手动运行 <code>git reset --hard</code> 才行。
 </p>
@@ -7145,8 +7560,8 @@ Sparkle shared其实就是一个 git 图形客户端。自动定期同步其管�
 </div>
 </div>
 
-<div id="outline-container-orgheadline92" class="outline-4">
-<h4 id="orgheadline92"><span class="section-number-4">8.16.3</span> 参考网址：</h4>
+<div id="outline-container-orgheadline94" class="outline-4">
+<h4 id="orgheadline94"><span class="section-number-4">8.16.3</span> 参考网址：</h4>
 <div class="outline-text-4" id="text-8-16-3">
 <p>
 官方网址：<a href="https://www.sparkleshare.org/">https://www.sparkleshare.org/</a>
@@ -7175,16 +7590,16 @@ git-annex:  <a href="http://git-annex.branchable.com/">http://git-annex.branchab
 </div>
 </div>
 
-<div id="outline-container-orgheadline93" class="outline-3">
-<h3 id="orgheadline93"><span class="section-number-3">8.17</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> dvcs-autosync</h3>
+<div id="outline-container-orgheadline95" class="outline-3">
+<h3 id="orgheadline95"><span class="section-number-3">8.17</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> dvcs-autosync</h3>
 <div class="outline-text-3" id="text-8-17">
 <ul class="org-ul">
 <li>State "MAYBE/FUTURE" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-07-28 四 19:53]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline94" class="outline-3">
-<h3 id="orgheadline94"><span class="section-number-3">8.18</span> <span class="done CANCEL">CANCEL</span> git annex</h3>
+<div id="outline-container-orgheadline96" class="outline-3">
+<h3 id="orgheadline96"><span class="section-number-3">8.18</span> <span class="done CANCEL">CANCEL</span> git annex</h3>
 <div class="outline-text-3" id="text-8-18">
 <ul class="org-ul">
 <li>State "CANCEL"     from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-07-29 五 11:57] </span></span> <br  />
@@ -7203,8 +7618,8 @@ git-annex is Free Software, written in Haskell. You can contribute!
 </pre>
 </div>
 
-<div id="outline-container-orgheadline95" class="outline-4">
-<h4 id="orgheadline95"><span class="section-number-4">8.18.1</span> 源代码</h4>
+<div id="outline-container-orgheadline97" class="outline-4">
+<h4 id="orgheadline97"><span class="section-number-4">8.18.1</span> 源代码</h4>
 <div class="outline-text-4" id="text-8-18-1">
 <div class="org-src-container">
 
@@ -7214,8 +7629,8 @@ git-annex is Free Software, written in Haskell. You can contribute!
 </div>
 </div>
 
-<div id="outline-container-orgheadline96" class="outline-4">
-<h4 id="orgheadline96"><span class="section-number-4">8.18.2</span> 参考资料</h4>
+<div id="outline-container-orgheadline98" class="outline-4">
+<h4 id="orgheadline98"><span class="section-number-4">8.18.2</span> 参考资料</h4>
 <div class="outline-text-4" id="text-8-18-2">
 <p>
 官方网站：
@@ -7249,8 +7664,8 @@ git-annex is Free Software, written in Haskell. You can contribute!
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline97" class="outline-3">
-<h3 id="orgheadline97"><span class="section-number-3">8.19</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> git lfs</h3>
+<div id="outline-container-orgheadline99" class="outline-3">
+<h3 id="orgheadline99"><span class="section-number-3">8.19</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> git lfs</h3>
 <div class="outline-text-3" id="text-8-19">
 <ul class="org-ul">
 <li>State "MAYBE/FUTURE" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-03 三 19:02]</span></span></li>
@@ -7285,7 +7700,7 @@ git-annex is Free Software, written in Haskell. You can contribute!
 	</tr>
     	<tr>
 	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-08-09 二 16:45:11></td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-08-19 五 16:26:02></td>
 	</tr>
     </tbody></table>
 </div>

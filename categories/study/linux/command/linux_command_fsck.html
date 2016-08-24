@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
-<title>My first page</title>
+<title>Linux命令学习手册-fsck</title>
 
 <!--theme-->
 <link rel="stylesheet" type="text/css"
@@ -16,7 +16,7 @@
       href="/assets/css/posts.css" media="screen" />
   </head>
 
-   <body onload="change_categories('categories_others')">
+   <body onload="change_categories('categories_study_linux_command')">
      <table class="container">
         <tbody>
 	      <tr>
@@ -31,7 +31,7 @@
 	</th>
 
 	<th class="navitm">
-	      <a href=/categories/others/first_page.html>分类</a>
+	      <a href=/categories/study/linux/command/linux_command_fsck.html>分类</a>
 	      <div id="category_menus" class="second">
   	      	   
 
@@ -1433,22 +1433,629 @@
                 <td id="td_posts" colspan="6" valign="top">
 		  <article>
   <h1 id='header1' style="text-align: center;">
-      My first page
+      Linux命令学习手册-fsck
   </h1>
   <hr id='title_line'>
   <div>
-    <h2 id="第一篇文章">第一篇文章</h2>
+    
 
+<style type="text/css">
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #0c0;
+    box-shadow: 1px 1px 1px #0e0;
+    padding: 8pt;
+    font-family: italic monospace;
+    color: #C7EDCC;
+    background-color: #111111;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: black;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+    code {
+        border:groove #555555;
+	border-width:thin;
+        background-color: #111111;
+	color: #C7EDCC;
+    }
+
+
+#table-of-contents {
+    font-size: 9pt;
+    position: fixed;
+    right: 10px;
+    top: 14em;
+    margin:0;
+    padding:0;
+    border-width:1px;
+    border-style:solid;
+    background: #000000;
+    -webkit-box-shadow: 0 0 1em #777777;
+    -moz-box-shadow: 0 0 1em #777777;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    text-align: right;
+    /* ensure doesn't flow off the screen when expanded */
+    max-height: 60%;
+    overflow: auto; 
+    z-index: 200;
+}
+
+#table-of-contents h2 {
+    font-size: 9pt;
+    max-width: 8em;
+    font-weight: normal;
+    padding-left: 0.5em;
+    padding-top: 0.05em;
+    padding-bottom: 0.05em; 
+}
+
+#table-of-contents ul {
+    margin-left: 14pt; 
+    margin-bottom: 10pt;
+    padding: 0
+}
+
+#table-of-contents li {
+    padding: 0;
+    margin: 1px;
+    list-style: none;
+}
+
+#table-of-contents ul>:first-child {
+    color: blue;
+}
+
+#table-of-contents #text-table-of-contents {
+    display: none;
+    text-align: left;
+}
+
+#table-of-contents:hover #text-table-of-contents {
+    display: block;
+    padding: 0.5em;
+    margin-top: -1.5em; 
+}
+
+</style>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
 <ul>
-<li>这是我的第一篇文章<br></li>
-<li>直接在github上用Markdown书写。<br></li>
+<li><a href="#orgheadline1">1. 功能</a></li>
+<li><a href="#orgheadline2">2. 举例</a></li>
+<li><a href="#orgheadline3">3. 描述</a>
+<ul>
+<li><a href="#orgheadline4">3.1. 参数</a></li>
+<li><a href="#orgheadline5">3.2. 详细参数</a></li>
+<li><a href="#orgheadline6">3.3. 一些原理</a></li>
 </ul>
+</li>
+<li><a href="#orgheadline7">4. 其它</a>
+<ul>
+<li><a href="#orgheadline8">4.1. 运行 <code>fsck</code> 命令后产生的文件有什么用？</a></li>
+<li><a href="#orgheadline9">4.2. 关于 <code>fsck</code> 得结果输出：</a></li>
+<li><a href="#orgheadline10">4.3. 文件</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<p>
+<code>fsck [-aANPrRsTV][-t &lt;文件系统类型&gt;][文件系统...]</code>
+</p>
+
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 功能</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+检查文件系统并尝试修复错误。
+</p>
+
+<p>
+补充说明：当文件系统发生错误四化，可用 <code>fsck</code> 指令尝试加以修复。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> 举例</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li><p>
+检查 <code>msdos</code> 档案系统的 <code>/dev/hda5</code> 是否正常，如果有异常便自动修复:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$fsck -t msdos -a /dev/hda5
+</pre>
+</div>
+<p>
+此指令可与 <code>/etc/fstab</code> 相互参考操作来加以了解。
+</p></li>
+
+<li><p>
+检查所有的缺省文件系统:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$fsck
+</pre>
+</div>
+<p>
+这个命令检查在 <code>/etc/filesystems</code> 文件中所有标记 <code>check=true</code> 的文件系统。 <code>fsck</code> 命令这种形式在对文件系统做出任何更改之前会向您请求许可。
+</p></li>
+
+<li><p>
+利用缺省的文件系统自动修复较次要的问题:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$fsck -p
+</pre>
+</div></li>
+
+<li><p>
+检查一个特定的文件系统:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$fsck /dev/hd1
+</pre>
+</div>
+<p>
+这个命令检查位于 <code>/dev/hd1</code> 设备上的未安装的文件系统。
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">3</span> 描述</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">3.1</span> 参数</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+<code>-a</code> 自动修复文件系统，不询问任何问题。
+</p>
+
+<p>
+<code>-A</code> 依照 <code>/etc/fstab</code> 配置文件的内容，检查文件内所列的全部文件系统。
+</p>
+
+<p>
+<code>-N</code> 不执行指令，仅列出实际执行会进行的动作。
+</p>
+
+<p>
+<code>-P</code> 当搭配 <code>-A</code> 参数使用时，则会同时检查所有的文件系统。
+</p>
+
+<p>
+<code>-r</code> 采用互动模式，在执行修复时询问问题，让用户得以确认并决定处理方式。
+</p>
+
+<p>
+<code>-R</code> 当搭配 <code>-A</code> 参数使用时，则会略过 <code>/</code> 目录的文件系统不予检查。
+</p>
+
+<p>
+<code>-s</code> 依序执行检查作业，而非同时执行。
+</p>
+
+<p>
+<code>-t &lt;文件系统类型&gt;</code> 指定要检查的文件系统类型。
+</p>
+
+<p>
+<code>-T</code> 执行 <code>fsck</code> 指令时，不显示标题信息。
+</p>
+
+<p>
+<code>-V</code> 显示指令执行过程。 
+</p>
+
+<p>
+<code>-o</code> <code>f</code> 对系统进行强制检查，不论系统是否在 <code>clean</code> 等状态
+</p>
+
+<p>
+<code>-o p</code> 非交互式检查并修复文件系统，对有的问题则立即退出
+</p>
+
+<p>
+<code>-o b=xx</code> 用来修复超级块的错误，就是将备份的超级块内容拷入超级块中。solaris对超级块很重视，它的备份有很多，一般的 <code>b=32</code> 就可以了，如果不行可以使用命令 <code>newfs -N /dev/rdsk/cxtxdxsx</code> 来查看超级块的位置，其中任何一个备份块都可使用.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">3.2</span> 详细参数</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<code>-d BlockNumber</code> 搜索指定磁盘块的参考。无论 <code>fsck</code> 命令遇到包含特定块的文件，它将会显示索引节点号和所有指向它的路径名称。对于 <code>JFS2</code> 文件系统，引用指定模块的索引节点号将会被显示，但是不是它们的路径名称。 
+</p>
+
+<p>
+<code>-f</code> 进行快速检查。在正常情况下，通过非正确方式关闭系统来停机仅有的文件系统很可能被影响，这个文件系统就是当系统停止时在安装的那些。 <code>-f</code> 标志会提示 <code>fsck</code> 命令不要检查没有成功安装的文件系统。=fsck= 命令通过检查文件系统超级块中的 <code>s_fmod</code> 标志来决定这件事。 当文件系统没有成功安装的时候，无论何时文件系统被安装和被清除，这个标志都将被设定。如果文件系统被成功的卸载，这不大可能会存在什么问题。因为多数文件系统没有成功安装，不检查这些文件系统能减少检查时间。
+</p>
+
+<p>
+<code>-i i-NodeNumber</code> 搜索指定索引节点的参考。无论何时 <code>fsck</code> 命令遇到一个指向指定索引节点的目录，它都会显示这个参考的完整路径名称。 
+</p>
+
+<p>
+<code>-n</code> 对 <code>fsck</code> 命令所提出的所有问题给出一个 <code>no</code> 的回应；不打开指定的文件系统来写。 
+</p>
+
+<p>
+<code>-o</code> 选项 向 <code>fsck</code> 命令传递逗号分隔的选项。这些选项被认为是文件系统的实现细节，除了下面目前为了所有文件系统而当前被支持的选项： 
+</p>
+<ul class="org-ul">
+<li><p>
+<code>mountable</code>
+</p>
+
+<p>
+如果有问题的文件系统可安装（清除），促使 <code>fsck</code> 命令成功的退出，返回一个 <code>0</code> 值。如果文件系统不可安装, <code>fsck</code> 命令退出并返回一个值 <code>8</code> 。 
+</p></li>
+
+<li><p>
+<code>mytype</code>
+</p>
+
+<p>
+如果存在问题的文件系统与在 <code>/etc/filesystems</code> 文件中或者在命令行中通过 <code>-V</code> 标志指定的具有相同的类型，那么促使 <code>fsck</code> 命令退出并给出一个成功的 <code>0</code> 值。否则，返回一个值 <code>8</code> 。例如，如果 <code>/</code> （引导文件系统）是一个分类文件系统，那么 <code>fsck</code> 命令 <code>-o mytype -V jfs /</code> 会退出给出一个 <code>0</code> 值。  
+</p></li>
+</ul>
+
+<p>
+<code>-p</code> 不显示次要问题的消息但是自动修复问题。这个标志并不是象 <code>-y</code> 标志那样授予大规模许可，当系统正常启动的时候对自动进行检查工作有用。无论系统在何时自动运行，您应该将这个标志作为系统启动过程的一部分来使用。也允许并行分组检查。如果主要的超级块损坏了，次要的超级块就被验证，并且复制到主要的高级块中。 
+</p>
+
+<p>
+<code>-t文件</code> 如果 <code>fsck</code> 命令得不到足够的内存来保存它的表的话，在文件系统中作为一个临时文件而不是被检查的文件来指定File参数。如果没有指定 <code>-t</code> 标志，那么 <code>fsck</code> 命令需要一个临时文件，它会提示您给这个临时文件起名字。但是，如果指定了 <code>-p</code> 标志， <code>fsck</code> 命令是不成功的。如果临时文件不是一个特定的文件，当 <code>fsck</code> 命令结束的时候，它就会被删除。 
+</p>
+
+<p>
+<code>-V VfsName</code> 使用为文件系统由VFSName变量指定的虚拟文件系统的描述，而不是用 <code>/etc/filesystems</code> 文件决定描述。如果 <code>-V VfsName</code> 标志没有在命令行中指定，就会检查 <code>/etc/filesystems</code> 文件并且 <code>vfs=</code> 匹配节的特性被认为是正确的文件系统类型。 
+</p>
+
+<p>
+<code>-y</code> 对所有 <code>fsck</code> 命令提出的所有问题假定一个 <code>yes</code> 的响应。这个标志使 <code>fsck</code> 命令采取它认为必要的行动。仅在损坏严重的文件系统中使用这个标志。 
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">3.3</span> 一些原理</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+大多数系统设置为启动时自动运行 <code>fsck</code> ，因此任何错误将在系统使用前被检测到(并根据希望修正)。自动检查只对启动时自动 <code>mount</code> 的文件系统发生作用，使用 <code>fsck</code> 手工检查其他文件系统，比如软盘。使用有错误的文件系统可能使问题变得更坏。如果系统正常关闭，几乎从不发生错误，因此有一些方法可以不进行检查。如果文件 <code>/etc/fastboot</code> 存在，就不检查。另外，如果 <code>ext2</code> 文件系统在超级块中有一个特定的标记告知该文件系统在上次 <code>mount</code> 后没有正常 <code>unmount</code> . 如果标记指出 <code>unmount</code> 正常完成(假设正常 <code>unmount</code> 指出没问题)， <code>e2fsck</code> ( <code>fsck</code> 的 <code>ext2</code> 文件系统版) 就不检查系统。 <code>/etc/fastboot</code> 是否影响系统依赖于你的启动手稿，但 <code>ext2</code> 标记则在你使用 <code>e2fsck</code> 时发生作用&#x2013;基于一个 <code>e2fsck</code> 选项(参阅 <code>e2fsck</code> 手册页) 　　
+</p>
+
+<p>
+运行 <code>fsck</code> 后，该命令会分6个阶段对文件系统进行检查，这六个阶段分别是： 
+</p>
+<ol class="org-ol">
+<li>阶段1： 检查块和块的大小</li>
+<li>阶段2： 检查路径名</li>
+<li>阶段3： 检查连接性</li>
+<li>阶段4： 检查参考记数</li>
+<li>阶段5： 检查自由块列表</li>
+<li>阶段6： 补救自由块列表</li>
+</ol>
+
+<p>
+对每个阶段进行检查,常见的一些错误:
+</p>
+
+<ol class="org-ol">
+<li><p>
+移去一个没有相关文件的目录入口　
+</p>
+
+<p>
+这时用户可以回答 <code>Yes</code> 或 <code>Y</code> 来删除该目录入口。 　　　　
+</p></li>
+
+<li><p>
+重连接一个已分配但不能访问的文件
+</p>
+
+<p>
+<code>fsck</code> 找到了一个已分配的I节点，但却不可访问(该节点没与任何目录连接)，这时一般对 <code>fsck</code> 的"RECONNECT？"回答 <code>Yes</code> ，即把该I节点连接到 <code>lost+found</code> 目录下，文件名即是I节点号，之后管理员应检查该文件类型，判明该文件用途，再将该文件拷贝到相应目录下。
+</p></li>
+
+<li><p>
+连接数调整ADJUST
+</p>
+
+<p>
+在交互方式下， <code>fsck</code> 若发现连接数(与原记录)不一致，将询问用户采取何种行动，本例发现一目录的I节点连接数与该目录的真实连接数不一致。
+</p>
+
+<p>
+这时用户应该回答 <code>Yes</code> 或 <code>Y</code> 来改正连接数。 　　　　
+</p></li>
+
+<li><p>
+自由块表不一致
+</p>
+
+<p>
+<code>fsck</code> 查出未分配块数与超级块中所给出的自由块表不一致。
+</p>
+
+<p>
+这时用户应该回答 <code>Yes</code> 或 <code>Y</code> 来修正超级块。 
+</p>
+
+<p>
+从上面的出错信息和处理方法可以发现，对于 <code>fsck</code> 询问的问题大多数情况下都可以用 <code>Yes</code> 来回答，所以在实际应用时，可以用 <code>-y</code> 选项来执行该命令对硬盘进行检查和修复。 
+</p>
+
+<p>
+这里：
+</p>
+<ul class="org-ul">
+<li><p>
+RECONNECT
+</p>
+
+<p>
+表示目录丢失，可将其存入 <code>lost+found</code> 中再作转移。回答 <code>yes</code>
+</p></li>
+
+<li><p>
+SUPERBLK坏（注意是坏，不是wrong）
+</p>
+
+<p>
+修复见上面（如果是wrong就随便了，修不修都可以）
+</p></li>
+
+<li><p>
+CLEAR
+</p>
+
+<p>
+删i节点，可能会错
+</p></li>
+
+<li><p>
+REMOVE
+</p>
+
+<p>
+删文件，一般给出文件名。 file=&#x2026;.
+</p></li>
+
+<li><p>
+ADJUST
+</p>
+
+<p>
+调整连接数。实际数与原记录不符。回答 <code>yes</code>
+</p></li>
+</ul>
+<p>
+使用一般都是 <code>yes</code> 过去的，不能在正在 <code>mount</code> 的文件系统上操作，否则有可能导致文件系统损坏。但也没有碰到过用 <code>fsck</code> 导致发生错误的情况，不过还是建议操作的时候规范一些。
+</p>
+
+<p>
+对于一个已经安装好了的文件系统， <code>fsck</code> 命令不会做出矫正。 
+</p>
+
+<p>
+<code>fsck</code> 命令出于某些原因可以在一个已经安装好了的文件系统中运行，但不是进行修复。但是当文件系统安装完毕之后，也许会返回不准确的错误消息。 
+</p>
+
+<p>
+<code>fsck</code> 命令检查并以交互方式修复不连贯的文件系统。在安装文件系统之前，应该运行这个命令。您必须能够读设备文件，在这个设备上驻留着文件系统（例如 <code>/dev/sda1</code> )安装一个不连贯的文件系统也许会导致系统的崩溃。
+</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-2">
+<h2 id="orgheadline7"><span class="section-number-2">4</span> 其它</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+（有待实践）
+</p>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">4.1</span> 运行 <code>fsck</code> 命令后产生的文件有什么用？</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+当执行 <code>fsck</code> 命令时， <code>fsck</code> 命令如果发现存在孤立的文件或目录，这些孤立的文件或目录对于系统管理员或用户来说，无法访问到它，因为它与它的上级目录失去了关联，如果用户允许 <code>fsck</code> 重新把它们找回来的话， <code>fsck</code> 命令就会把这些孤立的文件或目录放在文件系统的 <code>/lost+found</code> 目录下，并用各自的 <code>i-node</code> 号来命名，以便用户查找自己需要的文件。 <code>Lost+found</code> 目录通过它的英文含义我们都可以知道，它是一个失物认领处。
+</p>
+
+<p>
+因此当某个用户发现自己丢失了某个文件，可以在执行 <code>fsck</code> 之后到 <code>/lost+found</code> 目录下去查找，这时通过文件名已无法辨认出文件的作用，只能用 <code>file</code> 之类的命令来确定文件的类型，如果是数据文件，可以用 <code>more</code> 或 <code>vi</code> 命令来查看，如果是二进制文件，可以用 <code>dbx</code> 命令来调试或者试着执行它(注意它可能是一个具有破坏性的程序)，知道文件或目录的作用之后，可以对其进行改名。
+</p>
+
+<p>
+如果用户不允许 <code>fsck</code> 把这些孤立的文件或目录找回来，那么 <code>fsck</code> 命令就会破坏这些文件或目录，彻底丢失这些文件或目录，用户或系统管理员永远也无法找回它们。 
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">4.2</span> 关于 <code>fsck</code> 得结果输出：</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+当系统启动的时候会使用 <code>fsck</code> 对文件系统进行扫描，并相应的报出扫描结果。
+</p>
+
+<p>
+例如： <code>dev/rdsk/c0t0d0s7 stable</code> 等。
+</p>
+
+<p>
+后面是Fs的状态。其中，
+</p>
+
+<p>
+<code>clean</code> 表示文件系统 <code>umount</code> 后无人用，
+</p>
+
+<p>
+<code>stable</code> 表示文件系统用过，但却是完整的，好的。
+</p>
+
+<p>
+而出一大堆的话，还有什么 fragment % 什么的的那都表示文件系统上有乱的地方，那么就应该进入系统后使用 <code>fsck</code> 来整理。
+</p>
+
+<p>
+　　当系统的状态是 <code>clean</code> ， <code>stable</code> 和 <code>logging</code> 的状态的时候 <code>fsck</code> 不运行。
+</p>
+
+<p>
+在非法关机后（各种原因），再次启动的时候会有很多的情况，上面说的是一种情况，再厉害一些是系统只能进入但用户状态，最厉害的是连单用户的状态都无法进入（肯定是 <code>/</code> 和 <code>/usr</code> 区有问题。这是因为 <code>fsck</code> 对 <code>/</code> 区的扫描无法通过的话，系统当然无法启动，而 <code>fsck</code> 调用的一些函数库又在 <code>/usr</code> 上。。。。）
+</p>
+
+<p>
+此外，在一个已经安装好了的文件系统上运行的 <code>fsck</code> 命令产生不可靠的结果。
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><span class="section-number-3">4.3</span> 文件</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+<code>/usr/sbin/fsck</code> 包含 <code>fsck</code> 命令。 
+</p>
+
+<p>
+<code>/etc/filesystems</code> 列出已知的文件系统并且定义它们的特征。 
+</p>
+
+<p>
+<code>/var/spool/mail/*</code> 包含虚拟文件系统类型的描述。 
+</p>
+
+<p>
+<code>/usr/bin/from</code> 包含当系统启动的时候运行的命令（包括 <code>fsck</code> 命令）。 
+</p>
+</div>
+</div>
+</div>
+<br>
+<div id="mypostamble" align="right" style="float:right" class="status">
+    <table> <tbody> 
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Author</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">QuietHeart</td>	  
+	</tr>
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Email</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">
+	    <a href="mailto:quiet_heart000@126.com">quiet_heart000@126.com</a>
+	  </td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Date</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2009-11-23 一 20:25]</td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-08-16 二 15:09:07></td>
+	</tr>
+    </tbody></table>
+</div>
+<br>
+
+
 
   </div>
 </article>
 
 		  <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="/categories/others/first_page" data-title="My first page" data-url="http://vaqeteart.github.io//categories/others/first_page.html"></div>
+<div class="ds-thread" data-thread-key="/categories/study/linux/command/linux_command_fsck" data-title="Linux命令学习手册-fsck" data-url="http://vaqeteart.github.io//categories/study/linux/command/linux_command_fsck.html"></div>
 <!-- 多说评论框 end -->
 <script src="/assets/js/comment.js"></script>
 		</td>

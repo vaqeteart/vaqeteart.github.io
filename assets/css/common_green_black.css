@@ -188,7 +188,7 @@ hr {
     /*width: 300;*/
 }
 
-#article_line{
+hr.article_line{
     align: center;
     height:1px;
     border:none;

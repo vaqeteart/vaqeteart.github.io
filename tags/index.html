@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
 <title>标签</title>
 
 <!--theme-->
@@ -671,6 +671,23 @@
         }
     }
     
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
 
     create_categories(categories, 0, categories_count);
     //document.write("hello")
@@ -682,6 +699,8 @@
   <hr>
   <div>
     <ul id="post-list" class="post-list">
+      
+        
       
         
       
