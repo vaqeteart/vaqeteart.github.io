@@ -1,0 +1,1210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html style="cursor: auto ! important;" xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Android Native/Tombstone Crash Log 详细分析[原创]_夜莺_新浪博客</title>
+<meta name="keywords" content="Android Native/Tombstone Crash Log 详细分析[原创]_夜莺_新浪博客,夜莺,android,crash,native,log,tombstone">
+<meta name="description" content="Android Native/Tombstone Crash Log 详细分析[原创]_夜莺_新浪博客,夜莺,">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<meta http-equiv="mobile-agent" content="format=html5; url=http://blog.sina.cn/dpool/blog/s/blog_702c2db50102vc2h.html?vt=4">
+<meta http-equiv="mobile-agent" content="format=wml; url=http://blog.sina.cn/dpool/blog/ArtRead.php?nid=702c2db50102vc2h&amp;vt=1">
+<!--–[if lte IE 6]-->
+<script src="index_files/sinaads_ck.js" charset="utf-8" id="sinaads-ck-script"></script><script type="text/javascript"><!--
+/* Script removed by snapshot save */
+--></script>
+<!--[endif]–-->
+<script type="text/javascript"><!--
+/* Script removed by snapshot save */
+--></script>
+<link rel="pingback" href="http://upload.move.blog.sina.com.cn/blog_rebuild/blog/xmlrpc.php">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://upload.move.blog.sina.com.cn/blog_rebuild/blog/xmlrpc.php?rsd">
+<link href="http://blog.sina.com.cn/blog_rebuild/blog/wlwmanifest.xml" type="application/wlwmanifest+xml" rel="wlwmanifest">
+<link rel="alternate" type="application/rss+xml" href="http://blog.sina.com.cn/rss/1881943477.xml" title="RSS">
+<link href="index_files/article.css" type="text/css" rel="stylesheet"><link href="index_files/common.css" type="text/css" rel="stylesheet"><link href="index_files/blog.css" type="text/css" rel="stylesheet"><link href="index_files/blog-1.css" type="text/css" rel="stylesheet"><style id="tplstyle" type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+@import url("index_files/t.css");
+--></style>
+<style id="positionstyle" type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+.sinabloghead .blogtoparea { left: 228px; top: 35%; }
+.sinabloghead .blognav { left: 217px; top: 68%; }
+--></style>
+<style id="bgcolor" type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+body { background-color: rgb(0, 0, 0); }
+--></style>
+<style id="bgtyle" type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+body { background-image: none; }
+.sinabloga { background-image: none; }
+.sinablogb { background-image: url("index_files/702c2db5gc3e94067119d.jpg"); }
+.sinablogb { background-repeat: repeat-x; background-position: center top; }
+--></style>
+<style id="headtyle" type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+--></style>
+<style id="navtyle" type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+.sinabloghead .blognav .blognavBg { background-image: none; }
+--></style>
+<script type="text/javascript" src="index_files/sspnew.js"></script><script async="" charset="utf-8" src="index_files/ssologin.js"></script><script charset="utf-8" src="index_files/article.js"></script><script charset="utf-8" type="text/javascript" src="index_files/bsStatic.js"></script><script charset="utf-8" type="text/javascript" src="index_files/fingerprint2.min.js"></script><script charset="utf-8" type="text/javascript" src="index_files/bs-engine.js"></script><script charset="utf-8" src="index_files/sinaads.js"></script><style type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+a.bshareDiv, #bsPanel, #bsMorePanel, #bshareF { border: medium none; background: transparent none repeat scroll 0% 0%; padding: 0px; margin: 0px; font: 12px/14px Helvetica,Calibri,Tahoma,Arial,\5B8B \4F53 ,sans-serif; }
+#bsPanel div, #bsMorePanel div, #bshareF div { display: block; }
+div.buzzButton { cursor: pointer; font-weight: bold; }
+a.bshareDiv .bsPromo, div.bshare-custom .bsPromo { display: none; position: absolute; z-index: 100; }
+div.bshare-custom .bsPromo.bsPromo2 { background: transparent url("urn:not-loaded:http://static.bshare.cn/frame/images/bshare_promo_sprite.gif") no-repeat scroll 0% 0%; cursor: pointer; }
+--></style><style type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+.bsBox { display: none; z-index: 100000001; font-size: 12px; background: transparent url("urn:not-loaded:http://static.bshare.cn/frame/images//background-opaque-dark.gif") repeat scroll 0% 0% ! important; padding: 6px ! important; border-radius: 5px; }
+.bsClose { cursor: pointer; position: absolute; z-index: 10000000; color: rgb(102, 102, 102); font-weight: bold; font-family: Helvetica,Arial; font-size: 14px; line-height: 20px; }
+.bsTop { color: rgb(102, 102, 102); background: rgb(242, 242, 242) none repeat scroll 0% 0%; height: 24px; line-height: 24px; border-bottom: 1px solid rgb(232, 232, 232); }
+.bsTop span { float: left; }
+.bsFrameDiv, #bsMorePanel { border: medium none; background: rgb(255, 255, 255) none repeat scroll 0% 0%; }
+.bsReturn { float: right; margin-right: 36px; text-align: right; cursor: pointer; line-height: 24px; color: rgb(102, 102, 102); opacity: 0.5; }
+--></style><script charset="utf-8" type="text/javascript" src="index_files/bsMore.js"></script><script charset="utf-8" type="text/javascript" src="index_files/bshare_share_count.js"></script><style type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+.bshare-custom { font-size: 13px; line-height: 16px ! important; }
+.bshare-custom a { padding-left: 19px; height: 16px; text-decoration: none; display: none; vertical-align: middle; cursor: pointer; color: rgb(51, 51, 51); margin-right: 3px; opacity: 1; }
+.bshare-custom a:hover { text-decoration: underline; opacity: 0.75; }
+.bshare-custom .bshare-more { padding-left: 0px ! important; color: rgb(51, 51, 51) ! important; display: inline-block; }
+.bshare-custom .bshare-douban { background: transparent url("index_files/top_logos_sprite.png") no-repeat scroll 0px -36px; display: inline-block; }
+.bshare-custom .bshare-qzone { background: transparent url("index_files/top_logos_sprite.png") no-repeat scroll 0px -234px; display: inline-block; }
+.bshare-custom .bshare-sinaminiblog { background: transparent url("index_files/top_logos_sprite.png") no-repeat scroll 0px -270px; display: inline-block; }
+.bshare-custom .bshare-weixin { background: transparent url("index_files/weixin.png") no-repeat scroll 0% 0%; display: inline-block; }
+.bshare-custom #bshare-more-icon, .bshare-custom .bshare-more-icon { background: transparent url("urn:not-loaded:http://static.bshare.cn/frame/images/logos/s4/more.png") no-repeat scroll 0% 0%; padding-left: 19px ! important; }
+.bshare-custom .bshare-more.more-style-addthis { background: transparent url("index_files/more-style-addthis.png") no-repeat scroll 0% 0%; }
+--></style><script charset="utf-8" type="text/javascript" src="index_files/bshareS887.js"></script><style type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+div.bsClear { clear: both; height: 0px; line-height: 0; overflow: hidden; font-size: 0px; }
+.bsLogoLink:hover { text-decoration: underline; }
+--></style><style type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+.bshare-custom { font-size: 13px; line-height: 16px ! important; }
+.bshare-custom a { padding-left: 19px; height: 16px; text-decoration: none; display: none; vertical-align: middle; cursor: pointer; color: rgb(51, 51, 51); margin-right: 3px; opacity: 1; }
+.bshare-custom a:hover { text-decoration: underline; opacity: 0.75; }
+.bshare-custom .bshare-more { padding-left: 0px ! important; color: rgb(51, 51, 51) ! important; display: inline-block; }
+.bshare-custom .bshare-douban { background: transparent url("index_files/top_logos_sprite.png") no-repeat scroll 0px -36px; display: inline-block; }
+.bshare-custom .bshare-qzone { background: transparent url("index_files/top_logos_sprite.png") no-repeat scroll 0px -234px; display: inline-block; }
+.bshare-custom .bshare-sinaminiblog { background: transparent url("index_files/top_logos_sprite.png") no-repeat scroll 0px -270px; display: inline-block; }
+.bshare-custom .bshare-weixin { background: transparent url("index_files/weixin.png") no-repeat scroll 0% 0%; display: inline-block; }
+.bshare-custom #bshare-more-icon, .bshare-custom .bshare-more-icon { background: transparent url("urn:not-loaded:http://static.bshare.cn/frame/images/logos/s4/more.png") no-repeat scroll 0% 0%; padding-left: 19px ! important; }
+.bshare-custom .bshare-more.more-style-addthis { background: transparent url("index_files/more-style-addthis.png") no-repeat scroll 0% 0%; }
+--></style><script charset="utf-8" src="index_files/suda_s_v851c.js"></script><iframe scrolling="no" style="height: 0px; width: 1px; overflow: hidden;" id="ckctlFrame" src="index_files/ckctl.html"></iframe><script src="index_files/geetest.5.5.36.js" id="gt_lib" charset="UTF-8"></script><script src="index_files/get.php.js" charset="UTF-8"></script><link href="index_files/style.3.0.23.css" rel="stylesheet"><script charset="utf-8" src="index_files/di_yuan_xin.js"></script><script charset="utf-8" src="index_files/tmp_clone.js"></script><style id="stylefix" type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+#bsPanelHolder, #sinaads_pdps54771 { display: none; }
+--></style><script charset="utf-8" src="index_files/getSinaadsExParamsForBlog.js"></script><script charset="gb2312" src="index_files/guess.boot.blog.js"></script><script charset="gb2312" src="index_files/collect.js"></script><script src="index_files/sea-1.js" id="seajsnode"></script><style type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+@import url("index_files/layer20.css");
+--></style><style type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+a.bsSiteLink { text-decoration: none; color: rgb(102, 102, 102); }
+a.bsSiteLink:hover { text-decoration: underline; }
+div.bsTitle { padding: 0px 8px; border-bottom: 1px solid rgb(232, 232, 232); color: rgb(102, 102, 102); background: rgb(242, 242, 242) none repeat scroll 0% 0%; text-align: left; }
+div.buzzButton { cursor: pointer; }
+div.bsRlogo, div.bsRlogoSel { width: 68px; float: left; margin: 0px; padding: 2px 0px; }
+div.bsRlogo a, div.bsRlogoSel a { float: left; }
+div.bsLogo, div.bsLogoSel { float: left; width: 111px; text-align: left; height: auto; padding: 2px 4px; margin: 2px 0px; white-space: nowrap; overflow: hidden; }
+div.bsLogo, div.bsRlogo { border: 1px solid rgb(255, 255, 255); background: rgb(255, 255, 255) none repeat scroll 0% 0%; }
+div.bsLogo a, div.bsLogoSel a { display: block; height: 16px; line-height: 16px; padding: 0px 0px 0px 24px; text-decoration: none; float: left; overflow: hidden; }
+div.bsLogo a, div.bsRlogo a { color: rgb(102, 102, 102); border: medium none; }
+div.bsLogoLink { width: 121px; overflow: hidden; background: rgb(255, 255, 255) none repeat scroll 0% 0%; float: left; margin: 3px 0px; }
+#bsPanel { position: absolute; z-index: 100000000; font-size: 12px; width: 258px; background: transparent url("urn:not-loaded:http://static.bshare.cn/frame/images/background-opaque-dark.png") repeat scroll 0% 0%; padding: 6px; border-radius: 5px; }
+div.bsClear { clear: both; height: 0px; line-height: 0; font-size: 0px; overflow: hidden; }
+--></style><script charset="utf-8" type="text/javascript" src="index_files/bsPlatforms.js"></script><script charset="utf-8" type="text/javascript" src="index_files/bshare_view.js"></script><style type="text/css"><!--
+/* Effective stylesheet produced by snapshot save */
+a.bsSiteLink { text-decoration: none; color: rgb(102, 102, 102); }
+a.bsSiteLink:hover { text-decoration: underline; }
+div.bsTitle { padding: 0px 8px; border-bottom: 1px solid rgb(232, 232, 232); color: rgb(102, 102, 102); background: rgb(242, 242, 242) none repeat scroll 0% 0%; text-align: left; }
+div.buzzButton { cursor: pointer; }
+div.bsRlogo, div.bsRlogoSel { width: 68px; float: left; margin: 0px; padding: 2px 0px; }
+div.bsRlogo a, div.bsRlogoSel a { float: left; }
+div.bsLogo, div.bsLogoSel { float: left; width: 111px; text-align: left; height: auto; padding: 2px 4px; margin: 2px 0px; white-space: nowrap; overflow: hidden; }
+div.bsLogo, div.bsRlogo { border: 1px solid rgb(255, 255, 255); background: rgb(255, 255, 255) none repeat scroll 0% 0%; }
+div.bsLogo a, div.bsLogoSel a { display: block; height: 16px; line-height: 16px; padding: 0px 0px 0px 24px; text-decoration: none; float: left; overflow: hidden; }
+div.bsLogo a, div.bsRlogo a { color: rgb(102, 102, 102); border: medium none; }
+div.bsLogoLink { width: 121px; overflow: hidden; background: rgb(255, 255, 255) none repeat scroll 0% 0%; float: left; margin: 3px 0px; }
+#bsPanel { position: absolute; z-index: 100000000; font-size: 12px; width: 258px; background: transparent url("urn:not-loaded:http://static.bshare.cn/frame/images/background-opaque-dark.png") repeat scroll 0% 0%; padding: 6px; border-radius: 5px; }
+div.bsClear { clear: both; height: 0px; line-height: 0; font-size: 0px; overflow: hidden; }
+--></style><script charset="utf-8" src="index_files/blog_bottom_float.js"></script><script src="index_files/check_login.php.js" id="jsonp_script1473661870867"></script></head>
+<body><div style="position: fixed; width: 300px; height: 250px; z-index: 99999; display: none; left: 1053px; top: 389px;" class="sinaad-toolkit-box" id="sinaadToolkitBox4"><ins class="sinaads sinaads-fail" id="PDPS000000058147" data-ad-status="done" data-ad-pdps="PDPS000000058147"></ins></div><div style="position: fixed; width: 640px; height: 90px; z-index: 10501; display: none; left: 201px; top: 551px; transition: all 0.3s ease 0s;" class="sinaad-toolkit-box" id="sinaadToolkitBox3"><div id="sinaAD_type_blogbf"><a style="display:block;line-height:0;" href="http://sax.sina.com.cn/dsp/click?t=MjAxNi0wOS0xMiAxNDozMDo0MAkxODMuNjIuMjI2LjE3OAkxODMuNjIuMjI2LjE3OF8xNDczMDQ1ODkxLjk5NzI5OQkwYmQ5NWU5Ni1lMWY3LTQ1ODQtYTg3Zi04ZTc2YjViZDNhNmMJNTYyODQyCTU5OTc4Njk5NzJfUElOUEFJLUNQQwkxOTE2NDYJODA0NzQJMC4wMDEzOTY2NAkxCXRydWUJUERQUzAwMDAwMDA1Mjk1MAkxNDg3NTQ2CVBDCWltYWdlCS0JMHw1NjI4NDJ8bnVsbHxudWxsfGJqfDU2Mjg0MgludWxsCTEJbnVsbAktCS0JLQkw&amp;userid=183.62.226.178_1473045891.997299&amp;auth=efca3d170cb31b4d&amp;p=nMWyBlqqOvGFMn8WbZo1%2FvRVoI0rSRMHQ%2BCZIw%3D%3D&amp;url=http%3A%2F%2Fsax.sina.com.cn%2Fclick%3Ftype%3D2%26t%3DOWNjNWIyMDYtNWFhYS0zYWYxLTg1MzItN2YxNjZkOWEzNWZlCTE3CVBEUFMwMDAwMDAwNTI5NTAJMTQ4NzU0NgkxCVJUQgkt%26id%3D17%26url%3Dhttp%253A%252F%252Fwww.xiaotulv.cn%252F%253Fgzid%253Dk640x90%26sina_sign%3Db493ea50887b3fb2&amp;sign=fe1950c0a07c3bc5" target="_blank" data-link="http://sax.sina.com.cn/dsp/click?t=MjAxNi0wOS0xMiAxNDozMDo0MAkxODMuNjIuMjI2LjE3OAkxODMuNjIuMjI2LjE3OF8xNDczMDQ1ODkxLjk5NzI5OQkwYmQ5NWU5Ni1lMWY3LTQ1ODQtYTg3Zi04ZTc2YjViZDNhNmMJNTYyODQyCTU5OTc4Njk5NzJfUElOUEFJLUNQQwkxOTE2NDYJODA0NzQJMC4wMDEzOTY2NAkxCXRydWUJUERQUzAwMDAwMDA1Mjk1MAkxNDg3NTQ2CVBDCWltYWdlCS0JMHw1NjI4NDJ8bnVsbHxudWxsfGJqfDU2Mjg0MgludWxsCTEJbnVsbAktCS0JLQkw&amp;userid=183.62.226.178_1473045891.997299&amp;auth=efca3d170cb31b4d&amp;p=nMWyBlqqOvGFMn8WbZo1%2FvRVoI0rSRMHQ%2BCZIw%3D%3D&amp;url=http%3A%2F%2Fsax.sina.com.cn%2Fclick%3Ftype%3D2%26t%3DOWNjNWIyMDYtNWFhYS0zYWYxLTg1MzItN2YxNjZkOWEzNWZlCTE3CVBEUFMwMDAwMDAwNTI5NTAJMTQ4NzU0NgkxCVJUQgkt%26id%3D17%26url%3Dhttp%253A%252F%252Fwww.xiaotulv.cn%252F%253Fgzid%253Dk640x90%26sina_sign%3Db493ea50887b3fb2&amp;sign=fe1950c0a07c3bc5" onmousedown=""><img src="index_files/2bdc66f3db7c4ad6b4f64b820cc8494e.jpg" style="width:640px;height:90px;border:0" alt="http://d1.sina.com.cn/pfpghc2/201608/15/2bdc66f3db7c4ad6b4f64b820cc8494e.jpg" border="0"></a></div><div style="background: transparent url(&quot;index_files/60x18_2_close.gif&quot;) no-repeat scroll left top; cursor: pointer; z-index: 11010; position: absolute; width: 60px; height: 18px; right: 7px; top: 1px;"></div></div><div style="height: 1px; width: 1px; position: absolute; left: -9999px; top: -9999px;"><iframe src="index_files/store2.html"></iframe></div><div style="position: fixed; width: 25px; height: 239px; z-index: 10000; display: none; left: 1328px; top: 200px;" class="sinaad-toolkit-box" id="sinaadToolkitBox2"><div></div><div style="width: 25px; height: 24px; position: absolute; left: 0px; top: 150px; background: transparent url(&quot;urn:not-loaded:http://d5.sina.com.cn/d1images/lmt/play.gif&quot;) no-repeat scroll center center; margin: 0px; padding: 0px; display: block; cursor: pointer;"></div><div style="margin: 0px; padding: 0px; display: block; cursor: pointer; width: 25px; height: 65px; position: absolute; left: 0px; top: 174px; background: transparent url(&quot;urn:not-loaded:http://d1.sina.com.cn/litong/zhitou/sinaads/25x65_1-close.gif&quot;) no-repeat scroll center center;"></div></div><div style="position: fixed; width: 120px; height: 270px; z-index: 10010; display: none; left: 1233px; top: 30px;" class="sinaad-toolkit-box" id="sinaadToolkitBox1"><div></div><div style="width: 120px; height: 18px; position: absolute; right: 0px; bottom: -18px; z-index: 9999; background: rgb(238, 238, 238) url(&quot;index_files/60x18_1_close.gif&quot;) no-repeat scroll left top; margin: 0px; padding: 0px; cursor: pointer;"></div></div><div style="position: fixed; width: 120px; height: 288px; z-index: 99999; display: none; left: 0px; top: 120px;" class="sinaad-toolkit-box" id="sinaadToolkitBox0"><div style="width: 120px; height: 18px; position: absolute; right: 0px; top: 270px; z-index: 10000; background: rgb(235, 235, 235) url(&quot;index_files/60x18_1_close.gif&quot;) no-repeat scroll right center; margin: 0px; padding: 0px; cursor: pointer;"></div><div style="width: 120px; height: 270px; position: absolute; right: 0px; top: 0px;"></div></div>
+<!--$sinatopbar-->
+<ins data-ad-status="done" class="sinaads sinaads-done" data-ad-pdps="PDPS000000049439" style="width: 1000px; margin: 0px auto; display: block; overflow: hidden; text-decoration: none;"><ins style="text-decoration:none;margin:0px auto;width:1000px;display:block;position:relative;overflow:hidden;"><a style="display:block;line-height:0;" href="http://sax.sina.com.cn/dsp/click?t=MjAxNi0wOS0xMiAxNDozMDozNgkxODMuNjIuMjI2LjE3OAkxODMuNjIuMjI2LjE3OF8xNDczMDQ1ODkxLjk5NzI5OQlhMWU0ZTQwNi0zYTQ0LTQwOTMtOTcxYy0xZWFlNWU2NGRkOWMJNTcwNTU0CTU3Mzk1MDQxNDZfUElOUEFJLUNQQwkxOTQ5MTUJMTI0MjAwCTQuMEUtNAkxCXRydWUJUERQUzAwMDAwMDA0OTQzOQkxNTA1NjcwCVBDCWltYWdlCS0JMHw1NzA1NTR8bnVsbHxudWxsfGJqfDU3MDU1NAludWxsCTEJbnVsbAktCS0JLQkw&amp;userid=183.62.226.178_1473045891.997299&amp;auth=51e3905562aa53e9&amp;p=OAXpFUTPNTSaF4cQkGbICrdCvN2NiRk%2FaPAKrQ%3D%3D&amp;url=http%3A%2F%2Fsax.sina.com.cn%2Fclick%3Ftype%3D2%26t%3DMzgwNWU5MTUtNDRjZi0zNTM0LTlhMTctODcxMDkwNjZjODBhCTE3CVBEUFMwMDAwMDAwNDk0MzkJMTUwNTY3MAkxCVJUQgkt%26id%3D17%26url%3Dhttp%253A%252F%252Fluzon.yishaxiu.com%252F%253Fgzid%253DU1%26sina_sign%3D494b7fb6e0bdf782&amp;sign=31bedef58815e7cb" target="_blank" data-link="http://sax.sina.com.cn/dsp/click?t=MjAxNi0wOS0xMiAxNDozMDozNgkxODMuNjIuMjI2LjE3OAkxODMuNjIuMjI2LjE3OF8xNDczMDQ1ODkxLjk5NzI5OQlhMWU0ZTQwNi0zYTQ0LTQwOTMtOTcxYy0xZWFlNWU2NGRkOWMJNTcwNTU0CTU3Mzk1MDQxNDZfUElOUEFJLUNQQwkxOTQ5MTUJMTI0MjAwCTQuMEUtNAkxCXRydWUJUERQUzAwMDAwMDA0OTQzOQkxNTA1NjcwCVBDCWltYWdlCS0JMHw1NzA1NTR8bnVsbHxudWxsfGJqfDU3MDU1NAludWxsCTEJbnVsbAktCS0JLQkw&amp;userid=183.62.226.178_1473045891.997299&amp;auth=51e3905562aa53e9&amp;p=OAXpFUTPNTSaF4cQkGbICrdCvN2NiRk%2FaPAKrQ%3D%3D&amp;url=http%3A%2F%2Fsax.sina.com.cn%2Fclick%3Ftype%3D2%26t%3DMzgwNWU5MTUtNDRjZi0zNTM0LTlhMTctODcxMDkwNjZjODBhCTE3CVBEUFMwMDAwMDAwNDk0MzkJMTUwNTY3MAkxCVJUQgkt%26id%3D17%26url%3Dhttp%253A%252F%252Fluzon.yishaxiu.com%252F%253Fgzid%253DU1%26sina_sign%3D494b7fb6e0bdf782&amp;sign=31bedef58815e7cb" onmousedown=""><img src="index_files/7a62ced961aa4d95b87bd407e3788853.jpg" style="width:1000px;height:90px;border:0" alt="http://d8.sina.com.cn/pfpghc2/201608/23/7a62ced961aa4d95b87bd407e3788853.jpg" border="0"></a><div style="width: 26px; height: 13px; position: absolute; right: 1px; bottom: 1px; z-index: 99; background: transparent url(&quot;index_files/ad_logo_update_IAB.gif&quot;) no-repeat scroll 0% 0%;"></div></ins></ins><div style="z-index: 512; top: 0px; width: 100%; display: block;" class="nsinatopbar">
+  <div style="position:absolute;left:0;top:0;" id="trayFlashConnetion"><embed pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" src="index_files/scache.swf" style="undefined" id="scache" name="scache" bgcolor="#00ff00" quality="high" wmode="transparent" allowscriptaccess="always" height="1" width="1"></div>
+  <div class="ntopbar_main"><div style="display: none;" id="_5381473661834295_panel" class="horn"><div id="_5381473661834295_tj" class="horn_con" style="">推荐：<a suda-uatrack="key=blog_notice&amp;value=h_SLOT_58_84_N" title="如何用iPhone拍宠物" id="_5381473661834295_noticeAd1" target="_blank" href="http://blog.sina.com.cn/s/blog_9ddfcf770102wn78.html?tj=1">如何用iPhone拍宠物</a><a suda-uatrack="key=blog_notice&amp;value=h_SLOT_59_84_N" title="一顿饭看出男人是否适合你" id="_5381473661834295_noticeAd2" target="_blank" href="http://blog.sina.com.cn/s/blog_475a1ef50102wr69.html?tj=1">一顿饭看出男人是否适合你</a></div><div id="_5381473661834295_announce" class="horn_con" style="display:none;"><p id="_5381473661834295_announceCon">公告：<em>请您及时更换请请请您正在使用的模版将于2周后被下线，请您及时更换</em></p></div><a class="close" title="关闭" id="_5381473661834295_close" style="float:none;">×</a></div> 
+    <a style="display: block;" id="login_bar_logo_link_350" href="http://blog.sina.com.cn/" target="_blank"><img class="ntopbar_logo" src="index_files/topbar_logo.gif" alt="新浪博客" width="100"></a>
+    <div style="display: block;" class="ntopbar_floatL">
+      <div class="ntopbar_search" id="traySearchBar"><div style="" class="ntopbar_input" id="_1441473661834151_panel"><form id="_1441473661834151_searchForm" method="get" target="_blank" action="http://search.sina.com.cn/"><input id="_1441473661834151_queryTxt" class="ntopbar_txt" name="q" autocomplete="off" type="text"><input id="_1441473661834151_submit" onclick="" class="ntopbar_searchBtn" value="" type="submit"><input name="ie" value="utf-8" type="hidden"><input name="e" value="utf-8" type="hidden"><input id="_1441473661834151_range" name="range" value="article" type="hidden"><input id="_1441473661834151_t" name="t" value="" type="hidden"><input id="_1441473661834151_s" name="s" value="sup" type="hidden"><input id="_1441473661834151_by" name="by" value="all" type="hidden"><input id="_1441473661834151_type" name="type" value="" type="hidden"><input id="_1441473661834151_stype" name="stype" value="1" type="hidden"><input id="_1441473661834151_c" name="c" value="blog" type="hidden"></form></div></div>
+	  <div class="ntopbar_ad" id="loginBarActivity" style=""><a onmousedown="" style="color: red;" title="谈恋爱何必比惨" href="http://blog.sina.com.cn/s/blog_593917460102xgxl.html" suda-uatrack="key=blog_topbar&amp;value=h_SLOT_43_84_N" target="_blank">谈恋爱何必比惨</a><ins data-ad-status="done" class="sinaads sinaads-fail" data-ad-pdps="PDPS000000033238" style="display:block;"></ins></div>
+    </div>
+    <div style="display: none;" class="ntopbar_loading"><img src="index_files/loading.gif">加载中…</div>
+  <div login="1" style="" id="_1771473661834028_panel" class="ntopbar_login"><span class="link bk_home"><a href="http://www.sina.com.cn/" target="_blank" suda-uatrack="key=sinahome_from_blog&amp;value=sinahome_from_blogpage"><i class="SG_bkhome"></i>新浪首页</a></span><a class="login" onclick="" href="###" action-type="tray-login-btn"><span>登录</span></a><a class="register" onclick="" target="_blank" href="http://login.sina.com.cn/signup/signupmail.php?entry=blog&amp;srcuid=1881943477&amp;src=blogicp">注册</a></div></div>
+</div><div id="______noticeTrayHolder" style="height: 30px;"></div>
+<!--$end sinatopbar-->
+
+<div class="sinabloga" id="sinabloga">
+	<div id="sinablogb" class="sinablogb">
+
+	   
+ <div id="sinablogHead" class="sinabloghead">
+     <div style="display: none;" id="headflash" class="headflash"></div>
+	   <div id="headarea" class="headarea">
+      <div id="blogTitle" class="blogtoparea">
+      <h1 id="blogname" class="blogtitle"><a href="http://blog.sina.com.cn/nightingalewish"><span id="blognamespan">夜莺的博客</span></a></h1>
+	  		
+					<div id="bloglink" class="bloglink"><a href="http://blog.sina.com.cn/nightingalewish">http://blog.sina.com.cn/nightingalewish</a>  <a onclick="" class="CP_a_fuc" href="#" id="SubscribeNewRss">[<cite>订阅</cite>]</a><a class="CP_a_fuc" href="javascript:void(0);">[<cite>手机订阅</cite>]</a></div>
+      </div>
+      <div class="blognav" id="blognav">
+      			  <div id="blognavBg" class="blognavBg"></div> <div class="blognavInfo"> 
+		<span><a href="http://blog.sina.com.cn/nightingalewish">首页</a></span>
+      <span><a class="on" href="http://blog.sina.com.cn/s/articlelist_1881943477_0_1.html">博文目录</a></span>
+      <span><a href="http://photo.blog.sina.com.cn/nightingalewish">图片</a></span>
+      <span class="last"><a href="http://blog.sina.com.cn/s/profile_1881943477.html">关于我</a></span></div>
+      </div>      		      		 	
+      
+             <div class="autoskin" id="auto_skin">
+       </div>
+
+<div class="adsarea">
+     <a href="#"><div id="template_clone_pic" class="pic"></div></a>
+     <div id="template_clone_link" class="link wdc_HInf"></div>
+     <div id="template_clone_other" class="other"></div>        
+</div>
+    </div>
+    </div>
+    
+    <!--主题内容开始 -->
+    <div class="sinablogbody" id="sinablogbody">
+		
+	<!--第一列start-->
+    <div id="column_1" class="SG_colW21 SG_colFirst"><div class="SG_conn" id="module_901">
+    <div class="SG_connHead">
+            <span class="title" comp_title="个人资料">个人资料</span>
+            <span class="edit">
+                        </span>
+    </div>
+    <div class="SG_connBody">
+        <div class="info">
+                         
+            <div class="info_img" id="comp_901_head"><img src="index_files/01871341306571.jpg" real_src="http://p6.sinaimg.cn/1881943477/180/01871341306571" id="comp_901_head_image" alt="夜莺" title="夜莺" height="180" width="180"></div>
+            
+            <div class="info_txt">
+              <div class="info_nm">
+                <img id="comp_901_online_icon" style="display:none;" class="SG_icon SG_icon1" src="index_files/sg_trans.gif" align="absmiddle" height="15" width="15">
+                <span class="SG_txtb"><strong id="ownernick">夜莺</strong></span>
+                
+                <div class="clearit"></div>
+              </div>
+              <div class="info_btn1">
+                <a target="_blank" href="http://weibo.com/u/1881943477?source=blog" class="SG_aBtn SG_aBtn_ico"><cite><img class="SG_icon SG_icon51" src="index_files/sg_trans.gif" align="absmiddle" height="15" width="15">微博</cite></a>
+                <div class="clearit"></div>
+              </div>
+    <div class="SG_j_linedot"></div>        <div class="info_locate" id="info_locate_id">
+<div class="SG_j_linedot"></div>
+<div class="info_btn2">
+    <p>
+    <a href="javascript:void(0);" class="SG_aBtn " id="comp901_btn_invite"><cite>加好友</cite></a>
+    <a href="javascript:void(0);" class="SG_aBtn" id="comp901_btn_sendpaper"><cite>发纸条</cite></a>
+    </p>
+    <p>
+    <a href="http://blog.sina.com.cn/s/profile_1881943477.html#write" class="SG_aBtn" id="comp901_btn_msninfo"><cite>写留言</cite></a>
+    <a href="#" onclick="" class="SG_aBtn" id="comp901_btn_follow"><cite>加关注</cite></a>
+    </p>
+    <div class="clearit"></div>
+</div>
+<div class="SG_j_linedot"></div>
+</div>
+                  <div class="info_list"><a href="http://blog.sina.com.cn/lm/map/" target="_blank" title=""><img src="index_files/ten_map.png" alt="博客十周年地图"></a></div><div class="info_list">     
+                                   <ul class="info_list1">
+                    <li><span class="SG_txtc">博客等级：</span><span id="comp_901_grade"><img src="index_files/1.gif"><img src="index_files/3.gif"></span></li>
+                    <li><span class="SG_txtc">博客积分：</span><span id="comp_901_score"><a href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_action.php" title="积分"><strong>105</strong><img title="积分" alt="积分" src="index_files/sg_trans.gif" class="SG_icon SG_icon11" align="top" height="15" width="15"></a></span></li>
+                    </ul>
+                    <ul class="info_list2">
+                    <li><span class="SG_txtc">博客访问：</span><span id="comp_901_pv"><strong>31,000</strong></span></li>
+                    <li><span class="SG_txtc">关注人气：</span><span id="comp_901_attention"><strong>9</strong></span></li>
+                    <li><span class="SG_txtc">获赠金笔：</span><strong id="comp_901_d_goldpen">0</strong></li>
+                    <li><span class="SG_txtc">赠出金笔：</span><strong id="comp_901_r_goldpen">0</strong></li>
+					<li class="lisp" id="comp_901_badge"><span class="SG_txtc">荣誉徽章：</span><a href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_action.php" title="点亮荣誉勋章"><img title="点亮荣誉勋章" alt="点亮荣誉勋章" src="index_files/sg_trans.gif" class="badge" style="background-image:url(index_files/badge08.png);_background-image: url(urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/badge/badge08.gif);"></a><a href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_action.php" title="兑换图片博主服务"><img title="兑换图片博主服务" alt="兑换图片博主服务" src="index_files/sg_trans.gif" class="badge" style="background-image:url(index_files/badge11.png);_background-image: url(urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/badge/badge11.gif);"></a><a href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_action.php" title="私密博文"><img title="私密博文" alt="私密博文" src="index_files/sg_trans.gif" class="badge" style="background-image:url(index_files/badge12.png);_background-image: url(urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/badge/badge12.gif);"></a><a href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_action.php" title="兑换金笔"><img title="兑换金笔" alt="兑换金笔" src="index_files/sg_trans.gif" class="badge" style="background-image:url(index_files/badge15.png);_background-image: url(urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/badge/badge15.gif);"></a></li>
+                    </ul>
+                  </div>
+<div class="clearit"></div>
+    </div>
+    <div class="clearit"></div>
+</div>
+            </div>       
+            <div class="SG_connFoot"></div>
+</div>
+<div class="SG_conn" suda-uatrack="key=blog_article&amp;value=h_article53" id="hotShangPin"><ins data-ad-status="done" class="sinaads sinaads-done" data-ad-pdps="PDPS000000057414" style="display: block; overflow: hidden; text-decoration: none;"><ins style="text-decoration:none;margin:0px auto;width:210px;display:block;position:relative;overflow:hidden;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="index_files/exsites.html" name="clickTAG=http%3A%2F%2Fsax.sina.com.cn%2Fmfp%2Fclick%3Ftype%3D3%26t%3DMjAxNi0wOS0xMiAxNDozMDozNQkxODMuNjIuMjI2LjE3OAkxODMuNjIuMjI2LjE3OF8xNDczMDQ1ODkxLjk5NzI5OQlodHRwOi8vYmxvZy5zaW5hLmNvbS5jbi9zL2Jsb2dfNzAyYzJkYjUwMTAydmMyaC5odG1sCVBEUFMwMDAwMDAwNTc0MTQJN2M1MDNkYjAtMTA4YS00NWRjLTgxNDItMjNkMDEyODYxOWVmCUZERTMyQTYwRkE3QQlGREUzMkE2MEZBN0EJYXV0b19sZXZlbDoxODAxMDB8dXNlcl9ncm91cDo5MDMsOTExLDkwMXx1c2VyX3RhZzoyMDk1MSwyMDk1NiwyMDk1M3xwb3M6UERQUzAwMDAwMDA1NzQxNHx3YXBfb3M6NzAwfHVzZXJfYWdlOjYwMiw2MDMsNjAxfHZfem9uZTozMDYwMDAsMzA2MDAyfHVzZXJfZ2VuZGVyOjUwMXxfdl96b25lOjMwNjAwMCwzMDYwMDJ8YXV0b19wcmljZToxODAyMDB8bW9iaWxlX2JyYW5kOjEyMDl8bW9iaWxlX2Jyb3dzZXI6ODA3fHZlcnNpb246Z2xfYl8xXzEsYWdfYnAyXzEsY2lfYnAxXzEscGM6MS4wCQkzMDYwMDB8MzA2MDAyCUZERTMyQTYwRkE3QQlOQjE1MTIwNTY5CVBEUFMwMDAwMDAwNTc0MTQJRkRFMzJBNjBGQTdBCUFFCS0JNQktCS0JLQktCS0JLQktCS0JMgkxNAktCTAJMAljaGFubmVsMjpibG9nX3N8b3M6bGludXh8YnJvd3NlcjpmaXJlZm94fHBsYXRmb3JtOm90aGVyfGRldmljZTpvdGhlcg%253D%253D&amp;viewTAG=http%3A%2F%2Fsax.sina.com.cn%2Fmfp%2Fview%3Ftype%3D3%26t%3DMjAxNi0wOS0xMiAxNDozMDozNQkxODMuNjIuMjI2LjE3OAkxODMuNjIuMjI2LjE3OF8xNDczMDQ1ODkxLjk5NzI5OQlodHRwOi8vYmxvZy5zaW5hLmNvbS5jbi9zL2Jsb2dfNzAyYzJkYjUwMTAydmMyaC5odG1sCVBEUFMwMDAwMDAwNTc0MTQJN2M1MDNkYjAtMTA4YS00NWRjLTgxNDItMjNkMDEyODYxOWVmCUZERTMyQTYwRkE3QQlGREUzMkE2MEZBN0EJYXV0b19sZXZlbDoxODAxMDB8dXNlcl9ncm91cDo5MDMsOTExLDkwMXx1c2VyX3RhZzoyMDk1MSwyMDk1NiwyMDk1M3xwb3M6UERQUzAwMDAwMDA1NzQxNHx3YXBfb3M6NzAwfHVzZXJfYWdlOjYwMiw2MDMsNjAxfHZfem9uZTozMDYwMDAsMzA2MDAyfHVzZXJfZ2VuZGVyOjUwMXxfdl96b25lOjMwNjAwMCwzMDYwMDJ8YXV0b19wcmljZToxODAyMDB8bW9iaWxlX2JyYW5kOjEyMDl8bW9iaWxlX2Jyb3dzZXI6ODA3fHZlcnNpb246Z2xfYl8xXzEsYWdfYnAyXzEsY2lfYnAxXzEscGM6MS4wCQkzMDYwMDB8MzA2MDAyCUZERTMyQTYwRkE3QQlOQjE1MTIwNTY5CVBEUFMwMDAwMDAwNTc0MTQJRkRFMzJBNjBGQTdBCUFFCS0JNQktCS0JLQktCS0JLQktCS0JMgkxNAktCTAJMAljaGFubmVsMjpibG9nX3N8b3M6bGludXh8YnJvd3NlcjpmaXJlZm94fHBsYXRmb3JtOm90aGVyfGRldmljZTpvdGhlcg%253D%253D%26userid%3D183.62.226.178_1473045891.997299%26viewlog%3Dfalse" frameborder="0" height="220px" width="210px"></iframe></ins></ins></div><div id="module_903" class="SG_conn ">
+    <div class="SG_connHead">
+    <span comp_title="相关博文" class="title">相关博文</span>
+    <span class="edit"> </span>
+    </div>
+    <div class="SG_connBody">
+    <div class="atcTitList relaList">        <ul class="">
+
+                <li class="SG_j_linedot1" style=""><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_SLOT_41_84_N" href="http://blog.sina.com.cn/s/blog_76c5a72a0102x41b.html" target="_blank" title="以神秘八卦布局的古村落">以神秘八卦布局的古村落</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_SLOT_41_84_N" href="http://blog.sina.com.cn/s/blog_76c5a72a0102x41b.html" class="SG_linkb" target="_blank">TIM生命過客</a></p></li>
+        <li class="SG_j_linedot1" style=""><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_SLOT_42_84_N" href="http://blog.sina.com.cn/s/blog_69768a1b0102wobw.html" target="_blank" title="走进神秘的纳米比亚死亡谷">走进神秘的纳米比亚死亡谷</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_SLOT_42_84_N" href="http://blog.sina.com.cn/s/blog_69768a1b0102wobw.html" class="SG_linkb" target="_blank">Fisher</a></p></li>
+        
+                	<li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_631625de0102wjpu.html#cre=blogpagepc&amp;mod=f&amp;loc=1&amp;r=1&amp;doct=0&amp;rfunc=100&amp;tj=none" target="_blank" title="中国突然强硬变脸：连亮两剑震住日菲越">中国突然强硬变脸：连亮两剑震住日菲越</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1662395870" class="SG_linkb" target="_blank">风的渡口1986</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_4b7a2b720102wl04.html#cre=blogpagepc&amp;mod=f&amp;loc=2&amp;r=1&amp;doct=0&amp;rfunc=100&amp;tj=none" target="_blank" title="马蓉妈妈说马蓉是无辜的，但她微博已经自证马蓉出轨了">马蓉妈妈说马蓉是无辜的，但她微博已经自证马蓉出轨了</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1266297714" class="SG_linkb" target="_blank">福天思想</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_9b6db2450102ws50.html#cre=blogpagepc&amp;mod=f&amp;loc=3&amp;r=1&amp;doct=0&amp;rfunc=100&amp;tj=none" target="_blank" title="和老公结婚之后，每晚他都让我看他和小三的活春宫……">和老公结婚之后，每晚他都让我看他和小三的活春宫……</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/2607657541" class="SG_linkb" target="_blank">一起写情话</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_13de245be0102wg5i.html#cre=blogpagepc&amp;mod=f&amp;loc=4&amp;r=1&amp;doct=0&amp;rfunc=100&amp;tj=none" target="_blank" title="我为亲姐姐代孕，与姐夫同床之后">我为亲姐姐代孕，与姐夫同床之后</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/333325403" class="SG_linkb" target="_blank">用户333325403</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_e34415d90102wi6q.html#cre=blogpagepc&amp;mod=f&amp;loc=5&amp;r=1&amp;doct=0&amp;rfunc=100&amp;tj=none" target="_blank" title="出差回家，却看到了老公和保姆紧紧纠缠在一起。。。">出差回家，却看到了老公和保姆紧紧纠缠在一起。。。</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/3812890073" class="SG_linkb" target="_blank">崔依和丨00401</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_c3d8bb1d0102wu3z.html#cre=blogpagepc&amp;mod=f&amp;loc=6&amp;r=1&amp;doct=0&amp;rfunc=100&amp;tj=none" target="_blank" title="蔡英文竟想反将大陆一军：结果出人意料">蔡英文竟想反将大陆一军：结果出人意料</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/3285760797" class="SG_linkb" target="_blank">好润来1988</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_13de245be0102wg6a.html#cre=blogpagepc&amp;mod=f&amp;loc=7&amp;r=1&amp;doct=0&amp;rfunc=100&amp;tj=none" target="_blank" title="一个月还不到两次，老公快要把我逼疯了">一个月还不到两次，老公快要把我逼疯了</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/333325403" class="SG_linkb" target="_blank">用户333325403</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_13de245be0102wg66.html#cre=blogpagepc&amp;mod=f&amp;loc=8&amp;r=1&amp;doct=0&amp;rfunc=100&amp;tj=none" target="_blank" title="半夜在小姨子身上乱摸被揭发下场尬尴">半夜在小姨子身上乱摸被揭发下场尬尴</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/333325403" class="SG_linkb" target="_blank">用户333325403</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_13de245be0102wg5k.html#cre=blogpagepc&amp;mod=f&amp;loc=9&amp;r=1&amp;doct=0&amp;rfunc=100&amp;tj=none" target="_blank" title="第一次相亲的女人，见面就约我开房发生关系">第一次相亲的女人，见面就约我开房发生关系</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/333325403" class="SG_linkb" target="_blank">用户333325403</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_13de245be0102wg5p.html#cre=blogpagepc&amp;mod=f&amp;loc=10&amp;r=1&amp;doct=0&amp;rfunc=100&amp;tj=none" target="_blank" title="35岁的离异女人居然这样解决生理需求">35岁的离异女人居然这样解决生理需求</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/333325403" class="SG_linkb" target="_blank">用户333325403</a></p></li></ul>
+    <div class="atcTit_more"><span class="SG_more"><a href="http://blog.sina.com.cn/" target="_blank">更多&gt;&gt;</a></span></div></div>    </div>
+    <div class="SG_connFoot"></div>
+  </div><ins data-ad-status="done" class="sinaads sinaads-done" data-ad-pdps="PDPS000000055124" style="display: block; overflow: hidden; text-decoration: none; margin-bottom: 10px;"><ins style="text-decoration:none;margin:0px auto;width:210px;display:block;position:relative;overflow:hidden;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="index_files/unnamed.html" id="sinaadtk_sandbox_id_2" style="float:left;" name="sinaadtk_sandbox_id_2" frameborder="0" height="220px" width="210px"></iframe></ins></ins><div class="SG_conn"><!--博客左侧推荐商讯210*220按钮(扶翼) Start--><ins data-ad-status="done" class="sinaads sinaads-fail" data-ad-pdps="PDPS000000057669"></ins><script><!--
+/* Script removed by snapshot save */
+--></script><!--博客左侧推荐商讯210*220按钮(扶翼) End—></div>--></div>
+<div id="module_904_top_ad"></div>
+<ins data-ad-status="done" class="sinaads sinaads-done" data-ad-pdps="PDPS000000033239" style="display: block; overflow: hidden; text-decoration: none; margin-bottom: 10px;"><ins style="text-decoration:none;margin:0px auto;width:210px;display:block;position:relative;overflow:hidden;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="index_files/unnamed-2.html" id="sinaadtk_sandbox_id_0" style="float:left;" name="sinaadtk_sandbox_id_0" frameborder="0" height="220px" width="210px"></iframe></ins></ins><div class="SG_conn " id="module_904">
+<div class="SG_connHead">
+<span class="title">推荐博文</span>
+</div>
+<div class="SG_connBody ">
+	<div class="atcTitList relaList">		<ul class="">
+			<li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="徐婷之死与中医" target="_blank" href="http://blog.sina.com.cn/s/blog_48f8a5230102x0j5.html?tj=2?tj=2">徐婷之死与中医</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1224254755" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="老外问中国的五个傻问题" target="_blank" href="http://blog.sina.com.cn/s/blog_538268a00102whr2.html?tj=2?tj=2">老外问中国的五个傻问题</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1401055392" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="中传女生被害案嫌犯：写谋杀剧本" target="_blank" href="http://blog.sina.com.cn/s/blog_61ff32de0102x47h.html?tj=2?tj=2">中传女生被害案嫌犯：写谋杀剧本</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1644114654" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="世界首个“换脸”人因术后排异反" target="_blank" href="http://blog.sina.com.cn/s/blog_726309370102yesd.html?tj=2?tj=2">世界首个“换脸”人因术后排异反</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1919093047" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="知情人士独家披露：美国记者被锁" target="_blank" href="http://blog.sina.com.cn/s/blog_75b1a75f0102wdhs.html?tj=2?tj=2">知情人士独家披露：美国记者被锁</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1974576991" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="想知道iPhone7会闹什么妖" target="_blank" href="http://blog.sina.com.cn/s/blog_14dd813960102xb7t.html?tj=2?tj=2">想知道iPhone7会闹什么妖</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/5600973718" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="京沪高铁立硬币8分钟不倒，日本" target="_blank" href="http://blog.sina.com.cn/s/blog_88f89f490102wxwb.html?tj=2?tj=2">京沪高铁立硬币8分钟不倒，日本</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/2297995081" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="得了癌症是看中医还是西医？" target="_blank" href="http://blog.sina.com.cn/s/blog_5854ac960102wgm9.html?tj=2?tj=2">得了癌症是看中医还是西医？</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1481944214" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="三点原因造成国内天价奥数班横行" target="_blank" href="http://blog.sina.com.cn/s/blog_60a4358b0102wml7.html?tj=2?tj=2">三点原因造成国内天价奥数班横行</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1621374347" class="SG_linkb"></a></p>
+		</li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" title="为“公主抱”老太上火车的特警点" target="_blank" href="http://blog.sina.com.cn/s/blog_4969c6830102wn6j.html?tj=2?tj=2">为“公主抱”老太上火车的特警点</a></p>
+        <p class="atcTitCell_nm"><a suda-uatrack="key=blog_tjblog&amp;value=h_tjblog" target="_blank" href="http://blog.sina.com.cn/u/1231668867" class="SG_linkb"></a></p>
+		</li>		</ul>
+		<div id="atcPicList"><!--[346,152,102] published at 2016-09-12 14:18:48 from #106 by system-->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <script language="javascript"><!--
+/* Script removed by snapshot save */
+--></script>
+
+<div class="relaPic SG_j_linedot1"> 
+	<ul>
+			<li>
+		<p><a href="http://blog.sina.com.cn/s/blog_4b7941c30102wks6.html?tj=1" target="_blank"><img src="index_files/4lM3-fxvukhz1594333.jpg" alt="壶口听涛" border="0" height="58" width="80"></a></p>
+		<p><a href="http://blog.sina.com.cn/s/blog_4b7941c30102wks6.html?tj=1" target="_blank">壶口听涛</a></p>
+	</li>
+	<li>
+		<p><a href="http://blog.sina.com.cn/s/blog_543ad8870102wpoc.html?tj=1" target="_blank"><img src="index_files/eVzK-fxvukhz1589520.jpg" alt="百老汇性感舞娘惊艳四座" border="0" height="58" width="80"></a></p>
+		<p><a href="http://blog.sina.com.cn/s/blog_543ad8870102wpoc.html?tj=1" target="_blank">百老汇性感舞娘惊艳四座</a></p>
+	</li>
+	<li>
+		<p><a href="http://blog.sina.com.cn/s/blog_9a9dee490102wwm9.html?tj=1" target="_blank"><img src="index_files/B9gQ-fxvukhx4894772.jpg" alt="说走就走的轻旅行" border="0" height="58" width="80"></a></p>
+		<p><a href="http://blog.sina.com.cn/s/blog_9a9dee490102wwm9.html?tj=1" target="_blank">说走就走的轻旅行</a></p>
+	</li>
+	<li>
+		<p><a href="http://blog.sina.com.cn/s/blog_537719ca0102ww4x.html?tj=1" target="_blank"><img src="index_files/Vb3F-fxvukhx4893584.jpg" alt="把黄河拍成了咖啡" border="0" height="58" width="80"></a></p>
+		<p><a href="http://blog.sina.com.cn/s/blog_537719ca0102ww4x.html?tj=1" target="_blank">把黄河拍成了咖啡</a></p>
+	</li>
+	<li>
+		<p><a href="http://blog.sina.com.cn/s/blog_3dd54ae30102wubt.html?tj=1" target="_blank"><img src="index_files/HCbH-fxvukhz1586612.jpg" alt="每斤2600元的大黄鱼" border="0" height="58" width="80"></a></p>
+		<p><a href="http://blog.sina.com.cn/s/blog_3dd54ae30102wubt.html?tj=1" target="_blank">每斤2600元的大黄鱼</a></p>
+	</li>
+	<li>
+		<p><a href="http://blog.sina.com.cn/s/blog_6804ba2b0102wo7m.html?tj=1" target="_blank"><img src="index_files/Ed2b-fxvuvfp3449545.jpg" alt="探访密林深处的游猎民族" border="0" height="58" width="80"></a></p>
+		<p><a href="http://blog.sina.com.cn/s/blog_6804ba2b0102wo7m.html?tj=1" target="_blank">探访密林深处的游猎民族</a></p>
+	</li>
+
+	</ul>
+	<div class="clearfix"></div>
+</div>
+</div>
+	<div class="atcTit_more"><span class="SG_more"><a target="_blank" href="http://blog.sina.com.cn/">查看更多</a>&gt;&gt;</span></div></div></div>
+<div class="SG_connFoot"></div>
+</div>
+        <div class="SG_conn" id="module_47"><div class="SG_connHead">
+                <span class="title" comp_title="谁看过这篇博文">谁看过这篇博文</span>
+                                <span class="edit"></span>
+            </div>
+            <div class="SG_connBody"><ul class="ad_ptlist"><li onmouseover="" onmouseout=""><span class="pt_imgs"><img class="SG_icon SG_icon35" src="index_files/sg_trans.gif" title="猪猪熊熊" align="absmiddle" height="15" width="15"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/1704114530" target="_blank" title="猪猪熊熊">猪猪熊熊</a></span><span class="pt_tms">今天13:25</span></li><li onmouseover="" onmouseout=""><span class="pt_imgs"><img class="SG_icon SG_icon35" src="index_files/sg_trans.gif" title="游资大哥" align="absmiddle" height="15" width="15"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/3713531264" target="_blank" title="游资大哥">游资大哥</a></span><span class="pt_tms">9月10日</span></li><li onmouseover="" onmouseout=""><span class="pt_imgs"><img class="SG_icon SG_icon35" src="index_files/sg_trans.gif" title="MikeWong" align="absmiddle" height="15" width="15"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/1751800351" target="_blank" title="MikeWong">MikeWong</a></span><span class="pt_tms">9月9日</span></li><li onmouseover="" onmouseout=""><span class="pt_imgs"><img class="SG_icon SG_icon35" src="index_files/sg_trans.gif" title="用户2928961107" align="absmiddle" height="15" width="15"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/2928961107" target="_blank" title="用户2928961107">用户29289…</a></span><span class="pt_tms">9月8日</span></li><li onmouseover="" onmouseout=""><span class="pt_imgs"><img class="SG_icon SG_icon35" src="index_files/sg_trans.gif" title="ALFA" align="absmiddle" height="15" width="15"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/1613762695" target="_blank" title="ALFA">ALFA</a></span><span class="pt_tms">9月8日</span></li><li onmouseover="" onmouseout=""><span class="pt_imgs"><img class="SG_icon SG_icon35" src="index_files/sg_trans.gif" title="i梳子" align="absmiddle" height="15" width="15"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/2288948810" target="_blank" title="i梳子">i梳子</a></span><span class="pt_tms">9月7日</span></li><li onmouseover="" onmouseout=""><span class="pt_imgs"><img class="SG_icon SG_icon35" src="index_files/sg_trans.gif" title="liuyanhui2195" align="absmiddle" height="15" width="15"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/1949703483" target="_blank" title="liuyanhui2195">liuyanhui…</a></span><span class="pt_tms">9月6日</span></li><li onmouseover="" onmouseout=""><span class="pt_imgs"><img class="SG_icon SG_icon35" src="index_files/sg_trans.gif" title="0xr0ot" align="absmiddle" height="15" width="15"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/2649213881" target="_blank" title="0xr0ot">0xr0ot</a></span><span class="pt_tms">9月2日</span></li><li onmouseover="" onmouseout=""><span class="pt_imgs"><img class="SG_icon SG_icon35" src="index_files/sg_trans.gif" title="d_arrow" align="absmiddle" height="15" width="15"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/1426815692" target="_blank" title="d_arrow">d_arrow</a></span><span class="pt_tms">9月1日</span></li><li onmouseover="" onmouseout=""><span class="pt_imgs"><img class="SG_icon SG_icon35" src="index_files/sg_trans.gif" title="爱超chao" align="absmiddle" height="15" width="15"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/2674199623" target="_blank" title="爱超chao">爱超chao</a></span><span class="pt_tms">8月31日</span></li><li onmouseover="" onmouseout=""><span class="pt_imgs"><img class="SG_icon SG_icon35" src="index_files/sg_trans.gif" title="QuietHeart" align="absmiddle" height="15" width="15"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/1366032530" target="_blank" title="QuietHeart">QuietHeart</a></span><span class="pt_tms">8月30日</span></li><li onmouseover="" onmouseout=""><span class="pt_imgs"><img class="SG_icon SG_icon35" src="index_files/sg_trans.gif" title="jiangjun.jking" align="absmiddle" height="15" width="15"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/2087862361" target="_blank" title="jiangjun.jking">jiangjun.…</a></span><span class="pt_tms">8月29日</span></li></ul><div class="moreLink" style="padding-top:0;"></div></div>
+            <div class="SG_connFoot"></div>
+                  </div></div>
+	<!--第一列end-->
+	
+	<!--第二列start-->
+	<div id="column_2" class="SG_colW73">	
+<div id="module_920" class="SG_conn">
+	<div class="SG_connHead">
+	    <span comp_title="正文" class="title">正文</span>
+	    <span class="edit"><span id="articleFontManage" class="fontSize">字体大小：<a href="javascript:void(0);" onclick="">大</a> <strong>中</strong> <a href="javascript:void(0);" onclick="">小</a></span></span>
+	</div>
+    <div id="module_920_SG_connBody" class="SG_connBody">
+<!--博文正文 begin -->
+	<div id="articlebody" class="artical" favmd5="{&quot;702c2db50102vc2h&quot;:&quot;eb74e845edc0c65336fc5b0e8153103c&quot;}">
+		<div class="articalTitle"> 
+			
+								<h2 id="t_702c2db50102vc2h" class="titName SG_txta">Android Native/Tombstone Crash Log 详细分析[原创]</h2>
+			
+					<span class="img2">
+				<img title="此博文包含图片" src="index_files/sg_trans.gif" class="SG_icon SG_icon18" align="absmiddle" height="15" width="15">	
+			</span>
+					<span class="time SG_txtc">(2014-11-28 17:44:37)</span><div class="turnBoxzz"><a href="javascript:void(0);" class="SG_aBtn SG_aBtn_ico SG_turn" action-type="reblog" action-data="{srcBlog:1, blogId:'702c2db50102vc2h'}"><cite><img class="SG_icon SG_icon111" src="index_files/sg_trans.gif" align="absmiddle" height="15" width="15">转载<em class="arrow">▼</em></cite></a></div>		</div>
+		<div class="articalTag" id="sina_keyword_ad_area">
+			<table>
+				<tbody><tr>
+					<td class="blog_tag">
+					<script><!--
+/* Script removed by snapshot save */
+--></script>
+											<span class="SG_txtb">标签：</span>
+																				<h3><a href="http://search.sina.com.cn/?c=blog&amp;q=android&amp;by=tag" target="_blank">android</a></h3>
+																				<h3><a href="http://search.sina.com.cn/?c=blog&amp;q=crash&amp;by=tag" target="_blank">crash</a></h3>
+																				<h3><a href="http://search.sina.com.cn/?c=blog&amp;q=native&amp;by=tag" target="_blank">native</a></h3>
+																				<h3><a href="http://search.sina.com.cn/?c=blog&amp;q=log&amp;by=tag" target="_blank">log</a></h3>
+																				<h3><a href="http://search.sina.com.cn/?c=blog&amp;q=tombstone&amp;by=tag" target="_blank">tombstone</a></h3>
+																</td>
+					<td class="blog_class">
+											<span class="SG_txtb">分类：</span>
+						<a target="_blank" href="http://blog.sina.com.cn/s/articlelist_1881943477_6_1.html">Android</a>
+										</td>
+				</tr>
+			</tbody></table>
+		</div>
+						<!-- 正文开始 -->
+		<div id="sina_keyword_ad_area2" class="articalContent   newfont_family">
+			<div>Android 虽然已经有好几年了，但是NDK的开放速度却非常缓慢，所以目前网络上针对对Android Native
+Crash的分析说明还比较少，尤其是非常详细的分析方式更难以查询。因此大部分程序员在遇到难以进行addr2line的crash
+log时，会一筹莫展。事实上这份log中的其他部分同样提供了非常丰富的信息可供解读，所以在这里总结一下对在这方面的一些经验，在这里以Android
+samples中的hello-jni为参照做了一定的修改产生的crash来进行分析说明。在深入理解错误日志的分析之后，许多难以复制或者几乎不能重现的bug也能够得到有效的解决。以下所有内容为夜莺原创。</div>
+<div>内容主要分为一下几个部分:</div>
+<div style="text-align: left;">
+<ul>
+<li>1.Library Symbols （共享库的符号）</li>
+<li>2.Analyze Tools （可用到的分析工具）</li>
+<li>3.CrashLog – Header <wbr></li>
+<li>4.Crash<span style="line-height: 21px;">Log</span> <wbr>– Backtrace(For
+most crashes)</li>
+<li>5.Crash<span style="line-height: 21px;">Log</span> <wbr>– Registers</li>
+<li>6.Crash<span style="line-height: 21px;">Log</span> <wbr>– Memory</li>
+<li>7.Crash<span style="line-height: 21px;">Log</span> <wbr>– Stack</li>
+<li>8.Library Base Address （共享库在内存中基地址）</li>
+</ul>
+</div>
+<div><b>1.Library Symbols （共享库的符号）</b></div>
+<div>ndk提供了一些工具可以供程序员直接获取到出错的文件，函数以及行数。
+但是这部分工具都需要没有去符号的共享库（通常是放在out/target/product/xxx/<font color="#FF2E2E"><b>symbols</b></font>/system/lib）。而<span style="line-height: 21px;">out/target/product/xxx/system/lib中的共享库是去掉了符号的，所以直接从设备上抓下来的lib是不能够通过工具来找到对应的符号（而且没有去symbol的库比去掉的空间占用会大许多）。所以如果想要分析一份native
+crash，那么unstripped
+lib几乎不可缺少，但是即使是strip过的库也同样会包含少量的symbol。</span></div>
+<div><span style="line-height: 21px;"><br></span></div>
+<b><span style="line-height: 1.5;">2.</span><span style="line-height: 21px;">Analyze Tools</span></b><b style="line-height: 1.5;"> <wbr></b>
+<div>即常用的辅助工具</div>
+<div><br></div>
+<div style="font-family:" microsoft="" color:="" background-color:=""><span style="color: rgb(153, 150, 139); font-style: italic;">01 <wbr></span>addr2line
+ <wbr>(<span style="color: rgb(138, 198, 242);">$(</span>ANDROID_NDK)<span style="color: rgb(149, 228, 84); font-style: italic;">\t</span>oolchains<span style="color: rgb(149, 228, 84); font-style: italic;">\a</span>rm-linux-androideabi-4.7<span style="color: rgb(149, 228, 84); font-style: italic;">\p</span>rebuilt<span style="color: rgb(149, 228, 84); font-style: italic;">\w</span>indows<span style="color: rgb(149, 228, 84); font-style: italic;">\b</span>in)<br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">02 <wbr></span><span style="color: rgb(153, 150, 139); font-style: italic;">#通过backtrace一栏提供的地址查询对应的符号，可以定位到文件，函数，行数.</span><br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">03 <wbr></span>Usage:
+addr2line –aCfe libs <span style="color: rgb(138, 198, 242);">$(</span>trace_address)<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">04 <wbr></span><br>
+
+<span style="color: rgb(248, 16, 176);">05 <wbr></span>ndk-stack
+(android-ndk-r8d<span style="color: rgb(149, 228, 84); font-style: italic;">\n</span>dk-stack)<br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">06 <wbr></span><span style="color: rgb(153, 150, 139); font-style: italic;">#相当于执行多次addr2line,
+可以直接针对一份crash log使用，会输出所有backtrace里地址对应的symbol</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">07 <wbr></span>Usage:
+ndk-stack –sym <span style="color: rgb(138, 198, 242);">$(</span>lib_directory) –dump
+<span style="color: rgb(138, 198, 242);">$(</span>crash_log_file)<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">08 <wbr></span><br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">09 <wbr></span>objdump
+(android-ndk-r8d<span style="color: rgb(149, 228, 84); font-style: italic;">\t</span>oolchains<span style="color: rgb(149, 228, 84); font-style: italic;">\a</span>rm-linux-androideabi-4.7<span style="color: rgb(149, 228, 84); font-style: italic;">\p</span>rebuilt<span style="color: rgb(149, 228, 84); font-style: italic;">\w</span>indows<span style="color: rgb(149, 228, 84); font-style: italic;">\b</span>in)<br>
+
+<span style="color: rgb(248, 16, 176);">10 <wbr></span><span style="color: rgb(153, 150, 139); font-style: italic;">#Dump the object
+file. 通过汇编代码定位错误的原因，大部分复杂的问题可以通过这种方式得到解决。</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">11 <wbr></span>Usage:
+objdump -S <span style="color: rgb(138, 198, 242);">$(</span>objfile) &gt; <span style="color: rgb(138, 198, 242);">$(</span>output_file)<br></div>
+<div><br></div>
+<div><b>3.Crash Log - Header</b></div>
+<div>信息头，包含当前系统版本有关的信息，如果是做平台级的开发，这将有助于定位当前的系统的开发版本。</div>
+<div><br></div>
+<div style="font-family:" microsoft="" color:="" background-color:=""><span style="color: rgb(153, 150, 139); font-style: italic;">1 <wbr></span>Time:
+2014-11-28 17:40:52<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">2 <wbr></span>Build
+description: xxxx<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">3 <wbr></span>Build:
+xxxx<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">4 <wbr></span>Hardware:
+xxxx<br>
+<span style="color: rgb(248, 16, 176);">5 <wbr></span>Revision:
+0<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">6 <wbr></span>Bootloader:
+unknown<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">7 <wbr></span>Radio:
+unknown<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">8 <wbr></span>Kernel:
+Linux version 3.4.5 xxxx<br></div>
+<div>这部分较为容易阅读。所以不再赘述。</div>
+<div><br></div>
+<div><b>4.Crash<span style="line-height: 21px;">Log</span> <wbr>– Backtrace(For
+most crashes)</b></div>
+<div>
+即最常用的看backtrace部分，backtrace的地址可用addr2line或者ndk-stack查找对应的symbol,非常直观，大多数的crash都能够通过这种方式解决。</div>
+<div style="font-family:" microsoft="" color:="" background-color:=""><span style="color: rgb(153, 150, 139); font-style: italic;">01 <wbr></span>backtrace:<br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">02 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#00
+ <wbr>pc 00026fbc
+ <wbr>/system/lib/libc.so</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">03 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#01
+ <wbr>pc 000004cf
+ <wbr>/data/app-lib/com.example.hellojni-1/libhello-jni.so
+(Java_com_example_hellojni_HelloJni_stringFromJNI+18)</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">04 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#02
+ <wbr>pc 0001e610
+ <wbr>/system/lib/libdvm.so
+(dvmPlatformInvoke+112)</span><br>
+<span style="color: rgb(248, 16, 176);">05 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#03
+ <wbr>pc 0004e015
+ <wbr>/system/lib/libdvm.so (dvmCallJNIMethod(unsigned
+int const*, JValue*, Method const*, Thread*)+500)</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">06 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#04
+ <wbr>pc 00050421
+ <wbr>/system/lib/libdvm.so
+(dvmResolveNativeMethod(unsigned int const*, JValue*, Method
+const*, Thread*)+200)</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">07 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#05
+ <wbr>pc 000279e0
+ <wbr>/system/lib/libdvm.so</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">08 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#06
+ <wbr>pc 0002b934
+ <wbr>/system/lib/libdvm.so (dvmInterpret(Thread*,
+Method const*, JValue*)+180)</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">09 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#07
+ <wbr>pc 0006175f
+ <wbr>/system/lib/libdvm.so (dvmInvokeMethod(Object*,
+Method const*, ArrayObject*, ArrayObject*, ClassObject*,
+bool)+374)</span><br>
+<span style="color: rgb(248, 16, 176);">10 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#08
+ <wbr>pc 00069785
+ <wbr>/system/lib/libdvm.so</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">11 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#09
+ <wbr>pc 000279e0
+ <wbr>/system/lib/libdvm.so</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">12 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#10
+ <wbr>pc 0002b934
+ <wbr>/system/lib/libdvm.so (dvmInterpret(Thread*,
+Method const*, JValue*)+180)</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">13 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#11
+ <wbr>pc 00061439
+ <wbr>/system/lib/libdvm.so (dvmCallMethodV(Thread*,
+Method const*, Object*, bool, JValue*,
+std::__va_list)+272)</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">14 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#12
+ <wbr>pc 0004a2ed
+ <wbr>/system/lib/libdvm.so</span><br>
+<span style="color: rgb(248, 16, 176);">15 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#13
+ <wbr>pc 0004d501
+ <wbr>/system/lib/libandroid_runtime.so</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">16 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#14
+ <wbr>pc 0004e259
+ <wbr>/system/lib/libandroid_runtime.so
+(android::AndroidRuntime::start(char const*, char
+const*)+536)</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">17 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#15
+ <wbr>pc 00000db7
+ <wbr>/system/bin/app_process</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">18 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#16
+ <wbr>pc 00020ea0  <wbr>/system/lib/libc.so
+(__libc_init+64)</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">19 <wbr></span>
+ <wbr> <span style="color: rgb(153, 150, 139); font-style: italic;">#17
+ <wbr>pc 00000ae8
+ <wbr>/system/bin/app_process</span><br></div>
+<div><br></div>
+<div>
+从上面这份backtrace可以看到包含一个pc地址和后面的symbol。部分错误可以通过只看这里的symbol发现问题所在。而如果想要更准确的定位，则需要借助ndk工具。</div>
+<div><br></div>
+<div style="font-family:" microsoft="" color:="" background-color:=""><span style="color: rgb(153, 150, 139); font-style: italic;">1 <wbr></span><span style="color: rgb(202, 230, 130);">$addr2line</span>
+-aCfe out/target/production/xxx/symbols/system/lib/libhello-jni.so
+4cf<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">2 <wbr></span>0x4cf<br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">3 <wbr></span>java_com_example_hellojni_HelloJni_stringFromJNI<br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">4 <wbr></span>/ANDROID_PRODUCT/hello-jni/jni/hello-jni.c:48<br>
+</div>
+<div><br></div>
+<div>然后再来看看hello-jni.c</div>
+<div><br></div>
+<div style="font-family:" microsoft="" color:="" background-color:=""><span style="color: rgb(153, 150, 139); font-style: italic;">01 <wbr></span><br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">17 <wbr></span><span style="color: rgb(229, 120, 109);">#include</span><br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">18 <wbr></span><span style="color: rgb(229, 120, 109);">#include</span><br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">19 <wbr></span><br>
+
+<span style="color: rgb(248, 16, 176);">20 <wbr></span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">26 <wbr></span><span style="color: rgb(202, 230, 130);">void</span>
+<span style="color: rgb(246, 243, 232);">func_a</span>(<span style="color: rgb(202, 230, 130);">char</span> <span style="color: rgb(246, 243, 232);">*</span>p);<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">27 <wbr></span><span style="color: rgb(202, 230, 130);">void</span>
+<span style="color: rgb(246, 243, 232);">func_b</span>(<span style="color: rgb(202, 230, 130);">char</span> <span style="color: rgb(246, 243, 232);">*</span>p);<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">28 <wbr></span><span style="color: rgb(202, 230, 130);">void</span>
+<span style="color: rgb(202, 230, 130);">func_a</span>(<span style="color: rgb(202, 230, 130);">char</span> <span style="color: rgb(246, 243, 232);">*</span>p)<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">29 <wbr></span><span style="color: rgb(246, 243, 232);">{</span><br>
+
+<span style="color: rgb(248, 16, 176);">30 <wbr></span>
+ <wbr>  <wbr><span style="color: rgb(138, 198, 242);">const</span> <span style="color: rgb(202, 230, 130);">char</span><span style="color: rgb(246, 243, 232);">*</span> <span style="color: rgb(246, 243, 232);">A</span> <span style="color: rgb(246, 243, 232);">=</span> <span style="color: rgb(149, 228, 84); font-style: italic;">"AAAAAAAAA"</span>;
+<span style="color: rgb(153, 150, 139); font-style: italic;">// len
+= 9</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">31 <wbr></span>
+ <wbr>  <wbr><span style="color: rgb(202, 230, 130);">char</span><span style="color: rgb(246, 243, 232);">*</span> <span style="color: rgb(246, 243, 232);">a</span> <span style="color: rgb(246, 243, 232);">=</span> <span style="color: rgb(149, 228, 84); font-style: italic;">"dead"</span>;<br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">32 <wbr></span>
+ <wbr>  <wbr><span style="color: rgb(246, 243, 232);">memcpy</span>(p<span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">A</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">strlen</span>(<span style="color: rgb(246, 243, 232);">A</span>));<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">33 <wbr></span>
+ <wbr>  <wbr><span style="color: rgb(246, 243, 232);">memcpy</span>(p<span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">a</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">strlen</span>(<span style="color: rgb(246, 243, 232);">a</span>));<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">34 <wbr></span>
+ <wbr>  <wbr>p<span style="color: rgb(246, 243, 232);">[</span><span style="color: rgb(246, 243, 232);">strlen</span>(<span style="color: rgb(246, 243, 232);">a</span><span style="color: rgb(246, 243, 232);">)]</span> <span style="color: rgb(246, 243, 232);">=</span> <span style="color: rgb(229, 120, 109);">0</span>;<br>
+<span style="color: rgb(248, 16, 176);">35 <wbr></span>
+ <wbr>  <wbr><span style="color: rgb(246, 243, 232);">func_b</span>(p);<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">36 <wbr></span><span style="color: rgb(246, 243, 232);">}</span><br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">37 <wbr></span><span style="color: rgb(202, 230, 130);">void</span>
+<span style="color: rgb(202, 230, 130);">func_b</span>(<span style="color: rgb(202, 230, 130);">char</span> <span style="color: rgb(246, 243, 232);">*</span>p)<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">38 <wbr></span><span style="color: rgb(246, 243, 232);">{</span><br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">39 <wbr></span>
+ <wbr>  <wbr><span style="color: rgb(202, 230, 130);">char</span><span style="color: rgb(246, 243, 232);">*</span> b <span style="color: rgb(246, 243, 232);">=</span> <span style="color: rgb(229, 120, 109);">0xddeeaadd</span>;<br>
+<span style="color: rgb(248, 16, 176);">40 <wbr></span>
+ <wbr>  <wbr><span style="color: rgb(246, 243, 232);">memcpy</span>(b<span style="color: rgb(246, 243, 232);">,</span> p<span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">strlen</span>(p));<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">41 <wbr></span><span style="color: rgb(246, 243, 232);">}</span><br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">42 <wbr></span><br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">43 <wbr></span><span style="color: rgb(246, 243, 232);">jstring</span><br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">44 <wbr></span><span style="color: rgb(202, 230, 130);">Java_com_example_hellojni_HelloJni_stringFromJNI</span>(
+<span style="color: rgb(246, 243, 232);">JNIEnv</span><span style="color: rgb(246, 243, 232);">*</span> <span style="color: rgb(246, 243, 232);">env</span><span style="color: rgb(246, 243, 232);">,</span><br>
+<span style="color: rgb(248, 16, 176);">45 <wbr></span>
+ <wbr>  <wbr>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">jobject</span> <span style="color: rgb(246, 243, 232);">thiz</span> )<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">46 <wbr></span><span style="color: rgb(246, 243, 232);">{</span><br>
+
+<span style="color: rgb(153, 150, 139); font-style: italic;">47 <wbr></span>
+ <wbr>  <wbr><span style="color: rgb(202, 230, 130);">char</span> <span style="color: rgb(246, 243, 232);">buf</span><span style="color: rgb(246, 243, 232);">[</span><span style="color: rgb(229, 120, 109);">10</span><span style="color: rgb(246, 243, 232);">];</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">48 <wbr></span>
+ <wbr>  <wbr><span style="color: rgb(246, 243, 232);">func_a</span>(<span style="color: rgb(246, 243, 232);">buf</span>);<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">49 <wbr></span>
+ <wbr>  <wbr><span style="color: rgb(138, 198, 242);">return</span> (<span style="color: rgb(246, 243, 232);">*</span><span style="color: rgb(246, 243, 232);">env</span>)<span style="color: rgb(246, 243, 232);">-&gt;</span><span style="color: rgb(246, 243, 232);">NewStringUTF</span>(<span style="color: rgb(246, 243, 232);">env</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(149, 228, 84); font-style: italic;">"Hello from JNI
+!"</span>);<br>
+<span style="color: rgb(248, 16, 176);">50 <wbr></span><span style="color: rgb(246, 243, 232);">}</span><br></div>
+<div><br></div>
+<div>可以看到现在只能看到出错在func_a(). 这里面有个比较特别的地方是为什么backtrace
+中只有func_a而没有出现func_b.
+这是编译器的处理部分，不过多赘述。所以现在只能从backtrace中确认#1是在func_a,然后#0是在libc中的某个函数死掉。其实symbols/system/lib中也包含有libc.so，可以通过addr2line确认是那个函数。而这里调用到libc的只有memcpy，
+所以可以基本确定出错在memcpy，但是有三个memcpy，又怎么确定是哪一个呢？(当然，可以通过直接检查代码发现是在func_b里面)</div>
+<div><br></div>
+<div><b>5.Crash<span style="line-height: 21px;">Log</span> <wbr>–
+Registers</b></div>
+<div>寄存器信息，可以通过这部分信息基本确定系统为什么会错。</div>
+<div><br></div>
+<div style="font-family:" microsoft="" color:="" background-color:=""><span style="color: rgb(153, 150, 139); font-style: italic;">01 <wbr></span>pid:
+4000, tid: 4000, name: xample.hellojni  <wbr></div>
+<div style="font-family:" microsoft="" color:="" background-color:=""><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">02 <wbr></span><span style="color: rgb(149, 228, 84); font-style: italic;">signal
+11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr
+ddeeaadd</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">03 <wbr></span>
+<span style="color: rgb(149, 228, 84); font-style: italic;"> <wbr>
+ <wbr>r0 ddeeaadd  <wbr>r1 beab238c
+ <wbr>r2 00000004  <wbr>r3
+beab2390</span><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">04 <wbr></span>
+<span style="color: rgb(149, 228, 84); font-style: italic;"> <wbr>
+ <wbr>r4 4012b260  <wbr>r5 40e1b760
+ <wbr>r6 00000004  <wbr>r7
+4bdd2ca0</span><br>
+<span style="color: rgb(248, 16, 176);">05 <wbr></span>
+<span style="color: rgb(149, 228, 84); font-style: italic;"> <wbr>
+ <wbr>r8 beab23a8  <wbr>r9 4bdd2c98
+ <wbr>s</span>l 40e1d050  <wbr>fp
+beab23bc<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">06 <wbr></span>
+ <wbr>  <wbr>ip 80000000
+ <wbr>sp beab2380  <wbr>lr 518254d3
+ <wbr>pc 400dffbc  <wbr>cpsr 80000010<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">07 <wbr></span>
+ <wbr>  <wbr>d0
+ <wbr>4141414141414164  <wbr>d1
+ <wbr>6e6a6f6c6c656865<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">08 <wbr></span>
+ <wbr>  <wbr>d2
+ <wbr>3133393766666661  <wbr>d3
+ <wbr>726f6c6f632f3c64<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">09 <wbr></span>
+ <wbr>  <wbr>d4
+ <wbr>3e2d2d206f646f54  <wbr>d5
+ <wbr>6f633c202020200a<br>
+<span style="color: rgb(248, 16, 176);">10 <wbr></span>
+ <wbr>  <wbr>d6
+ <wbr>656d616e20726f6c  <wbr>d7
+ <wbr>3f8000003f800000<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">11 <wbr></span>
+ <wbr>  <wbr>d8
+ <wbr>0000000000000000  <wbr>d9
+ <wbr>0000000000000000<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">12 <wbr></span>
+ <wbr>  <wbr>d10 0000000000000000
+ <wbr>d11 0000000000000000<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">13 <wbr></span>
+ <wbr>  <wbr>d12 0000000000000000
+ <wbr>d13 0000000000000000<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">14 <wbr></span>
+ <wbr>  <wbr>d14 0000000000000000
+ <wbr>d15 0000000000000000<br>
+<span style="color: rgb(248, 16, 176);">15 <wbr></span>
+ <wbr>  <wbr>d16 000000000000019e
+ <wbr>d17 000000000000019e<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">16 <wbr></span>
+ <wbr>  <wbr>d18 0000000000000000
+ <wbr>d19 000000e600000000<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">17 <wbr></span>
+ <wbr>  <wbr>d20 e600000000000000
+ <wbr>d21 0000000000000000<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">18 <wbr></span>
+ <wbr>  <wbr>d22 0000000000000000
+ <wbr>d23 090a0b0c0d0e0f10<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">19 <wbr></span>
+ <wbr>  <wbr>d24 0000004d0000003d
+ <wbr>d25 000000e600000000<br>
+<span style="color: rgb(248, 16, 176);">20 <wbr></span>
+ <wbr>  <wbr>d26 000000e7000000b7
+ <wbr>d27 0000000000000000<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">21 <wbr></span>
+ <wbr>  <wbr>d28 0000004d0000003d
+ <wbr>d29 0000000000000000<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">22 <wbr></span>
+ <wbr>  <wbr>d30 0000000100000001
+ <wbr>d31 0000000100000001<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">23 <wbr></span>
+ <wbr>  <wbr>scr 60000090<br></div>
+<div><br></div>
+<div>这部分信息展示了出错时的运行状态，
+当前中断原因是收到SIGSEGV（通常crash也都是因为收到这个信号，也有少数是因为SIGFPE，即除0操作）。错误码是SEGV_MAPERR，常见的段错误。然后出错地址为ddeeaadd。即第39行的地址0xddeeadd。所以已经可以基本确定和指针b有关。</div>
+<div>而代码里面接下来便是memcpy的操作。所以很明显就是在这里的memcpy有问题。</div>
+<div>
+再看r0是ddeeaadd，r1是beab238c，r2是4，其实这三个寄存器刚好代表memcpy的操作参数。目的地址为ddeeaadd，源地址<font color="#FF0000"><b>加偏移</b></font>为beab238c，长度是4。这里有提到beab238c为源地址加偏移，原因的话会在后面解释。</div>
+<div>
+通常我们需要关注的寄存器主要就是r0到pc，下面的32个寄存器的话通常是数据存取时常用，有时也会有重要信息，但一般情况下不会太关注。如果是对这部分不太了解的话，也不用担心，多看一看就自然明白了，笔者在尝试却解读之前也完全没有接触过这方面的内容。</div>
+<div><br></div>
+<div><b>6.Crash<span style="line-height: 21px;">Log</span> <wbr>– Memory</b></div>
+<div>
+日志当中也提供了出错时寄存器地址里面的临近内存信息，信息量同样很丰富。之前有提到r1是与源地址有关，所以先看看r1(0xbeab238c)附近的内存情况</div>
+<div><br></div>
+<div style="font-family:" microsoft="" color:="" background-color:=""><span style="color: rgb(153, 150, 139); font-style: italic;">1 <wbr></span>memory
+near r1:<br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">2 <wbr></span>
+ <wbr>  <wbr>beab236c 4f659a18 51825532
+518254a5 df0027ad  <wbr><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">3 <wbr></span>
+ <wbr>  <wbr>beab237c 00000000 ddeeaadd
+518254d3 64616564  <wbr><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">4 <wbr></span>
+ <wbr>  <wbr>beab238c 41414100 41714641
+a8616987 40e1d040  <wbr><br>
+<span style="color: rgb(248, 16, 176);">5 <wbr></span>
+ <wbr>  <wbr>beab239c 4c11cb40 40e1d040
+40a2f614 4bdd2c94  <wbr><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">6 <wbr></span>
+ <wbr>  <wbr>beab23ac 00000000 41714608
+00000001 417093c4  <wbr><br>
+<span style="color: rgb(153, 150, 139); font-style: italic;">7 <wbr></span>
+ <wbr>  <wbr>beab23bc 40a5f019 4bdd2c94
+518215a3 518254bd<br></div>
+<div><br></div>
+<div>
+beab238c在第四行，但是注意在第三行末尾有一串类似ASCII的字符，64616564，这即是dead,而从这里开始，一段内存为64616564
+ <wbr>41414100 41714641即"64,65,61,64, 00,41,41,41,
+41"647141。其实不难发现这就是dead'\0'AAAA，其后位于栈上的值没有初始化，会比较随机。</div>
+<div>所以func_b中p的起始地址应该是从<span style="line-height: 21px;">64616564
+的位置开始的，至于为什么r1是</span><span style="line-height: 21px;">beab238c,解读一下汇编代码即可很容易发现。</span></div>
+<div>在Android中使用的binoc实现中，查找源文件为memcpy.s（可通过addr2line
+找到文件路径和行数）。看到出错点在memcpy.s +248。</div>
+<div>这部分源码如下：</div>
+<div><a href="http://photo.blog.sina.com.cn/showpic.html#blogid=702c2db50102vc2h&amp;url=http://album.sina.com.cn/pic/0023mrt3ty6O2jqA75A16" target="_blank"><img src="index_files/0023mrt3ty6O2jqA75A16&amp;690.jpg" real_src="http://s7.sinaimg.cn/mw690/0023mrt3ty6O2jqA75A16&amp;690" name="image_operate_23601417401938545" alt="Android &lt;wbr&gt;Native/Tombstone &lt;wbr&gt;Crash &lt;wbr&gt;Log &lt;wbr&gt;详细分析[原创]" title="Android &lt;wbr&gt;Native/Tombstone &lt;wbr&gt;Crash &lt;wbr&gt;Log &lt;wbr&gt;详细分析[原创]" height="42" width="561"></a><br>
+这两段的大致意思为从r1地址读取4个字节放到d0~d3，r1地址增加，然后将d0~d3中的数据存入到r0的地址去，同时r0也增加。</div>
+<div>
+现在可以回过去查看d0~d3寄存器的最后一个字节，分别是64,65,61,64。为“dead“。因此当前的r1是增加后后的地址。而此时企图对r0处无效的地址0xddeeaadd写入数据，所以出错。并显示错误地址为0xddeeaadd.</div>
+<div><br></div>
+<div><span style="line-height: 21px;">objdump，到这里，再提一提objdump的部分。</span></div>
+<div>可以对共享库<span style="line-height: 21px;">(.so)</span>使用或者对目标文件(.o)使用，如果共享库比较大，那还是对被编译文件的目标文件使用比较好。通常来说Android的编译会默认保存目标文件，存放在out/target/product/xxxx/obj目录下面，于是现在找到libhello-jni.o通过objdump来查看它的信息。</div>
+<div><br></div>
+<div style="font-family:" microsoft="" color:="" background-color:=""><span style="color: rgb(246, 243, 232);">jstring</span><br>
+<span style="color: rgb(246, 243, 232);">Java_com_example_hellojni_HelloJni_stringFromJNI</span>(
+<span style="color: rgb(246, 243, 232);">JNIEnv</span><span style="color: rgb(246, 243, 232);">*</span> <span style="color: rgb(246, 243, 232);">env</span><span style="color: rgb(246, 243, 232);">,</span><br>
+ <wbr>  <wbr>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">jobject</span> <span style="color: rgb(246, 243, 232);">thiz</span> )<br>
+<span style="color: rgb(246, 243, 232);">{</span><br>
+ <wbr> <span style="color: rgb(246, 243, 232);">a</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">447</span><span style="color: rgb(246, 243, 232);">c</span>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">add</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">r4</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">pc</span><br>
+ <wbr> <span style="color: rgb(246, 243, 232);">c</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">6824</span>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">ldr</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">r4</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">[</span><span style="color: rgb(246, 243, 232);">r4</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">#</span><span style="color: rgb(229, 120, 109);">0</span><span style="color: rgb(246, 243, 232);">]</span><br>
+ <wbr> <span style="color: rgb(246, 243, 232);">e</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">6821</span>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">ldr</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">r1</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">[</span><span style="color: rgb(246, 243, 232);">r4</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">#</span><span style="color: rgb(229, 120, 109);">0</span><span style="color: rgb(246, 243, 232);">]</span><br>
+ <wbr><span style="color: rgb(229, 120, 109);">10</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">9103</span>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">str</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">r1</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">[</span>sp<span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">#</span><span style="color: rgb(229, 120, 109);">12</span><span style="color: rgb(246, 243, 232);">]</span><br>
+ <wbr>  <wbr><span style="color: rgb(202, 230, 130);">char</span> <span style="color: rgb(246, 243, 232);">buf</span><span style="color: rgb(246, 243, 232);">[</span><span style="color: rgb(229, 120, 109);">10</span><span style="color: rgb(246, 243, 232);">];</span><br>
+ <wbr>  <wbr><span style="color: rgb(246, 243, 232);">func_a</span>(<span style="color: rgb(246, 243, 232);">buf</span>);<br>
+ <wbr><span style="color: rgb(229, 120, 109);">12</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">f7ff</span> <span style="color: rgb(246, 243, 232);">fffe</span>  <wbr>
+ <wbr> <span style="color: rgb(246, 243, 232);">bl</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">0</span>
+<span style="color: rgb(246, 243, 232);">&lt;&lt;/span&gt;<span style="color: rgb(246, 243, 232);">Java_com_example_hellojni_HelloJni_stringFromJNI</span><span style="color: rgb(246, 243, 232);">&gt;</span><br>
+
+ <wbr>  <wbr><span style="color: rgb(138, 198, 242);">return</span> <span style="color: rgb(246, 243, 232);">(*</span><span style="color: rgb(246, 243, 232);">env</span><span style="color: rgb(246, 243, 232);">)-&gt;</span><span style="color: rgb(246, 243, 232);">NewStringUTF</span>(<span style="color: rgb(246, 243, 232);">env</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(149, 228, 84); font-style: italic;">"Hello from JNI
+!"</span>);<br>
+ <wbr><span style="color: rgb(229, 120, 109);">16</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">6828</span>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">ldr</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">r0</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">[</span><span style="color: rgb(246, 243, 232);">r5</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">#</span><span style="color: rgb(229, 120, 109);">0</span><span style="color: rgb(246, 243, 232);">]</span><br>
+ <wbr><span style="color: rgb(229, 120, 109);">18</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">4907</span>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">ldr</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">r1</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">[</span><span style="color: rgb(246, 243, 232);">pc</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">#</span><span style="color: rgb(229, 120, 109);">28</span><span style="color: rgb(246, 243, 232);">]</span>  <wbr>
+ <wbr>; (<span style="color: rgb(229, 120, 109);">38</span> <span style="color: rgb(246, 243, 232);">&lt;&lt;/span&gt;<span style="color: rgb(246, 243, 232);">Java_com_example_hellojni_HelloJni_stringFromJNI</span><span style="color: rgb(246, 243, 232);">+</span><span style="color: rgb(229, 120, 109);">0x38</span><span style="color: rgb(246, 243, 232);">&gt;)</span><br>
+
+ <wbr><span style="color: rgb(229, 120, 109);">1</span><span style="color: rgb(246, 243, 232);">a</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">f8d0</span> <span style="color: rgb(229, 120, 109);">229</span><span style="color: rgb(246, 243, 232);">c</span>  <wbr>
+ <wbr> <span style="color: rgb(246, 243, 232);">ldr</span><span style="color: rgb(246, 243, 232);">.</span><span style="color: rgb(246, 243, 232);">w</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">r2</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">[</span><span style="color: rgb(246, 243, 232);">r0</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">#</span><span style="color: rgb(229, 120, 109);">668</span><span style="color: rgb(246, 243, 232);">]</span>  <wbr>
+ <wbr>; <span style="color: rgb(229, 120, 109);">0x29c</span><br>
+ <wbr><span style="color: rgb(229, 120, 109);">1</span><span style="color: rgb(246, 243, 232);">e</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">4628</span>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">mov</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">r0</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">r5</span><br>
+ <wbr><span style="color: rgb(229, 120, 109);">20</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">4479</span>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">add</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">r1</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">pc</span><br>
+ <wbr><span style="color: rgb(229, 120, 109);">22</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">4790</span>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">blx</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">r2</span><br>
+<span style="color: rgb(246, 243, 232);">}</span><br></span></span></div>
+<div><br></div>
+<div>
+不要太在意诸如'Java_com_example_hellojni_HelloJni_stringFromJNI','{','}'之类的符号，它只是提供给我们大致的位置信息，并不是完全等同于C语言中的代码段。</div>
+<div>之前有通过backtrace
+#1看到(Java_com_example_hellojni_HelloJni_stringFromJNI+18)这样的信息，将+18转换成16进制为0x12.那么对应dump
+出来的文件位置就是上面的12.指令为bl 0.这是一个常见的跳转指令。从源代码里面也可以看到开始调用func_a().</div>
+<div>再看看func_b的代码:</div>
+<div style="font-family:" microsoft="" color:="" background-color:=""><span style="color: rgb(202, 230, 130);">void</span>
+<span style="color: rgb(246, 243, 232);">func_b</span>(<span style="color: rgb(202, 230, 130);">char</span> <span style="color: rgb(246, 243, 232);">*</span>p)<br>
+<span style="color: rgb(246, 243, 232);">{</span><br>
+ <wbr> <span style="color: rgb(229, 120, 109);">0</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">b510</span>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">push</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">{</span><span style="color: rgb(246, 243, 232);">r4</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">lr</span><span style="color: rgb(246, 243, 232);">}</span><br>
+ <wbr> <span style="color: rgb(229, 120, 109);">2</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">4604</span>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">mov</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">r4</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">r0</span><br>
+ <wbr> <span style="color: rgb(229, 120, 109);">4</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">f7ff</span> <span style="color: rgb(246, 243, 232);">fffe</span>  <wbr>
+ <wbr> <span style="color: rgb(246, 243, 232);">bl</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">0</span>
+<span style="color: rgb(246, 243, 232);">&lt;&lt;/span&gt;<span style="color: rgb(246, 243, 232);">strlen</span><span style="color: rgb(246, 243, 232);">&gt;</span><br>
+ <wbr> <span style="color: rgb(229, 120, 109);">8</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">4621</span>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">mov</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">r1</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">r4</span><br>
+ <wbr> <span style="color: rgb(246, 243, 232);">a</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">4602</span>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">mov</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">r2</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">r0</span><br>
+ <wbr> <span style="color: rgb(246, 243, 232);">c</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">4802</span>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">ldr</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">r0</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">[</span><span style="color: rgb(246, 243, 232);">pc</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">#</span><span style="color: rgb(229, 120, 109);">8</span><span style="color: rgb(246, 243, 232);">]</span>  <wbr>
+ <wbr>; (<span style="color: rgb(229, 120, 109);">18</span> <span style="color: rgb(246, 243, 232);">&lt;&lt;/span&gt;<span style="color: rgb(246, 243, 232);">func_b</span><span style="color: rgb(246, 243, 232);">+</span><span style="color: rgb(229, 120, 109);">0x18</span><span style="color: rgb(246, 243, 232);">&gt;)</span><br>
+<span style="color: rgb(246, 243, 232);">}</span><br>
+ <wbr> <span style="color: rgb(246, 243, 232);">e</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">e8bd</span> <span style="color: rgb(229, 120, 109);">4010</span>  <wbr>
+ <wbr> <span style="color: rgb(246, 243, 232);">ldmia</span><span style="color: rgb(246, 243, 232);">.</span><span style="color: rgb(246, 243, 232);">w</span>  <wbr>
+ <wbr>sp<span style="color: rgb(246, 243, 232);">!,</span> <span style="color: rgb(246, 243, 232);">{</span><span style="color: rgb(246, 243, 232);">r4</span><span style="color: rgb(246, 243, 232);">,</span> <span style="color: rgb(246, 243, 232);">lr</span><span style="color: rgb(246, 243, 232);">}</span><br>
+ <wbr><span style="color: rgb(229, 120, 109);">12</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">f7ff</span> <span style="color: rgb(246, 243, 232);">bffe</span>  <wbr>
+ <wbr> b<span style="color: rgb(246, 243, 232);">.</span><span style="color: rgb(246, 243, 232);">w</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">0</span>
+<span style="color: rgb(246, 243, 232);">&lt;&lt;/span&gt;<span style="color: rgb(246, 243, 232);">memcpy</span><span style="color: rgb(246, 243, 232);">&gt;</span><br>
+ <wbr><span style="color: rgb(229, 120, 109);">16</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">bf00</span>  <wbr>
+ <wbr>  <wbr>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">nop</span><br>
+ <wbr><span style="color: rgb(229, 120, 109);">18</span><span style="color: rgb(246, 243, 232);">:</span>  <wbr>
+ <wbr><span style="color: rgb(246, 243, 232);">ddeeaadd</span>  <wbr>
+ <wbr> <span style="color: rgb(246, 243, 232);">.</span><span style="color: rgb(246, 243, 232);">word</span>  <wbr>
+ <wbr><span style="color: rgb(229, 120, 109);">0xddeeaadd</span><br></span></span></span></div>
+<div><br></div>
+<div>
+先将r0(p指针的值)放入r4，调用strlen,返回值默认放入r0（值为4）,再将r4取出放入r1,然后从pc+8的位置拿地址放入r0（可以看到func_b+0x18为0xddeeaadd）,再跳转到memcpy。所以r0为ddeeaadd,r1为p指针的值，r4为长度。由此进行了memcpy的调用，然后出错。</div>
+<div>通过objdump通常可以更进一步的确定错误产生的情况，对追踪代码逻辑有极大的帮助，所以在很多情况下<span style="line-height: 21px;">解决问题可以只通过阅读代码</span>，并不需要不停地加debug打印并尝试去复制它。</div>
+<div><br></div>
+<div><b>7.Crash<span style="line-height: 21px;">Log</span> <wbr>– Stack</b></div>
+<div>当backtrace信息量极少时（没有给全函数调用栈），这是重点。</div>
+<div>
+Stack一栏提供的是线程调用栈的信息。可以从右边的一些symbol大致猜测出错的位置。但由于stack上的内容可能残留未初始化或者未清空的信息，又或者存储有其他的数据，所以有时会造成一定的困惑。因此stack上的<span style="line-height: 21px;">symbol虽然</span>大部分是本次调用栈的<span style="line-height: 21px;">symbol</span>,但不一定全都是。</div>
+<div><br></div>
+<div style="font-family:" microsoft="" color:="" background-color:="">stack:<br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab2340  <wbr>4012ac68
+ <wbr><br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab2344  <wbr>50572968
+ <wbr><br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab2348  <wbr>4f659a50
+ <wbr><br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab234c  <wbr>0000002f
+ <wbr><br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab2350  <wbr>00000038
+ <wbr><br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab2354  <wbr>50572960
+ <wbr><br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab2358  <wbr>beab2390
+ <wbr><span style="color: rgb(246, 243, 232);">[</span>stack<span style="color: rgb(246, 243, 232);">]</span><br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab235c  <wbr>4012ac68
+ <wbr><br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab2360  <wbr>00000071
+ <wbr><br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab2364  <wbr>400cb528
+ <wbr>/system/lib/libc.so<br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab2368  <wbr>00000208
+ <wbr><br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab236c  <wbr>4f659a18
+ <wbr><br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab2370  <wbr>51825532
+ <wbr>/data/app-lib/com.example.hellojni-1/libhello-jni.so<br>
+
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab2374  <wbr>518254a5
+ <wbr>/data/app-lib/com.example.hellojni-1/libhello-jni.so
+(func_a+56)<br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab2378  <wbr>df0027ad
+ <wbr><br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab237c  <wbr>00000000
+ <wbr><br>
+ <wbr>  <wbr><span style="color: rgb(153, 150, 139); font-style: italic;">#00
+ <wbr>beab2380  <wbr>ddeeaadd
+ <wbr></span><br>
+ <wbr>  <wbr>  <wbr>
+ <wbr> beab2384  <wbr>518254d3
+ <wbr>/data/app-lib/com.example.hellojni-1/libhello-jni.so
+(Java_com_example_hellojni_HelloJni_stringFromJNI+22)<br>
+ <wbr>  <wbr><span style="color: rgb(153, 150, 139); font-style: italic;">#01
+ <wbr>beab2388
+ <wbr>64616564</span><br></div>
+<div><br></div>
+<div>栈是由下往上(frame#02-&gt;#01-&gt;#00)。
+现在可以大致看到从#01到#00，从Java_com_example_hellojni_HelloJni_stringFromJNI进入func_a。但是这里是不能够通过左边的地址直接addr2line得到目标symbol。它是属于在内存当中的相对地址。接下来就会提到如何去通过相对地址计算可用的addr2line地址。</div>
+<div><br></div>
+<div><b>8.Library Base Address （共享库在内存中基地址）</b></div>
+<div>通过地址计算得出可用的addr2line地址。</div>
+<div>
+addr2line需要一份未去symbol的共享库。当代码没有改变时，每次生成的.so的符号位置应该是相同的。所以如果想要得到有效的符号，必须要使用程序运行时对应的未去符号的.so。</div>
+<div>
+jni在运行时可以看到在java中有load_library的动作，这个动作大致可以看做将一个库文件加载到内存当中。因此这个库在内存当中就存在一个加载的基地址，但是根据内存的情况和相应的算法，基地址每次都可能会不一样。addr2line需要的地址是相对于共享库的一个绝对地址。因此现在只要能够得到共享库在内存中的基地址就能够有办法通过stack上的地址计算出可用的addr2line地址。</div>
+<div>
+在上面的stack和backtrace信息当中有(Java_com_example_hellojni_HelloJni_stringFromJNI+22)和(Java_com_example_hellojni_HelloJni_stringFromJNI+18)这两个symbol的相对地址和绝对地址。</div>
+<div>所以基地址的计算应该为对应的地址相减：0x518254d3 - 0x000004cf - 0x4 =
+0x51825000.</div>
+<div>为了验证基地址有效性，可以尝试计算0x518254a5(func_a+56)的符号：<span style="line-height: 21px;">0x518254a5
+- <wbr></span><span style="line-height: 21px;">0x51825000 = 0x4a5</span>。</div>
+<div>然后使用addr2line查询0x4a5得到hello-jni.c:34。</div>
+<div>除此之外还有另一种方法计算可用的地址，同样需要stack里提供的个别的symbol信息: 例<span style="line-height: 21px;">0x518254a5(func_a+56)，然后之前有提到objdump可以直接将.so作为输入，这时会出来整个lib的汇编信息。然后可以从中找到"0xxxxxxxx <wbr>&lt;func_a&gt;:"这样的信息，前面的0xxxxxx就代表函数的在lib中的地址，在这里是"0x46c <wbr>&lt;func_a&gt;:"
+，然后加上0x38(56)
+就等于0x4a4，这个和之前有一定的差别，原因是stack上保存的会是函数返回地址，但指向的指令是相同的</span><span style="line-height: 21px;">。</span></div>
+<div><font color="#FF0000"><span style="line-height: 21px;">提出基地址的问题是为了进一步说明stack中的地址和backtrace中地址的不同，以及共享库被加载到内存当中指令的存在形式，但是通过比较也可以发现，在所加载的库非常大的时候（例如100M+）前一种方式得到可以用的地址会相对于后一种方式简单许多</span><span style="line-height: 21px;">。</span></font></div>
+<div><span style="line-height: 21px;"><br></span></div>
+<div>
+大多数情况下应该是不需要使用计算基地址的方式。但是也有个别的日志信息给出的backtrace不完整，导致难以解析出具体的问题所在。这个时候就需要使用基地址计算的方式得出可用的addr2line地址。</div>
+<div><b><br></b></div>
+<div><b><br></b></div>
+<div>
+<b>到最后看来，一般只要有一份类似于错误日志的信息文件，通常可以解决绝大部分的问题。那么如果是运行时，可以通过gdb(如果打开corefile的选项更好)，或者kill
+-9(同样需要打开编译选项才行)。还有就是Android系统通常内自带有debuggerd命令可以使用。详情可以从上网查阅。</b></div>
+<div>
+<b>最后附上本次测试的源码：</b>http://vdisk.weibo.com/s/yVmhF5M5tTuIi</div>
+<div><b><br></b></div>
+<div><b><br></b></div>
+<div><b>2014.12.01</b></div>
+<div><b>codenightingale@gamil.com</b></div>							
+		</div>
+				
+        		<div class="articalList borderc">
+        			<div class="listBg">
+        				<div class="listTit">我的更多文章：</div>
+        				<div class="chooseOk">
+        					<ul><li><label><a href="#" target="_blank">Android Native/Tombstone Crash Log 详细分析[原创]</a><img class="SG_icon SG_icon18" src="index_files/sg_trans.gif" title="此博文包含图片" align="absmiddle" height="15" width="15"></label><span>(2014-11-28 17:44:37)</span></li><li><label><a href="http://blog.sina.com.cn/s/blog_702c2db50101g9y7.html" target="_blank">Linux/Android NDK wchar_t 陷阱</a></label><span>(2014-03-20 17:33:56)</span></li><li><label><a href="http://blog.sina.com.cn/s/blog_702c2db50101dk3n.html" target="_blank">android auto suspend/resume program</a><img class="SG_icon SG_icon18" src="index_files/sg_trans.gif" title="此博文包含图片" align="absmiddle" height="15" width="15"></label><span>(2013-10-14 18:49:29)</span></li><li><label><a href="http://blog.sina.com.cn/s/blog_702c2db50101cqld.html" target="_blank">随机分布重复性考量</a></label><span>(2013-09-05 18:55:50)</span></li><li><label><a href="http://blog.sina.com.cn/s/blog_702c2db50101c1qq.html" target="_blank">shell 语句并列执行并处理返回错误</a></label><span>(2013-08-02 12:40:39)</span></li>
+        					</ul>
+        				</div>
+        			</div>
+        		</div>		<!-- 正文结束 -->
+		<div id="share" class="shareUp">
+        	<div class="share SG_txtb">
+			分享： 
+			<div class="bshare-custom" style="display:inline;margin-left:5px;"><div class="bsPromo bsPromo2"></div><a title="分享到新浪微博" class="bshare-sinaminiblog" href="javascript:void(0);"></a><a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban" href="javascript:void(0);"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+			</div>
+			</div>
+            <div class="up">
+	        	<div title="喜欢后让更多人看到" id="dbox_702c2db50102vc2h" class="upBox upBox_click" style="cursor: pointer;">
+	            	<p mnum="3" ti_title="Android Native/Tombstone Crash Log 详细分析[原创]" id="dbox2_702c2db50102vc2h" class="count">3</p>
+	                <p class="link"><img src="index_files/sg_trans.gif" class="SG_icon SG_icon34" align="absmiddle" height="15" width="15">喜欢</p>
+	            </div>
+<!--
+                <div class="upBox upBox_add">
+                    <p class="count">0</p>
+                    <p class="link"><img width="20" height="16" align="absmiddle" title="推荐" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" class="SG_icon SG_icon214">赠金笔</p>
+                </div>
+-->
+                                <div class="upBox upBox_add">
+                    <p class="count" id="goldPan-num">0</p>
+                    <p class="link" id="goldPan-give"><img class="SG_icon SG_icon214" src="index_files/sg_trans.gif" title="赠金笔" align="absmiddle" height="16" width="20">赠金笔</p>
+                </div>
+                
+	        </div>
+            <div class="clearit"></div>
+		</div>
+		<div class="articalInfo">
+			<!-- 分享到微博 {$t_blog} -->
+			<div class="IL">
+				阅读<span id="r_702c2db50102vc2h" class="SG_txtb">(11047)</span><em class="SG_txtb">┊</em> 
+				<a href="#commonComment">评论</a> <span id="c_702c2db50102vc2h" class="SG_txtb">(4)</span><em class="SG_txtb">┊</em>				<a href="javascript:void(0);" onclick="">收藏</a><span id="f_702c2db50102vc2h" class="SG_txtb">(1)</span>
+				<em class="SG_txtb">┊</em><a href="#" id="quote_set_sign" onclick="">转载</a><a href="#" id="z_702c2db50102vc2h" onclick="" class="zznum">(2)</a>				<span id="fn_Android Native/Tombstone Crash Log 详细分析[原创]" class="SG_txtb"></span><em class="SG_txtb">┊</em>
+				<a onclick="" href="javascript:void(0);"><cite id="d1_digg_702c2db50102vc2h">喜欢</cite></a><a id="d1_digg_down_702c2db50102vc2h" href="javascript:void(0);"><b>▼</b></a>
+									<em class="SG_txtb">┊</em><a href="http://blog.sina.com.cn/main_v5/ria/print.html?blog_id=blog_702c2db50102vc2h" target="_blank">打印</a><em class="SG_txtb">┊</em><a id="q_702c2db50102vc2h" onclick="" href="#">举报</a>
+											</div>
+			<div class="IR">
+				<table>
+					<tbody><tr>
+											<th class="SG_txtb" scope="row">已投稿到：</th>
+						<td>
+							<div class="IR_list">
+								<span><img class="SG_icon SG_icon36" src="index_files/sg_trans.gif" title="排行榜" align="absmiddle" height="15" width="15"> <a href="http://blog.sina.com.cn/lm/114/117/day.html" class="SG_linkb" target="_blank">排行榜</a></span>							</div>
+						</td>
+										</tr>
+									</tbody></table>
+			</div>
+		</div>
+		<div class="clearit"></div>
+		<div class="blogzz_zzlist borderc" id="blog_quote" style="display:none"><h3><a href="#" onclick="" title="关闭" id="ql_close702c2db50102vc2h" class="blogzz_closepic SG_floatR"></a>转载列表：</h3>                <ul class="ul_zzlist" id="ql_content702c2db50102vc2h">                </ul>				<ul style="display:none"><li id="ql_tip702c2db50102vc2h"></li></ul>                <div class="SG_clearB"></div>                <div class="blogzz_btn">					<a id="btnArticleQuote702c2db50102vc2h" href="#" onclick="" class="SG_aBtn SG_aBtn_ico SG_turn"><cite><img class="SG_icon SG_icon111" id="quoteList_quote702c2db50102vc2h" src="index_files/sg_trans.gif" align="absmiddle" height="15" width="15">转载</cite></a>					<p style="display: none;" id="quoteDescription702c2db50102vc2h" class="SG_turntxt">转载是分享博文的一种常用方式...</p>				</div>				<div id="ql_page702c2db50102vc2h" class="blogzz_paged"></div>				<div class="clearit"></div></div>
+		<div class="articalfrontback SG_j_linedot1 clearfix" id="new_nextprev_702c2db50102vc2h">
+							<div><span class="SG_txtb">前一篇：</span><a href="http://blog.sina.com.cn/s/blog_702c2db50101g9y7.html">Linux/Android NDK wchar_t 陷阱</a></div>
+								</div>
+		<div class="clearit"></div>
+							
+		<div id="loginFollow"></div>
+				<div class="allComm">
+			<div class="allCommTit">
+				<div class="SG_floatL">
+				    <strong>评论</strong>
+				    <span id="commAd_1" style="display: inline-block;">
+				        <span style="margin-left:15px; width:220px; display:inline-block;"><a target="_blank" href="http://blog.sina.com.cn/lm/8/2009/0325/105340.html">重要提示：警惕虚假中奖信息</a></span>
+				    </span>
+				</div>
+				<div class="SG_floatR"><a class="CP_a_fuc" href="#post">[<cite>发评论</cite>]</a></div>
+			</div>
+			<ul id="article_comment_list" class="SG_cmp_revert"><li id="cmt_3106837" class=""><div class="SG_revert_Left"><a href="http://blog.sina.com.cn/u/1881943477" target="_blank"><img src="index_files/50.jpg"></a></div><div class="SG_revert_Cont"><p><span class="SG_revert_Tit"><a href="http://blog.sina.com.cn/u/1881943477">夜莺</a><span class="god_reply">神评</span></span></p><div class="SG_revert_Inner SG_txtb" id="body_cmt_3106837"><img src="index_files/E___0104GD00SIGT.gif" style="margin:1px;" title="不明觉厉" border="0"><a href="javascript:void(0);" class="btn_artzk" style="display:none" action-type="comment_more" action-data="%7B%22commentid%22%3A%223106837%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%221881943477%22%2C%22uname%22%3A%22%E5%A4%9C%E8%8E%BA%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F1881943477%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D"></a></div><p class="myReFrom"><em class="SG_txtc">2014-12-1  12:44</em><span class="SG_revert_Func"><a href="javascript:void(0);" class="SG_a_fuc" action-type="comment_report" action-data="%7B%22commentid%22%3A%223106837%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%221881943477%22%2C%22uname%22%3A%22%E5%A4%9C%E8%8E%BA%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F1881943477%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:"><cite>举报</cite></a><a href="javascript:void(0);" class="SG_a_fuc" action-type="comment_del" action-data="%7B%22commentid%22%3A%223106837%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%221881943477%22%2C%22uname%22%3A%22%E5%A4%9C%E8%8E%BA%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F1881943477%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:none">删除</a><a href="javascript:void(0);" class="SG_a_fuc" action-type="comment_share" action-data="%7B%22commentid%22%3A%223106837%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%221881943477%22%2C%22uname%22%3A%22%E5%A4%9C%E8%8E%BA%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F1881943477%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:"><cite>分享</cite></a><a href="javascript:void(0);" class="SG_a_fucs" action-type="comment_reply" action-data="%7B%22commentid%22%3A%223106837%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%221881943477%22%2C%22uname%22%3A%22%E5%A4%9C%E8%8E%BA%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F1881943477%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:"><cite>回复(0)</cite></a></span></p><div class="SG_reply" id="comment_3106837" style="display:none;"></div></div></li><li id="cmt_3146817" class="SG_j_linedot1"><div class="SG_revert_Left"><a href="http://blog.sina.com.cn/u/2992586435" target="_blank"><img src="index_files/50.gif"></a></div><div class="SG_revert_Cont"><p><span class="SG_revert_Tit"><a href="http://blog.sina.com.cn/u/2992586435">谁与争风</a></span></p><div class="SG_revert_Inner SG_txtb" id="body_cmt_3146817">好牛逼<a href="javascript:void(0);" class="btn_artzk" style="display:none" action-type="comment_more" action-data="%7B%22commentid%22%3A%223146817%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%222992586435%22%2C%22uname%22%3A%22%E8%B0%81%E4%B8%8E%E4%BA%89%E9%A3%8E%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F2992586435%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D"></a></div><p class="myReFrom"><em class="SG_txtc">2015-3-11  18:07</em><span class="SG_revert_Func"><a href="javascript:void(0);" class="SG_a_fuc" action-type="comment_report" action-data="%7B%22commentid%22%3A%223146817%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%222992586435%22%2C%22uname%22%3A%22%E8%B0%81%E4%B8%8E%E4%BA%89%E9%A3%8E%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F2992586435%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:"><cite>举报</cite></a><a href="javascript:void(0);" class="SG_a_fuc" action-type="comment_del" action-data="%7B%22commentid%22%3A%223146817%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%222992586435%22%2C%22uname%22%3A%22%E8%B0%81%E4%B8%8E%E4%BA%89%E9%A3%8E%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F2992586435%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:none">删除</a><a href="javascript:void(0);" class="SG_a_fuc" action-type="comment_share" action-data="%7B%22commentid%22%3A%223146817%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%222992586435%22%2C%22uname%22%3A%22%E8%B0%81%E4%B8%8E%E4%BA%89%E9%A3%8E%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F2992586435%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:"><cite>分享</cite></a><a href="javascript:void(0);" class="SG_a_fucs" action-type="comment_reply" action-data="%7B%22commentid%22%3A%223146817%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%222992586435%22%2C%22uname%22%3A%22%E8%B0%81%E4%B8%8E%E4%BA%89%E9%A3%8E%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F2992586435%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:"><cite>回复(0)</cite></a></span></p><div class="SG_reply" id="comment_3146817" style="display:none;"></div></div></li><li id="cmt_3149092" class="SG_j_linedot1"><div class="SG_revert_Left"><a href="http://blog.sina.com.cn/u/5461681405" target="_blank"><img src="index_files/50-1.gif"></a></div><div class="SG_revert_Cont"><p><span class="SG_revert_Tit"><a href="http://blog.sina.com.cn/u/5461681405">Wagner_Wang</a></span></p><div class="SG_revert_Inner SG_txtb" id="body_cmt_3149092">好牛！<a href="javascript:void(0);" class="btn_artzk" style="display:none" action-type="comment_more" action-data="%7B%22commentid%22%3A%223149092%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%225461681405%22%2C%22uname%22%3A%22Wagner_Wang%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F5461681405%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D"></a></div><p class="myReFrom"><em class="SG_txtc">2015-3-17  16:52</em><span class="SG_revert_Func"><a href="javascript:void(0);" class="SG_a_fuc" action-type="comment_report" action-data="%7B%22commentid%22%3A%223149092%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%225461681405%22%2C%22uname%22%3A%22Wagner_Wang%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F5461681405%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:"><cite>举报</cite></a><a href="javascript:void(0);" class="SG_a_fuc" action-type="comment_del" action-data="%7B%22commentid%22%3A%223149092%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%225461681405%22%2C%22uname%22%3A%22Wagner_Wang%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F5461681405%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:none">删除</a><a href="javascript:void(0);" class="SG_a_fuc" action-type="comment_share" action-data="%7B%22commentid%22%3A%223149092%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%225461681405%22%2C%22uname%22%3A%22Wagner_Wang%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F5461681405%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:"><cite>分享</cite></a><a href="javascript:void(0);" class="SG_a_fucs" action-type="comment_reply" action-data="%7B%22commentid%22%3A%223149092%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%225461681405%22%2C%22uname%22%3A%22Wagner_Wang%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F5461681405%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:"><cite>回复(0)</cite></a></span></p><div class="SG_reply" id="comment_3149092" style="display:none;"></div></div></li><li id="cmt_3293783" class="SG_j_linedot1"><div class="SG_revert_Left"><a href="http://blog.sina.com.cn/u/2357359855" target="_blank"><img src="index_files/50-2.gif"></a></div><div class="SG_revert_Cont"><p><span class="SG_revert_Tit"><a href="http://blog.sina.com.cn/u/2357359855">用户2357359855</a></span></p><div class="SG_revert_Inner SG_txtb" id="body_cmt_3293783">你好，我想问下，你的这些CrashLog数据是如何取出来的呢？<a href="javascript:void(0);" class="btn_artzk" style="display:none" action-type="comment_more" action-data="%7B%22commentid%22%3A%223293783%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%222357359855%22%2C%22uname%22%3A%22%E7%94%A8%E6%88%B72357359855%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F2357359855%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D"></a></div><p class="myReFrom"><em class="SG_txtc">3月8日 14:05</em><span class="SG_revert_Func"><a href="javascript:void(0);" class="SG_a_fuc" action-type="comment_report" action-data="%7B%22commentid%22%3A%223293783%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%222357359855%22%2C%22uname%22%3A%22%E7%94%A8%E6%88%B72357359855%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F2357359855%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:"><cite>举报</cite></a><a href="javascript:void(0);" class="SG_a_fuc" action-type="comment_del" action-data="%7B%22commentid%22%3A%223293783%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%222357359855%22%2C%22uname%22%3A%22%E7%94%A8%E6%88%B72357359855%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F2357359855%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:none">删除</a><a href="javascript:void(0);" class="SG_a_fuc" action-type="comment_share" action-data="%7B%22commentid%22%3A%223293783%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%222357359855%22%2C%22uname%22%3A%22%E7%94%A8%E6%88%B72357359855%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F2357359855%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:"><cite>分享</cite></a><a href="javascript:void(0);" class="SG_a_fucs" action-type="comment_reply" action-data="%7B%22commentid%22%3A%223293783%22%2C%22articleid%22%3A%22702c2db50102vc2h%22%2C%22fromProduct%22%3A%22blog%22%2C%22comm_uid%22%3A%222357359855%22%2C%22uname%22%3A%22%E7%94%A8%E6%88%B72357359855%22%2C%22ulink%22%3A%22http%3A%2F%2Fblog.sina.com.cn%2Fu%2F2357359855%22%2C%22src_uid%22%3A%221881943477%22%2C%22cms_reply_num%22%3A%220%22%7D" style="display:"><cite>回复(0)</cite></a></span></p><div class="SG_reply" id="comment_3293783" style="display:none;"></div></div></li></ul>
+			<div class="clearit"></div>
+			<div style="display: none;" class="myCommPages SG_j_linedot1">
+				<div class="SG_page" id="commentPaging" style="display:none;">
+					<ul class="SG_pages">
+					</ul>
+				</div>
+				<div class="clearit"></div>
+			</div>
+			<a name="post"></a>
+			<div class="writeComm">
+				<div class="allCommTit">
+					<div class="SG_floatL">
+					    <strong>发评论</strong>
+					    <span></span>
+					</div>
+					<div class="SG_floatR"></div>
+				</div>
+				<div class="wrCommTit">
+					<div class="SG_floatL" id="commentNick" style="display:none;"></div>
+				</div>
+				<div class="formTextarea">
+					<div style="float:left;" id="commonComment">
+					<iframe id="postCommentIframe" style="border:1px solid #C7C7C7;
+		height:158px;width:448px;maring-top:1px;background-color:white;" src="index_files/blank2.html" frameborder="0"></iframe>
+					<textarea id="commentArea" tabindex="1" style="display:none;"></textarea>
+					</div>
+					<div id="mobileComment" style="float:left;display:none;">
+						<textarea id="mbCommentTa" style="width:438px;height:150px;border:1px solid #C7C7C7;line-height:18px;padding:5px;"></textarea>
+					</div>
+					<div class="faceblk" id="faceWrap">
+						<div id="smilesSortShow" class="faceline1">
+						<div id="recomm_1473661834809" class="facestyle"><a key="302" href="#"><img src="index_files/302-25.gif" alt="小新小浪" title="小新小浪"></a><a key="308" href="#"><img src="index_files/308-25.gif" alt="炮炮兵" title="炮炮兵"></a><a key="315" href="#"><img src="index_files/315-25.gif" alt="张富贵" title="张富贵"></a><a key="316" href="#"><img src="index_files/316-25.gif" alt="旺狗" title="旺狗"></a><a key="331" href="#"><img src="index_files/331-25.gif" alt="悠嘻猴" title="悠嘻猴"></a><a key="351" href="#"><img src="index_files/351-25.gif" alt="酷巴熊" title="酷巴熊"></a></div><span class="SG_more"><a href="#">更多&gt;&gt;</a></span><div class="clearit"></div></div>
+						<ul id="smilesRecommended" class="faceline01"><li><a href="#"><img src="index_files/E___0321EN00SIGT.gif" alt="就不买你" title="就不买你" height="50" width="50"></a></li><li><a href="#"><img src="index_files/E___0320EN00SIGT.gif" alt="股市" title="股市" height="50" width="50"></a></li><li><a href="#"><img src="index_files/E___0319EN00SIGT.gif" alt="发霉" title="发霉" height="50" width="50"></a></li><li><a href="#"><img src="index_files/E___0318EN00SIGT.gif" alt="陈水边" title="陈水边" height="50" width="50"></a></li><li><a href="#"><img src="index_files/E___0317EN00SIGT.gif" alt="裁员" title="裁员" height="50" width="50"></a></li><li><a href="#"><img src="index_files/E___0316EN00SIGT.gif" alt="音乐" title="音乐" height="50" width="50"></a></li><li><a href="#"><img src="index_files/E___0315EN00SIGT.gif" alt="贴你" title="贴你" height="50" width="50"></a></li><li><a href="#"><img src="index_files/E___0314EN00SIGT.gif" alt="抢车位" title="抢车位" height="50" width="50"></a></li></ul>
+					</div>
+					<div class="clearit"></div>
+				</div>
+				<div class="formLogin">
+					<div class="SG_floatL"> 
+					<p id="commentlogin" style="display: block;"><span>登录名：</span><input style="width: 115px;" id="login_name" tabindex="2" type="text">   <span>密码：</span><input style="width: 115px;" id="login_pass" tabindex="3" type="password">   <a href="http://login.sina.com.cn/getpass.html" target="_blank">找回密码</a>   <a href="http://login.sina.com.cn/signup/signup.php?entry=blog&amp;src=blogicp&amp;srcuid=1881943477" target="_blank">注册</a>	<input checked="checked" id="login_remember" type="checkbox"><label for="login_remember" style="display:inline-block;" title="建议在网吧/公用电脑上取消该选项">记住登录状态</label></p><p id="commentloginM" style="display:none;"><span>昵   称：</span><input style="width: 115px;" id="comment_anonyous" value="新浪网友" tabindex="2" disabled="disabled" type="text"></p><p id="quote_comment_p"><input checked="checked" id="bb" type="checkbox"> <label for="bb"><img title="" src="index_files/sg_trans.gif" class="SG_icon SG_icon110" align="absmiddle" height="18" width="18">分享到微博 <img title="新" src="index_files/sg_trans.gif" class="SG_icon SG_icon11" align="absmiddle" height="15" width="15"></label>   <input id="cbCommentQuote" type="checkbox"><label for="cbCommentQuote">评论并转载此博文</label><img class="SG_icon SG_icon11" src="index_files/sg_trans.gif" title="新" align="absmiddle" height="15" width="15"></p>
+					<p id="geetest-box"><div class="gt_holder float" id="geetest_1473661842124"><div class="gt_input"><input name="geetest_challenge" class="geetest_challenge" type="hidden"><input name="geetest_validate" class="geetest_validate" type="hidden"><input name="geetest_seccode" class="geetest_seccode" type="hidden"></div><div class="gt_slider"><div class="gt_guide_tip gt_show">按住左边滑块，拖动完成上方拼图</div><div style="left: 0px;" class="gt_slider_knob gt_show"></div><div class="gt_curtain_tip gt_hide">点击上图按钮并沿道路拖动到终点处</div><div class="gt_curtain_knob gt_hide">移动到此开始验证</div><div class="gt_ajax_tip ready"></div></div></div></p>
+					</div>
+
+					<span style="display: none; color: rgb(153, 153, 153); margin-left: 10px;" id="login_remember_caution"></span>
+
+											<div style="display: none;" class="SG_floatR" id="anonymity_cont"><input id="anonymity" type="checkbox"><label for="anonymity">匿名评论</label></div>
+									</div>
+				<div class="formBtn">
+					<a href="javascript:void(0);" onclick="" class="SG_aBtn" tabindex="5"><cite id="postcommentid">发评论</cite></a>
+					<p class="SG_txtc">以上网友发言只代表其个人观点，不代表新浪网的观点或立场。</p>
+				</div>
+			</div>
+		</div>
+				<div class="clearit"></div>
+		
+				<div class="articalfrontback articalfrontback2 clearfix">
+						  <div class="SG_floatL"><span class="SG_txtb">&lt; 前一篇</span><a href="http://blog.sina.com.cn/s/blog_702c2db50101g9y7.html">Linux/Android NDK wchar_t 陷阱</a></div>
+								</div>
+		<div class="clearit"></div>
+				
+	</div>
+	<!--博文正文 end -->
+		<script type="text/javascript"><!--
+/* Script removed by snapshot save */
+--></script>
+
+            </div>       
+            <div class="SG_connFoot"></div>
+          </div>
+</div>
+	<!--第二列start-->
+	
+	<!--第三列start-->
+	<div id="column_3" class="SG_colWnone"><div style="width:0px;height:0.1px;margin:0px;">  </div></div>
+	<!--第三列end-->
+
+	
+    </div>
+   <!--主题内容结束 -->
+  
+
+	<div id="diggerFla" style="position:absolute;left:0px;top:0px;width:0px"><embed pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" src="index_files/digger.swf" style="undefined" id="digger" name="digger" bgcolor="#00ff00" quality="high" wmode="transparent" allowscriptaccess="always" height="1" width="1"></div>
+    <div class="sinablogfooter" id="sinablogfooter" style="position:relative;">
+      
+      <p class="SG_linka"><a href="http://help.sina.com.cn/index.php?s=askquestion&amp;a=view" target="_blank">新浪BLOG意见反馈留言板</a>　<a href="javascript:void(0);" onclick="">不良信息反馈</a>　电话：4006900000 提示音后按1键（按当地市话标准计费）　欢迎批评指正</p>
+   
+      <p class="SG_linka"><a href="http://corp.sina.com.cn/chn/" target="_blank">新浪简介</a> | <a href="http://corp.sina.com.cn/eng/" target="_blank">About Sina</a> | <a href="http://emarketing.sina.com.cn/" target="_blank">广告服务</a> | <a href="http://www.sina.com.cn/contactus.html" target="_blank">联系我们</a> | <a href="http://corp.sina.com.cn/chn/sina_job.html" target="_blank">招聘信息</a> | <a href="http://www.sina.com.cn/intro/lawfirm.shtml" target="_blank">网站律师</a> | <a href="http://english.sina.com/" target="_blank">SINA English</a> | <a href="http://members.sina.com.cn/apply/" target="_blank">会员注册</a> | <a href="http://help.sina.com.cn/" target="_blank">产品答疑</a> </p>
+      <p class="copyright SG_linka"> Copyright © 1996 - 2016 SINA Corporation,  All Rights Reserved</p>
+      <p class="SG_linka"> 新浪公司 <a href="http://www.sina.com.cn/intro/copyright.shtml" target="_blank">版权所有</a></p>
+	  <a href="http://www.bj.cyberpolice.cn/index.jsp" target="_blank" class="gab_link"></a>
+    </div>
+  </div>
+</div>
+<div id="swfbox"><embed pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" src="index_files/voteCookie.swf" style="undefined" id="swfId" name="swfId" bgcolor="#00ff00" quality="high" allowscriptaccess="always" flashvars="readyFun=readyFun&amp;realfull=1&amp;moz=1&quot;/" height="1" width="1"></div>
+<script id="PVCOUNTER_FORIE" type="text/javascript"></script>
+
+<script type="text/javascript"><!--
+/* Script removed by snapshot save */
+--></script>
+
+<script type="text/javascript" src="index_files/boot.js"></script>
+<script type="text/javascript"><!--
+/* Script removed by snapshot save */
+--></script>
+<script type="text/javascript"><!--
+/* Script removed by snapshot save */
+--></script>
+
+
+<script type="text/javascript" charset="utf-8" src="index_files/buttonLite.js#style=-1&amp;uuid=b436f96b-ce3c-469f-93ca-9c0c406fcf10&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="index_files/bshareC0.js"></script>
+<script type="text/javascript" charset="utf-8"><!--
+/* Script removed by snapshot save */
+--></script>
+
+<script type="text/javascript" src="index_files/blog680-min.js"></script>
+<script type="text/javascript"><!--
+/* Script removed by snapshot save */
+--></script>
+
+<div class="bsBox" id="bsBox"><div class="bsClose">X</div><div class="bsTop"><div class="bsReturn">选择其他平台 &gt;&gt;</div><span style="margin-left:15px;">分享到</span><span class="bsPlatName"></span></div><div class="bsFrameDiv"><iframe src="index_files/generated-content-2.html" class="bShareFrame" name="bsFrame386" scrolling="no" allowtransparency="true" frameborder="0"></iframe></div><div id="bsMorePanel" style="display: none;"></div></div><div id="sinaads_pdps54771"> <ins data-ad-status="done" class="sinaads sinaads-done" data-ad-pdps="PDPS000000054771"></ins>  </div><div id="reblog_1473661834091" class="turnList" style="display:none;position:absolute;z-index:20;"><ul class=""><li><a suda-uatrack="key=blog_article&amp;value=h_article17" action-type="click_reblog" action-data="{action:'toBlog'}" href="javascript:void(0);" title="转载到博客"><img src="index_files/sg_trans.gif" class="SG_icon SG_icon141" align="absmiddle" height="18" width="18">博客</a></li><li style="display:none;"><a suda-uatrack="key=blog_article&amp;value=h_article17" action-type="click_reblog" action-data="{action:'toBlog'}" href="javascript:void(0);" title="转载原文"><img src="index_files/sg_trans.gif" class="SG_icon SG_icon141" align="absmiddle" height="18" width="18">转载原文</a></li><li><a suda-uatrack="key=blog_article&amp;value=h_article17" action-type="click_reblog" action-data="{action:'cwb'}" href="javascript:void(0);" title="发布长微博"><img src="index_files/sg_trans.gif" class="SG_icon SG_icon143" align="absmiddle" height="18" width="18">长微博</a></li></ul></div><div class="godreply" id="_6891473661834102_panel" style="z-index: 999; position: fixed; left: 849px; top: 321px;">
+                              <div class="btn"><span node-data="btn-golgreply" style="display: none;">神回复</span></div>
+                              <div class="reply_con" node-data="reply-conlist" style="display:none;">
+                                <div class="txt">神回复，只要<span>1积分</span>就可以了哦</div>
+                                <ul class="reply_pic_s"><li title="贱人就是矫情" data-num="0"><img src="index_files/E___0101GD00SIGT.gif" title="贱人就是矫情" alt="贱人就是矫情"></li><li title="人艰不拆" data-num="1"><img src="index_files/E___0102GD00SIGT.gif" title="人艰不拆" alt="人艰不拆"></li><li title="朕知道了" data-num="2"><img src="index_files/E___0103GD00SIGT.gif" title="朕知道了" alt="朕知道了"></li><li title="不明觉厉" data-num="3"><img src="index_files/E___0104GD00SIGT.gif" title="不明觉厉" alt="不明觉厉"></li><li title="这真是极好的" data-num="4"><img src="index_files/E___0105GD00SIGT.gif" title="这真是极好的" alt="这真是极好的"></li><li title="也真是醉了" data-num="5"><img src="index_files/E___0106GD00SIGT.gif" title="也真是醉了" alt="也真是醉了"></li><li title="点个赞" data-num="6"><img src="index_files/E___0107GD00SIGT.gif" title="点个赞" alt="点个赞"></li><li title="你那么萌你家人造吗" data-num="7"><img src="index_files/E___0108GD00SIGT.gif" title="你那么萌你家人造吗" alt="你那么萌你家人造吗"></li><li title="涨姿势" data-num="8"><img src="index_files/E___0109GD00SIGT.gif" title="涨姿势" alt="涨姿势"></li></ul>
+                              </div>
+                            </div><iframe src="index_files/generated-content-3.html" style="border: medium none; z-index: 998; opacity: 0; position: fixed; width: 308px; height: 0px; left: 849px; top: 321px;"></iframe><div class="godreply_show" id="_7011473661834102_panel" style="z-index: 1001; position: fixed; display: none; left: 368px; top: 89px;">
+                               <div class="reply_pic_l" node-data="facebox">
+                                 <img node-data="faceimg" title="" alt="" src="">
+                               </div>
+                               <div class="btn_group" node-data="action" style="display:none;"><a href="#" class="a1" action-type="ok">发表</a><a href="#" class="a2" action-type="cancel">取消</a></div>
+                               <div class="jgimg" node-data="success" style="display:none;"><img src="index_files/jf.gif"><div class="txt">发表成功</div></div>
+                           </div><iframe style="display: none;" src="index_files/sinaads_ck.html" id="sinaads-ck-iframe"></iframe><div style="position: absolute; display: none; z-index: 512;" id="_5771473661834152_panel" class="mCatSearch"><ul><li action-type="tray-search" onclick="" action-data="article" class="current">含“<span id="_5771473661834152_article"></span>”的博文</li><li action-type="tray-search" onclick="" action-data="bloger">含“<span id="_5771473661834152_bloger"></span>”的博主</li><li action-type="tray-search" onclick="" action-data="music">含“<span id="_5771473661834152_music"></span>”的音乐</li><li action-type="tray-search" onclick="" action-data="video">含“<span id="_5771473661834152_video"></span>”的视频</li></ul></div><iframe src="index_files/generated-content-4.html" style="border: medium none; z-index: -1; opacity: 0; position: absolute; width: 0px; height: 0px; display: none;"></iframe><div style="z-index: 511; position: absolute; display: none; width: 160px;" class="tb_layer_Y tb_layer_w3"><div class="tb_layer_arrow"></div><div style="width: auto;" class="tb_layer_Y_main tip_ps"><a style="margin-top: 5px;" title="关闭" class="tb_friend_inputDel" href="javascript:void(0);"></a>							<div style="text-align:left;color:#999999">最近喜欢了的博主：</div>							<div style="white-space: nowrap;"><div style="text-align:center;"><img src="index_files/loading.gif">加载中…</div></div></div></div><div style="position: fixed; width: 1353px; height: 639px; left: 0px; top: 0px; z-index: 1024; background-color: black; opacity: 0.4; display: none;"></div><table class="CP_w" id="_6221473661834336_panel" style="z-index: 5000; position: fixed; display: none; left: 348.5px; top: 94.5px;"><thead><tr><th class="tLeft"><span></span></th><th class="tMid"><div class="bLyTop"><strong>赠金笔</strong><cite><a node-data="btn-close" href="#" class="CP_w_shut" title="关闭">关闭</a></cite></div></th><th class="tRight"><span></span></th></tr></thead><tfoot><tr><td class="tLeft"><span></span></td><td class="tMid"><span></span></td><td class="tRight"><span></span></td></tr></tfoot><tbody><tr><td class="tLeft"><span></span></td><td class="tMid"><div class="CP_layercon3 jiben"><div class="SG_tag tag_h"><ul><li class="current"><span><strong><a node-data="gold-exchange" href="javascript:void(0);">金笔兑换</a></strong></span><span class="tagR"></span></li><li><span><strong><a node-data="tyrant-standings" href="javascript:void(0);">今日土豪榜</a></strong></span><span class="tagR"></span></li><li><span><strong><a node-data="nomination-list" href="javascript:void(0);">今日提名榜</a></strong></span><span class="tagR"></span></li></ul></div><div name="jiben_tab" class="jiben_tab"><ul class="denPicRow denPicRow01 clearfix" name="radioAll"><li><span class="a">兑换服务：</span><span class="b">金笔道具</span></li><li><span class="a"><span class="CP_w_star"></span>赠送数量：</span><span class="b rlist"><input checked="checked" name="num" value="1" id="jb1" type="radio"><label for="jb1">1支</label><input name="num" value="10" id="jb2" type="radio"><label for="jb2">10支</label><input name="num" value="20" id="jb3" type="radio"><label for="jb3">20支</label><input name="num" value="50" id="jb4" type="radio"><label for="jb4">50支</label><input name="num" value="100" id="jb5" type="radio"><label for="jb5">100支</label><br><input name="num" value="0" id="jb5" type="radio"><label for="jb6">其他</label><input maxlength="4" class="SG_input" id="jb6" node-data="other-num" value="请输入1~100整数" type="text"></span></li><li><span class="a cold">现有金笔：</span><span class="b cold" node-data="own-num">0支</span></li><li><span class="a cold">还需兑换：</span><span class="b cold" node-data="need-num">1支 x 1=1(积分)</span></li></ul><div id="hidden"></div><div class="butt01" id="button01"><a node-data="btn-ok" href="#" class="SG_aBtn SG_aBtnB "><cite>确认</cite></a><a target="_blank" href="http://blog.sina.com.cn/s/blog_4b0f52990102v0dd.html" class="jf_rule">点击了解更多规则</a></div></div><div class="clearit"></div></div></td><td class="tRight"><span></span></td></tr></tbody></table><iframe src="index_files/generated-content-5.html" style="border: medium none; z-index: 4999; opacity: 0; position: fixed; width: 0px; height: 0px; left: 348.5px; top: 94.5px;"></iframe><script src="index_files/get.php-1.js"></script><div id="_3981473661834490_panel" style="z-index: 512; width: 200px; position: absolute; display: none;" class="tb_layer_Y tb_layer_w5"><div class="tb_layer_Y_main tip_layer_main"><div class="tip_ps" style="width:auto;float:right"><a id="closeBindEmail" title="关闭提示" class="tb_friend_inputDel" href="#" onclick=""></a></div><div style="padding:6px">为了您的账号安全，请<a id="linkBindEmail" href="#" target="_blank">绑定邮箱</a></div></div><div class="tb_layer_arrow tip_arrow"></div></div><iframe src="index_files/generated-content-6.html" style="border: medium none; z-index: 511; opacity: 0; position: absolute; width: 0px; height: 0px;"></iframe><div id="sharePhoto" style="display:none;width:120px;position:absolute;"><div class="picShareFlt"><div class="share SG_txtb" style="margin-top:5px;"><span>分享到新浪微博</span></div></div></div><ins data-ad-status="done" class="sinaads sinaads-done" data-ad-pdps="PDPS000000054727" style="display:block;"></ins><div style="position: absolute; cursor: pointer; left: 463px; top: 582px; display: none;" id="selectionShare"><img src="index_files/share.gif" title="将选中内容分享到新浪微博"></div><div style="top: 7822px; left: 445px;" class="gt_holder float gt_clone"><div class="gt_widget gt_hide"><div class="gt_holder_top"></div><div style="height: 116px;" class="gt_box_holder"><div class="gt_box"><div class="gt_loading"><div class="gt_loading_icon"></div><div class="gt_loading_text">加载中...</div></div><a style="background-image: none;" class="gt_bg gt_show"><div class="gt_cut_bg gt_show"><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -157px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -145px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -265px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -277px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -181px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -169px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -241px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -253px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -109px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -97px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -289px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -301px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -85px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -73px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -25px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -37px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -13px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -1px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -121px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -133px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -61px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -49px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -217px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -229px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -205px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -193px -58px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -145px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -157px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -277px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -265px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -169px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -181px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -253px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -241px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -97px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -109px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -301px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -289px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -73px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -85px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -37px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -25px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -1px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -13px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -133px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -121px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -49px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -61px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -229px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -217px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -193px 0px;" class="gt_cut_bg_slice"></div><div style="background-image: url(&quot;index_files/23393d8f.jpg&quot;); background-position: -205px 0px;" class="gt_cut_bg_slice"></div></div><div style="left: 0px; background-image: url(&quot;index_files/23393d8f.png&quot;); width: 55px; height: 59px; top: 3px;" class="gt_slice gt_show"></div></a><a style="cursor: default; background-image: none;" class="gt_fullbg gt_show"><div class="gt_cut_fullbg gt_show"><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -157px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -145px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -265px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -277px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -181px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -169px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -241px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -253px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -109px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -97px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -289px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -301px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -85px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -73px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -25px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -37px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -13px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -1px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -121px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -133px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -61px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -49px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -217px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -229px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -205px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -193px -58px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -145px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -157px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -277px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -265px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -169px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -181px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -253px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -241px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -97px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -109px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -301px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -289px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -73px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -85px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -37px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -25px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -1px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -13px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -133px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -121px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -49px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -61px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -229px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -217px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -193px 0px;" class="gt_cut_fullbg_slice"></div><div style="background-image: url(&quot;index_files/d0ecb1510.jpg&quot;); background-position: -205px 0px;" class="gt_cut_fullbg_slice"></div></div><div style="height: 94px;" class="gt_flash"></div><div class="gt_ie_success"></div></a><a style="background-image: none;" class="gt_curtain gt_hide"><div class="gt_curtain_bg_wrap"><div class="gt_curtain_bg"><div class="gt_cut_curtain"></div></div></div><div class="gt_curtain_button gt_hide"></div></a><a style="display: none;" class="gt_box_tips"></a></div><div class="gt_info"><div class="gt_info_tip"><div class="gt_info_icon"></div><div class="gt_info_text"></div></div></div></div><div class="gt_bottom"><a class="gt_refresh_button"><div class="gt_refresh_tips">刷新验证</div></a><a target="_blank" href="http://www.geetest.com/contact#report" class="gt_help_button"><div class="gt_help_tips">帮助反馈</div></a><a target="_blank" href="http://www.geetest.com/first_page" class="gt_logo_button"></a></div></div></div><div id="ramdomVisitDiv" style="position: absolute; width: 140px; z-index: 101; top: 120px; right: 0px;"><embed pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" src="index_files/lookViewSpring.swf" style="undefined" id="map" name="map" bgcolor="#000" quality="high" scale="noscale" allowscriptaccess="always" wmode="transparent" flashvars="url=http://blog.sina.com.cn/lm/top/eladies/day.html&amp;realfull=1&amp;moz=1&quot;/" height="87" width="140"></div><ins data-ad-status="done" class="sinaads sinaads-fail" data-ad-pdps="PDPS000000051781" style="display: none;"></ins><div style="left: -1000px; top: -1000px;position:absolute;" class="picSlideBtn" action-type="show-slide" action-data="http%3A%2F%2Fww4.sinaimg.cn%2Flarge%2F697db644jw1dw1s1zljvaj.jpg"><a href="javascript:void(0);">幻灯播放</a></div><div style="overflow: hidden; height: 210px; position: absolute;"></div><div id="ads"></div><div id="bsPanelHolder"><div id="bsPanel" style="display:none;"><div class="bsTitle"><a style="float:left;height:20px;line-height:20px;font-weight:bold;" class="bsSiteLink" target="_blank" href="http://www.bshare.cn/intro">分享到</a><a class="bsSiteLink" style="cursor:pointer;float:right;height:20px;line-height:20px;font-weight:bold;" onclick="">X</a><div class="bsClear"></div></div><div class="bsClear"></div><div style="padding-left:8px;background:#fff;*height:244px;"><div style="height:47px;border-bottom:1px #ccc solid;padding:4px 0 4px 16px;margin-right:8px;_padding-left:12px;"><div class="bsRlogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" onclick="" style="text-decoration:none;line-height:120%;"><div style="cursor:pointer;width:24px;height:24px;margin:0 18px 2px;background:url(urn:not-loaded:http://static.bshare.cn/frame/images//logos/m2/qqmb.gif) no-repeat;"></div><div style="cursor:pointer;text-align:center;width:60px;height:16px !important;overflow:hidden;color:inherit;white-space:nowrap;line-height:120% !important">腾讯微博</div></a></div><div class="bsRlogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" onclick="" style="text-decoration:none;line-height:120%;"><div style="cursor:pointer;width:24px;height:24px;margin:0 18px 2px;background:url(urn:not-loaded:http://static.bshare.cn/frame/images//logos/m2/bsharesync.gif) no-repeat;"></div><div style="cursor:pointer;text-align:center;width:60px;height:16px !important;overflow:hidden;color:inherit;white-space:nowrap;line-height:120% !important">一键通</div></a></div><div class="bsRlogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" onclick="" style="text-decoration:none;line-height:120%;"><div style="cursor:pointer;width:24px;height:24px;margin:0 18px 2px;background:url(urn:not-loaded:http://static.bshare.cn/frame/images//logos/m2/sinaminiblog.gif) no-repeat;"></div><div style="cursor:pointer;text-align:center;width:60px;height:16px !important;overflow:hidden;color:inherit;white-space:nowrap;line-height:120% !important">新浪微博</div></a></div></div><div class="bsLogoLink"><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="QQ空间" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1566px;">QQ空间</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="搜狐微博" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1800px;">搜狐微博</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="新华微博" onclick="" style="color:red;background:url(urn:not-loaded:http://static.bshare.cn/frame/images//logos/s4/xinhuamb.png) no-repeat;">新华微博</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="手机" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1710px;">手机</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="网易微博" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1332px;">网易微博</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="开心网" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1008px;">开心网</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="豆瓣网" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -540px;">豆瓣网</a></div></div><div class="bsLogoLink"><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="手机快传" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//logos/s4/189share.png) no-repeat;">手机快传</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="人人网" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1674px;">人人网</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="天涯" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1890px;">天涯</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="凤凰微博" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -918px;">凤凰微博</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="朋友网" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//slogos_sprite8.png) no-repeat 0 -1548px;">朋友网</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="微信" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//logos/s4/weixin.png) no-repeat;">微信</a></div><div class="bsLogo" onmouseover="" onmouseout=""><a href="javascript:void(0);" title="QQ好友" onclick="" style="background:url(urn:not-loaded:http://static.bshare.cn/frame/images//logos/s4/qqim.png) no-repeat;">QQ好友</a></div></div><div class="bsClear"></div></div><div style="height:20px;line-height:20px;padding:0 8px;border-top:1px solid #e8e8e8;color:#666;background:#f2f2f2;"><div class="buzzButton" style="float:left;">更多平台... <font style="font-weight:normal;">(133)</font></div><div id="bsPower" style="float:right;text-align:right;overflow:hidden;height:100%;"><a class="bsSiteLink" style="font-size:10px;vertical-align:text-bottom;line-height:24px;cursor:pointer;" href="http://www.bshare.cn/" target="_blank"><span style="font-size:10px;vertical-align:text-bottom;"><span style="color:#f60;">b</span>Share</span></a></div></div></div></div><iframe src="index_files/cm.html" style="display: none;"></iframe><ins data-ad-status="done" class="sinaads sinaads-done" data-ad-pdps="PDPS000000052950" style="display:block;"></ins></body></html>

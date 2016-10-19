@@ -1,0 +1,34 @@
+/* Effective stylesheet produced by snapshot save */
+.SG_bkhome { display: inline-block; width: 9px; height: 10px; background: transparent url("home_sina.png") no-repeat scroll 0% 0%; margin-right: 5px; vertical-align: -1px; }
+.nsinatopbar { min-width: 950px; height: 30px; overflow: hidden; font-size: 12px; font-family: "宋体"; background: transparent url("topbar.png") repeat-x scroll 0px 0px; }
+.nsinatopbar a, .nsinatopbar a:link, .nsinatopbar a:visited { color: rgb(46, 48, 146); text-decoration: none; }
+.nsinatopbar a:hover { color: rgb(46, 48, 146); text-decoration: underline; }
+.ntopbar_main { width: 950px; height: 30px; margin: 0px auto; }
+.ntopbar_logo { float: left; }
+.ntopbar_ad { float: left; padding-top: 9px; margin-left: 20px; }
+.ntopbar_login { float: right; margin-left: 10px; }
+.ntopbar_login a.login { height: 30px; line-height: 30px; display: block; float: left; overflow: hidden; text-align: center; padding-left: 11px; color: rgb(255, 255, 255); }
+.ntopbar_login a.login span { height: 30px; line-height: 30px; padding-right: 11px; display: inline-block; color: rgb(255, 255, 255); }
+.ntopbar_login a.login:link, .ntopbar_login a.login:visited, .ntopbar_login a.login:hover { background: transparent url("ntopbar.png") no-repeat scroll 0px -42px; }
+.ntopbar_login a.login:link span, .ntopbar_login a.login:visited span, .ntopbar_login a.login:hover span { background: transparent url("ntopbar.png") no-repeat scroll right -82px; text-decoration: none; cursor: pointer; }
+.ntopbar_login a.register, .ntopbar_login .bk_home a { height: 30px; line-height: 30px; display: block; float: left; padding: 0px 11px; margin-left: 2px; color: rgb(46, 48, 146); }
+.ntopbar_login .bk_home a { margin-right: 2px; }
+.ntopbar_login a.register:hover, .ntopbar_login .bk_home a:hover { background: transparent url("ntopbar.png") repeat-x scroll 0px -123px; text-decoration: none; }
+.ntopbar_loading { float: right; padding-top: 7px; margin-right: 150px; color: rgb(102, 102, 102); }
+.ntopbar_loading img { vertical-align: -3px; margin-right: 5px; }
+.nsinatopbar .horn { float: left; height: 30px; line-height: 30px; }
+.nsinatopbar .horn .horn_con { float: left; font-size: 12px; color: rgb(153, 153, 153); }
+.nsinatopbar .horn .horn_con a { margin-right: 12px; color: rgb(102, 102, 102); }
+.nsinatopbar .horn .horn_con p { background: transparent url("urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/layer/icon_horn.png") no-repeat scroll 0px 8px; padding: 0px 10px 0px 20px; }
+.nsinatopbar .horn .horn_con p em { color: rgb(102, 102, 102); }
+.nsinatopbar .horn a.close, .nsinatopbar .horn a.close:hover { float: right; cursor: pointer; text-decoration: none; font-size: 14px; }
+.ntopbar_floatL { float: left; position: relative; }
+.ntopbar_search { padding-top: 5px; float: left; margin-left: 13px; }
+.ntopbar_searchBtn { width: 12px; height: 12px; position: absolute; right: 5px; top: 3px; overflow: hidden; text-align: center; background: transparent url("ntopbar.png") no-repeat scroll 0px 0px; border: medium none; cursor: pointer; }
+.ntopbar_input { position: relative; width: 128px; height: 18px; float: left; border: 1px solid rgb(195, 195, 195); overflow: hidden; background: rgb(255, 255, 255) none repeat scroll 0% 0%; }
+.ntopbar_input .ntopbar_txt { padding: 0px 3px; border-width: 0px; height: 16px; line-height: 16px; width: 100px; background: transparent none repeat scroll 0% 0%; }
+.mCatSearch { position: absolute; width: 128px; border-width: 0px 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(195, 195, 195) rgb(195, 195, 195); -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; }
+.mCatSearch ul {  }
+.mCatSearch li { padding: 0px 10px; height: 21px; line-height: 21px; border-top: 1px solid rgb(227, 227, 227); background: rgb(249, 249, 249) none repeat scroll 0% 0%; color: rgb(153, 153, 153); cursor: pointer; }
+.mCatSearch li.current { background: rgb(234, 234, 234) none repeat scroll 0% 0%; }
+.mCatSearch li span { color: rgb(147, 164, 197); }

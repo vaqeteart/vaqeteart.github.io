@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<RDF:RDF xmlns:MAF="http://maf.mozdev.org/metadata/rdf#"
+         xmlns:NC="http://home.netscape.com/NC-rdf#"
+         xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <RDF:Description RDF:about="urn:root">
+    <MAF:originalurl RDF:resource="http://blog.sina.com.cn/s/blog_702c2db50102vc2h.html"/>
+    <MAF:title RDF:resource="Android Native/Tombstone Crash Log 详细分析[原创]_夜莺_新浪博客"/>
+    <MAF:archivetime RDF:resource="Mon, 12 Sep 2016 14:31:37 +0800"/>
+    <MAF:indexfilename RDF:resource="index.html"/>
+    <MAF:charset RDF:resource="UTF-8"/>
+  </RDF:Description>
+</RDF:RDF>
