@@ -42,6 +42,23 @@
     var categories_count = JSON.parse('{"/categories":0}');
 
     
+    var post_categories = '/categories/study/linux';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
     var post_categories = '/categories/study/linux/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
@@ -399,7 +416,7 @@
         }
     }
     
-    var post_categories = '/categories/others/rambles';
+    var post_categories = '/categories/study/linux';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -433,7 +450,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/others/rambles';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -570,6 +587,74 @@
     }
     
     var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -699,6 +784,16 @@
   <hr>
   <div>
     <ul id="post-list" class="post-list">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
       
         
       

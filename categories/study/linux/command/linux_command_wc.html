@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
-<title>Vim实践与学习-00大纲</title>
+<title>Linux命令学习手册-wc</title>
 
 <!--theme-->
 <link rel="stylesheet" type="text/css"
@@ -16,7 +16,7 @@
       href="/assets/css/posts.css" media="screen" />
   </head>
 
-   <body onload="change_categories('categories_study_vim')">
+   <body onload="change_categories('categories_study_linux_command')">
      <table class="container">
         <tbody>
 	      <tr>
@@ -31,7 +31,7 @@
 	</th>
 
 	<th class="navitm">
-	      <a href=/draft/vim/vim_use_tutor_00.html>分类</a>
+	      <a href=/categories/study/linux/command/linux_command_wc.html>分类</a>
 	      <div id="category_menus" class="second">
   	      	   
 
@@ -1603,27 +1603,463 @@
                 <td id="td_posts" colspan="6" valign="top">
 		  <article>
   <h1 id='header1' style="text-align: center;">
-      Vim实践与学习-00大纲
+      Linux命令学习手册-wc
   </h1>
   <hr id='title_line'>
   <div>
-    <p>课程简介课时<br>
-第0课：演示<br>
-第1课：简介（1.5时）<br>
-第2课：模式<br>
-第3课：文件<br>
-第4课：编辑<br>
-第5课：跳转<br>
-第6课：编程<br>
-第7课：视图<br>
-第8课：配置<br>
-第9课：其它</p>
+    
+
+<style type="text/css">
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #0c0;
+    box-shadow: 1px 1px 1px #0e0;
+    padding: 8pt;
+    font-family: italic monospace;
+    color: #C7EDCC;
+    background-color: #111111;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: black;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+    code {
+        border:groove #555555;
+	border-width:thin;
+        background-color: #111111;
+	color: #C7EDCC;
+    }
+
+
+#table-of-contents {
+    font-size: 9pt;
+    position: fixed;
+    right: 10px;
+    top: 14em;
+    margin:0;
+    padding:0;
+    border-width:1px;
+    border-style:solid;
+    background: #000000;
+    -webkit-box-shadow: 0 0 1em #777777;
+    -moz-box-shadow: 0 0 1em #777777;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    text-align: right;
+    /* ensure doesn't flow off the screen when expanded */
+    max-height: 60%;
+    overflow: auto; 
+    z-index: 200;
+}
+
+#table-of-contents h2 {
+    font-size: 9pt;
+    max-width: 8em;
+    font-weight: normal;
+    padding-left: 0.5em;
+    padding-top: 0.05em;
+    padding-bottom: 0.05em; 
+}
+
+#table-of-contents ul {
+    margin-left: 14pt; 
+    margin-bottom: 10pt;
+    padding: 0
+}
+
+#table-of-contents li {
+    padding: 0;
+    margin: 1px;
+    list-style: none;
+}
+
+#table-of-contents ul>:first-child {
+    color: blue;
+}
+
+#table-of-contents #text-table-of-contents {
+    display: none;
+    text-align: left;
+}
+
+#table-of-contents:hover #text-table-of-contents {
+    display: block;
+    padding: 0.5em;
+    margin-top: -1.5em; 
+}
+
+</style>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 功能</a></li>
+<li><a href="#orgheadline2">2. 描述</a>
+<ul>
+<li><a href="#orgheadline3">2.1. 参数有</a></li>
+<li><a href="#orgheadline4">2.2. 这个命令返回以下输出值</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline5">3. 举例</a>
+<ul>
+<li><a href="#orgheadline6">3.1. 对 <code>hello3.c</code> 行数、字数和字节数统计</a></li>
+<li><a href="#orgheadline7">3.2. 仅对 <code>hello3.c</code> 字节数和字数统计</a></li>
+<li><a href="#orgheadline8">3.3. 对所有以 <code>hello</code> 开头的文件，仅对字节数和字数统计</a></li>
+<li><a href="#orgheadline9">3.4. 对 <code>hello3.c</code> 文件的字符数统计</a></li>
+<li><a href="#orgheadline10">3.5. 对标准输入进行统计</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline11">4. 其它</a>
+<ul>
+<li><a href="#orgheadline12">4.1. 还有一个选项</a></li>
+<li><a href="#orgheadline13">4.2. 用如下的命令可以统计当前目录下的文件数，挺常用</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<p>
+<code>wc [-c|-m] [-l] [-w] [File...]</code>
+</p>
+
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 功能</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+统计一个文件中的行数、字数、字节数或字符数.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> 描述</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+缺省情况下， <code>wc</code> 命令对 <code>File</code> 参数指定的文件中的行数、字数和字节数进行计数。这个命令将换行符数、字数和字节数写到标准输出并为所有指定的文件保留一个总数。
+</p>
+
+<p>
+当使用 <code>File</code> 参数时， <code>wc</code> 命令显示文件名以及请求的计数。如果没有给 <code>File</code> 参数指定一个文件名， <code>wc</code> 命令使用标准输入。
+</p>
+
+<p>
+<code>wc</code> 命令受 <code>LANG</code>, <code>LC_ALL</code>, <code>LC_CTYPE</code> 和 <code>LC_MESSAGES</code> 环境变量影响。
+</p>
+
+<p>
+<code>wc</code> 命令把一个字看作是被一个空格（如空白和跳格）分隔的非零长度字符串。 
+</p>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3"><span class="section-number-3">2.1</span> 参数有</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<code>-c</code> 统计字节数
+</p>
+
+<p>
+<code>-l</code> 统计行数。
+</p>
+
+<p>
+<code>-m</code> 统计字符数。这个标志不能与 <code>-c</code> 标志一起使用。
+</p>
+
+<p>
+<code>-w</code> 统计字数。一个字被定义为由空白、跳格或换行字符分隔的字符串。
+</p>
+
+<p>
+<code>-L</code> 打印最长行的长度。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">2.2</span> 这个命令返回以下输出值</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<code>0</code> 命令成功运行。
+</p>
+
+<p>
+<code>&gt;0</code> 发生一个错误。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5"><span class="section-number-2">3</span> 举例</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+假设：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$nl hello3.c
+1  #include
+2  //using std::cin;
+3  using std::endl;
+4  using std::cout;
+5  i
+6  int main(int argc, char *argv[])
+7  {
+8          cout&lt;&lt;"hello,this is a simple program writing in cpp"&lt;
+9          return 0;
+10  }
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">3.1</span> 对 <code>hello3.c</code> 行数、字数和字节数统计</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$wc hello3.c
+</pre>
+</div>
+<p>
+输入之后，输出如下：
+</p>
+<pre class="example">
+10  25 183 hello3.c
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7"><span class="section-number-3">3.2</span> 仅对 <code>hello3.c</code> 字节数和字数统计</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">$wc -cw hello3.c
+</pre>
+</div>
+<p>
+输入之后，输出如下：
+</p>
+<pre class="example">
+25 183 hello3.c
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">3.3</span> 对所有以 <code>hello</code> 开头的文件，仅对字节数和字数统计</h3>
+<div class="outline-text-3" id="text-3-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">$ wc -cw hello*
+</pre>
+</div>
+<p>
+输入之后，输出如下：
+</p>
+<pre class="example">
+7  266 hello2
+24  182 hello2.c
+7  266 hello2h
+7  266 hello2s
+25  183 hello3.c
+70 1163 total
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">3.4</span> 对 <code>hello3.c</code> 文件的字符数统计</h3>
+<div class="outline-text-3" id="text-3-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">$wc -m hello3.c
+</pre>
+</div>
+<p>
+输入之后，输出如下：
+</p>
+<pre class="example">
+183 hello3.c
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><span class="section-number-3">3.5</span> 对标准输入进行统计</h3>
+<div class="outline-text-3" id="text-3-5">
+<div class="org-src-container">
+
+<pre class="src src-sh">$wc
+</pre>
+</div>
+<p>
+输入之后，需要继续输入：
+</p>
+<pre class="example">
+dd
+dd
+dd
+</pre>
+
+<p>
+按 <code>[Ctrl]D</code> ，输出如下：
+</p>
+<pre class="example">
+3       3       9
+</pre>
+
+<p>
+这里，没有指定文件名则以默认的标准输入做为输入， <code>[Ctrl]D</code> 表示输入结束。
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline11" class="outline-2">
+<h2 id="orgheadline11"><span class="section-number-2">4</span> 其它</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><span class="section-number-3">4.1</span> 还有一个选项</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<code>-k</code> 统计字符数。指定 <code>-k</code> 标志等同于指定 <code>-klwc</code> 标志。如果把 <code>-k</code> 标志同其它标志一起使用，那么必须包含 <code>-c</code> 标志。否则，将会忽略 <code>-k</code> 标志。请参阅示例 4 和5 以获取更多信息。
+</p>
+
+<p>
+注：这个标志在将来的发行版中将会撤销。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"><span class="section-number-3">4.2</span> 用如下的命令可以统计当前目录下的文件数，挺常用</h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">$ls -l|wc -l
+</pre>
+</div>
+<p>
+输入之后，例如输出：
+</p>
+<pre class="example">
+15
+</pre>
+<p>
+表示15个。
+</p>
+</div>
+</div>
+</div>
+<br>
+<div id="mypostamble" align="right" style="float:right" class="status">
+    <table> <tbody> 
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Author</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">QuietHeart</td>	  
+	</tr>
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Email</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">
+	    <a href="mailto:quiet_heart000@126.com">quiet_heart000@126.com</a>
+	  </td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Date</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2009-11-23 一 21:20]</td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2017-03-07 二 18:05:00></td>
+	</tr>
+    </tbody></table>
+</div>
+<br>
+
+
 
   </div>
 </article>
 
 		  <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="" data-title="Vim实践与学习-00大纲" data-url="http://vaqeteart.github.io//draft/vim/vim_use_tutor_00.html"></div>
+<div class="ds-thread" data-thread-key="/categories/study/linux/command/linux_command_wc" data-title="Linux命令学习手册-wc" data-url="http://vaqeteart.github.io//categories/study/linux/command/linux_command_wc.html"></div>
 <!-- 多说评论框 end -->
 <script src="/assets/js/comment.js"></script>
 		</td>
