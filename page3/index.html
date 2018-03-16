@@ -40,6 +40,23 @@
 		       var categories_count = JSON.parse('{"/categories":0}');
 
   		       
+    		       var post_categories = '/categories/study/misc';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
     		       var post_categories = '/categories/study/linux';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -931,6 +948,34 @@
     <ul id="post-list" class="post-list">
       
         <div>
+            [2011-04-04]<a href="/categories/others/rambles/213516cublog.html">努力</a> <br>
+            ||<a href="/categories/others/rambles" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  其它/
+  
+  
+
+  
+  
+  随笔/
+  
+  
+
+
+            </a>
+            <hr class='article_line'>
+        </div>
+      
+        <div>
             [2011-04-02]<a href="/categories/others/rambles/211013cublog.html">清明</a> <br>
             ||<a href="/categories/others/rambles" style="color:#0066CC; font-size:75%;">
             
@@ -1212,40 +1257,6 @@
       
         <div>
             [2009-11-23]<a href="/categories/study/linux/command/linux_command_wc.html">Linux命令学习手册-wc</a> <br>
-            ||<a href="/categories/study/linux/command" style="color:#0066CC; font-size:75%;">
-            
-
-  
-  
-  分类:
-  
-  
-
-  
-  
-  学习/
-  
-  
-
-  
-  
-  linux/
-  
-  
-
-  
-  
-  命令/
-  
-  
-
-
-            </a>
-            <hr class='article_line'>
-        </div>
-      
-        <div>
-            [2009-11-23]<a href="/categories/study/linux/command/linux_command_install.html">Linux命令学习手册-install</a> <br>
             ||<a href="/categories/study/linux/command" style="color:#0066CC; font-size:75%;">
             
 

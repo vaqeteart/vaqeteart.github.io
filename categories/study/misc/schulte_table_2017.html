@@ -1,0 +1,2897 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+<title>2017年舒尔特数字表训练总结--挣扎在路上</title>
+
+<!--theme-->
+<link rel="stylesheet" type="text/css"
+  href="/assets/css/common_green_black.css" media="screen" />
+<script src="/assets/js/jquery-1.11.3.min.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/category_list.js"></script>
+
+
+    <link rel="stylesheet" type="text/css"
+      href="/assets/css/posts.css" media="screen" />
+  </head>
+
+   <body onload="change_categories('categories_study_misc')">
+     <table class="container">
+        <tbody>
+	      <tr>
+		<script src="/assets/js/nav.js"></script>
+<th id="th_navbar">
+    <table class="navbar"> <tbody> <tr>
+	<th class="navitm">
+	    <a href='/'>主页</a>
+	</th>
+
+	<th class="navblank">
+	</th>
+
+	<th class="navitm">
+	      <a href=/categories/study/misc/schulte_table_2017.html>分类</a>
+	      <div id="category_menus" class="second">
+  	      	   
+
+		   <script>
+		       var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"os":{"id":"categories_study_os","path":"/categories/study/os","title":"操作系统","parent":"categories_study","children":null},"books":{"id":"categories_study_books","path":"/categories/study/books","title":"books","parent":"categories_study","children":{"apue":{"id":"categories_study_books_apue","path":"/categories/study/books/apue","title":"APUE","parent":"categories_study_books","children":null}}},"linux":{"id":"categories_study_linux","path":"/categories/study/linux","title":"linux","parent":"categories_study","children":{"misc":{"id":"categories_study_linux_misc","path":"/categories/study/linux/misc","title":"杂乱","parent":"categories_study_linux","children":null},"command":{"id":"categories_study_linux_command","path":"/categories/study/linux/command","title":"命令","parent":"categories_study_linux","children":null}}},"jekyll":{"id":"categories_study_jekyll","path":"/categories/study/jekyll","title":"jekyll","parent":"categories_study","children":null},"kits":{"id":"categories_study_kits","path":"/categories/study/kits","title":"工具","parent":"categories_study","children":null},"emacs":{"id":"categories_study_emacs","path":"/categories/study/emacs","title":"emacs","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+		       var categories_count = JSON.parse('{"/categories":0}');
+
+  		       
+    		       var post_categories = '/categories/study/misc';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/misc';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/misc';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/kits';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/misc';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/os';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/emacs';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/emacs';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/life';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/git';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others/rambles';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/others/rambles';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/vim';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/study/linux/command';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+
+    			create_category_menu(categories, 0, categories_count);
+    			//document.write("hello")
+		    </script>
+	      </div>
+	</th>
+
+        <th class="navitm">
+	      <a href='#'>标签</a>
+	      <div id="tag_menus" class="second">
+	          
+		      <a id="gtd_next" href="#"> gtd_next(13)</a>
+		  
+		      <a id="study" href="#"> study(10)</a>
+		  
+		      <a id="gtd_done" href="#"> gtd_done(4)</a>
+		  
+		      <a id="others" href="#"> others(3)</a>
+		  
+		      <a id="life" href="#"> life(1)</a>
+		  
+	      </div>
+        </th>
+
+	<th class="navblank">
+	</th>
+
+	<th class="navitm">
+	      <a href=/more.html>更多</a>
+        </th>
+
+        <th class="navitm">
+	      <a href=/about.html>关于</a>
+        </th>
+
+	<th class="navblank" style="width:25%;">
+	</th>
+
+	<th class="navitm" style="margin:0; padding:0;border:none;">
+	    <form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+	    	  <span style= "color:#00FF00;">Q</span>
+	    	  <span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+				<input value="Search by title (canbe regex)..." name="s" class="s" 
+		  	 	onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" 
+		  	 	onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}"
+			 	style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" 
+			 	type="text">
+		  </span>
+		  <!--input type="submit" value="Q" style="width:20%;"-->
+	    </form>
+	</th>
+
+	<th class="navblank">
+	</th>
+
+	<th class="navblank">
+	</th>
+
+	<a href='#' id="topbtn">⇑</a>
+
+	<a href='#bottom' id="bottombtn">⇓</a>
+	<!--⇐⇑⇒⇓-->
+
+  <tr> </tbody> </table>
+</th>
+
+	      </tr>
+	      <tr>
+                  <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+    <header style="text-align: center;">
+	<h1>
+	       <a href="/" title="Home Page">
+	       QuietHeart's Site
+	       </a>
+	</h1>
+    </header>
+</td>
+
+
+
+	      </tr>
+             <tr>
+                <!--td id="td_category_list"  colspan="1" valign="top"><aside id="left-side" >
+  <h2> 分类 </h2>
+  
+  <script>
+    var categories = {"id":"categories","path":"/","title":"分类","parent":null,"children":{"note":{"id":"categories_note","path":"/categories/note","title":"记事","parent":"categories","children":{"remind":{"id":"categories_note_remind","path":"/categories/note/remind","title":"备忘","parent":"categories_note","children":null},"plan":{"id":"categories_note_plan","path":"/categories/note/plan","title":"计划","parent":"categories_note","children":null}}},"study":{"id":"categories_study","path":"/categories/study","title":"学习","parent":"categories","children":{"problem":{"id":"categories_study_problem","path":"/categories/study/problem","title":"问题","parent":"categories_study","children":null},"git":{"id":"categories_study_git","path":"/categories/study/git","title":"git","parent":"categories_study","children":null},"os":{"id":"categories_study_os","path":"/categories/study/os","title":"操作系统","parent":"categories_study","children":null},"books":{"id":"categories_study_books","path":"/categories/study/books","title":"books","parent":"categories_study","children":{"apue":{"id":"categories_study_books_apue","path":"/categories/study/books/apue","title":"APUE","parent":"categories_study_books","children":null}}},"linux":{"id":"categories_study_linux","path":"/categories/study/linux","title":"linux","parent":"categories_study","children":{"misc":{"id":"categories_study_linux_misc","path":"/categories/study/linux/misc","title":"杂乱","parent":"categories_study_linux","children":null},"command":{"id":"categories_study_linux_command","path":"/categories/study/linux/command","title":"命令","parent":"categories_study_linux","children":null}}},"jekyll":{"id":"categories_study_jekyll","path":"/categories/study/jekyll","title":"jekyll","parent":"categories_study","children":null},"kits":{"id":"categories_study_kits","path":"/categories/study/kits","title":"工具","parent":"categories_study","children":null},"emacs":{"id":"categories_study_emacs","path":"/categories/study/emacs","title":"emacs","parent":"categories_study","children":null},"vim":{"id":"categories_study_vim","path":"/categories/study/vim","title":"vim","parent":"categories_study","children":null}}},"work":{"id":"categories_work","path":"/categories/work","title":"工作","parent":"categories","children":{"progress":{"id":"categories_work_progress","path":"/categories/work/progress","title":"进度","parent":"categories_work","children":null}}},"life":{"id":"categories_life","path":"/categories/life","title":"生活","parent":"categories","children":{"experience":{"id":"categories_life_experience","path":"/categories/life/experience","title":"经验","parent":"categories_life","children":null},"tips":{"id":"categories_life_tips","path":"/categories/life/tips","title":"技巧","parent":"categories_life","children":null}}},"others":{"id":"categories_others","path":"/categories/others","title":"其它","parent":"categories","children":{"rambles":{"id":"categories_others_rambles","path":"/categories/others/rambles","title":"随笔","parent":"categories_others","children":null},"temp":{"id":"categories_others_temp","path":"/categories/others/temp","title":"临时","parent":"categories_others","children":null},"test":{"id":"categories_others_test","path":"/categories/others/test","title":"测试","parent":"categories_others","children":null}}}}};
+    var categories_count = JSON.parse('{"/categories":0}');
+
+    
+    var post_categories = '/categories/study/misc';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/misc';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/misc';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/kits';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/misc';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/os';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/emacs';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/emacs';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/life';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/git';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others/rambles';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/others/rambles';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/vim';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/study/linux/command';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+
+    create_categories(categories, 0, categories_count);
+    //document.write("hello")
+  </script>
+</aside>
+</td-->
+                <td id="td_posts" colspan="6" valign="top">
+		  <article>
+  <h1 id='header1' style="text-align: center;">
+      2017年舒尔特数字表训练总结--挣扎在路上
+  </h1>
+  <hr id='title_line'>
+  <div>
+    
+
+<style type="text/css">
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #0c0;
+    box-shadow: 1px 1px 1px #0e0;
+    padding: 8pt;
+    font-family: italic monospace;
+    color: #C7EDCC;
+    background-color: #111111;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: black;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+    code {
+        border:groove #555555;
+	border-width:thin;
+        background-color: #111111;
+	color: #C7EDCC;
+    }
+
+
+#table-of-contents {
+    font-size: 9pt;
+    position: fixed;
+    right: 10px;
+    top: 14em;
+    margin:0;
+    padding:0;
+    border-width:1px;
+    border-style:solid;
+    background: #000000;
+    -webkit-box-shadow: 0 0 1em #777777;
+    -moz-box-shadow: 0 0 1em #777777;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    text-align: right;
+    /* ensure doesn't flow off the screen when expanded */
+    max-height: 60%;
+    overflow: auto; 
+    z-index: 200;
+}
+
+#table-of-contents h2 {
+    font-size: 9pt;
+    max-width: 8em;
+    font-weight: normal;
+    padding-left: 0.5em;
+    padding-top: 0.05em;
+    padding-bottom: 0.05em; 
+}
+
+#table-of-contents ul {
+    margin-left: 14pt; 
+    margin-bottom: 10pt;
+    padding: 0
+}
+
+#table-of-contents li {
+    padding: 0;
+    margin: 1px;
+    list-style: none;
+}
+
+#table-of-contents ul>:first-child {
+    color: blue;
+}
+
+#table-of-contents #text-table-of-contents {
+    display: none;
+    text-align: left;
+}
+
+#table-of-contents:hover #text-table-of-contents {
+    display: block;
+    padding: 0.5em;
+    margin-top: -1.5em; 
+}
+
+</style>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 20170301注意力训练心得</a></li>
+<li><a href="#orgheadline2">2. 20170306注意力训练心得</a></li>
+<li><a href="#orgheadline3">3. 20170309</a></li>
+<li><a href="#orgheadline4">4. 20170316</a></li>
+<li><a href="#orgheadline5">5. 20170318</a></li>
+<li><a href="#orgheadline6">6. 20170320</a></li>
+<li><a href="#orgheadline7">7. 20170331之前</a></li>
+<li><a href="#orgheadline8">8. 20170401</a></li>
+<li><a href="#orgheadline9">9. 20170402</a></li>
+<li><a href="#orgheadline10">10. 20170407</a></li>
+<li><a href="#orgheadline11">11. 20170405看清再点</a></li>
+<li><a href="#orgheadline12">12. 20170407逐渐稳定、清晰的视野</a></li>
+<li><a href="#orgheadline13">13. 20170412 （你的手指不是思考与预知的结果，而是视线扩展的进度）</a></li>
+<li><a href="#orgheadline14">14. 20170412 （将注意力从手指和速度上转移到视野清晰范围上）</a></li>
+<li><a href="#orgheadline15">15. 20170413 （用眼睛直接看比用脑袋去推测更快更轻松）</a></li>
+<li><a href="#orgheadline16">16. 20170413 （训练的重点是眼睛，而非脑袋或手指）</a></li>
+<li><a href="#orgheadline17">17. 20170413 （不要等待不要顾及，尽量延伸你的目光，手指自然不会闲的）</a></li>
+<li><a href="#orgheadline18">18. 20170414 （重点在于看到所有的数字而非点到）</a></li>
+<li><a href="#orgheadline19">19. 20170414 （训练的是视线而非反应）</a></li>
+<li><a href="#orgheadline20">20. 20170416 （只要看到就应能注意到，不存在余光或焦点）</a></li>
+<li><a href="#orgheadline21">21. 20170504 （快到一定程度后，就变成视线广度而非反应的问题了）</a></li>
+<li><a href="#orgheadline22">22. 20170510公平</a></li>
+<li><a href="#orgheadline23">23. 20170507凝聚</a></li>
+<li><a href="#orgheadline24">24. 20170508 余光</a></li>
+<li><a href="#orgheadline25">25. 20170512 替代常规</a></li>
+<li><a href="#orgheadline26">26. 20170518 印象</a></li>
+<li><a href="#orgheadline27">27. 20170520 训练方向-余光</a></li>
+<li><a href="#orgheadline28">28. 20150522 训练方向-独立的数字</a></li>
+<li><a href="#orgheadline29">29. 20170523 两个重点</a></li>
+<li><a href="#orgheadline30">30. 20170524 规律</a></li>
+<li><a href="#orgheadline31">31. 20170524 是看不是找</a></li>
+<li><a href="#orgheadline32">32. 20170524 注意与记忆的容量与起点</a></li>
+<li><a href="#orgheadline33">33. 20170524 关闭记忆的能力</a></li>
+<li><a href="#orgheadline34">34. 20170528 行为本身就是目的</a></li>
+<li><a href="#orgheadline35">35. 20170615 找与看</a></li>
+<li><a href="#orgheadline36">36. 20170620 不用点的训练</a></li>
+<li><a href="#orgheadline37">37. 20170620 只看不点</a></li>
+<li><a href="#orgheadline38">38. 20170622 探索</a></li>
+<li><a href="#orgheadline39">39. 20170622 放松后每次实际不只一个数字</a></li>
+<li><a href="#orgheadline40">40. 20170622 毫无犹豫的信心</a></li>
+<li><a href="#orgheadline41">41. 20170629 预知又好用了？</a></li>
+<li><a href="#orgheadline42">42. 20170711 勇往直前</a></li>
+<li><a href="#orgheadline43">43. 20170711 一轮训练，多个机会</a></li>
+<li><a href="#orgheadline44">44. 20170711如果数字是独立的</a></li>
+<li><a href="#orgheadline45">45. 20170712 预知与独立</a></li>
+<li><a href="#orgheadline46">46. 20170713去除关联</a></li>
+<li><a href="#orgheadline47">47. 20170714没有开始</a></li>
+<li><a href="#orgheadline48">48. 20170721不要聚焦</a></li>
+<li><a href="#orgheadline49">49. 20170721由点到面</a></li>
+<li><a href="#orgheadline50">50. 20170816 反复的看</a></li>
+<li><a href="#orgheadline51">51. 20170828 一视同仁</a></li>
+<li><a href="#orgheadline52">52. 20170908 忘记</a></li>
+<li><a href="#orgheadline53">53. 20170915 整体去看</a></li>
+<li><a href="#orgheadline54">54. 20170915 是看不是找</a></li>
+<li><a href="#orgheadline55">55. 28170916 宁慢勿错</a></li>
+<li><a href="#orgheadline56">56. 20171012 看，宽</a></li>
+<li><a href="#orgheadline57">57. 20171013视线与反应</a></li>
+<li><a href="#orgheadline58">58. 20171013关键</a></li>
+<li><a href="#orgheadline59">59. 20171020 切换</a></li>
+<li><a href="#orgheadline60">60. 20171021指不从心，指随眼落</a></li>
+<li><a href="#orgheadline61">61. 20171022 重点是视线</a></li>
+<li><a href="#orgheadline62">62. 20171024 开始在后面</a></li>
+<li><a href="#orgheadline63">63. 20171027 没有负担地看</a></li>
+<li><a href="#orgheadline64">64. 20171031 相信</a></li>
+<li><a href="#orgheadline65">65. 20171031 限制</a></li>
+<li><a href="#orgheadline66">66. 20171106 手指在哪</a></li>
+<li><a href="#orgheadline67">67. 20171108 点的技巧</a></li>
+<li><a href="#orgheadline68">68. 20171110阅读的乐趣</a></li>
+<li><a href="#orgheadline69">69. 20171110 顺序</a></li>
+<li><a href="#orgheadline70">70. 20171115看完</a></li>
+<li><a href="#orgheadline71">71. 20171115 忽略手指</a></li>
+<li><a href="#orgheadline72">72. 20171123 维持完整</a></li>
+<li><a href="#orgheadline73">73. 20171128 奇妙的状态</a></li>
+<li><a href="#orgheadline74">74. 20171202 不断的开始</a></li>
+<li><a href="#orgheadline75">75. 20171203 加速度</a></li>
+<li><a href="#orgheadline76">76. 20171206 克制</a></li>
+<li><a href="#orgheadline77">77. 20171214 关注</a></li>
+<li><a href="#orgheadline78">78. 20171214 协调</a></li>
+<li><a href="#orgheadline79">79. 20171215 分组</a></li>
+<li><a href="#orgheadline80">80. 20171225 有的放矢</a></li>
+<li><a href="#orgheadline81">81. 20171226 手速</a></li>
+<li><a href="#orgheadline82">82. 20171226 机会与微调</a></li>
+<li><a href="#orgheadline83">83. 20171226 精力分配</a></li>
+<li><a href="#orgheadline84">84. 20180205 分享一下训练技巧与心得</a>
+<ul>
+<li><a href="#orgheadline85">84.1. 手速-单手练</a></li>
+<li><a href="#orgheadline86">84.2. 协调-双手练</a></li>
+<li><a href="#orgheadline87">84.3. 视幅-不用手，只用眼</a></li>
+<li><a href="#orgheadline88">84.4. 敏感度-不用手，不用眼</a></li>
+<li><a href="#orgheadline89">84.5. 理论值</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<p>
+汇总一下2017整年的舒尔特训练过程，每个阶段有不同的体悟。
+</p>
+
+<p>
+通过不断尝试与调整新的方式和思路，在尽可能多的方向上进行探索。
+</p>
+
+<p>
+所有的内容并不一定是正确的，
+</p>
+
+<p>
+希望能助大家探索到正确的道路。
+</p>
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 20170301注意力训练心得</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+速度：4*4稳定在6.5~7.5秒
+原理：目光不要移动，不要聚焦
+</p>
+
+<p>
+解释：在舒尔特表中，找到目标数字后，不要将焦点集中到已找到的目标上，继续找下一个，在寻找的时候不要目光移动，目光始终停在表中间，用"余光"找，尽量克服被移动的手指，吸引你的目光焦点
+</p>
+
+<p>
+技巧，可用一只眼睛练习，体验下不移动眼睛找目标的感觉，这样似乎容易些。
+</p>
+
+<p>
+猜测：熟练后，下一步或许是记住看过的数字，使复杂度由o(n*n)变到o(n).
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> 20170306注意力训练心得</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+速度：4*4稳定在5.5~6.5秒
+</p>
+
+<p>
+原理：看到的先是图像，不要翻译成意义
+</p>
+
+<p>
+解释：此步骤确实复杂度都变成o(n)了，但是主要不是靠回忆达成的，目光扫描且看到的都是图形，不要考虑翻译成意义，杜绝默念。而是现搜索现确定，不要考虑语义记忆因素，因为回忆的时候会下意识地使用语言，导致寻找位置的时候，会下意识地思考它的意义。其实，尽量让眼睛扫描到数字，但是，不要考虑数字的意义，也不要考虑数字，谁大谁小谁先谁后，只把它们当作图形来处理，心里，看你念着到了那个数字，眼睛看到去点就行，根本不用念到数字后再考虑数字意义，比谁大比谁小等（虽然左脑总是想翻译，不翻译的话这样也能让左脑轻松些，这时你是能感觉到速度飞快，但是却很轻松的），这样寻找的速度是也稳定不会时快时慢。目光尽量要放宽，扫描到数字，但是，数字都是图形，扫描到之后，到了那个数字手自然会点到，而不是因为心里判断的意义才去点。这样会感觉到，速度大幅提升，而且，在，训练的时候，脑袋里还能思考别的事情，感觉思考别的事情所用的精力，与训练时的精力是相互不干扰的，甚至可以尝试在训练时，脑袋里，尽量去考虑别的事情，用别的事情来占用左脑精力，使得训练精力尽少使用左脑而是用右脑。
+猜测：下一步才可能是记忆，不是记忆，因为如果，使用右脑图像搜索不熟练，回忆时会自然使用语言、逻辑、抽的方式，会影响，右脑的直观图像搜索功能。等右脑直观图像搜索熟练后，再考虑记忆，记忆的时候，也不要考虑意义，而是要直接图像印到脑子里，不要考虑意义。还有，左右脑结合。
+</p>
+
+<p>
+技巧，想别的占用左脑，或快速点，不让左脑有默念分析的机会
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">3</span> 20170309</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+不要只追求右脑，要尽量放宽视野。比如，从一数到十六，找每个数的同时，眼睛里其他的数也看得见，其实找十六个数相当于把每个数过了十六遍。千万不要把目光的焦点来回移动。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4"><span class="section-number-2">4</span> 20170316</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+点击的时候没有相互关系，看到的图像点了就行了。不用考虑怎么读，下一个是什么上一个，有什么关系等？看到就点。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5"><span class="section-number-2">5</span> 20170318</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+要的不是理解，而是尽快的看到。不管看到的是什么，要尽快看到。因为右脑的功能是输入信息，左脑是加工信息。不需要加工，只需输入。要注意，看到的意思。看到后不要去理解，那样会累，也会降低速度。这也考验你控制不用左脑的能力。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline6" class="outline-2">
+<h2 id="orgheadline6"><span class="section-number-2">6</span> 20170320</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+眼睛目光定在中心，一定不要转。习惯目光固定的点数字。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-2">
+<h2 id="orgheadline7"><span class="section-number-2">7</span> 20170331之前</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+在提高手的速度之前，先把4×4练好也就是视觉的范围以及右脑思维，手的速度，靠3×3练习。然后标准练习。
+</p>
+
+<p>
+让目光放宽不过于焦距的方法：在选一个数字前，先确保边缘（四角）的数字看清再选。
+</p>
+
+<p>
+目的是看数字数字尽收眼底，然后赶快点，不要去想它是啥，不要去读它是啥？看到了就是为了去看。
+</p>
+
+<p>
+从1到9。看着还不错，十以上，也要以1-9方式来寻找，不要去想数字的意义，还是直接整体当成图像识别。
+</p>
+
+<p>
+不去预知下一步的位置就不会，移动目光了。有信心，找的东西一定在视野之内，这样的话就不会去找下一次是啥。
+</p>
+
+<p>
+要明白一件事，东西都在自己的视野范围之内，那就没有必要去找下一个，直接，该点哪，就点看到的就行，肯定能看到，所以不用考虑左脑的意志了。你会感觉到不是你，预知的东西牵引着你的目光，和寻找的位置，而是你看到的东西，随着你的点中，牵着你的预知往前走。因为你点的很快，超出了你的预知速度，所以也不用担心由于预知的慢而破坏了点的节奏。预知其实就是左脑，而你看到的，已经存在的东西，根本不用费心去预知，这是右脑。而造成这种感觉逐渐形成的条件就是，你的目光一定在中间不要来回移动去寻找什么。
+</p>
+
+<p>
+你到你觉得因为太快而担心会慢下来，那原因多半是因为你，开始了寻找。已经在那了，根本不用寻找。不会越来越慢，只会越来越快。要相信这一点，就更要固定你的视线，不要移动你的目光。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-2">
+<h2 id="orgheadline8"><span class="section-number-2">8</span> 20170401</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+记忆力是变相扩大了视野，在小小舒尔特表前，还不需要
+</p>
+
+<p>
+不要过于太意速度的快慢，要将练习时领会到非左脑的感觉控制自如
+</p>
+
+<p>
+要明白数字不是你感觉轮到的时候才注意到它，要在落下手指时感觉它原本就在那里，不比后面的提前，也不比以前的落后
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-2">
+<h2 id="orgheadline9"><span class="section-number-2">9</span> 20170402</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+练习的时候目光固定，并且每个数字点的时候，都能够心里很明白也能同时看到其他的数字，也就是说，你不要期望下一个数字，是你预期的某个数。你要觉的下一个数字可能是随机的任何一个数字，但是，即便是任何一个数字，你也能够立即点到，这样能够防止你内心的默念以及分心寻找预测下一个究竟是什么数字？在你，数数字的时候，脑袋里却没有思考。虽然你说数字的规律是顺序的，但是脑袋里只有，在你数到了的数字上，才能知道当前到了哪里，数道之前，不要思考。
+</p>
+
+<p>
+要明白舒尔特数字表示用来看数字的不是用来数数字的。不是为了能快速点到数的数字，而是点到而是看到的数字。之所以用顺序的数，那是因为我们自身无法快速随机生成无重复数字。所以，我们用快速的数，来模拟随机的生成，以便于看到。但是不要本末倒置，数的目的是为了给看一个目标。但是不要去预测看的目标。这样做，也可以有助于我们分离左脑和右脑思维。
+</p>
+
+
+<p>
+其实用脑袋，默默的数数，容易给人造成一种误解，最好的方式应该是，能有一个跟得上你的节奏的机器，大声的发出顺序的数字。然后你的眼睛，立刻去看到那个数字，如果机器大声发出随机的数字，你也能立刻去看到。可惜没有这样的机器，我们只能用自己的脑袋顺序的模拟数字的发声，这样就给我们造成一种误解，为了能尽快的看到数字，我们提前去预知下一个要数的数字是什么？这反而摒弃了练习的目的。但是这种，方式并不与练习冲突。它恰恰训练了我们，能够善于分离左脑右脑的习惯。我们在数数字之前，尽量的看清楚每一个数字。既然都看清楚了，当然就不用预知了。数到点到，仅此而已。所以重点不是，杜绝默念，默念并非完全错误，重点在于尽量不要在没有看清楚全貌的时候去点，那样你的脑袋会不由自主的去预知，即便默念，也不是预知。每点一个数字的，都是因为你看全了所有的数字，点的越快，说明你的视觉，越稳定，也就是注意力越稳定。应该是这样的吧！
+</p>
+
+<p>
+练习有了重点。首先是不要去默念，而是靠视觉看到。其次是要视线固定在中心就达到看的目前。而今，重点转移到了，要做到每点一个数字之前，保证全部的数字都清晰，再去点。这样就不用，在意什么不要默念，不要思考，等等的问题。练习中如果方式对了你会发现，其实点的慢，不是因为，反应慢的问题，而是因为你的眼睛的，范围不够。因为能尽快的看到而快，而不是因为反应快而快。这样即便你的速度降下来，你还是进步的，反之，即便你速度快了，你也只感觉是因为幸运实际并无进展。尽快找到这样的感觉。
+</p>
+
+
+<p>
+现在的目的有两个：第一是尽快的看到那个数字，第二是在看到的那个数字时候也保证其他数字也看到了，这样才达到了目的，达到这两个目的之后再点下去。其实目的都是为了去看，尽快点完，但是大多数时候，往往，注意了第一条，忘记了第二点。说法是一样的，但是意义却不一样了。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline10" class="outline-2">
+<h2 id="orgheadline10"><span class="section-number-2">10</span> 20170407</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+并不是一直都有收获的，每次收获，可能不是最好的，甚至是错误的，但却是当前自己最好的收获，因为它毕竟让自己推进了一点，于是每次都会将这种感觉记下。可是，并不一直是这么顺利的，每次到一定程度都觉得不会再进步了，渐渐的感觉很累，很枯燥，感觉已经没有什么进展的余地了，幸运的是还能看到有很多人有更好的成绩，为什么呢？这也给了我坚持下去的信心，相信一定还有没有做到的地方，这信心就像自己在感觉前面一片黑暗的状况下，心中的一盏灯，并且，是真实的，因为确实有人拿出了更好的成绩。然后，在痛苦的坚持下，终于某时，有了柳暗花明又一村的感觉，就是在这个状态下，让我不断发现新的收获。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline11" class="outline-2">
+<h2 id="orgheadline11"><span class="section-number-2">11</span> 20170405看清再点</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+每次的目的不是点，点的时候，只看到你点的目标。而是不只你点的目标，其他的目标也同时看到这个时候再点。
+</p>
+
+<p>
+先把视野广度练习稳定，先不要在意默念。点击的条件：1.看到目标数字 2.其它数字也清晰
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-2">
+<h2 id="orgheadline12"><span class="section-number-2">12</span> 20170407逐渐稳定、清晰的视野</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+先让视野稳定，再开始点。视野稳定的意思是，看一会，感觉全部数字看到了，并且有信心在点的时候不会停顿。这样慢也能感觉到训练达到了目的，稳定的时候点，即便快也没达到目的。关键时间要消耗在稳定视线上（其实就是注意力的集中与稳定），而非寻找的上面。毕竟我们练的重点应该是视界，而非反应。注意：视野的稳定并不是记忆数字的位置。
+</p>
+
+<p>
+如果无法一次看全，可在迅速点的同时尽快拓广视野，清晰没在视野的数字，而非专注于下个数字是啥。扩展视野，不只是范围上，也包括每一个数字的清晰度上。然后你会感觉到，随着练习，每轮练习中，你的视野像洒在桌上的水，扩展的越来越快，同时也像相机调焦由模糊变清晰的过程，清晰速度的越来越快，这是整体视野的训练，而非你找的越来越快。练习时应该要格外注意这点，不要为了一时的快而本末倒置（这也是量化自己进步的一个弊端）。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-2">
+<h2 id="orgheadline13"><span class="section-number-2">13</span> 20170412 （你的手指不是思考与预知的结果，而是视线扩展的进度）</h2>
+<div class="outline-text-2" id="text-13">
+<p>
+一定要体会到，不是你的脑袋牵引着你的眼睛，再到手指，而是你的眼睛直指牵引手指，同时脑袋才反应过来。不让脑袋绊住视线的一个技巧是，忘记时间，只要尽量把看到的一下子点完，看到就点，不要去想，即可，体会越来越清晰的余光。重点不是快速的点，那样会让你为了求速度而慌张紧张，重点是快速的把所有数字同时看清，而点的动作只是附带顺便尽量快的点，点慢了也无所谓。你的手指所落最终转变为不是思考与预知的结果，而是你视线扩展的进度。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline14" class="outline-2">
+<h2 id="orgheadline14"><span class="section-number-2">14</span> 20170412 （将注意力从手指和速度上转移到视野清晰范围上）</h2>
+<div class="outline-text-2" id="text-14">
+<p>
+不要把心思不断的花费到每次要点的数字上，要注意在让所有数字清晰上。训练的目标就是将注意力如此转移到清晰上，从最初的不由自主的想你手指头该往哪点，到最后收放自如只顾数字，而非一气呵成就能达到的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline15" class="outline-2">
+<h2 id="orgheadline15"><span class="section-number-2">15</span> 20170413 （用眼睛直接看比用脑袋去推测更快更轻松）</h2>
+<div class="outline-text-2" id="text-15">
+<p>
+将手指变成视线扩展的进度，比思考要顺其自然，也快，也不慢。因为毕竟最终是看到的确定了结果，而非思考的。思考只需判断数字就够了，不用去找数字，找的工作由眼睛做，而非脑袋。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline16" class="outline-2">
+<h2 id="orgheadline16"><span class="section-number-2">16</span> 20170413 （训练的重点是眼睛，而非脑袋或手指）</h2>
+<div class="outline-text-2" id="text-16">
+<p>
+先不要顾及手指往哪里点，先用眼睛尽快的把所有数字过一遍。手指的话能跟上眼睛的速度则尽量根上，眼睛扫描后，手指没有跟上，则从手指没有跟上的地方，再尽量过一遍数字，手指再进量跟上眼睛的速度。整个过程，注意力都集中在眼睛的尽量扫描上，手指只是附带的。不要让手指来分散你眼睛扫的注意力。大不了没有跟上眼睛翻过来从头再扫。关键是用眼睛去看，这样渐渐的眼睛扫完，到再渐渐的，眼睛扫完，并且能清晰起来。越来越清晰，手指也会自然的越来越快的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline17" class="outline-2">
+<h2 id="orgheadline17"><span class="section-number-2">17</span> 20170413 （不要等待不要顾及，尽量延伸你的目光，手指自然不会闲的）</h2>
+<div class="outline-text-2" id="text-17">
+<p>
+其实应该不能说目光牵着手指，其实手指应比目光快，所以才能说指落处便是目光扩展处。因为手指所向就是结果，结果是本来就存在的，它只是为了让目光看到，或思考预测到，本来就存在的，比任何发现要更快，所以说到底实质是手指一定比目光快，更比思考快。但是很多时候感觉目光更快，反正目光刻意等待手指，而手指本应比目光快，却反过来又等目光去扩展下一个，反而更慢了。也就是说，本来比手指慢的目光，却还以为它太快要等待手指，反而慢了。所以，不要顾及，不要怕忘记，不要等手指，目光尽快延伸，即可。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline18" class="outline-2">
+<h2 id="orgheadline18"><span class="section-number-2">18</span> 20170414 （重点在于看到所有的数字而非点到）</h2>
+<div class="outline-text-2" id="text-18">
+<p>
+煅炼的是眼睛，手指如同考官只是告诉你结果对错的，根本不用训练，不要想那么复杂，若让视线停止扩展，就如同考场上的考生停止答卷，等待老师告诉你答完了后是否能告诉你对错一样可笑，这是常识，不用等待。认识到这点，训练才步入正轨，当然，也是需时间的，只需记住一点：你的心思要在考卷上而非考官。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline19" class="outline-2">
+<h2 id="orgheadline19"><span class="section-number-2">19</span> 20170414 （训练的是视线而非反应）</h2>
+<div class="outline-text-2" id="text-19">
+<p>
+要达到：变慢的原因不是因为找的慢，而是看的慢
+</p>
+
+<p>
+锻炼分两个阶段，第一去掉眼睛停顿的习惯，第二，去掉眼镜停顿习惯之后，才真正开始锻炼眼睛的广度和速度。两个阶段与手指都无关系。手指只是辅助的作用。成绩说不了什么
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline20" class="outline-2">
+<h2 id="orgheadline20"><span class="section-number-2">20</span> 20170416 （只要看到就应能注意到，不存在余光或焦点）</h2>
+<div class="outline-text-2" id="text-20">
+<p>
+当目光能一下子扩展到全部数字的时候，下一步就应该是，快速地将注意力，凝聚在每个数字上。
+</p>
+
+<p>
+当达到了一定的程度，目光都不用移动，就能看到全部的数字。就好像用余光在看一样。看着数字，一个一个数一点到，目光根本不用移动，非常轻松。这个时候如果注意力一分散，状态就没了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline21" class="outline-2">
+<h2 id="orgheadline21"><span class="section-number-2">21</span> 20170504 （快到一定程度后，就变成视线广度而非反应的问题了）</h2>
+<div class="outline-text-2" id="text-21">
+<p>
+感谢以前看过的一则评论，引用为标题，忘记了出处，但是一句点醒梦中人：用扩大视界替代寻找，不思考替代默念，轻松替代紧张，几方面结合。
+</p>
+
+<p>
+（每种技巧都有背后的原因，每份领悟都基于错误的经验）
+最近的新领悟，在以前领悟的基础上，进一步明白为何是看，是看全，不是记，不是念，不是找，不是只看一点，知道了为什么快且轻松，为什么两只手更快的深层次原因，知道了还是可以一只手继续，也许是对的。比如：将视线线性的扩展过程（即便你迅速地"从头到尾"看清了每个数字，但有头、尾，就表示线性），变成多维的扩展（从点到线，到面，到……维数越多，越稳定，因为"线"是很容易"断"的）。再一步解释，你"点"的过程是顺序（线性）的，但事实是，那些数字却不是顺序映入你的眼中。不刻意做这种非顺序到顺序的转换，才叫顺其自然，才会轻松，且快。这也是以前所感觉的，不要想，要看，的原理。其它类似。这些行为，是需要时间来习惯的，每次的领悟是经历过一段时间煅炼才能理解的，每次的技巧，也是煅炼到一定程度才适用的，对于更慢的和更快的阶段，都是错误的。其实，任何技巧方法经验领悟，都是对锻炼了一定程度而言的，对于合适的，它能点醒，对于不合适的，如同天书。但是，对于任何阶段都有一种万能的方法，就是明白，没有捷径，不断努力，相信会有更好，不要放弃，也不要自以为是。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline22" class="outline-2">
+<h2 id="orgheadline22"><span class="section-number-2">22</span> 20170510公平</h2>
+<div class="outline-text-2" id="text-22">
+<p>
+所有数字都是公平的而非只是你要找的那个
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline23" class="outline-2">
+<h2 id="orgheadline23"><span class="section-number-2">23</span> 20170507凝聚</h2>
+<div class="outline-text-2" id="text-23">
+<p>
+当目光能一下子扩展到全部数字的时候，下一步就应该是，快速地将注意力，凝聚在每个数字上。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline24" class="outline-2">
+<h2 id="orgheadline24"><span class="section-number-2">24</span> 20170508 余光</h2>
+<div class="outline-text-2" id="text-24">
+<p>
+当达到了一定的程度，目光都不用移动，就能看到全部的数字。就好像用余光在看一样。看着数字，一个一个数一点到，目光根本不用移动，非常轻松。这个时候如果注意力一分散，状态就没了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline25" class="outline-2">
+<h2 id="orgheadline25"><span class="section-number-2">25</span> 20170512 替代常规</h2>
+<div class="outline-text-2" id="text-25">
+<p>
+用扩大视界替代寻找，不思考替代默念，轻松替代紧张，几方面结合。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline26" class="outline-2">
+<h2 id="orgheadline26"><span class="section-number-2">26</span> 20170518 印象</h2>
+<div class="outline-text-2" id="text-26">
+<p>
+个位数比较快的看到是因为它在你的头脑里，把更多的数字放到头脑里再看，比看到了头脑再知道要快很多
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline27" class="outline-2">
+<h2 id="orgheadline27"><span class="section-number-2">27</span> 20170520 训练方向-余光</h2>
+<div class="outline-text-2" id="text-27">
+<p>
+其实训练的是余光
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline28" class="outline-2">
+<h2 id="orgheadline28"><span class="section-number-2">28</span> 20150522 训练方向-独立的数字</h2>
+<div class="outline-text-2" id="text-28">
+<p>
+切断每个数字间的联系。每个数字与前面后面的都无关系，每次点都是重新开始点，不要把顺序的附近数字当成包袱。每个数字都是独立的，不要分心记忆与注意它们的关系。当然，视线还是要放宽的。学会把每个数字做为新的开始。每个数字点完就忘记它，只在点的时候在你心中（所有数字均在眼下）
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline29" class="outline-2">
+<h2 id="orgheadline29"><span class="section-number-2">29</span> 20170523 两个重点</h2>
+<div class="outline-text-2" id="text-29">
+<p>
+总结两点：第一每个数字都是独立的，切断数字间的联系。第二视线应该是相对固定的，不是不动，是用余光找。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline30" class="outline-2">
+<h2 id="orgheadline30"><span class="section-number-2">30</span> 20170524 规律</h2>
+<div class="outline-text-2" id="text-30">
+<p>
+有一个规律可以试试，就是点数字的时候学会放下。具体点说，点完了一个数字，那个数字就没有用了，要学会忘记点过的数字，去点下一个。不要让过去的数字占据你的精力，一个个的去点，一个个的去忘记，很多时候都是因为心里放不下，觉得点过的数字或多或少还有点用，不舍得忘，但其实它会降低你的速度。学会忘记，再往后就是尝试不去预知，不考虑下一个将会是什么数字，下一个数字在哪，因为那也会影响你对视野广度的煅炼，让你花费更多的精力在逻辑顺序和记忆上了。可能数字少或开始时不断预知下一个甚至下几个会觉得快，但是那不是根本，到一定时候就不能再快了，因为精力和记忆力，注意力是有限的，而且数字越多练习越累，时间长不练习了还容易退步，成绩很不稳定。简言之，最终要学会把每个数字的联系斩断，每个数字都是孤立的，唯一的联系就是切换的瞬间。这样，你的精力便只集中于当下，也不要耗时去想过去与未来。个人的感受，可能也因人而异。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline31" class="outline-2">
+<h2 id="orgheadline31"><span class="section-number-2">31</span> 20170524 是看不是找</h2>
+<div class="outline-text-2" id="text-31">
+<p>
+要达到：变慢的原因不是因为找的慢，而是看的慢
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline32" class="outline-2">
+<h2 id="orgheadline32"><span class="section-number-2">32</span> 20170524 注意与记忆的容量与起点</h2>
+<div class="outline-text-2" id="text-32">
+<p>
+一般都觉得是头1-10左右很快，然后就慢下来了，其实不是1-10，是头十几个数字，一般都习惯将数字起点设置为1，若把每个数字当做新的起点，那样会明显感觉轻松快速很多。当然足够多的训练，也会将十几个提升。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline33" class="outline-2">
+<h2 id="orgheadline33"><span class="section-number-2">33</span> 20170524 关闭记忆的能力</h2>
+<div class="outline-text-2" id="text-33">
+<p>
+带着记忆去点，总是会分心去记忆前后，或判断，不能充分的煅炼眼睛。因为总是记忆，所以不能专心。当然，记忆也有好处，但过尤不及，若记忆分了你的专心，则减少记忆的量。专心的程度，取决于保持"不"记忆状态时间的长短。3*3太少，感觉不出来，适合练习速度与记忆；4*4稍少，可以练记忆与一点专心；5*5以上则主要是专心的程度。
+</p>
+
+<p>
+20170528 煅炼的是眼睛不是手速
+锻炼的应该是看得更快，而不是点得更快，点不点到不重要，重要的是你看没看到，切记切记切记，你锻炼的是视野，不是速度。一旦你在意点击的速度，你的速度反而慢下来了，反而忘记了快慢，才会更好，因此需要把一些干扰排除。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline34" class="outline-2">
+<h2 id="orgheadline34"><span class="section-number-2">34</span> 20170528 行为本身就是目的</h2>
+<div class="outline-text-2" id="text-34">
+<p>
+当你已经为了某种目的而来到了这里去做的时候，一切的目的都可转换为：在做的时候把那个目的忘掉。全身心的去做，无为而至。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline35" class="outline-2">
+<h2 id="orgheadline35"><span class="section-number-2">35</span> 20170615 找与看</h2>
+<div class="outline-text-2" id="text-35">
+<p>
+在点的时候，每个数字开始是需要寻视，然后就都是清晰的了，不会因为点而清晰，也不会因为没点而模糊
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline36" class="outline-2">
+<h2 id="orgheadline36"><span class="section-number-2">36</span> 20170620 不用点的训练</h2>
+<div class="outline-text-2" id="text-36">
+<p>
+你关注的是视线，不是手指，手指只是顺带动动，能动不动，不能动也别让它影响了你的训练，手指停滞了错误了但别让视线停滞，大不了不动手指，只看完所有数字就退出来，这至少也达到训练视线的目的了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline37" class="outline-2">
+<h2 id="orgheadline37"><span class="section-number-2">37</span> 20170620 只看不点</h2>
+<div class="outline-text-2" id="text-37">
+<p>
+其实每轮训练时仅训练看完就行了，看完就返回，不用点。这样能更有针对性，效率也更高些，也能大至知道看的时间。这样到一定阶段后，再用手指来实践一下训练的成果。这样想来，手指挺误导人的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline38" class="outline-2">
+<h2 id="orgheadline38"><span class="section-number-2">38</span> 20170622 探索</h2>
+<div class="outline-text-2" id="text-38">
+<p>
+练习到一定时间遇到了瓶颈，可换一种方式，经常换方法，找感觉最好的方法。比如，有一个阶段觉得看的慢了，可能是由于顺序"默念"的原因，这时就换个方式，杜绝默念，整体去看，并行读。新方式不一定对，但会让你的前进方向更开阔更有动力和新鲜感
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline39" class="outline-2">
+<h2 id="orgheadline39"><span class="section-number-2">39</span> 20170622 放松后每次实际不只一个数字</h2>
+<div class="outline-text-2" id="text-39">
+<p>
+同时不是看到一个，是多个，一片数字，并且当你尝试数的时候，这一片数字不一定是相邻的，而且东一个西一个的分布着，所以当你数的时候发现是在一个一个的找的时候，立即停下来，转换一下方式，视野，等等。数字本来就被看着在那等你去数到的，而不是数到了才看到。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline40" class="outline-2">
+<h2 id="orgheadline40"><span class="section-number-2">40</span> 20170622 毫无犹豫的信心</h2>
+<div class="outline-text-2" id="text-40">
+<p>
+手指的作用是指出早已经看到的，落指前要相信自己早已看见过了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline41" class="outline-2">
+<h2 id="orgheadline41"><span class="section-number-2">41</span> 20170629 预知又好用了？</h2>
+</div>
+
+<div id="outline-container-orgheadline42" class="outline-2">
+<h2 id="orgheadline42"><span class="section-number-2">42</span> 20170711 勇往直前</h2>
+<div class="outline-text-2" id="text-42">
+<p>
+不怕点错，破斧沉舟，勇往直前。只有不怕慢，才会快！只有不在意快，才不会慢下来！
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline43" class="outline-2">
+<h2 id="orgheadline43"><span class="section-number-2">43</span> 20170711 一轮训练，多个机会</h2>
+<div class="outline-text-2" id="text-43">
+<p>
+练习的是视野，不是逻辑，所以你的任务只是当前数字，不要思前顾后，不要怕点错点慢，否则会因为你的思想，影响了扩展视野的煅炼机会，这样你每点一个数字都是一次重新开始看，点了25个数字，就等于训练了25遍，反之点完一轮也许没煅炼到眼睛，可能只煅炼了肌肉，以来因为幸运感觉的反应变快。再次强调你练的是视野，不是快慢，不是记忆，不是反应，不是寻找，所以一定要斩断联系！将是否找到，转换为是否能看到，你不是因为记住了而点到了，而是因为再次看到而点到。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline44" class="outline-2">
+<h2 id="orgheadline44"><span class="section-number-2">44</span> 20170711如果数字是独立的</h2>
+<div class="outline-text-2" id="text-44">
+<p>
+把注意力放在当前数字上而非上一个，或下一个，或这些数字之间的联系上
+</p>
+
+<p>
+小小舒尔特表，蕴含了无限深意，看似眼花缭乱，其实它给了每个人弄清自己终究将注意力分散到了哪里的机会。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline45" class="outline-2">
+<h2 id="orgheadline45"><span class="section-number-2">45</span> 20170712 预知与独立</h2>
+<div class="outline-text-2" id="text-45">
+<p>
+可以预看与独立并存只是要懂得随时切换，每一轮也是在练习心境
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline46" class="outline-2">
+<h2 id="orgheadline46"><span class="section-number-2">46</span> 20170713去除关联</h2>
+<div class="outline-text-2" id="text-46">
+<p>
+想象着如果每点一个数字就换一幅图，这样便去除了关联
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline47" class="outline-2">
+<h2 id="orgheadline47"><span class="section-number-2">47</span> 20170714没有开始</h2>
+<div class="outline-text-2" id="text-47">
+<p>
+不用刻意分离每个数字，有时一下缓存到几个就缓存上，如1-9，有时找不到就一个数字自成一体，只要将开始放在每一段的第一个就行，不用每个数字都是开始，顺其自然地切換开始，忽快忽慢至匀速。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline48" class="outline-2">
+<h2 id="orgheadline48"><span class="section-number-2">48</span> 20170721不要聚焦</h2>
+<div class="outline-text-2" id="text-48">
+<p>
+即便不得不寻找，也不要把视野只限制在一个点，每次搜索的单位由点变为面
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline49" class="outline-2">
+<h2 id="orgheadline49"><span class="section-number-2">49</span> 20170721由点到面</h2>
+<div class="outline-text-2" id="text-49">
+<p>
+即便不得不寻找，也不要把视野只限制在一个点，每次搜索的单位由点变为面
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline50" class="outline-2">
+<h2 id="orgheadline50"><span class="section-number-2">50</span> 20170816 反复的看</h2>
+<div class="outline-text-2" id="text-50">
+<p>
+想像着点每个数字的同时，表格也刷新不同的序列，而非不动，这样才反应出看的速度
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline51" class="outline-2">
+<h2 id="orgheadline51"><span class="section-number-2">51</span> 20170828 一视同仁</h2>
+<div class="outline-text-2" id="text-51">
+<p>
+学会不断忘记，不断重新开始，不考虑当前进度，所有数字一视同仁，比如10以内的数字，应当与其它的一样速度才对，不因为超过10而减慢，否则便是有了杂念
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline52" class="outline-2">
+<h2 id="orgheadline52"><span class="section-number-2">52</span> 20170908 忘记</h2>
+<div class="outline-text-2" id="text-52">
+<p>
+排除杂念，总是不由自主回忆点过的数字，以及想知道还有多少，所以，每个数字点完后干脆尝试停止脑中活动专心只找该点的数字。点完的已经点完了，不要再占用你的精力，还有多少也与你当下"点"的目标无关。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline53" class="outline-2">
+<h2 id="orgheadline53"><span class="section-number-2">53</span> 20170915 整体去看</h2>
+<div class="outline-text-2" id="text-53">
+<p>
+整体看，不要记忆 快速看完不用顾及手指，手指自然会点完，意思不是顺序着快速看完同时手指紧跟着目光之后，而是一眼全部看完，再转换成手指点的顺序。你的看，绝对不是顺序的，那样就变成了训练反应而非看。看，是一个整体，既然没有了顺序，自然不会瞻前顾后考虑到底到了哪里，还有多少这样的分心之事。也给人一种似乎是余光，眼睛不动，预知，的错觉，其实早已全部映入眼帘。所以如果训练正确，不存在到哪个数字后就慢了的问题，所有数字都是一样的，即便慢也是随机的慢，因为没看清，而不是没记住。这感觉，阶数高就感觉明显。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline54" class="outline-2">
+<h2 id="orgheadline54"><span class="section-number-2">54</span> 20170915 是看不是找</h2>
+<div class="outline-text-2" id="text-54">
+<p>
+练习的是看到，不是找到。点到的数字都是看到的，不是找到的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline55" class="outline-2">
+<h2 id="orgheadline55"><span class="section-number-2">55</span> 28170916 宁慢勿错</h2>
+<div class="outline-text-2" id="text-55">
+<p>
+练习的重点 宁慢勿错，还有就是，目光要广，不要被当前数字吸引了全部注意力，当前数字只是看到的数字之一，没什么特别的，这个习惯可能需要放慢速度来练习，一旦发现你的目光太聚焦于某个数字了，就赶紧纠正。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline56" class="outline-2">
+<h2 id="orgheadline56"><span class="section-number-2">56</span> 20171012 看，宽</h2>
+<div class="outline-text-2" id="text-56">
+<p>
+除了要看不要找，还有一点就是，尽量把目光放宽
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline57" class="outline-2">
+<h2 id="orgheadline57"><span class="section-number-2">57</span> 20171013视线与反应</h2>
+<div class="outline-text-2" id="text-57">
+<p>
+要意识到视线始终是走在手和反应的前面的，不会等待它们。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline58" class="outline-2">
+<h2 id="orgheadline58"><span class="section-number-2">58</span> 20171013关键</h2>
+<div class="outline-text-2" id="text-58">
+<p>
+记住要点，视线范围尽量放广，视线不要等待动作和反应，要靠看不靠找
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline59" class="outline-2">
+<h2 id="orgheadline59"><span class="section-number-2">59</span> 20171020 切换</h2>
+<div class="outline-text-2" id="text-59">
+<p>
+数字的敏感度，其实是脑中缓存的当前关注的数字区间的切换灵活度。大多开始时，会练习到对1-9很敏感，之后就慢了，其实，当到10后，脑中切换下当前应关注的区间，如11-19，就可提就速度，因人而异，但大多人应同时能关注到10个左右。这10个数字随着你点的进度而"滑动"，比如开始只关注1-10，到10的时候变成11-20，等等，再灵活些，到5的时候变成5-15，这应该就是数字的敏感度的根源吧？关键是要忘记掉点过的数字，你头脑中的区间才会向前，否则只能始终是1-10，之后就变成一个个的找数字了。所以可尝试在切换前停下来，想想下一批要点的数字是哪些，然后再点，逐渐减少切换的停顿时间，然后我们要做的就是看，而非找。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline60" class="outline-2">
+<h2 id="orgheadline60"><span class="section-number-2">60</span> 20171021指不从心，指随眼落</h2>
+<div class="outline-text-2" id="text-60">
+<p>
+不要反应不怕点错 只需关注眼睛一下子看完，手指就别关注了，手指自动的尽快划完就行，看完即点完，可能点错，但没关系，看完才重要。渐渐的，看完后，手指点完的正确率会上升。这样有利于训练集中注意力在看上而非点上，如果不明白的话，举个例子，眼睛迅速看完，同时手指也似乎正确的尽量与目光一致地"乱点"一气也结束了，开始不要在意手指的精确度，可能点的正确率只有1/100（一般前几个数字的正确率较高），这也不奇怪，目光本来就是快于反应，最后一个正确点到的数字后就表示从那起目光就与反应拉开了距离，但至少全部数字都看过了。这样训练是为了避免过分关注手指点到了哪里而停滞了目光，看不见了后面的其它数字，等渐渐的适应了目光稳定的快速看完（这时目光速度已达到了可能手指即便想乱点，也还没点出第一下前就看完了；或者即便控制手指也不会影响目光的前进与扫视的范围），再稍微分出些精力控制下手指的精确度。也就是，心神的主要精力不要浪费在控制手指上，毕竟人的反应是有极限的，这样渐渐的，有种手指随眼睛自动落下的感觉，根本不用控制。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline61" class="outline-2">
+<h2 id="orgheadline61"><span class="section-number-2">61</span> 20171022 重点是视线</h2>
+<div class="outline-text-2" id="text-61">
+<p>
+不要让手指跑在视线的前面 即使3*3一闪而过，目光也其实是在手指前面的，不要被手指打乱了视线。手指再快也无用，只有视线在手指前面才是又快又准的正确方式。一切的奇迹都应是在看的见的基础上才能可靠的出现。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline62" class="outline-2">
+<h2 id="orgheadline62"><span class="section-number-2">62</span> 20171024 开始在后面</h2>
+<div class="outline-text-2" id="text-62">
+<p>
+先不管三七二十一把前面熟悉的迅速点完（比如1-9），然后重点熟悉和点后面的数字。将真正训练的开始定在后面，前面一带而过。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline63" class="outline-2">
+<h2 id="orgheadline63"><span class="section-number-2">63</span> 20171027 没有负担地看</h2>
+<div class="outline-text-2" id="text-63">
+<p>
+感受看到而非找到的感觉。手自然的点在那里，不因为提前看到了而增加记忆的负担，也不因为快了一些而想更快，慢了一些而想弥补。眼睛自然的看，渐渐的会因熟练与阶数而增减转动的频率，头脑也会放松，没有了预知、记忆、寻找的负担。训练多了，感觉的至多是眼睛有些累，而非头痛。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline64" class="outline-2">
+<h2 id="orgheadline64"><span class="section-number-2">64</span> 20171031 相信</h2>
+<div class="outline-text-2" id="text-64">
+<p>
+不断扫视，扫到即点，不要停顿到看清，因为扫视到了，就是看清了，要相信自己的视力。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline65" class="outline-2">
+<h2 id="orgheadline65"><span class="section-number-2">65</span> 20171031 限制</h2>
+<div class="outline-text-2" id="text-65">
+<p>
+不是脑袋控制手指，而是目光，在脑袋看来，手指不由自主的随目光而动。不要控制手指，顺其自然不加以控制的练习会让你切实体会到进步乐趣，脑袋控制的是目光看，而非对手指的控制反应，这样便感觉从脑袋控制反应的限制中解脱出来的舒畅与轻松感，从而更有动力。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline66" class="outline-2">
+<h2 id="orgheadline66"><span class="section-number-2">66</span> 20171106 手指在哪</h2>
+<div class="outline-text-2" id="text-66">
+<p>
+用眼睛尽量看，之后会发现手指不是依次快速落下，而是似乎双手指有时同时落下却不错，尽量不是依次点下，尽可能多的同时用上双手，又不必分心去控制落下的策略，自动的却无双手互抢的奇怪感觉，好像手不是自己的，自动寻找到最轻松迅速却又不阻挡视线的下落方式。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline67" class="outline-2">
+<h2 id="orgheadline67"><span class="section-number-2">67</span> 20171108 点的技巧</h2>
+<div class="outline-text-2" id="text-67">
+<p>
+总是说看最重要，手指就是点完看过的。但是点也有一定的技巧，快点看完，不管怎么点，看完的基础上，尽快点完。就像我亲自感受过的，单手三阶难以破1.3，单手四阶难以破2.3，双手点就能很快突破。即便双手，我想，点的方式若不变，也难以破除一定的极限的。手指会自动随着顺序进行，跟本无须控制哪个手指点。点完就行，谁点不重要，看过之后，注意力只在点上，而非谁去点，怎么点。一旦你觉得你开始控制手指了那就不是这种状态了，你会感觉手腕由于过度被控制而发酸，3阶可能也能达到0.9左右，但是感觉很难寸进，你更多的精力应该控制的是目光和思想，这样手腕任其自然，不累，有游刃有余的感觉，当然，若只用单手，因为单手只有唯一个线性的策略，为了追上思想和视线，还是会有些酸，如果双手，就会自然充分利用好双手交替的优势的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline68" class="outline-2">
+<h2 id="orgheadline68"><span class="section-number-2">68</span> 20171110阅读的乐趣</h2>
+<div class="outline-text-2" id="text-68">
+<p>
+每一次舒尔特表，就是一篇文章。文章的意义就是数字的次序，将文章背诵下来就是将所有数字位置记住，背的过程是读，记的过程是看。将练习的过程变为阅读。每一篇文章阅读完才知其意义。虽然这里的意义比较抽象，但是，知道了这点，便与阅读一样，你可以稳步提升"阅读"的速度，而不必被无关的单字干扰，也不存在哪个数字更敏感的问题。反之，其实阅读并理解，实质就是看完文字并根据头脑中的认知按特定次序加工，与舒尔特看完数字并点完是一个道理。实质就是看，这样，便不会枯燥。所以，你今天看完50篇文章了吗？
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline69" class="outline-2">
+<h2 id="orgheadline69"><span class="section-number-2">69</span> 20171110 顺序</h2>
+<div class="outline-text-2" id="text-69">
+<p>
+阅读被打乱的是文字，意义是顺序出现的。舒尔特被打乱的是数字的意义，数字本身是自然映入的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline70" class="outline-2">
+<h2 id="orgheadline70"><span class="section-number-2">70</span> 20171115看完</h2>
+<div class="outline-text-2" id="text-70">
+<p>
+还是那个感觉，不管手指怎么样，一下子全看完。手指一下子全点完，不要控制它，只告诉它点完看过的，不管它怎么点。你要控制的是一下子看完，这个动作。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline71" class="outline-2">
+<h2 id="orgheadline71"><span class="section-number-2">71</span> 20171115 忽略手指</h2>
+<div class="outline-text-2" id="text-71">
+<p>
+手指点归点，眼睛就当手指不存在，该看哪了就看哪，不要等手指也别被手指干扰到。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline72" class="outline-2">
+<h2 id="orgheadline72"><span class="section-number-2">72</span> 20171123 维持完整</h2>
+<div class="outline-text-2" id="text-72">
+<p>
+不用的表，数字的次序本身就是表的意义，不同的表区别就在于次序，次序是每个表的唯一标识。而非要一定依次去看，而是一下子尽快看完整个表的意义，一下子确认完表的标识。因为标识是一个整体低阶中几乎视线不动，而高阶中视幅达不到全览时，就会靠不断扫视来让这个整体维持完整不会残缺（或许记忆表也行，但这便不是对视线的训练了），千万别因为寻找，而导致图像片面残缺不完整。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline73" class="outline-2">
+<h2 id="orgheadline73"><span class="section-number-2">73</span> 20171128 奇妙的状态</h2>
+<div class="outline-text-2" id="text-73">
+<p>
+左手，右手，视线三者各自独立，各行其事，似乎毫无关系。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline74" class="outline-2">
+<h2 id="orgheadline74"><span class="section-number-2">74</span> 20171202 不断的开始</h2>
+<div class="outline-text-2" id="text-74">
+<p>
+将每个数字看做新的轮舒尔特表的数字，而非原有的，这样便使得每个数字失去了关联，省去了预知和记忆的压力。记住，每一次点击都假想舒尔特表发生了变化，这样便不会企图上一个、下一个是什么的疑问，因为不断变化的表会让你明白数字间没有上一个、下一个的关系；也不用担心找不到下一个数字，因为找是基于不断的上面的，当你认为整个表本身都不是固定的前提下，根本没有找的机会，也不必记忆无意义的相对位置。这也是强迫你将注意力不得不只放在当下的一个技巧。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline75" class="outline-2">
+<h2 id="orgheadline75"><span class="section-number-2">75</span> 20171203 加速度</h2>
+<div class="outline-text-2" id="text-75">
+<p>
+将前9个看做是后面的加速阶段，并且，脑袋尽量别想事了
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline76" class="outline-2">
+<h2 id="orgheadline76"><span class="section-number-2">76</span> 20171206 克制</h2>
+<div class="outline-text-2" id="text-76">
+<p>
+千万克制住控制手指的欲望，无论你反应有多快，一点控制了手指，即便速度没降低，也增加了大脑与手指的负担，失去了煅炼视觉的机会。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline77" class="outline-2">
+<h2 id="orgheadline77"><span class="section-number-2">77</span> 20171214 关注</h2>
+<div class="outline-text-2" id="text-77">
+<p>
+即便看到了将要点的，但那不是现在点的，也不关注。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline78" class="outline-2">
+<h2 id="orgheadline78"><span class="section-number-2">78</span> 20171214 协调</h2>
+<div class="outline-text-2" id="text-78">
+<p>
+不想前面，不想后面，只看当前，看到就点，手要配合好眼，不要反客为主眼等手。眼
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline79" class="outline-2">
+<h2 id="orgheadline79"><span class="section-number-2">79</span> 20171215 分组</h2>
+<div class="outline-text-2" id="text-79">
+<p>
+三个一组三一组个的点，这样也符合想往下看，以及记忆的规律。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline80" class="outline-2">
+<h2 id="orgheadline80"><span class="section-number-2">80</span> 20171225 有的放矢</h2>
+<div class="outline-text-2" id="text-80">
+<p>
+为了看清每个数字，眼睛不要盲目乱转。头几个数字一样的，看清是或不是再看别的。要有的放失，即然看到那了，就要看清再走。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline81" class="outline-2">
+<h2 id="orgheadline81"><span class="section-number-2">81</span> 20171226 手速</h2>
+<div class="outline-text-2" id="text-81">
+<p>
+两手轮流落下是提升手速的关键
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline82" class="outline-2">
+<h2 id="orgheadline82"><span class="section-number-2">82</span> 20171226 机会与微调</h2>
+<div class="outline-text-2" id="text-82">
+<p>
+手速，视幅，眼力是基础。基础练好了，就可以提前看清楚了，但能看清全部后，应立即再考虑用剩余的精力练习落指的方式，而非看清后就停下来等手指去点了。类似的，当提前考虑好落指策略，肯定还有基它方便可以调整的，以更进一步，只有时刻处在追求进取的心态中，并充分抓住并利用好每一瞬间，才能有更多的突破。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline83" class="outline-2">
+<h2 id="orgheadline83"><span class="section-number-2">83</span> 20171226 精力分配</h2>
+<div class="outline-text-2" id="text-83">
+<p>
+只有尽快看完所有，才可能在已看清的基础上，有精力分配与练习两手配合的最优策略。手速是标，视幅是基础，眼力才是本。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline84" class="outline-2">
+<h2 id="orgheadline84"><span class="section-number-2">84</span> 20180205 分享一下训练技巧与心得</h2>
+<div class="outline-text-2" id="text-84">
+</div><div id="outline-container-orgheadline85" class="outline-3">
+<h3 id="orgheadline85"><span class="section-number-3">84.1</span> 手速-单手练</h3>
+<div class="outline-text-3" id="text-84-1">
+<p>
+先只左手，再只右手。
+</p>
+
+<p>
+实践感觉，
+</p>
+
+<p>
+3阶1.2-1.3，4阶2.3-2.4，5阶3.7-3.8
+</p>
+
+<p>
+就大概是单手的极限了吧。
+</p>
+
+<p>
+而6阶以上，目前感觉，单手完全可以练很久，到手不及眼的时候再换。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline86" class="outline-3">
+<h3 id="orgheadline86"><span class="section-number-3">84.2</span> 协调-双手练</h3>
+<div class="outline-text-3" id="text-84-2">
+<p>
+也可以说是手法，有些人是左食右拇，有些人是左拇右食，或双拇指，双食指等等。
+</p>
+
+<p>
+其实是注意安全的分配问题。有很多策略，比如左手尽量点左侧右手尽量点右侧以减少位移，或者尽量交错双手落指以减少抬指落指时间，等等，很明显，双手是快于单手的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline87" class="outline-3">
+<h3 id="orgheadline87"><span class="section-number-3">84.3</span> 视幅-不用手，只用眼</h3>
+<div class="outline-text-3" id="text-84-3">
+<p>
+手会干扰你的注意，将注意从眼转移到手，由于手慢于眼，这期间担误的多余时间又使得脑袋中不由自主去默念、思考、记忆、寻找……让精力更消耗在无用之上。所以，可以只看不点，看完一轮就退出再重看，如果不习惯，可以用儿童模式，灰显点过的数字让你只将精神集中于未点的，眼睛会不自觉的顾盼那些没点的。其实还有一点，就是，练久了手会酸，那就偷一下懒，让手休息一会吧。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline88" class="outline-3">
+<h3 id="orgheadline88"><span class="section-number-3">84.4</span> 敏感度-不用手，不用眼</h3>
+<div class="outline-text-3" id="text-84-4">
+<p>
+尝试一下，你闭上双眼，不默念，只是依次快速、清晰的浮现完每个数字，你一次能同时浮现出几个数字？位置在哪浮现？100个数字你多久能浮现完？当数字清晰了，迅速了，你会发现，睁开眼睛后，你的眼晴会不由自由的只看你脑中的那些数字，数字在头脑中迅速切换浮现，眼睛同时就看到了，然后手就点到了，而非费劲的去一个个的找。眼随心动，指随眼落，再后来，眼力上去后，直接有指随心落的感觉，似乎是有了预知的能力。如果落实一下敏感度，还有个决窍，在自定义模式中，定义好1-10，11-20，21-30，31-40，41-50等等，先熟悉好各范围的十个数字；然后：1-25，11-35，21-45，31-55，等等，自己发挥吧。你会发现，最开始最熟悉的，往往是开始的几个数字，要是能将所有区间一视同仁就好了。
+</p>
+
+<p>
+当然，视幅练久了头晕眼胀，可是却还想练习的时候，这样，的确是一个不会累，也很方便的训练方法。
+并且，依次在头脑中浮现数字而非数数字，也似乎有助睡眠，久了习惯了，再加上颜色，声音，变换形状，浮现文字，图像，甚至动态图像，直接能在头脑中看电影了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline89" class="outline-3">
+<h3 id="orgheadline89"><span class="section-number-3">84.5</span> 理论值</h3>
+<div class="outline-text-3" id="text-84-5">
+<p>
+目前我还是探索，探索到以上的方法。究竟极限是什么？是多少呢？其实只要我们练习就行了，不必在意那些，这都是因人而异的，只要自己提升，就足矣。
+</p>
+
+<p>
+引用一下之前和小鹏聊天是说的吧，也算是给大家一个理论参考：
+</p>
+<pre class="example">
+细算一下，你玩过计算器吗？我以前小时候玩过计时器，开始计时后立即停下。以最快速度的按两次。我以前最快两次按键间隔是0.05秒，这是我的极限了，我觉得拿到舒尔特上，除去反应时间，但按不同数字也是有位移的，按照以前计时器的按键速度估计，就乘2吧，舒尔特上单手一个键0.1秒应该也可以了吧，这样单手无反应理论上9个数字0.9秒，两个手的话，就减半，0.45秒。这样下来，9个键，还得0.45，还不算反应与看清所有数字的时间，所以我觉得那个人成绩不太可能，除非他确实大异常人。我这个估算应该问题不大，我记得在某处看过，人类反应理论极限0.2秒，这样双手理想为0.45+0.2=0.65还有些可能。拿到我自身上，我单手最高纪录实际1.25秒，其实其中看清与反应约0.3，纯手按9个键0.9多，也是符合这个规律。双手最高0.82，看清与反应仍然约0.3，双手0.52按9个键，也是正常的范围。
+所以我觉得那个0.41甚至0.3几的成绩，不太可能。
+要知道人的肌肉也是要休息的，按两下那么快可以，但好几个键连续都那么快，太难以想象了
+
+按照我之前的计算方式，四阶应该是反应时间，0.5以上，因为我也一下子看不完16个数字，要分两次看才能看得完，这不是熟练不熟练的问题，应该就是人类反应大概就是那样了，一下子十几个数字。4阶最好的成绩，如果比1.4少，那很有可能就是挂了。五阶以上我就不好说了。毕竟练得也不那么多。而且五阶以上反应就不是0.3那么简单了。
+</pre>
+</div>
+</div>
+</div>
+<br>
+<div id="mypostamble" align="right" style="float:right" class="status">
+    <table> <tbody> 
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Author</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">QuietHeart</td>	  
+	</tr>
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Email</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">
+	    <a href="mailto:quiet_heart000@126.com">quiet_heart000@126.com</a>
+	  </td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Date</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2018-03-16 五 10:40]</td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2018-03-16 五 10:42:57></td>
+	</tr>
+    </tbody></table>
+</div>
+<br>
+
+
+
+  </div>
+</article>
+
+		  <!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="/categories/study/misc/schulte_table_2017" data-title="2017年舒尔特数字表训练总结--挣扎在路上" data-url="http://vaqeteart.github.io//categories/study/misc/schulte_table_2017.html"></div>
+<!-- 多说评论框 end -->
+<script src="/assets/js/comment.js"></script>
+		</td>
+             </tr>
+            <tr>
+                <td id="td_page_footer" colspan="6">
+<footer>
+  &copy 2015
+</footer>
+<a id="bottom"></a>
+</td>
+
+
+            </tr>
+        </tbody>
+    </table>
+  </body>
+</html>

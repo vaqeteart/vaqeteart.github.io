@@ -40,6 +40,23 @@
 		       var categories_count = JSON.parse('{"/categories":0}');
 
   		       
+    		       var post_categories = '/categories/study/misc';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
     		       var post_categories = '/categories/study/linux';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -930,6 +947,34 @@
     <ul id="post-list" class="post-list">
       
         <div>
+            [2018-03-16]<a href="/categories/study/misc/schulte_table_2017.html">2017年舒尔特数字表训练总结--挣扎在路上</a> <br>
+            ||<a href="/categories/study/misc" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  学习/
+  
+  
+
+  
+  
+  /
+  
+  
+
+
+            </a>
+            <hr class='article_line'>
+        </div>
+      
+        <div>
             [2017-02-20]<a href="/categories/study/linux/linux_system_access.html">Linux 访问权限控制基本原理</a> <br>
             ||<a href="/categories/study/linux" style="color:#0066CC; font-size:75%;">
             
@@ -1229,28 +1274,6 @@
   
   
   其它/
-  
-  
-
-
-            </a>
-            <hr class='article_line'>
-        </div>
-      
-        <div>
-            [2015-11-27]<a href="/categories/note/gtd_with_orgmode.html">使用orgmode进行GTD管理</a> <br>
-            ||<a href="/categories/note" style="color:#0066CC; font-size:75%;">
-            
-
-  
-  
-  分类:
-  
-  
-
-  
-  
-  记事/
   
   
 
