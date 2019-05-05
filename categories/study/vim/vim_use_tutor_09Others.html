@@ -40,6 +40,57 @@
 		       var categories_count = JSON.parse('{"/categories":0}');
 
   		       
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
     		       var post_categories = '/categories/study/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -142,7 +193,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/kits';
+    		       var post_categories = '/categories/study/linux/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -159,7 +210,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/linux/misc';
+    		       var post_categories = '/categories/study/kits';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -295,7 +346,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study/emacs';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -312,7 +363,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/emacs';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -346,7 +397,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -363,7 +414,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -567,7 +618,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -601,7 +652,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -618,7 +669,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -880,6 +931,57 @@
     var categories_count = JSON.parse('{"/categories":0}');
 
     
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
     var post_categories = '/categories/study/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
@@ -982,7 +1084,7 @@
         }
     }
     
-    var post_categories = '/categories/study/kits';
+    var post_categories = '/categories/study/linux/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -999,7 +1101,7 @@
         }
     }
     
-    var post_categories = '/categories/study/linux/misc';
+    var post_categories = '/categories/study/kits';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1135,7 +1237,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study/emacs';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1152,7 +1254,7 @@
         }
     }
     
-    var post_categories = '/categories/study/emacs';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1186,7 +1288,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1203,7 +1305,7 @@
         }
     }
     
-    var post_categories = '/categories/study';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1407,7 +1509,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1441,7 +1543,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1458,7 +1560,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1756,7 +1858,7 @@ vimdiff可以同时打开两个或者多个文件,进行比较。它会将两个
 
 <p>举例：<br><br>
 一个简单的程序员的vi编辑器, 创建或修改<code class="prettyprint">~/.vimrc</code>文件,内容如下:  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">set tabstop=4  
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>set tabstop=4  
 set softtabstop=4  
 set shiftwidth=4  
 set autoindent  
@@ -1792,7 +1894,7 @@ set mouse=a
 <li><p>用一個 &#39;適當&#39; 的 space數量取代 tab：<br><br>
 输入<code class="prettyprint">:set expandtab</code>.<br><br>
 这里，需要和shiftwidth一块使用，在多人一起开发项目时，为了使代码风格尽量保持一致，一般不允许在代码使用TAB符，而以4个空格代之。我们可以编辑一个文件，包含下面的内容：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">set shiftwidth=4  
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>set shiftwidth=4  
 set expandtab  
 </code></pre></div></li>
 <li><p>遇到make不做expandtab：<br><br>
@@ -1836,7 +1938,7 @@ set expandtab
 <li><p>配置cscope<br><br>
 配置好cscope之后，可以在代码中完成函数跳转、搜索代码标号、以及查看被调用函数、搜索文件等等。cscope与ctags的不同之处在于，cscope产生的索引是静态的，文件内容改变之后，定位信息就不准确了。<br><br>
 可以在vim的配置中加入相关的配置，如cscope.vim的内容如下：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
 &quot; CSCOPE settings for vim           
 &quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
 &quot;

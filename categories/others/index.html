@@ -32,7 +32,7 @@
 	</th>
 
 	<th class="navitm">
-	      <a href=/categories/others/index.html>分类</a>
+	      <a href=/categories/others/>分类</a>
 	      <div id="category_menus" class="second">
   	      	   
 
@@ -41,6 +41,57 @@
 		       var categories_count = JSON.parse('{"/categories":0}');
 
   		       
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
     		       var post_categories = '/categories/study/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -143,7 +194,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/kits';
+    		       var post_categories = '/categories/study/linux/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -160,7 +211,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/linux/misc';
+    		       var post_categories = '/categories/study/kits';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -296,7 +347,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study/emacs';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -313,7 +364,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/emacs';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -347,7 +398,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -364,7 +415,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -568,7 +619,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -602,7 +653,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -619,7 +670,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -881,6 +932,57 @@
     var categories_count = JSON.parse('{"/categories":0}');
 
     
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
     var post_categories = '/categories/study/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
@@ -983,7 +1085,7 @@
         }
     }
     
-    var post_categories = '/categories/study/kits';
+    var post_categories = '/categories/study/linux/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1000,7 +1102,7 @@
         }
     }
     
-    var post_categories = '/categories/study/linux/misc';
+    var post_categories = '/categories/study/kits';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1136,7 +1238,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study/emacs';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1153,7 +1255,7 @@
         }
     }
     
-    var post_categories = '/categories/study/emacs';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1187,7 +1289,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1204,7 +1306,7 @@
         }
     }
     
-    var post_categories = '/categories/study';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1408,7 +1510,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1442,7 +1544,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1459,7 +1561,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1680,42 +1782,25 @@
       
         
         
-          [2016-02-16]<a href="/categories/others/net_articles201602.html"> 网文收集201602  </a> <br>
 
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-
-
-
-
-Table of Contents
-
-
-1. 网文列表
-
-1.1. &lt;2016...
-          </div>
-          <hr class='article_line'>
+      
+        
         
 
       
         
         
-          [2016-02-11]<a href="/categories/others/template_file.html"> 模板文件  </a> <br>
 
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
+      
+        
+        
 
+      
+        
+        
 
-Table of Contents
-
-
-1. 介绍
-
-1.1. 子标题1
-1.2. 子标...
-          </div>
-          <hr class='article_line'>
+      
+        
         
 
       
@@ -1737,40 +1822,21 @@ Table of Contents
       
         
         
-          [2015-12-17]<a href="/categories/others/testexport.html"> 测试orgmode文章导出  </a> <br>
 
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-
-
-
-Table of Contents
-
-
-1. FAQ [3/8]([37%])
-
-1....
-          </div>
-          <hr class='article_line'>
+      
+        
         
 
       
         
         
-          [2015-12-01]<a href="/categories/others/test_orglink.html"> 测试orgmode链接  </a> <br>
 
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
+      
+        
+        
 
-
-
-Table of Contents
-
-
-1. image links
-2. audio...
-          </div>
-          <hr class='article_line'>
+      
+        
         
 
       
@@ -1788,55 +1854,9 @@ Table of Contents
       
         
         
-          [2015-09-09]<a href="/categories/others/test_categories.html"> 测试自动分类  </a> <br>
-
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          将文章放到当前/xxx1/xxx2/_posts/下会自动指定其分类为[xxx1,xxx2]
-...
-          </div>
-          <hr class='article_line'>
-        
 
       
         
-        
-
-      
-        
-        
-
-      
-        
-        
-          [2015-08-19]<a href="/categories/others/test_link.html"> 测试代码  </a> <br>
-
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-测试文章链接
-[文章（引用错误）](/_posts/2015-08-14-first_pag...
-          </div>
-          <hr class='article_line'>
-        
-
-      
-        
-        
-
-      
-        
-        
-          [2015-08-14]<a href="/categories/others/first_page.html"> My first page  </a> <br>
-
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          第一篇文章
-
-
-这是我的第一篇文章
-直接在github上用Markdown书写。
-
-
-          </div>
-          <hr class='article_line'>
         
 
       

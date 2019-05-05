@@ -40,6 +40,57 @@
 		       var categories_count = JSON.parse('{"/categories":0}');
 
   		       
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
     		       var post_categories = '/categories/study/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -142,7 +193,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/kits';
+    		       var post_categories = '/categories/study/linux/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -159,7 +210,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/linux/misc';
+    		       var post_categories = '/categories/study/kits';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -295,7 +346,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study/emacs';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -312,7 +363,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/emacs';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -346,7 +397,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -363,7 +414,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -567,7 +618,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -601,7 +652,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -618,7 +669,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -880,6 +931,57 @@
     var categories_count = JSON.parse('{"/categories":0}');
 
     
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
     var post_categories = '/categories/study/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
@@ -982,7 +1084,7 @@
         }
     }
     
-    var post_categories = '/categories/study/kits';
+    var post_categories = '/categories/study/linux/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -999,7 +1101,7 @@
         }
     }
     
-    var post_categories = '/categories/study/linux/misc';
+    var post_categories = '/categories/study/kits';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1135,7 +1237,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study/emacs';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1152,7 +1254,7 @@
         }
     }
     
-    var post_categories = '/categories/study/emacs';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1186,7 +1288,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1203,7 +1305,7 @@
         }
     }
     
-    var post_categories = '/categories/study';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1407,7 +1509,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1441,7 +1543,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1458,7 +1560,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1642,7 +1744,7 @@
   <hr id='title_line'>
   <div>
     <p>本&quot;书&quot;诞生于实践。在学校初次接触Linux的时候，编辑器我选择使用Vim，因为Emacs虽然也强大但是不是默认就装到Linux的，其它编辑器又基本没有Vim强大。用vim的时候，脑袋里面总是希望知道这样那样的操作，例如撤销，保存等等等等，于是开始痛苦的查找、发贴询问、实践、学习、记录......；慢慢的知道的东西原来越多了，记录的东西也多了而且杂乱，于是萌生了整理的念头，也害怕以后会忘记；整理的过程中发现有些地方不太严密，所以就开始真正的学习，看man手册，看网上其他人的使用等等等等，于是，本&quot;书&quot;就诞生了<sup>_<sup>.</sup></sup></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">   本来想弄一个完整且便于查阅的手册，可是，没想到总是发现vi越来越多的功能，导致这里的内容总是不断增加，毕竟精力和时间也是有限的，想要达到“完整”且易读的目的，似乎不太可能，vim的功能太多了。后来竟发现，自己的总结似乎是徒劳的，因为vi已经为用户准备了通俗易懂的用户手册，直接使用&quot;:help&quot;命令，进入用户手册里进行学习和阅读，学到的东西会更完整，而且vim用户手册的翻译版也有。
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>   本来想弄一个完整且便于查阅的手册，可是，没想到总是发现vi越来越多的功能，导致这里的内容总是不断增加，毕竟精力和时间也是有限的，想要达到“完整”且易读的目的，似乎不太可能，vim的功能太多了。后来竟发现，自己的总结似乎是徒劳的，因为vi已经为用户准备了通俗易懂的用户手册，直接使用&quot;:help&quot;命令，进入用户手册里进行学习和阅读，学到的东西会更完整，而且vim用户手册的翻译版也有。
 
    整理过程中最大的收获有两个:一是学会了一些vi的功能；另一个就是深刻体会到，只要你会一些英语，并且坚持经常看英文的资料，一定会有所收获。
 

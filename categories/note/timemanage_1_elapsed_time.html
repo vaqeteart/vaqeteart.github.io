@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
-<title>Linux进程和线程的调度与优先级</title>
+<title>时间管理：1.发现问题——时间的流逝</title>
 
 <!--theme-->
 <link rel="stylesheet" type="text/css"
@@ -16,7 +16,7 @@
       href="/assets/css/posts.css" media="screen" />
   </head>
 
-   <body onload="change_categories('categories_study_os')">
+   <body onload="change_categories('categories_note')">
      <table class="container">
         <tbody>
 	      <tr>
@@ -31,7 +31,7 @@
 	</th>
 
 	<th class="navitm">
-	      <a href=/categories/study/os/linux_schedule_priority.html>分类</a>
+	      <a href=/categories/note/timemanage_1_elapsed_time.html>分类</a>
 	      <div id="category_menus" class="second">
   	      	   
 
@@ -1739,11 +1739,13 @@
                 <td id="td_posts" colspan="6" valign="top">
 		  <article>
   <h1 id='header1' style="text-align: center;">
-      Linux进程和线程的调度与优先级
+      时间管理：1.发现问题——时间的流逝
   </h1>
   <hr id='title_line'>
   <div>
-    <style type="text/css">
+    
+
+<style type="text/css">
   .title  { text-align: center;
              margin-bottom: .2em; }
   .subtitle { text-align: center;
@@ -1781,7 +1783,7 @@
   pre.src:before {
     display: none;
     position: absolute;
-    background-color: white;
+    background-color: black;
     top: -10px;
     right: 10px;
     padding: 3px;
@@ -1893,297 +1895,439 @@
 
 </style>
 
+
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgheadline1">1. 总述</a>
+<li><a href="#orgheadline1">1. 你的一周，究竟有多少时间?</a>
 <ul>
-<li><a href="#orgheadline2">1.1. 概念：</a></li>
-<li><a href="#orgheadline3">1.2. 方法：</a></li>
-<li><a href="#orgheadline4">1.3. 原理：</a></li>
+<li><a href="#orgheadline2">1.1. 1 想法</a></li>
+<li><a href="#orgheadline3">1.2. 2 动机</a></li>
+<li><a href="#orgheadline4">1.3. 3 准备</a></li>
+<li><a href="#orgheadline5">1.4. 4 计算</a>
+<ul>
+<li><a href="#orgheadline6">1.4.1. 4.1 最初</a></li>
+<li><a href="#orgheadline7">1.4.2. 4.2 减去必不可少的睡觉</a></li>
+<li><a href="#orgheadline8">1.4.3. 4.3 减去不得不从事的职业</a></li>
+<li><a href="#orgheadline9">1.4.4. 4.4 减去必不可少的饮食</a></li>
+<li><a href="#orgheadline10">1.4.5. 4.5 减去必定要做的卫生</a></li>
+<li><a href="#orgheadline11">1.4.6. 4.6 减去必不可少的精力恢复</a></li>
+<li><a href="#orgheadline12">1.4.7. 4.7 减去不知不觉的移动</a></li>
+<li><a href="#orgheadline13">1.4.8. 4.8 减去不知不觉的休闲、交际</a></li>
+<li><a href="#orgheadline14">1.4.9. 4.9 减去不得不进行的健康医疗</a></li>
+<li><a href="#orgheadline15">1.4.10. 4.10 减去必须要做的事务</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline5">2. 进程优先级概念</a></li>
-<li><a href="#orgheadline6">3. 进程优先级与变动影响因素与原理</a></li>
-<li><a href="#orgheadline7">4. 查看与设置优先级与进程线程信息等的方法</a></li>
-<li><a href="#orgheadline8">5. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[0/4]</code>(<code>[0%]</code>)</a>
+<li><a href="#orgheadline16">1.5. 5 答案</a></li>
+<li><a href="#orgheadline17">1.6. 6 怎样</a>
 <ul>
-<li><a href="#orgheadline9">5.1. <span class="todo nilNEXT">NEXT</span> 线程优先级是否继承父线程优先级？是否继承父进程优先级？</a></li>
-<li><a href="#orgheadline10">5.2. <span class="todo nilNEXT">NEXT</span> <code>chrt</code> 修改进程优先级，那么该进程的子线程优先级是否改变？</a></li>
-<li><a href="#orgheadline11">5.3. <span class="todo nilNEXT">NEXT</span> <code>chrt</code>, <code>ps</code>, <code>top</code>, <code>pthread_attr_setschedpolicy()</code>, <code>sched_setscheduler()</code> 中的优先级值和含义有什么关系？</a></li>
-<li><a href="#orgheadline12">5.4. <span class="todo nilNEXT">NEXT</span> 考虑将引文中的链接下载到本地</a></li>
+<li><a href="#orgheadline18">1.6.1. 消耗</a></li>
+<li><a href="#orgheadline19">1.6.2. 积累</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<p>
-本文主要概述Linux下进程与线程的调度算法和优先级相关内容。
-</p>
 <div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1"><span class="section-number-2">1</span> 总述</h2>
+<h2 id="orgheadline1"><a id="ID-fed237e9-2985-45ba-9e0f-f280f0d1ca26"></a><span class="section-number-2">1</span> 你的一周，究竟有多少时间?</h2>
 <div class="outline-text-2" id="text-1">
-<p>
-为便于快速了解和复习，本节先给出结论性的大致概述，后面再详细介绍相关内容。关于进程优先级和调度策略的大致信息如下。
-</p>
 </div>
 <div id="outline-container-orgheadline2" class="outline-3">
-<h3 id="orgheadline2"><span class="section-number-3">1.1</span> 概念：</h3>
+<h3 id="orgheadline2"><span class="section-number-3">1.1</span> 1 想法</h3>
 <div class="outline-text-3" id="text-1-1">
-<ol class="org-ol">
-<li>进程优先级值越小，优先级越大。</li>
-<li>进程优先级是PRI值不是Nice值，但是Nice值会影响优先级。</li>
-<li>三类调度策略：RR调度和FIFO调度的进程属于实时进程，以分时调度(OTHER)的进程是非实时进程</li>
-<li>实时进程优先级高于普通进程，实时进程使用静态优先级调度、非实时进程使用动态优先级调度，非实时进程动态优先级通过nice调整、可能受bonus影响。</li>
-</ol>
+<p>
+我思考了好久，想要专门写一篇文章，描述下时间的宝贵，可是得知结果后，却发现专门花费时间写这样一篇文章，真是太为奢侈的浪费。
+</p>
 </div>
 </div>
+
 <div id="outline-container-orgheadline3" class="outline-3">
-<h3 id="orgheadline3"><span class="section-number-3">1.2</span> 方法：</h3>
+<h3 id="orgheadline3"><span class="section-number-3">1.2</span> 2 动机</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
-命令行/脚本中可以通过 <code>ps</code>, <code>top</code>, <code>chrt</code> 来查看和修改调度和优先级属性。
-通过 <code>sched_setscheduler()</code> 设置进程调度和优先级属性。
-通过 <code>pthread_attr_setschedpolicy()</code> 设置线程调度和优先级属性。
+不写出来，又担心会忘记，尤其是现在这个信息如海，一切都让人应接不暇的世界。对比忘记这个的结果的可怕，我只好心惊胆颤，利用一切似乎没有被浪费的、欺骗自己那不是奢侈的时间，上厕所时、路上、排队等候……，总之是用一切可能无用的一点一滴的碎片，堆积出了此文章，文章表达肯定是有不足之处的，只是希望给自己一个警醒，也希望能将思想传达出来，给大家一个参考。
 </p>
 </div>
 </div>
 
 <div id="outline-container-orgheadline4" class="outline-3">
-<h3 id="orgheadline4"><span class="section-number-3">1.3</span> 原理：</h3>
+<h3 id="orgheadline4"><span class="section-number-3">1.3</span> 3 准备</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
-一般子进程会继承父进程的调度策略，在Linux  2.6.32之后，可以使用 <code>SCHED_RESET_ON_FORK</code> 按位与参数的方式调用 <code>sched_setscheduler()</code>, 使用之后效果是：如果调用进程使用 <code>SCHED_FIFO</code> 或 <code>SCHED_RR</code> 调度策略，使用 <code>SCHED_RESET_ON_FORK</code> 后fork创建的子进程创建时将会自动重置为 <code>SCHED_OTHER</code> 调度策略；如果调用进程使用负值nice，那么使用  <code>SCHED_RESET_ON_FORK</code> 后fork创建的子进程创建时将会自动将其nice重置为0。 这个标记激活时只有当进程具有 <code>CAP_SYS_NICE</code> 标记时才能被重置，而这个 <code>CAP_SYS_NICE</code> 标记在使用fork()创建子进程后，在子进程中被禁止。
+我们中有学生、职业者、居家人员……等等，不过在本质上，结果对我们来说是一样的，就暂且以我这个职业者的角度来看看这个结果吧。
+</p>
+
+<p>
+假设，你有一份不错的职业，每天工作八个小时，工作不忙，还有每周二天的双休日。钱多事少离家近，位高权重责任轻，并且自身还积极上进。
+</p>
+
+<p>
+——显然，这是理想。:)
+</p>
+
+<p>
+姑且就在这样理想的情况下，我们一起看一下，究竟能有多少时间吧。
 </p>
 </div>
 </div>
+
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">1.4</span> 4 计算</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+一个人的每天都是变化的，所以下面将用一周来做为单位（时间太短不准，时间太长太复杂），粗略的分析并计算一下。
+</p>
 </div>
-
-<div id="outline-container-orgheadline5" class="outline-2">
-<h2 id="orgheadline5"><span class="section-number-2">2</span> 进程优先级概念</h2>
-<div class="outline-text-2" id="text-2">
-<ol class="org-ol">
-<li><p>
-进程优先级值越小，优先级越大。
-</p>
-
+<div id="outline-container-orgheadline6" class="outline-4">
+<h4 id="orgheadline6"><span class="section-number-4">1.4.1</span> 4.1 最初</h4>
+<div class="outline-text-4" id="text-1-4-1">
 <p>
-linux下的进程调度优先级是从-20到19，一共40个级别，数字越大，表示进程的优先级越低。默认时候，进程的优先级是0。
+一周时长：24*7 = 168小时。
 </p>
-
-<p>
-如果不是root权限,则侄只能降调度优先级而不能提高，即使是自己用户的进程，自己把它调高了后，优先级也不能再被调会原来的值了，除非使用root用户来调回去。
-</p>
-
-<p>
-系统重启后，对进程优先级的调整全部失效，所有进程的调度回到默认的初始级别。
-</p>
-
-<p>
-参考：<a href="http://blog.chinaunix.net/uid-25940826-id-2888088.html">Linux进程优先级的调整方法</a>
-</p></li>
-
-<li><p>
-进程优先级是PRI值不是Nice值，但是Nice值会影响优先级
-</p>
-
-<p>
-PRI也还是比较好理解的，即进程的优先级，或者通俗点说就是程序被CPU执行的先后顺序，此值越小进程的优先级别越高。那NI呢？就是我们所要说的nice值了，其表示进程可被执行的优先级的修正数值。如前面所说，PRI值越小越快被执行，那么加入nice值后，将会使得PRI变为：PRI(new)=PRI(old)+nice。
-</p>
-
-<p>
-到目前为止，更需要强调一点的是，进程的nice值不是进程的优先级，他们不是一个概念，但是进程nice值会影响到进程的优先级变化。
-</p>
-
-<p>
-通过调整nice值，更改进程优先级，nice调整范围是 -20~19。
-</p>
-
-<p>
-参考：<a href="http://blog.csdn.net/codestinity/article/details/7496962">linux进程优先级、进程nice值</a>
-</p></li>
-</ol>
 </div>
 </div>
 
-
-<div id="outline-container-orgheadline6" class="outline-2">
-<h2 id="orgheadline6"><span class="section-number-2">3</span> 进程优先级与变动影响因素与原理</h2>
-<div class="outline-text-2" id="text-3">
-<ol class="org-ol">
-<li><p>
-调度策略：RR调度和FIFO调度的进程属于实时进程，以分时调度(OTHER)的进程是非实时进程。
+<div id="outline-container-orgheadline7" class="outline-4">
+<h4 id="orgheadline7"><span class="section-number-4">1.4.2</span> 4.2 减去必不可少的睡觉</h4>
+<div class="outline-text-4" id="text-1-4-2">
+<p>
+假设周末不睡懒觉，作息规律，平均每天睡觉22:30-6:30共需8小时。
 </p>
 
 <p>
-FIFO（先进先出）和RR（时间片轮转）用于实时进程，OTHER（分时调度）用于非实时进程；实时进程会抢占普通进程;FIFO会导致同优先级实时进程始终占用CPU，RR会保证同优先级实时进程按时间片轮流执行。
+——一周还剩：168-8*7 = 112小时。
 </p>
-
-<p>
-参考：<a href="http://blog.chinaunix.net/uid-7187477-id-5593.html">SCHED_OTHER,SCHED_FIFO,SCHED_RR</a>
-</p></li>
-
-<li><p>
-实时进程优先级高于普通进程，实时进程使用静态优先级调度、非实时进程使用动态优先级调度，非实时进程动态优先级通过nice调整、可能受bonus影响。
-</p>
-
-<p>
-Linux进程有两种优先级：普通进程优先级（使用SCHED_NORMAL调度策略），以及实时进程优先级（使用SCHED_FIFO或SCHED_RR调度策略）
-</p>
-
-<p>
-不同调度策略的实时进程只有在相同优先级时才有可比性，任何时候，实时进程的优先级都高于普通进程
-</p>
-
-<p>
-Linux对实时进程使用静态优先级调度，对普通的进程（非实时进程），根据动态优先级进行调度。
-</p>
-
-<p>
-实时进程，只有静态优先级(在0~MAX_RT_PRIO-1间，默认MAX_RT_PRIO为100）, 内核不会再根据休眠等因素对其静态优先级做调整； 
-</p>
-
-<p>
-实时进程0-99号优先级每一个优先级对应一个优先级队列（链表），先执行数值高的对应的链表（0号最低），可由后面所述的 <code>chrt</code> 以及 相应函数修改该优先级；
-</p>
-
-<p>
-非实时进程静态优先级可通过nice值（-20~19）调整：static_prio=MAX_RT_PRIO + nice + 20。
-</p>
-
-<p>
-nice只影响非实时进程(静态优先级在100~139之间)，nice越大静态优先级值越大，优先级越低。
-</p>
-
-<p>
-非实时进程动态优先级根据静态优先级和bonus计算:dynamic_prio = max (100, min (static_prio - bonus + 5, 139))
-</p>
-
-<p>
-bonus反映进程平均睡眠时间（范围0~10），睡眠时间越多越可能是交互进程，每次轮到它运行时它就越可能不会使用完时间片再释放cpu。
-</p>
-
-<p>
-参考：<a href="http://www.cnblogs.com/zhaoyl/archive/2012/09/04/2671156.html">Linux进程调度原理</a> 以及 <a href="http://sunnyshineboy.blog.163.com/blog/static/20281511820130664616543/">给进程设置实时优先级</a>
-</p></li>
-</ol>
 </div>
 </div>
 
-<div id="outline-container-orgheadline7" class="outline-2">
-<h2 id="orgheadline7"><span class="section-number-2">4</span> 查看与设置优先级与进程线程信息等的方法</h2>
-<div class="outline-text-2" id="text-4">
-<ol class="org-ol">
-<li><p>
-通过 <code>ps</code> 查看进程信息
+<div id="outline-container-orgheadline8" class="outline-4">
+<h4 id="orgheadline8"><span class="section-number-4">1.4.3</span> 4.3 减去不得不从事的职业</h4>
+<div class="outline-text-4" id="text-1-4-3">
+<p>
+假设正常工作每周5天，8小时/天且，每天能忙里偷闲2小时，即你只需要工作6小时/天。
 </p>
 
 <p>
-<code>ps -el</code> 可查看进程优先级和nice值,命令执行结果：NI列显示的每个进程的nice值（主要针对非实时进程），PRI是进程的优先级（如果是实时进程就是静态优先级，如果是非实时进程，就是动态优先级）。
+——一周还剩：112-6*5 = 82小时。
 </p>
-
-<p>
-参考：<a href="http://www.cnblogs.com/zhaoyl/archive/2012/09/04/2671156.html">Linux进程调度原理</a>
-</p></li>
-
-<li><p>
-通过 <code>top</code> 查看进程信息
-</p>
-
-<p>
-其中的优先级和ps的pri不一样，ps中一般为0的进程，在top中为20，这个优先级应该对应于前面所说的实时进程优先级，实时进程只使用1-99号优先级队列，序号越大优先级越高，0号留给普通进程使用。
-</p></li>
-
-<li><p>
-<code>chrt -p &lt;pid&gt;</code> 查看进程属性
-</p>
-
-<p>
-通过 <code>chrt</code> 查看和修改进程调度和优先级属性，它一般也是调用后面的 <code>sched_setscheduler()</code> 实现的。  
-</p>
-
-<p>
-注意： <code>char -o pri command</code> 设置为SCHED_OTHER调度方式优先级别值只能是0表示比任何实时优先级都低，非实时进程不使用该值决定调度行为，普通进程使用自己的调度策略。
-</p>
-
-<p>
-参考： <code>man chrt</code> 
-</p></li>
-
-<li><p>
-通过 <code>sched_setscheduler()</code> 设置进程调度和优先级属性
-</p>
-
-<p>
-效果类似 <code>chrt</code>, 
-</p>
-
-<p>
-关于priority的注意：这里参数中的pri不是ps的nice也不是priority,而是代码中的sched_priority，用于表示一系列可执行进程列表。实时进程中该值范围为1-99越大表示优先级越高, 非实时只能是0表示始终比实时进程低，并且非实时进程的优先级不由此值确定而是由其内部动态优先级确定。chrt中的pri应该也类似含义，例如： <code>chrt -f -p 10 pid</code> 则ps中pri为-11， <code>chrt -f -p 1 pid</code> 则ps中pri为-2）为0，进程命令为command，其它可以根据选项参数设置。
-</p>
-
-<p>
-关于prioriti的注意：一般子进程会继承父进程的调度策略，在Linux  2.6.32之后，可以使用 <code>SCHED_RESET_ON_FORK</code> 按位与参数的方式调用 <code>sched_setscheduler()</code>, 使用之后效果是：如果调用进程使用 <code>SCHED_FIFO</code> 或 <code>SCHED_RR</code> 调度策略，使用 <code>SCHED_RESET_ON_FORK</code> 后fork创建的子进程创建时将会自动重置为 <code>SCHED_OTHER</code> 调度策略；如果调用进程使用负值nice，那么使用  <code>SCHED_RESET_ON_FORK</code> 后fork创建的子进程创建时将会自动将其nice重置为0。 这个标记激活时只有当进程具有 <code>CAP_SYS_NICE</code> 标记时才能被重置，而这个 <code>CAP_SYS_NICE</code> 标记在使用fork()创建子进程后，在子进程中被禁止。
-</p>
-
-<p>
-参考： <code>man sched_setscheduler</code> 和 <a href="http://blog.chinaunix.net/xmlrpc.php?r=blog/article&amp;uid=20205875&amp;id=3028468">线程优先级设置</a>
-</p></li>
-
-<li><p>
-通过 <code>pthread_attr_setschedpolicy()</code> 设置线程调度和优先级属性
-</p>
-
-<p>
-效果类似 <code>sched_setscheduler()</code>, 但是用于线程而非进程。
-</p>
-
-<p>
-参考： <code>man pthread_attr_setschedpolicy</code>
-</p></li>
-</ol>
 </div>
 </div>
 
+<div id="outline-container-orgheadline9" class="outline-4">
+<h4 id="orgheadline9"><span class="section-number-4">1.4.4</span> 4.4 减去必不可少的饮食</h4>
+<div class="outline-text-4" id="text-1-4-4">
+<p>
+假设一天三顿饭，每顿餐前准备+吃完饭时间30分钟，那么一天共需1.5小时。
+</p>
 
-<div id="outline-container-orgheadline8" class="outline-2">
-<h2 id="orgheadline8"><span class="section-number-2">5</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[0/4]</code>(<code>[0%]</code>)</h2>
-<div class="outline-text-2" id="text-5">
-</div><div id="outline-container-orgheadline9" class="outline-3">
-<h3 id="orgheadline9"><span class="section-number-3">5.1</span> <span class="todo NEXT">NEXT</span> 线程优先级是否继承父线程优先级？是否继承父进程优先级？</h3>
-<div class="outline-text-3" id="text-5-1">
+<p>
+具体这样计算：
+</p>
 <ul class="org-ul">
-<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-02-01 一 15:39]</span></span></li>
+<li>根据日常经验，一顿饭的时间一般是15分钟，但是这只是纯粹的时间。</li>
+<li>对于居家的情形，一顿饭不只如此（不是你一个人吃饭），算上餐前/餐后事项（上桌与撤桌），却可能在近一个小时！</li>
+<li>即便是最简洁的快餐、外卖，相关的选择、到达指定地点、以及排队等也是需要时间的。</li>
 </ul>
+<p>
+这里只将餐前餐后那些家务性的事情先省略，得出这样的时间，平均起来，也应该是合理的。
+</p>
+
+<p>
+——一周还剩：72-1.5*7 = 71.5小时 = 4290分钟。
+</p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline10" class="outline-3">
-<h3 id="orgheadline10"><span class="section-number-3">5.2</span> <span class="todo NEXT">NEXT</span> <code>chrt</code> 修改进程优先级，那么该进程的子线程优先级是否改变？</h3>
-<div class="outline-text-3" id="text-5-2">
-<ul class="org-ul">
-<li>State "NEXT"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-02-01 一 15:40]</span></span></li>
-</ul>
+<div id="outline-container-orgheadline10" class="outline-4">
+<h4 id="orgheadline10"><span class="section-number-4">1.4.5</span> 4.5 减去必定要做的卫生</h4>
+<div class="outline-text-4" id="text-1-4-5">
+<p>
+假设每天卫生间，小便（3-5次）大便（1次）算上洗手加起来共需20分钟。
+</p>
+
+<p>
+——一周还剩：4290-20*7 = 4150分钟。
+</p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline11" class="outline-3">
-<h3 id="orgheadline11"><span class="section-number-3">5.3</span> <span class="todo NEXT">NEXT</span> <code>chrt</code>, <code>ps</code>, <code>top</code>, <code>pthread_attr_setschedpolicy()</code>, <code>sched_setscheduler()</code> 中的优先级值和含义有什么关系？</h3>
-<div class="outline-text-3" id="text-5-3">
+<div id="outline-container-orgheadline11" class="outline-4">
+<h4 id="orgheadline11"><span class="section-number-4">1.4.6</span> 4.6 减去必不可少的精力恢复</h4>
+<div class="outline-text-4" id="text-1-4-6">
+<p>
+假设你日间间歇休息的时间（发呆、恢复精力、调整状态、午休等），每天需30分钟，另外工作日午休需15分钟。
+</p>
+
+<p>
+具体这样计算：
+</p>
 <ul class="org-ul">
-<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-02-01 一 15:40]</span></span></li>
+<li>上午工作/活动间隙：15分钟。</li>
+<li>下午工作/活动间隙：15分钟。</li>
+<li>午休：15分钟。</li>
 </ul>
+
+<p>
+——一周还剩：4150-30*7-15*5=3865分钟。
+</p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline12" class="outline-3">
-<h3 id="orgheadline12"><span class="section-number-3">5.4</span> <span class="todo NEXT">NEXT</span> 考虑将引文中的链接下载到本地</h3>
-<div class="outline-text-3" id="text-5-4">
+<div id="outline-container-orgheadline12" class="outline-4">
+<h4 id="orgheadline12"><span class="section-number-4">1.4.7</span> 4.7 减去不知不觉的移动</h4>
+<div class="outline-text-4" id="text-1-4-7">
+<p>
+假设你每天行走时间（不可能一直呆在原处）只有35分钟。
+</p>
+
+<p>
+具体的计算：
+</p>
 <ul class="org-ul">
-<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-02-01 一 15:50]</span></span></li>
+<li>本人上班通勤，不算坐车而是走到车站的时间，每次都往往15分钟，家里和公司离车站都不远，实际一天上下班两趟应该在30分钟。</li>
+<li>周末活动应该大于通勤的行走吧，也算成30分钟。</li>
+<li>平时活动，拿东西，卫生间等等，怎么都是要行走的，就算5分钟。</li>
 </ul>
+<p>
+已经尽可能少的计算了，我记得以前上小学初近10年，家里到学校步行正好1000米15分钟，大概1500步，1分钟100步，如果你有记录步数的工具，会更精确。
+</p>
+
+<p>
+——一周还剩：3865-35*7 = 3620分钟。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-4">
+<h4 id="orgheadline13"><span class="section-number-4">1.4.8</span> 4.8 减去不知不觉的休闲、交际</h4>
+<div class="outline-text-4" id="text-1-4-8">
+<p>
+假设你每天闲聊时间（电话、微信、网络、朋友、亲人、同僚）只有30分钟。
+</p>
+
+<p>
+具体的计算：
+</p>
+<ul class="org-ul">
+<li>上网</li>
+<li>电话</li>
+<li>微信</li>
+<li>朋友圈</li>
+<li>闲聊</li>
+<li>等等</li>
+</ul>
+<p>
+这个也是尽量少的计算了的，我上网不是很多，电话很少，微信也很少聊，一般都是咨询或者意料外的联系与交际。我想对于一般人而言，单单刷朋友圈就不止这些时间吧？
+</p>
+
+<p>
+——一周还剩：3620-30*7 = 3410分钟。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline14" class="outline-4">
+<h4 id="orgheadline14"><span class="section-number-4">1.4.9</span> 4.9 减去不得不进行的健康医疗</h4>
+<div class="outline-text-4" id="text-1-4-9">
+<p>
+假设生病就医的时间一周平均1.5小时。
+</p>
+
+<p>
+具体的计算
+不可能每个人都不会生病，而且每次生病对时间消耗的影响非常的大，不但生病期间状态和效率低下，而且看病也是要花费时间的如：
+</p>
+<ul class="org-ul">
+<li>预约</li>
+<li>排队</li>
+<li>去医院</li>
+<li>就医</li>
+<li>买药</li>
+<li>等等</li>
+</ul>
+<p>
+每次折腾下来，严重的往往几天没有精神，每年都平均有1到2次不大不小的病状。
+</p>
+
+<p>
+假设每年1次，每次一天多，那一个月平均下来约2、3个小时，一周就算半个小时吧。
+</p>
+
+<p>
+另外，
+</p>
+<ul class="org-ul">
+<li>家里如果有任何一个人有生病，尤其是家里老人、小孩的体弱者的情况，受到的影响</li>
+<li>学校中，就是走的很近的朋友/同学/舍友生病，受到的影响</li>
+</ul>
+<p>
+假设每个人身边有2个这样的人吧，按照前面计算，每人平均半个小时，两个人就是1个小时。
+</p>
+
+<p>
+——一周还剩：3410-90=3320分钟。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline15" class="outline-4">
+<h4 id="orgheadline15"><span class="section-number-4">1.4.10</span> 4.10 减去必须要做的事务</h4>
+<div class="outline-text-4" id="text-1-4-10">
+<p>
+假设家务和规划、日常琐事、意料之外事项占用的时间只有：12小时50分钟+10.5小时+6.5小时+1小时10分钟+1小时45分钟 = 32小时45分钟 = 1965分钟
+</p>
+
+<p>
+具体的计算：
+</p>
+
+<p>
+家务类：12小时50分钟
+</p>
+<ul class="org-ul">
+<li>对于居家人员，换洗衣物、被褥、清洁整理是必要的事情，就算你比较邋遢、有别人为你做这些，至少平均也需要20分钟/天，一周2小时20分钟；</li>
+<li>清洁卫生，主要是餐后清洁、扫地拖地、家具擦拭、清洗/晾晒衣物被褥等，这个时间不固定的，按照经验，一日三餐餐后的洗碗和整理一般是20分钟一次，扫地拖地家具擦拭那次都不会少于1个小时，少点算吧，减去30分钟也得是：20*3+60-30=90分钟/天，一周10.5小时；</li>
+</ul>
+
+<p>
+餐前准备：10.5小时
+</p>
+<ul class="org-ul">
+<li>居家人员做饭，是我亲身实践的事情，每次饭菜做好的时间，哪怕是简单的一饭一荤一素，都远远不止1个小时，何况是不止一个人的饭菜；</li>
+<li>若只在外面吃饭，外卖或餐饮店，点餐选餐也是需要时间的（似乎前面已经算到了），不排除个别时候的高效。</li>
+</ul>
+<p>
+所以不多算，餐前准备这一项，就以平均30分钟一顿的时间，就是30*3=90分钟/天，一周10.5小时；
+</p>
+
+<p>
+日常消费：6.5小时
+</p>
+<ul class="org-ul">
+<li>日常生活中的衣食住行，是不可少的，每隔一段时间必定会去一趟商场、超市，一次至少要2个小时的时间，即便是网购也只是选择上方便，时间实际不会少多少，而有些人甚至每天都会有一些小的消费（抽烟、饮料、零食、等等），姑且，总共我们就算一周3个小时吧；</li>
+<li>走亲访友，相信每个人每个月至少得有，一次从头到尾怎么都要4个小时以上的时间，而如果是出远门的，甚至会更多，姑且算作一个月15个小时吧，平均下来一天0.5小时，一周3.5小时。</li>
+</ul>
+
+<p>
+规划排程：1小时10分钟
+</p>
+<ul class="org-ul">
+<li>对生活中的事务，如果多或复杂的时候，总是要做一些规划的，日常我们处理的事务太多了，少算一些，假设一天就10分钟吧（实际远远不止），一周也要70分钟。</li>
+</ul>
+
+<p>
+意料外：1小时45分钟
+最后，作业、加班、客户、小孩生病，这些不想发生的事情，没有计算到的事情，相信大多数人都会经历吧，就算15分钟，很少了，一周也要105分钟。
+</p>
+
+<p>
+实际上，相信大多数人，远远不止于此，然而，所剩太少了，还是到此为止吧。
+</p>
+
+<p>
+——一周还剩：3320-1965=1355分钟
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16"><span class="section-number-3">1.5</span> 5 答案</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+<b>没错，按照这样的方式计算，最后的答案就是：我们的一周，只有1355分钟。</b>
+</p>
+
+<p>
+可能有人会想，算了这么多的时间，正常这就是一个人的生活啊，算这些有什么意义？
+</p>
+
+<p>
+首先，我们要注意，以上要做的事情，我都是刻意加上了：必须要做、不得不做、必不可少、不知不觉……之类的修饰，也就是说，这些事情，不是你能控制的。
+</p>
+
+<p>
+再者，回到前面的提问，计算这些时间，是为了逐渐提取出我们真正想要的、能够控制的时间。平时被太多的事务蒙蔽了双眼的我们，以为自己有很多的时间，实际呢？我们的时间，少的可怜。
+</p>
+
+<p>
+显然，显然这样计算是不准确的，有些方面也过于片面，计算的方式过于简单……等等，而且这里所做的工作是相对徒劳的，因为太多的不速之客、意外事件、中断干扰、请人帮忙、帮助别人……等等等等，我都没有计算在内，也不可能全部都想象的到，因为剩下的时间太少了，也姑且只算这么多吧。相信大家肯定还能再加入不少的类似的时间，但是，加入的越多，就意味着下面你似乎能剩下的可控时间越少了。
+</p>
+
+<p>
+不过，至少这样或多或少的，应该能得到比猜想更接近真实结果的答案吧。我们至少能够稍微感知的到，我们真正拥有的时间，很少，很少，在下次计划一个事情的时候（比如我要一个月内看完一本提升自我的书籍），就会更容易仔细的斟酌而非随意决定了。
+</p>
+
+<p>
+所以，至此为止还有1355分钟，不是小时，所以，折合起来我们一周的可控时间至多是：23小时不到，平均3小时多一点/天。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17"><span class="section-number-3">1.6</span> 6 怎样</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+然后在一周仅剩的这23个小时中，我们需要做哪些事情呢？
+</p>
+</div>
+<div id="outline-container-orgheadline18" class="outline-4">
+<h4 id="orgheadline18"><span class="section-number-4">1.6.1</span> 消耗</h4>
+<div class="outline-text-4" id="text-1-6-1">
+<p>
+首先，还得承认，我们倾向于享受生活，一切都是为了生活，所以有类似如下的活动。
+</p>
+
+<p>
+姑且称作“娱乐休闲”吧。很多类型，朋友、亲人、同事、同学，旅游、游戏、上网、户内外活动、商场购物等等，究竟喜欢花费多久是因人而异的。
+</p>
+
+<p>
+举个简单的例子：
+</p>
+<ul class="org-ul">
+<li>比如每个周末都会出去散步、或者电视、小说等等，这些活动，每周都有而且不止一次，每次不止1个小时，算2小时吧。</li>
+<li>时常公司还会有些聚会活动，陪家人看看电影电视，休闲娱乐……每次都不会少于2-3个小时，即便每个月只有两次那每周也得有至少1个小时的时间预留给它们。</li>
+<li>相信每个人不可能一周不上网，甚至每天上网的时间不止半个小时……就算3个小时吧。</li>
+</ul>
+
+<p>
+实际远远不止，但是，少算一些，暂时先这样吧，因为时间还剩：23-2-1-3=17小时，只剩下平均每天2个多小时了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline19" class="outline-4">
+<h4 id="orgheadline19"><span class="section-number-4">1.6.2</span> 积累</h4>
+<div class="outline-text-4" id="text-1-6-2">
+<p>
+其次，享受生活，必然是在一定物质、非物质的积累基础之上。
+</p>
+
+<p>
+有些人喜欢进取，这类活动安排的就多；反之，有些人可能完全没有这方面的安排。
+</p>
+
+<p>
+姑且将这些活动，分为三个方面：
+</p>
+<ul class="org-ul">
+<li>个人管理</li>
+<li>学习进修</li>
+<li>事业方面</li>
+</ul>
+
+<p>
+实际也远远不止，但是，还是少列出一些，因为时间不多了。一天2个多小时，一周17个小时的时间内，你要进行这些的事情，以保证生活正常进行。
+</p>
+
+<p>
+那么，剩下的这些时间中，该怎么分配呢？
+</p>
+</div>
 </div>
 </div>
 </div>
@@ -2203,22 +2347,24 @@ bonus反映进程平均睡眠时间（范围0~10），睡眠时间越多越可�
 	</tr>
     	<tr>
 	  <td style="border-style: solid;border-width:1px;border-left:0px;">Date</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2016-02-01 一 15:35]</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2019-02-19 二]</td>
 	  
 	</tr>
     	<tr>
 	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-02-11 四 16:14:46></td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2019-05-05 日 14:04:02></td>
 	</tr>
     </tbody></table>
 </div>
 <br>
 
+
+
   </div>
 </article>
 
 		  <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="/categories/study/os/linux_schedule_priority" data-title="Linux进程和线程的调度与优先级" data-url="http://vaqeteart.github.io//categories/study/os/linux_schedule_priority.html"></div>
+<div class="ds-thread" data-thread-key="/categories/note/timemanage_1_elapsed_time" data-title="时间管理：1.发现问题——时间的流逝" data-url="http://vaqeteart.github.io//categories/note/timemanage_1_elapsed_time.html"></div>
 <!-- 多说评论框 end -->
 <script src="/assets/js/comment.js"></script>
 		</td>

@@ -40,6 +40,57 @@
 		       var categories_count = JSON.parse('{"/categories":0}');
 
   		       
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
     		       var post_categories = '/categories/study/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -142,7 +193,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/kits';
+    		       var post_categories = '/categories/study/linux/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -159,7 +210,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/linux/misc';
+    		       var post_categories = '/categories/study/kits';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -295,7 +346,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study/emacs';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -312,7 +363,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/emacs';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -346,7 +397,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -363,7 +414,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -567,7 +618,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -601,7 +652,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -618,7 +669,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -880,6 +931,57 @@
     var categories_count = JSON.parse('{"/categories":0}');
 
     
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
     var post_categories = '/categories/study/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
@@ -982,7 +1084,7 @@
         }
     }
     
-    var post_categories = '/categories/study/kits';
+    var post_categories = '/categories/study/linux/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -999,7 +1101,7 @@
         }
     }
     
-    var post_categories = '/categories/study/linux/misc';
+    var post_categories = '/categories/study/kits';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1135,7 +1237,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study/emacs';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1152,7 +1254,7 @@
         }
     }
     
-    var post_categories = '/categories/study/emacs';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1186,7 +1288,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1203,7 +1305,7 @@
         }
     }
     
-    var post_categories = '/categories/study';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1407,7 +1509,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1441,7 +1543,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1458,7 +1560,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1650,7 +1752,7 @@
 + 具体实践<br><br>
 + 其它  </p>
 
-<h3 id="简介">简介</h3>
+<h3 id="part-6542f4d68c4">简介</h3>
 
 <p>本文将介绍一种强大的版本控制工具，git的基本使用。与之前svn工具类似，本文首先给出一些常见的使用需求，然后以这些需求为中心，来展开git的学习过程。<br>
 带着问题学习：<br><br>
@@ -1668,7 +1770,7 @@
 
 <p>这些问题也可作为学习之后的练习，我们可以尝试自己来解决一下<sup>_<sup>。</sup></sup></p>
 
-<h3 id="一、基本概念">一、基本概念 ###</h3>
+<h3 id="part-62615aa18b5c4d01">一、基本概念 ###</h3>
 
 <p>这部分内容，大部分来自git的man手册，更为具体的信息可以参见<code class="prettyprint">man gittutorial</code>的命令输出。</p>
 
@@ -1697,7 +1799,7 @@ svn服务器通过其中的某个统一的代码库集中管理某个项目代�
 
 <p>下面是学习git时需要了解的一些重要内容，其中有些涉及到的内容，在后面的部分会详细提及。  </p>
 
-<h4 id="1、git中的status和diff，以及add和commit">1、git中的<code class="prettyprint">status</code>和<code class="prettyprint">diff</code>，以及<code class="prettyprint">add</code>和<code class="prettyprint">commit</code> ####</h4>
+<h4 id="1-git-status-diff-add-commit">1、git中的<code class="prettyprint">status</code>和<code class="prettyprint">diff</code>，以及<code class="prettyprint">add</code>和<code class="prettyprint">commit</code> ####</h4>
 
 <p>git中，每次提交修改文件之前要<code class="prettyprint">add</code>，然后再<code class="prettyprint">commit</code>。git的<code class="prettyprint">add</code>命令和许多版本控制系统不一样，不是增加新增的文件，而是以内容为单位，将最新修改的内容，添加到一个临时的索引中，等待<code class="prettyprint">commit</code>。</p>
 
@@ -1705,7 +1807,7 @@ svn服务器通过其中的某个统一的代码库集中管理某个项目代�
 
 <p>另外，如果修改了一个文件然后没有<code class="prettyprint">git add</code>，那么可以用<code class="prettyprint">git diff</code>查看修改的内容，而<code class="prettyprint">git status</code>无法看到修改的内容；当<code class="prettyprint">git add</code>这个文件之后，用<code class="prettyprint">git diff</code>就看不到这个内容了，用<code class="prettyprint">git status</code>就可以看到。<br><br>
 例如：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">lv-k@quietheart:~/temp/temp/git_t$ echo hello5 &gt;&gt;hello
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>lv-k@quietheart:~/temp/temp/git_t$ echo hello5 &gt;&gt;hello
 lv-k@quietheart:~/temp/temp/git_t$ git diff
 diff --git a/hello b/hello
 index 0863c71..bba0e39 100644
@@ -1802,7 +1904,7 @@ lv-k@quietheart:~/temp/temp/git_t$ git status
 </code></pre></div>
 <p>对于以上内容中出现的命令，我们可以在后续的学习中看到。</p>
 
-<h4 id="2、pull、push和fetch">2、<code class="prettyprint">pull</code>、<code class="prettyprint">push</code>和<code class="prettyprint">fetch</code></h4>
+<h4 id="2-pull-push-fetch">2、<code class="prettyprint">pull</code>、<code class="prettyprint">push</code>和<code class="prettyprint">fetch</code></h4>
 
 <p>git中的<code class="prettyprint">pull</code>子命令做两个工作：从远处库的分支<code class="prettyprint">fetch</code>相应的修改，然后将修改合并到当前分支。如果发生冲突，那么也会进行<code class="prettyprint">fetch</code>但是会拒绝对冲突的文件进行合并（这时需要解决冲突然后再次<code class="prettyprint">pull</code>???）。</p>
 
@@ -1810,7 +1912,7 @@ lv-k@quietheart:~/temp/temp/git_t$ git status
 
 <p>而<code class="prettyprint">push</code>和<code class="prettyprint">pull</code>相反，是向远端发送本地提交的修改，当然需要让远端设置成可以接受本地提交的修改。具体参见后面的实践。</p>
 
-<h4 id="3、常用常量和范围表示">3、常用常量和范围表示</h4>
+<h4 id="3">3、常用常量和范围表示</h4>
 
 <p>有一些常用常量可以表示特定的版本，它们是：  </p>
 
@@ -1846,18 +1948,18 @@ COMMIT_EDITMSG：最后一次<code class="prettyprint">commit</code>时的提交
 例如<code class="prettyprint">HEAD...FETCH_HEAD</code>，可以用来查看两者都修改了什么，是两者分别修改的而不是同时修改的。</p></li>
 </ul>
 
-<h3 id="二、常用命令">二、常用命令</h3>
+<h3 id="part-19d685d146a5841">二、常用命令</h3>
 
 <p>这里给出常用的基本命令。</p>
 
 <ul>
 <li><p>获取git的子命令的帮助信息的方式：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$man git-log
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$man git-log
 $git help log
 </code></pre></div>
 <p>这里，子命令用<code class="prettyprint">git log</code>或<code class="prettyprint">git log --graph</code>之类的<code class="prettyprint">log</code>子命令进行举例。</p></li>
 <li><p>为git添加自己的名字以及邮箱信息：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git config --global user.name &quot;Your Name Comes Here&quot;
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git config --global user.name &quot;Your Name Comes Here&quot;
 $ git config --global user.email you@yourdomain.example.com
 </code></pre></div>
 <p>另外，通过当前目录的<code class="prettyprint">.git/config</code>，来查看类似<code class="prettyprint">svn info</code>输出的url相关的信息等等。</p></li>
@@ -1871,11 +1973,11 @@ $ git config --global user.email you@yourdomain.example.com
 $ cd project<br>
 $ git init</p></li>
 <li><p>将当前目录下所有文件的快照(snap)加入git  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git add .`  
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git add .`  
 </code></pre></div>
 <p>这样会告诉git将当前目录下所有的修改的文件，以及以前不在git下面的文件等的当前状态，添加到git的一个临时&quot;stage area&quot;中(但是还没有被保存下来)，git称它为索引(index)。</p></li>
 <li><p>将索引(index)的内容保存到git库中：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">`$git commit`  
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>`$git commit`  
 </code></pre></div>
 <p>这样会提示你输入日志信息，之后就将当前的目录所有最新内容存放到git中管理了。另外需要注意的是，<code class="prettyprint">commit</code>有一个<code class="prettyprint">--amend</code>选项，可以给修改版本的信息，例如注释信息，具体参见man手册。</p></li>
 </ul></li>
@@ -1901,13 +2003,13 @@ $git commit -a<br>
 提交时候的日志信息，最好用一个简单行开始，然后一个空行，因为许多工具将其日志第一行自动转换作为邮件标题，剩下内容作为邮件内容。</p></li>
 </ul></li>
 <li><p>查看历史信息  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$git log
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$git log
 </code></pre></div>
 <p>或者  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$git log -p
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$git log -p
 </code></pre></div>
 <p>或者  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$git log --stat --summary
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$git log --stat --summary
 </code></pre></div>
 <p>这里，<code class="prettyprint">-p</code> 查看完整历史消息并且重定向到 <code class="prettyprint">less</code> 之类的pager程序查看，<code class="prettyprint">--stat --summary</code>也会重定向到pager但是信息比较简要，而只有 <code class="prettyprint">git log</code> 则更简要并且不会将输出重定向到pager程序中。另外，使用<code class="prettyprint">git log --graph</code>可以用文本图形的方式显示版本之间的关系。</p></li>
 <li><p>分支管理  </p>
@@ -1937,47 +2039,47 @@ $ git checkout experimental<br>
 
 <ul>
 <li><p>B在A库的基础上面工作：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">bob$ git clone /home/alice/project myrepo
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>bob$ git clone /home/alice/project myrepo
 (edit files)
 bob$ git commit -a
 (repeat as necessary)
 </code></pre></div>
 <p>这里，首先B从A拷贝一份库到本地，然后在本地进行修改，并且提交，这个时候，提交的内容都是提交到B自己的库中。</p></li>
 <li><p>A合并B的修改：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">alice$ cd /home/alice/project
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>alice$ cd /home/alice/project
 alice$ git pull /home/bob/myrepo master
 </code></pre></div>
 <p>这里，当A想要合并B的内容的时候，可以通过<code class="prettyprint">pull</code>实现；如果A已经在本地有过一些修改，那么可能会出现并处理一些合并的冲突问题。其实，<code class="prettyprint">pull=fetch+merge</code>，就是先获取远端修改的内容，然后合并到本地。</p></li>
 <li><p>只查看B的修改，但是不合并：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">alice$ git fetch /home/bob/myrepo master
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>alice$ git fetch /home/bob/myrepo master
 alice$ git log -p HEAD..FETCH_HEAD
 </code></pre></div>
 <p>这里，<code class="prettyprint">fetch</code>只是将修改信息抓取下来，并不进行合并，这样就能够在合并之前看到远端（抓取端）进行了哪些修改HEAD是最新的一次<code class="prettyprint">commit</code>，FETCH_HEAD使抓取端的信息。HEAD..FETCH_HEAD表示显示抓取的开始之后的信息不显示HEAD开始之后的信息(也就是显示的时候不显示自HEAD以来本地库的信息，而是只显示远端的信息).而用HEAD...FETCH_HEAD可以用来查看两者都修改了什么，是两者分别修改的而不是同时修改的。</p></li>
 <li><p>A设置fetch时使用的B的远端位置的简写：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">alice$ git remote add bob /home/bob/myrepo
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>alice$ git remote add bob /home/bob/myrepo
 </code></pre></div>
 <p>如果A经常和B进行交互，那么可以使用<code class="prettyprint">remote</code>命令，这样以后A便可以通过这个简写来获取B的修改而不用输入完整名称了。</p></li>
 <li><p>A使用remote设置的B的简写来获取B的修改并合并：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">alice$ git fetch bob
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>alice$ git fetch bob
 alice$ git merge bob/master
 </code></pre></div>
 <p>这里，也可以用如下命令来完成合并：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">alice$ git pull . remotes/bob/master
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>alice$ git pull . remotes/bob/master
 </code></pre></div></li>
 <li><p>B获取A最新修改的内容：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">bob$ git pull
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>bob$ git pull
 </code></pre></div>
 <p>这里，B不需要给出A的库的位置，因为B是来自A的一个拷贝，A的位置信息在拷贝的时候被记录到库的配置中了，这个位置信息在B使用没有参数的<code class="prettyprint">pull</code>的时候会被自动地应用。使用如下命令可以查看B的配置中的这个url信息：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">bob$ git config --get remote.origin.url
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>bob$ git config --get remote.origin.url
 /home/alice/project
 </code></pre></div></li>
 <li><p>查看B来自A的原始master拷贝：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">bob$ git branch -r
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>bob$ git branch -r
 origin/master
 </code></pre></div>
 <p>拷贝B的时候，git会自动将一份原始的A的master分支拷贝到&quot;origin/master&quot;中，用这个命令可以看到。</p></li>
 <li><p>与A在不同主机上的B拷贝A的库到本地：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">bob$ git clone alice.org:/home/alice/project myrepo
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>bob$ git clone alice.org:/home/alice/project myrepo
 </code></pre></div>
 <p>这里，可以使用特定的本地协议例如“rsync”或者“http”，可以查看<code class="prettyprint">git-pull</code>的信息来获取更多帮助。另外，查看<code class="prettyprint">git-push(1)</code>和<code class="prettyprint">gitcvs-migration(7)</code>，可以知道git还可以设置成像cvs那样集中控制版本的模式。</p></li>
 </ul>
@@ -1988,18 +2090,18 @@ origin/master
 
 <ul>
 <li><p>查看所有历史信息：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$git log
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$git log
 </code></pre></div>
 <p>这样会显示所有的历史信息，包括<code class="prettyprint">commit</code>的id，使用<code class="prettyprint">git log --graph</code>会以文本图形的方式直观地显示出每个历史版本之间的合并关系等。其实，我们可以将历史看成一系列的<code class="prettyprint">commit</code>。</p></li>
 <li><p>查看特定id的历史信息：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$git show c82a22c39cbc32576f64f5c6b3f24b99ea8149c7
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$git show c82a22c39cbc32576f64f5c6b3f24b99ea8149c7
 </code></pre></div>
 <p>或</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$git show c82a22c39c
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$git show c82a22c39c
 </code></pre></div>
 <p>这样，我们可以看到指定<code class="prettyprint">commit</code>的id为&quot;c82a22c39cbc32576f64f5c6b3f24b99ea8149c7&quot;的历史信息。这里，只要能够保证前缀唯一，也可指定部分id的前缀作为相应历史的标识。</p></li>
 <li><p>查看当前分支当前的历史状态：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$git show HEAD
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$git show HEAD
 </code></pre></div>
 <p>这里，HEAD表示当前分支最新版本。关于查看时候指定的类似&quot;HEAD&quot;的常量大致如下：</p>
 
@@ -2015,56 +2117,56 @@ HEAD<sup>2：表示HEAD的第二个父母的信息</sup><br>
 COMMIT_EDITMSG：最后一次<code class="prettyprint">commit</code>时的提交信息。</p>
 </blockquote></li>
 <li><p>自定义<code class="prettyprint">commit</code>的id名称：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git tag v2.5 1b2e1d63ff
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git tag v2.5 1b2e1d63ff
 </code></pre></div>
 <p>这样定义之后，就可以使用<code class="prettyprint">v2.5</code>这样比较容易理解的方式来引用&quot;1b2e1d63ff&quot;这种看起来没有意义的字符串，如果想要和别人共享这个定义的名称，需要创建一个<code class="prettyprint">tag</code>对象，并且给它&quot;sign&quot;，具体参见<code class="prettyprint">git help tag</code>。</p></li>
 <li><p>比较两个不同的版本：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$git diff HEAD bc32576f64f5c6b3f24b99ea8149c7
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$git diff HEAD bc32576f64f5c6b3f24b99ea8149c7
 </code></pre></div>
 <p>这里，比较&quot;HEAD&quot;和&quot;bc32576f64f5c6b3f24b99ea8149c7&quot;之间的区别，也可以使用自己定义的名称。</p></li>
 <li><p>回退到指定版本，清除该版本之后所有的信息：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git reset --hard HEAD
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git reset --hard HEAD
 </code></pre></div>
 <p>这样将会把当前工作分支的内容回退到<code class="prettyprint">HEAD^</code>版本。注意，这个命令不仅会把当前的修改给移除，而且还会把自<code class="prettyprint">HEAD^</code>以后的所有<code class="prettyprint">commit</code>给删除（<code class="prettyprint">HEAD^</code>版本本身保留为当前的HEAD），如果当前的分支是唯一的分支的话，那么运行这个命令之后，之前<code class="prettyprint">HEAD^</code>以后的修改将会完全丢失（当然可以通过<code class="prettyprint">pull</code>再将之前的HEAD拉取回来，但是自己没有提交的本地修改是无法找回来的了）；另外如果在一个公共的分支上面执行这个命令将会导致其他开发者<code class="prettyprint">pull</code>的时候都进行一遍这个清除的工作，如果不加<code class="prettyprint">--hard</code>选项，那么可能当前HEAD基础上有修改的情况导致这个命令不会成功。</p></li>
 <li><p>回退到指定版本，并作为新版本提交上去（保留该版本之后所有的信息）：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git revert HEAD^
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git revert HEAD^
 </code></pre></div>
 <p>这样只会把内容回退为<code class="prettyprint">HEAD^</code>之前的版本（即<code class="prettyprint">HEAD^^</code>），再将这样的内容做为新的<code class="prettyprint">HEAD</code>提交上去，原来的<code class="prettyprint">HEAD</code>变成<code class="prettyprint">HEAD^</code>（即在库中保留<code class="prettyprint">HEAD^</code>之后的版本的提交，而不像<code class="prettyprint">reset</code>那样完全清除）。这里，运行之后，会打开一个编辑窗口让你编辑提交的log信息，退出就直接提交了，或者<code class="prettyprint">revert</code>命令也有不编辑提交log信息的选项。</p></li>
 <li><p>使用checkout的“回退”：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git checkout v2.5
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git checkout v2.5
 </code></pre></div>
 <p>这样，会将当前v2.5版本重新检出，效果是使用v2.5做为当前的HEAD了，但是，原来的HEAD对应的commit id还存在于库中，可以使用那个id用<code class="prettyprint">checkout</code>重新检回。另外，如果检出v2.5之后做了修改并且提交到库中，那么会以v2.5为基础重新生成一个版本，并且提交上去，这时候可以再用原来那个HEAD检查出，但是就“隐藏”了这个v2.5之后提交的新HEAD相关的一系列修改版本，这时候一般git会提醒你为此次提交创建一个新分支，并且会给出提示命令。实践发现，如果修改了没有提交，那么<code class="prettyprint">checkout</code>会有问题，就是修改的内容并到了<code class="prettyprint">checkout</code>的版本中，具体需要实践。</p></li>
 <li><p>从指定版本搜索某个字符串：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git grep &quot;hello&quot; v2.5
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git grep &quot;hello&quot; v2.5
 </code></pre></div>
 <p>这样将会从&quot;v2.5&quot;这个自定义的commit名字的版本中的所有文件搜索&quot;hello&quot;字符串。如果没有指定&quot;v2.5&quot;类似的commit的号码的话，将会从当前路径搜索这个&quot;hello&quot;字符串。</p></li>
 <li><p>介于v2.5和v2.6之间的commit信息：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git log v2.5..v2.6
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git log v2.5..v2.6
 </code></pre></div></li>
 <li><p>介于v2.5之后的commit信息：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git log v2.5..
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git log v2.5..
 </code></pre></div></li>
 <li><p>两周以前的commit信息：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git log --since=&quot;2 weeks ago&quot; # commits from the last 2 weeks
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git log --since=&quot;2 weeks ago&quot; # commits from the last 2 weeks
 </code></pre></div></li>
 <li><p>自Makefile修改之后的commit信息：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git log v2.5.. Makefile       # commits since v2.5 which modify
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git log v2.5.. Makefile       # commits since v2.5 which modify
 </code></pre></div></li>
 <li><p>两个没有前后关系的commit之间的信息：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$git log v2.5 s2.5
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$git log v2.5 s2.5
 </code></pre></div>
 <p>这里，v2.5和s2.5是两个没有直系关系的版本，这样会只显示关于s2.5的提交信息。</p></li>
 <li><p>指定某个版本的文件并进行操作：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git diff v2.5:Makefile HEAD:Makefile.in
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git diff v2.5:Makefile HEAD:Makefile.in
 </code></pre></div>
 <p>或  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git show v2.5:Makefile
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git show v2.5:Makefile
 </code></pre></div>
 <p>这里，我们运行操作文件的命令的时候，可以给文件名称添加一个commit的ID，以标识对那个版本的文件进行操作。</p></li>
 </ul></li>
 </ul>
 
-<h3 id="三、具体实践">三、具体实践</h3>
+<h3 id="part-86cda0a25f1f1628">三、具体实践</h3>
 
 <p>下面用一个具体的实践展示使用git的简单过程。若有更多内容，再做更新。  </p>
 
@@ -2073,10 +2175,10 @@ COMMIT_EDITMSG：最后一次<code class="prettyprint">commit</code>时的提交
 
 <ul>
 <li><p>查看帮助：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git
 </code></pre></div>
 <p>具体如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">lv-k@quietheart:~/temp/git_test$ git
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>lv-k@quietheart:~/temp/git_test$ git
 usage: git [--version] [--exec-path[=&lt;path&gt;]] [--html-path]
            [-p|--paginate|--no-pager] [--no-replace-objects]
            [--bare] [--git-dir=&lt;path&gt;] [--work-tree=&lt;path&gt;]
@@ -2114,28 +2216,28 @@ See &#39;git help &lt;command&gt;&#39; for more information on a specific comman
 
 <ul>
 <li><p>查看当前分支：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git branch
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git branch
 </code></pre></div>
 <p>具体如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">lv-k@quietheart:~/temp/git_test$ git branch
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>lv-k@quietheart:~/temp/git_test$ git branch
 *master
 </code></pre></div>
 <p>这里，可知当前处于主分支&quot;master&quot;，当前分支用&#39;*&#39;和高亮标记出来。</p></li>
 <li><p>创建分支：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git branch quietheart
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git branch quietheart
 </code></pre></div>
 <p>具体如下：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">lv-k@quietheart:~/temp/git_test$ git branch quietheart
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>lv-k@quietheart:~/temp/git_test$ git branch quietheart
 lv-k@quietheart:~/temp/git_test$ git branch
 *master
 quietheart
 </code></pre></div>
 <p>这里，创建了一个&#39;quietheart&#39;分支，但是创建之后并没有切换过去。</p></li>
 <li><p>切换分支：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git checkout quietheart
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git checkout quietheart
 </code></pre></div>
 <p>具体如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">lv-k@quietheart:~/temp/git_test$ git checkout quietheart
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>lv-k@quietheart:~/temp/git_test$ git checkout quietheart
 Switched to branch &#39;quietheart&#39;
 lv-k@quietheart:~/temp/git_test$ git branch
 master
@@ -2143,7 +2245,7 @@ master
 </code></pre></div>
 <p>这里，使用&#39;checkout&#39;命令切换到了指定的分支。</p></li>
 <li><p>分别在分支中进行修改：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">lv-k@quietheart:~/temp/git_test$ git checkout master
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>lv-k@quietheart:~/temp/git_test$ git checkout master
 lv-k@quietheart:~/temp/git_test$ echo &#39;change in master&#39; &gt;&gt;hello
 lv-k@quietheart:~/temp/git_test$ git commit -m &#39;change in master&#39; -a
 lv-k@quietheart:~/temp/git_test$ git checkout quietheart
@@ -2151,7 +2253,7 @@ lv-k@quietheart:~/temp/git_test$ echo &#39;changed in quietheart&#39; &gt;&gt;ex
 lv-k@quietheart:~/temp/git_test$ git commit -m &#39;change in quietheart&#39; -a
 </code></pre></div>
 <p>具体如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">lv-k@quietheart:~/temp/git_test$ git checkout master
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>lv-k@quietheart:~/temp/git_test$ git checkout master
 Switched to branch &#39;master&#39;
 lv-k@quietheart:~/temp/git_test$ git branch
 *master
@@ -2213,7 +2315,7 @@ Date:   Thu Feb 9 16:59:04 2012 +0800
   initial commit contents
 </code></pre></div>
 <p>这里，在执行本例子之前提交过一次，而那次提交没有在本文档记录所以所以多了一条记录&#39;add modify2&#39;。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">lv-k@quietheart:~/temp/git_test$ git checkout quietheart
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>lv-k@quietheart:~/temp/git_test$ git checkout quietheart
 Switched to branch &#39;quietheart&#39;
 lv-k@quietheart:~/temp/git_test$ git log
 commit fa4abf6455aa01cf7d74810b96e2279983287fc8
@@ -2284,11 +2386,11 @@ Date:   Thu Feb 9 16:59:04 2012 +0800
   initial commit contents
 </code></pre></div></li>
 <li><p>合并某分支到当前分支最新：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git checkout master
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git checkout master
 $ git merge quietheart
 </code></pre></div>
 <p>具体过程如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">lv-k@quietheart:~/temp/git_test$ git branch
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>lv-k@quietheart:~/temp/git_test$ git branch
 master
 *quietheart
 lv-k@quietheart:~/temp/git_test$ git checkout master
@@ -2345,10 +2447,10 @@ Date:   Thu Feb 9 16:59:04 2012 +0800
 
 <ul>
 <li><p>拷贝两份远端库到本地：  </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ git clone /home/lv-k/temp/git_test git_test_clone
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ git clone /home/lv-k/temp/git_test git_test_clone
 </code></pre></div>
 <p>具体如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">lv-k@quietheart:~/temp$ git clone /home/lv-k/temp/git_test git_test_clone
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>lv-k@quietheart:~/temp$ git clone /home/lv-k/temp/git_test git_test_clone
 Cloning into git_test_clone...
 done.
 lv-k@quietheart:~/temp$ git clone /home/lv-k/temp/git_test_clone/ /home/lv-k/temp/git_test_clone1
@@ -2357,12 +2459,12 @@ done.
 </code></pre></div>
 <p>这里，其实拷贝的是当前库所在的分支，通过<code class="prettyprint">git branch</code>查看可知，得到的git_test_clone其实只有master分支，因为拷贝的时候，git_test库所在的当前分支是master。</p></li>
 <li><p>在一个拷贝上面修改并提交：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ cd git_test_clone1/
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ cd git_test_clone1/
 $ echo &quot;hello after clone&quot; &gt;&gt;hello
 $ git commit -a -m &#39;commin in clone&#39;
 </code></pre></div>
 <p>具体如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">lv-k@quietheart:~/temp$ cd git_test_clone1/
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>lv-k@quietheart:~/temp$ cd git_test_clone1/
 lv-k@quietheart:~/temp/git_test_clone1$ echo &quot;hello after clone&quot; &gt;&gt;hello
 lv-k@quietheart:~/temp/git_test_clone1$ git commit -a -m &#39;commin in clone&#39;
 [master bf44b20] commin in clone
@@ -2382,11 +2484,11 @@ After doing this, you may fix the identity used for this commit with:
 </code></pre></div>
 <p>这里，修改之后，本地库便和远端的原始库发生了变化。</p></li>
 <li><p>将远端拷贝修改的内容拉取过来：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ cd git_test_clone/
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ cd git_test_clone/
 $ git pull /home/lv-k/temp/git_test_clone1/
 </code></pre></div>
 <p>具体如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">lv-k@quietheart:~/temp$ cd git_test_clone/
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>lv-k@quietheart:~/temp$ cd git_test_clone/
 lv-k@quietheart:~/temp/git_test_clone$ git pull /home/lv-k/temp/git_test_clone1/
 remote: Counting objects: 5, done.
 remote: Compressing objects: 100% (3/3), done.
@@ -2418,7 +2520,7 @@ Date:   Thu Feb 9 18:09:51 2012 +0800
 </code></pre></div>
 <p>从这里我们可以看到，拉取过来的内容被自动地提交上去了，其实拉取内容的时候应该指明是哪个分支。实际如果没有参数则从<code class="prettyprint">clone</code>时候的来源来<code class="prettyprint">pull</code>，这里可以通过.git/config中查看来源。</p></li>
 <li><p>将本地库拷贝的修改推送到远程库中：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ cd git_test_clone1/
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ cd git_test_clone1/
 $ echo &quot;test push&quot; &gt;&gt;hello
 $ cd ../git_test_clone1/
 $ vim .git/config
@@ -2430,7 +2532,7 @@ $ cd ../git_test_clone1
 $ git push /home/lv-k/temp/git_test_clone
 </code></pre></div>
 <p>具体如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">lv-k@quietheart:~/temp$ cd git_test_clone1/
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>lv-k@quietheart:~/temp$ cd git_test_clone1/
 lv-k@quietheart:~/temp/git_test_clone1$ echo &quot;test push&quot; &gt;&gt;hello
 lv-k@quietheart:~/temp/git_test_clone1$ git push /home/lv-k/temp/git_test_clone
 Everything up-to-date
@@ -2535,7 +2637,7 @@ test push
 lv-k@quietheart:~/temp/git_test_clone$ vim .git/config
 </code></pre></div>
 <p>添加如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">[receive]
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>[receive]
     denyCurrentBranch = ignore
 
 lv-k@quietheart:~/temp$ cd git_test_clone1
@@ -2594,7 +2696,7 @@ push2
     git config --bool core.bare true</li>
 <li><p>方法2：<br><br>
 修改.git/config添加如下代码：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">[receive]
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>[receive]
     denyCurrentBranch = ignore
 </code></pre></div>
 <p>我们使用第1个方法，比较麻烦，使用第二个方法，就不用再从服务端重新设置&quot;core.bare&quot;了。<br><br>
@@ -2605,14 +2707,14 @@ push2
 
 <hr>
 
-<h2 id="待整理">待整理</h2>
+<h2 id="part-3786dd59fbc9179">待整理</h2>
 
 <hr>
 
 <ul>
 <li><p>版本回退的实践：<br><br>
 这里分别对<code class="prettyprint">reset</code>,<code class="prettyprint">revert</code>,<code class="prettyprint">checkout</code>三种方式进行一下实践具体过程如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">lv-k@quietheart:~/temp$ git clone git_test git_test_clone2
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>lv-k@quietheart:~/temp$ git clone git_test git_test_clone2
 Cloning into git_test_clone2...
 done.
 lv-k@quietheart:~/temp$ cd git_test_clone2/
@@ -2879,7 +2981,7 @@ lv-k@quietheart:~/temp/git_test_clone2$ git log --graph
 使用<code class="prettyprint">git checkout &lt;commit id&gt;</code>可以提取以前的版本，并且也可以回到以前之后的版本，但是如何回到以前的版本之后，知道以后有什么版本？</p></li>
 </ul>
 
-<h3 id="参考资料">参考资料</h3>
+<h3 id="part-2bb23717ee7e9bfc">参考资料</h3>
 
 <p><a href="/data/2012-06-14-git_basic.files/misc/2012-06-13-git_test.tgz">本文实践的库</a><br><br>
 <a href="http://www.cnblogs.com/abeen/archive/2010/06/17/1759496.html">http://www.cnblogs.com/abeen/archive/2010/06/17/1759496.html</a><br><br>

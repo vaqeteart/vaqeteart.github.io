@@ -16,7 +16,7 @@
       href="/assets/css/posts.css" media="screen" />
   </head>
 
-   <body onload="change_categories('categories_study_vim')">
+   <body onload="change_categories('categories_study_vim_Vim')">
      <table class="container">
         <tbody>
 	      <tr>
@@ -40,6 +40,57 @@
 		       var categories_count = JSON.parse('{"/categories":0}');
 
   		       
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
     		       var post_categories = '/categories/study/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -142,7 +193,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/kits';
+    		       var post_categories = '/categories/study/linux/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -159,7 +210,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/linux/misc';
+    		       var post_categories = '/categories/study/kits';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -295,7 +346,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study/emacs';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -312,7 +363,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/emacs';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -346,7 +397,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -363,7 +414,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -567,7 +618,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -601,7 +652,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -618,7 +669,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -880,6 +931,57 @@
     var categories_count = JSON.parse('{"/categories":0}');
 
     
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
     var post_categories = '/categories/study/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
@@ -982,7 +1084,7 @@
         }
     }
     
-    var post_categories = '/categories/study/kits';
+    var post_categories = '/categories/study/linux/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -999,7 +1101,7 @@
         }
     }
     
-    var post_categories = '/categories/study/linux/misc';
+    var post_categories = '/categories/study/kits';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1135,7 +1237,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study/emacs';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1152,7 +1254,7 @@
         }
     }
     
-    var post_categories = '/categories/study/emacs';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1186,7 +1288,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1203,7 +1305,7 @@
         }
     }
     
-    var post_categories = '/categories/study';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1407,7 +1509,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1441,7 +1543,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1458,7 +1560,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1641,7 +1743,7 @@
   </h1>
   <hr id='title_line'>
   <div>
-    <h2 id="vim基本模式">Vim基本模式</h2>
+    <h2 id="vim">Vim基本模式</h2>
 
 <p>Vim中有6个基本模式和6个基本模式的变种的辅助模式，后面的讲述中会涉及到这些模式。这里将这些模式做一个简单介绍，更多文档请参考vim手册中 <code class="prettyprint">*vim-modes-intro* *vim-modes*</code> 部分的内容（可通过<code class="prettyprint">:help vim-modes</code>浏览）。</p>
 
@@ -1670,7 +1772,7 @@
 
 <p>类似Command-line mode，在Normal mode中通过键入<code class="prettyprint">Q</code>、<code class="prettyprint">gQ</code>可以进入该模式。该模式下输入的命令和Command-line mode中的差不多，但是输入完一条命令之后，你会保持在Ex mode中继续输入其他命令，期间当前屏幕不会刷新，键入<code class="prettyprint">vi</code>会退出该模式。具体参见<code class="prettyprint">:help Ex-mode</code>。</p>
 
-<h2 id="vim的辅助模式">Vim的辅助模式</h2>
+<h2 id="vim">Vim的辅助模式</h2>
 
 <p>除了基本模式之外，Vim还有六个辅助模式，如下。</p>
 
@@ -1698,7 +1800,7 @@
 
 <p>这个模式类似Select mode，是在Insert mode中进入 Insert Normal mode后再键入从Normal进入Select mode的命令，会进入该模式，该状态结束后，会回到Insert mode。设置<code class="prettyprint">showmode</code>选项为<code class="prettyprint">on</code>后，可以在窗口底部看到进入该模式的提示<code class="prettyprint">-- (insert) SELECT --</code>。</p>
 
-<h2 id="最常见的模式及相关操作">最常见的模式及相关操作</h2>
+<h2 id="part-eced66318fd0d188">最常见的模式及相关操作</h2>
 
 <p>前面介绍了Vim的多种模式，内容较多，为便于理解和继续，这里给出其中最常见的模式和相关操作。深入理解可在学习完本系列文章后再回顾。内容是在输入模式下的功能。输入模式主要有如下的操作：</p>
 

@@ -32,7 +32,7 @@
 	</th>
 
 	<th class="navitm">
-	      <a href=/categories/study/linux/command/index.html>分类</a>
+	      <a href=/categories/study/linux/command/>分类</a>
 	      <div id="category_menus" class="second">
   	      	   
 
@@ -41,6 +41,57 @@
 		       var categories_count = JSON.parse('{"/categories":0}');
 
   		       
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
     		       var post_categories = '/categories/study/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -143,7 +194,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/kits';
+    		       var post_categories = '/categories/study/linux/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -160,7 +211,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/linux/misc';
+    		       var post_categories = '/categories/study/kits';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -296,7 +347,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study/emacs';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -313,7 +364,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/emacs';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -347,7 +398,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -364,7 +415,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -568,7 +619,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -602,7 +653,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -619,7 +670,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -881,6 +932,57 @@
     var categories_count = JSON.parse('{"/categories":0}');
 
     
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
     var post_categories = '/categories/study/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
@@ -983,7 +1085,7 @@
         }
     }
     
-    var post_categories = '/categories/study/kits';
+    var post_categories = '/categories/study/linux/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1000,7 +1102,7 @@
         }
     }
     
-    var post_categories = '/categories/study/linux/misc';
+    var post_categories = '/categories/study/kits';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1136,7 +1238,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study/emacs';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1153,7 +1255,7 @@
         }
     }
     
-    var post_categories = '/categories/study/emacs';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1187,7 +1289,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1204,7 +1306,7 @@
         }
     }
     
-    var post_categories = '/categories/study';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1408,7 +1510,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1442,7 +1544,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1459,7 +1561,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1708,21 +1810,6 @@
       
         
         
-          [2016-02-02]<a href="/categories/study/linux/command/linux_command_tips.html"> Linux命令学习记录  </a> <br>
-
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-
-
-Table of Contents
-
-
-1. Misc
-
-1.1. MAYBE/FUTU...
-          </div>
-          <hr class='article_line'>
-        
 
       
         
@@ -1831,195 +1918,49 @@ Table of Contents
       
         
         
-          [2009-11-23]<a href="/categories/study/linux/command/linux_command_wc.html"> Linux命令学习手册-wc  </a> <br>
 
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-
-
-
-
-Table of Contents
-
-
-1. 功能
-2. 描述
-
-2.1. 参数有
-...
-          </div>
-          <hr class='article_line'>
+      
+        
         
 
       
         
         
-          [2009-11-23]<a href="/categories/study/linux/command/linux_command_install.html"> Linux命令学习手册-install  </a> <br>
 
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-
-
-Table of Contents
-
-
-1. 功能
-2. 描述
-3. 举例
-4. 其它
-...
-          </div>
-          <hr class='article_line'>
+      
+        
         
 
       
         
         
-          [2009-11-23]<a href="/categories/study/linux/command/linux_command_fsck.html"> Linux命令学习手册-fsck  </a> <br>
 
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-
-
-
-
-Table of Contents
-
-
-1. 功能
-2. 举例
-3. 描述
-
-3.1...
-          </div>
-          <hr class='article_line'>
+      
+        
         
 
       
         
         
-          [2009-11-23]<a href="/categories/study/linux/command/linux_command_find.html"> Linux命令学习手册-find  </a> <br>
 
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-
-
-
-
-Table of Contents
-
-
-1. 功能
-2. 描述
-
-2.1. find...
-          </div>
-          <hr class='article_line'>
+      
+        
         
 
       
         
         
-          [2009-11-23]<a href="/categories/study/linux/command/linux_command_diff.html"> Linux命令学习手册-diff  </a> <br>
 
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-
-
-Table of Contents
-
-
-1. 功能
-2. 举例
-3. 描述
-4. 其它
-...
-          </div>
-          <hr class='article_line'>
+      
+        
         
 
       
         
         
-          [2009-11-23]<a href="/categories/study/linux/command/linux_command_df.html"> Linux命令学习手册-df  </a> <br>
-
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-
-
-Table of Contents
-
-
-1. 功能
-2. 描述
-3. 举例
-4. 其它
-...
-          </div>
-          <hr class='article_line'>
-        
 
       
         
-        
-          [2009-11-23]<a href="/categories/study/linux/command/linux_command_awk.html"> Linux命令学习手册-awk  </a> <br>
-
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-
-
-Table of Contents
-
-
-1. 功能
-2. 描述
-
-2.1. awk 的处...
-          </div>
-          <hr class='article_line'>
-        
-
-      
-        
-        
-          [2009-11-23]<a href="/categories/study/linux/command/linux_command_ar.html"> Linux命令学习手册-ar  </a> <br>
-
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-
-
-
-
-Table of Contents
-
-
-1. 功能
-2. 描述
-
-2.1. 选项
-2...
-          </div>
-          <hr class='article_line'>
-        
-
-      
-        
-        
-          [2009-11-23]<a href="/categories/study/linux/command/linux_command_00Introduce.html"> Linux命令学习手册-0前言  </a> <br>
-
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-
-
-Table of Contents
-
-
-1. 读者须知
-2. 本文内容
-3. 本文约定
-...
-          </div>
-          <hr class='article_line'>
         
 
       

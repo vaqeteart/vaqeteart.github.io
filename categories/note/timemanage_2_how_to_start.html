@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
-<title>Linux进程和线程的调度与优先级</title>
+<title>时间管理：2.分析问题——如何开始</title>
 
 <!--theme-->
 <link rel="stylesheet" type="text/css"
@@ -16,7 +16,7 @@
       href="/assets/css/posts.css" media="screen" />
   </head>
 
-   <body onload="change_categories('categories_study_os')">
+   <body onload="change_categories('categories_note')">
      <table class="container">
         <tbody>
 	      <tr>
@@ -31,7 +31,7 @@
 	</th>
 
 	<th class="navitm">
-	      <a href=/categories/study/os/linux_schedule_priority.html>分类</a>
+	      <a href=/categories/note/timemanage_2_how_to_start.html>分类</a>
 	      <div id="category_menus" class="second">
   	      	   
 
@@ -1739,11 +1739,13 @@
                 <td id="td_posts" colspan="6" valign="top">
 		  <article>
   <h1 id='header1' style="text-align: center;">
-      Linux进程和线程的调度与优先级
+      时间管理：2.分析问题——如何开始
   </h1>
   <hr id='title_line'>
   <div>
-    <style type="text/css">
+    
+
+<style type="text/css">
   .title  { text-align: center;
              margin-bottom: .2em; }
   .subtitle { text-align: center;
@@ -1781,7 +1783,7 @@
   pre.src:before {
     display: none;
     position: absolute;
-    background-color: white;
+    background-color: black;
     top: -10px;
     right: 10px;
     padding: 3px;
@@ -1893,26 +1895,18 @@
 
 </style>
 
+
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgheadline1">1. 总述</a>
+<li><a href="#orgheadline1">1. 类似的问题</a></li>
+<li><a href="#orgheadline2">2. 共同的方式</a></li>
+<li><a href="#orgheadline3">3. 确认思路</a></li>
+<li><a href="#orgheadline4">4. 开始行动</a>
 <ul>
-<li><a href="#orgheadline2">1.1. 概念：</a></li>
-<li><a href="#orgheadline3">1.2. 方法：</a></li>
-<li><a href="#orgheadline4">1.3. 原理：</a></li>
-</ul>
-</li>
-<li><a href="#orgheadline5">2. 进程优先级概念</a></li>
-<li><a href="#orgheadline6">3. 进程优先级与变动影响因素与原理</a></li>
-<li><a href="#orgheadline7">4. 查看与设置优先级与进程线程信息等的方法</a></li>
-<li><a href="#orgheadline8">5. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[0/4]</code>(<code>[0%]</code>)</a>
-<ul>
-<li><a href="#orgheadline9">5.1. <span class="todo nilNEXT">NEXT</span> 线程优先级是否继承父线程优先级？是否继承父进程优先级？</a></li>
-<li><a href="#orgheadline10">5.2. <span class="todo nilNEXT">NEXT</span> <code>chrt</code> 修改进程优先级，那么该进程的子线程优先级是否改变？</a></li>
-<li><a href="#orgheadline11">5.3. <span class="todo nilNEXT">NEXT</span> <code>chrt</code>, <code>ps</code>, <code>top</code>, <code>pthread_attr_setschedpolicy()</code>, <code>sched_setscheduler()</code> 中的优先级值和含义有什么关系？</a></li>
-<li><a href="#orgheadline12">5.4. <span class="todo nilNEXT">NEXT</span> 考虑将引文中的链接下载到本地</a></li>
+<li><a href="#orgheadline5">4.1. 如何开始记录？——分类</a></li>
+<li><a href="#orgheadline6">4.2. 如何进行分类？——寻找分类策略而非分类本身</a></li>
 </ul>
 </li>
 </ul>
@@ -1920,270 +1914,181 @@
 </div>
 
 <p>
-本文主要概述Linux下进程与线程的调度算法和优先级相关内容。
+时间总是不知不觉逝去，如何改善这种状况？——时间管理，很明显，管理好自己的时间或许是一个出路。
 </p>
+
+<p>
+时间是抽象的，在提出可能能进行有效管理的方式之前，先理解一下提出该方式的思路。
+</p>
+
 <div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1"><span class="section-number-2">1</span> 总述</h2>
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 类似的问题</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-为便于快速了解和复习，本节先给出结论性的大致概述，后面再详细介绍相关内容。关于进程优先级和调度策略的大致信息如下。
+不知道大家有没有这个体会：
 </p>
-</div>
-<div id="outline-container-orgheadline2" class="outline-3">
-<h3 id="orgheadline2"><span class="section-number-3">1.1</span> 概念：</h3>
-<div class="outline-text-3" id="text-1-1">
-<ol class="org-ol">
-<li>进程优先级值越小，优先级越大。</li>
-<li>进程优先级是PRI值不是Nice值，但是Nice值会影响优先级。</li>
-<li>三类调度策略：RR调度和FIFO调度的进程属于实时进程，以分时调度(OTHER)的进程是非实时进程</li>
-<li>实时进程优先级高于普通进程，实时进程使用静态优先级调度、非实时进程使用动态优先级调度，非实时进程动态优先级通过nice调整、可能受bonus影响。</li>
-</ol>
-</div>
-</div>
-<div id="outline-container-orgheadline3" class="outline-3">
-<h3 id="orgheadline3"><span class="section-number-3">1.2</span> 方法：</h3>
-<div class="outline-text-3" id="text-1-2">
+
 <p>
-命令行/脚本中可以通过 <code>ps</code>, <code>top</code>, <code>chrt</code> 来查看和修改调度和优先级属性。
-通过 <code>sched_setscheduler()</code> 设置进程调度和优先级属性。
-通过 <code>pthread_attr_setschedpolicy()</code> 设置线程调度和优先级属性。
+逛超市时
 </p>
+<pre class="example">
+来到超市，不知道买什么东西；最后不知不觉，买了很多没必要的东西。
+如果出行前对所缺失的东西都有所记录的话，到超市会更有目的性。
+</pre>
+
+<p>
+理财时
+</p>
+<pre class="example">
+消费的时候，不知道所消费的价格，最后不知不觉，花了很多没有必要的钱。
+如果对每一笔花销及时记录，消费的时候，会自然的衡量，状况也会好很多。
+</pre>
+
+<p>
+学习时
+</p>
+<pre class="example">
+进修的时候，不知道看些什么，最后不知不觉，什么也没有学会。
+如果在学习的时候先做好笔记，在进修的时候再拿出来分析、消化这些知识，最终会掌握相应的技巧。
+</pre>
+
+<p>
+执行计划时
+</p>
+<pre class="example">
+将要做某件事情的时候，却不知从何开始，不知不觉过去了很久了却什么都没有做。
+如果在执行任务之前，先尽可能在任何地点、时间及时收集到有关的想法，再组织整理汇集分类，最终到执行的时候，会更有目的性并最终完成。
+</pre>
 </div>
 </div>
 
-<div id="outline-container-orgheadline4" class="outline-3">
-<h3 id="orgheadline4"><span class="section-number-3">1.3</span> 原理：</h3>
-<div class="outline-text-3" id="text-1-3">
-<p>
-一般子进程会继承父进程的调度策略，在Linux  2.6.32之后，可以使用 <code>SCHED_RESET_ON_FORK</code> 按位与参数的方式调用 <code>sched_setscheduler()</code>, 使用之后效果是：如果调用进程使用 <code>SCHED_FIFO</code> 或 <code>SCHED_RR</code> 调度策略，使用 <code>SCHED_RESET_ON_FORK</code> 后fork创建的子进程创建时将会自动重置为 <code>SCHED_OTHER</code> 调度策略；如果调用进程使用负值nice，那么使用  <code>SCHED_RESET_ON_FORK</code> 后fork创建的子进程创建时将会自动将其nice重置为0。 这个标记激活时只有当进程具有 <code>CAP_SYS_NICE</code> 标记时才能被重置，而这个 <code>CAP_SYS_NICE</code> 标记在使用fork()创建子进程后，在子进程中被禁止。
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgheadline5" class="outline-2">
-<h2 id="orgheadline5"><span class="section-number-2">2</span> 进程优先级概念</h2>
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> 共同的方式</h2>
 <div class="outline-text-2" id="text-2">
-<ol class="org-ol">
-<li><p>
-进程优先级值越小，优先级越大。
+<p>
+其实类似的事情有很多，仔细观察一下你会发现，导致这些事务成功的过程，都有一个共性，就是如下类似的三步：
+</p>
+<ul class="org-ul">
+<li>发现（列出/记录&#x2026;）问题</li>
+<li>分析（归纳/组织&#x2026;）问题</li>
+<li>解决（理解/完成&#x2026;）问题</li>
+</ul>
+
+<p>
+这里简单借用下麦肯锡笔记法中提到的空、雨、伞来总结一下（对麦肯锡笔记了解不多，可能也不准）。
 </p>
 
 <p>
-linux下的进程调度优先级是从-20到19，一共40个级别，数字越大，表示进程的优先级越低。默认时候，进程的优先级是0。
+麦肯锡笔记法是一个通过笔记方式解决问题的方式：空、雨、伞，其实是对：“天空有乌云，应该要下雨，所以得打伞”的简写。
 </p>
 
 <p>
-如果不是root权限,则侄只能降调度优先级而不能提高，即使是自己用户的进程，自己把它调高了后，优先级也不能再被调会原来的值了，除非使用root用户来调回去。
+它是对解决问题的三个阶段的抽象性概述，直观点说就是：发现问题、分析问题、解决问题。
 </p>
 
 <p>
-系统重启后，对进程优先级的调整全部失效，所有进程的调度回到默认的初始级别。
+而上面例子，就像对这个思想的一个变相应用，这是一个符合一般人思考规律的过程(感觉如此，实际并未深入调查关于人的思考规律)。
 </p>
 
 <p>
-参考：<a href="http://blog.chinaunix.net/uid-25940826-id-2888088.html">Linux进程优先级的调整方法</a>
-</p></li>
-
-<li><p>
-进程优先级是PRI值不是Nice值，但是Nice值会影响优先级
+正是因为经历了上面提到的过程，所以：
 </p>
-
-<p>
-PRI也还是比较好理解的，即进程的优先级，或者通俗点说就是程序被CPU执行的先后顺序，此值越小进程的优先级别越高。那NI呢？就是我们所要说的nice值了，其表示进程可被执行的优先级的修正数值。如前面所说，PRI值越小越快被执行，那么加入nice值后，将会使得PRI变为：PRI(new)=PRI(old)+nice。
-</p>
-
-<p>
-到目前为止，更需要强调一点的是，进程的nice值不是进程的优先级，他们不是一个概念，但是进程nice值会影响到进程的优先级变化。
-</p>
-
-<p>
-通过调整nice值，更改进程优先级，nice调整范围是 -20~19。
-</p>
-
-<p>
-参考：<a href="http://blog.csdn.net/codestinity/article/details/7496962">linux进程优先级、进程nice值</a>
-</p></li>
-</ol>
+<ul class="org-ul">
+<li>到超市前的清单是对购物内容的记录，购物前的排序是对购物目的的清晰化，有了清晰的购物清单便能轻松购物。</li>
+<li>对每一笔花销及时的记录，日常浏览各类花销以及比例的分析，有让每次消费更合理。</li>
+<li>学习时及时做好笔记（记录），过后的时间内对记录的内容消化（分析），最终会很好的吸收（掌握）相应知识。</li>
+<li>执行任务前，尽可能集思广益收集一切琐项（记录），再组织整理归纳排序（分析），最终执行（行动）会更容易完成。</li>
+</ul>
 </div>
 </div>
 
-
-<div id="outline-container-orgheadline6" class="outline-2">
-<h2 id="orgheadline6"><span class="section-number-2">3</span> 进程优先级与变动影响因素与原理</h2>
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><a id="ID-f0fd28ee-3519-43e1-b844-eda86cd27121"></a><span class="section-number-2">3</span> 确认思路</h2>
 <div class="outline-text-2" id="text-3">
-<ol class="org-ol">
+<p>
+购物要先列清单、理财要先记账、学习要先笔记、任务要先规划……同理，显然对时间的管理，应当如此： <b>管理时间，要先记录时间。</b> 
+</p>
+
+<p>
+回归主题：时间记录——只有掌握好每时每刻，才可能管理好时间。
+</p>
+
+<p>
+（仔细想想，在得出这个结论之前，我们是否也也应用了类似的三步分析过程呢^_^）
+</p>
+
+<p>
+虽然结论得出的有些“突然”，却总是有一种“似乎被理论说服了，却心底不够确定”的感觉？
+</p>
+
+<p>
+这样的话，我能想到的只有将这段时间以来收集的零散时刻抓住的些许体会分享，
+</p>
+
+<p>
+或许将来会有更多，或许也有机会并入，但人各有不同，希望能够更坚定同道者继续的信心：
+</p>
+<ul class="org-ul">
+<li>只有做好记录，才能为接下来的分析、与规划打好基础。</li>
+<li>只有对自己要做的事情很清晰了之后，才会更容易记录自己做过的事情，所以要对事物分类。</li>
+<li>深感自己如同随波逐流的一叶扁舟，一切都处于无法掌控的状态，如何掌控?不清晰则乱,乱则无法掌控！</li>
+<li>看清自己的每时每刻，才能看见自己的未来；掌控好自己的每时每刻，才能掌握自己的一生！</li>
 <li><p>
-调度策略：RR调度和FIFO调度的进程属于实时进程，以分时调度(OTHER)的进程是非实时进程。
+借助规律，而非感觉。
 </p>
-
-<p>
-FIFO（先进先出）和RR（时间片轮转）用于实时进程，OTHER（分时调度）用于非实时进程；实时进程会抢占普通进程;FIFO会导致同优先级实时进程始终占用CPU，RR会保证同优先级实时进程按时间片轮流执行。
-</p>
-
-<p>
-参考：<a href="http://blog.chinaunix.net/uid-7187477-id-5593.html">SCHED_OTHER,SCHED_FIFO,SCHED_RR</a>
-</p></li>
-
-<li><p>
-实时进程优先级高于普通进程，实时进程使用静态优先级调度、非实时进程使用动态优先级调度，非实时进程动态优先级通过nice调整、可能受bonus影响。
-</p>
-
-<p>
-Linux进程有两种优先级：普通进程优先级（使用SCHED_NORMAL调度策略），以及实时进程优先级（使用SCHED_FIFO或SCHED_RR调度策略）
-</p>
-
-<p>
-不同调度策略的实时进程只有在相同优先级时才有可比性，任何时候，实时进程的优先级都高于普通进程
-</p>
-
-<p>
-Linux对实时进程使用静态优先级调度，对普通的进程（非实时进程），根据动态优先级进行调度。
-</p>
-
-<p>
-实时进程，只有静态优先级(在0~MAX_RT_PRIO-1间，默认MAX_RT_PRIO为100）, 内核不会再根据休眠等因素对其静态优先级做调整； 
-</p>
-
-<p>
-实时进程0-99号优先级每一个优先级对应一个优先级队列（链表），先执行数值高的对应的链表（0号最低），可由后面所述的 <code>chrt</code> 以及 相应函数修改该优先级；
-</p>
-
-<p>
-非实时进程静态优先级可通过nice值（-20~19）调整：static_prio=MAX_RT_PRIO + nice + 20。
-</p>
-
-<p>
-nice只影响非实时进程(静态优先级在100~139之间)，nice越大静态优先级值越大，优先级越低。
-</p>
-
-<p>
-非实时进程动态优先级根据静态优先级和bonus计算:dynamic_prio = max (100, min (static_prio - bonus + 5, 139))
-</p>
-
-<p>
-bonus反映进程平均睡眠时间（范围0~10），睡眠时间越多越可能是交互进程，每次轮到它运行时它就越可能不会使用完时间片再释放cpu。
-</p>
-
-<p>
-参考：<a href="http://www.cnblogs.com/zhaoyl/archive/2012/09/04/2671156.html">Linux进程调度原理</a> 以及 <a href="http://sunnyshineboy.blog.163.com/blog/static/20281511820130664616543/">给进程设置实时优先级</a>
-</p></li>
-</ol>
+<pre class="example">
+偏好按照感觉而不按照规律做事，是因为不明白规律，根本是原因你对你所遇见的了解不够清晰。
+深刻的体会到，感觉只是片面的、短暂的、主观的感受，规律才是系统的、长久的、客观的事实。
+当足够清晰并了解掌握一切，感觉会更接近规律，从而自然而然变得按规律做事不按照感觉做事。
+当一切形成了规律，一切会顺理成章，一切的未知似乎已经被掌握，不再焦虑、迷茫、以及空虚。
+</pre></li>
+</ul>
 </div>
 </div>
 
-<div id="outline-container-orgheadline7" class="outline-2">
-<h2 id="orgheadline7"><span class="section-number-2">4</span> 查看与设置优先级与进程线程信息等的方法</h2>
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4"><span class="section-number-2">4</span> 开始行动</h2>
 <div class="outline-text-2" id="text-4">
-<ol class="org-ol">
-<li><p>
-通过 <code>ps</code> 查看进程信息
+<p>
+在前面，我们确认了一点：想要做好时间管理，首先我们需要做的，便是记录下你身上所有发生事情的所有时间信息。即： <b>时间记录</b> 。
 </p>
 
 <p>
-<code>ps -el</code> 可查看进程优先级和nice值,命令执行结果：NI列显示的每个进程的nice值（主要针对非实时进程），PRI是进程的优先级（如果是实时进程就是静态优先级，如果是非实时进程，就是动态优先级）。
+这里重点给出第一步行动，因为有了第一步，接下来的过程就容易多了，并且这个问题也还在继续探索中。
+</p>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">4.1</span> 如何开始记录？——分类</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+直接面对这个任务我们会发现，要记录的事情各式各样、杂乱无章，似乎根本不可能全部记录下来。如何记录才能有助于真正有意义的跟踪与分析呢？
 </p>
 
 <p>
-参考：<a href="http://www.cnblogs.com/zhaoyl/archive/2012/09/04/2671156.html">Linux进程调度原理</a>
-</p></li>
-
-<li><p>
-通过 <code>top</code> 查看进程信息
+其实，仔细想想，难以进行下去的很大一部分原因是对自己从事事务分类的不明确，
 </p>
 
 <p>
-其中的优先级和ps的pri不一样，ps中一般为0的进程，在top中为20，这个优先级应该对应于前面所说的实时进程优先级，实时进程只使用1-99号优先级队列，序号越大优先级越高，0号留给普通进程使用。
-</p></li>
-
-<li><p>
-<code>chrt -p &lt;pid&gt;</code> 查看进程属性
+所以先对要记录的事务先做好分类，记录时再根据分类组织记录项，应该能有所改善。
 </p>
-
-<p>
-通过 <code>chrt</code> 查看和修改进程调度和优先级属性，它一般也是调用后面的 <code>sched_setscheduler()</code> 实现的。  
-</p>
-
-<p>
-注意： <code>char -o pri command</code> 设置为SCHED_OTHER调度方式优先级别值只能是0表示比任何实时优先级都低，非实时进程不使用该值决定调度行为，普通进程使用自己的调度策略。
-</p>
-
-<p>
-参考： <code>man chrt</code> 
-</p></li>
-
-<li><p>
-通过 <code>sched_setscheduler()</code> 设置进程调度和优先级属性
-</p>
-
-<p>
-效果类似 <code>chrt</code>, 
-</p>
-
-<p>
-关于priority的注意：这里参数中的pri不是ps的nice也不是priority,而是代码中的sched_priority，用于表示一系列可执行进程列表。实时进程中该值范围为1-99越大表示优先级越高, 非实时只能是0表示始终比实时进程低，并且非实时进程的优先级不由此值确定而是由其内部动态优先级确定。chrt中的pri应该也类似含义，例如： <code>chrt -f -p 10 pid</code> 则ps中pri为-11， <code>chrt -f -p 1 pid</code> 则ps中pri为-2）为0，进程命令为command，其它可以根据选项参数设置。
-</p>
-
-<p>
-关于prioriti的注意：一般子进程会继承父进程的调度策略，在Linux  2.6.32之后，可以使用 <code>SCHED_RESET_ON_FORK</code> 按位与参数的方式调用 <code>sched_setscheduler()</code>, 使用之后效果是：如果调用进程使用 <code>SCHED_FIFO</code> 或 <code>SCHED_RR</code> 调度策略，使用 <code>SCHED_RESET_ON_FORK</code> 后fork创建的子进程创建时将会自动重置为 <code>SCHED_OTHER</code> 调度策略；如果调用进程使用负值nice，那么使用  <code>SCHED_RESET_ON_FORK</code> 后fork创建的子进程创建时将会自动将其nice重置为0。 这个标记激活时只有当进程具有 <code>CAP_SYS_NICE</code> 标记时才能被重置，而这个 <code>CAP_SYS_NICE</code> 标记在使用fork()创建子进程后，在子进程中被禁止。
-</p>
-
-<p>
-参考： <code>man sched_setscheduler</code> 和 <a href="http://blog.chinaunix.net/xmlrpc.php?r=blog/article&amp;uid=20205875&amp;id=3028468">线程优先级设置</a>
-</p></li>
-
-<li><p>
-通过 <code>pthread_attr_setschedpolicy()</code> 设置线程调度和优先级属性
-</p>
-
-<p>
-效果类似 <code>sched_setscheduler()</code>, 但是用于线程而非进程。
-</p>
-
-<p>
-参考： <code>man pthread_attr_setschedpolicy</code>
-</p></li>
-</ol>
 </div>
 </div>
 
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">4.2</span> 如何进行分类？——寻找分类策略而非分类本身</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+需要要将所有待记录的事件分类，可是同样因待记录的数据过于庞大、繁杂、变化多端，却有种无从下手的感觉，怎么分类才能达到简明，并且保罗万象呢？
+</p>
 
-<div id="outline-container-orgheadline8" class="outline-2">
-<h2 id="orgheadline8"><span class="section-number-2">5</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[0/4]</code>(<code>[0%]</code>)</h2>
-<div class="outline-text-2" id="text-5">
-</div><div id="outline-container-orgheadline9" class="outline-3">
-<h3 id="orgheadline9"><span class="section-number-3">5.1</span> <span class="todo NEXT">NEXT</span> 线程优先级是否继承父线程优先级？是否继承父进程优先级？</h3>
-<div class="outline-text-3" id="text-5-1">
-<ul class="org-ul">
-<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-02-01 一 15:39]</span></span></li>
-</ul>
-</div>
-</div>
+<p>
+经过长时间的实践发现，分类的情况应该是因人而异的，即使是同一个人，分类的方式在不同的时间也有所不同，并且存在分类交叉的现象，这是复杂的一个关键。
+</p>
 
-<div id="outline-container-orgheadline10" class="outline-3">
-<h3 id="orgheadline10"><span class="section-number-3">5.2</span> <span class="todo NEXT">NEXT</span> <code>chrt</code> 修改进程优先级，那么该进程的子线程优先级是否改变？</h3>
-<div class="outline-text-3" id="text-5-2">
-<ul class="org-ul">
-<li>State "NEXT"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-02-01 一 15:40]</span></span></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orgheadline11" class="outline-3">
-<h3 id="orgheadline11"><span class="section-number-3">5.3</span> <span class="todo NEXT">NEXT</span> <code>chrt</code>, <code>ps</code>, <code>top</code>, <code>pthread_attr_setschedpolicy()</code>, <code>sched_setscheduler()</code> 中的优先级值和含义有什么关系？</h3>
-<div class="outline-text-3" id="text-5-3">
-<ul class="org-ul">
-<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-02-01 一 15:40]</span></span></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orgheadline12" class="outline-3">
-<h3 id="orgheadline12"><span class="section-number-3">5.4</span> <span class="todo NEXT">NEXT</span> 考虑将引文中的链接下载到本地</h3>
-<div class="outline-text-3" id="text-5-4">
-<ul class="org-ul">
-<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-02-01 一 15:50]</span></span></li>
-</ul>
+<p>
+问题不在于分类本身，而在于分类策略，接下来将专用针对时间记录，给出一个分类策略，特点是事务间基本互斥（同一时间只能做一件事情），这个分类并非内容/知识管理组织中的分类/标签(可以交叉从属)。
+</p>
 </div>
 </div>
 </div>
@@ -2203,22 +2108,24 @@ bonus反映进程平均睡眠时间（范围0~10），睡眠时间越多越可�
 	</tr>
     	<tr>
 	  <td style="border-style: solid;border-width:1px;border-left:0px;">Date</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2016-02-01 一 15:35]</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2019-02-27 三]</td>
 	  
 	</tr>
     	<tr>
 	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-02-11 四 16:14:46></td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2019-05-05 日 14:04:11></td>
 	</tr>
     </tbody></table>
 </div>
 <br>
 
+
+
   </div>
 </article>
 
 		  <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="/categories/study/os/linux_schedule_priority" data-title="Linux进程和线程的调度与优先级" data-url="http://vaqeteart.github.io//categories/study/os/linux_schedule_priority.html"></div>
+<div class="ds-thread" data-thread-key="/categories/note/timemanage_2_how_to_start" data-title="时间管理：2.分析问题——如何开始" data-url="http://vaqeteart.github.io//categories/note/timemanage_2_how_to_start.html"></div>
 <!-- 多说评论框 end -->
 <script src="/assets/js/comment.js"></script>
 		</td>

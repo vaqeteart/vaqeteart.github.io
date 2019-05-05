@@ -32,7 +32,7 @@
 	</th>
 
 	<th class="navitm">
-	      <a href=/categories/study/vim/index.html>分类</a>
+	      <a href=/categories/study/vim/>分类</a>
 	      <div id="category_menus" class="second">
   	      	   
 
@@ -41,6 +41,57 @@
 		       var categories_count = JSON.parse('{"/categories":0}');
 
   		       
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
+    		       var post_categories = '/categories/note';
+    		       if (typeof(categories_count[post_categories]) == "undefined")
+    		       {
+				categories_count[post_categories] =0;
+    		       }
+    		       for(var key in categories_count)
+    		       {
+				if (key.length <= post_categories.length)
+        			{
+					if (post_categories.substring(0, key.length) 
+                			   == key.substring(0,key.length))
+            				{
+						categories_count[key]+=1;
+            				}
+        			}
+    			}
+    			
     		       var post_categories = '/categories/study/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -143,7 +194,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/kits';
+    		       var post_categories = '/categories/study/linux/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -160,7 +211,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/linux/misc';
+    		       var post_categories = '/categories/study/kits';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -296,7 +347,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study/emacs';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -313,7 +364,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/emacs';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -347,7 +398,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -364,7 +415,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -568,7 +619,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -602,7 +653,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -619,7 +670,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim';
+    		       var post_categories = '/categories/study/vim/Vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -881,6 +932,57 @@
     var categories_count = JSON.parse('{"/categories":0}');
 
     
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
+    var post_categories = '/categories/note';
+    if (typeof(categories_count[post_categories]) == "undefined")
+    {
+        categories_count[post_categories] =0;
+    }
+    for(var key in categories_count)
+    {
+        if (key.length <= post_categories.length)
+        {
+            if (post_categories.substring(0, key.length) 
+                == key.substring(0,key.length))
+            {
+                categories_count[key]+=1;
+            }
+        }
+    }
+    
     var post_categories = '/categories/study/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
@@ -983,7 +1085,7 @@
         }
     }
     
-    var post_categories = '/categories/study/kits';
+    var post_categories = '/categories/study/linux/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1000,7 +1102,7 @@
         }
     }
     
-    var post_categories = '/categories/study/linux/misc';
+    var post_categories = '/categories/study/kits';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1136,7 +1238,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study/emacs';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1153,7 +1255,7 @@
         }
     }
     
-    var post_categories = '/categories/study/emacs';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1187,7 +1289,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1204,7 +1306,7 @@
         }
     }
     
-    var post_categories = '/categories/study';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1408,7 +1510,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1442,7 +1544,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1459,7 +1561,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim';
+    var post_categories = '/categories/study/vim/Vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1774,129 +1876,49 @@
       
         
         
-          [2010-04-02]<a href="/categories/study/vim/vim_use_tutor_09Others.html"> Vim实践与学习-09其他  </a> <br>
 
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-查看vim的简易教程：
-输入:!vimtutor.
-这里实际vimtutor是shell终端...
-          </div>
-          <hr class='article_line'>
+      
+        
         
 
       
         
         
-          [2010-04-02]<a href="/categories/study/vim/vim_use_tutor_08Config.html"> Vim实践与学习-08配置相关  </a> <br>
 
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-查看vim的版本及功能：
-输入:version.
-这样会显示当前vim的版本，编译选项，vi...
-          </div>
-          <hr class='article_line'>
+      
+        
         
 
       
         
         
-          [2010-04-02]<a href="/categories/study/vim/vim_use_tutor_07View.html"> Vim实践与学习-07显示相关  </a> <br>
 
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          vi 有时候可以用特殊的方式来显示你编辑的文件，例如多个窗口等。这里就将这类相关的命令集中了。...
-          </div>
-          <hr class='article_line'>
+      
+        
         
 
       
         
         
-          [2010-04-02]<a href="/categories/study/vim/vim_use_tutor_06Programing.html"> Vim实践与学习-06编程  </a> <br>
 
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          这里的内容是针对编程序或者阅读源代码时候使用的，本来它的有些内容可以属于其它类的，但是这里单独...
-          </div>
-          <hr class='article_line'>
+      
+        
         
 
       
         
         
-          [2010-04-02]<a href="/categories/study/vim/vim_use_tutor_05Jump.html"> Vim实践与学习-05定位  </a> <br>
 
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-定位到指定行n:
-输入:nG.
-或输入:ngg.
-或输入::n
-这里,n就是指定的行的行号....
-          </div>
-          <hr class='article_line'>
+      
+        
         
 
       
         
         
-          [2010-04-02]<a href="/categories/study/vim/vim_use_tutor_04Edit.html"> Vim实践与学习-04编辑  </a> <br>
-
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          
-输入模式
-
-
-进入输入模式:
-输入i.
-或输入a.
-这里，输入i是在字符前开始插入，输入a是...
-          </div>
-          <hr class='article_line'>
-        
 
       
         
-        
-          [2010-04-02]<a href="/categories/study/vim/vim_use_tutor_03File.html"> Vim实践与学习-03文件  </a> <br>
-
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          这里包含在shell下执行vim,以及vim中关于文件操作的内容。
-
-
-打开一个文件file进...
-          </div>
-          <hr class='article_line'>
-        
-
-      
-        
-        
-          [2010-04-02]<a href="/categories/study/vim/vim_use_tutor_02Input.html"> Vim实践与学习-02输入模式  </a> <br>
-
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          Vim基本模式
-
-Vim中有6个基本模式和6个基本模式的变种的辅助模式，后面的讲述中会涉及到这...
-          </div>
-          <hr class='article_line'>
-        
-
-      
-        
-        
-          [2010-04-02]<a href="/categories/study/vim/vim_use_tutor_01Introduction.html"> Vim实践与学习-01简介  </a> <br>
-
-          <div id="summary" style="font-size: 75%;overflow:hidden;text-overflow: ellipsis;">
-          什么是Vim
-
-没有明确的定义，这里给出一些经验性的概括
-
-
-
-Vim是上世纪这个世界上诞生的...
-          </div>
-          <hr class='article_line'>
         
 
       
