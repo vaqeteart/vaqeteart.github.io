@@ -16,7 +16,7 @@
       href="/assets/css/posts.css" media="screen" />
   </head>
 
-   <body onload="change_categories('categories_study_vim_Vim')">
+   <body onload="change_categories('categories_study_vim')">
      <table class="container">
         <tbody>
 	      <tr>
@@ -40,57 +40,6 @@
 		       var categories_count = JSON.parse('{"/categories":0}');
 
   		       
-    		       var post_categories = '/categories/note';
-    		       if (typeof(categories_count[post_categories]) == "undefined")
-    		       {
-				categories_count[post_categories] =0;
-    		       }
-    		       for(var key in categories_count)
-    		       {
-				if (key.length <= post_categories.length)
-        			{
-					if (post_categories.substring(0, key.length) 
-                			   == key.substring(0,key.length))
-            				{
-						categories_count[key]+=1;
-            				}
-        			}
-    			}
-    			
-    		       var post_categories = '/categories/note';
-    		       if (typeof(categories_count[post_categories]) == "undefined")
-    		       {
-				categories_count[post_categories] =0;
-    		       }
-    		       for(var key in categories_count)
-    		       {
-				if (key.length <= post_categories.length)
-        			{
-					if (post_categories.substring(0, key.length) 
-                			   == key.substring(0,key.length))
-            				{
-						categories_count[key]+=1;
-            				}
-        			}
-    			}
-    			
-    		       var post_categories = '/categories/note';
-    		       if (typeof(categories_count[post_categories]) == "undefined")
-    		       {
-				categories_count[post_categories] =0;
-    		       }
-    		       for(var key in categories_count)
-    		       {
-				if (key.length <= post_categories.length)
-        			{
-					if (post_categories.substring(0, key.length) 
-                			   == key.substring(0,key.length))
-            				{
-						categories_count[key]+=1;
-            				}
-        			}
-    			}
-    			
     		       var post_categories = '/categories/study/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -193,7 +142,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/linux/misc';
+    		       var post_categories = '/categories/study/kits';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -210,7 +159,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/kits';
+    		       var post_categories = '/categories/study/linux/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -346,7 +295,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/emacs';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -363,7 +312,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study/emacs';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -397,7 +346,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -414,7 +363,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -618,7 +567,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim/Vim';
+    		       var post_categories = '/categories/study/vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -652,7 +601,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim/Vim';
+    		       var post_categories = '/categories/study/vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -669,7 +618,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim/Vim';
+    		       var post_categories = '/categories/study/vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -931,57 +880,6 @@
     var categories_count = JSON.parse('{"/categories":0}');
 
     
-    var post_categories = '/categories/note';
-    if (typeof(categories_count[post_categories]) == "undefined")
-    {
-        categories_count[post_categories] =0;
-    }
-    for(var key in categories_count)
-    {
-        if (key.length <= post_categories.length)
-        {
-            if (post_categories.substring(0, key.length) 
-                == key.substring(0,key.length))
-            {
-                categories_count[key]+=1;
-            }
-        }
-    }
-    
-    var post_categories = '/categories/note';
-    if (typeof(categories_count[post_categories]) == "undefined")
-    {
-        categories_count[post_categories] =0;
-    }
-    for(var key in categories_count)
-    {
-        if (key.length <= post_categories.length)
-        {
-            if (post_categories.substring(0, key.length) 
-                == key.substring(0,key.length))
-            {
-                categories_count[key]+=1;
-            }
-        }
-    }
-    
-    var post_categories = '/categories/note';
-    if (typeof(categories_count[post_categories]) == "undefined")
-    {
-        categories_count[post_categories] =0;
-    }
-    for(var key in categories_count)
-    {
-        if (key.length <= post_categories.length)
-        {
-            if (post_categories.substring(0, key.length) 
-                == key.substring(0,key.length))
-            {
-                categories_count[key]+=1;
-            }
-        }
-    }
-    
     var post_categories = '/categories/study/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
@@ -1084,7 +982,7 @@
         }
     }
     
-    var post_categories = '/categories/study/linux/misc';
+    var post_categories = '/categories/study/kits';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1101,7 +999,7 @@
         }
     }
     
-    var post_categories = '/categories/study/kits';
+    var post_categories = '/categories/study/linux/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1237,7 +1135,7 @@
         }
     }
     
-    var post_categories = '/categories/study/emacs';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1254,7 +1152,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study/emacs';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1288,7 +1186,7 @@
         }
     }
     
-    var post_categories = '/categories/study';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1305,7 +1203,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1509,7 +1407,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim/Vim';
+    var post_categories = '/categories/study/vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1543,7 +1441,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim/Vim';
+    var post_categories = '/categories/study/vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1560,7 +1458,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim/Vim';
+    var post_categories = '/categories/study/vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1743,7 +1641,7 @@
   </h1>
   <hr id='title_line'>
   <div>
-    <h3 id="vim">什么是Vim</h3>
+    <h3 id="什么是vim">什么是Vim</h3>
 
 <p>没有明确的定义，这里给出一些经验性的概括</p>
 
@@ -1763,7 +1661,7 @@
 
 <p>目前我们实际使用的都是Vim，它其实是vi的改进版本之一，是最流行的改进版本，所以现在所说的Vi基本上就是Vim了</p>
 
-<h3 id="vim">Vim能做什么</h3>
+<h3 id="vim能做什么">Vim能做什么</h3>
 
 <p>Vim能够处理的事情很多，前面说了那么多空话，为避免有广告之嫌，这里列出其中一些常用的功能应用：  </p>
 
@@ -1780,11 +1678,11 @@
 <p>等等……</p>
 </blockquote>
 
-<h3 id="part-ca77f6be8c219d91">与其他编辑器的比较</h3>
+<h3 id="与其他编辑器的比较">与其他编辑器的比较</h3>
 
 <p>这里的比较主要是针对与它的“对手”Emacs而言，前面众多说法中，有一种可以这样解释：在Linux/Unix界，有三种编辑器：一种是Emacs，一种是Vim，还有一种是除此之外的编辑器，由此可见Vim在编辑器领域的地位。</p>
 
-<h4 id="part-9e83aea72eacc328">操作理念不同</h4>
+<h4 id="操作理念不同">操作理念不同</h4>
 
 <p>Vim与Emacs，两者各有千秋，下面只列出其中少许</p>
 
@@ -1800,7 +1698,7 @@
 
 <p>其实，Vim更算是一款编辑器，而Emacs则像是隐藏在编辑器下的操作系统。</p>
 
-<h4 id="part-1debe167979f3eb2">工作方式不同</h4>
+<h4 id="工作方式不同">工作方式不同</h4>
 
 <p>有人做过这样的比喻，Vim是编辑器之神，Emacs是神之编辑器。</p>
 
@@ -1823,14 +1721,14 @@
 
 <p>两者除各自擅长之处外，又各自在对方擅长的领域表现优异，令其它类编辑器“无可乘之机”，也另对方不敢有丝毫“松懈”。</p>
 
-<h4 id="part-6542bae3383">建议</h4>
+<h4 id="建议">建议</h4>
 
 <p>历史上两者的阵营之间爆发过多次“圣战”，涉及的方面太多，这里不一一列举，在实用的原则上，这里给出一点建议：<br>
 * 对两者的选择，应当建立在对它们的了解之上<br>
 * 使用Vim之时要给自己的思维一点空闲时间，防止进入“走火入魔”的境地<br>
 * 而对Emacs的使用，其配置和扩展能够达到一定实用价值即可，避免为了不断提升Emacs而使用Emacs（虽然不断的提升是值得的）</p>
 
-<h4 id="vim">Vim的特征</h4>
+<h4 id="vim的特征">Vim的特征</h4>
 
 <p>本文并无意加入Vim和Emacs的圣战中来；因讲述的是Vim的使用，所以针对其特点进行叙述；相应地Emacs也有它的特点，在讲述Emacs之时也会相应提到。</p>
 
@@ -1847,7 +1745,7 @@
 
 <p>总之，使用工具的方式，决定工具的价值。</p>
 
-<h4 id="emacs">与Emacs的共通之处</h4>
+<h4 id="与emacs的共通之处">与Emacs的共通之处</h4>
 
 <p>Vim与Emacs其实也有许多共通之处，这里只给出我们最容易遇见和理解的两条：</p>
 
@@ -1861,12 +1759,12 @@
 <li>虽然两者入门难度较大，但是两者又都有一个非常好的学习捷径：避免只看理论，尽早让实践成为习惯，在实践中学习。</li>
 </ul>
 
-<h3 id="part-2ca6bbb0589bba72">开始学习</h3>
+<h3 id="开始学习">开始学习</h3>
 
-<h4 id="part-2cb36e8d25934f0a">本文约定</h4>
+<h4 id="本文约定">本文约定</h4>
 
 <p>特殊按键表示：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>Space: &lt;SPC&gt;  
+<div class="highlight"><pre><code class="language-text" data-lang="text">Space: &lt;SPC&gt;  
 Ctrl: &lt;CTRL&gt;或&lt;C&gt;  
 Alt: &lt;ALT&gt;或&lt;M&gt;  
 Esc: &lt;ESC&gt;（注意，Emacs也将Esc键归为&lt;M&gt;）  
@@ -1877,7 +1775,7 @@ BackSpace:&lt;&lt;BS&gt;（注意，Emacs上表示为&lt;DEL&gt;，Emacs上&lt;D
 Delete:&lt;Del&gt;  
 </code></pre></div>
 <p>组合键的表示：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>&lt;Esc&gt;: Escape key
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;Esc&gt;: Escape key
 &lt;C-G&gt;: CTRL-G
 &lt;Up&gt;: cursor up key
 &lt;C-LeftMouse&gt;: Control- left mouse click
@@ -1890,7 +1788,7 @@ Delete:&lt;Del&gt;
 
 <p>在没有歧义的情况下，可以使用任何方式表示。</p>
 
-<h4 id="part-2e9e5902712308b6">模式的概念　　</h4>
+<h4 id="模式的概念　　">模式的概念　　</h4>
 
 <p>Vim具有多种模式，后面会详述，初学时，我们最好能理解其中两种最常见的模式：</p>
 
@@ -1911,7 +1809,7 @@ Delete:&lt;Del&gt;
 
 <p>总结起来，在本文中，“插入模式”＝“输入模式”＝“编辑模式”、“指令模式”＝“命令模式”、“行命令模式”是特殊的指令模式。</p>
 
-<h4 id="part-2c1280e461db2a54">基本操作</h4>
+<h4 id="基本操作">基本操作</h4>
 
 <p>这里提供了使用vi得最基本的操作，能够实现基本的编辑目的。<br><br>
 如果你肯花几分钟把这里的内容都实践一下，那么至少能够独立地在Vim中朝你想要得方向“前进”。<br><br>

@@ -31,7 +31,7 @@
 	</th>
 
 	<th class="navitm">
-	      <a href=/>分类</a>
+	      <a href=/index.html>分类</a>
 	      <div id="category_menus" class="second">
   	      	   
 
@@ -40,57 +40,6 @@
 		       var categories_count = JSON.parse('{"/categories":0}');
 
   		       
-    		       var post_categories = '/categories/note';
-    		       if (typeof(categories_count[post_categories]) == "undefined")
-    		       {
-				categories_count[post_categories] =0;
-    		       }
-    		       for(var key in categories_count)
-    		       {
-				if (key.length <= post_categories.length)
-        			{
-					if (post_categories.substring(0, key.length) 
-                			   == key.substring(0,key.length))
-            				{
-						categories_count[key]+=1;
-            				}
-        			}
-    			}
-    			
-    		       var post_categories = '/categories/note';
-    		       if (typeof(categories_count[post_categories]) == "undefined")
-    		       {
-				categories_count[post_categories] =0;
-    		       }
-    		       for(var key in categories_count)
-    		       {
-				if (key.length <= post_categories.length)
-        			{
-					if (post_categories.substring(0, key.length) 
-                			   == key.substring(0,key.length))
-            				{
-						categories_count[key]+=1;
-            				}
-        			}
-    			}
-    			
-    		       var post_categories = '/categories/note';
-    		       if (typeof(categories_count[post_categories]) == "undefined")
-    		       {
-				categories_count[post_categories] =0;
-    		       }
-    		       for(var key in categories_count)
-    		       {
-				if (key.length <= post_categories.length)
-        			{
-					if (post_categories.substring(0, key.length) 
-                			   == key.substring(0,key.length))
-            				{
-						categories_count[key]+=1;
-            				}
-        			}
-    			}
-    			
     		       var post_categories = '/categories/study/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -193,7 +142,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/linux/misc';
+    		       var post_categories = '/categories/study/kits';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -210,7 +159,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/kits';
+    		       var post_categories = '/categories/study/linux/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -346,7 +295,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/emacs';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -363,7 +312,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study/emacs';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -397,7 +346,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -414,7 +363,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -618,7 +567,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim/Vim';
+    		       var post_categories = '/categories/study/vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -652,7 +601,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim/Vim';
+    		       var post_categories = '/categories/study/vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -669,7 +618,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim/Vim';
+    		       var post_categories = '/categories/study/vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -925,22 +874,65 @@
 	      <tr id="tr_page_nav">
 		<td colspan="6" valign="bottom">
 		  
+<div class="pagination">
+  
+    <span>|</span>
+  
+
+  
+    
+      <em>1</em>
+    
+  
+    
+      <a href="/page2">2</a>
+      <!--a href="/">2</a-->
+    
+  
+    
+      <a href="/page3">3</a>
+      <!--a href="/">3</a-->
+    
+  
+    
+      <a href="/page4">4</a>
+      <!--a href="/">4</a-->
+    
+  
+
+  
+    <a href="/page2">下一页 &raquo;</a>
+  
+</div>
+
 
 <!--div id="pagination">
      <div class="pagenavi">
-	<span class="page_number">第页/共页</span>
+	<span class="page_number">第1页/共4页</span>
 	<a href="/">第一页</a>
 	
 		<span><<前一页</span>
 	
 	
 	
+	   
+	      <a href="/page2">2</a>
+	   
+	
+	   
+	      <a href="/page3">3</a>
+	   
+	
+	   
+	      <a href="/page4">4</a>
+	   
+	
 
 	
-	   <span>后一页>></span>
+	   <a href="/page2">后一页>></a>
 	
 	
-	<a href="/page">最后一页</a>
+	<a href="/page4">最后一页</a>
      </div>
 </div-->
 
@@ -954,27 +946,406 @@
   <div>
     <ul id="post-list" class="post-list">
       
+        <div>
+            [2018-03-16]<a href="/categories/study/misc/schulte_table_2017.html">2017年舒尔特数字表训练总结--挣扎在路上</a> <br>
+            ||<a href="/categories/study/misc" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  学习/
+  
+  
+
+  
+  
+  /
+  
+  
+
+
+            </a>
+            <hr class='article_line'>
+        </div>
+      
+        <div>
+            [2017-02-20]<a href="/categories/study/linux/linux_system_access.html">Linux 访问权限控制基本原理</a> <br>
+            ||<a href="/categories/study/linux" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  学习/
+  
+  
+
+  
+  
+  linux/
+  
+  
+
+
+            </a>
+            <hr class='article_line'>
+        </div>
+      
+        <div>
+            [2016-04-07]<a href="/categories/study/linux/misc/xiaomi_router_tips.html">小米路由器DIY</a> <br>
+            ||<a href="/categories/study/linux/misc" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  学习/
+  
+  
+
+  
+  
+  linux/
+  
+  
+
+  
+  
+  杂乱/
+  
+  
+
+
+            </a>
+            <hr class='article_line'>
+        </div>
+      
+        <div>
+            [2016-02-18]<a href="/categories/study/linux/misc/linux_time_timezone.html">关于linux中的时间和时区</a> <br>
+            ||<a href="/categories/study/linux/misc" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  学习/
+  
+  
+
+  
+  
+  linux/
+  
+  
+
+  
+  
+  杂乱/
+  
+  
+
+
+            </a>
+            <hr class='article_line'>
+        </div>
+      
+        <div>
+            [2016-02-16]<a href="/categories/others/net_articles201602.html">网文收集201602</a> <br>
+            ||<a href="/categories/others" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  其它/
+  
+  
+
+
+            </a>
+            <hr class='article_line'>
+        </div>
+      
+        <div>
+            [2016-02-11]<a href="/categories/others/template_file.html">模板文件</a> <br>
+            ||<a href="/categories/others" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  其它/
+  
+  
+
+
+            </a>
+            <hr class='article_line'>
+        </div>
+      
+        <div>
+            [2016-02-09]<a href="/categories/study/kits/useful_tools.html">实用工具</a> <br>
+            ||<a href="/categories/study/kits" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  学习/
+  
+  
+
+  
+  
+  工具/
+  
+  
+
+
+            </a>
+            <hr class='article_line'>
+        </div>
+      
+        <div>
+            [2016-02-09]<a href="/categories/study/linux/misc/linux_misc_notes.html">Linux杂乱记录</a> <br>
+            ||<a href="/categories/study/linux/misc" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  学习/
+  
+  
+
+  
+  
+  linux/
+  
+  
+
+  
+  
+  杂乱/
+  
+  
+
+
+            </a>
+            <hr class='article_line'>
+        </div>
+      
+        <div>
+            [2016-02-02]<a href="/categories/study/linux/command/linux_command_tips.html">Linux命令学习记录</a> <br>
+            ||<a href="/categories/study/linux/command" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  学习/
+  
+  
+
+  
+  
+  linux/
+  
+  
+
+  
+  
+  命令/
+  
+  
+
+
+            </a>
+            <hr class='article_line'>
+        </div>
+      
+        <div>
+            [2016-02-01]<a href="/categories/study/os/linux_schedule_priority.html">Linux进程和线程的调度与优先级</a> <br>
+            ||<a href="/categories/study/os" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  学习/
+  
+  
+
+  
+  
+  操作系统/
+  
+  
+
+
+            </a>
+            <hr class='article_line'>
+        </div>
+      
+        <div>
+            [2015-12-17]<a href="/categories/others/testexport.html">测试orgmode文章导出</a> <br>
+            ||<a href="/categories/others" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  其它/
+  
+  
+
+
+            </a>
+            <hr class='article_line'>
+        </div>
+      
+        <div>
+            [2015-12-01]<a href="/categories/others/test_orglink.html">测试orgmode链接</a> <br>
+            ||<a href="/categories/others" style="color:#0066CC; font-size:75%;">
+            
+
+  
+  
+  分类:
+  
+  
+
+  
+  
+  其它/
+  
+  
+
+
+            </a>
+            <hr class='article_line'>
+        </div>
+      
     </ul>
   </div>
 </article>
 
 		  
+<div class="pagination">
+  
+    <span>|</span>
+  
+
+  
+    
+      <em>1</em>
+    
+  
+    
+      <a href="/page2">2</a>
+      <!--a href="/">2</a-->
+    
+  
+    
+      <a href="/page3">3</a>
+      <!--a href="/">3</a-->
+    
+  
+    
+      <a href="/page4">4</a>
+      <!--a href="/">4</a-->
+    
+  
+
+  
+    <a href="/page2">下一页 &raquo;</a>
+  
+</div>
+
 
 <!--div id="pagination">
      <div class="pagenavi">
-	<span class="page_number">第页/共页</span>
+	<span class="page_number">第1页/共4页</span>
 	<a href="/">第一页</a>
 	
 		<span><<前一页</span>
 	
 	
 	
+	   
+	      <a href="/page2">2</a>
+	   
+	
+	   
+	      <a href="/page3">3</a>
+	   
+	
+	   
+	      <a href="/page4">4</a>
+	   
+	
 
 	
-	   <span>后一页>></span>
+	   <a href="/page2">后一页>></a>
 	
 	
-	<a href="/page">最后一页</a>
+	<a href="/page4">最后一页</a>
      </div>
 </div-->
 
@@ -985,7 +1356,7 @@
               <tr id="tr_page_comment">
 		<td colspan="6" valign="bottom">
 		  <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="" data-title="首页" data-url="http://vaqeteart.github.io//"></div>
+<div class="ds-thread" data-thread-key="" data-title="首页" data-url="http://vaqeteart.github.io//index.html"></div>
 <!-- 多说评论框 end -->
 <script src="/assets/js/comment.js"></script>
 		</td>

@@ -16,7 +16,7 @@
       href="/assets/css/posts.css" media="screen" />
   </head>
 
-   <body onload="change_categories('categories_study_vim_Vim')">
+   <body onload="change_categories('categories_study_vim')">
      <table class="container">
         <tbody>
 	      <tr>
@@ -40,57 +40,6 @@
 		       var categories_count = JSON.parse('{"/categories":0}');
 
   		       
-    		       var post_categories = '/categories/note';
-    		       if (typeof(categories_count[post_categories]) == "undefined")
-    		       {
-				categories_count[post_categories] =0;
-    		       }
-    		       for(var key in categories_count)
-    		       {
-				if (key.length <= post_categories.length)
-        			{
-					if (post_categories.substring(0, key.length) 
-                			   == key.substring(0,key.length))
-            				{
-						categories_count[key]+=1;
-            				}
-        			}
-    			}
-    			
-    		       var post_categories = '/categories/note';
-    		       if (typeof(categories_count[post_categories]) == "undefined")
-    		       {
-				categories_count[post_categories] =0;
-    		       }
-    		       for(var key in categories_count)
-    		       {
-				if (key.length <= post_categories.length)
-        			{
-					if (post_categories.substring(0, key.length) 
-                			   == key.substring(0,key.length))
-            				{
-						categories_count[key]+=1;
-            				}
-        			}
-    			}
-    			
-    		       var post_categories = '/categories/note';
-    		       if (typeof(categories_count[post_categories]) == "undefined")
-    		       {
-				categories_count[post_categories] =0;
-    		       }
-    		       for(var key in categories_count)
-    		       {
-				if (key.length <= post_categories.length)
-        			{
-					if (post_categories.substring(0, key.length) 
-                			   == key.substring(0,key.length))
-            				{
-						categories_count[key]+=1;
-            				}
-        			}
-    			}
-    			
     		       var post_categories = '/categories/study/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
@@ -193,7 +142,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/linux/misc';
+    		       var post_categories = '/categories/study/kits';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -210,7 +159,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/kits';
+    		       var post_categories = '/categories/study/linux/misc';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -346,7 +295,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/emacs';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -363,7 +312,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study/emacs';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -397,7 +346,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study';
+    		       var post_categories = '/categories/others';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -414,7 +363,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/others';
+    		       var post_categories = '/categories/study';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -618,7 +567,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim/Vim';
+    		       var post_categories = '/categories/study/vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -652,7 +601,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim/Vim';
+    		       var post_categories = '/categories/study/vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -669,7 +618,7 @@
         			}
     			}
     			
-    		       var post_categories = '/categories/study/vim/Vim';
+    		       var post_categories = '/categories/study/vim';
     		       if (typeof(categories_count[post_categories]) == "undefined")
     		       {
 				categories_count[post_categories] =0;
@@ -931,57 +880,6 @@
     var categories_count = JSON.parse('{"/categories":0}');
 
     
-    var post_categories = '/categories/note';
-    if (typeof(categories_count[post_categories]) == "undefined")
-    {
-        categories_count[post_categories] =0;
-    }
-    for(var key in categories_count)
-    {
-        if (key.length <= post_categories.length)
-        {
-            if (post_categories.substring(0, key.length) 
-                == key.substring(0,key.length))
-            {
-                categories_count[key]+=1;
-            }
-        }
-    }
-    
-    var post_categories = '/categories/note';
-    if (typeof(categories_count[post_categories]) == "undefined")
-    {
-        categories_count[post_categories] =0;
-    }
-    for(var key in categories_count)
-    {
-        if (key.length <= post_categories.length)
-        {
-            if (post_categories.substring(0, key.length) 
-                == key.substring(0,key.length))
-            {
-                categories_count[key]+=1;
-            }
-        }
-    }
-    
-    var post_categories = '/categories/note';
-    if (typeof(categories_count[post_categories]) == "undefined")
-    {
-        categories_count[post_categories] =0;
-    }
-    for(var key in categories_count)
-    {
-        if (key.length <= post_categories.length)
-        {
-            if (post_categories.substring(0, key.length) 
-                == key.substring(0,key.length))
-            {
-                categories_count[key]+=1;
-            }
-        }
-    }
-    
     var post_categories = '/categories/study/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
@@ -1084,7 +982,7 @@
         }
     }
     
-    var post_categories = '/categories/study/linux/misc';
+    var post_categories = '/categories/study/kits';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1101,7 +999,7 @@
         }
     }
     
-    var post_categories = '/categories/study/kits';
+    var post_categories = '/categories/study/linux/misc';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1237,7 +1135,7 @@
         }
     }
     
-    var post_categories = '/categories/study/emacs';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1254,7 +1152,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study/emacs';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1288,7 +1186,7 @@
         }
     }
     
-    var post_categories = '/categories/study';
+    var post_categories = '/categories/others';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1305,7 +1203,7 @@
         }
     }
     
-    var post_categories = '/categories/others';
+    var post_categories = '/categories/study';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1509,7 +1407,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim/Vim';
+    var post_categories = '/categories/study/vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1543,7 +1441,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim/Vim';
+    var post_categories = '/categories/study/vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -1560,7 +1458,7 @@
         }
     }
     
-    var post_categories = '/categories/study/vim/Vim';
+    var post_categories = '/categories/study/vim';
     if (typeof(categories_count[post_categories]) == "undefined")
     {
         categories_count[post_categories] =0;
@@ -2012,8 +1910,8 @@ vim将最近一次的搜索文字保存在&quot;/中，对应的变量@/决定�
 + 在不同vi程序之间互相复制粘贴：<br><br>
     1. 在vi中输入<code class="prettyprint">v</code>之后，选择一段文字（或者定位到某一行）。<br><br>
     2. 在vi中输入<code class="prettyprint">&quot;*y</code>(或者行复制用<code class="prettyprint">&quot;*yy</code>).<br><br>
-    这样就把内容复制到寄存器&quot;*中了。<br><br>
-    3. 在另一个vi输入<code class="prettyprint">&quot;*p</code>。  </p>
+    这样就把内容复制到寄存器&quot;<em>中了。<br><br>
+    3. 在另一个vi输入`&quot;</em>p`。  </p>
 
 <p>这样就把刚才vi中复制到&quot;*中的内容粘贴出来了。<br>
 + 使用vi和其他图形程序（例如gedit）之间剪切板互访：<br><br>
@@ -2032,7 +1930,7 @@ vim将最近一次的搜索文字保存在&quot;/中，对应的变量@/决定�
     当然如果另外一个vi程序没有设置这个选项那么它还是要用&quot;</em>前缀的。去掉这个设置好像是<code class="prettyprint">:set clipboard=</code>.  </p></li>
 <li><p>宏<br>
 寄存器与宏是紧密相连的宏的相关帮助命令入口如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>:h q
+<div class="highlight"><pre><code class="language-text" data-lang="text">:h q
 :h @
 :h :@
 </code></pre></div>
