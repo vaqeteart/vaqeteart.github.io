@@ -1,0 +1,26 @@
+/* Effective stylesheet produced by snapshot save */
+.mainnav { height: 36px; background-color: rgb(241, 241, 241); width: 100%; min-width: 1000px; }
+.mainnav1 { margin: 0px auto; width: 1000px; text-align: left; }
+.navwz1 { font-size: 16px; font-weight: bold; color: rgb(95, 95, 95); text-align: center; padding-top: 4px; cursor: pointer; }
+.navxt { text-align: left; border-width: 1px medium medium; border-style: solid none none; border-color: rgb(255, 255, 255) -moz-use-text-color -moz-use-text-color; -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; background-image: url("sy-3.gif"); background-repeat: repeat-x; height: 15px; width: 100%; margin-top: -1px; min-width: 1000px; }
+.navwz1 A:link { color: rgb(95, 95, 95); text-decoration: none; }
+.navwz1 A:visited { color: rgb(95, 95, 95); text-decoration: none; }
+.navwz1 A:hover { color: rgb(88, 134, 0); text-decoration: none; }
+.serch { background-image: url("sy-21.gif"); background-repeat: no-repeat; width: 187px; height: 25px; }
+.serchpt { text-align: left; height: 16px; background-color: rgb(255, 255, 255); font-size: 12px; line-height: 16px; border: 1px solid rgb(255, 255, 255); padding: 2px; width: 173px; color: rgb(178, 178, 178); margin: 1px 0px 0px 2px; }
+.ssuo { width: 37px; height: 25px; float: left; }
+.ssuo a:link, .ssuo a:visited { display: block; width: 37px; height: 25px; background-image: url("sousuo.gif"); background-repeat: no-repeat; }
+.ssuo a:hover { display: block; width: 37px; height: 25px; background-image: url("sousuo_a.gif"); background-repeat: no-repeat; }
+.denglbj { background-image: url("sy-30.gif"); background-repeat: no-repeat; width: 131px; height: 25px; line-height: 25px; float: right; }
+.lan2 A:link { color: rgb(45, 96, 159); text-decoration: none; }
+.lan2 A:visited { color: rgb(45, 96, 159); text-decoration: none; }
+.lan2 A:hover { color: rgb(45, 96, 159); text-decoration: none; }
+.boxwid { width: 45px; float: left; text-align: center; }
+.tipzhu3 { border: 1px solid rgb(212, 212, 212); width: 94px; background-color: rgb(255, 255, 255); z-index: 0; margin-top: -1px; }
+.tipzhu3 ul { margin: 0px; padding: 0px; }
+.tipzhu3 li { margin: 0px; padding: 0px 0px 0px 13px; height: 27px; line-height: 27px; }
+.tugduo3 { width: 37px; z-index: 100; position: relative; }
+.xinngdui { width: 40px; padding-top: 7px; z-index: 2000000; position: relative; }
+.hui2 li A:link { color: rgb(102, 102, 102); text-decoration: none; }
+.hui2 li A:visited { color: rgb(102, 102, 102); text-decoration: none; }
+.hui2 li A:hover { color: rgb(102, 102, 102); text-decoration: none; }

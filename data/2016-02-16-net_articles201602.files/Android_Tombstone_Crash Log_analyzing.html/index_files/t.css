@@ -1,0 +1,41 @@
+/* Effective stylesheet produced by snapshot save */
+body { color: rgb(192, 189, 187); }
+a, a:link, a:visited, a:hover, .SG_more { color: rgb(129, 151, 176); }
+.SG_txta { color: rgb(129, 151, 176); }
+.SG_txtb { color: rgb(91, 96, 101); }
+.SG_txtc { color: rgb(91, 96, 101); }
+.SG_linka a:link, .SG_linka a:visited, .SG_linka a:hover, a.SG_linka:link, a.SG_linka:visited, a.SG_linka:hover { color: rgb(129, 151, 176); }
+.SG_linkb a:link, .SG_linkb a:visited, .SG_linkb a:hover, a.SG_linkb:link, a.SG_linkb:visited, a.SG_linkb:hover { color: rgb(91, 96, 101); }
+.borderc { border-color: rgb(64, 64, 64); }
+.sinabloghead .blogtitle, .sinabloghead .blogtitle a, .sinabloghead .blogtitle a:link, .sinabloghead .blogtitle a:visited, .sinabloghead .blogtitle a:hover, .sinabloghead .blogtitle .CP_a_fuc { color: rgb(197, 201, 206); }
+.sinabloghead .bloglink, .sinabloghead .bloglink a, .sinabloghead .bloglink a:link, .sinabloghead .bloglink a:visited, .sinabloghead .bloglink a:hover { color: rgb(187, 191, 195); }
+.sinabloghead .bloglink .CP_a_fuc { color: rgb(178, 181, 186); }
+.sinabloghead .blognav a, .sinabloghead .blognav a:link, .sinabloghead .blognav a:visited, .sinabloghead .blognav a:hover { color: rgb(150, 155, 188); }
+.sinabloghead .blognav a.on, .sinabloghead .blognav a.on:link, .sinabloghead .blognav a.on:visited, .sinabloghead .blognav a.on:hover { color: rgb(179, 179, 179); }
+.SG_connHead .title, .SG_connHead .title a, .SG_connHead .title a:link, .SG_connHead .title a:visited, .SG_connHead .title a:hover, .SG_connHead .tip, .SG_connHead .tip a, .SG_connHead .tip a:link, .SG_connHead .tip a:visited, .SG_connHead .tip a:hover, .SG_connHead .edit, .SG_connHead .edit a, .SG_connHead .edit a:link, .SG_connHead .edit a:visited, .SG_connHead .edit a:hover, .SG_connHead .tip_r, .SG_connHead .tip_r a, .SG_connHead .tip_r a:link, .SG_connHead .tip_r a:visited, .SG_connHead .tip_r a:hover, .SG_connHead .fontSize, .SG_connHead .fontSize a, .SG_connHead .fontSize a:link, .SG_connHead .fontSize a:visited, .SG_connHead .fontSize a:hover, .menuList ul li.current, .menuList ul li.current a, .menuList ul li.current a:link, .menuList ul li.current a:visited, .menuList ul li.current a:hover, .menuList ul li.current em.SG_txtc { color: rgb(173, 173, 173); }
+.sinablogfooter, .sinablogfooter a:link, .sinablogfooter a:visited, .sinablogfooter a:hover { color: rgb(138, 138, 138); }
+a.SG_aBtn, a.SG_aBtn:link, a.SG_aBtn:visited { color: rgb(192, 189, 187); }
+.SG_tag ul li span a, .SG_tag ul li span a:link, .SG_tag ul li span a:visited, .SG_tag ul li span a:hover { color: rgb(136, 134, 132); }
+body { background-color: rgb(0, 0, 0); }
+.sinablogb { background-image: none; }
+.sinabloghead { height: 233px; }
+.sinabloga { background-image: none; }
+.sinablogfooter { height: 243px; }
+.sinabloghead .blogtoparea { top: 35%; left: 228px; }
+.sinabloghead .blognav { top: 68%; left: 217px; width: 246px; height: 32px; }
+.sinabloghead .blognav .blognavInfo { top: 8px; left: 0px; }
+.sinabloghead .blognav .blognavBg { background-image: none; }
+.sinabloghead .blognav span { padding: 0px 10px; background-image: url("sg_newsp.png"); }
+.SG_colW95 .SG_connHead, .SG_colW73 .SG_connHead, .SG_colW51 .SG_connHead, .SG_colW21 .SG_connHead, .blogads .ad_head { background-image: url("modelhead.png"); }
+.SG_colW95 .SG_connBody, .SG_colW73 .SG_connBody, .SG_colW51 .SG_connBody, .SG_colW21 .SG_connBody, .blogads .ad_body { background-image: none; }
+.SG_colW95 .SG_connFoot, .SG_colW73 .SG_connFoot, .SG_colW51 .SG_connFoot, .SG_colW21 .SG_connFoot, .blogads .ad_foot { background-image: none; }
+.SG_j_linedot, .SG_j_linedot1 { background-image: url("SG_linedot.gif"); }
+.SG_dot { background-image: url("SG_dot.gif"); }
+.SG_tag, .SG_tag ul li, .SG_tag ul li span.tagR, .SG_tag ul li.current, .SG_tag ul li.current span.tagR { background-image: url("sg_newsp.png"); }
+.allComm .allCommTit { background-image: url("sg_newsp.png"); }
+a.SG_aBtn, a.SG_aBtn cite { background-image: url("sg_newsp.png"); }
+a.SG_aBtnB, a.SG_aBtnB cite { color: rgb(51, 51, 153); background-image: url("urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/sg_btnb.png"); }
+.sinabloghead .adsarea { display: none; right: 0px; bottom: 50px; }
+.sinabloghead .adsarea .pic { display: none; }
+.sinabloghead .adsarea .link { color: rgb(255, 255, 255); }
+.sinabloghead .adsarea .other { display: none; }

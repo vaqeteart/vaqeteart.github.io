@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<RDF:RDF xmlns:MAF="http://maf.mozdev.org/metadata/rdf#"
+         xmlns:NC="http://home.netscape.com/NC-rdf#"
+         xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <RDF:Description RDF:about="urn:root">
+    <MAF:originalurl RDF:resource="http://www.hahack.com/codes/cmake/"/>
+    <MAF:title RDF:resource="CMake 入门实战 | HaHack"/>
+    <MAF:archivetime RDF:resource="Fri, 12 Aug 2016 16:14:02 +0800"/>
+    <MAF:indexfilename RDF:resource="index.html"/>
+    <MAF:charset RDF:resource="UTF-8"/>
+  </RDF:Description>
+</RDF:RDF>

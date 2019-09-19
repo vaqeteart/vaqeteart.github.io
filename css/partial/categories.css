@@ -1,0 +1,37 @@
+#category_menus ul.categories_tree {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    background: #000000;
+    /*border-style:hidden;*/
+    /*none, square, disc, circle, --no effect?*/
+    /*list-style-type: none;*/
+    clear:right;
+}
+
+#category_menus ul.categories_tree li.categories_tree_item {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    float: left;
+}
+
+li.categories_tree_item a.item_path {
+    border-style: dotted;
+    border-color: #00FF00;
+    border-width: 1px;
+    border-right: 0px;
+    border-top: 0px;
+    border-left: 0px;
+}
+
+li.categories_tree_item span.tree_switch {
+    font-size: 100%;
+}
+
+.categories_tree_item span.item_title {
+    font-size: 100%;
+}
+
+.categories_tree_item span.item_count {
+    font-size: 100%;
+    text-align: right;
+}

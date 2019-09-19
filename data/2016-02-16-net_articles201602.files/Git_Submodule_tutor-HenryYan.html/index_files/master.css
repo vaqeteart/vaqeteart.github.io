@@ -1,0 +1,37 @@
+/* Effective stylesheet produced by snapshot save */
+body { font-family: Rockwell,Verdana,sans-serif; letter-spacing: 0em; background: url("header_bg.gif") repeat-x scroll center top rgb(255, 255, 255); color: rgb(53, 59, 64); margin: 0px; padding: 0px; font-size: 1em; }
+a { color: rgb(85, 136, 51); font-weight: bold; text-decoration: none; }
+a:visited { color: rgb(34, 102, 0); }
+#wrapper { width: 960px; margin: 0px auto; padding: 0px; border-radius: 1.5em; }
+#header { height: 140px; }
+#header h1 { float: left; }
+#header h1 a { margin-top: 30px; margin-left: 5px; display: block; }
+#menu { float: right; }
+#menu ul { list-style: none outside none; margin: 25px 0px 0px; text-align: center; }
+#menu ul li { display: block; float: left; margin-left: 10px; }
+#menu ul li a { display: block; background: url("blog.gif") no-repeat scroll left top transparent; width: 69px; height: 94px; text-indent: -999em; }
+#menu ul li a#blog-link { background-image: url("blog.gif"); }
+#menu ul li a#github-link { background-image: url("github.gif"); }
+#menu ul li a#about-link { background-image: url("about.gif"); }
+#menu ul li a#weibo-link { background-image: url("weibo.gif"); }
+#menu ul li a#home-link { background-image: url("home.gif"); }
+#menu ul li a#categories-link { background-image: url("categories.gif"); }
+#menu ul li a#tags-link { background-image: url("tags.gif"); }
+#menu ul li a#activiti-link { background-image: url("activiti.gif"); }
+#menu ul li a#forum-link { background-image: url("forum.gif"); }
+#content { padding: 2em 0px; }
+#content h2 { margin: 0px 0px 0.5em; color: black; font-size: 1.2em; }
+#content p { line-height: 160%; }
+span.date { background: url("green_gradient.gif") repeat-x scroll center top rgb(110, 155, 32); display: block; padding: 0.4em 0.6em 0.5em; font-weight: bold; color: white; box-shadow: 1px -1px 5px rgba(0, 0, 0, 0.4); float: left; text-shadow: 1px 1px 4px black; }
+div.post { margin-bottom: 2em; color: rgb(51, 51, 51); }
+.post h1 { margin-top: 0.2em; }
+.post h1 a, #content h2, #footer { text-decoration: none; clear: left; display: block; padding: 0.3em 0.5em; margin: 0px 0px 0.2em; background: url("header_gradient.gif") repeat-x scroll center bottom rgb(248, 248, 248); box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6); font-weight: normal; color: rgb(0, 0, 0); z-index: 10000; }
+div.post h3 { color: black; margin: 1em 0px 0.7em; font-weight: normal; font-size: 1em; background-color: rgb(238, 201, 166); padding: 3px 0px 3px 5px; border-radius: 8px; }
+pre { background: none repeat scroll 0% 0% rgb(248, 248, 248); border-style: solid; border-color: rgb(231, 229, 220); -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; border-width: 1px 0px 4px 6px; padding: 1em; overflow: auto; color: black; line-height: 120%; font-family: "Consolas",Monaco,"Courier New",Courier,monospace; font-size: 14px; letter-spacing: 0px; }
+#footer { background-position: center top; margin: 2em auto 1em; width: 960px; color: rgb(68, 68, 68); font-size: 0.9em; padding: 0.5em 0px; text-align: center; border-radius: 10px; }
+#footer a { color: black; font-weight: bold; text-decoration: none; }
+.clearfix { clear: both; }
+code { font-size: 1em; font-family: "Consolas","Courier New",Courier,monospace; }
+a img { border: 0px none; }
+.corner-all { border-radius: 8px; }
+.original-post { font-size: 0.8em; font-style: italic; background: none repeat scroll 0% 0% yellow; padding: 0.5em; }

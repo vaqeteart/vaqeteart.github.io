@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    Vim实践与学习-08配置相关
+</title>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="/css/partial/head.css">
+<link rel="stylesheet" href="/css/partial/header.css">
+<link rel="stylesheet" href="/css/partial/archives.css">
+<link rel="stylesheet" href="/css/partial/categories.css">
+<link rel="stylesheet" href="/css/partial/home-posts.css">
+<link rel="stylesheet" href="/css/partial/page-nav.css">
+<link rel="stylesheet" href="/css/partial/tags.css">
+<link rel="stylesheet" href="/css/partial/about.css">
+<link rel="stylesheet" href="/css/partial/more.css">
+<link rel="stylesheet" href="/css/partial/footer.css">
+<link rel="stylesheet" href="/css/post.css">
+
+
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="/lib/jquery-1.11.3.min.js"></script>
+<script src="/js/common.js"></script>
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody>
+        <tr>
+            <script src="js/nav.js"></script>
+<table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="/">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="/categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="/categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(47)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="/categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(5)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="/categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="/categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="/categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="/categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="/categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="/categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="/categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="/categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="/categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(2)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="/categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="/categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(10)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="/categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="/categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="/categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="/categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(9)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="/categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="/categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="/categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(1)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="/categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="/categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="/categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(6)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="/categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(2)</span></a></li><li id="temp" class="categories_tree_item"><a href="/categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="/categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="/tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/gtd-done/">gtd_done</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gtd-next/">gtd_next</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/life/">life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/others/">others</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/study/">study</a><span class="tag-list-count">10</span></li></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="/archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="/more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="/about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+        <h1>
+               <a href="/" title="Menu.Home">
+               QuietHeart's Site
+               </a>
+        </h1>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <article>
+                    <h1 id="header1" style="text-align: center;">
+                        Vim实践与学习-08配置相关
+                    </h1>
+                    <hr id="title_line">
+                    <div>
+                        <ul>
+<li><p>查看vim的版本及功能：<br>  输入<code>:version</code>.<br>  这样会显示当前vim的版本，编译选项，vim配置路径等信息。  </p>
+</li>
+<li><p>查看所有set选项:<br>  输入<code>:set all</code>.<br>  或输入<code>:se all</code>.<br>  这样可以查看所有可以设置的选项。  </p>
+</li>
+<li><p>显示当前set设置：<br>  输入<code>:set</code>.<br>  或输入<code>:se</code><br>  这样，可以显示当前set设置。  </p>
+</li>
+<li><p>显示制定选项的设置:<br>  输入<code>:set {option}?</code>.<br>  或输入<code>:se {option}?</code><br>  这里，可以查看选项<code>{option}</code>的值，例如<code>:set nu?</code>可以查看是<code>nu</code>或是<code>nonu</code>（是否显示行号）。  </p>
+</li>
+<li><p>显示所有行行号：<br>  输入<code>:set nu</code>。  </p>
+</li>
+<li><p>设置搜索时显示高亮：<br>  输入<code>:set hls</code>。<br>  或输入<code>set hlsearch</code>。  </p>
+</li>
+<li><p>取消搜索时高亮显示：<br>  输入<code>:set nohls</code>。<br>  或输入<code>:set nohlsearch</code>。<br>  或输入<code>:nohl</code>.<br>  这里，查找一个字符，程序会用高亮显示出来，这样设置就不高亮了，当然查找一个不存在的字符也可取消当前高亮状态。通过<code>:nohlsearch</code>只是暂时关闭高亮显示，下次搜索时将自动恢复高亮(当然是在一次启动vim的期间，如果关闭vim再重新启动，那么状态是.vimrc规定的)。高亮就不能用<code>:hls</code>需要用<code>:set hls</code>.实践发现，<code>:set nohls</code>之后，关闭vi,再打开之后上次搜索的还是高亮状态，但是用<code>:nohls</code>之后再打开那么上次的搜索就不是高亮了.  </p>
+</li>
+<li><p>搜索时忽略大小写：<br>  输入<code>set ic</code>.<br>  这样输入<code>/</code>进行搜索的时候，就不考虑大小写了。  </p>
+</li>
+<li><p>取消搜索时忽略大小写：<br>  输入<code>set noic</code>.<br>  也即搜索不忽略大小写，这也是默认的情况。  </p>
+</li>
+<li><p>对netrw插件（文件浏览）窗口方向的配置：<br>  输入<code>:let g:netrw_preview=0</code>.<br>  或输入<code>:let g:netrw_preview=1</code>.<br>  设置内部变量g:netrw_preview.假设光标在目录的某一个文件上面，如果为0（默认）则按p的时候水平开窗口预览文件，为1则垂直。  </p>
+</li>
+<li><p>高亮当前行：<br>  输入<code>:set cursorline</code>.<br>  或输入<code>:set cul</code>.<br>  这样光标当前行会有一个下划线。  </p>
+</li>
+<li><p>取消高亮当前行：<br>  输入<code>:set no cursorline</code>.<br>  或输入<code>:set no cul</code>.<br>  这样取消了当前行的下划线。  </p>
+</li>
+<li><p>在’complete‘选项中去掉<code>i</code>标记:<br>  输入<code>:set complete -=i</code><br>  如果CTRL-N和CTRL-P补全时查找所包含的头文件，耗时会比较久。此时，可以在 ’complete‘ 选项中去掉<code>i</code>标记<code>:set complete-=i</code> 。  </p>
+</li>
+<li><p>让vi自动缩进对齐代码:<br>  输入<code>:set ai</code>.<br>  或输入<code>:set autoindent</code>.<br>  这样在你敲入一个新行的时候,会自动将上一行的缩进拷贝过来,这样上下两行的缩进就会一样了,并且即使输入<code>{</code>之后,再新起一行也会这样,而不是多缩进一个,为了保持代码的语法缩进输入<code>{</code>之后新行要手动再输入一个缩进.如果该行没有任何内容就进入下一行,那么这个缩进会自动被删除.  </p>
+</li>
+<li><p>让vi智能缩进对齐代码:<br>  输入<code>:set si</code>.<br>  或输入<code>:set smartindent</code>.<br>  亦或<code>:set cindent</code>.<br>  这里，<code>si</code>是<code>smartindent</code>的简写，它比<code>ai</code>智能，而<code>ai</code>只管复制上一行缩进。如果有<code>si</code>那么<code>ai</code>就会自动也有了，并且在输入<code>{</code>或者一些<code>cinwords</code>关键字的时候会自动插入一个缩进(不止是复制，还多插入一个缩进，这导致输入这样字符之后新起一行看起来像是自动又缩进了)，而且输入<code>}</code>的时候如果它是一行的第一个字符会自动让它和与它匹配的那个<code>{</code>取相同的缩进。<code>smartindent</code>和<code>cindent</code>有点不一样，前者在多数语言中比较通用，而后者比较严格像c.<code>cindent</code>如果打开那么<code>smartindent</code>就会关闭。  </p>
+</li>
+<li><p>设置在敲<code>}</code>,<code>]</code>或<code>)</code>显示出对应匹配的<code>{</code>,<code>[</code>或<code>(</code>:<br>  输入<code>:set sm</code>.<br>  这样,在敲入右半括号的时候会自动把前面的左半括号高亮一下.  </p>
+</li>
+<li><p>设置简写：<br>  输入<code>:ab</code>.<br>  这里，会将做为的简写，例如：输入<code>:ab usa United States of America</code>之后，当你在文见里插入 <code>usa</code> 之后，按下回车或空格等，这时 <code>United States of America</code> 就蹦出来了。  </p>
+</li>
+<li><p>设置显示的颜色主题为<code>ron</code>：<br>  输入<code>:color ron</code>.<br>  或输入<code>:colorscheme ron</code>.<br>  这里，<code>ron</code>主题是我个人感觉比较好看的一种主题，可以先输入<code>:colorscheme</code>再<code>[Ctrl]d</code>可以查看所有的可选主题。  </p>
+</li>
+<li><p>打开语法高亮：<br>  输入<code>:syntax on</code>.<br>  或输入<code>:syn on</code>.<br>  这里，syntax还有enable等值，具体察看<code>:help syntax</code>,之后搜索<code>syntax on</code>.  </p>
+</li>
+<li><p>关于缩进的宽度：  </p>
+<ul>
+<li><p>一個tab用4个space寬度顯示：<br>  输入<code>:set tabstop=4</code>.<br>  这里，定义tab所等同的空格长度，一般来说最好设置成8，因为如果是其它值的话，可能引起文件在打印之类的场合中看起来很别扭。除非你设置了 expandtab模式，也就是把tabs转换成空格，这样的话就不会一起混淆，不过毕竟制表符为8是最常用最普遍的设置，所以一般还是不要改。  </p>
+</li>
+<li><p>一個縮排 (indent) 跳的 space 數为4：<br>  输入<code>:set shiftwidth=4</code>.<br>  或输入<code>:set sw=4</code>.<br>  这个是用于程序中自动缩进（(auto)indent）所使用的空白长度指示的。一般来说为了保持程序的美观，和tabstop参数最好一致。同时它也是符号移位长度的制定者。  </p>
+</li>
+<li><p>一個 tab 含幾個 space (under editing operation)：<br>  输入<code>:set softtabstop=4</code>.<br>  这里，若我们希望改变程序中的缩进，shiftwidth和tabstop不一样的话，你会发现程序比较难看的。这时需要设置这个softtabstop。从vim说明可知，一旦设置了softtabstop的值，你按下tab键，插入的是空格和tab制表符的混合，具体如何混合取决于你设定的softtabstop。例如，如果设定<code>softtabstop=8</code>,那么按下tab键，插入的就是正常的一个制表符;如果设定 <code>softtabstop=16</code>,那么插入的就是两个制表符；如果<code>softtabstop=12</code>,那么插入的就是一个制表符加上4个空格；如果 <code>softtabstop=4</code>呢？那么一开始，插入的就是4个空格，此时一旦你再按下一次tab，这次的四个空格就会和上次的四个空格组合起来变成一个制表符。换句话说，softtabstop是<code>逢8空格进1制表符</code>,前提是你<code>tabstop=8</code>。  </p>
+</li>
+<li><p>设置举例1(建议使用)：  </p>
+<pre><code>set shiftwidth=4  
+set tabstop=4  </code></pre><p>  这样，缩进的宽度和制表宽度都是4个空格的宽度，也没有前面的在Makefile等需要制表符的语法里需要敲两次[Tab]才产生一个制表符号的缺点了。  </p>
+</li>
+<li><p>设置举例2：  </p>
+<pre><code>set shiftwidth=4  
+set tabstop=8  
+set softtabstop=4  </code></pre><p>  这样，代码自动缩进(shiftwidth)的宽度是4个空格，一个制表符的宽度(tabstop)是8个空格,按下一次[Tab]会产生4个空格，产生8个空格的时候会自动转换成一个制表符号（很智能地，删除的时候可以判断是删[Tab]产生的4个空格）。缺点是这样的设置在Makefile等需要制表符的语法里需要敲两次[Tab]才产生一个制表符号。  </p>
+</li>
+</ul>
+</li>
+<li><p>设置当前目录自动跟随当前文件:<br>  输入<code>:set autochdir</code>.<br>  或输入<code>:set acd</code>.<br>  这样之后，当切换到另一个文件的时候，vim的当前工作目录就会自动地切换到那个文件所在的目录。这里即使有tab标签打开多个文件，当前显示的文件，所在的目录就是vim的工作目录。取消这个选项的命令是<code>set noacd</code>.  </p>
+</li>
+<li><p>不要备份编辑的文件:<br>  输入<code>:set nobackup</code>.<br>  这里，当vi打开一个文件开始编辑的时候，会创建一个原始文件的备份文件（一般以原名加<code>~</code>结尾），如果不想创建这个备份，那么就设置这个选项。一般这个选项可以和writebackup一块使用，两者的值的组合决定了不同的备份策略。当backup和writebackup同时为no的时候就会什么备份也不创建了。使用具体参见帮助<code>help backup</code>。一般默认的设置就是<code>:set nobackup</code>和<code>:set writebackup</code>,就是备份当前文件，过后（成功写入之后）再删除？。  </p>
+</li>
+<li><p>备份编辑的文件：<br>  输入<code>:set backup</code>.<br>  这样设置之后，会在你编辑并且保存写好的文件的时候，备份文件。  </p>
+</li>
+</ul>
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>

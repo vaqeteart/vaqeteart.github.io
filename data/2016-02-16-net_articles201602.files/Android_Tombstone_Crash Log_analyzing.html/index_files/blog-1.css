@@ -1,0 +1,105 @@
+/* Effective stylesheet produced by snapshot save */
+@import url("layer_face.css");
+@import url("layer31.css");
+.atcTitList { clear: both; width: 188px; overflow: hidden; padding: 5px 11px 13px; }
+.atcTitList li { clear: both; background-position: left bottom; padding: 8px 0px 9px; }
+.atcTitList li .atcTitCell_tit { clear: both; font-family: "宋体"; font-size: 12px; white-space: nowrap; overflow: hidden; padding-left: 7px; background-position: left 5px; }
+.atcTitList li .atcTitCell_nm { clear: both; font-family: "宋体"; font-size: 12px; white-space: nowrap; overflow: hidden; padding-left: 7px; padding-top: 4px; }
+.atcTit_more { clear: both; padding-top: 10px; text-align: right; }
+.relaPic { clear: both; padding-top: 10px; background-position: left bottom; overflow: hidden; }
+.relaPic li { width: 86px; height: 103px; margin-left: 4px; margin-right: 4px; overflow: hidden; float: left; clear: none; padding: 0px; display: inline; word-break: break-all; font-family: "宋体"; font-size: 12px; line-height: 18px; }
+.relaPic li img { border: 1px solid rgb(220, 220, 220); margin-bottom: 1px; }
+.relaPic .clearfix { height: 0px; overflow: hidden; }
+.clearfix::after { content: "."; clear: both; display: block; height: 0px; visibility: hidden; overflow: hidden; }
+.clearfix { display: inline-table; }
+.clearfix { display: block; }
+.artical { padding: 24px 20px 0px; clear: both; }
+.articalTitle { clear: both; line-height: 20px; padding-bottom: 10px; }
+.articalTitle span { white-space: nowrap; }
+.articalTitle .titName { font-size: 18px; font-family: "微软雅黑","黑体"; font-weight: 300; display: inline; }
+.articalTitle .img2 { padding-top: 4px; }
+.articalTitle .img2 img { margin-left: 5px; vertical-align: text-bottom; }
+.articalTitle .time { font-family: Arial; font-size: 10px; margin-left: 5px; margin-right: 13px; }
+.articalTag { width: 100%; clear: both; word-break: break-all; line-height: 20px; }
+.articalTag td { vertical-align: top; }
+.articalTag .blog_tag { padding-right: 10px; }
+.articalTag .blog_tag h3 { display: inline; font-size: 12px; font-weight: normal; margin-right: 5px; }
+.articalTag .blog_tag h3 a { white-space: nowrap; }
+.articalTag .blog_class { width: 220px; white-space: nowrap; }
+.articalTag .blog_tag, .articalTag .blog_tag span, .articalTag .blog_tag a, .articalTag .blog_class, .articalTag .blog_class span, .articalTag .blog_class a { font-family: "宋体"; }
+.articalContent { width: 690px; clear: both; padding-top: 18px; font-size: 14px; line-height: 150%; padding-bottom: 30px; word-wrap: break-word; word-break: break-all; overflow: hidden; font-family: simsun; }
+.articalContent ul li { margin-left: 30px; list-style-type: disc; }
+.articalContent, .articalContent p, .articalContent span, .articalContent font { word-wrap: normal; word-break: normal; }
+.articalContent a { text-decoration: underline; }
+.articalContent, .articalContent p, .articalContent p font, .articalContent font, .articalContent span, .articalContent table td { line-height: 150%; }
+.articalList { clear: both; width: 648px; margin: 0px auto 20px; }
+.articalList .listBg { padding: 20px 20px 15px; }
+.articalList .listTit { padding: 0px 0px 10px 10px; font-size: 14px; }
+.articalList li { height: 16px; line-height: 16px; padding: 4px 0px 5px; background-repeat: repeat-x; background-position: left top; }
+.articalList li label { background-repeat: no-repeat; background-position: left 7px; padding-left: 10px; margin-left: 10px; font-size: 14px; }
+.articalList li label img { vertical-align: -2px; }
+.articalList li span { font-size: 10px; }
+.articalInfo { clear: both; padding-top: 10px; }
+.articalInfo .IL { float: left; width: 65%; padding-top: 2px; }
+.articalInfo .IL span.SG_txtb { font-family: "宋体"; }
+.articalInfo .IL em { margin: 0px 2px; }
+.articalInfo .IL b { font-family: Verdana,Helvetica; font-size: 9px; }
+.articalInfo .IR { float: right; width: 35%; }
+.articalInfo .IR table { float: right; }
+.articalInfo .IR td, .articalInfo .IR th { vertical-align: top; font-weight: normal; }
+.articalInfo .IR th { width: 60px; text-align: right; }
+.articalInfo .IR span { margin-right: 5px; height: 22px; }
+.articalInfo .IR span img { margin-right: 0px; }
+.articalInfo .IR span a { word-break: break-all; }
+.articalInfo .IR .IR_list { float: left; }
+.articalInfo .IR .IR_list span { display: block; float: left; white-space: nowrap; }
+.articalfrontback { clear: both; margin: 20px 0px 0px; padding: 24px 0px; font-size: 14px; }
+.articalfrontback div { line-height: 24px; min-height: 24px; font-family: "宋体"; }
+.articalfrontback div.SG_floatL span, .articalfrontback div.SG_floatR span { clear: both; display: block; }
+.articalfrontback div.SG_floatL, .articalfrontback div.SG_floatR { width: 340px; }
+.articalfrontback2 { margin-top: 0px; padding-top: 0px; }
+.blogzz_zzlist { padding: 10px 10px 0px; margin-bottom: 20px; }
+.blogzz_zzlist h3 { margin: 0px 5px; font-size: 12px; height: 24px; line-height: 24px; background: transparent url("urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/SG_linedot.gif") repeat-x scroll left bottom; }
+.blogzz_zzlist ul.ul_zzlist { margin: 0px 5px; }
+.blogzz_paged { float: right; height: 40px; line-height: 40px; }
+.blogzz_closepic { width: 10px; height: 10px; background: transparent url("urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/topbar/tb_layer/tb_layer.png") no-repeat scroll -5px -293px; display: block; }
+.turnBoxzz { float: right; }
+.turnBoxzz a.SG_turn { letter-spacing: 5px; width: 86px; display: inline-block; padding: 0px 0px 0px 3px; font-family: Verdana,"宋体",sans-serif; }
+.turnBoxzz a.SG_turn cite { padding: 0px 20px 0px 32px; width: 34px; display: inline-block ! important; }
+.turnBoxzz a.SG_turn .arrow { font-size: 7px; position: absolute; right: 5px; top: 2px; }
+.turnBoxzz a.SG_turn img { left: 11px; }
+.articalInfo .IL .zznum { font-family: "宋体"; }
+.blogzz_btn { position: relative; height: 1px; }
+.blogzz_btn .SG_turn { position: relative; left: 46%; top: 8px; text-align: center; }
+.blogzz_btn a:link, .blogzz_btn a:visited, .blogzz_btn a:active { text-decoration: none; }
+.articalContent a:link, .articalContent a:visited { text-decoration: none; }
+.articalContent a:hover { text-decoration: underline; }
+.picShareFlt, .picShareQing, .picSlideBtn, .picAward { overflow: hidden; }
+.picShareFlt .share, .picShareQing .share { overflow: hidden; cursor: pointer; float: left; font-size: 12px; height: 24px; line-height: 24px; background: transparent url("urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/btn_share.png") repeat scroll right 0px; }
+.picShareFlt .share span, .picShareQing .share span { float: left; display: inline; margin: 0px 6px 0px 29px; color: rgb(94, 9, 0); }
+.picSlideBtn a, .picSlideBtn a:link, .picSlideBtn a:visited { width: 64px; height: 21px; line-height: 21px; display: block; background: transparent url("multishow_bg.png") no-repeat scroll -21px -873px; text-align: center; color: rgb(255, 255, 255); font-size: 12px; }
+.turnList { position: absolute; z-index: 100; width: 87px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border-top: 1px solid rgb(176, 172, 194); border-left: 1px solid rgb(176, 172, 194); border-right: 1px solid rgb(176, 172, 194); }
+.turnList li { height: 21px; line-height: 21px; overflow: hidden; vertical-align: middle; border-bottom: 1px solid rgb(176, 172, 194); }
+.turnList li a { height: 21px; display: block; position: relative; background: rgb(231, 231, 231) none repeat scroll 0% 0%; padding-left: 35px; color: rgb(53, 59, 57); }
+.turnList li a:hover { text-decoration: none; background: rgb(255, 255, 255) none repeat scroll 0% 0%; }
+.turnList li a img { position: absolute; left: 13px; top: 3px; }
+.SG_cmp_revert { overflow: hidden; width: 100%; }
+.SG_cmp_revert li { overflow: hidden; background-position: center top; padding: 20px 0px; }
+.SG_cmp_revert li .SG_revert_Left { float: left; display: none ! important; }
+.SG_cmp_revert li .SG_revert_Left img { height: 50px; width: 50px; border: 1px solid rgb(220, 220, 220); }
+.SG_cmp_revert li .SG_revert_Cont { float: none; margin-left: 20px ! important; width: 652px; font-family: "宋体"; padding-top: 2px; }
+.SG_cmp_revert li .SG_revert_Cont p { width: 100%; clear: both; overflow: hidden; font-size: 12px; }
+.SG_cmp_revert li .SG_revert_Cont p.myReFrom { padding-top: 10px; }
+.SG_cmp_revert li .SG_revert_Cont p.myReFrom .SG_txtc { margin-right: 12px; }
+.SG_cmp_revert li .SG_revert_Cont p.myReFrom a { margin: 0px 5px; }
+.SG_cmp_revert li .SG_revert_Cont .SG_revert_Tit { float: left; font-weight: bold; }
+.SG_cmp_revert li .SG_revert_Cont .SG_revert_Tit a { vertical-align: middle; }
+.SG_cmp_revert li .SG_revert_Cont .SG_revert_Time, .SG_cmp_revert li .SG_revert_Cont .SG_revert_Func { float: right; }
+.SG_cmp_revert li .SG_revert_Cont .SG_revert_Func .SG_a_fuc { visibility: hidden; }
+.SG_cmp_revert li .SG_revert_Cont .SG_revert_Func .SG_a_fucs { margin: 0px 5px; }
+.SG_cmp_revert li:hover .SG_revert_Cont .SG_revert_Func .SG_a_fuc { margin-left: 12px; visibility: visible; }
+.SG_cmp_revert li .SG_revert_Inner { line-height: 22px; clear: both; width: 100%; font-size: 14px; margin-top: 9px; word-break: break-all; }
+.btn_artzk { display: inline-block; margin-left: 5px; vertical-align: -4px; width: 69px; height: 20px; background: transparent url("urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/img_replyzk.png") no-repeat scroll 0px 0px; }
+.allComm .SG_reply { margin-top: 10px; }
+.newfont_family { font-family: "Microsoft YaHei","Helvetica Neue",SimSun; }
+.god_reply { background: transparent url("godreply.png") no-repeat scroll 0% 0%; text-align: center; color: rgb(255, 255, 255); display: inline-block; width: 40px; height: 20px; line-height: 20px; margin-left: 6px; vertical-align: middle; font-weight: 400; }

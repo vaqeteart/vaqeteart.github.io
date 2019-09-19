@@ -1,0 +1,10 @@
+#td_page_footer {
+    align=center;
+}
+
+footer {
+    height: 20px;
+    width: 100%;
+    clear: both;
+    text-align: center;
+}

@@ -1,0 +1,141 @@
+/* Effective stylesheet produced by snapshot save */
+body { font-family: Arial,Helvetica,sans-serif; font-size: 12px; background-color: rgb(255, 255, 255); text-align: center; padding: 0px; margin: 0px; }
+li { padding: 0px; margin: 0px; }
+.lf360 { float: left; }
+.rt360 { float: right; }
+.both { clear: both; }
+a:link, a:visited { color: rgb(61, 107, 167); text-decoration: none; }
+a:hover { color: rgb(61, 107, 167); text-decoration: underline; }
+.plbox { width: 670px; height: 175px; background-color: rgb(250, 250, 250); }
+.plmain { padding: 15px 20px; }
+.deluwx { color: rgb(98, 98, 98); height: auto; text-align: left; font-size: 14px; }
+.deluwx span { font-weight: 700; }
+#goTop2 { bottom: 30px; position: fixed; width: 131px; z-index: 2; text-align: left; }
+#goTop, #goTop1, #goTop3 { width: 50px; height: 50px; }
+#goTop #go_top, #goTop #go_top:hover { background-image: url("wz26.gif"); cursor: pointer; float: left; overflow: hidden; }
+#goTop #go_top { height: 50px; width: 50px; }
+#goTop #go_top:hover { background-image: url("urn:not-loaded:http://pubimage.360doc.com/wz/wzgo1.gif"); }
+#goTop1 #go_top1, #goTop1 #go_top1:hover { background-image: url("wzgo3.gif"); cursor: pointer; float: left; overflow: hidden; }
+#goTop1 #go_top1, #goTop3 #go_top3 { height: 49px; width: 50px; }
+.dsftb { background-image: url("sf28.png"); background-repeat: no-repeat; width: 28px; height: 28px; display: block; float: left; margin: 0px 5px; }
+.sf1 { background-position: 0px 0px; }
+.sf2 { background-position: 0px -28px; }
+.sf3 { background-position: 0px -56px; }
+.dsfwz { line-height: 28px; float: left; display: block; color: rgb(146, 146, 146); }
+.doc360article_content { width: 1012px; height: auto; margin: 0px auto; padding: 0px; }
+#sameArtOuter { right: -90px ! important; left: auto ! important; }
+body { margin: 0px; padding: 0px; }
+.f_left { float: left; }
+.f_right { float: right; }
+.doc360article_content a, .user_data_name a:hover { text-decoration: none; outline: 0px none; }
+.doc360article_content img { border: medium none; }
+.doc360article_content a:hover { color: rgb(15, 101, 156) ! important; }
+#bdshare *, .a_right *, .bottom_controler *, .prev_next *, .youlike * { list-style: outside none none; margin: 0px; padding: 0px; }
+#bdshare, #bdshare *, #bgchange, .a_right *, .article_container, .article_data, .bottom_article *, .bottom_controler *, .prev_next *, .youlike * { font-family: "microsoft yahei",arial,simsun; }
+.clearboth { clear: both; width: 100%; height: 0px; font-size: 0px; overflow: hidden; margin: 0px; padding: 0px; }
+.a_left { width: 656px; height: auto; float: left; position: relative; padding-bottom: 50px; z-index: 2; }
+#bgchange { padding: 13px 13px 0px; width: 656px; height: auto; }
+.fontsize_bgcolor_controler { height: 17px; }
+.a_fontsize { width: 17px; height: 17px; float: right; position: relative; }
+.a_bgcolor { width: 17px; height: 17px; float: right; position: relative; margin-left: 10px; }
+.fschange { width: 146px; height: 35px; z-index: 2; border: 1px solid rgb(203, 203, 203); background: rgb(255, 255, 255) none repeat scroll 0% 0%; position: absolute; right: 0px; top: 18px; text-align: center; display: none; }
+.fschange label { font-size: 13px; display: inline-block; margin-top: 7px; }
+.fschange label input { height: 14px; vertical-align: top; }
+@media not all {
+  .fschange label input { vertical-align: sub; }
+}
+.a_colorlist { z-index: 2; width: 146px; height: 35px; border: 1px solid rgb(203, 203, 203); background: rgb(255, 255, 255) none repeat scroll 0% 0%; position: absolute; right: 0px; top: 18px; text-align: center; display: none; }
+.a_colorlist span { display: inline-block; width: 13px; height: 13px; overflow: hidden; border: 1px solid rgb(203, 203, 203); margin: 10px 1px 0px; cursor: pointer; font-size: 12px; }
+.a_colorlist img { vertical-align: top; visibility: hidden; }
+.a_color1 { background: rgb(231, 244, 253) none repeat scroll 0% 0%; }
+.a_color2 { background: rgb(245, 241, 230) none repeat scroll 0% 0%; }
+.a_color3 { background: rgb(234, 232, 246) none repeat scroll 0% 0%; }
+.a_color4 { background: rgb(254, 245, 240) none repeat scroll 0% 0%; }
+.a_color5 { background: rgb(235, 244, 239) none repeat scroll 0% 0%; }
+.a_color6 { background: rgb(255, 255, 255) none repeat scroll 0% 0%; }
+.doc360article_content #titiletext { font-size: 30px; font-family: simhei; color: rgb(0, 0, 0); line-height: 40px; margin: 12px 0px 25px; max-height: 80px; overflow: hidden; text-align: left; word-break: break-all; }
+.article_data { height: 35px; border-bottom: 1px solid rgb(239, 239, 239); position: relative; z-index: 2; }
+.article_data_left { position: relative; float: left; text-align: left; font-size: 13px; color: rgb(112, 112, 112); height: 25px; margin-top: 10px; z-index: 2; }
+.a_username { vertical-align: bottom; }
+.a_username a { color: rgb(84, 123, 60); }
+.a_from { vertical-align: bottom; }
+.a_from a { color: rgb(46, 46, 46); }
+.article_data_left .a_from a { color: rgb(112, 112, 112); }
+.article_data_right { float: right; width: 262px; height: 35px; position: relative; }
+.article_data_right .zcommond a { font-size: 13px; line-height: 35px; color: rgb(112, 112, 112); display: block; height: 35px; overflow: hidden; text-align: right; }
+.article_data_right .p1 { float: right; width: 55px; background: transparent url("btnico_wx.png") no-repeat scroll left center; }
+.article_data_right .p2 { float: right; background: transparent url("btnico_cang.png") no-repeat scroll left center; width: 124px; }
+.article_container { word-break: break-all; padding: 10px 0px 0px; height: auto; overflow: hidden; font-size: 16px; text-align: left; color: rgb(46, 46, 46); line-height: 1.5; float: left; position: relative; }
+.bottombtn { height: 39px; text-align: left; position: relative; z-index: 3; }
+.bottombtn .btn_collect, .bottombtn .btn_good { float: left; height: 36px; line-height: 36px; display: inline-block; font-size: 14px; color: rgb(0, 0, 0) ! important; font-family: "Microsoft YaHei"; border-radius: 2px; background-color: rgb(255, 255, 255); padding: 0px 14px 0px 34px; background-image: url("btn_icon1.gif"); background-repeat: no-repeat; margin: 0px 2px; }
+.bottombtn .btn_collect:hover, .bottombtn .btn_good:hover { background-color: rgb(253, 147, 58); color: rgb(255, 255, 255) ! important; text-decoration: none; }
+.btn_collect { background-position: 0px 0px; }
+.btn_good { position: relative; background-position: 0px -75px; }
+.btn_good #flowernumadd { position: absolute; right: 0px; top: -20px; font-weight: 700; font-size: 22px; color: rgb(204, 79, 79); }
+.btn_collect:hover { background-position: 0px -37px; }
+.btn_good:hover { background-position: 0px -111px; }
+.bottom_controler { height: 28px; border-bottom: 1px solid rgb(239, 239, 239); }
+.bottom_cleft { width: 60%; height: auto; overflow: hidden; font-size: 13px; color: rgb(112, 112, 112); text-align: left; float: left; margin-top: 4px; }
+.bottom_cright { width: 40%; height: auto; overflow: hidden; font-size: 13px; color: rgb(112, 112, 112); }
+.bottom_cright { float: right; text-align: right; }
+.bottom_cright a { display: inline-block; height: 32px; line-height: 32px; color: rgb(112, 112, 112); }
+.prev_next { height: auto; line-height: 30px; color: rgb(0, 0, 0); font-size: 14px; font-weight: 700; width: 100%; text-align: left; }
+.prev_next p { width: 98%; height: 26px; display: none; overflow: hidden; word-break: keep-all; text-overflow: ellipsis; white-space: nowrap; }
+.prev_next p a { color: rgb(112, 112, 112); }
+.prev_next .p1 { text-align: left; }
+.prev_next .p2 { text-align: left; }
+.str_border { height: 24px; overflow: hidden; border-bottom: 1px solid rgb(239, 239, 239); margin-top: 14px; text-indent: 6px; text-align: left; }
+.str_border strong { font-size: 16px; color: rgb(0, 0, 0); float: left; }
+.youlike, .zcommond { width: 100%; height: auto; overflow: hidden; }
+.a_left .youlike { margin-left: -6px ! important; }
+.bottom_article { width: 48%; height: auto; overflow: hidden; }
+.barticle_list { height: auto; overflow: hidden; margin-top: 10px; }
+.barticle_list li { text-align: left; width: 100%; height: 30px; line-height: 30px; overflow: hidden; word-break: keep-all; text-overflow: ellipsis; white-space: nowrap; background: transparent url("article_libg.jpg") no-repeat scroll 7px center; text-indent: 24px; }
+.barticle_list li a { color: rgb(108, 108, 108); font-size: 14px; }
+.titwx { text-align: left; }
+.a_more { line-height: 24px; color: rgb(46, 46, 46) ! important; height: 24px; padding-right: 16px; background: transparent url("a_more.gif") no-repeat scroll right center; display: inline-block; }
+.user_talk:hover { opacity: 1; }
+.a_right { float: right; width: 300px; height: auto; margin-top: 13px; position: relative; }
+.user_info { height: 116px; background: rgb(253, 253, 253) none repeat scroll 0% 0%; }
+.user_photo { width: 58px; height: 100%; overflow: hidden; margin-left: 16px; }
+.user_photopic { width: 58px; height: 58px; position: relative; overflow: hidden; margin-top: 12px; }
+.user_talk { display: block; width: 100%; height: 40px; background: transparent url("talk.gif") no-repeat scroll center 10px; opacity: 0.8; }
+.user_data { width: 208px; height: auto; overflow: hidden; text-align: left; }
+#userdegree { margin-top: 5px; }
+.user_data_name { height: 24px; overflow: hidden; margin-top: 18px; }
+.user_data_name img { float: left; margin-top: 3px ! important; margin-left: 3px ! important; }
+.user_data_name a { color: rgb(8, 8, 8) ! important; display: inline-block; height: 24px; line-height: 24px; font-size: 16px; float: left; }
+.user_data_num { height: 22px; margin-top: 16px; }
+#spanfollowstatus { cursor: pointer; width: 58px; background-image: url("guanzhu1.gif"); background-repeat: no-repeat; display: inline-block; height: 21px; margin-top: -3px; vertical-align: middle; }
+.gz_no { background-position: left top; }
+.gz_no:hover { background-position: left bottom; }
+.his_her { width: 280px; height: auto; margin: 23px auto 0px; overflow: hidden; }
+.his_her_type li { cursor: pointer; width: 140px; background-image: url("user_TA.gif"); height: 31px; font-size: 14px; color: rgb(0, 0, 0); background-repeat: no-repeat; background-position: right bottom; }
+.his_her_type li.curone { width: 100%; text-align: left ! important; }
+.his_her_div { width: 100%; height: 210px; position: relative; overflow: hidden; }
+.his_her_list { height: 100%; width: 561px; overflow: hidden; position: absolute; left: 0px; top: 0px; z-index: 1; }
+.his_her_list li { float: left; width: 280px; height: auto; overflow: hidden; }
+.his_her_list li div { width: 100%; height: auto; overflow: hidden; background: transparent url("article_libg.jpg") no-repeat scroll 6px center; }
+.his_her_list li div span { display: block; float: left; margin-left: 20px; font-size: 14px; line-height: 30px; height: 30px; }
+.his_her_list li div a { display: block; float: left; width: 230px; height: 30px; line-height: 30px; text-decoration: none; text-align: left; font-size: 14px; color: rgb(98, 98, 98); word-break: keep-all; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+#artContent { min-width: 656px; }
+.ggwz { padding-left: 3px; padding-right: 2px; position: absolute; margin-top: -15px; background-color: rgb(154, 154, 154); color: rgb(255, 255, 255); }
+.ggwz a:link { color: rgb(255, 255, 255); text-decoration: none; }
+.ggwz a:visited { color: rgb(255, 255, 255); text-decoration: none; }
+.ggwz a:hover { color: rgb(255, 255, 255) ! important; text-decoration: none; }
+.article_data_right .s1 { float: right; height: 35px; line-height: 35px; color: rgb(112, 112, 112); cursor: pointer; font-size: 13px; }
+.article_data_right .s2, .bottombtn .s2 { width: 25px; height: 35px; cursor: pointer; overflow: hidden; }
+.article_data_right .s2 span, .bottombtn .s2 span { width: 0px; height: 0px; overflow: hidden; line-height: 0px; font-size: 0px; border-color: rgb(51, 51, 51) transparent transparent; display: block; border-style: solid dashed dashed; border-width: 5px; margin: 16px 0px 0px 4px; }
+.article_data_right .s2 span {  }
+.sharelist_new { width: 98px; height: 145px; border: 1px solid rgb(242, 242, 242); position: absolute; bottom: -147px; z-index: 2; background: rgb(255, 255, 255) none repeat scroll 0% 0%; display: none; }
+.article_data_right .sharelist_new { left: 53px; }
+.bottombtn .sharelist_new { left: 326px; }
+.sharelist_new a { display: block; height: 29px; line-height: 29px; color: rgb(112, 112, 112); text-align: left; text-indent: 30px; background-image: url("urn:not-loaded:http://pubimage.360doc.com/NewArticle/NewArticleShareIcon.png"); background-repeat: no-repeat; }
+.sharelist_new a:hover { background-color: rgb(242, 242, 242); }
+.sharelist_new .slbg1 { background-position: 6px 5px; }
+.sharelist_new .slbg2 { background-position: 6px -26px; }
+.sharelist_new .slbg3 { background-position: 6px -56px; }
+.sharelist_new .slbg4 { background-position: 6px -86px; }
+.sharelist_new .slbg5 { background-position: 6px -112px; }
+.bottombtn .span1 { display: inline-block; height: 36px; line-height: 36px; font-size: 14px; cursor: pointer; margin-left: 10px; }
+.bottombtn .sharewx { display: inline-block; height: 36px; text-align: right; width: 55px; background: transparent url("btnico_wx.png") no-repeat scroll left center; line-height: 36px; color: rgb(0, 0, 0); font-size: 14px; }

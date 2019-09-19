@@ -1,0 +1,15 @@
+/* Effective stylesheet produced by snapshot save */
+.syntaxhighlighter { background-color: rgb(15, 25, 42) ! important; }
+.syntaxhighlighter .line.alt1 { background-color: rgb(15, 25, 42) ! important; }
+.syntaxhighlighter .line.alt2 { background-color: rgb(15, 25, 42) ! important; }
+.syntaxhighlighter .gutter { color: rgb(175, 175, 175) ! important; }
+.syntaxhighlighter .gutter .line { border-right: 3px solid rgb(67, 90, 95) ! important; }
+.syntaxhighlighter .toolbar { color: rgb(209, 237, 255) ! important; background: none repeat scroll 0% 0% rgb(67, 90, 95) ! important; border: medium none ! important; }
+.syntaxhighlighter .toolbar a { color: rgb(209, 237, 255) ! important; }
+.syntaxhighlighter .toolbar a:hover { color: rgb(138, 166, 193) ! important; }
+.syntaxhighlighter .plain, .syntaxhighlighter .plain a { color: rgb(209, 237, 255) ! important; }
+.syntaxhighlighter .comments, .syntaxhighlighter .comments a { color: rgb(66, 139, 221) ! important; }
+.syntaxhighlighter .string, .syntaxhighlighter .string a { color: rgb(29, 193, 22) ! important; }
+.syntaxhighlighter .keyword { color: rgb(180, 61, 61) ! important; }
+.syntaxhighlighter .preprocessor { color: rgb(138, 166, 193) ! important; }
+.syntaxhighlighter .functions { color: rgb(255, 170, 62) ! important; }

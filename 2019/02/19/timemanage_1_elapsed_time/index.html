@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    时间管理：1.发现问题——时间的流逝
+</title>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="/css/partial/head.css">
+<link rel="stylesheet" href="/css/partial/header.css">
+<link rel="stylesheet" href="/css/partial/archives.css">
+<link rel="stylesheet" href="/css/partial/categories.css">
+<link rel="stylesheet" href="/css/partial/home-posts.css">
+<link rel="stylesheet" href="/css/partial/page-nav.css">
+<link rel="stylesheet" href="/css/partial/tags.css">
+<link rel="stylesheet" href="/css/partial/about.css">
+<link rel="stylesheet" href="/css/partial/more.css">
+<link rel="stylesheet" href="/css/partial/footer.css">
+<link rel="stylesheet" href="/css/post.css">
+
+
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="/lib/jquery-1.11.3.min.js"></script>
+<script src="/js/common.js"></script>
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody>
+        <tr>
+            <script src="js/nav.js"></script>
+<table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="/">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="/categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="/categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(47)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="/categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(5)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="/categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="/categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="/categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="/categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="/categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="/categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="/categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="/categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="/categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(2)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="/categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="/categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(10)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="/categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="/categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="/categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="/categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(9)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="/categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="/categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="/categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(1)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="/categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="/categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="/categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(6)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="/categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(2)</span></a></li><li id="temp" class="categories_tree_item"><a href="/categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="/categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="/tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/gtd-done/">gtd_done</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gtd-next/">gtd_next</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/life/">life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/others/">others</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/study/">study</a><span class="tag-list-count">10</span></li></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="/archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="/more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="/about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+        <h1>
+               <a href="/" title="Menu.Home">
+               QuietHeart's Site
+               </a>
+        </h1>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <article>
+                    <h1 id="header1" style="text-align: center;">
+                        时间管理：1.发现问题——时间的流逝
+                    </h1>
+                    <hr id="title_line">
+                    <div>
+                        
+
+<style type="text/css">
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #0c0;
+    box-shadow: 1px 1px 1px #0e0;
+    padding: 8pt;
+    font-family: italic monospace;
+    color: #C7EDCC;
+    background-color: #111111;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: black;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+    code {
+        border:groove #555555;
+	border-width:thin;
+        background-color: #111111;
+	color: #C7EDCC;
+    }
+
+
+#table-of-contents {
+    font-size: 9pt;
+    position: fixed;
+    right: 10px;
+    top: 14em;
+    margin:0;
+    padding:0;
+    border-width:1px;
+    border-style:solid;
+    background: #000000;
+    -webkit-box-shadow: 0 0 1em #777777;
+    -moz-box-shadow: 0 0 1em #777777;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    text-align: right;
+    /* ensure doesn't flow off the screen when expanded */
+    max-height: 60%;
+    overflow: auto; 
+    z-index: 200;
+}
+
+#table-of-contents h2 {
+    font-size: 9pt;
+    max-width: 8em;
+    font-weight: normal;
+    padding-left: 0.5em;
+    padding-top: 0.05em;
+    padding-bottom: 0.05em; 
+}
+
+#table-of-contents ul {
+    margin-left: 14pt; 
+    margin-bottom: 10pt;
+    padding: 0
+}
+
+#table-of-contents li {
+    padding: 0;
+    margin: 1px;
+    list-style: none;
+}
+
+#table-of-contents ul>:first-child {
+    color: blue;
+}
+
+#table-of-contents #text-table-of-contents {
+    display: none;
+    text-align: left;
+}
+
+#table-of-contents:hover #text-table-of-contents {
+    display: block;
+    padding: 0.5em;
+    margin-top: -1.5em; 
+}
+
+</style>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 你的一周，究竟有多少时间?</a>
+<ul>
+<li><a href="#orgheadline2">1.1. 1 想法</a></li>
+<li><a href="#orgheadline3">1.2. 2 动机</a></li>
+<li><a href="#orgheadline4">1.3. 3 准备</a></li>
+<li><a href="#orgheadline5">1.4. 4 计算</a>
+<ul>
+<li><a href="#orgheadline6">1.4.1. 4.1 最初</a></li>
+<li><a href="#orgheadline7">1.4.2. 4.2 减去必不可少的睡觉</a></li>
+<li><a href="#orgheadline8">1.4.3. 4.3 减去不得不从事的职业</a></li>
+<li><a href="#orgheadline9">1.4.4. 4.4 减去必不可少的饮食</a></li>
+<li><a href="#orgheadline10">1.4.5. 4.5 减去必定要做的卫生</a></li>
+<li><a href="#orgheadline11">1.4.6. 4.6 减去必不可少的精力恢复</a></li>
+<li><a href="#orgheadline12">1.4.7. 4.7 减去不知不觉的移动</a></li>
+<li><a href="#orgheadline13">1.4.8. 4.8 减去不知不觉的休闲、交际</a></li>
+<li><a href="#orgheadline14">1.4.9. 4.9 减去不得不进行的健康医疗</a></li>
+<li><a href="#orgheadline15">1.4.10. 4.10 减去必须要做的事务</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline16">1.5. 5 答案</a></li>
+<li><a href="#orgheadline17">1.6. 6 怎样</a>
+<ul>
+<li><a href="#orgheadline18">1.6.1. 消耗</a></li>
+<li><a href="#orgheadline19">1.6.2. 积累</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><a id="ID-fed237e9-2985-45ba-9e0f-f280f0d1ca26"></a><span class="section-number-2">1</span> 你的一周，究竟有多少时间?</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><span class="section-number-3">1.1</span> 1 想法</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+我思考了好久，想要专门写一篇文章，描述下时间的宝贵，可是得知结果后，却发现专门花费时间写这样一篇文章，真是太为奢侈的浪费。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3"><span class="section-number-3">1.2</span> 2 动机</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+不写出来，又担心会忘记，尤其是现在这个信息如海，一切都让人应接不暇的世界。对比忘记这个的结果的可怕，我只好心惊胆颤，利用一切似乎没有被浪费的、欺骗自己那不是奢侈的时间，上厕所时、路上、排队等候……，总之是用一切可能无用的一点一滴的碎片，堆积出了此文章，文章表达肯定是有不足之处的，只是希望给自己一个警醒，也希望能将思想传达出来，给大家一个参考。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">1.3</span> 3 准备</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+我们中有学生、职业者、居家人员……等等，不过在本质上，结果对我们来说是一样的，就暂且以我这个职业者的角度来看看这个结果吧。
+</p>
+
+<p>
+假设，你有一份不错的职业，每天工作八个小时，工作不忙，还有每周二天的双休日。钱多事少离家近，位高权重责任轻，并且自身还积极上进。
+</p>
+
+<p>
+——显然，这是理想。:)
+</p>
+
+<p>
+姑且就在这样理想的情况下，我们一起看一下，究竟能有多少时间吧。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">1.4</span> 4 计算</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+一个人的每天都是变化的，所以下面将用一周来做为单位（时间太短不准，时间太长太复杂），粗略的分析并计算一下。
+</p>
+</div>
+<div id="outline-container-orgheadline6" class="outline-4">
+<h4 id="orgheadline6"><span class="section-number-4">1.4.1</span> 4.1 最初</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<p>
+一周时长：24*7 = 168小时。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-4">
+<h4 id="orgheadline7"><span class="section-number-4">1.4.2</span> 4.2 减去必不可少的睡觉</h4>
+<div class="outline-text-4" id="text-1-4-2">
+<p>
+假设周末不睡懒觉，作息规律，平均每天睡觉22:30-6:30共需8小时。
+</p>
+
+<p>
+——一周还剩：168-8*7 = 112小时。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-4">
+<h4 id="orgheadline8"><span class="section-number-4">1.4.3</span> 4.3 减去不得不从事的职业</h4>
+<div class="outline-text-4" id="text-1-4-3">
+<p>
+假设正常工作每周5天，8小时/天且，每天能忙里偷闲2小时，即你只需要工作6小时/天。
+</p>
+
+<p>
+——一周还剩：112-6*5 = 82小时。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-4">
+<h4 id="orgheadline9"><span class="section-number-4">1.4.4</span> 4.4 减去必不可少的饮食</h4>
+<div class="outline-text-4" id="text-1-4-4">
+<p>
+假设一天三顿饭，每顿餐前准备+吃完饭时间30分钟，那么一天共需1.5小时。
+</p>
+
+<p>
+具体这样计算：
+</p>
+<ul class="org-ul">
+<li>根据日常经验，一顿饭的时间一般是15分钟，但是这只是纯粹的时间。</li>
+<li>对于居家的情形，一顿饭不只如此（不是你一个人吃饭），算上餐前/餐后事项（上桌与撤桌），却可能在近一个小时！</li>
+<li>即便是最简洁的快餐、外卖，相关的选择、到达指定地点、以及排队等也是需要时间的。</li>
+</ul>
+<p>
+这里只将餐前餐后那些家务性的事情先省略，得出这样的时间，平均起来，也应该是合理的。
+</p>
+
+<p>
+——一周还剩：72-1.5*7 = 71.5小时 = 4290分钟。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-4">
+<h4 id="orgheadline10"><span class="section-number-4">1.4.5</span> 4.5 减去必定要做的卫生</h4>
+<div class="outline-text-4" id="text-1-4-5">
+<p>
+假设每天卫生间，小便（3-5次）大便（1次）算上洗手加起来共需20分钟。
+</p>
+
+<p>
+——一周还剩：4290-20*7 = 4150分钟。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-4">
+<h4 id="orgheadline11"><span class="section-number-4">1.4.6</span> 4.6 减去必不可少的精力恢复</h4>
+<div class="outline-text-4" id="text-1-4-6">
+<p>
+假设你日间间歇休息的时间（发呆、恢复精力、调整状态、午休等），每天需30分钟，另外工作日午休需15分钟。
+</p>
+
+<p>
+具体这样计算：
+</p>
+<ul class="org-ul">
+<li>上午工作/活动间隙：15分钟。</li>
+<li>下午工作/活动间隙：15分钟。</li>
+<li>午休：15分钟。</li>
+</ul>
+
+<p>
+——一周还剩：4150-30*7-15*5=3865分钟。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-4">
+<h4 id="orgheadline12"><span class="section-number-4">1.4.7</span> 4.7 减去不知不觉的移动</h4>
+<div class="outline-text-4" id="text-1-4-7">
+<p>
+假设你每天行走时间（不可能一直呆在原处）只有35分钟。
+</p>
+
+<p>
+具体的计算：
+</p>
+<ul class="org-ul">
+<li>本人上班通勤，不算坐车而是走到车站的时间，每次都往往15分钟，家里和公司离车站都不远，实际一天上下班两趟应该在30分钟。</li>
+<li>周末活动应该大于通勤的行走吧，也算成30分钟。</li>
+<li>平时活动，拿东西，卫生间等等，怎么都是要行走的，就算5分钟。</li>
+</ul>
+<p>
+已经尽可能少的计算了，我记得以前上小学初近10年，家里到学校步行正好1000米15分钟，大概1500步，1分钟100步，如果你有记录步数的工具，会更精确。
+</p>
+
+<p>
+——一周还剩：3865-35*7 = 3620分钟。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-4">
+<h4 id="orgheadline13"><span class="section-number-4">1.4.8</span> 4.8 减去不知不觉的休闲、交际</h4>
+<div class="outline-text-4" id="text-1-4-8">
+<p>
+假设你每天闲聊时间（电话、微信、网络、朋友、亲人、同僚）只有30分钟。
+</p>
+
+<p>
+具体的计算：
+</p>
+<ul class="org-ul">
+<li>上网</li>
+<li>电话</li>
+<li>微信</li>
+<li>朋友圈</li>
+<li>闲聊</li>
+<li>等等</li>
+</ul>
+<p>
+这个也是尽量少的计算了的，我上网不是很多，电话很少，微信也很少聊，一般都是咨询或者意料外的联系与交际。我想对于一般人而言，单单刷朋友圈就不止这些时间吧？
+</p>
+
+<p>
+——一周还剩：3620-30*7 = 3410分钟。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline14" class="outline-4">
+<h4 id="orgheadline14"><span class="section-number-4">1.4.9</span> 4.9 减去不得不进行的健康医疗</h4>
+<div class="outline-text-4" id="text-1-4-9">
+<p>
+假设生病就医的时间一周平均1.5小时。
+</p>
+
+<p>
+具体的计算
+不可能每个人都不会生病，而且每次生病对时间消耗的影响非常的大，不但生病期间状态和效率低下，而且看病也是要花费时间的如：
+</p>
+<ul class="org-ul">
+<li>预约</li>
+<li>排队</li>
+<li>去医院</li>
+<li>就医</li>
+<li>买药</li>
+<li>等等</li>
+</ul>
+<p>
+每次折腾下来，严重的往往几天没有精神，每年都平均有1到2次不大不小的病状。
+</p>
+
+<p>
+假设每年1次，每次一天多，那一个月平均下来约2、3个小时，一周就算半个小时吧。
+</p>
+
+<p>
+另外，
+</p>
+<ul class="org-ul">
+<li>家里如果有任何一个人有生病，尤其是家里老人、小孩的体弱者的情况，受到的影响</li>
+<li>学校中，就是走的很近的朋友/同学/舍友生病，受到的影响</li>
+</ul>
+<p>
+假设每个人身边有2个这样的人吧，按照前面计算，每人平均半个小时，两个人就是1个小时。
+</p>
+
+<p>
+——一周还剩：3410-90=3320分钟。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline15" class="outline-4">
+<h4 id="orgheadline15"><span class="section-number-4">1.4.10</span> 4.10 减去必须要做的事务</h4>
+<div class="outline-text-4" id="text-1-4-10">
+<p>
+假设家务和规划、日常琐事、意料之外事项占用的时间只有：12小时50分钟+10.5小时+6.5小时+1小时10分钟+1小时45分钟 = 32小时45分钟 = 1965分钟
+</p>
+
+<p>
+具体的计算：
+</p>
+
+<p>
+家务类：12小时50分钟
+</p>
+<ul class="org-ul">
+<li>对于居家人员，换洗衣物、被褥、清洁整理是必要的事情，就算你比较邋遢、有别人为你做这些，至少平均也需要20分钟/天，一周2小时20分钟；</li>
+<li>清洁卫生，主要是餐后清洁、扫地拖地、家具擦拭、清洗/晾晒衣物被褥等，这个时间不固定的，按照经验，一日三餐餐后的洗碗和整理一般是20分钟一次，扫地拖地家具擦拭那次都不会少于1个小时，少点算吧，减去30分钟也得是：20*3+60-30=90分钟/天，一周10.5小时；</li>
+</ul>
+
+<p>
+餐前准备：10.5小时
+</p>
+<ul class="org-ul">
+<li>居家人员做饭，是我亲身实践的事情，每次饭菜做好的时间，哪怕是简单的一饭一荤一素，都远远不止1个小时，何况是不止一个人的饭菜；</li>
+<li>若只在外面吃饭，外卖或餐饮店，点餐选餐也是需要时间的（似乎前面已经算到了），不排除个别时候的高效。</li>
+</ul>
+<p>
+所以不多算，餐前准备这一项，就以平均30分钟一顿的时间，就是30*3=90分钟/天，一周10.5小时；
+</p>
+
+<p>
+日常消费：6.5小时
+</p>
+<ul class="org-ul">
+<li>日常生活中的衣食住行，是不可少的，每隔一段时间必定会去一趟商场、超市，一次至少要2个小时的时间，即便是网购也只是选择上方便，时间实际不会少多少，而有些人甚至每天都会有一些小的消费（抽烟、饮料、零食、等等），姑且，总共我们就算一周3个小时吧；</li>
+<li>走亲访友，相信每个人每个月至少得有，一次从头到尾怎么都要4个小时以上的时间，而如果是出远门的，甚至会更多，姑且算作一个月15个小时吧，平均下来一天0.5小时，一周3.5小时。</li>
+</ul>
+
+<p>
+规划排程：1小时10分钟
+</p>
+<ul class="org-ul">
+<li>对生活中的事务，如果多或复杂的时候，总是要做一些规划的，日常我们处理的事务太多了，少算一些，假设一天就10分钟吧（实际远远不止），一周也要70分钟。</li>
+</ul>
+
+<p>
+意料外：1小时45分钟
+最后，作业、加班、客户、小孩生病，这些不想发生的事情，没有计算到的事情，相信大多数人都会经历吧，就算15分钟，很少了，一周也要105分钟。
+</p>
+
+<p>
+实际上，相信大多数人，远远不止于此，然而，所剩太少了，还是到此为止吧。
+</p>
+
+<p>
+——一周还剩：3320-1965=1355分钟
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16"><span class="section-number-3">1.5</span> 5 答案</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+<b>没错，按照这样的方式计算，最后的答案就是：我们的一周，只有1355分钟。</b>
+</p>
+
+<p>
+可能有人会想，算了这么多的时间，正常这就是一个人的生活啊，算这些有什么意义？
+</p>
+
+<p>
+首先，我们要注意，以上要做的事情，我都是刻意加上了：必须要做、不得不做、必不可少、不知不觉……之类的修饰，也就是说，这些事情，不是你能控制的。
+</p>
+
+<p>
+再者，回到前面的提问，计算这些时间，是为了逐渐提取出我们真正想要的、能够控制的时间。平时被太多的事务蒙蔽了双眼的我们，以为自己有很多的时间，实际呢？我们的时间，少的可怜。
+</p>
+
+<p>
+显然，显然这样计算是不准确的，有些方面也过于片面，计算的方式过于简单……等等，而且这里所做的工作是相对徒劳的，因为太多的不速之客、意外事件、中断干扰、请人帮忙、帮助别人……等等等等，我都没有计算在内，也不可能全部都想象的到，因为剩下的时间太少了，也姑且只算这么多吧。相信大家肯定还能再加入不少的类似的时间，但是，加入的越多，就意味着下面你似乎能剩下的可控时间越少了。
+</p>
+
+<p>
+不过，至少这样或多或少的，应该能得到比猜想更接近真实结果的答案吧。我们至少能够稍微感知的到，我们真正拥有的时间，很少，很少，在下次计划一个事情的时候（比如我要一个月内看完一本提升自我的书籍），就会更容易仔细的斟酌而非随意决定了。
+</p>
+
+<p>
+所以，至此为止还有1355分钟，不是小时，所以，折合起来我们一周的可控时间至多是：23小时不到，平均3小时多一点/天。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17"><span class="section-number-3">1.6</span> 6 怎样</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+然后在一周仅剩的这23个小时中，我们需要做哪些事情呢？
+</p>
+</div>
+<div id="outline-container-orgheadline18" class="outline-4">
+<h4 id="orgheadline18"><span class="section-number-4">1.6.1</span> 消耗</h4>
+<div class="outline-text-4" id="text-1-6-1">
+<p>
+首先，还得承认，我们倾向于享受生活，一切都是为了生活，所以有类似如下的活动。
+</p>
+
+<p>
+姑且称作“娱乐休闲”吧。很多类型，朋友、亲人、同事、同学，旅游、游戏、上网、户内外活动、商场购物等等，究竟喜欢花费多久是因人而异的。
+</p>
+
+<p>
+举个简单的例子：
+</p>
+<ul class="org-ul">
+<li>比如每个周末都会出去散步、或者电视、小说等等，这些活动，每周都有而且不止一次，每次不止1个小时，算2小时吧。</li>
+<li>时常公司还会有些聚会活动，陪家人看看电影电视，休闲娱乐……每次都不会少于2-3个小时，即便每个月只有两次那每周也得有至少1个小时的时间预留给它们。</li>
+<li>相信每个人不可能一周不上网，甚至每天上网的时间不止半个小时……就算3个小时吧。</li>
+</ul>
+
+<p>
+实际远远不止，但是，少算一些，暂时先这样吧，因为时间还剩：23-2-1-3=17小时，只剩下平均每天2个多小时了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline19" class="outline-4">
+<h4 id="orgheadline19"><span class="section-number-4">1.6.2</span> 积累</h4>
+<div class="outline-text-4" id="text-1-6-2">
+<p>
+其次，享受生活，必然是在一定物质、非物质的积累基础之上。
+</p>
+
+<p>
+有些人喜欢进取，这类活动安排的就多；反之，有些人可能完全没有这方面的安排。
+</p>
+
+<p>
+姑且将这些活动，分为三个方面：
+</p>
+<ul class="org-ul">
+<li>个人管理</li>
+<li>学习进修</li>
+<li>事业方面</li>
+</ul>
+
+<p>
+实际也远远不止，但是，还是少列出一些，因为时间不多了。一天2个多小时，一周17个小时的时间内，你要进行这些的事情，以保证生活正常进行。
+</p>
+
+<p>
+那么，剩下的这些时间中，该怎么分配呢？
+</p>
+</div>
+</div>
+</div>
+</div>
+<br>
+<div id="mypostamble" align="right" style="float:right" class="status">
+    <table> <tbody> 
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Author</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">QuietHeart</td>	  
+	</tr>
+	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Email</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">
+	    <a href="mailto:quiet_heart000@126.com" target="_blank" rel="noopener">quiet_heart000@126.com</a>
+	  </td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Date</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2019-02-19 二]</td>
+	  
+	</tr>
+    	<tr>
+	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
+	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2019-05-05 日 14:04:02></2019-05-05></td>
+	</tr>
+    </tbody></table>
+</div>
+<br>
+
+
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>

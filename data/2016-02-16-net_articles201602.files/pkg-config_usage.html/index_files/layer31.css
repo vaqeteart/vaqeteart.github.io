@@ -1,0 +1,20 @@
+@charset "utf-8";
+/* Effective stylesheet produced by snapshot save */
+.godreply { position: relative; width: 308px; background: none repeat scroll 0% 0% rgb(255, 255, 255); font-family: "Microsoft YaHei","Helvetica Neue",SimSun; }
+.godreply .btn { border: 1px solid rgb(226, 226, 226); width: 56px; height: 56px; background: url("btn.png") no-repeat scroll center center rgb(255, 255, 255); cursor: pointer; position: absolute; right: -57px; top: 0px; }
+.godreply .btn span { display: block; width: 56px; height: 56px; line-height: 56px; color: rgb(153, 153, 153); font-size: 16px; text-align: center; background: none repeat scroll 0% 0% rgb(255, 255, 255); }
+.godreply .reply_con { border: 1px solid rgb(226, 226, 226); padding: 0px 2px 15px 10px; }
+.godreply .txt { height: 38px; line-height: 38px; color: rgb(102, 102, 102); border-bottom: 1px dashed rgb(226, 226, 226); margin-right: 8px; font-size: 14px; }
+.godreply .txt span { color: rgb(245, 132, 20); }
+.godreply .reply_pic_s { overflow: hidden; }
+.godreply .reply_pic_s li { width: 86px; height: 38px; border: 2px solid rgb(254, 219, 51); background: none repeat scroll 0% 0% rgb(254, 219, 51); margin: 10px 8px 0px 0px; float: left; cursor: pointer; }
+.godreply .reply_pic_s li img { width: 86px; height: 38px; display: block; }
+.godreply_show { width: 480px; height: 370px; background: url("urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/godreply/bg.png") repeat scroll 0% 0% transparent; text-align: center; position: relative; font-family: "Microsoft YaHei","Helvetica Neue",SimSun; }
+.godreply_show .btn_group { text-align: center; }
+.godreply_show .reply_pic_l img { margin: 40px auto 9px; }
+.godreply_show .jgimg { position: absolute; top: 60px; left: 40px; }
+.godreply_show .jgimg .txt { font-size: 20px; color: rgb(0, 0, 0); }
+.godreply_show .btn_group a { width: 90px; height: 36px; line-height: 36px; text-align: center; display: inline-block; font-size: 16px; margin: 0px 10px; color: rgb(255, 255, 255); }
+.godreply_show .btn_group a:hover { text-decoration: none; }
+.godreply_show .btn_group .a1 { background: url("urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/godreply/btn1.png") no-repeat scroll 0% 0% transparent; }
+.godreply_show .btn_group .a2 { background: url("urn:not-loaded:http://simg.sinajs.cn/blog7style/images/common/godreply/btn2.png") no-repeat scroll 0% 0% transparent; }

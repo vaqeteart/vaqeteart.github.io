@@ -1,0 +1,115 @@
+body {
+    /*background:
+      url('/assets/images/bg7.jpg');*/
+    /*background-color: #C7EDCC;*/
+    background-color: #000000;
+    /*background-size: cover;*/
+    background-size: repeat;
+    /*color: #000000;*/
+    color: #00FF00;
+    font-family: Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+    height: 100%;
+    line-height: 27px;
+
+    /*disable copy
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+    */
+}
+
+table.container {
+    table-layout: fixed;
+    /*height: 100%;*/
+    width: 100%;
+    min-height: 1000px;
+    position: relative;
+    /*    margin: 0px 0px;*/
+    padding: 0px 5px;
+}
+
+table.tr_page_nav {
+    vertical-align: bottom;
+}
+
+table.tr_page_content {
+    vertical-align: top;
+}
+
+table.tr_page_comment {
+    vertical-align: top;
+}
+
+header {
+    height: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.header1 {
+    text-align: center;
+}
+
+aside {
+    width: 100%;
+    font-size: 100%;
+    /*vertical-align: top;*/
+}
+
+ul.tag_ul {
+    height: 90%;
+}
+
+hr {
+    color: 987cb9;
+}
+
+textarea {
+    overflow-x: auto;
+}
+
+
+a {
+    color: #C7EDCC;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    filter: alpha(opacity=30);
+    /* ie 有效*/
+    -moz-opacity: 0.3;
+    /* Firefox  有效*/
+    opacity: 0.3;
+    /* 通用，其他浏览器  有效*/
+}
+
+#topbtn {
+    color: #00FF00;
+    border-style: solid;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 0px;
+    float: right;
+    width: 15px;
+    position: fixed;
+    right: 7px;
+    top: 2em;
+}
+
+#bottombtn {
+    color: #00FF00;
+    border-style: solid;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    float: right;
+    width: 15px;
+    position: fixed;
+    right: 7px;
+    bottom: 0em;
+}
