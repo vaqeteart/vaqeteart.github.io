@@ -1,0 +1,13 @@
+/* Effective stylesheet produced by snapshot save */
+html { color: rgb(0, 0, 0); background-color: transparent; }
+blockquote, body, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, td, textarea, th, ul { margin: 0px; padding: 0px; }
+fieldset, img { border: 0px none; }
+q::after, q::before { content: ""; }
+body { margin: 0px; padding: 0px; }
+.bd-logo, .bd-logo4, .feed-logo { text-decoration: none; cursor: pointer; display: none; overflow: hidden; position: absolute; bottom: 0px; right: 0px; z-index: 2147483647; }
+.bd-logo { height: 16px; width: 16px; right: 30px; background: transparent url("urn:not-loaded:https://cpro.baidustatic.com/cpro/ui/noexpire/css/2.1.5/img/pc-logo_1x.png") no-repeat scroll 0px 0px / cover ; }
+.bd-logo:hover { width: 52px; height: 16px; right: 30px; background: transparent url("urn:not-loaded:https://cpro.baidustatic.com/cpro/ui/noexpire/css/2.1.5/img/pc-logo-marketing_1x.png") no-repeat scroll left top / cover ; }
+.cf::after, .cf::before { content: " "; display: table; }
+.cf::after { clear: both; }
+.bd-adIcon { width: 30px; height: 16px; background: transparent url("pc-adIcon_1x.png") no-repeat scroll left top / cover ; }
+.bd-adIcon, .mob-bd-adIcon, .feed-adIcon { position: absolute; right: 0px; bottom: 0px; overflow: hidden; z-index: 2147483647; text-decoration: none; }

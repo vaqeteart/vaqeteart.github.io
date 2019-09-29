@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<RDF:RDF xmlns:MAF="http://maf.mozdev.org/metadata/rdf#"
+         xmlns:NC="http://home.netscape.com/NC-rdf#"
+         xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <RDF:Description RDF:about="urn:root">
+    <MAF:originalurl RDF:resource="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html"/>
+    <MAF:title RDF:resource="数字签名是什么？ - 阮一峰的网络日志"/>
+    <MAF:archivetime RDF:resource="Mon, 11 Dec 2017 12:15:33 +0800"/>
+    <MAF:indexfilename RDF:resource="index.html"/>
+    <MAF:charset RDF:resource="UTF-8"/>
+  </RDF:Description>
+</RDF:RDF>

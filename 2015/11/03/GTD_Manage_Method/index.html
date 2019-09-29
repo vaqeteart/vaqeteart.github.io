@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="/css/partial/more.css">
 <link rel="stylesheet" href="/css/partial/footer.css">
 <link rel="stylesheet" href="/css/post.css">
+<link rel="stylesheet" href="/css/orgmode/hexo_orgmode_style.css">
 
 
 <!--javascript-->
@@ -30,8 +31,8 @@
   <body>
     <main class="main">
       <table class="container">
-    <tbody>
-        <tr>
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
             <script src="js/nav.js"></script>
 <table class="navbar">
 	<tbody>
@@ -66,7 +67,7 @@ var category_info = getCategoriesInfo();
 -->
 
 					
-					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="/categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(47)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="/categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(5)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="/categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="/categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="/categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="/categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="/categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="/categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="/categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="/categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="/categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(2)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="/categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="/categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(10)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="/categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="/categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="/categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="/categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(9)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="/categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="/categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="/categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(1)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="/categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="/categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="/categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(6)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="/categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(2)</span></a></li><li id="temp" class="categories_tree_item"><a href="/categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="/categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="/categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(56)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="/categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(6)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="/categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="/categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="/categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="/categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="/categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="/categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="/categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="/categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="/categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(3)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="/categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="/categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="/categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="/categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="/categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="/categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="/categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="/categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="/categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="/categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="/categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="/categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="/categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="/categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="/categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
 				</div>
 			</th>
 
@@ -75,7 +76,7 @@ var category_info = getCategoriesInfo();
 			<th class="navitm">
 				<a href="/tags">标签</a>
 				<div id="tag_menus" class="second">
-					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/gtd-done/">gtd_done</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gtd-next/">gtd_next</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/life/">life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/others/">others</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/study/">study</a><span class="tag-list-count">10</span></li></ul>
+					<ul class="tag-list"></ul>
 				</div>
 			</th>
 
@@ -138,159 +139,9 @@ var category_info = getCategoriesInfo();
                     </h1>
                     <hr id="title_line">
                     <div>
-                        <style type="text/css">
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #0c0;
-    box-shadow: 1px 1px 1px #0e0;
-    padding: 8pt;
-    font-family: italic monospace;
-    color: #C7EDCC;
-    background-color: #111111;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: black;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-    code {
-        border:groove #555555;
-	border-width:thin;
-        background-color: #111111;
-	color: #C7EDCC;
-    }
-
-
-#table-of-contents {
-    font-size: 9pt;
-    position: fixed;
-    right: 10px;
-    top: 14em;
-    margin:0;
-    padding:0;
-    border-width:1px;
-    border-style:solid;
-    background: #000000;
-    -webkit-box-shadow: 0 0 1em #777777;
-    -moz-box-shadow: 0 0 1em #777777;
-    -webkit-border-bottom-left-radius: 5px;
-    -moz-border-radius-bottomleft: 5px;
-    text-align: right;
-    /* ensure doesn't flow off the screen when expanded */
-    max-height: 60%;
-    overflow: auto; 
-    z-index: 200;
-}
-
-#table-of-contents h2 {
-    font-size: 9pt;
-    max-width: 8em;
-    font-weight: normal;
-    padding-left: 0.5em;
-    padding-top: 0.05em;
-    padding-bottom: 0.05em; 
-}
-
-#table-of-contents ul {
-    margin-left: 14pt; 
-    margin-bottom: 10pt;
-    padding: 0
-}
-
-#table-of-contents li {
-    padding: 0;
-    margin: 1px;
-    list-style: none;
-}
-
-#table-of-contents ul>:first-child {
-    color: blue;
-}
-
-#table-of-contents #text-table-of-contents {
-    display: none;
-    text-align: left;
-}
-
-#table-of-contents:hover #text-table-of-contents {
-    display: block;
-    padding: 0.5em;
-    margin-top: -1.5em; 
-}
-
-</style>
-
-
+                        
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#orgheadline1">1. 前言</a></li>
@@ -388,27 +239,40 @@ var category_info = getCategoriesInfo();
 <li><a href="#orgheadline52">7.5.2. 实现举例</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline53">7.6. 杂乱</a>
+<li><a href="#orgheadline53">7.6. 使用GTD方式管理网址收藏</a>
 <ul>
-<li><a href="#orgheadline54">7.6.1. 任务状态</a></li>
-<li><a href="#orgheadline55">7.6.2. 任务属性</a></li>
-<li><a href="#orgheadline56">7.6.3. 任务性质</a></li>
-<li><a href="#orgheadline57">7.6.4. 优先级划分</a></li>
-<li><a href="#orgheadline58">7.6.5. 劳逸结合</a></li>
-<li><a href="#orgheadline59">7.6.6. 回顾的解释</a></li>
-<li><a href="#orgheadline60">7.6.7. 管理回顾的经验</a></li>
-<li><a href="#orgheadline61">7.6.8. 关于参考</a></li>
-<li><a href="#orgheadline62">7.6.9. 如何处理“项目分类”与“状态分类”实现的冲突</a></li>
-<li><a href="#orgheadline63">7.6.10. 自我管理的演化过程</a></li>
+<li><a href="#orgheadline54">7.6.1. 思路</a></li>
+<li><a href="#orgheadline55">7.6.2. 实现方式</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline64">7.7. 参考资料</a></li>
+<li><a href="#orgheadline56">7.7. 杂乱</a>
+<ul>
+<li><a href="#orgheadline57">7.7.1. 任务状态</a></li>
+<li><a href="#orgheadline58">7.7.2. 任务属性</a></li>
+<li><a href="#orgheadline59">7.7.3. 任务性质</a></li>
+<li><a href="#orgheadline60">7.7.4. 优先级划分</a></li>
+<li><a href="#orgheadline61">7.7.5. 劳逸结合</a></li>
+<li><a href="#orgheadline62">7.7.6. 回顾的解释</a></li>
+<li><a href="#orgheadline63">7.7.7. 管理回顾的经验</a></li>
+<li><a href="#orgheadline64">7.7.8. 关于参考</a></li>
+<li><a href="#orgheadline65">7.7.9. 如何处理“项目分类”与“状态分类”实现的冲突</a></li>
+<li><a href="#orgheadline66">7.7.10. 自我管理的演化过程</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline65">8. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[%]</code> <code>[/]</code></a>
+<li><a href="#orgheadline67">7.8. 留给未来的自己</a></li>
+<li><a href="#orgheadline68">7.9. 参考资料</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline69">8. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[0%]</code> <code>[0/4]</code></a>
 <ul>
-<li><a href="#orgheadline66">8.1. <span class="todo nilNEXT">NEXT</span> 如何通过orgMobile进行管理？</a></li>
-<li><a href="#orgheadline67">8.2. <span class="todo nilINBOX">INBOX</span> 回顾的内容，没有完成的可以用链接的方式将任务与回顾相互引用，任务完成之后，可以考虑将其直接集成到回顾中，不用链接，防止过于分散。</a></li>
+<li><a href="#orgheadline70">8.1. <span class="todo nilNEXT">NEXT</span> 如何通过orgMobile进行管理？</a></li>
+<li><a href="#orgheadline71">8.2. <span class="todo nilINBOX">INBOX</span> 回顾与完成/没完成任务之间的引用</a></li>
+<li><a href="#orgheadline72">8.3. <span class="todo nilNEXT">NEXT</span> 六个高度、5w1h=时间地点任务，起因经过结果</a></li>
+<li><a href="#orgheadline73">8.4. <span class="todo nilNEXT">NEXT</span> 任务的状态、场景、和分类、参考资料等。</a>
+<ul>
+<li><a href="#orgheadline74">8.4.1. 分类、场景、标签、状态；待办、提醒、日程、任务、记事</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -731,56 +595,56 @@ GTD不是为了完成任务，而是为了减轻压力，使用GTD还能辅助�
 除了基本的GTD功能，对于特定工作环境，一些高级属性借助工具扩展，可能会有助提升效率。如今日待办、或者提醒，场景或任务跟踪等等，在一些工具中有特定的表示和组织方式，设置好相关属性后，任务会自动迁移、或者提醒等等，避免了手动设置。尽管几乎不用进行手动设置了，但是想要保持自己GTD的有序和获取更多的执行动力，还是要经常回顾。可以借助相关的GTD管理工具，这里介绍几个：
 </p>
 </div>
-<div id="outline-container-orgheadline68" class="outline-5">
-<h5 id="orgheadline68"><span class="section-number-5">6.1.9.1</span> DGT GTD：</h5>
+<div id="outline-container-orgheadline75" class="outline-5">
+<h5 id="orgheadline75"><span class="section-number-5">6.1.9.1</span> DGT GTD：</h5>
 <div class="outline-text-5" id="text-6-1-9-1">
 <p>
 是安卓系统下非常全面的GTD工具，操作便捷，记录迅速，自定制功能丰富，支持备份，自定义同步等，只是刚开始需要稍微熟悉一下其操作的方式。简单说，两个特点：“丑”（不是很丑）、“好用”（非常好用）。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline69" class="outline-5">
-<h5 id="orgheadline69"><span class="section-number-5">6.1.9.2</span> Doit.im：</h5>
+<div id="outline-container-orgheadline76" class="outline-5">
+<h5 id="orgheadline76"><span class="section-number-5">6.1.9.2</span> Doit.im：</h5>
 <div class="outline-text-5" id="text-6-1-9-2">
 <p>
 支持多平台，云同步，界面简洁便于初学者使用和理解GTD的工作流程，但是有些功能需要收费才能实现。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline70" class="outline-5">
-<h5 id="orgheadline70"><span class="section-number-5">6.1.9.3</span> Omnifocus：</h5>
+<div id="outline-container-orgheadline77" class="outline-5">
+<h5 id="orgheadline77"><span class="section-number-5">6.1.9.3</span> Omnifocus：</h5>
 <div class="outline-text-5" id="text-6-1-9-3">
 <p>
 没有亲自用过，根据许多文章中的介绍，可以知道这是一款重量级的华丽版的IOS下的GTD管理工具，入门门槛高，但是功能极其强大。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline71" class="outline-5">
-<h5 id="orgheadline71"><span class="section-number-5">6.1.9.4</span> 2Do：</h5>
+<div id="outline-container-orgheadline78" class="outline-5">
+<h5 id="orgheadline78"><span class="section-number-5">6.1.9.4</span> 2Do：</h5>
 <div class="outline-text-5" id="text-6-1-9-4">
 <p>
 也是一款IOS下好用的GTD管理工具，功能强大，入门相对简单。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline72" class="outline-5">
-<h5 id="orgheadline72"><span class="section-number-5">6.1.9.5</span> Wunderlist(奇妙清单)：</h5>
+<div id="outline-container-orgheadline79" class="outline-5">
+<h5 id="orgheadline79"><span class="section-number-5">6.1.9.5</span> Wunderlist(奇妙清单)：</h5>
 <div class="outline-text-5" id="text-6-1-9-5">
 <p>
 简洁的界面，不过在国内同步功能比较慢。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline73" class="outline-5">
-<h5 id="orgheadline73"><span class="section-number-5">6.1.9.6</span> toodledo</h5>
+<div id="outline-container-orgheadline80" class="outline-5">
+<h5 id="orgheadline80"><span class="section-number-5">6.1.9.6</span> toodledo</h5>
 <div class="outline-text-5" id="text-6-1-9-6">
 <p>
 IOS下一个比较流行的GTD工具。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline74" class="outline-5">
-<h5 id="orgheadline74"><span class="section-number-5">6.1.9.7</span> Orgmode：</h5>
+<div id="outline-container-orgheadline81" class="outline-5">
+<h5 id="orgheadline81"><span class="section-number-5">6.1.9.7</span> Orgmode：</h5>
 <div class="outline-text-5" id="text-6-1-9-7">
 <p>
 这个其实是基于文本的标记语言，是Emacs的一款著名的编辑模式插件，但是功能非常强大，目前已经在许多地方支持（如vim、github、IOS、Android应用上等）。它的初衷是项目管理相关的目的，其中就包括能够实现GTD管理的相关内容，但是功能不仅限此，它也可以用来记录笔记，记录的笔记基于大纲模式，有一定的所见即所得功能，但是更强大的是“所想即所得”的特性，是word远不能及的。这个工具/语言不限于平台，只需遵循orgmode语法即可，配合Emacs进行使用会使得效率极高、扩展性几近无限。Orgmode能够完成的功能也会随掌握程度的提升而丰富：如果简单掌握，那么Orgmode属于轻量级标记语言中的一种；但是如果需要更多的功能（如导出发布为各种格式），则需要进一步的学习。关键的是，Orgmode文件是纯文本格式，只需纯文本格式的内容便能实现它的全部功能。
@@ -945,15 +809,15 @@ IOS下一个比较流行的GTD工具。
 例如GTD中，有一条已经完成的任务（单词任务），该任务有对应的项目回顾（单词任务），并且这条任务已经整理到内容管理系统中的某个位置，则可采用类似如下方式处理（实际只需在相应的“已处理”任务中添加整理至何处的信息）。
 </p>
 </div>
-<div id="outline-container-orgheadline78" class="outline-5">
-<h5 id="orgheadline78"><span class="section-number-5">7.2.2.1</span> GTD系统项目回顾中对应的条目</h5>
+<div id="outline-container-orgheadline85" class="outline-5">
+<h5 id="orgheadline85"><span class="section-number-5">7.2.2.1</span> GTD系统项目回顾中对应的条目</h5>
 <div class="outline-text-5" id="text-7-2-2-1">
-</div><ol class="org-ol"><li><a id="orgheadline75"></a>路径<br><div class="outline-text-6" id="text-7-2-2-1-1">
+</div><ol class="org-ol"><li><a id="orgheadline82"></a>路径<br><div class="outline-text-6" id="text-7-2-2-1-1">
 <p>
 回顾条目路径为： <code>我的任务/GTD/#回顾/英语学习回顾</code>  
 </p>
 </div></li>
-<li><a id="orgheadline76"></a>内容：<br><div class="outline-text-6" id="text-7-2-2-1-2">
+<li><a id="orgheadline83"></a>内容：<br><div class="outline-text-6" id="text-7-2-2-1-2">
 <p>
 回顾条目内容如下:
 </p>
@@ -967,23 +831,23 @@ xxxxxxx
 </pre>
 </div></li>
 
-<li><a id="orgheadline77"></a>注意：<br><div class="outline-text-6" id="text-7-2-2-1-3">
+<li><a id="orgheadline84"></a>注意：<br><div class="outline-text-6" id="text-7-2-2-1-3">
 <p>
 列出的任务可以是链接，但是显示的名字要与对应的任务名一致，便于在不支持链接的笔记系统中查找
 </p>
 </div></li></ol>
 </div>
 
-<div id="outline-container-orgheadline82" class="outline-5">
-<h5 id="orgheadline82"><span class="section-number-5">7.2.2.2</span> GTD系统“已处理”状态中对应的任务：</h5>
+<div id="outline-container-orgheadline89" class="outline-5">
+<h5 id="orgheadline89"><span class="section-number-5">7.2.2.2</span> GTD系统“已处理”状态中对应的任务：</h5>
 <div class="outline-text-5" id="text-7-2-2-2">
-</div><ol class="org-ol"><li><a id="orgheadline79"></a>路径：<br><div class="outline-text-6" id="text-7-2-2-2-1">
+</div><ol class="org-ol"><li><a id="orgheadline86"></a>路径：<br><div class="outline-text-6" id="text-7-2-2-2-1">
 <p>
 任务条目路径为： <code>我的任务/GTD/已处理/单词任务</code>
 </p>
 </div></li>
 
-<li><a id="orgheadline80"></a>内容：<br><div class="outline-text-6" id="text-7-2-2-2-2">
+<li><a id="orgheadline87"></a>内容：<br><div class="outline-text-6" id="text-7-2-2-2-2">
 <p>
 任务条目内容如下：
 </p>
@@ -995,23 +859,23 @@ XXXXXX
 </pre>
 </div></li>
 
-<li><a id="orgheadline81"></a>注意：<br><div class="outline-text-6" id="text-7-2-2-2-3">
+<li><a id="orgheadline88"></a>注意：<br><div class="outline-text-6" id="text-7-2-2-2-3">
 <p>
 被整理至内容管理系统中的任务，整理之时，也在任务顶部追加“已整理至xxxx位置”之类的字样，最好名字也和实际笔记的名字一致，便于日后查找。
 </p>
 </div></li></ol>
 </div>
 
-<div id="outline-container-orgheadline86" class="outline-5">
-<h5 id="orgheadline86"><span class="section-number-5">7.2.2.3</span> 内容管理系统中对应的内容：</h5>
+<div id="outline-container-orgheadline93" class="outline-5">
+<h5 id="orgheadline93"><span class="section-number-5">7.2.2.3</span> 内容管理系统中对应的内容：</h5>
 <div class="outline-text-5" id="text-7-2-2-3">
-</div><ol class="org-ol"><li><a id="orgheadline83"></a>路径：<br><div class="outline-text-6" id="text-7-2-2-3-1">
+</div><ol class="org-ol"><li><a id="orgheadline90"></a>路径：<br><div class="outline-text-6" id="text-7-2-2-3-1">
 <p>
 笔记路径为： <code>学习/英语/单词任务</code>
 </p>
 </div></li>
 
-<li><a id="orgheadline84"></a>内容：<br><div class="outline-text-6" id="text-7-2-2-3-2">
+<li><a id="orgheadline91"></a>内容：<br><div class="outline-text-6" id="text-7-2-2-3-2">
 <p>
 笔记内容如下：
 </p>
@@ -1022,7 +886,7 @@ XXXXXX
 </pre>
 </div></li>
 
-<li><a id="orgheadline85"></a>注意：<br><div class="outline-text-6" id="text-7-2-2-3-3">
+<li><a id="orgheadline92"></a>注意：<br><div class="outline-text-6" id="text-7-2-2-3-3">
 <p>
 在内容管理系统中，保留回顾链接，可以链接至GTD系统中的对应回顾条目。
 </p>
@@ -1236,16 +1100,57 @@ $ls -p
 </div>
 
 <div id="outline-container-orgheadline53" class="outline-3">
-<h3 id="orgheadline53"><span class="section-number-3">7.6</span> 杂乱</h3>
+<h3 id="orgheadline53"><span class="section-number-3">7.6</span> 使用GTD方式管理网址收藏</h3>
 <div class="outline-text-3" id="text-7-6">
+<p>
+有时我们需要有一个类似稍后阅读的需求，比如，看到某一个网址，把它添加到收藏夹中，将来再浏览。这个和稍后阅读有些类似，但是同时也具有收藏网址的目的。
+</p>
+</div>
+<div id="outline-container-orgheadline54" class="outline-4">
+<h4 id="orgheadline54"><span class="section-number-4">7.6.1</span> 思路</h4>
+<div class="outline-text-4" id="text-7-6-1">
+<p>
+类似前面讲述的GTD标签的方式，我们可以创建一些GTD分类，将需要处理（稍后阅读、或者收藏到指定目录）的网址流经这些分类最终归并到其他的合适的普通分类中。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline55" class="outline-4">
+<h4 id="orgheadline55"><span class="section-number-4">7.6.2</span> 实现方式</h4>
+<div class="outline-text-4" id="text-7-6-2">
+<p>
+在你常见的收藏夹中，这里以firefox的书签为例。firefox书签支持层级目录。
+</p>
+
+<p>
+首先创建好你的普通书签分类（因人而异），以及一个 <code>gtd</code> 的书签分类。
+</p>
+
+<p>
+在gtd分类中建立各种gtd分类，例如： <code>1_inbox</code>, <code>2_next</code>, <code>3_later</code>, <code>4_wait</code>, <code>5_maybe_fure</code>, <code>6_done</code>, <code>7_cancel</code>.
+</p>
+
+<p>
+然后，在想要系统性浏览阅读网站的时候，把它添加到合适的 <code>gtd</code> 目录中. 
+</p>
+
+<p>
+阅读完毕后，如需收藏网址，则在 <code>6_done</code> 的gtd分类中将其转移到普通书签分类，完成网址收藏。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline56" class="outline-3">
+<h3 id="orgheadline56"><span class="section-number-3">7.7</span> 杂乱</h3>
+<div class="outline-text-3" id="text-7-7">
 <p>
 任何经验知识等叙述到一定程度，总有一些无法具体归类的杂项内容，哪怕是某方面知识体系中的一小部分，也很难一下子把所知以及真正的内容全部完美的表达出来。本文也是如此，所以在这里列出暂时堆积一些无法放置的，可能有待进一步整理也可能不会再整理的内容。
 </p>
 </div>
 
-<div id="outline-container-orgheadline54" class="outline-4">
-<h4 id="orgheadline54"><span class="section-number-4">7.6.1</span> 任务状态</h4>
-<div class="outline-text-4" id="text-7-6-1">
+<div id="outline-container-orgheadline57" class="outline-4">
+<h4 id="orgheadline57"><span class="section-number-4">7.7.1</span> 任务状态</h4>
+<div class="outline-text-4" id="text-7-7-1">
 <p>
 GTD系统不是一成不变的，但是大多数GTD系统，应当具有如下几个类似的状态：收集、下一步、将来也许、已完成。
 </p>
@@ -1258,9 +1163,9 @@ GTD系统不是一成不变的，但是大多数GTD系统，应当具有如下�
 </div>
 </div>
 
-<div id="outline-container-orgheadline55" class="outline-4">
-<h4 id="orgheadline55"><span class="section-number-4">7.6.2</span> 任务属性</h4>
-<div class="outline-text-4" id="text-7-6-2">
+<div id="outline-container-orgheadline58" class="outline-4">
+<h4 id="orgheadline58"><span class="section-number-4">7.7.2</span> 任务属性</h4>
+<div class="outline-text-4" id="text-7-7-2">
 <p>
 除了前面的任务状态，根据所处环境、工具与方法的不同，GTD任务还可能具有的属性也有所不同。比较基本的有任务所属的“任务名称”、“项目分类”；有时候根据情况还需要其他扩展的属性如：“场景”、“开始/结束时间”、“是否重复”、“提醒”、“备注”、“优先级”等等。
 </p>
@@ -1279,9 +1184,9 @@ GTD系统不是一成不变的，但是大多数GTD系统，应当具有如下�
 </div>
 </div>
 
-<div id="outline-container-orgheadline56" class="outline-4">
-<h4 id="orgheadline56"><span class="section-number-4">7.6.3</span> 任务性质</h4>
-<div class="outline-text-4" id="text-7-6-3">
+<div id="outline-container-orgheadline59" class="outline-4">
+<h4 id="orgheadline59"><span class="section-number-4">7.7.3</span> 任务性质</h4>
+<div class="outline-text-4" id="text-7-7-3">
 <p>
 如果对任务，需要时间方面的属性进行辅助管理，这里给出一些经验性的建议：
 </p>
@@ -1301,9 +1206,9 @@ GTD系统不是一成不变的，但是大多数GTD系统，应当具有如下�
 </div>
 </div>
 
-<div id="outline-container-orgheadline57" class="outline-4">
-<h4 id="orgheadline57"><span class="section-number-4">7.6.4</span> 优先级划分</h4>
-<div class="outline-text-4" id="text-7-6-4">
+<div id="outline-container-orgheadline60" class="outline-4">
+<h4 id="orgheadline60"><span class="section-number-4">7.7.4</span> 优先级划分</h4>
+<div class="outline-text-4" id="text-7-7-4">
 <p>
 任务都有一个优先级的问题，有一个为任务优先级分类的方式：四象限法则。该方法不具体介绍，大致是将任务按照“紧急度”与“重要度”划分为四个象限：
 </p>
@@ -1343,9 +1248,9 @@ GTD系统不是一成不变的，但是大多数GTD系统，应当具有如下�
 </div>
 </div>
 
-<div id="outline-container-orgheadline58" class="outline-4">
-<h4 id="orgheadline58"><span class="section-number-4">7.6.5</span> 劳逸结合</h4>
-<div class="outline-text-4" id="text-7-6-5">
+<div id="outline-container-orgheadline61" class="outline-4">
+<h4 id="orgheadline61"><span class="section-number-4">7.7.5</span> 劳逸结合</h4>
+<div class="outline-text-4" id="text-7-7-5">
 <p>
 划分任务状态很大一部分也是为了集中我们的精力，将处理任务时精力集中在下一步，回顾时精力集中在任务的划分等等。而真正在处理任务之时，精力不一定能保证一直集中；集中过久又可能会导致之后的处理效率低下。所以可以考虑番茄工作法来改善这样的状况。
 </p>
@@ -1369,9 +1274,9 @@ GTD系统不是一成不变的，但是大多数GTD系统，应当具有如下�
 </div>
 </div>
 
-<div id="outline-container-orgheadline59" class="outline-4">
-<h4 id="orgheadline59"><span class="section-number-4">7.6.6</span> 回顾的解释</h4>
-<div class="outline-text-4" id="text-7-6-6">
+<div id="outline-container-orgheadline62" class="outline-4">
+<h4 id="orgheadline62"><span class="section-number-4">7.7.6</span> 回顾的解释</h4>
+<div class="outline-text-4" id="text-7-7-6">
 <p>
 如果某项任务比较复杂，处理完毕后，最好能有一个汇总的文档，整理期间处理的情况，类似索引。便于以后参考引用，以及追加索引处理更新情况，也可能没有用处，这就是一条回顾，也是项目。
 </p>
@@ -1382,9 +1287,9 @@ GTD系统不是一成不变的，但是大多数GTD系统，应当具有如下�
 </div>
 </div>
 
-<div id="outline-container-orgheadline60" class="outline-4">
-<h4 id="orgheadline60"><span class="section-number-4">7.6.7</span> 管理回顾的经验</h4>
-<div class="outline-text-4" id="text-7-6-7">
+<div id="outline-container-orgheadline63" class="outline-4">
+<h4 id="orgheadline63"><span class="section-number-4">7.7.7</span> 管理回顾的经验</h4>
+<div class="outline-text-4" id="text-7-7-7">
 <p>
 这里有些，可以借鉴，不是必须的：
 </p>
@@ -1404,9 +1309,9 @@ GTD系统不是一成不变的，但是大多数GTD系统，应当具有如下�
 </div>
 </div>
 
-<div id="outline-container-orgheadline61" class="outline-4">
-<h4 id="orgheadline61"><span class="section-number-4">7.6.8</span> 关于参考</h4>
-<div class="outline-text-4" id="text-7-6-8">
+<div id="outline-container-orgheadline64" class="outline-4">
+<h4 id="orgheadline64"><span class="section-number-4">7.7.8</span> 关于参考</h4>
+<div class="outline-text-4" id="text-7-7-8">
 <p>
 参考既不是任务，也不是回顾，但是它又处于GTD系统当中。它主要是在回顾，或者处理时不是中间任务性质的半参考文档性质的内容。例如导致接收任务的邮件片段、期间的交互证据、网址文献等等。按理说应该有相关的时间、地点（可以是email地址）、人物、事件（起因/经过/结果）。在目前看来，参考在本文所述的GTD中可以被去掉，归并到已处理分类中，但是也可根据个人需要与喜好单独列出来一个分类用来管理这些内容。
 </p>
@@ -1422,9 +1327,9 @@ GTD系统不是一成不变的，但是大多数GTD系统，应当具有如下�
 </div>
 </div>
 
-<div id="outline-container-orgheadline62" class="outline-4">
-<h4 id="orgheadline62"><span class="section-number-4">7.6.9</span> 如何处理“项目分类”与“状态分类”实现的冲突</h4>
-<div class="outline-text-4" id="text-7-6-9">
+<div id="outline-container-orgheadline65" class="outline-4">
+<h4 id="orgheadline65"><span class="section-number-4">7.7.9</span> 如何处理“项目分类”与“状态分类”实现的冲突</h4>
+<div class="outline-text-4" id="text-7-7-9">
 <p>
 先给出问题，在列出思考实现的过程，最后给出采用当前的方案的原因。
 </p>
@@ -1443,26 +1348,26 @@ GTD系统不是一成不变的，但是大多数GTD系统，应当具有如下�
 </div>
 </div>
 
-<div id="outline-container-orgheadline63" class="outline-4">
-<h4 id="orgheadline63"><span class="section-number-4">7.6.10</span> 自我管理的演化过程</h4>
-<div class="outline-text-4" id="text-7-6-10">
+<div id="outline-container-orgheadline66" class="outline-4">
+<h4 id="orgheadline66"><span class="section-number-4">7.7.10</span> 自我管理的演化过程</h4>
+<div class="outline-text-4" id="text-7-7-10">
 <p>
 随着时间的过去，我们从学校进入到职场，从个人变成了组建的家庭，所处理和面对的事务也变得越来越复杂。如果不做合理规划，工作、生活、学习各个方面会变得越来越糟糕。
 希望能有一个高效的生活方式的我们，可能会经历如下的管理过程阶段，希望能给大家一个参考。
 </p>
 </div>
-<div id="outline-container-orgheadline87" class="outline-5">
-<h5 id="orgheadline87"><span class="section-number-5">7.6.10.1</span> 记事本阶段(笔记本子，或者Windows上的记事本，博客等)</h5>
-<div class="outline-text-5" id="text-7-6-10-1">
+<div id="outline-container-orgheadline94" class="outline-5">
+<h5 id="orgheadline94"><span class="section-number-5">7.7.10.1</span> 记事本阶段(笔记本子，或者Windows上的记事本，博客等)</h5>
+<div class="outline-text-5" id="text-7-7-10-1">
 <p>
 将平时涉及的一切写到一个记事本中，可以是电子版的，或者纸质的，也有时候为分享和方便记录到博客等网络平台中。在随后的讲述中我们会发现，这些内容渐渐变得越来越复杂分散，简单的记录已不再适应。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline88" class="outline-5">
-<h5 id="orgheadline88"><span class="section-number-5">7.6.10.2</span> 待办清单与文档（任何设备、系统上自带的工具）</h5>
-<div class="outline-text-5" id="text-7-6-10-2">
+<div id="outline-container-orgheadline95" class="outline-5">
+<h5 id="orgheadline95"><span class="section-number-5">7.7.10.2</span> 待办清单与文档（任何设备、系统上自带的工具）</h5>
+<div class="outline-text-5" id="text-7-7-10-2">
 <p>
 记事本，可能包含了能够记录的一切，但是其中记录的内容各不相同，而且数据量越来越大，我们真正所需的，其实是在适当的时候将其提取出来，总结起来发现大致有两类事情：
 </p>
@@ -1485,9 +1390,9 @@ GTD系统不是一成不变的，但是大多数GTD系统，应当具有如下�
 </div>
 </div>
 
-<div id="outline-container-orgheadline89" class="outline-5">
-<h5 id="orgheadline89"><span class="section-number-5">7.6.10.3</span> 丰富的待办清单与文档系统(中华万年历与为知笔记)</h5>
-<div class="outline-text-5" id="text-7-6-10-3">
+<div id="outline-container-orgheadline96" class="outline-5">
+<h5 id="orgheadline96"><span class="section-number-5">7.7.10.3</span> 丰富的待办清单与文档系统(中华万年历与为知笔记)</h5>
+<div class="outline-text-5" id="text-7-7-10-3">
 <p>
 随着时间迁移，在待办清单和文档，终于有一个像样的名称，内容管理和行动管理。
 </p>
@@ -1511,9 +1416,9 @@ GTD系统不是一成不变的，但是大多数GTD系统，应当具有如下�
 </div>
 </div>
 
-<div id="outline-container-orgheadline90" class="outline-5">
-<h5 id="orgheadline90"><span class="section-number-5">7.6.10.4</span> 轻重结合(轻量级的系统便签或笔记工具、与为知、中华万年历)</h5>
-<div class="outline-text-5" id="text-7-6-10-4">
+<div id="outline-container-orgheadline97" class="outline-5">
+<h5 id="orgheadline97"><span class="section-number-5">7.7.10.4</span> 轻重结合(轻量级的系统便签或笔记工具、与为知、中华万年历)</h5>
+<div class="outline-text-5" id="text-7-7-10-4">
 <p>
 在管理内容和行动方面的信息的同时，不断寻求新的更强大的工具，最终会感觉到，自己的手机、电脑、越来越慢，访问所需的等待时间往往超过了我们的忍耐限度，为了临时记录一点东西，我们可能会花费1、2分钟的时间启动我们的系统和软件，启动的时间内，我们往往可能已经能够把相应的事务处理完毕了。
 </p>
@@ -1524,28 +1429,28 @@ GTD系统不是一成不变的，但是大多数GTD系统，应当具有如下�
 </div>
 </div>
 
-<div id="outline-container-orgheadline97" class="outline-5">
-<h5 id="orgheadline97"><span class="section-number-5">7.6.10.5</span> 需有体系的信息管理组织方式（GTD与Git）</h5>
-<div class="outline-text-5" id="text-7-6-10-5">
+<div id="outline-container-orgheadline104" class="outline-5">
+<h5 id="orgheadline104"><span class="section-number-5">7.7.10.5</span> 需有体系的信息管理组织方式（GTD与Git）</h5>
+<div class="outline-text-5" id="text-7-7-10-5">
 <p>
 便携性意味着功能的减弱，功能强则会减弱便携性。两者综合起来应用，又会涉及到同步和数据移植行的问题。这时候管理信息已经不是工具方面的问题了，而是方法和存储。
 </p>
 </div>
 
-<ol class="org-ol"><li><a id="orgheadline91"></a>采用的方式：<br><div class="outline-text-6" id="text-7-6-10-5-1">
+<ol class="org-ol"><li><a id="orgheadline98"></a>采用的方式：<br><div class="outline-text-6" id="text-7-7-10-5-1">
 <dl class="org-dl">
 <dt>行动管理方面</dt><dd>方法是GTD方法，为所有任务定义好状态。工具则任意款便携、可移植的工具即可。</dd>
 <dt>内容管理方面</dt><dd>原生文本格式方式增强数据移植性；Git分布式管理增强便携安全与版本控制；用现有大型网站托管资料（如github、bitbucket等等）增强集中与同步性。</dd>
 </dl>
 </div></li>
 
-<li><a id="orgheadline95"></a>数据格式、访问、存储与管理方式<br><div class="outline-text-6" id="text-7-6-10-5-2">
+<li><a id="orgheadline102"></a>数据格式、访问、存储与管理方式<br><div class="outline-text-6" id="text-7-7-10-5-2">
 <p>
 工具可以尽量简单，方法选择适合自己的方法，而数据的格式也是一个问题。如果做过软件开发的人，可能会觉得，这有点类似软件中的MVC方法问题（M是数据模型、V是数据访问视图、C是数据控制方式）。
 </p>
 </div>
 
-<ol class="org-ol"><li><a id="orgheadline92"></a>数据格式-Orgmode<br><div class="outline-text-7" id="text-7-6-10-5-2-1">
+<ol class="org-ol"><li><a id="orgheadline99"></a>数据格式-Orgmode<br><div class="outline-text-7" id="text-7-7-10-5-2-1">
 <p>
 为了便于将来环境的切换，数据存储的格式是一个比较重要的内容。
 </p>
@@ -1563,7 +1468,7 @@ markdown的学习成本很低，相对orgmode更流行，但是若用它写复�
 </dl>
 </div></li>
 
-<li><a id="orgheadline93"></a>访问方式-工具控<br><div class="outline-text-7" id="text-7-6-10-5-2-2">
+<li><a id="orgheadline100"></a>访问方式-工具控<br><div class="outline-text-7" id="text-7-7-10-5-2-2">
 <p>
 总结起来，这个阶段，工具不是重点，Emacs、Vim、记事本、任意一款可以编辑的工具都可做为数据访问的方式。
 </p>
@@ -1578,13 +1483,13 @@ markdown的学习成本很低，相对orgmode更流行，但是若用它写复�
 </dl>
 </div></li>
 
-<li><a id="orgheadline94"></a>管理方式-GTD与分布式版本控制<br><div class="outline-text-7" id="text-7-6-10-5-2-3">
+<li><a id="orgheadline101"></a>管理方式-GTD与分布式版本控制<br><div class="outline-text-7" id="text-7-7-10-5-2-3">
 <p>
 方法才是核心，管理方法往往说起来很简单：GTD管理任务，Git分布式管理内容并版本控制，当然肯定也会有其它的方法或者分布式管理。
 </p>
 </div></li></ol></li>
 
-<li><a id="orgheadline96"></a>总结<br><div class="outline-text-6" id="text-7-6-10-5-3">
+<li><a id="orgheadline103"></a>总结<br><div class="outline-text-6" id="text-7-7-10-5-3">
 <p>
 总之，如果用最直接的方式来描述一个特定的管理方式，目前而言，我采用的方式是：
 </p>
@@ -1600,9 +1505,9 @@ markdown的学习成本很低，相对orgmode更流行，但是若用它写复�
 </div></li></ol>
 </div>
 
-<div id="outline-container-orgheadline98" class="outline-5">
-<h5 id="orgheadline98"><span class="section-number-5">7.6.10.6</span> 其它</h5>
-<div class="outline-text-5" id="text-7-6-10-6">
+<div id="outline-container-orgheadline105" class="outline-5">
+<h5 id="orgheadline105"><span class="section-number-5">7.7.10.6</span> 其它</h5>
+<div class="outline-text-5" id="text-7-7-10-6">
 <p>
 前面的过程，其实总结起来，可能是这个样子的：杂乱的信息-任务管理/内容管理。
 </p>
@@ -1619,10 +1524,31 @@ markdown的学习成本很低，相对orgmode更流行，但是若用它写复�
 </div>
 </div>
 
+<div id="outline-container-orgheadline67" class="outline-3">
+<h3 id="orgheadline67"><span class="section-number-3">7.8</span> 留给未来的自己</h3>
+<div class="outline-text-3" id="text-7-8">
+<ul class="org-ul">
+<li><p>
+<span class="timestamp-wrapper"><span class="timestamp">[2019-04-23 二 17:30] </span></span> 
+</p>
 
-<div id="outline-container-orgheadline64" class="outline-3">
-<h3 id="orgheadline64"><span class="section-number-3">7.7</span> 参考资料</h3>
-<div class="outline-text-3" id="text-7-7">
+<pre class="example">
+这个文章写完至今，已经将近4年了，期间学了不少相关的知识。
+当时觉得自己学了很多，会了很多（毕竟使用GTD的人，还不多），现在一看不过入门的程度。而且还有很多有待完善之处。不过这个文章还是对走在GTD之路上，有价值的。
+
+一言难尽，简单总结几句。
+1. 它会帮你从直观上了解，什么是GTD，以及使用GTD的大致方式。
+2. GTD五大流程：收集、处理、组织整理、回顾、执行。它基本上解决了其中的收集、部分解决了处理（状态方面）
+3. GTD的特点是，你学了一部分，就能开始实践它，在实践中一边完善，要走的路还很长……
+</pre></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline68" class="outline-3">
+<h3 id="orgheadline68"><span class="section-number-3">7.9</span> 参考资料</h3>
+<div class="outline-text-3" id="text-7-9">
 <p>
 一些值得参考的一些文章：
 </p>
@@ -1642,62 +1568,129 @@ markdown的学习成本很低，相对orgmode更流行，但是若用它写复�
 </div>
 </div>
 
-<div id="outline-container-orgheadline65" class="outline-2">
-<h2 id="orgheadline65"><span class="section-number-2">8</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[%]</code> <code>[/]</code></h2>
+<div id="outline-container-orgheadline69" class="outline-2">
+<h2 id="orgheadline69"><span class="section-number-2">8</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[0%]</code> <code>[0/4]</code></h2>
 <div class="outline-text-2" id="text-8">
 <ul class="org-ul">
 <li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-06-12 日 17:16] </span></span> <br>
 wait for all done.</li>
 </ul>
 </div>
-<div id="outline-container-orgheadline66" class="outline-3">
-<h3 id="orgheadline66"><span class="section-number-3">8.1</span> <span class="todo NEXT">NEXT</span> 如何通过orgMobile进行管理？</h3>
+<div id="outline-container-orgheadline70" class="outline-3">
+<h3 id="orgheadline70"><span class="section-number-3">8.1</span> <span class="todo NEXT">NEXT</span> 如何通过orgMobile进行管理？</h3>
 <div class="outline-text-3" id="text-8-1">
 <ul class="org-ul">
 <li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-30 三 09:40]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline67" class="outline-3">
-<h3 id="orgheadline67"><span class="section-number-3">8.2</span> <span class="todo INBOX">INBOX</span> 回顾的内容，没有完成的可以用链接的方式将任务与回顾相互引用，任务完成之后，可以考虑将其直接集成到回顾中，不用链接，防止过于分散。</h3>
+<div id="outline-container-orgheadline71" class="outline-3">
+<h3 id="orgheadline71"><span class="section-number-3">8.2</span> <span class="todo INBOX">INBOX</span> 回顾与完成/没完成任务之间的引用</h3>
 <div class="outline-text-3" id="text-8-2">
 <p>
 Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-05-25 三 10:30]</span></span>
 </p>
 <hr>
+<p>
+回顾的内容，没有完成的可以用链接的方式将任务与回顾相互引用，任务完成之后，可以考虑将其直接集成到回顾中，不用链接，防止过于分散。
+</p>
 
 <p>
 如果过大过复杂的内容，或者没有办法很好的组织的内容，可以用链接的方式对其进行关联。否则就尽量不要使用链接，使用链接的内容，都是没有弄完的内容，弄完之后把链接去掉。
 </p>
 </div>
 </div>
+<div id="outline-container-orgheadline72" class="outline-3">
+<h3 id="orgheadline72"><span class="section-number-3">8.3</span> <span class="todo NEXT">NEXT</span> 六个高度、5w1h=时间地点任务，起因经过结果</h3>
+<div class="outline-text-3" id="text-8-3">
+<ul class="org-ul">
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2017-10-13 五 09:38]</span></span></li>
+</ul>
 </div>
-<br>
-<div id="mypostamble" align="right" style="float:right" class="status">
-    <table> <tbody> 
-	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Author</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;">QuietHeart</td>	  
-	</tr>
-	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Email</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;">
-	    <a href="mailto:quiet_heart000@126.com" target="_blank" rel="noopener">quiet_heart000@126.com</a>
-	  </td>
-	  
-	</tr>
-    	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Date</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2015-11-30 一]</td>
-	  
-	</tr>
-    	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-06-12 日 17:17:48></2016-06-12></td>
-	</tr>
-    </tbody></table>
 </div>
-<br>
+<div id="outline-container-orgheadline73" class="outline-3">
+<h3 id="orgheadline73"><span class="section-number-3">8.4</span> <span class="todo NEXT">NEXT</span> 任务的状态、场景、和分类、参考资料等。</h3>
+<div class="outline-text-3" id="text-8-4">
+<ul class="org-ul">
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2018-02-01 四 14:19]</span></span></li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline74" class="outline-4">
+<h4 id="orgheadline74"><span class="section-number-4">8.4.1</span> 分类、场景、标签、状态；待办、提醒、日程、任务、记事</h4>
+<div class="outline-text-4" id="text-8-4-1">
+</div><div id="outline-container-orgheadline106" class="outline-5">
+<h5 id="orgheadline106"><span class="section-number-5">8.4.1.1</span> 分类</h5>
+<div class="outline-text-5" id="text-8-4-1-1">
+<p>
+任务的分类，确切的说是标签，用来描述任务的属性，因人而异，标签比分类更灵活，因为标签不是层级的而是图形的，而且随时添加，一个任务可以属于多个标签，却只能属于一个分类。而场景，是另外一种根据现状的分类，尤其是下一步任务，不象日程提醒这样有时间闹钟的辅助，下一步的任务对时间要求是尽快而非精确，积累多了，提示下一步任务的信息就是相应任务的执行场景，比如“在家”就关注只能在家里执行的下一步内容。
+</p>
+
+<p>
+简而言之，分类因人而异。可以用两极分化的思想归结为两个方面：现实和思想。场景是当下状况的现实分类，是亲临实境的现实；标签是根据每个人经历的印象分类，是思想内容的组织结构。而这两者通过任务的状态相互关联，每个任务的状态转换，是将任务从思想变为现实的过程。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline107" class="outline-5">
+<h5 id="orgheadline107"><span class="section-number-5">8.4.1.2</span> 待办</h5>
+<div class="outline-text-5" id="text-8-4-1-2">
+<p>
+我们可以将待办事项看作包含：“提醒”（精确时间做）、“日程”（精确日期做）、“任务”（尽快去做）、“记事”（前面的参考资料，不用做是提示信息或文档）。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline108" class="outline-5">
+<h5 id="orgheadline108"><span class="section-number-5">8.4.1.3</span> “提醒”和“日程”，</h5>
+<div class="outline-text-5" id="text-8-4-1-3">
+<p>
+可以用闹钟来提醒，防止遗忘。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline112" class="outline-5">
+<h5 id="orgheadline112"><span class="section-number-5">8.4.1.4</span> “任务”</h5>
+<div class="outline-text-5" id="text-8-4-1-4">
+<p>
+又包括各个任务状态。
+</p>
+</div>
+<ol class="org-ol"><li><a id="orgheadline109"></a>分类<br></li>
+
+<li><a id="orgheadline110"></a>其中“下一步”状态需要通过场景提醒<br><div class="outline-text-6" id="text-8-4-1-4-2">
+<p>
+我们可以将场景看作执行“下一步”任务时的提示信息，以防遗忘。因为“下一步”的任务，没有像 “提醒”、“日程”这样的时间闹钟辅助，所以我们将任务转化为下一步的时候，一定要确认好它的场景，没有场景的，就只能在每次各个场景回顾的时候同时都回顾了。
+</p>
+</div></li>
+
+<li><a id="orgheadline111"></a>其他状态<br><div class="outline-text-6" id="text-8-4-1-4-3">
+<p>
+其他状态的内容，是通过周期性的回顾结合标签来组织，以防遗忘。因为它们没有闹钟，也不一定用“场景”来辅助。但是我们可将标签抽象为项目，里面包含多个任务。实在关联性太强的各个任务，可以考虑用层级的方式归集到一个清单中。
+</p>
+</div></li></ol>
+</div>
+
+<div id="outline-container-orgheadline113" class="outline-5">
+<h5 id="orgheadline113"><span class="section-number-5">8.4.1.5</span> 记事</h5>
+<div class="outline-text-5" id="text-8-4-1-5">
+<p>
+记事是捕获到的，不是可以执行的内容，一般归结到“参考”状态中，只起到提示、参考和文档的作用。将来会转存到其他文档系统。
+</p>
+
+<p>
+任务的状态中，如果记录的不是任务，而是提示性的内容，应当放到参考里面，而非将来/也许。
+</p>
+
+<p>
+简而言之，任务的gtd系统，通过"参考"和文档系统关联上。
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
 
                     </div>
                 </article>                        

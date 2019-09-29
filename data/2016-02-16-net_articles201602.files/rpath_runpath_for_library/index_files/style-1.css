@@ -1,0 +1,4 @@
+/* Effective stylesheet produced by snapshot save */
+body {  }
+.clearfix { display: block; }
+.clearfix::after { content: "."; display: block; height: 0px; clear: both; visibility: hidden; }

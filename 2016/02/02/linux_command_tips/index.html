@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="/css/partial/more.css">
 <link rel="stylesheet" href="/css/partial/footer.css">
 <link rel="stylesheet" href="/css/post.css">
+<link rel="stylesheet" href="/css/orgmode/hexo_orgmode_style.css">
 
 
 <!--javascript-->
@@ -30,8 +31,8 @@
   <body>
     <main class="main">
       <table class="container">
-    <tbody>
-        <tr>
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
             <script src="js/nav.js"></script>
 <table class="navbar">
 	<tbody>
@@ -66,7 +67,7 @@ var category_info = getCategoriesInfo();
 -->
 
 					
-					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="/categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(47)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="/categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(5)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="/categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="/categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="/categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="/categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="/categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="/categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="/categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="/categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="/categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(2)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="/categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="/categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(10)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="/categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="/categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="/categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="/categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(9)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="/categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="/categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="/categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(1)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="/categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="/categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="/categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(6)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="/categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(2)</span></a></li><li id="temp" class="categories_tree_item"><a href="/categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="/categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="/categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(56)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="/categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(6)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="/categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="/categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="/categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="/categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="/categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="/categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="/categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="/categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="/categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(3)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="/categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="/categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="/categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="/categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="/categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="/categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="/categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="/categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="/categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="/categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="/categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="/categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="/categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="/categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="/categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
 				</div>
 			</th>
 
@@ -75,7 +76,7 @@ var category_info = getCategoriesInfo();
 			<th class="navitm">
 				<a href="/tags">标签</a>
 				<div id="tag_menus" class="second">
-					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/gtd-done/">gtd_done</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gtd-next/">gtd_next</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/life/">life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/others/">others</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/study/">study</a><span class="tag-list-count">10</span></li></ul>
+					<ul class="tag-list"></ul>
 				</div>
 			</th>
 
@@ -138,158 +139,8 @@ var category_info = getCategoriesInfo();
                     </h1>
                     <hr id="title_line">
                     <div>
-                        <style type="text/css">
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #0c0;
-    box-shadow: 1px 1px 1px #0e0;
-    padding: 8pt;
-    font-family: italic monospace;
-    color: #C7EDCC;
-    background-color: #111111;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-    code {
-        border:groove #555555;
-	border-width:thin;
-        background-color: #111111;
-	color: #C7EDCC;
-    }
-
-
-#table-of-contents {
-    font-size: 9pt;
-    position: fixed;
-    right: 10px;
-    top: 14em;
-    margin:0;
-    padding:0;
-    border-width:1px;
-    border-style:solid;
-    background: #000000;
-    -webkit-box-shadow: 0 0 1em #777777;
-    -moz-box-shadow: 0 0 1em #777777;
-    -webkit-border-bottom-left-radius: 5px;
-    -moz-border-radius-bottomleft: 5px;
-    text-align: right;
-    /* ensure doesn't flow off the screen when expanded */
-    max-height: 60%;
-    overflow: auto; 
-    z-index: 200;
-}
-
-#table-of-contents h2 {
-    font-size: 9pt;
-    max-width: 8em;
-    font-weight: normal;
-    padding-left: 0.5em;
-    padding-top: 0.05em;
-    padding-bottom: 0.05em; 
-}
-
-#table-of-contents ul {
-    margin-left: 14pt; 
-    margin-bottom: 10pt;
-    padding: 0
-}
-
-#table-of-contents li {
-    padding: 0;
-    margin: 1px;
-    list-style: none;
-}
-
-#table-of-contents ul>:first-child {
-    color: blue;
-}
-
-#table-of-contents #text-table-of-contents {
-    display: none;
-    text-align: left;
-}
-
-#table-of-contents:hover #text-table-of-contents {
-    display: block;
-    padding: 0.5em;
-    margin-top: -1.5em; 
-}
-
-</style>
-
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
+                        <div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#orgheadline1">1. Misc</a>
@@ -303,11 +154,29 @@ var category_info = getCategoriesInfo();
 <li><a href="#orgheadline8">1.7. update-alternatives</a>
 <ul>
 <li><a href="#orgheadline9">1.7.1. java配置举例</a></li>
-<li><a href="#orgheadline10">1.7.2. 添加举例：</a></li>
+<li><a href="#orgheadline10">1.7.2. gcc配置举例</a></li>
+<li><a href="#orgheadline11">1.7.3. 添加举例：</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline11">1.8. ps</a></li>
-<li><a href="#orgheadline12">1.9. sudo</a></li>
+<li><a href="#orgheadline12">1.8. ps</a></li>
+<li><a href="#orgheadline13">1.9. top</a>
+<ul>
+<li><a href="#orgheadline14">1.9.1. 查看指定进程号的进程信息</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline15">1.10. sudo</a></li>
+<li><a href="#orgheadline16">1.11. 字体相关</a></li>
+<li><a href="#orgheadline17">1.12. dot相关</a>
+<ul>
+<li><a href="#orgheadline18">1.12.1. FAQ</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline19">1.13. <span class="todo nilLATER">LATER</span> repquota -avs</a></li>
+<li><a href="#orgheadline20">1.14. tr</a>
+<ul>
+<li><a href="#orgheadline21">1.14.1. tr将windows下的文件换行符转为linux的&#xa0;&#xa0;&#xa0;<span class="tag"><span class="_study">@study</span></span></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -490,8 +359,49 @@ $sudo update-alternatives --config javac
 </div>
 
 <div id="outline-container-orgheadline10" class="outline-4">
-<h4 id="orgheadline10"><span class="section-number-4">1.7.2</span> 添加举例：</h4>
+<h4 id="orgheadline10"><span class="section-number-4">1.7.2</span> gcc配置举例</h4>
 <div class="outline-text-4" id="text-1-7-2">
+<p>
+假设原来机器上的是 <code>gcc-4.6</code> (默认 <code>gcc</code> 会链接到 <code>gcc-4.6</code> 执行)， 升级gcc到4.9, 并且保留以前版本，方法如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+$sudo apt-get update
+$sudo apt-get install gcc-4.9
+$sudo apt-get install g++-4.9
+$sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.6 10
+$sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 20
+$sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/gcc-4.9 20
+$sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/gcc-4.6 10
+miracle@xmnb4003210:~/test$ sudo update-alternatives --config gcc
+有 2 个候选项可用于替换 gcc (提供 /usr/bin/gcc)。
+
+选择       路径            优先级  状态
+------------------------------------------------------------
+*0            /usr/bin/gcc-4.9   20        自动模式
+1            /usr/bin/gcc-4.6   10        手动模式
+2            /usr/bin/gcc-4.9   20        手动模式
+
+要维持当前值[*]请按回车键，或者键入选择的编号：
+miracle@xmnb4003210:~/test$ sudo update-alternatives --config g++
+有 2 个候选项可用于替换 g++ (提供 /usr/bin/g++)。
+
+  选择       路径            优先级  状态
+------------------------------------------------------------
+*0            /usr/bin/gcc-4.9   20        自动模式
+1            /usr/bin/gcc-4.6   10        手动模式
+2            /usr/bin/gcc-4.9   20        手动模式
+
+要维持当前值[*]请按回车键，或者键入选择的编号：
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-4">
+<h4 id="orgheadline11"><span class="section-number-4">1.7.3</span> 添加举例：</h4>
+<div class="outline-text-4" id="text-1-7-3">
 <p>
 假设源代码安装php在 <code>/usr/local/develop/php-5.6.19</code>, 那么
 <code>sudo update-alternatives --install /usr/bin/php5.6.19 php5.6.19 /usr/local/develop/php-5.6.19/bin/php 49</code>
@@ -511,8 +421,8 @@ $sudo update-alternatives --config javac
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline11" class="outline-3">
-<h3 id="orgheadline11"><span class="section-number-3">1.8</span> ps</h3>
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><span class="section-number-3">1.8</span> ps</h3>
 <div class="outline-text-3" id="text-1-8">
 <p>
 支持三种类型的选项：
@@ -574,41 +484,156 @@ USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline12" class="outline-3">
-<h3 id="orgheadline12"><span class="section-number-3">1.9</span> sudo</h3>
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"><span class="section-number-3">1.9</span> top</h3>
 <div class="outline-text-3" id="text-1-9">
+</div><div id="outline-container-orgheadline14" class="outline-4">
+<h4 id="orgheadline14"><span class="section-number-4">1.9.1</span> 查看指定进程号的进程信息</h4>
+<div class="outline-text-4" id="text-1-9-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$top -p &lt;pid&gt;
+</pre>
+</div>
+
 <p>
-以 <code>user</code> 用户而非 <code>root</code> 运行 <code>xxx</code> ， <code>sudo -u user xxx</code>
+可以交互界面过滤显示EUID等相关信息。
 </p>
 </div>
 </div>
 </div>
-<br>
-<div id="mypostamble" align="right" style="float:right" class="status">
-    <table> <tbody> 
-	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Author</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;">QuietHeart</td>	  
-	</tr>
-	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Email</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;">
-	    <a href="mailto:quiet_heart000@126.com" target="_blank" rel="noopener">quiet_heart000@126.com</a>
-	  </td>
-	  
-	</tr>
-    	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Date</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2016-02-11 四 17:05]</td>
-	  
-	</tr>
-    	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-04-16 六 20:15:21></2016-04-16></td>
-	</tr>
-    </tbody></table>
+
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><span class="section-number-3">1.10</span> sudo</h3>
+<div class="outline-text-3" id="text-1-10">
+<p>
+以 <code>user</code> 用户而非 <code>root</code> 运行 <code>xxx</code> ， <code>sudo -u user xxx</code>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">root@qcy:/usr/local/develop/etc/prosody/conf.d# ls -l /usr/local/develop/etc/prosody/certs/120.78.198.148.key
+-rw------- 1 prosody prosody 1679 Dec  5 14:46 /usr/local/develop/etc/prosody/certs/120.78.198.148.key
+root@qcy:/usr/local/develop/etc/prosody/conf.d# sudo -u prosody cat /usr/local/develop/etc/prosody/certs/120.78.198.148.key
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEAzC0PJjXaSmNDW32KqWwD8x7W+DLiLQMAuhziFYo74+cRS8jk
+IGMoNZMnlsOJd+9c1iKR4NmlSD4vDODjgYw6HawN9uZZAWxFjlWabr9VSSkKWHTd
+wlgvsZWT2UFeBFTp6NeWS6DRDbFe5+G/CV1UbJbh5A6mEeKHArBftLNyduwI/wx+
+VQWSZK2csquDxcSNpJh+XBmB6WDWcmNSFi80QSlYPM7YaFkGXF9SooLPTFZV0wMV
+pk0DS0bZn5AQySDmapBpBZ/DZ61pITxBu40vBeHV0njeq7f6sqL5FnxuYg3w+Arl
+h5+F0BzBrwA8qk1lhN3sT/zfyh9hJXpLMWoSGQIDAQABAoIBAFr24D730y89Fi9W
+uUZOF1xjqwadNOM06UgBwkAyfAhHVA9dizVat/lWfFbQ+xfyDnxgnnl8vgR3n+Ku
+9u0qmmHJ29baPWFC6aJGRS1+FPMpU7ChMIN7YpRNvbcXRlnLswLHufArz7e4BD5u
+9vunFwviFPXUCO0C7X+nMJyDLkYIirN5AxmwCSII1FLB9X3fwtKN2+urevsy+e6+
+i7FyS9AqA19OpFt0b4iZeWDErh3emR/XaD/DJnvYP8Po2RUJnmyUR9liO55AZjc0
+JLx9FuCVNymXQgnWwk3zxQteTQaHTzhKt4SK3QlPNAbGK5Mv32Zw0X17mxETKIj3
+tz+xIQECgYEA9JRbEF4KGg85Ea8/Meyrqkk8LdSH5zTRMJkuaSFI/yaeu3rauBJ7
+rmg859i+YmvAuQ4Zh1BlyY1B6Mp2Pyok5BZEn6q1xrJAARsEwVNfAkP0REBXgK/j
+sttSaBXkk51Dp0Ou1HNpW2V40ySjQDWrMkKCON6Y9msSVoKUJ4K98WkCgYEA1bW6
+0tKRmfLaj6V3OX4lvEj+uUXeYubM8RzxIbOP8IS81oIAcGtAPB2mSK35HI9jl7KV
+R6PRiDRlCdYqRqLWCDOxA9I99KNdns76HEqiebk2SlWzEoleTQZ8ArEyy1kILDah
+izhHVip+W/HAIOZfk/JphP0n3YvjGaVDmfbPVTECgYA+njkOYLU/ZMRctbx9QLXW
+vDdPGInO9SPVyHIsclwpDy82msaiuAC4b3GgfkqIEkReXLDGhxv4VVUZj7RkiZq2
+VsktA9zUSVC/t7Yo9PpvLwy76Kk+hknKwgJAKdLCxFHM4jRBqmbAAqPDky7EwrjY
+/lQu0TbiaBli0r2xu/R7eQKBgQCu5TTpyA4EkW0w1deGo6g6OPrNoVJoWj4qrObi
+D9OioN7yJh454mwFRraJEGeoaei1gx8MLBMUhtyRekXK3QSQXc1mNS8jAHdjujuR
+37qsJ1k46H3Ok8ErBD2E7oOFS22W0XbPOtWWvNwAXw4/XomlyGN2xL9VXmAS4t86
+J3RyYQKBgQCRguSkLPiN3nPRj8PxhA9Bp7eDkGqHxCgYd/aAc1Il4TJsd/6ndXi6
+X4hgO2omjEZjPfGi4Mf0DGKMuc2smoxO2U2kfi5gmLaYuszhtD5KAkr0JjSgllK/
+TD5qOjaEsBSKOeCYLFYeLt77NE3QiviSoPQRBU+iEZZK0OSqhEeyqQ==
+-----END RSA PRIVATE KEY-----
+root@qcy:/usr/local/develop/etc/prosody/conf.d# sudo -u quietheart cat /usr/local/develop/etc/prosody/certs/120.78.198.148.key
+cat: /usr/local/develop/etc/prosody/certs/120.78.198.148.key: Permission denied
+</pre>
 </div>
-<br>
+</div>
+</div>
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16"><span class="section-number-3">1.11</span> 字体相关</h3>
+<div class="outline-text-3" id="text-1-11">
+<p>
+查看字体文件：
+<code>fc-scan &lt;font file&gt;</code>, <code>fc-query &lt;font file&gt;</code> 可以看到字体文件的信息，比如 <code>*.ttf</code> 文件信息。
+</p>
+
+<p>
+<code>fc-list</code> 列出字体信息。
+</p>
+
+<p>
+具体参见：<a href="http://www.360doc.com/content/14/0612/13/203871_385965856.shtml" target="_blank" rel="noopener">http://www.360doc.com/content/14/0612/13/203871_385965856.shtml</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17"><span class="section-number-3">1.12</span> dot相关</h3>
+<div class="outline-text-3" id="text-1-12">
+<p>
+vimdot 可以直接编辑dot文件并且预览。
+</p>
+</div>
+<div id="outline-container-orgheadline18" class="outline-4">
+<h4 id="orgheadline18"><span class="section-number-4">1.12.1</span> FAQ</h4>
+<div class="outline-text-4" id="text-1-12-1">
+</div><div id="outline-container-orgheadline22" class="outline-5">
+<h5 id="orgheadline22"><span class="section-number-5">1.12.1.1</span> <span class="todo NEXT">NEXT</span> 如何控制孤立节点的左右次序？</h5>
+<div class="outline-text-5" id="text-1-12-1-1">
+<ul class="org-ul">
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2017-05-10 三 10:35]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline23" class="outline-5">
+<h5 id="orgheadline23"><span class="section-number-5">1.12.1.2</span> <span class="todo NEXT">NEXT</span> 如何定义有名的style便于共享，而非每次都指定style?</h5>
+<div class="outline-text-5" id="text-1-12-1-2">
+<ul class="org-ul">
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2017-05-10 三 10:35]</span></span></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="section-number-3">1.13</span> <span class="todo LATER">LATER</span> repquota -avs</h3>
+<div class="outline-text-3" id="text-1-13">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-12-15 四 17:21]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-09-01 四 15:32]</span></span>
+</p>
+<hr>
+
+<p>
+查看磁盘配额？
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="section-number-3">1.14</span> tr</h3>
+<div class="outline-text-3" id="text-1-14">
+</div><div id="outline-container-orgheadline21" class="outline-4">
+<h4 id="orgheadline21"><a id="ID-8e99c53a-5590-4478-8629-0cd66afaa2d5"></a><span class="section-number-4">1.14.1</span> tr将windows下的文件换行符转为linux的&#xa0;&#xa0;&#xa0;<span class="tag"><span class="_study">@study</span></span></h4>
+<div class="outline-text-4" id="text-1-14-1">
+<p>
+有些系统的文件换行符号是不一样的，unix下都是一个'\n'， 但是windows下是'\r\n'
+</p>
+
+<p>
+转换可以这样：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$tr -d '\r' &lt; original.pem &gt; fixed.pem
+</pre>
+</div>
+
+<p>
+参考：<a href="http://how2ssl.com/articles/working_with_pem_files/" target="_blank" rel="noopener">http://how2ssl.com/articles/working_with_pem_files/</a>
+</p>
+</div>
+</div>
+</div>
+</div>
 
                     </div>
                 </article>                        

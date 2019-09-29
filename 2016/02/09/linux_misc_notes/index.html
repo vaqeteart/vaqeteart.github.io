@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="/css/partial/more.css">
 <link rel="stylesheet" href="/css/partial/footer.css">
 <link rel="stylesheet" href="/css/post.css">
+<link rel="stylesheet" href="/css/orgmode/hexo_orgmode_style.css">
 
 
 <!--javascript-->
@@ -30,8 +31,8 @@
   <body>
     <main class="main">
       <table class="container">
-    <tbody>
-        <tr>
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
             <script src="js/nav.js"></script>
 <table class="navbar">
 	<tbody>
@@ -66,7 +67,7 @@ var category_info = getCategoriesInfo();
 -->
 
 					
-					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="/categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(47)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="/categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(5)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="/categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="/categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="/categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="/categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="/categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="/categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="/categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="/categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="/categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(2)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="/categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="/categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(10)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="/categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="/categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="/categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="/categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(9)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="/categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="/categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="/categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(1)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="/categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="/categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="/categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(6)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="/categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(2)</span></a></li><li id="temp" class="categories_tree_item"><a href="/categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="/categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="/categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(56)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="/categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(6)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="/categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="/categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="/categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="/categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="/categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="/categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="/categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="/categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="/categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(3)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="/categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="/categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="/categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="/categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="/categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="/categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="/categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="/categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="/categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="/categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="/categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="/categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="/categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="/categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="/categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
 				</div>
 			</th>
 
@@ -75,7 +76,7 @@ var category_info = getCategoriesInfo();
 			<th class="navitm">
 				<a href="/tags">标签</a>
 				<div id="tag_menus" class="second">
-					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/gtd-done/">gtd_done</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gtd-next/">gtd_next</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/life/">life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/others/">others</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/study/">study</a><span class="tag-list-count">10</span></li></ul>
+					<ul class="tag-list"></ul>
 				</div>
 			</th>
 
@@ -138,177 +139,167 @@ var category_info = getCategoriesInfo();
                     </h1>
                     <hr id="title_line">
                     <div>
-                        <style type="text/css">
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #0c0;
-    box-shadow: 1px 1px 1px #0e0;
-    padding: 8pt;
-    font-family: italic monospace;
-    color: #C7EDCC;
-    background-color: #111111;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-    code {
-        border:groove #555555;
-	border-width:thin;
-        background-color: #111111;
-	color: #C7EDCC;
-    }
-
-
-#table-of-contents {
-    font-size: 9pt;
-    position: fixed;
-    right: 10px;
-    top: 14em;
-    margin:0;
-    padding:0;
-    border-width:1px;
-    border-style:solid;
-    background: #000000;
-    -webkit-box-shadow: 0 0 1em #777777;
-    -moz-box-shadow: 0 0 1em #777777;
-    -webkit-border-bottom-left-radius: 5px;
-    -moz-border-radius-bottomleft: 5px;
-    text-align: right;
-    /* ensure doesn't flow off the screen when expanded */
-    max-height: 60%;
-    overflow: auto; 
-    z-index: 200;
-}
-
-#table-of-contents h2 {
-    font-size: 9pt;
-    max-width: 8em;
-    font-weight: normal;
-    padding-left: 0.5em;
-    padding-top: 0.05em;
-    padding-bottom: 0.05em; 
-}
-
-#table-of-contents ul {
-    margin-left: 14pt; 
-    margin-bottom: 10pt;
-    padding: 0
-}
-
-#table-of-contents li {
-    padding: 0;
-    margin: 1px;
-    list-style: none;
-}
-
-#table-of-contents ul>:first-child {
-    color: blue;
-}
-
-#table-of-contents #text-table-of-contents {
-    display: none;
-    text-align: left;
-}
-
-#table-of-contents:hover #text-table-of-contents {
-    display: block;
-    padding: 0.5em;
-    margin-top: -1.5em; 
-}
-
-</style>
-
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
+                        <div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgheadline1">1. Miscellaneous</a>
+<li><a href="#orgheadline1">1. 介绍</a>
 <ul>
-<li><a href="#orgheadline2">1.1. &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-10-28 三 11:32] </span></span> Cscope 没有文件的错误------</a></li>
-<li><a href="#orgheadline3">1.2. &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2016-01-31 日 11:12] </span></span> top再H即可list by thread------</a></li>
-<li><a href="#orgheadline4">1.3. &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2016-01-31 日 14:42] </span></span> Linux进程状态机与ps关联------</a></li>
+<li><a href="#orgheadline2">1.1. 子标题1</a></li>
+<li><a href="#orgheadline3">1.2. 子标题2：</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline4">2. 内容1</a></li>
+<li><a href="#orgheadline5">3. 内容2</a></li>
+<li><a href="#orgheadline6">4. Miscellaneous</a>
+<ul>
+<li><a href="#orgheadline7">4.1. &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-10-28 三 11:32] </span></span> Cscope 没有文件的错误------</a></li>
+<li><a href="#orgheadline8">4.2. &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2016-01-31 日 11:12] </span></span> top再H即可list by thread------</a></li>
+<li><a href="#orgheadline9">4.3. &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2016-01-31 日 14:42] </span></span> Linux进程状态机与ps关联------</a></li>
+<li><a href="#orgheadline10">4.4. <span class="done nilDONE">DONE</span> ubuntu无线热点供android使用</a>
+<ul>
+<li><a href="#orgheadline11">4.4.1. 安装所需工具</a></li>
+<li><a href="#orgheadline12">4.4.2. 修改配置文件</a></li>
+<li><a href="#orgheadline13">4.4.3. 运行相关内容</a></li>
+<li><a href="#orgheadline14">4.4.4. 参考网址</a></li>
+<li><a href="#orgheadline15">4.4.5. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> Ubuntu wifi(hostapd+udhcpd)</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline16">4.5. <span class="done nilDONE">DONE</span> 结合coredump调试</a>
+<ul>
+<li><a href="#orgheadline17">4.5.1. 杂乱</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline18">4.6. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 添加超级用户权限 <code>sudo adduser xxx sudo</code></a></li>
+<li><a href="#orgheadline19">4.7. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> ssh配置文件简化登录过程</a></li>
+<li><a href="#orgheadline20">4.8. &gt;&gt;&gt;&gt;&gt; <span class="timestamp-wrapper"><span class="timestamp">[2017-03-22 三 09:28] </span></span> 查看一个进程的环境变量</a></li>
+<li><a href="#orgheadline21">4.9. Linux系统管理杂技</a>
+<ul>
+<li><a href="#orgheadline22">4.9.1. Linux如何查看当前占用CPU或内存最多的几个进程</a></li>
+<li><a href="#orgheadline23">4.9.2. 踢出特定终端的用户</a></li>
+<li><a href="#orgheadline24">4.9.3. 限制占用资源过多的进程</a></li>
+<li><a href="#orgheadline25">4.9.4. 局域网间文件互传</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline26">4.10. 意外发现</a></li>
+<li><a href="#orgheadline27">4.11. <span class="done nilREFERENCE">REFERENCE</span> 一个便于调试的源码编译软件安装技巧</a>
+<ul>
+<li><a href="#orgheadline28">4.11.1. 问题</a></li>
+<li><a href="#orgheadline29">4.11.2. 整体思想</a></li>
+<li><a href="#orgheadline30">4.11.3. 执行过程</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline31">5. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[0/8]</code>(<code>[0%]</code>)</a>
+<ul>
+<li><a href="#orgheadline32">5.1. <span class="todo nilNEXT">NEXT</span> 问题1？</a></li>
+<li><a href="#orgheadline33">5.2. <span class="todo nilNEXT">NEXT</span> 问题2？</a></li>
+<li><a href="#orgheadline34">5.3. <span class="todo nilLATER">LATER</span> screen如何将剪切内容与x剪切板关联？</a></li>
+<li><a href="#orgheadline35">5.4. <span class="todo nilLATER">LATER</span> screenkey</a></li>
+<li><a href="#orgheadline36">5.5. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> sudo apt-get install screenlets-pack-all screenlets</a></li>
+<li><a href="#orgheadline37">5.6. <span class="todo nilLATER">LATER</span> 如何打开.msg格式的邮件文件</a></li>
+<li><a href="#orgheadline38">5.7. <span class="todo nilLATER">LATER</span> sshfs用目录的方式来挂载ssh主机</a></li>
+<li><a href="#orgheadline39">5.8. <span class="todo nilLATER">LATER</span> vimdot</a></li>
+<li><a href="#orgheadline40">5.9. <span class="todo nilLATER">LATER</span> 跨网传输</a></li>
+<li><a href="#orgheadline41">5.10. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> Thunderbird+DavMail 支持Exchange</a>
+<ul>
+<li><a href="#orgheadline42">5.10.1. DavMail configuration</a></li>
+<li><a href="#orgheadline43">5.10.2. Thunder bird</a></li>
+<li><a href="#orgheadline44">5.10.3. 问题</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline45">5.11. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> lua geany</a></li>
+<li><a href="#orgheadline46">5.12. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> haroopad</a></li>
+<li><a href="#orgheadline47">5.13. <span class="todo nilLATER">LATER</span> 常用linux命令的源码</a></li>
+<li><a href="#orgheadline48">5.14. <span class="todo nilLATER">LATER</span> mount等linux源码</a></li>
+<li><a href="#orgheadline49">5.15. <span class="todo nilLATER">LATER</span> shell操作技巧,自动补全上下搜索的技巧</a></li>
+<li><a href="#orgheadline50">5.16. <span class="todo nilLATER">LATER</span> shell输入实用技巧</a></li>
+<li><a href="#orgheadline51">5.17. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 关于 <code>configure</code> 系列体系的交叉编译</a></li>
+<li><a href="#orgheadline52">5.18. <span class="todo nilLATER">LATER</span> 设置coredump的格式</a></li>
+<li><a href="#orgheadline53">5.19. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> ssh远程解压</a></li>
+<li><a href="#orgheadline54">5.20. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 每次启动vim或者ssh的时候都会提示错误</a></li>
+<li><a href="#orgheadline55">5.21. emacs dot绘图出现错误</a>
+<ul>
+<li><a href="#orgheadline56">5.21.1. 实践</a></li>
+<li><a href="#orgheadline57">5.21.2. 参考</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline58">5.22. <code>/proc/pid/maps</code> 查看动态链接的库</a></li>
+<li><a href="#orgheadline59">5.23. <code>/proc/pid/environ</code> 查看进程的环境变量</a></li>
+<li><a href="#orgheadline60">5.24. 批量重命名文件的技巧</a></li>
+<li><a href="#orgheadline61">5.25. 链接选项 <code>-rpath</code> 和 <code>-rpath-link</code></a></li>
+<li><a href="#orgheadline62">5.26. <code>di</code> 命令替代 <code>du</code> 命令</a></li>
+<li><a href="#orgheadline63">5.27. 使用shell数组来实现cut类似功能的技巧</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-
+<p>
+本文主要记录使用linux过程中记录的杂乱问题,适时可能会整理至特定的地方.
+</p>
 <div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1"><span class="section-number-2">1</span> Miscellaneous</h2>
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 介绍</h2>
 <div class="outline-text-2" id="text-1">
-</div><div id="outline-container-orgheadline2" class="outline-3">
-<h3 id="orgheadline2"><span class="section-number-3">1.1</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-10-28 三 11:32] </span></span> Cscope 没有文件的错误------</h3>
+<p>
+文章可以以二级标题开始,便于将来父级追加,这一点不知道是否必要.
+</p>
+</div>
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><span class="section-number-3">1.1</span> 子标题1</h3>
 <div class="outline-text-3" id="text-1-1">
+<p>
+子标题内容
+</p>
+
+<ol class="org-ol">
+<li>列表项目1。</li>
+<li>列表项目2。</li>
+</ol>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3"><span class="section-number-3">1.2</span> 子标题2：</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+子标题2的内容
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4"><span class="section-number-2">2</span> 内容1</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+规整好的内容1
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5"><span class="section-number-2">3</span> 内容2</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+规整好的内容2
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline6" class="outline-2">
+<h2 id="orgheadline6"><span class="section-number-2">4</span> Miscellaneous</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+介绍没有明确规整，或有待规整的内容.
+</p>
+</div>
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7"><span class="section-number-3">4.1</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-10-28 三 11:32] </span></span> Cscope 没有文件的错误------</h3>
+<div class="outline-text-3" id="text-4-1">
 <p>
 From:/home/miracle/mydata/orgmode/gtd/next.org
 </p>
@@ -325,17 +316,17 @@ E609: Cscope error: cscope: cannot read trailer offset from file cscope.outc
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline3" class="outline-3">
-<h3 id="orgheadline3"><span class="section-number-3">1.2</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2016-01-31 日 11:12] </span></span> top再H即可list by thread------</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">4.2</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2016-01-31 日 11:12] </span></span> top再H即可list by thread------</h3>
+<div class="outline-text-3" id="text-4-2">
 <p>
 From:/home/miracle/mydata/orgmode/gtd/_next.org
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline4" class="outline-3">
-<h3 id="orgheadline4"><span class="section-number-3">1.3</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2016-01-31 日 14:42] </span></span> Linux进程状态机与ps关联------</h3>
-<div class="outline-text-3" id="text-1-3">
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">4.3</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2016-01-31 日 14:42] </span></span> Linux进程状态机与ps关联------</h3>
+<div class="outline-text-3" id="text-4-3">
 <p>
 From:/home/miracle/mydata/orgmode/gtd/_next.org
 </p>
@@ -502,33 +493,1877 @@ X(TASK_DEAD - EXIT_DEAD)，退出状态，进程即将被销毁。
 </p>
 </div>
 </div>
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><span class="section-number-3">4.4</span> <span class="done DONE">DONE</span> ubuntu无线热点供android使用</h3>
+<div class="outline-text-3" id="text-4-4">
+<ul class="org-ul">
+<li>State "DONE"       from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 16:47]</span></span></li>
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-03-15 二 12:15] </span></span> <br>
+等待整理</li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-15 二 11:33]</span></span>
+</p>
+<hr>
+<p>
+使用Ubuntu自带的wifi热点设置，一般android无法联网，因为一般android不支持ad-hoc模式。
+可借助如下方式实现ubuntu共享wifi热点。
+</p>
+
+<p>
+系统：Ubuntu 12.04
+</p>
 </div>
-<br>
-<div id="mypostamble" align="right" style="float:right" class="status">
-    <table> <tbody> 
-	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Author</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;">QuietHeart</td>	  
-	</tr>
-	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Email</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;">
-	    <a href="mailto:quiet_heart000@126.com" target="_blank" rel="noopener">quiet_heart000@126.com</a>
-	  </td>
-	  
-	</tr>
-    	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Date</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;">[2016-02-09 二 10:35]</td>
-	  
-	</tr>
-    	<tr>
-	  <td style="border-style: solid;border-width:1px;border-left:0px;">Update</td>
-	  <td style="border-style: solid;border-width:1px;border-right:0px;"><2016-02-16 二 17:40:09></2016-02-16></td>
-	</tr>
-    </tbody></table>
+
+<div id="outline-container-orgheadline11" class="outline-4">
+<h4 id="orgheadline11"><span class="section-number-4">4.4.1</span> 安装所需工具</h4>
+<div class="outline-text-4" id="text-4-4-1">
+<pre class="example">
+$sudo apt-get install hostapd dnsmasq
+</pre>
 </div>
-<br>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-4">
+<h4 id="orgheadline12"><span class="section-number-4">4.4.2</span> 修改配置文件</h4>
+<div class="outline-text-4" id="text-4-4-2">
+<p>
+修改配置： <code>/etc/hostapd.conf</code>, <code>/etc/dnsmasq.conf</code>, <code>/etc/sysctl.conf</code>
+</p>
+
+<p>
+<code>/etc/hostapd.conf</code> 编辑如下：
+</p>
+<pre class="example">
+interface=wlan0
+driver=nl80211
+ssid=CMCC_QUIET
+hw_mode=g
+channel=11
+dtim_period=1
+rts_threshold=2347
+fragm_threshold=2346
+macaddr_acl=0
+auth_algs=3
+ieee80211n=0
+wpa=3
+wpa_passphrase=12345678
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+</pre>
+
+<p>
+<code>/etc/dnsmasq.conf</code> 加入如下：
+</p>
+<pre class="example">
+interface=wlan0
+
+#这个是只监听wlan0，没有之会检测所有卡
+bind-interfaces
+except-interface=lo
+
+#设置dhcp地址范围，即租借时间6小时
+dhcp-range=192.168.1.100,192.168.1.254,12h
+#address=/#/10.0.0.1#如果你的配置中有这个，请注释掉，应为这个会把#(代表所有网址)的dns到10.1.1.1这个地址
+
+#为手机配置网关，要和dhcp-arange对应，这涉及网络的知识，不详细介绍。
+dhcp-option=3,192.168.1.1
+
+#为手机配置dns，你可以根据实际情况去修改
+dhcp-option=6,202.114.128.2
+</pre>
+
+<p>
+<code>/etc/sysctl.conf</code> 修改如下：
+为了确保打开了转发的功能，还要修改文件 <code>/etc/sysctl.conf</code> 。打开文件 <code>/etc/sysctl.conf</code> ,找到 <code>net.ipv4.ip_forward=1</code> ，如果被注释了，要将其前面的注释去掉，以便使其生效。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline13" class="outline-4">
+<h4 id="orgheadline13"><span class="section-number-4">4.4.3</span> 运行相关内容</h4>
+<div class="outline-text-4" id="text-4-4-3">
+<p>
+首先创建 <code>myap.sh</code> 脚本用于端口转发。 <code>myap.sh</code> 内容如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">#!/bin/sh
+#为无线添加路由规则
+iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t nat -APOSTROUTING -s 192.168.1.0/24 -o eth0 -jMASQUERADE
+iptables -A FORWARD -s 192.168.1.0/24 -o eth0 -jACCEPT
+iptables -A FORWARD -d 192.168.1.0/24 -m conntrack --ctstate ESTABLISHED,RELATED -i eth0 -jACCEPT
+</pre>
+</div>
+
+<p>
+依次运行如下命令：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$sudo killall named  #一般情况下bind的named会占了53端口，从而导致dnsmasq启动不了，所以要用killallnamed来杀了named再启动dnsmasq。
+$sudo killall hostapd
+$sudo ifconfig wlan0 192.168.1.1 #由于上面我们将dhcp-range设置为192.168.1.100,192.168.1.254，所以这里我们要将wlan0的ip设置为同一网段的ip。
+$sudo hostapd -B /etc/hostapd.conf
+$sudo /etc/init.d/dnsmasq restart #使用静态ip的朋友注意了，dnsmasq启动后会出现电脑突然上不了网，因为dnsmasq更了/etc/resolv.conf的原因。可以在/etc/resolv.conf加一行，执行命令echo"nameserver202.114.128.2"&gt;&gt;/etc/resolv.conf即可。202.114.128.2是dns服务器，你可以根据你的当地的实际情况去修改。
+#echo 1 &gt;/proc/sys/net/ipv4/ip_forward #启动转发功能。
+$sudo ./myap#如果你的myap不在当前路径下，要加路径/
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline64" class="outline-5">
+<h5 id="orgheadline64"><span class="section-number-5">4.4.3.1</span> 总结</h5>
+<div class="outline-text-5" id="text-4-4-3-1">
+<p>
+给出一个脚本, <code>mywifi.sh</code>, 运行之时只需要： <code>sudo ./mywifi.sh start</code> 即可。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">#!/bin/sh
+
+#you must install hostapd, and dnsmasq
+
+do_start()
+{
+        ifconfig wlan0 10.1.1.1 netmask 255.255.255.0
+        ifconfig wlan0 up
+        killall named
+        killall hostapd
+        ifconfig wlan0 10.1.1.1
+        hostapd -B /etc/hostapd.conf
+        /etc/init.d/dnsmasq restart
+
+        echo 1 &gt;/proc/sys/net/ipv4/ip_forward
+        #sysctl  -w net.ipv4.ip_forward=1
+        iptables -F
+        iptables -X
+        iptables -t nat -F
+        iptables -t nat -X
+        iptables -t nat -APOSTROUTING -s 10.1.1.0/24 -o eth0 -jMASQUERADE
+        iptables -A FORWARD -s 10.1.1.0/24 -o eth0 -jACCEPT
+        iptables -A FORWARD -d 10.1.1.0/24 -m conntrack --ctstate ESTABLISHED,RELATED -i eth0 -jACCEPT
+}
+
+do_stop()
+{
+        iptables -X
+        iptables -F
+        echo 0 &gt;/proc/sys/net/ipv4/ip_forward
+        #/etc/init.d/dnsmasq stop
+        #killall named
+        killall hostapd
+        ifconfig wlan0 down
+}
+
+show_help()
+{
+        echo "usage: $0 [start |stop]"
+}
+
+case $1 in
+"start")
+        do_start $*
+        ;;
+"stop")
+        do_stop $*
+        ;;
+*)
+        show_help
+        ;;
+esac
+__tmp_return=$?
+exit $__tmp_return
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline14" class="outline-4">
+<h4 id="orgheadline14"><span class="section-number-4">4.4.4</span> 参考网址</h4>
+<div class="outline-text-4" id="text-4-4-4">
+<p>
+<a href="http://xgwdy06.blog.163.com/blog/static/190718352201223093522365/" target="_blank" rel="noopener">http://xgwdy06.blog.163.com/blog/static/190718352201223093522365/</a>
+</p>
+
+<p>
+<a href="http://www.360doc.com/content/14/0108/11/13232598_343535168.shtml" target="_blank" rel="noopener">http://www.360doc.com/content/14/0108/11/13232598_343535168.shtml</a>
+</p>
+
+<p>
+<a href="http://www.devba.com/index.php/archives/2289.html" target="_blank" rel="noopener">http://www.devba.com/index.php/archives/2289.html</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline15" class="outline-4">
+<h4 id="orgheadline15"><span class="section-number-4">4.4.5</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> Ubuntu wifi(hostapd+udhcpd)</h4>
+<div class="outline-text-4" id="text-4-4-5">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-16 二 16:37] </span></span> <br>
+wait for arranged.</li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-08-16 二 16:01]</span></span>
+</p>
+<hr>
+
+<ol class="org-ol">
+<li><p>
+hostapd
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$sudo apt-get install hostapd
+</pre>
+</div></li>
+
+<li><p>
+udhcpd
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$sudo apt-get install udhcpd
+</pre>
+</div></li>
+
+<li><p>
+hostapd config
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$vim hostapd.conf
+interface=wlan0
+driver=nl80211
+ssid=&lt;your ssid name&gt;
+hw_mode=g
+channel=11
+dtim_period=1
+rts_threshold=2347
+fragm_threshold=2346
+macaddr_acl=0
+auth_algs=3
+ieee80211n=0
+wpa=3
+wpa_passphrase=&lt;your password&gt;
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+</pre>
+</div></li>
+
+<li><p>
+udhcpd config
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$vim /etc/udhcpd.conf
+...
+start                10.1.1.100      #default: 192.168.0.20
+end          10.1.1.200      #default: 192.168.0.254
+...
+# The interface that udhcpd will use
+interface    wlan0           #default: eth0
+...
+opt  dns     10.1.1.1 114.114.114.114
+option       subnet  255.255.255.0
+opt  router  10.1.1.1
+opt  wins    10.1.1.1
+option       dns     129.219.13.81   # appened to above DNS servers for a total of 3
+option       domain  local
+option       lease   864000          # 10 days of seconds
+...
+
+$vim /etc/default/udhcpd
+...
+#DHCPD_ENABLED="no"
+...
+</pre>
+</div></li>
+
+<li><p>
+<code>start/stop</code>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$vim mywifi.sh
+#!/bin/sh
+
+#you must install hostapd, and dnsmasq
+
+do_start()
+{
+     ifconfig wlan0 10.1.1.1 netmask 255.255.255.0
+     ifconfig wlan0 up
+     killall named
+     killall hostapd
+     ifconfig wlan0 10.1.1.1
+     hostapd -B /etc/hostapd.conf
+     /etc/init.d/udhcpd start
+
+     echo 1 &gt;/proc/sys/net/ipv4/ip_forward
+     #sysctl  -w net.ipv4.ip_forward=1
+     iptables -F
+     iptables -X
+     iptables -t nat -F
+     iptables -t nat -X
+     iptables -t nat -APOSTROUTING -s 10.1.1.0/24 -o eth0 -jMASQUERADE
+     iptables -A FORWARD -s 10.1.1.0/24 -o eth0 -jACCEPT
+     iptables -A FORWARD -d 10.1.1.0/24 -m conntrack --ctstate ESTABLISHED,RELATED -i eth0 -jACCEPT
+}
+
+do_stop()
+{
+     #iptables -D FORWARD -d 10.1.1.0/24 -m conntrack --ctstate ESTABLISHED,RELATED -i eth0 -jACCEPT
+     #iptables -D FORWARD -s 10.1.1.0/24 -o eth0 -jACCEPT
+     iptables -t nat -DPOSTROUTING -s 10.1.1.0/24 -o eth0 -jMASQUERADE
+     iptables -X
+     iptables -F
+     echo 0 &gt;/proc/sys/net/ipv4/ip_forward
+     /etc/init.d/udhcpd stop
+     #killall named
+     killall hostapd
+     ifconfig wlan0 down
+}
+
+show_help()
+{
+     echo "usage: $0 [start |stop]"
+}
+
+case $1 in
+"start")
+     do_start $*
+     ;;
+"stop")
+     do_stop $*
+     ;;
+* )
+     show_help
+     ;;
+
+esac
+__tmp_return=$?
+exit $__tmp_return
+</pre>
+</div>
+
+<p>
+有时候无法联网，可以尝试一下如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$sudo ip route del 10.1.1.0/24
+$sudo ip route add 10.1.1.0/24 via 10.1.1.1 dev wlan0 src 10.1.1.1
+</pre>
+</div></li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16"><span class="section-number-3">4.5</span> <span class="done DONE">DONE</span> 结合coredump调试</h3>
+<div class="outline-text-3" id="text-4-5">
+<ul class="org-ul">
+<li>State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 10:52]</span></span></li>
+</ul>
+<p>
+关于coredump, 具体可参见 <a href="http://vaqeteart.iteye.com/blog/1013397" target="_blank" rel="noopener"><a href="http://vaqeteart.iteye.com/blog/1013397" target="_blank" rel="noopener">http://vaqeteart.iteye.com/blog/1013397</a></a>
+</p>
+
+<p>
+大致注意如下:
+</p>
+
+<ol class="org-ol">
+<li>coredump 是程序崩溃前系统为其生成的内存快照.</li>
+
+<li>coredump 默认存放在当前进程工作路径,也有些系统会生成到特定的目录中,需要自己确认.</li>
+
+<li><p>
+需要打开系统coredump开关,才可令系统在程序崩溃前生成coredump.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"># ulimit -c unlimited
+</pre>
+</div></li>
+
+<li>coredump的读取
+
+<ul class="org-ul">
+<li><p>
+确认coredump类型用file,例如
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$file core.pid 
+core.pid: ELF 32-bit LSB core file ARM, version 1 (SYSV), SVR4-style, from 'nt_'
+</pre>
+</div></li>
+
+<li><p>
+查看基本信息用 <code>readelf</code> 或者 <code>objump</code> 结合相应选项,例如:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ readelf -h core.pid 
+ELF Header:
+Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+Class:                             ELF32
+Data:                              2's complement, little endian
+Version:                           1 (current)
+OS/ABI:                            UNIX - System V
+ABI Version:                       0
+Type:                              CORE (Core file)
+Machine:                           ARM
+Version:                           0x1
+...
+
+$objdump -x -C core.pid
+
+core.pid:     file format elf32-little
+core.pid
+architecture: UNKNOWN!, flags 0x00000000:
+
+start address 0x00000000
+
+Program Header:
+ NOTE off    0x000012d4 vaddr 0x00000000 paddr 0x00000000 align 2**0
+      filesz 0x0000198c memsz 0x00000000 flags ---
+ LOAD off    0x00003000 vaddr 0x7f555000 paddr 0x00000000 align 2**12
+      filesz 0x00000000 memsz 0x00005000 flags r-x
+ LOAD off    0x00003000 vaddr 0x7f55a000 paddr 0x00000000 align 2**12
+      filesz 0x00001000 memsz 0x00001000 flags r--
+ LOAD off    0x00004000 vaddr 0x7f55b000 paddr 0x00000000 align 2**12
+      filesz 0x00001000 memsz 0x00001000 flags rw-
+...
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+0 note0         0000198c  00000000  00000000  000012d4  2**0
+                 CONTENTS, READONLY
+1 .auxv         00000090  00000000  00000000  000014b8  2**2
+                 CONTENTS
+2 .reg2/0       00000074  00000000  00000000  000023fc  2**2
+...
+SYMBOL TABLE:
+no symbols
+</pre>
+</div></li>
+</ul></li>
+
+<li><p>
+gdb结合coredump调试,有助于迅速找到程序发生崩溃的位置.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$gdb a.out core.pid
+</pre>
+</div></li>
+</ol>
+</div>
+<div id="outline-container-orgheadline17" class="outline-4">
+<h4 id="orgheadline17"><span class="section-number-4">4.5.1</span> 杂乱</h4>
+<div class="outline-text-4" id="text-4-5-1">
+</div><div id="outline-container-orgheadline65" class="outline-5">
+<h5 id="orgheadline65"><span class="section-number-5">4.5.1.1</span> 在特定的位置生成coredump</h5>
+<div class="outline-text-5" id="text-4-5-1-1">
+<pre class="example">
+5596L TV coredump 的命令如下：
+1. cd /tmp
+2. chmod –R 777 mnt
+3. ulimit -c unlimited
+4. echo 1 &gt; /proc/sys/kernel/core_uses_pid
+5. echo /mnt/usb/sda1/core_%e_sig%s_pid%p &gt; /proc/sys/kernel/core_pattern
+
+这样可以抓到browser.out crash时的coredump.
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18"><span class="section-number-3">4.6</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 添加超级用户权限 <code>sudo adduser xxx sudo</code></h3>
+<div class="outline-text-3" id="text-4-6">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-10-24 一 10:51] </span></span> <br>
+wait for more organize.</li>
+</ul>
+
+<p>
+或者直接修改 <code>/etc/sudoers</code> 文件
+</p>
+<pre class="example">
+#
+# This file MUST be edited with the 'visudo' command as root.
+#
+# Please consider adding local content in /etc/sudoers.d/ instead of
+# directly modifying this file.
+#
+# See the man page for details on how to write a sudoers file.
+#
+Defaults	env_reset
+Defaults	mail_badpass
+Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+
+# Host alias specification
+
+# User alias specification
+
+# Cmnd alias specification
+
+# User privilege specification 对单个用户的权限设置
+root	ALL=(ALL:ALL) ALL
+
+# Members of the admin group may gain root privileges 对admin组的权限设置
+%admin ALL=(ALL) ALL
+
+# Allow members of group sudo to execute any command 对sudo组的权限设置
+%sudo	ALL=(ALL:ALL) ALL
+
+# See sudoers(5) for more information on "#include" directives:
+
+#includedir /etc/sudoers.d
+</pre>
+
+<p>
+所以前面的 <code>adduser xxx sudo</code> 会将 <code>xxx</code> 添加到sudo组中，具有了相应的权限(需要重新login)。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="section-number-3">4.7</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> ssh配置文件简化登录过程</h3>
+<div class="outline-text-3" id="text-4-7">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 12:03] </span></span> <br>
+wait for more</li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-08-08 一 11:56]</span></span>
+</p>
+<hr>
+
+<ul class="org-ul">
+<li><p>
+生成密钥对儿
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$ssh-keygen
+</pre>
+</div>
+<p>
+会自动生成公钥密钥对，生成位置是 <code>~/.ssh</code>
+</p></li>
+
+<li><p>
+免密
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$ssh-copy-id &lt;ip&gt;
+</pre>
+</div>
+<p>
+将本地公钥拷贝到远端服务器，使之被远端被登录主机信任本地机，从而实现免密登录。即登录的时候不用输入密码。
+</p>
+
+<p>
+需要远端主机对ssh服务端也进行相应的配置，使之激活免密。
+</p></li>
+
+<li><p>
+免输入用户名密码
+</p>
+
+<p>
+在客户端为被主机配置好别名和端口：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$vim ~/.ssh/config
+#Myname1
+Host myname1
+HostName &lt;host ip&gt;
+User &lt;username&gt;
+Port &lt;ssh port, default 22&gt;
+IdentityFile ~/.ssh/id_rsa
+</pre>
+</div>
+
+<p>
+登录：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$ssh myname1
+</pre>
+</div></li>
+</ul>
+
+<p>
+另外，设置免密之后，scp命令也支持tab远程补全了，拷贝远程文件很方便。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="section-number-3">4.8</span> &gt;&gt;&gt;&gt;&gt; <span class="timestamp-wrapper"><span class="timestamp">[2017-03-22 三 09:28] </span></span> 查看一个进程的环境变量</h3>
+<div class="outline-text-3" id="text-4-8">
+<p>
+From:/home/miracle/mydata/orgmode/gtd/output/prosody_src_study.org
+</p>
+
+<p>
+进程运行的环境变量在:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$cat /proc/pid/environ
+</pre>
+</div>
+
+<p>
+默认没有换行的话可以:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$cat /proc/pid/environ |tr -s '\x0' '\n'
+</pre>
+</div>
+
+<p>
+效果类似
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$cat /proc/pid/environ |sed -e 's/\x0/\n/g'
+</pre>
+</div>
+
+<p>
+最简单的方法：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$strings /proc/pid/environ
+</pre>
+</div>
+
+<p>
+注意，这个环境变量的值是静态的。如果进程在运行期间用setenv等修改了环境变量，虽然进程实际环境变量变化了，但是这个文件的内容是不变的。
+可以这样检测：
+</p>
+<ol class="org-ol">
+<li><code>tty</code> 确认当前bash 终端</li>
+<li><code>ps</code> 查看当前bash的pid，假设为 <code>bashpid</code></li>
+<li><code>cd /proc/&lt;bashpid&gt;</code></li>
+<li>查看 <code>string environ</code></li>
+<li>设置一个bash环境变量TEST=test</li>
+<li>再次查看 <code>string =environ</code></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgheadline21" class="outline-3">
+<h3 id="orgheadline21"><span class="section-number-3">4.9</span> Linux系统管理杂技</h3>
+<div class="outline-text-3" id="text-4-9">
+</div><div id="outline-container-orgheadline22" class="outline-4">
+<h4 id="orgheadline22"><span class="section-number-4">4.9.1</span> Linux如何查看当前占用CPU或内存最多的几个进程</h4>
+<div class="outline-text-4" id="text-4-9-1">
+</div><div id="outline-container-orgheadline66" class="outline-5">
+<h5 id="orgheadline66"><span class="section-number-5">4.9.1.1</span> ps</h5>
+<div class="outline-text-5" id="text-4-9-1-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$ps -aux | sort -k4nr | head -N
+</pre>
+</div>
+
+<p>
+<code>ps aux</code> 输出类似：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$ ps aux |head -n 10
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.0  40448  3076 ?        Ss   Jun19   0:01 /sbin/init
+root         2  0.0  0.0      0     0 ?        S    Jun19   0:00 [kthreadd]
+root         3  0.0  0.0      0     0 ?        S    Jun19   0:09 [ksoftirqd/0]
+root         5  0.0  0.0      0     0 ?        S&lt;   Jun19   0:00 [kworker/0:0H]
+root         7  0.0  0.0      0     0 ?        S    Jun19   0:00 [migration/0]
+root         8  0.0  0.0      0     0 ?        S    Jun19   0:00 [rcu_bh]
+root         9  0.0  0.0      0     0 ?        S    Jun19   0:00 [rcuob/0]
+root        10  0.0  0.0      0     0 ?        S    Jun19   0:00 [rcuob/1]
+root        11  0.0  0.0      0     0 ?        S    Jun19   0:00 [rcuob/2]
+...
+</pre>
+</div>
+
+<p>
+参数 <code>a</code> 指代all——所有的进程， <code>u</code> 指代userid——执行该进程的用户id， <code>x</code> 指代显示所有程序，不以终端机来区分。
+</p>
+
+<p>
+<code>sort -k4nr</code> 中（ <code>k</code> 代表从根据哪一个关键词排序，后面的数字4表示按照第四列排序； <code>n</code> 指代numberic sort，根据其数值排序； <code>r</code> 指代reverse，这里是指反向比较结果，输出时默认从小到大，反向后从大到小。）。本例中，可以看到%MEM在第4个位置，根据%MEM的数值进行由大到小的排序。 <code>-k3</code> 表示按照cpu占用率排序。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline67" class="outline-5">
+<h5 id="orgheadline67"><span class="section-number-5">4.9.1.2</span> top</h5>
+<div class="outline-text-5" id="text-4-9-1-2">
+<p>
+命令行输入 <code>top</code> 回车，然后按下大写 <code>M</code> 按照memory排序，按下大写 <code>P</code> 按照CPU排序。
+</p>
+
+<p>
+参考：<a href="http://blog.csdn.net/u013181648/article/details/68941971" target="_blank" rel="noopener">http://blog.csdn.net/u013181648/article/details/68941971</a>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline23" class="outline-4">
+<h4 id="orgheadline23"><span class="section-number-4">4.9.2</span> 踢出特定终端的用户</h4>
+<div class="outline-text-4" id="text-4-9-2">
+<p>
+结合 <code>who</code> 命令， 使用 <code>pkill -KILL -t tty1</code>, 需要超级用户权限。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline24" class="outline-4">
+<h4 id="orgheadline24"><span class="section-number-4">4.9.3</span> 限制占用资源过多的进程</h4>
+<div class="outline-text-4" id="text-4-9-3">
+<p>
+发现CPU占用率超过某个限制的用户进程，然后将该进程杀死，这种做法很暴力，而且用户发现他的进程被杀以后很可能又启动进程，这样恶性循环。 有一种折中的方法，不是将目标进程杀死，而是适当调整其nice值。
+例如：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$renice +10 `ps aux | awk '{ if ($3 &gt; 0.8 &amp;&amp; id -u $1 &gt; 500) print $2}'`
+</pre>
+</div>
+
+<p>
+可结合 <code>ps aux</code> 输出分析该命令：
+可知这里 <code>$1</code> 是用户名，将 <code>&gt;500</code> 修改，可以直接限制某用户。比如：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$renice +10 `ps aux | awk '{ if ($3 &gt; 0.8 &amp;&amp; id -u $1 == id -u xxx) print $2}'`
+</pre>
+</div>
+
+<p>
+其实实践发现：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">#renice -n 10 -u miracle
+</pre>
+</div>
+<p>
+会将 miracle 的nice值增加10
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline25" class="outline-4">
+<h4 id="orgheadline25"><span class="section-number-4">4.9.4</span> 局域网间文件互传</h4>
+<div class="outline-text-4" id="text-4-9-4">
+</div><div id="outline-container-orgheadline68" class="outline-5">
+<h5 id="orgheadline68"><span class="section-number-5">4.9.4.1</span> 通过nc</h5>
+<div class="outline-text-5" id="text-4-9-4-1">
+<p>
+client on windows(cygwin):
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$nc -l 55555 | tar xzvf -
+</pre>
+</div>
+
+<p>
+server:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$tar czvf - &lt;your dir/file&gt; | nc 172.16.246.210 55555
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline69" class="outline-5">
+<h5 id="orgheadline69"><span class="section-number-5">4.9.4.2</span> 其它</h5>
+<div class="outline-text-5" id="text-4-9-4-2">
+<p>
+通过scp/winscp/rsync/rcp/smb/ftp/sftp/ssh/tftp
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline26" class="outline-3">
+<h3 id="orgheadline26"><span class="section-number-3">4.10</span> 意外发现</h3>
+<div class="outline-text-3" id="text-4-10">
+<p>
+在 <code>gnome-terminal</code> 应用中，切换各个 <code>tab</code> 除了可以用 <code>Alt-1, Alt-2, ...</code> 之外，还可以用 <code>C-PgUp, C-PgDn</code>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline27" class="outline-3">
+<h3 id="orgheadline27"><a id="ID-dd5ff563-8720-41e8-be0f-23c4c0a81b4d"></a><span class="section-number-3">4.11</span> <span class="done REFERENCE">REFERENCE</span> 一个便于调试的源码编译软件安装技巧</h3>
+<div class="outline-text-3" id="text-4-11">
+</div>
+
+<div id="outline-container-orgheadline28" class="outline-4">
+<h4 id="orgheadline28"><span class="section-number-4">4.11.1</span> 问题</h4>
+<div class="outline-text-4" id="text-4-11-1">
+<p>
+假设源代码编译安装的路径prefix为 <code>/usr/local/develop</code>, 
+</p>
+
+<p>
+如果所有软件安装都用这个目录，那么如果某个软件安装中出现失误，很难回滚包含了很多之前软件安装的 <code>/usr/loca/develop</code> 目录。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline29" class="outline-4">
+<h4 id="orgheadline29"><a id="ID-0f7dfdf6-cbdf-43e9-8faa-ac06efb3c8af"></a><span class="section-number-4">4.11.2</span> 整体思想</h4>
+<div class="outline-text-4" id="text-4-11-2">
+<ul class="org-ul">
+<li>安装每一个安装包的时候，先将原来的 <code>/usr/local/develop</code> 备份，</li>
+<li>然后将新的软件安装到空的 <code>/usr/local/develop</code> , 安装之后，重命名为 <code>/usr/local/develop.xxx</code>,</li>
+<li>然后恢复原来那个备份的 <code>/usr/local/develop</code> ，再将新备份的 <code>/usr/local/develop.xxx</code> 用 <code>cp -af xxx</code> 或 <code>ln -s xxx</code> 的方式合并到原来的 <code>/usr/local/develop</code> .</li>
+</ul>
+
+<p>
+当软件安装出现问题的时候（即 <code>/usr/local/develop</code> 目录会混乱掉），这个时候只需要简单删除掉合并的 <code>/usr/local/develop</code>, 重新建立总合并的目录，然后把没有问题的软件合并到干净的 <code>/usr/local/develop</code> 中去。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline30" class="outline-4">
+<h4 id="orgheadline30"><span class="section-number-4">4.11.3</span> 执行过程</h4>
+<div class="outline-text-4" id="text-4-11-3">
+<p>
+如下，最开始路径：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$sudo mkdir -p /usr/local/backup_installs
+$sudo mkdir -p /usr/local/backup_installs/develop.all #所有的软件安装最终实际合并到这里
+$sudo ln -s /usr/local/backup_installs/develop.all /usr/local/develop #对外表现为一个路径：/usr/local/develop
+</pre>
+</div>
+
+<p>
+安装xxx软件的时候
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$sudo mv /usr/local/develop /usr/local/develop.bak #备份原有目录链接
+$cd xxx
+$./configure --prefix=/usr/local/develop/ xxxxx
+$make
+$sudo make install #安装源码编译的软件
+$sudo mv /usr/local/develop /usr/local/backup_installs/develop.xxx #将软件安装目录重命名备份
+$sudo mv /usr/local/develop.bak /usr/local/develop #恢复原有所有安装集合链接
+$cd /usr/local/backup_installs
+$cp -af develop.xxx/* develop.all/ #将新安装的软件合并到安装集合目录中
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline31" class="outline-2">
+<h2 id="orgheadline31"><span class="section-number-2">5</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[0/8]</code>(<code>[0%]</code>)</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+描述该文章中遗留的问题,有待将来解决.
+</p>
+</div>
+<div id="outline-container-orgheadline32" class="outline-3">
+<h3 id="orgheadline32"><span class="section-number-3">5.1</span> <span class="todo NEXT">NEXT</span> 问题1？</h3>
+<div class="outline-text-3" id="text-5-1">
+<ul class="org-ul">
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-02-01 一 15:39]</span></span></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline33" class="outline-3">
+<h3 id="orgheadline33"><span class="section-number-3">5.2</span> <span class="todo NEXT">NEXT</span> 问题2？</h3>
+<div class="outline-text-3" id="text-5-2">
+<ul class="org-ul">
+<li>State "NEXT"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-02-01 一 15:40]</span></span></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline34" class="outline-3">
+<h3 id="orgheadline34"><span class="section-number-3">5.3</span> <span class="todo LATER">LATER</span> screen如何将剪切内容与x剪切板关联？</h3>
+<div class="outline-text-3" id="text-5-3">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 10:50]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-05-25 三 10:25]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline35" class="outline-3">
+<h3 id="orgheadline35"><span class="section-number-3">5.4</span> <span class="todo LATER">LATER</span> screenkey</h3>
+<div class="outline-text-3" id="text-5-4">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-12-15 四 17:22]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-12-15 四 17:06]</span></span>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline36" class="outline-3">
+<h3 id="orgheadline36"><span class="section-number-3">5.5</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> sudo apt-get install screenlets-pack-all screenlets</h3>
+<div class="outline-text-3" id="text-5-5">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-12-15 四 17:22]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-12-15 四 16:11]</span></span>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline37" class="outline-3">
+<h3 id="orgheadline37"><span class="section-number-3">5.6</span> <span class="todo LATER">LATER</span> 如何打开.msg格式的邮件文件</h3>
+<div class="outline-text-3" id="text-5-6">
+<ul class="org-ul">
+<li>State "LATER"      from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-12-15 四 17:23]</span></span></li>
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-12-15 四 17:23]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-08-29 一 17:07]</span></span>
+</p>
+<hr>
+</div>
+</div>
+
+<div id="outline-container-orgheadline38" class="outline-3">
+<h3 id="orgheadline38"><span class="section-number-3">5.7</span> <span class="todo LATER">LATER</span> sshfs用目录的方式来挂载ssh主机</h3>
+<div class="outline-text-3" id="text-5-7">
+<ul class="org-ul">
+<li>State "LATER"      from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-12-15 四 17:23]</span></span></li>
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-12-15 四 17:23]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-11-17 四 12:11]</span></span>
+</p>
+
+<pre class="example">
+NAME
+       SSHFS - filesystem client based on ssh
+
+SYNOPSIS
+   mounting
+       sshfs [user@]host:[dir] mountpoint [options]
+
+   unmounting
+       fusermount -u mountpoint
+
+...
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline39" class="outline-3">
+<h3 id="orgheadline39"><span class="section-number-3">5.8</span> <span class="todo LATER">LATER</span> vimdot</h3>
+<div class="outline-text-3" id="text-5-8">
+<ul class="org-ul">
+<li>State "LATER"      from              <span class="timestamp-wrapper"><span class="timestamp">[2017-01-06 五 09:29]</span></span></li>
+</ul>
+
+<p>
+可以用dot语言绘制图形的同时，进行预览。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline40" class="outline-3">
+<h3 id="orgheadline40"><span class="section-number-3">5.9</span> <span class="todo LATER">LATER</span> 跨网传输</h3>
+<div class="outline-text-3" id="text-5-9">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2017-04-07 五 16:18]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2017-02-22 三 14:22]</span></span>
+</p>
+
+
+<p>
+直接通过非加密压缩方式，快速传输文件的方式：
+1.client on windows(cygwin):
+nc -l 55555 | tar xzvf -
+</p>
+
+<p>
+2.server:
+tar czvf - &lt;your dir/file&gt; | nc 172.16.246.210 55555
+</p>
+
+
+<p>
+将220上的 <code>test.tgz</code> 直接解压到 215上
+直接通过非加密压缩方式，快速传输文件的方式：
+1.215
+nc -l 55555 | tar xzvf -
+</p>
+
+<p>
+2.220
+cat test.tgz | nc 172.16.246.215 55555
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline41" class="outline-3">
+<h3 id="orgheadline41"><a id="ID-f49b02bb-64ef-469a-8870-2abf1d7848f7"></a><span class="section-number-3">5.10</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> Thunderbird+DavMail 支持Exchange</h3>
+<div class="outline-text-3" id="text-5-10">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2017-02-27 一 17:20] </span></span> <br>
+有待整理</li>
+</ul>
+<p>
+为 <code>Thunderbird</code> 添加 <code>DavMail</code> 支持的方法。另外一种是使用 <code>Exquilla</code> 插件。
+</p>
+
+<p>
+缺点是，每次需要先启动 <code>DavMail</code> 才能使用支持 <code>Exchange</code> 的 <code>Thunderbird</code> 。
+</p>
+
+<p>
+refer to: <a href="http://karuppuswamy.com/wordpress/2010/05/13/how-to-integrate-thunderbird-with-ms-exchange-to-replace-ms-outlook/" target="_blank" rel="noopener">http://karuppuswamy.com/wordpress/2010/05/13/how-to-integrate-thunderbird-with-ms-exchange-to-replace-ms-outlook/</a>
+</p>
+</div>
+<div id="outline-container-orgheadline42" class="outline-4">
+<h4 id="orgheadline42"><a id="ID-6eb280cb-112b-47bb-8a6b-0b0ca265a046"></a><span class="section-number-4">5.10.1</span> DavMail configuration</h4>
+<div class="outline-text-4" id="text-5-10-1">
+</div>
+<div id="outline-container-orgheadline70" class="outline-5">
+<h5 id="orgheadline70"><span class="section-number-5">5.10.1.1</span> 下载</h5>
+<div class="outline-text-5" id="text-5-10-1-1">
+<p>
+官网： <a href="http://davmail.sourceforge.net/download.html" target="_blank" rel="noopener">http://davmail.sourceforge.net/download.html</a>
+</p>
+
+<p>
+如下命令下载
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$wget --no-check-certificate -c https://downloads.sourceforge.net/project/davmail/davmail/4.7.3/davmail_4.7.3-2438-1_all.deb?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fdavmail%2Ffiles%2Fdavmail%2F&amp;ts=1488180063&amp;use_mirror=excellmedia
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$wget -c --no-check-certificate https://excellmedia.dl.sourceforge.net/project/davmail/davmail/4.7.3/davmail_4.7.3-2438-1_all.deb
+</pre>
+</div>
+
+<p>
+已下载如下：<a href="file:///home/miracle/mydata/orgmode/data/6ef480dc-678c-4972-b09c-28d524c6ccb4/davmail_4.7.3-2438-1_all.deb" target="_blank" rel="noopener">davmail_4.7.3-2438-1_all.deb</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline71" class="outline-5">
+<h5 id="orgheadline71"><span class="section-number-5">5.10.1.2</span> 安装配置</h5>
+<div class="outline-text-5" id="text-5-10-1-2">
+<p>
+安装版本为： <code>davmail_4.7.3-2438-1_all.deb</code>
+</p>
+
+<p>
+在系统菜单中打开 <code>davmail</code>, 配置项
+</p>
+<pre class="example">
+Exchange Protocol: EWS
+OWA(Exchange) URL: https://hqmx.tpvaoc.com/EWS/Exchange.asmx
+</pre>
+</div>
+</div>
+<div id="outline-container-orgheadline72" class="outline-5">
+<h5 id="orgheadline72"><span class="section-number-5">5.10.1.3</span> 相关端口</h5>
+<div class="outline-text-5" id="text-5-10-1-3">
+<ul class="org-ul">
+<li><p>
+POP Port: 1110 
+</p>
+
+<p>
+从 <code>Exchange</code> 接收 <code>emails</code> (这里的情况we use this method in our case)
+</p></li>
+
+<li><p>
+IMAP Port: 1143 
+</p>
+
+<p>
+从 <code>Exchange</code> 接收 <code>emails</code> (这里不使用)
+</p></li>
+
+<li><p>
+SMTP Port: 1025
+</p>
+
+<p>
+通过 <code>Exchange</code> 发送 <code>emals</code>
+</p></li>
+
+<li><p>
+Caldav HTTP Port: 1080
+</p>
+
+<p>
+与 <code>Exchange server</code> 同步 <code>calendar</code>.
+</p></li>
+
+<li><p>
+LDAP Port: 1389 
+</p>
+
+<p>
+从 <code>Exchange server</code> 获取 <code>address book</code> ( <code>Thunderbird</code> 可以使用这个，在我们编辑邮件的时候自动匹配 <code>email</code> 地址)
+</p></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline74" class="outline-5">
+<h5 id="orgheadline74"><span class="section-number-5">5.10.1.4</span> 操作</h5>
+<div class="outline-text-5" id="text-5-10-1-4">
+</div><ol class="org-ol"><li><a id="orgheadline73"></a><a id="ID-efcadb69-dada-4b94-b915-366d3d8cfe29"></a>关闭<br><div class="outline-text-6" id="text-5-10-1-4-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$cat /usr/bin/davmail 
+#!/bin/sh
+#
+# Usage: davmail [&lt;/path/to/davmail.properties&gt;]
+#
+export LD_LIBRARY_PATH=/usr/lib/jni
+for i in /usr/share/davmail/lib/*; do export CLASSPATH=$CLASSPATH:$i; done
+exec java -Xmx512M -Dsun.net.inetaddr.ttl=60 -cp /usr/share/davmail/davmail.jar:/usr/share/java/swt.jar:$CLASSPATH davmail.DavGateway "$@" 
+
+$ps aux |grep davmail
+miracle  11780  1.1  1.4 4191188 111672 ?      Sl   11:52   0:08 java -Xmx512M -Dsun.net.inetaddr.ttl=60 -cp /usr/share/davmail/davmail.jar:/usr/share/java/swt.jar::/usr/share/davmail/lib/activation-1.1.1.jar:/usr/share/davmail/lib/commons-codec-1.3.jar:/usr/share/davmail/lib/commons-collections-3.1.jar:/usr/share/davmail/lib/commons-httpclient-3.1.jar:/usr/share/davmail/lib/commons-logging-1.0.4.jar:/usr/share/davmail/lib/htmlcleaner-2.2.jar:/usr/share/davmail/lib/jackrabbit-webdav-2.4.3.jar:/usr/share/davmail/lib/jcharset-1.3.jar:/usr/share/davmail/lib/jcifs-1.3.14.jar:/usr/share/davmail/lib/jdom-1.0.jar:/usr/share/davmail/lib/junit-3.8.1.jar:/usr/share/davmail/lib/log4j-1.2.16.jar:/usr/share/davmail/lib/mail-1.4.3.jar:/usr/share/davmail/lib/slf4j-api-1.3.1.jar:/usr/share/davmail/lib/slf4j-log4j12-1.3.1.jar:/usr/share/davmail/lib/stax-api-1.0.1.jar:/usr/share/davmail/lib/stax2-api-3.1.1.jar:/usr/share/davmail/lib/woodstox-core-asl-4.1.2.jar:/usr/share/davmail/lib/xercesImpl-2.8.1.jar davmail.DavGateway
+miracle  11961  1.6  0.8 3645736 67540 ?       Sl   12:03   0:01 java -Xmx512M -Dsun.net.inetaddr.ttl=60 -cp /usr/share/davmail/davmail.jar:/usr/share/java/swt.jar::/usr/share/davmail/lib/activation-1.1.1.jar:/usr/share/davmail/lib/commons-codec-1.3.jar:/usr/share/davmail/lib/commons-collections-3.1.jar:/usr/share/davmail/lib/commons-httpclient-3.1.jar:/usr/share/davmail/lib/commons-logging-1.0.4.jar:/usr/share/davmail/lib/htmlcleaner-2.2.jar:/usr/share/davmail/lib/jackrabbit-webdav-2.4.3.jar:/usr/share/davmail/lib/jcharset-1.3.jar:/usr/share/davmail/lib/jcifs-1.3.14.jar:/usr/share/davmail/lib/jdom-1.0.jar:/usr/share/davmail/lib/junit-3.8.1.jar:/usr/share/davmail/lib/log4j-1.2.16.jar:/usr/share/davmail/lib/mail-1.4.3.jar:/usr/share/davmail/lib/slf4j-api-1.3.1.jar:/usr/share/davmail/lib/slf4j-log4j12-1.3.1.jar:/usr/share/davmail/lib/stax-api-1.0.1.jar:/usr/share/davmail/lib/stax2-api-3.1.1.jar:/usr/share/davmail/lib/woodstox-core-asl-4.1.2.jar:/usr/share/davmail/lib/xercesImpl-2.8.1.jar davmail.DavGateway
+miracle  12127  0.0  0.0  11116   940 pts/1    S+   12:05   0:00 grep --color=auto davmail
+miracle@xmnb4003210:~$ ps aux |grep davmail |awk '{print $2}'
+11780
+11961
+12130
+
+$kill 11780
+
+$kill 11961
+</pre>
+</div>
+</div></li></ol>
+</div>
+<div id="outline-container-orgheadline76" class="outline-5">
+<h5 id="orgheadline76"><span class="section-number-5">5.10.1.5</span> 其它</h5>
+<div class="outline-text-5" id="text-5-10-1-5">
+</div><ol class="org-ol"><li><a id="orgheadline75"></a>How to run multiple instances of DavMail ?<br><div class="outline-text-6" id="text-5-10-1-5-1">
+<p>
+Just create multiple configuration files and provide them as a command line option, see previous question:
+</p>
+<pre class="example">
+davmail server1.properties
+davmail server2.properties
+</pre>
+</div></li></ol>
+</div>
+
+
+
+<div id="outline-container-orgheadline77" class="outline-5">
+<h5 id="orgheadline77"><span class="section-number-5">5.10.1.6</span> 参考</h5>
+<div class="outline-text-5" id="text-5-10-1-6">
+<p>
+<a href="http://davmail.sourceforge.net/" target="_blank" rel="noopener">http://davmail.sourceforge.net/</a>
+</p>
+
+<p>
+<a href="http://davmail.sourceforge.net/serversetup.html" target="_blank" rel="noopener">http://davmail.sourceforge.net/serversetup.html</a>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline43" class="outline-4">
+<h4 id="orgheadline43"><a id="ID-6ef480dc-678c-4972-b09c-28d524c6ccb4"></a><span class="section-number-4">5.10.2</span> Thunder bird</h4>
+<div class="outline-text-4" id="text-5-10-2">
+</div>
+
+<div id="outline-container-orgheadline78" class="outline-5">
+<h5 id="orgheadline78"><span class="section-number-5">5.10.2.1</span> 账户设置</h5>
+<div class="outline-text-5" id="text-5-10-2-1">
+<p>
+新建账户，然后停止自动配置，手动配置如下：
+</p>
+
+
+<div class="figure">
+<p><img src="file:///home/miracle/mydata/orgmode/data/6ef480dc-678c-4972-b09c-28d524c6ccb4/account_thunderbird.png" alt="account_thunderbird.png">
+</p>
+</div>
+
+<p>
+pop: <img src="file:///home/miracle/mydata/orgmode/data/6ef480dc-678c-4972-b09c-28d524c6ccb4/pop_thunder.png" alt="pop_thunder.png">
+</p>
+
+<p>
+smtp: <img src="file:///home/miracle/mydata/orgmode/data/6ef480dc-678c-4972-b09c-28d524c6ccb4/smtp_thunder.png" alt="smtp_thunder.png">
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline79" class="outline-5">
+<h5 id="orgheadline79"><span class="section-number-5">5.10.2.2</span> 文件夹设置</h5>
+<div class="outline-text-5" id="text-5-10-2-2">
+<p>
+如下： <img src="file:///home/miracle/mydata/orgmode/data/6ef480dc-678c-4972-b09c-28d524c6ccb4/folder_thunderbird.png" alt="folder_thunderbird.png">
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline80" class="outline-5">
+<h5 id="orgheadline80"><span class="section-number-5">5.10.2.3</span> 地址配置</h5>
+<div class="outline-text-5" id="text-5-10-2-3">
+<p>
+参见： <img src="file:///home/miracle/mydata/orgmode/data/6ef480dc-678c-4972-b09c-28d524c6ccb4/address_thunderbird.png" alt="address_thunderbird.png">
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline81" class="outline-5">
+<h5 id="orgheadline81"><span class="section-number-5">5.10.2.4</span> 通讯录相关</h5>
+<div class="outline-text-5" id="text-5-10-2-4">
+<p>
+可地址自动补全等。
+</p>
+
+<p>
+参见： <img src="file:///home/miracle/mydata/orgmode/data/6ef480dc-678c-4972-b09c-28d524c6ccb4/address_list_thunder.png" alt="address_list_thunder.png">
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline82" class="outline-5">
+<h5 id="orgheadline82"><a id="ID-04c1c67a-7029-42f3-b431-fb2153e02974"></a><span class="section-number-5">5.10.2.5</span> 日历相关</h5>
+<div class="outline-text-5" id="text-5-10-2-5">
+<p>
+可创建时间等。
+</p>
+
+<p>
+安装 <code>Lightning</code>, 这里是 <code>Lightning 3.3.3</code>
+</p>
+
+<p>
+文件-&gt;新建-&gt;日历，选中保存在网络上
+</p>
+
+<p>
+-&gt;下一步,格式选中 <code>CalDAV</code>, 位置写： <code>http://localhost:1080/users/miracle.lv@tpv-tech.com/calendar</code> 
+</p>
+
+<p>
+-&gt;下一步，名字是： <code>Works Calendar</code>, Email: <code>Import Identity</code>. 
+</p>
+
+<p>
+分别参见如下：
+</p>
+
+
+<div class="figure">
+<p><img src="file:///home/miracle/mydata/orgmode/data/6ef480dc-678c-4972-b09c-28d524c6ccb4/calendar1_thunderbird.png" alt="calendar1_thunderbird.png">
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///home/miracle/mydata/orgmode/data/6ef480dc-678c-4972-b09c-28d524c6ccb4/calendar2_thunderbird.png" alt="calendar2_thunderbird.png">
+</p>
+</div>
+
+<p>
+<a href="file:///home/miracle/mydata/orgmode/data/6ef480dc-678c-4972-b09c-28d524c6ccb4/calendar3_thunderbird.png" target="_blank" rel="noopener">/home/miracle/mydata/orgmode/data/6ef480dc-678c-4972-b09c-28d524c6ccb4/calendar3_thunderbird.png</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline44" class="outline-4">
+<h4 id="orgheadline44"><span class="section-number-4">5.10.3</span> 问题</h4>
+<div class="outline-text-4" id="text-5-10-3">
+</div><div id="outline-container-orgheadline89" class="outline-5">
+<h5 id="orgheadline89"><span class="section-number-5">5.10.3.1</span> 总是弹出不信任网站是否接受。可以尝试如下：</h5>
+<div class="outline-text-5" id="text-5-10-3-1">
+</div><ol class="org-ol"><li><a id="orgheadline86"></a>尝试1( <b>不好用?</b>)<br><ol class="org-ol"><li><a id="orgheadline83"></a>导出证书<br><div class="outline-text-7" id="text-5-10-3-1-1-1">
+<p>
+方法比较多,
+</p>
+
+<p>
+比如,登录 <code>https://hqmx.tpvaoc.com/EWS/Exchange.asmx</code>, 在firefox提示的添加例外中,找到导出的菜单,导出相应的证书,文件名假设为 <code>hqmx.tpvaoc.com</code>
+</p>
+
+<p>
+导出的时候,分别尝试导出 chain的方式,以及直接pem的方式.
+</p>
+</div></li>
+<li><a id="orgheadline84"></a>添加个人信任证书<br><div class="outline-text-7" id="text-5-10-3-1-1-2">
+<p>
+输入如下命令:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$keytool -import -alias mytpvaoc -keystore /etc/ssl/certs/java/cacerts -trustcacerts -file /home/miracle/work/davcert/hqmx.tpvaoc.com -storepass changeit -noprompt
+</pre>
+</div>
+</div></li>
+
+<li><a id="orgheadline85"></a>参考: <a href="http://davmail.sourceforge.net/sslsetup.html" target="_blank" rel="noopener">http://davmail.sourceforge.net/sslsetup.html</a><br><div class="outline-text-7" id="text-5-10-3-1-1-3">
+<pre class="example">
+Most users rely on the interactive accept certificate dialog to handle non public certificate authorities. However, this will not work with an Exchange server cluster with a different certificate on each server. In this case, you need to update global Java truststore with the custom certificate authority:
+
+keytool -import -alias root -keystore /path/to/jre/lib/security/cacerts -trustcacerts -file rootca.crt -storepass changeit -noprompt
+</pre>
+</div></li></ol></li>
+<li><a id="orgheadline87"></a>尝试2(<b>不好用</b>)<br><div class="outline-text-6" id="text-5-10-3-1-2">
+<ol class="org-ol">
+<li>在firefox中访问相关网址： <code>https://tpmail.tpvaoc.com/owa/</code> 在弹出的安全提示中，添加例外并导出证书。</li>
+<li>在thunderbird， 编辑-&gt;首选-&gt;高级-&gt;证书-&gt;查看证书-&gt;服务器，导入刚刚的内容。以及添加例外： <a href="https://hqmx.tpvaoc.com/EWS/Exchange.asmx" target="_blank" rel="noopener">https://hqmx.tpvaoc.com/EWS/Exchange.asmx</a></li>
+</ol>
+
+<p>
+参见： <img src="file:///home/miracle/mydata/orgmode/data/6ef480dc-678c-4972-b09c-28d524c6ccb4/cert_thunderbird.png" alt="cert_thunderbird.png">
+</p>
+</div></li>
+
+<li><a id="orgheadline88"></a>尝试3(<b>不好用</b>)<br><div class="outline-text-6" id="text-5-10-3-1-3">
+<ol class="org-ol">
+<li>导出证书</li>
+</ol>
+<p>
+在thunderbird， 编辑-&gt;首选-&gt;高级-&gt;证书-&gt;查看证书-&gt;服务器，将的证书导出到 tmpTrans/davmail/
+如下： <img src="file:///home/miracle/mydata/orgmode/data/6ef480dc-678c-4972-b09c-28d524c6ccb4/cafile_thunderbird.png" alt="cafile_thunderbird.png">
+</p>
+
+
+<ol class="org-ol">
+<li>配置文件 <code>~/.davmail.properties</code> 修改如下：</li>
+</ol>
+<pre class="example">
+...
+davmail.ssl.clientKeystoreFile=/home/miracle/tmpTrans/davcert/hqmx.tpvaoc.com
+davmail.ssl.clientKeystorePass=
+davmail.ssl.clientKeystoreType=PKCS11
+...
+</pre>
+
+<ol class="org-ol">
+<li>重启 <code>davmail</code>, 类似如下，除了最后一个，都kill</li>
+</ol>
+<div class="org-src-container">
+
+<pre class="src src-sh">$ ps aux |grep davmail |awk '{print $2}'
+11780
+11961
+12130
+$kill 11780
+$kill 11961
+$davmail (可图形启动)
+</pre>
+</div>
+</div></li></ol>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline45" class="outline-3">
+<h3 id="orgheadline45"><span class="section-number-3">5.11</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> lua geany</h3>
+<div class="outline-text-3" id="text-5-11">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2017-04-07 五 16:10]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-12-27 二 17:05]</span></span>
+</p>
+
+<p>
+sudo apt-get install geany-plugin-lua
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline46" class="outline-3">
+<h3 id="orgheadline46"><span class="section-number-3">5.12</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> haroopad</h3>
+<div class="outline-text-3" id="text-5-12">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2017-04-07 五 16:17]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2017-02-20 一 19:35]</span></span>
+</p>
+
+<p>
+markdown 编辑预览。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline47" class="outline-3">
+<h3 id="orgheadline47"><span class="section-number-3">5.13</span> <span class="todo LATER">LATER</span> 常用linux命令的源码</h3>
+<div class="outline-text-3" id="text-5-13">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2017-04-07 五 16:26]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2017-03-02 四 09:55]</span></span>
+</p>
+
+<ol class="org-ol">
+<li>busybox</li>
+<li>coreutils</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgheadline48" class="outline-3">
+<h3 id="orgheadline48"><span class="section-number-3">5.14</span> <span class="todo LATER">LATER</span> mount等linux源码</h3>
+<div class="outline-text-3" id="text-5-14">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2017-04-07 五 16:26]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2017-03-02 四 09:55]</span></span></li>
+
+<li>busybox</li>
+<li>util-linux: <a href="https://www.kernel.org/pub/linux/utils/util-linux/" target="_blank" rel="noopener">https://www.kernel.org/pub/linux/utils/util-linux/</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline49" class="outline-3">
+<h3 id="orgheadline49"><span class="section-number-3">5.15</span> <span class="todo LATER">LATER</span> shell操作技巧,自动补全上下搜索的技巧</h3>
+<div class="outline-text-3" id="text-5-15">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2017-04-07 五 16:26]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2017-03-03 五 09:39]</span></span>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline50" class="outline-3">
+<h3 id="orgheadline50"><span class="section-number-3">5.16</span> <span class="todo LATER">LATER</span> shell输入实用技巧</h3>
+<div class="outline-text-3" id="text-5-16">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2017-04-07 五 16:26]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2017-03-03 五 09:58]</span></span>
+</p>
+
+<p>
+Ctrl+Y 粘贴最近的文本 粘贴最近剪切的文本
+</p>
+
+<p>
+Alt+Y 粘贴早期的文本 轮回到先前剪切的文本并粘贴它
+</p>
+
+<p>
+Ctrl+C 删除整行 删除一整行
+</p>
+
+<p>
+ctrl + s      锁住终端
+</p>
+
+<p>
+ctrl + q      解锁终端
+</p>
+
+<p>
+Ctrl+R 反向渐进搜索 按下这些键后，输入一个搜索字符串进行反向搜索。输入此字符串后，匹配的命令行即会出现，可以运行或编辑它
+</p>
+
+<p>
+Ctrl+S 前向渐进搜索 与前一个功能相似，只不过是前向搜索(与锁住终端冲突?)
+</p>
+
+<p>
+Alt+P 反向搜索 按下这些键后，输入一个字符串进行反向搜索。输入一个字符串并且按Enter键可看到包含该字符串的最近已用命令
+</p>
+
+<p>
+Alt+N 前向搜索 与前一个功能类似，只不过是前向搜索
+</p>
+
+<p>
+Keyboard Macros
+    start-kbd-macro (C-x ()
+           Begin saving the characters typed into the current keyboard macro.
+    end-kbd-macro (C-x ))
+           Stop saving the characters typed into the current keyboard macro and store the definition.
+    call-last-kbd-macro (C-x e)
+           Re-execute the last keyboard macro defined, by making the characters in the macro appear as if typed at the keyboard.
+</p>
+
+
+
+<p>
+shell上:
+0表示标准输入
+1表示标准输出
+2表示标准错误输出
+&gt; 默认为标准输出重定向，与 1&gt; 相同
+2&gt;&amp;1 意思是把 标准错误输出 重定向到 标准输出.
+&amp;&gt;file 意思是把 标准输出 和 标准错误输出 都重定向到文件file中
+</p>
+
+<p>
+参考: <a href="http://blog.chinaunix.net/uid-361890-id-342066.html" target="_blank" rel="noopener">http://blog.chinaunix.net/uid-361890-id-342066.html</a>
+</p>
+
+<p>
+更多信息,参考比较权威的参考：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$man 1 bash
+$man history
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline51" class="outline-3">
+<h3 id="orgheadline51"><span class="section-number-3">5.17</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 关于 <code>configure</code> 系列体系的交叉编译</h3>
+<div class="outline-text-3" id="text-5-17">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2017-04-07 五 16:27]</span></span></li>
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2017-04-07 五 16:27]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2017-03-09 四 10:37]</span></span>
+./configure &#x2013;prefix=/home/miracle.lv/test/sysroot/usr/local &#x2013;host=armv7a-mediatek482_001_neon-linux-gnueabi CC=armv7a-mediatek482_001_neon-linux-gnueabi-gcc
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline52" class="outline-3">
+<h3 id="orgheadline52"><span class="section-number-3">5.18</span> <span class="todo LATER">LATER</span> 设置coredump的格式</h3>
+<div class="outline-text-3" id="text-5-18">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2017-04-07 五 16:27]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2017-03-10 五 14:44]</span></span>
+</p>
+
+<p>
+在masf fvp 系统中:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$echo  /data/coredump/core_%e_sig%s_pid%p &gt; /proc/sys/kernel/core_pattern
+$ulimit -c unlimited
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline53" class="outline-3">
+<h3 id="orgheadline53"><span class="section-number-3">5.19</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> ssh远程解压</h3>
+<div class="outline-text-3" id="text-5-19">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2017-04-07 五 16:29] </span></span> <br>
+wait for arranged.</li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2017-04-01 六 10:52]</span></span>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$ssh &lt;yourname&gt;@172.16.246.220 cat /home/share/miracle/masf_integer_base/masf/fvp_branch_for_sync/_repo_fvp_latest.tgz |tar -xzvf -
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline54" class="outline-3">
+<h3 id="orgheadline54"><span class="section-number-3">5.20</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 每次启动vim或者ssh的时候都会提示错误</h3>
+<div class="outline-text-3" id="text-5-20">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2017-04-07 五 18:48] </span></span> <br>
+wait for arrange.</li>
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2017-04-07 五 16:32]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2017-03-31 五 09:30]</span></span>
+</p>
+
+<pre class="example">
+vim: /usr/local/develop/lib/libcrypto.so.1.0.0: no version information available (required by /usr/lib/libpython2.7.so.1.0)
+vim: /usr/local/develop/lib/libssl.so.1.0.0: no version information available (required by /usr/lib/libpython2.7.so.1.0)
+</pre>
+
+<pre class="example">
+ssh: /usr/local/develop/lib/libcrypto.so.1.0.0: no version information available (required by ssh)
+</pre>
+
+<p>
+参考： <a href="https://www.oschina.net/question/936758_87431" target="_blank" rel="noopener">https://www.oschina.net/question/936758_87431</a>
+</p>
+
+
+<p>
+<a href="http://stackoverflow.com/questions/18390833/no-version-information-available" target="_blank" rel="noopener">http://stackoverflow.com/questions/18390833/no-version-information-available</a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$vim openssl.ld
+$cat openssl.ld
+ OPENSSL_1.0.0 {
+             global:
+                    *;
+ };
+$./config --prefix=/usr/local/develop/ --openssldir=/usr/local/develop/openssl shared -Wl,--version-script=$(pwd)/openssl.ld -Wl,-Bsymbolic-functions
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline55" class="outline-3">
+<h3 id="orgheadline55"><span class="section-number-3">5.21</span> emacs dot绘图出现错误</h3>
+<div class="outline-text-3" id="text-5-21">
+<p>
+使用emacs的dot绘图时， <code>C-c C-c</code> 出现如下错误：
+</p>
+<pre class="example">
+Fontconfig warning: "/etc/fonts/conf.d/25-wqy-zenhei.conf", line 11: Having multiple values in &lt;test&gt; isn't supported and may not work as expected
+Fontconfig warning: "/etc/fonts/conf.d/41-arphic-ukai.conf", line 16: Having multiple &lt;family&gt; in &lt;alias&gt; isn't supported and may not work as expected
+Fontconfig warning: "/etc/fonts/conf.d/41-arphic-ukai.conf", line 16: Having multiple &lt;family&gt; in &lt;alias&gt; isn't supported and may not work as expected
+....
+</pre>
+</div>
+
+<div id="outline-container-orgheadline56" class="outline-4">
+<h4 id="orgheadline56"><span class="section-number-4">5.21.1</span> 实践</h4>
+<div class="outline-text-4" id="text-5-21-1">
+<p>
+直接将相关的字体.conf文件删掉。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline57" class="outline-4">
+<h4 id="orgheadline57"><span class="section-number-4">5.21.2</span> 参考</h4>
+<div class="outline-text-4" id="text-5-21-2">
+<p>
+<a href="http://tieba.baidu.com/p/1849187273" target="_blank" rel="noopener">http://tieba.baidu.com/p/1849187273</a>
+</p>
+
+<p>
+关键点：
+</p>
+<pre class="example">
+安装了最新的fontconfig以后会出现如下警告（如果你安装了wqy字体）：
+
+updating font cache... Fontconfig warning: "/etc/fonts/conf.d/44-wqy-microhei.conf", line 6: Having multiple values in &lt;test&gt; isn't supported and may not works as expected
+Fontconfig warning: "/etc/fonts/conf.d/65-wqy-zenhei.conf", line 11: Having multiple values in &lt;test&gt; isn't supported and may not works as expected
+Fontconfig warning: "/etc/fonts/conf.d/85-wqy-bitmapsong.conf", line 33: Having multiple values in &lt;test&gt; isn't supported and may not works as expected
+Fontconfig warning: "/etc/fonts/conf.d/85-wqy-bitmapsong.conf", line 55: Having multiple values in &lt;test&gt; isn't supported and may not works as expected
+done.
+Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 9: reading configurations from ~/.fonts.conf is deprecated.
+更正方法是把：
+&lt;test qual=”any” name=”family”&gt;
+&lt;string&gt;WenQuanYi Micro Hei&lt;/string&gt;
+&lt;string&gt;文泉驿微米黑&lt;/string&gt;
+&lt;string&gt;文泉驿微米黑&lt;/string&gt;
+&lt;/test&gt;
+改成
+&lt;test qual=”any” name=”family”&gt;
+&lt;string&gt;WenQuanYi Micro Hei&lt;/string&gt;
+&lt;/test&gt;
+&lt;test qual=”any” name=”family”&gt;
+&lt;string&gt;文泉驿微米黑&lt;/string&gt;
+&lt;/test&gt;
+&lt;test qual=”any” name=”family”&gt;
+&lt;string&gt;文泉驿微米黑&lt;/string&gt;
+&lt;/test&gt;
+这种形式。
+关于
+Fontconfig warning: “/etc/fonts/conf.d/50-user.conf”, line 9: reading configurations from ~/.fonts.conf is deprecated.
+把50-user.conf里第九行的deprecated对应的“yes”改成“no”。
+</pre>
+
+<pre class="example">
+静·是一种态度: 研究了两天字体才发现，sudo rm最管用！
+</pre>
+
+<pre class="example">
+Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 9: reading configurations from ~/.fonts.conf is deprecated.
+
+解决方法：
+
+mkdir $XDG_CONFIG_HOME/fontconfig
+mv .fonts.conf $XDG_CONFIG_HOME/fontconfig/fonts.conf
+($XDG_CONFIG_HOME = ~/.config)
+神马意思呢，fontconfig2 告诉你，它的配置文件路径是符合 XDG 标准的，$HOME 下的 .fonts.conf 快快移到 $XDG_CONFIG_HOME 下吧。 
+
+necomancer: 回复 realasking :cat一下/etc/fonts/conf.d/50-user.conf就会看到的，下面指向~/.fonts.conf的两节是“will be removed in future”
+</pre>
+
+<p>
+<a href="https://bbs.archlinux.org/viewtopic.php?pid=1157957#p1157957" target="_blank" rel="noopener">https://bbs.archlinux.org/viewtopic.php?pid=1157957#p1157957</a>
+</p>
+
+<pre class="example">
+Create a $XDG_CONFIG_HOME/fontconfig directory (if not existing already) and move your ~/.fonts.conf there as fonts.conf.
+Usually $XDG_CONFIG_HOME is ~/.config
+
+The warning should then not appear any more.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline58" class="outline-3">
+<h3 id="orgheadline58"><span class="section-number-3">5.22</span> <code>/proc/pid/maps</code> 查看动态链接的库</h3>
+<div class="outline-text-3" id="text-5-22">
+<p>
+参考： <a href="http://blog.csdn.net/mldxs/article/details/16993315" target="_blank" rel="noopener">http://blog.csdn.net/mldxs/article/details/16993315</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline59" class="outline-3">
+<h3 id="orgheadline59"><span class="section-number-3">5.23</span> <code>/proc/pid/environ</code> 查看进程的环境变量</h3>
+</div>
+
+<div id="outline-container-orgheadline60" class="outline-3">
+<h3 id="orgheadline60"><span class="section-number-3">5.24</span> 批量重命名文件的技巧</h3>
+<div class="outline-text-3" id="text-5-24">
+<p>
+尝试了半天，终于找到了几种批量重命名文件的方法，记录下来以备后用^_^
+</p>
+
+<p>
+[quietheart@lv-k temp]\( touch {1,2,3,4,5}.cpp
+[quietheart@lv-k temp]\) touch [1-5]
+[quietheart@lv-k temp]\( ls
+[1-5]  1.cpp  2.cpp  3.cpp  4.cpp  5.cpp
+[quietheart@lv-k temp]\) rm \[1-5\]
+rm：是否删除 一般空文件 “[1-5]”? y
+[quietheart@lv-k temp]\( ls
+1.cpp  2.cpp  3.cpp  4.cpp  5.cpp
+[quietheart@lv-k temp]\) rename .cpp .c *.cpp
+[quietheart@lv-k temp]\( ls
+1.c  2.c  3.c  4.c  5.c
+[quietheart@lv-k temp]\) ls *.c |awk '{sub(<i>.c$</i>,"")}{print $1}'|awk '{printf "mv %s.c %s.cpp\n",$1,\(1}' |sh
+[quietheart@lv-k temp]\) ls
+1.cpp  2.cpp  3.cpp  4.cpp  5.cpp
+[quietheart@lv-k temp]\( ls *.cpp |sed 's/\(.*\).cpp/mv & \1.c/' |sh
+[quietheart@lv-k temp]\) ls
+1.c  2.c  3.c  4.c  5.c
+</p>
+
+<p>
+以上过程大致是：
+先把所有".cpp"文件的后缀修改成".c"后缀，再把".c"修改回".cpp"，再把".cpp"修改成".c"。
+原理分别用到了：使用rename、使用awk+sh、使用sed+正则+sh，三种方式。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline61" class="outline-3">
+<h3 id="orgheadline61"><span class="section-number-3">5.25</span> 链接选项 <code>-rpath</code> 和 <code>-rpath-link</code></h3>
+<div class="outline-text-3" id="text-5-25">
+<pre class="example">
+链接动态库
+
+如何程序在连接时使用了共享库，就必须在运行的时候能够找到共享库的位置。linux的可执行程序在执行的时候默认是先搜索/lib和/usr/lib这两个目录，然后按照/etc/ld.so.conf里面的配置搜索绝对路径。同时，Linux也提供了环境变量LD_LIBRARY_PATH供用户选择使用，用户可以通过设定它来查找除默认路径之外的其他路径，如查找/work/lib路径,你可以在/etc/rc.d/rc.local或其他系统启动后即可执行到的脚本添加如下语句：LD_LIBRARY_PATH =/work/lib:$(LD_LIBRARY_PATH)。并且LD_LIBRARY_PATH路径优先于系统默认路径之前查找（详细参考《使用LD_LIBRARY_PATH》）。
+
+不过LD_LIBRARY_PATH的设定作用是全局的，过多的使用可能会影响到其他应用程序的运行，所以多用在调试。（LD_LIBRARY_PATH的缺陷和使用准则，可以参考《Why LD_LIBRARY_PATH is bad》 ）。通常情况下推荐还是使用gcc的-R或-rpath选项来在编译时就指定库的查找路径，并且该库的路径信息保存在可执行文件中，运行时它会直接到该路径查找库，避免了使用LD_LIBRARY_PATH环境变量查找。
+链接选项和路径
+
+现代连接器在处理动态库时将链接时路径（Link-time path）和运行时路径（Run-time path）分开,用户可以通过-L指定连接时库的路径，通过-R（或-rpath）指定程序运行时库的路径，大大提高了库应用的灵活性。比如我们做嵌入式移植时#arm-linux-gcc $(CFLAGS) –o target –L/work/lib/zlib/ -llibz-1.2.3 (work/lib/zlib下是交叉编译好的zlib库)，将target编译好后我们只要把zlib库拷贝到开发板的系统默认路径下即可。或者通过-rpath（或-R ）、LD_LIBRARY_PATH指定查找路径。
+
+链接器ld的选项有 -L，-rpath 和 -rpath-link，看了下 man ld，大致是这个意思：
+
+-L: “链接”的时候，去找的目录，也就是所有的 -lFOO 选项里的库，都会先从 -L 指定的目录去找，然后是默认的地方。编译时的-L选项并不影响环境变量LD_LIBRARY_PATH，-L只是指定了程序编译连接时库的路径，并不影响程序执行时库的路径，系统还是会到默认路径下查找该程序所需要的库，如果找不到，还是会报错，类似cannot open shared object file。
+
+-rpath-link：这个也是用于“链接”的时候的，例如你显示指定的需要 FOO.so，但是 FOO.so 本身是需要 BAR.so 的，后者你并没有指定，而是 FOO.so 引用到它，这个时候，会先从 -rpath-link 给的路径里找。
+
+-rpath: “运行”的时候，去找的目录。运行的时候，要找 .so 文件，会从这个选项里指定的地方去找。对于交叉编译，交叉编译链接器需已经配置 –with-sysroot 选项才能起作用。也就是说，-rpath指定的路径会被记录在生成的可执行程序中，用于运行时查找需要加载的动态库。-rpath-link 则只用于链接时查找。
+链接搜索顺序
+
+直接man ld。
+
+
+gcc和链接选项的使用
+
+在gcc中使用ld链接选项时，需要在选项前面加上前缀-Wl(是字母l，不是1，我曾多次弄错），以区别不是编译器的选项。
+</pre>
+
+
+
+<p>
+参考： 
+<a href="http://blog.csdn.net/xph23/article/details/38157491" target="_blank" rel="noopener">http://blog.csdn.net/xph23/article/details/38157491</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline62" class="outline-3">
+<h3 id="orgheadline62"><span class="section-number-3">5.26</span> <code>di</code> 命令替代 <code>du</code> 命令</h3>
+</div>
+
+<div id="outline-container-orgheadline63" class="outline-3">
+<h3 id="orgheadline63"><span class="section-number-3">5.27</span> 使用shell数组来实现cut类似功能的技巧</h3>
+<div class="outline-text-3" id="text-5-27">
+<p>
+修改一个目录下文件的权限使之和另一个目录文件一样
+<code>/3rd/browser_engine</code> 和 <code>/data/3rd/browser_engine</code>
+</p>
+<pre class="example">
+cd /3rd/browser_engine
+for file in `find . -type f`; do atrr_file=$(ls -Z "$file"); array=($atrr_file); chcon ${array[0]} /data/3rd/browser_engine/${array[1]}; done
+</pre>
+</div>
+</div>
+</div>
 
                     </div>
                 </article>                        

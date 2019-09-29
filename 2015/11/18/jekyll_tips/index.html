@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    
+</title>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="/css/partial/head.css">
+<link rel="stylesheet" href="/css/partial/header.css">
+<link rel="stylesheet" href="/css/partial/archives.css">
+<link rel="stylesheet" href="/css/partial/categories.css">
+<link rel="stylesheet" href="/css/partial/home-posts.css">
+<link rel="stylesheet" href="/css/partial/page-nav.css">
+<link rel="stylesheet" href="/css/partial/tags.css">
+<link rel="stylesheet" href="/css/partial/about.css">
+<link rel="stylesheet" href="/css/partial/more.css">
+<link rel="stylesheet" href="/css/partial/footer.css">
+<link rel="stylesheet" href="/css/post.css">
+<link rel="stylesheet" href="/css/orgmode/hexo_orgmode_style.css">
+
+
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="/lib/jquery-1.11.3.min.js"></script>
+<script src="/js/common.js"></script>
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
+            <script src="js/nav.js"></script>
+<table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="/">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="/categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="/categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(56)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="/categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(6)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="/categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="/categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="/categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="/categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="/categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="/categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="/categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="/categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="/categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(3)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="/categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="/categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="/categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="/categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="/categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="/categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="/categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="/categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="/categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="/categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="/categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="/categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="/categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="/categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="/categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="/tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="/archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="/more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="/about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+        <h1>
+               <a href="/" title="Menu.Home">
+               QuietHeart's Site
+               </a>
+        </h1>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <article>
+                    <h1 id="header1" style="text-align: center;">
+                        
+                    </h1>
+                    <hr id="title_line">
+                    <div>
+                        <div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 序言</a>
+<ul>
+<li><a href="#orgheadline2">1.1. 文章的诞生过程</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline3">2. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[13/61]</code>(<code>[21%]</code>)</a>
+<ul>
+<li><a href="#orgheadline4">2.1. <span class="done nilDONE">DONE</span> 在jekyll分类的hover上添加自动切换当前分类的代码</a></li>
+<li><a href="#orgheadline5">2.2. <span class="todo nilLATER">LATER</span> 为jekyll添加帮助或者公告或者友情链接等菜单</a></li>
+<li><a href="#orgheadline6">2.3. <span class="done nilDONE">DONE</span> 多说评论添加到 jekyll</a></li>
+<li><a href="#orgheadline7">2.4. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 如何体现父子目录的层次关系？</a></li>
+<li><a href="#orgheadline8">2.5. <span class="todo nilLATER">LATER</span> json?</a></li>
+<li><a href="#orgheadline9">2.6. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 如何借助变量而非常量显示一些文字？</a></li>
+<li><a href="#orgheadline10">2.7. <span class="todo nilLATER">LATER</span> 文章全屏显示？</a></li>
+<li><a href="#orgheadline11">2.8. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 显示文章内容大纲?</a></li>
+<li><a href="#orgheadline12">2.9. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 嵌入flash等脚本特效如网盘</a></li>
+<li><a href="#orgheadline13">2.10. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 如何实现和规划标签？</a></li>
+<li><a href="#orgheadline14">2.11. <span class="todo nilNEXT">NEXT</span> 自动化建站编译与添加分类等的脚本</a></li>
+<li><a href="#orgheadline15">2.12. <span class="todo nilNEXT">NEXT</span> 本地动态相关脚本与配置：</a></li>
+<li><a href="#orgheadline16">2.13. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 可以用配置设置好本地ip。</a></li>
+<li><a href="#orgheadline17">2.14. <span class="todo nilNEXT">NEXT</span> 然后本地可以通过form提交调用本地脚本，完成文章的添加、删除等。</a></li>
+<li><a href="#orgheadline18">2.15. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> 脚本完成的内容实际是修改相应文件，然后commit、push。</a></li>
+<li><a href="#orgheadline19">2.16. <span class="done nilCANCEL">CANCEL</span> 但是仅限本地。这样便可对外展示，对本地而言​动态，同时又不借助动态插件，达到动态效果。</a></li>
+<li><a href="#orgheadline20">2.17. <span class="todo nilNEXT">NEXT</span> 搜索？</a></li>
+<li><a href="#orgheadline21">2.18. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 建立菜单</a></li>
+<li><a href="#orgheadline22">2.19. <span class="todo nilNEXT">NEXT</span> 规范一些写作规则</a></li>
+<li><a href="#orgheadline23">2.20. <span class="todo nilNEXT">NEXT</span> 如何显示未分类的内容？</a></li>
+<li><a href="#orgheadline24">2.21. <span class="done nilDONE">DONE</span> 链接的相对路径引用如何使用？比如引用一个文件等等？</a></li>
+<li><a href="#orgheadline25">2.22. <span class="done nilDONE">DONE</span> 如何在_posts文章内部引用其他的_posts文章？</a></li>
+<li><a href="#orgheadline26">2.23. <span class="done nilDONE">DONE</span> 如何实现子分类？</a></li>
+<li><a href="#orgheadline27">2.24. <span class="done nilDONE">DONE</span> 如何计算每个分类中的内容数目？</a></li>
+<li><a href="#orgheadline28">2.25. <span class="done nilDONE">DONE</span> 插入图片的大小无法自动适配显示？</a></li>
+<li><a href="#orgheadline29">2.26. <span class="done nilDONE">DONE</span> markdown代码块中换行在主页中无法体现</a></li>
+<li><a href="#orgheadline30">2.27. <span class="todo nilINBOX">INBOX</span> html滚动条颜色如何定制？</a></li>
+<li><a href="#orgheadline31">2.28. <span class="todo nilINBOX">INBOX</span> jekyll置顶文章</a></li>
+<li><a href="#orgheadline32">2.29. <span class="todo nilINBOX">INBOX</span> Jekyll置顶文章、搜索功能、以及各类半成品文章片段的存放分类创建（不用每个文章都是属于某个体系）。</a></li>
+<li><a href="#orgheadline33">2.30. <span class="todo nilINBOX">INBOX</span> jekyll 评论权限的管理</a></li>
+<li><a href="#orgheadline34">2.31. <span class="done nilDONE">DONE</span> jekyll 点击顶部分类菜单不是回到页首，而是对当前页面刷新，以便回复默认分类结构</a></li>
+<li><a href="#orgheadline35">2.32. <span class="todo nilINBOX">INBOX</span> jekyll左上部分top按钮的完善，目录位置的完善</a></li>
+<li><a href="#orgheadline36">2.33. <span class="done nilDONE">DONE</span> jekyll文章分界线不居中？</a></li>
+<li><a href="#orgheadline37">2.34. <span class="todo nilINBOX">INBOX</span> 代码框大小不自动随窗口而调整？</a></li>
+<li><a href="#orgheadline38">2.35. <span class="todo nilINBOX">INBOX</span> Jekyll “关于”与“更多”菜单</a></li>
+<li><a href="#orgheadline39">2.36. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> jekyll 不支持markdown语法高亮</a></li>
+<li><a href="#orgheadline40">2.37. <span class="todo nilLATER">LATER</span> jekyll 提示功能</a></li>
+<li><a href="#orgheadline41">2.38. <span class="todo nilINBOX">INBOX</span> 目前对orgmode+jekyll管理方式时orgmode中链接引用的路径问题需要解决。</a></li>
+<li><a href="#orgheadline42">2.39. <span class="todo nilINBOX">INBOX</span> Jekyll如何处理收藏的网址？</a></li>
+<li><a href="#orgheadline43">2.40. <span class="todo nilINBOX">INBOX</span> jekyll 上一页下一页上一篇下一篇</a></li>
+<li><a href="#orgheadline44">2.41. <span class="todo nilINBOX">INBOX</span> Jekyll中的附件图片，还是用这样的目录：../post_files/article/data/&#x2026;</a></li>
+<li><a href="#orgheadline45">2.42. <span class="todo nilNEXT">NEXT</span> Jekyll Cublog迁移</a></li>
+<li><a href="#orgheadline46">2.43. <span class="todo nilINBOX">INBOX</span> Jekyll 为文章添加额外信息，比如来源、转载等等。</a></li>
+<li><a href="#orgheadline47">2.44. <span class="todo nilINBOX">INBOX</span> jekyll设置复制选择文章的隐藏模式，双击可以激活选择复制功能</a></li>
+<li><a href="#orgheadline48">2.45. <span class="done nilDONE">DONE</span> jekyll 考虑将jekyll源码与站点结果分开，在github上存放站点结果, bitbucket上存放源码</a></li>
+<li><a href="#orgheadline49">2.46. <span class="done nilDONE">DONE</span> jekyll中评论框的布局调整，应该在page内容外</a></li>
+<li><a href="#orgheadline50">2.47. <span class="todo nilLATER">LATER</span> 添加丰富动作，比如双击可以解开复制文章的功能等等</a></li>
+<li><a href="#orgheadline51">2.48. <span class="todo nilNEXT">NEXT</span> Jekyll分类菜单的宽度是否可以不自动改变？</a></li>
+<li><a href="#orgheadline52">2.49. <span class="todo nilNEXT">NEXT</span> jekyll 公共板，一个大的随意涂鸦的“留言板”，基于多说评论。</a></li>
+<li><a href="#orgheadline53">2.50. <span class="todo nilNEXT">NEXT</span> 搭建一个最基本的jekyll的方式，在另外一篇文章中已有体现，引用？</a></li>
+<li><a href="#orgheadline54">2.51. <span class="todo nilINBOX">INBOX</span> 应该考虑将签名信息放在下面，以便能在摘要中显示正文</a></li>
+<li><a href="#orgheadline55">2.52. <span class="todo nilLATER">LATER</span> jekyll如何发布私有文件通过权限来控制访问?</a></li>
+<li><a href="#orgheadline56">2.53. <span class="todo nilLATER">LATER</span> jekyll博客导入导出</a></li>
+<li><a href="#orgheadline57">2.54. <span class="todo nilLATER">LATER</span> jekyll实现私有云与公有云可能需要了解的</a></li>
+<li><a href="#orgheadline58">2.55. <span class="todo nilLATER">LATER</span> jekyll搜索的改进</a></li>
+<li><a href="#orgheadline59">2.56. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> jekyll 网文分类规整</a></li>
+<li><a href="#orgheadline60">2.57. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> jekyll排序功能</a></li>
+<li><a href="#orgheadline61">2.58. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> jekyll文章导出功能</a></li>
+<li><a href="#orgheadline62">2.59. <span class="todo nilLATER">LATER</span> jekyll 如何实现相对路径迁移？</a></li>
+<li><a href="#orgheadline63">2.60. <span class="todo nilINBOX">INBOX</span> 如何快速建立一个简单的jekyll网站？</a></li>
+<li><a href="#orgheadline64">2.61. <span class="todo nilLATER">LATER</span> jekyll的分类选择跳来跳去有点不好操作，有待改善。</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+---
+layout: posts
+title: Jekyll建站问题
+categories: [categories, study]
+tags: [gtd_next]
+comments: true
+---
+
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 序言</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><span class="section-number-3">1.1</span> 文章的诞生过程</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+本文描述jekyll建站时遇到的问题，由于对jekyll建站并无专门的学习和研究，所以该文章内容目前还不够系统。
+</p>
+
+<p>
+本文中大多内容是这样产生的：
+</p>
+<ol class="org-ol">
+<li>在jekyll的建站过程中首先遇到某些问题，然后将改问题放于FAQ中，通过orgmode结合GTD方法来管理</li>
+
+<li>FAQ中的问题有些解决，有些没有解决，解决的问题或许会整理到更合适的文章章节中。</li>
+
+<li>如上方式会快速形成一个jekyll建站文档的雏形，虽然不够系统，也反映了在建站经历的真实过程，便于有兴趣的朋友参考。</li>
+
+<li>随着实践的增多，和文章内容的丰富，在更为熟悉之时会将所有FAQ相应内容归纳到合适的章节，该文章会逐渐形成一篇系统的文章。</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">2</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[13/61]</code>(<code>[21%]</code>)</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-27 五 17:30] </span></span> <br>
+wait for all finished.</li>
+</ul>
+</div>
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">2.1</span> <span class="done DONE">DONE</span> 在jekyll分类的hover上添加自动切换当前分类的代码</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:21]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-13 五 09:54]</span></span>
+</p>
+<hr>
+<p>
+阅读源代码。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">2.2</span> <span class="todo LATER">LATER</span> 为jekyll添加帮助或者公告或者友情链接等菜单</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-01-08 五 17:47]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-16 一 09:54]</span></span>
+</p>
+<hr>
+<p>
+此项记录最好整理到jekyll中相应的todo post中。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">2.3</span> <span class="done DONE">DONE</span> 多说评论添加到 jekyll</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 10:08]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-17 二 11:08]</span></span>
+</p>
+<hr>
+
+<p>
+多说评论框定制参考：
+<a href="http://yusi123.com/2689.html" target="_blank" rel="noopener">http://yusi123.com/2689.html</a>
+</p>
+
+<p>
+添加方式：
+1、注册多说（用qq或者通常社交帐号即可）
+2、站点管理生成自己的站点，然后会有地方生成相应的评论框代码。
+3、将评论框代码添加到需要添加的地方即可。
+可以参考：
+<a href="http://liberize.me/tech/jekyll-use-duoshuo-comment-system.html" target="_blank" rel="noopener">http://liberize.me/tech/jekyll-use-duoshuo-comment-system.html</a>
+</p>
+
+<p>
+<a href="http://www.ituring.com.cn/article/114888" target="_blank" rel="noopener">http://www.ituring.com.cn/article/114888</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7"><span class="section-number-3">2.4</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 如何体现父子目录的层次关系？</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:53]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:26]</span></span></li>
+</ul>
+
+<p>
+目前分类目录的实现方式：
+</p>
+<ol class="org-ol">
+<li>categories包含各级分类子目录，文章存放在子目录中的 <code>_posts</code> 目录中。</li>
+<li><p>
+各级子目录有 <code>index.html</code> 做为访问该目录的入口，并且该文件中包含该级目录的信息，
+例如：
+</p>
+<pre class="example">
+---
+layout: categories
+title: 命令
+_name: command
+_parent: linux
+_path: [categories, study, linux, command]
+---
+</pre></li>
+
+<li>通过 <code>_data/categories.json</code> 来描述层级目录的关系，便于显示。</li>
+</ol>
+
+<p>
+参考源代码。
+</p>
+
+<p>
+文章所述目录层次
+描述站点目录信息的文件
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">2.5</span> <span class="todo LATER">LATER</span> json?</h3>
+<div class="outline-text-3" id="text-2-5">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-27 五 17:51]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:27]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">2.6</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 如何借助变量而非常量显示一些文字？</h3>
+<div class="outline-text-3" id="text-2-6">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:55]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:27]</span></span></li>
+</ul>
+<p>
+如：
+目录列表中的链接文字"记事"等，用xxx.title方式来显示。
+主目录中文章的分类标题，用分类的title而非常量显示。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><span class="section-number-3">2.7</span> <span class="todo LATER">LATER</span> 文章全屏显示？</h3>
+<div class="outline-text-3" id="text-2-7">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:55]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:27]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11"><span class="section-number-3">2.8</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 显示文章内容大纲?</h3>
+<div class="outline-text-3" id="text-2-8">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:55] </span></span> <br>
+通过orgmode，已经实现。待整理。</li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:25]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><span class="section-number-3">2.9</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 嵌入flash等脚本特效如网盘</h3>
+<div class="outline-text-3" id="text-2-9">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:55]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:27]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"><span class="section-number-3">2.10</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 如何实现和规划标签？</h3>
+<div class="outline-text-3" id="text-2-10">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:55]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:27]</span></span></li>
+</ul>
+<p>
+网站主要用于阅读而非编辑，所以经常在线更新的东西，不适于用于这类网站。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14"><span class="section-number-3">2.11</span> <span class="todo NEXT">NEXT</span> 自动化建站编译与添加分类等的脚本</h3>
+<div class="outline-text-3" id="text-2-11">
+<ul class="org-ul">
+<li>State "NEXT"       from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:58]</span></span></li>
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:56]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:27]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><span class="section-number-3">2.12</span> <span class="todo NEXT">NEXT</span> 本地动态相关脚本与配置：</h3>
+<div class="outline-text-3" id="text-2-12">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:56]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:27]</span></span></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16"><span class="section-number-3">2.13</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 可以用配置设置好本地ip。</h3>
+<div class="outline-text-3" id="text-2-13">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:57]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:27]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17"><span class="section-number-3">2.14</span> <span class="todo NEXT">NEXT</span> 然后本地可以通过form提交调用本地脚本，完成文章的添加、删除等。</h3>
+<div class="outline-text-3" id="text-2-14">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:58]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:27]</span></span></li>
+</ul>
+<p>
+远程不用支持动态，因为远程的内容一般都是展示给别人的。更新的动作在本地就行，本地有动态即可。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18"><span class="section-number-3">2.15</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> 脚本完成的内容实际是修改相应文件，然后commit、push。</h3>
+<div class="outline-text-3" id="text-2-15">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:59]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:27]</span></span></li>
+</ul>
+<p>
+通过本地动态，方便在线编辑文章。建议修改文件内容还是通过特定编辑器，比如 <code>vim</code>, <code>emacs</code> 来进行，在线编辑器，还需另外调查。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="section-number-3">2.16</span> <span class="done CANCEL">CANCEL</span> 但是仅限本地。这样便可对外展示，对本地而言​动态，同时又不借助动态插件，达到动态效果。</h3>
+<div class="outline-text-3" id="text-2-16">
+<ul class="org-ul">
+<li>State "CANCEL"     from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 12:01] </span></span> <br>
+与前面貌似重复。</li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:27]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="section-number-3">2.17</span> <span class="todo NEXT">NEXT</span> 搜索？</h3>
+<div class="outline-text-3" id="text-2-17">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:59]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:27]</span></span></li>
+</ul>
+
+<p>
+参考：
+[<a href="http://holbrook.github.io/" target="_blank" rel="noopener">http://holbrook.github.io/</a>]()
+</p>
+
+<p>
+<a href="http://readthedocs.org/projects/org-babel/" target="_blank" rel="noopener">http://readthedocs.org/projects/org-babel/</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline21" class="outline-3">
+<h3 id="orgheadline21"><span class="section-number-3">2.18</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 建立菜单</h3>
+<div class="outline-text-3" id="text-2-18">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "WAIT/FORWARD" <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 12:01] </span></span> <br>
+已经完成，有待完善，具体参见源代码。</li>
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2015-11-27 五 17:52] </span></span> <br>
+等待整理解决方案。</li>
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:27]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:27]</span></span>
+右上角菜单来表示标签等，节省页面空间。
+参考：
+[<a href="http://www.fuzihao.org/blog/2015/02/19/org-mode%E6%95%99%E7%A8%8B/" target="_blank" rel="noopener">http://www.fuzihao.org/blog/2015/02/19/org-mode%E6%95%99%E7%A8%8B/</a>]()
+[<a href="http://blog.binchen.org/categories/index.html" target="_blank" rel="noopener">http://blog.binchen.org/categories/index.html</a>]()
+[<a href="http://z.sdutlinux.org/soft/data/20120610002446/index.html" target="_blank" rel="noopener">http://z.sdutlinux.org/soft/data/20120610002446/index.html</a>]()</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline22" class="outline-3">
+<h3 id="orgheadline22"><span class="section-number-3">2.19</span> <span class="todo NEXT">NEXT</span> 规范一些写作规则</h3>
+<div class="outline-text-3" id="text-2-19">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:28]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:28]</span></span>
+<ul class="org-ul">
+<li>文章引用的附件和图片等内容存放到/data目录，名称前面有和posts文章一样的时间前缀，  
+根据文件类型先分类，分类固定后不应再改动，所以不规定具体分类，只规定文件类型。  
+例如：  
+`/data/image/2015-08-19-test_image.jpg`图片就是被`_posts/2015-08-19-xxx`文章引用的。</li>
+<li>未完成的文章放置/draft目录中。</li>
+<li>文内引用链接：  
+配置_config.yml,permalink=none，这样文章的站内链接就是其分类位置，当然排除_post路径段。</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline23" class="outline-3">
+<h3 id="orgheadline23"><span class="section-number-3">2.20</span> <span class="todo NEXT">NEXT</span> 如何显示未分类的内容？</h3>
+<div class="outline-text-3" id="text-2-20">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:28]</span></span></li>
+<li>State "INBOX"      from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:28]</span></span></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline24" class="outline-3">
+<h3 id="orgheadline24"><span class="section-number-3">2.21</span> <span class="done DONE">DONE</span> 链接的相对路径引用如何使用？比如引用一个文件等等？</h3>
+<div class="outline-text-3" id="text-2-21">
+<ul class="org-ul">
+<li>State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:29]</span></span>
+    参见：  [测试代码](/categories/others/test_link.html "2015-08-19-test_link.md")</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline25" class="outline-3">
+<h3 id="orgheadline25"><span class="section-number-3">2.22</span> <span class="done DONE">DONE</span> 如何在_posts文章内部引用其他的_posts文章？</h3>
+<div class="outline-text-3" id="text-2-22">
+<ul class="org-ul">
+<li>State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:29]</span></span>
+    参见：  [测试代码](/categories/others/test_link.html "2015-08-19-test_link.md")</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline26" class="outline-3">
+<h3 id="orgheadline26"><span class="section-number-3">2.23</span> <span class="done DONE">DONE</span> 如何实现子分类？</h3>
+<div class="outline-text-3" id="text-2-23">
+<ul class="org-ul">
+<li>State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:29]</span></span>
+    参见：  [测试代码](/categories/others/test_link.html "2015-08-19-test_link.md")</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline27" class="outline-3">
+<h3 id="orgheadline27"><span class="section-number-3">2.24</span> <span class="done DONE">DONE</span> 如何计算每个分类中的内容数目？</h3>
+<div class="outline-text-3" id="text-2-24">
+<ul class="org-ul">
+<li>State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:29]</span></span>
+    liquid模板代码：</li>
+</ul>
+<p>
+
+        &lbrace;&lbrace;site.categories.note|size&rbrace;&rbrace;  
+
+    具体可参见：  
+    [<a href="http://www.tuicool.com/m/articles/INBnMz" target="_blank" rel="noopener">http://www.tuicool.com/m/articles/INBnMz</a>]()  
+    [<a href="http://higrid.net/c-art-jeklly_template_data.htm" target="_blank" rel="noopener">http://higrid.net/c-art-jeklly_template_data.htm</a>]()  
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline28" class="outline-3">
+<h3 id="orgheadline28"><span class="section-number-3">2.25</span> <span class="done DONE">DONE</span> 插入图片的大小无法自动适配显示？</h3>
+<div class="outline-text-3" id="text-2-25">
+<ul class="org-ul">
+<li><p>
+State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:29]</span></span>
+    css代码：
+</p>
+
+<p>
+    img {
+        max-width:100%;
+        height:auto;
+    }
+参见：  
+[测试代码](/categories/others/test_link.html "2015-08-19-test_link.md")  
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline29" class="outline-3">
+<h3 id="orgheadline29"><span class="section-number-3">2.26</span> <span class="done DONE">DONE</span> markdown代码块中换行在主页中无法体现</h3>
+<div class="outline-text-3" id="text-2-26">
+<ul class="org-ul">
+<li>State "DONE"       from              <span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 13:29]</span></span>
+    属于标记语言解析问题。当前解决方式：换行之前上一行结尾追加2个以上空白；代码段凭借缩进来完成，代码段之前保留一空行。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline30" class="outline-3">
+<h3 id="orgheadline30"><span class="section-number-3">2.27</span> <span class="todo INBOX">INBOX</span> html滚动条颜色如何定制？</h3>
+<div class="outline-text-3" id="text-2-27">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-18 三 10:07]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline31" class="outline-3">
+<h3 id="orgheadline31"><span class="section-number-3">2.28</span> <span class="todo INBOX">INBOX</span> jekyll置顶文章</h3>
+<div class="outline-text-3" id="text-2-28">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-19 四 09:17]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline32" class="outline-3">
+<h3 id="orgheadline32"><span class="section-number-3">2.29</span> <span class="todo INBOX">INBOX</span> Jekyll置顶文章、搜索功能、以及各类半成品文章片段的存放分类创建（不用每个文章都是属于某个体系）。</h3>
+<div class="outline-text-3" id="text-2-29">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-20 五 15:36]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline33" class="outline-3">
+<h3 id="orgheadline33"><span class="section-number-3">2.30</span> <span class="todo INBOX">INBOX</span> jekyll 评论权限的管理</h3>
+<div class="outline-text-3" id="text-2-30">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-20 五 15:52]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline34" class="outline-3">
+<h3 id="orgheadline34"><span class="section-number-3">2.31</span> <span class="done DONE">DONE</span> jekyll 点击顶部分类菜单不是回到页首，而是对当前页面刷新，以便回复默认分类结构</h3>
+<div class="outline-text-3" id="text-2-31">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-27 五 17:29]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-20 五 15:56]</span></span>
+</p>
+<hr>
+
+<pre class="example">
+&lt;a href=&lbrace;&lbrace;page.url&rbrace;&rbrace;&gt;分类&lt;/a&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline35" class="outline-3">
+<h3 id="orgheadline35"><span class="section-number-3">2.32</span> <span class="todo INBOX">INBOX</span> jekyll左上部分top按钮的完善，目录位置的完善</h3>
+<div class="outline-text-3" id="text-2-32">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-20 五 15:56]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline36" class="outline-3">
+<h3 id="orgheadline36"><span class="section-number-3">2.33</span> <span class="done DONE">DONE</span> jekyll文章分界线不居中？</h3>
+<div class="outline-text-3" id="text-2-33">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-27 五 17:45]</span></span></li>
+</ul>
+
+<pre class="example">
+#post-list{
+    /*margin: 0px 0px;*/
+    padding: 0px 0px;
+}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline37" class="outline-3">
+<h3 id="orgheadline37"><span class="section-number-3">2.34</span> <span class="todo INBOX">INBOX</span> 代码框大小不自动随窗口而调整？</h3>
+<div class="outline-text-3" id="text-2-34">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-20 五 16:32]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline38" class="outline-3">
+<h3 id="orgheadline38"><span class="section-number-3">2.35</span> <span class="todo INBOX">INBOX</span> Jekyll “关于”与“更多”菜单</h3>
+<div class="outline-text-3" id="text-2-35">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-23 一 14:19]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline39" class="outline-3">
+<h3 id="orgheadline39"><span class="section-number-3">2.36</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> jekyll 不支持markdown语法高亮</h3>
+<div class="outline-text-3" id="text-2-36">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-23 一 17:50]</span></span></li>
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-10-23 五 12:06]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-10-23 五 10:08]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline40" class="outline-3">
+<h3 id="orgheadline40"><span class="section-number-3">2.37</span> <span class="todo LATER">LATER</span> jekyll 提示功能</h3>
+<div class="outline-text-3" id="text-2-37">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-11-27 五 17:51]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-23 一 17:57]</span></span>
+</p>
+<hr>
+
+<p>
+光标停在某处，会自动提示文字，类似：
+<a href="http://ergoemacs.org/emacs/elisp_library_system.html" target="_blank" rel="noopener">http://ergoemacs.org/emacs/elisp_library_system.html</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline41" class="outline-3">
+<h3 id="orgheadline41"><span class="section-number-3">2.38</span> <span class="todo INBOX">INBOX</span> 目前对orgmode+jekyll管理方式时orgmode中链接引用的路径问题需要解决。</h3>
+<div class="outline-text-3" id="text-2-38">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-27 五 16:46]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline42" class="outline-3">
+<h3 id="orgheadline42"><span class="section-number-3">2.39</span> <span class="todo INBOX">INBOX</span> Jekyll如何处理收藏的网址？</h3>
+<div class="outline-text-3" id="text-2-39">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 09:51]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline43" class="outline-3">
+<h3 id="orgheadline43"><span class="section-number-3">2.40</span> <span class="todo INBOX">INBOX</span> jekyll 上一页下一页上一篇下一篇</h3>
+<div class="outline-text-3" id="text-2-40">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-11-30 一 09:59]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline44" class="outline-3">
+<h3 id="orgheadline44"><span class="section-number-3">2.41</span> <span class="todo INBOX">INBOX</span> Jekyll中的附件图片，还是用这样的目录：../post_files/article/data/&#x2026;</h3>
+<div class="outline-text-3" id="text-2-41">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-01 二 10:14]</span></span>
+</p>
+<hr>
+
+<p>
+其中 post_files目录不止一个，随着目录层次而定，可能多个，这样迁移文章的时候，好迁移，也不用考虑相对路径的修改。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline45" class="outline-3">
+<h3 id="orgheadline45"><span class="section-number-3">2.42</span> <span class="todo NEXT">NEXT</span> Jekyll Cublog迁移</h3>
+<div class="outline-text-3" id="text-2-42">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 14:16]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 09:13]</span></span>
+</p>
+<hr>
+
+<p>
+随时间顺序进行，进度如下
+</p>
+<ul class="org-ul">
+<li>随笔</li>
+</ul>
+
+<p>
+例如：
+</p>
+<pre class="example">
+---
+layout: posts
+title: 努力
+tags: [gtd_done, others]
+comments: true
+---
+我正在努力着让自己成为一个真正努力的人……
+
+From:[努力 in cublog](http://blog.chinaunix.net/uid-9525959-id-2001753.html)
+</pre>
+</div>
+</div>
+<div id="outline-container-orgheadline46" class="outline-3">
+<h3 id="orgheadline46"><span class="section-number-3">2.43</span> <span class="todo INBOX">INBOX</span> Jekyll 为文章添加额外信息，比如来源、转载等等。</h3>
+<div class="outline-text-3" id="text-2-43">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 09:26]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline47" class="outline-3">
+<h3 id="orgheadline47"><span class="section-number-3">2.44</span> <span class="todo INBOX">INBOX</span> jekyll设置复制选择文章的隐藏模式，双击可以激活选择复制功能</h3>
+<div class="outline-text-3" id="text-2-44">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-04 五 14:45]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline48" class="outline-3">
+<h3 id="orgheadline48"><span class="section-number-3">2.45</span> <span class="done DONE">DONE</span> jekyll 考虑将jekyll源码与站点结果分开，在github上存放站点结果, bitbucket上存放源码</h3>
+<div class="outline-text-3" id="text-2-45">
+<ul class="org-ul">
+<li>State "DONE"       from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-11 五 17:30]</span></span></li>
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-10 四 10:37]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-09 三 17:44]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline49" class="outline-3">
+<h3 id="orgheadline49"><span class="section-number-3">2.46</span> <span class="done DONE">DONE</span> jekyll中评论框的布局调整，应该在page内容外</h3>
+<div class="outline-text-3" id="text-2-46">
+<ul class="org-ul">
+<li>State "DONE"       from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-11 五 17:31]</span></span></li>
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-10 四 10:37]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-09 三 17:26]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline50" class="outline-3">
+<h3 id="orgheadline50"><span class="section-number-3">2.47</span> <span class="todo LATER">LATER</span> 添加丰富动作，比如双击可以解开复制文章的功能等等</h3>
+<div class="outline-text-3" id="text-2-47">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-10 四 10:37]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-09 三 17:48]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline51" class="outline-3">
+<h3 id="orgheadline51"><span class="section-number-3">2.48</span> <span class="todo NEXT">NEXT</span> Jekyll分类菜单的宽度是否可以不自动改变？</h3>
+<div class="outline-text-3" id="text-2-48">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-11 五 17:38]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-11 五 12:12]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline52" class="outline-3">
+<h3 id="orgheadline52"><span class="section-number-3">2.49</span> <span class="todo NEXT">NEXT</span> jekyll 公共板，一个大的随意涂鸦的“留言板”，基于多说评论。</h3>
+<div class="outline-text-3" id="text-2-49">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-11 五 17:38]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-11 五 13:51]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline53" class="outline-3">
+<h3 id="orgheadline53"><span class="section-number-3">2.50</span> <span class="todo NEXT">NEXT</span> 搭建一个最基本的jekyll的方式，在另外一篇文章中已有体现，引用？</h3>
+<div class="outline-text-3" id="text-2-50">
+<ul class="org-ul">
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-01-08 五 17:59]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline54" class="outline-3">
+<h3 id="orgheadline54"><span class="section-number-3">2.51</span> <span class="todo INBOX">INBOX</span> 应该考虑将签名信息放在下面，以便能在摘要中显示正文</h3>
+<div class="outline-text-3" id="text-2-51">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-01-16 六 15:58]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline55" class="outline-3">
+<h3 id="orgheadline55"><span class="section-number-3">2.52</span> <span class="todo LATER">LATER</span> jekyll如何发布私有文件通过权限来控制访问?</h3>
+<div class="outline-text-3" id="text-2-52">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-02-25 四 15:38]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-02-11 四 16:35]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline56" class="outline-3">
+<h3 id="orgheadline56"><span class="section-number-3">2.53</span> <span class="todo LATER">LATER</span> jekyll博客导入导出</h3>
+<div class="outline-text-3" id="text-2-53">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-02-25 四 15:39]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-02-23 二 09:10]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline57" class="outline-3">
+<h3 id="orgheadline57"><span class="section-number-3">2.54</span> <span class="todo LATER">LATER</span> jekyll实现私有云与公有云可能需要了解的</h3>
+<div class="outline-text-3" id="text-2-54">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 16:37]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-02 三 15:32]</span></span>
+</p>
+<hr>
+
+<ol class="org-ol">
+<li>git的子模块项目功能（私有云和公有云分别用两个库管理，私有云放在本地云库，公有云放在github或者bitbucket）。</li>
+
+<li>javascript的cookie功能、公钥加密（密码）对称加密（内容），可以读取私有密码等信息加密存储，解密显示。</li>
+
+<li>orgmode中的加密功能，可以撰写加密的org文件。</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgheadline58" class="outline-3">
+<h3 id="orgheadline58"><a id="ID-694af393-2a4a-430c-8935-3e62ce076488"></a><span class="section-number-3">2.55</span> <span class="todo LATER">LATER</span> jekyll搜索的改进</h3>
+<div class="outline-text-3" id="text-2-55">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 16:38]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-03 四 10:12]</span></span>
+</p>
+<hr>
+
+<ol class="org-ol">
+<li>搜索方式通过前面的 "Q" 点击进行切换。</li>
+<li>可以：
+<ul class="org-ul">
+<li class="on"><code>[X]</code> <p>
+按标题搜索
+</p>
+
+<p>
+使用正则表达式，具体参考代码。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js">&lt;script&gt;  
+var search = getQuery("s");
+
+&lt;/script&gt;
+</pre>
+</div></li>
+
+<li class="off"><code>[&#xa0;]</code> 按分类搜索</li>
+
+<li class="off"><code>[&#xa0;]</code> 按内容搜索</li>
+
+<li class="off"><code>[&#xa0;]</code> 按全文搜索</li>
+
+<li class="on"><code>[X]</code> <p>
+可搜索中文
+</p>
+
+<p>
+<code>js</code> 获取字串时需使用 <code>decodeURI</code> 进行转码，具体参考源码。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js">//获取传递给html页面的参数
+function getQuery(name)
+{
+    var reg = new RegExp("(^|&amp;)"+ name +"=([^&amp;]*)(&amp;|$)");
+    var r = window.location.search.substr(1).match(reg);
+    //if (r!=null) return unescape(r[2]); return null;
+    if (r!=null) return decodeURI(r[2]); return null;
+}
+</pre>
+</div>
+
+<p>
+参考： <a href="http://www.cnblogs.com/TivonStone/p/3504922.html" target="_blank" rel="noopener">http://www.cnblogs.com/TivonStone/p/3504922.html</a>
+</p></li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgheadline59" class="outline-3">
+<h3 id="orgheadline59"><span class="section-number-3">2.56</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> jekyll 网文分类规整</h3>
+<div class="outline-text-3" id="text-2-56">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 16:38]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-03 四 10:18]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline60" class="outline-3">
+<h3 id="orgheadline60"><a id="ID-409e4812-46bc-4250-903c-fac7fe74a546"></a><span class="section-number-3">2.57</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> jekyll排序功能</h3>
+<div class="outline-text-3" id="text-2-57">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 16:38]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-03 四 11:50]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline61" class="outline-3">
+<h3 id="orgheadline61"><span class="section-number-3">2.58</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> jekyll文章导出功能</h3>
+<div class="outline-text-3" id="text-2-58">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-04-16 六 16:38]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-03-04 五 10:15]</span></span>
+</p>
+<hr>
+
+<p>
+单篇文章导出，并且导出相关的引用？
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline62" class="outline-3">
+<h3 id="orgheadline62"><a id="ID-c2ccb121-3146-44a8-a42c-4b2be8d0ce0f"></a><span class="section-number-3">2.59</span> <span class="todo LATER">LATER</span> jekyll 如何实现相对路径迁移？</h3>
+<div class="outline-text-3" id="text-2-59">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 14:39]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-05-30 一 15:51]</span></span>
+</p>
+<hr>
+
+<p>
+目前迁移之后，内部链接还是基于服务器根路径的路径。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline63" class="outline-3">
+<h3 id="orgheadline63"><span class="section-number-3">2.60</span> <span class="todo INBOX">INBOX</span> 如何快速建立一个简单的jekyll网站？</h3>
+<div class="outline-text-3" id="text-2-60">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-05-30 一 15:52]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline64" class="outline-3">
+<h3 id="orgheadline64"><span class="section-number-3">2.61</span> <span class="todo LATER">LATER</span> jekyll的分类选择跳来跳去有点不好操作，有待改善。</h3>
+<div class="outline-text-3" id="text-2-61">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:16]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:08]</span></span>
+</p>
+<hr>
+</div>
+</div>
+</div>
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>

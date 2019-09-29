@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<RDF:RDF xmlns:MAF="http://maf.mozdev.org/metadata/rdf#"
+         xmlns:NC="http://home.netscape.com/NC-rdf#"
+         xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <RDF:Description RDF:about="urn:root">
+    <MAF:originalurl RDF:resource="http://blog.csdn.net/ibingow/article/details/7882098"/>
+    <MAF:title RDF:resource="rpath添加依赖库搜索路径 - ibingow的专栏 - CSDN博客"/>
+    <MAF:archivetime RDF:resource="Fri, 15 Sep 2017 10:01:53 +0800"/>
+    <MAF:indexfilename RDF:resource="index.html"/>
+    <MAF:charset RDF:resource="UTF-8"/>
+  </RDF:Description>
+</RDF:RDF>
