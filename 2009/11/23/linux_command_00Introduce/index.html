@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    Linux命令学习手册-0前言
+</title>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="../../../../css/partial/head.css">
+<link rel="stylesheet" href="../../../../css/partial/header.css">
+<link rel="stylesheet" href="../../../../css/partial/archives.css">
+<link rel="stylesheet" href="../../../../css/partial/categories.css">
+<link rel="stylesheet" href="../../../../css/partial/home-posts.css">
+<link rel="stylesheet" href="../../../../css/partial/page-nav.css">
+<link rel="stylesheet" href="../../../../css/partial/tags.css">
+<link rel="stylesheet" href="../../../../css/partial/about.css">
+<link rel="stylesheet" href="../../../../css/partial/more.css">
+<link rel="stylesheet" href="../../../../css/partial/footer.css">
+<link rel="stylesheet" href="../../../../css/post.css">
+<link rel="stylesheet" href="../../../../css/orgmode/hexo_orgmode_style.css">
+
+
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="../../../../lib/jquery-1.11.3.min.js"></script>
+<script src="../../../../js/common.js"></script>
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
+            <script src="js/nav.js"></script>
+<table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="../../../../index.html">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="../../../../categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(58)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="../../../../categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(6)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="../../../../categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="../../../../categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="../../../../categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="../../../../categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="../../../../categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="../../../../categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="../../../../categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="../../../../categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="../../../../categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(3)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="../../../../categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="../../../../categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="../../../../categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="../../../../categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="../../../../categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="../../../../categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="../../../../categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="../../../../categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="../../../../categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="../../../../categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="../../../../categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="../../../../categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="../../../../categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+        <h1>
+               <a href="/" title="Menu.Home">
+               QuietHeart's Site
+               </a>
+        </h1>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <article>
+                    <h1 id="header1" style="text-align: center;">
+                        Linux命令学习手册-0前言
+                    </h1>
+                    <hr id="title_line">
+                    <div>
+                        <div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 读者须知</a></li>
+<li><a href="#orgheadline2">2. 本文内容</a></li>
+<li><a href="#orgheadline3">3. 本文约定</a>
+<ul>
+<li><a href="#orgheadline4">3.1. 对于每一个命令，大致分为如下三个部分</a></li>
+<li><a href="#orgheadline5">3.2. 对于每个命令的使用例子，如下说明</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline6">4. 基本知识</a>
+<ul>
+<li><a href="#orgheadline7">4.1. 命令组成</a></li>
+<li><a href="#orgheadline8">4.2. 关于项</a></li>
+<li><a href="#orgheadline9">4.3. 关于项的参数</a></li>
+<li><a href="#orgheadline10">4.4. 基本命令</a>
+<ul>
+<li><a href="#orgheadline11">4.4.1. 文件管理相关</a></li>
+<li><a href="#orgheadline12">4.4.2. 权限管理相关</a></li>
+<li><a href="#orgheadline13">4.4.3. 磁盘管理相关</a></li>
+<li><a href="#orgheadline14">4.4.4. 其他操作</a></li>
+<li><a href="#orgheadline15">4.4.5. GNome桌面下面的操作</a></li>
+<li><a href="#orgheadline16">4.4.6. 任务的前台和后台控制</a></li>
+<li><a href="#orgheadline17">4.4.7. 最基本的文件编辑操作</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 读者须知</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+这篇文章纯粹是我个人在学习Linux过程中实践的积累，其中语言文字上面也许会有些错误，希望读者发现之后能够帮我纠正，在此先谢了。
+</p>
+
+<p>
+这里的每个命令都经过我亲身的实践，linux多数命令使用起来并不难，关键是读懂命令的输出信息，以及如何使用命令帮助。我的愿望是大家能够花费尽可能短的时间，熟悉Linux操作系统。
+</p>
+
+<p>
+如果你仅仅是为了临时做一些事情，那么本文也适合你，你只需要看本前言中的 <code>基本命令</code> 一节即可。
+</p>
+
+<p>
+如果有人转载，希望您能注明出处和作者；如果将本文用于商业行为，希望您能先通知我；希望大家能够互相体谅，尊重对方的劳动成果。
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> 本文内容</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+本文档最开始介绍Linux命令相关的基本知识，然后给出一些基本的Linux命令。后面每个章节将分别对每个重要的Linux命令进行详细的讲解，并给出详细的举例。
+</p>
+
+<p>
+这是一个没有终点的学习，这个手册的内容会随着学习的命令的更多而增加。
+</p>
+
+<p>
+侧重应用，重在举例，所以想要了解每个命令的具体细节还需要察看man或者info手册。如机会，每个命令可能会在今后完善更新。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">3</span> 本文约定</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">3.1</span> 对于每一个命令，大致分为如下三个部分</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li><p>
+功能
+</p>
+
+<p>
+简单介绍该命令功能。
+</p></li>
+
+<li><p>
+举例
+</p>
+
+<p>
+给出该命令最常使用的例子。
+</p></li>
+
+<li><p>
+描述
+</p>
+
+<p>
+详细描述该命令。
+</p></li>
+
+<li><p>
+其他
+</p>
+
+<p>
+该命令其他杂乱或者补充性的内容。
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">3.2</span> 对于每个命令的使用例子，如下说明</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+以orgmode格式做为文档格式, orgmode格式一方面可读性强,另一方面便于将来导出为各种格式.
+</p>
+
+<ol class="org-ol">
+<li><p>
+对于单个命令操作
+<code>+</code> 开始的列表项第一行给出要操作的目的，然后是具体的命令，最后给出该命令的详细解释。
+</p>
+
+<p>
+例如：
+</p>
+
+<pre class="example">
++ 列出当前目录的内容
+
+  =$ls=
+
+  这里，将会列出当前目录所文件。
+</pre>
+
+<p>
+如果命令过长，则使用 <code>#+BEGIN_SRC/#+END_SRC</code> 对。
+</p></li>
+
+<li><p>
+对于某个系列的命令
+</p>
+
+<p>
+具体的命令使用列表给出,而命令所述的系列使用子标题(orgmode中,列表的排版比较容易出错,所以使用子标题,尽量避免嵌套列表)。
+</p>
+
+<p>
+例如：
+</p>
+
+<pre class="example">
+** 使用vi编辑：
+
+   + 编辑之前首先打开文件&lt;filename&gt;:
+
+     =$vi filename=
+
+   打开文件之后，操作如下：
+
+   + 插入
+
+     输入 =a=
+
+   + 退出
+
+     输入 =:q=
+</pre></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline6" class="outline-2">
+<h2 id="orgheadline6"><span class="section-number-2">4</span> 基本知识</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+这里简单介绍linux命令行的一般语法格式。这对初学者很重要，尤其是查找某个命令的帮助手册( <code>man</code> 手册)的时候，不会什么也看不懂。
+</p>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7"><span class="section-number-3">4.1</span> 命令组成</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+一般linux的命令语法格式如下： 
+</p>
+
+<p>
+<code>命令名称 项 项参数(值) 命令参数(值)</code>
+</p>
+
+<p>
+例如： 
+</p>
+<pre class="example">
+od [OPTION]... [FILE]... 
+这里，命令名称是 =od= ,项是OPTION。这里项用'[]'括起来表示这个部分在 =od= 命令里面可可无。命令的参数是FILE也是可可无；'...'表示其前面的东西（这里是OPTION和FILE可以不只一个.一般来说(不是绝对的)，在 =man= 手册里面，命令中像OPTION和FILE这样的变量形式的参数（即其值取决于用户的键入部分会用特殊颜色显示出来；而 =od= 这样本身是固定的部分（即不是用户能改变的用另外一种颜色显示（例如加粗）。也有的描述中把可变的部分用'&lt;&gt;'括起来。
+</pre>
+
+<p>
+再如： 
+</p>
+<pre class="example">
+cp [OPTION]... SOURCE... DIRECTORY 
+从这里可以看出，=cp= 命令参数SOURCE和DIRECTORY,其中SOURCE参数可以是多个，DIRECTORY只能一个。OPTION部分可可无，但是SOURCE和DIRECTORY部分必须要。 
+
+具体的例子： 
+=$cp -r file1 file2 dir=
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">4.2</span> 关于项</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+项简单书写形式也复杂书写形式。简单形式的项一般用 <code>-</code> 引出，复杂形式一般用 <code>--</code> 引出等等。
+</p>
+
+<ul class="org-ul">
+<li><p>
+例如: 
+</p>
+
+<p>
+<code>$cp -v file1 file2</code> 等价于 <code>$cp --verbose file1 file2</code>
+</p>
+
+<p>
+这里，=-v= 和 <code>--verbose</code> 是一样的, <code>-v</code> 是简写形式， <code>--verbose</code> 是复杂形式。 
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+又例如: 
+</p>
+
+<p>
+<code>cp -r src des</code>
+</p>
+
+<p>
+其中， <code>-r</code> 就是其中的[OPTION]部分，也可以是 <code>--recursive</code> 。
+</p></li>
+
+<li><p>
+另外，有些命令的项不用 <code>-</code> 来引出，例如： 
+</p>
+
+<p>
+<code>$unrar e test.rar</code>
+</p>
+
+<p>
+使用 <code>e</code> 项指定 <code>unrar</code> 命令解压 <code>test.rar</code> 文件。 
+</p></li>
+
+<li><p>
+有些命令项用 <code>-</code> 做为前缀，然后可以接多个选项,例如： 
+</p>
+
+<p>
+<code>$tar -czvf dir.tgz dir</code>
+</p>
+
+<p>
+这个命令使用 <code>tar</code> 命令的 <code>-c -z -v -f</code> 四个项，给 <code>dir</code> 目录打包并且压缩，生成结果文件为 <code>dir.tgz</code>.
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+在项用'[]'包含起来表示可的同时，如果几个值其中只能出现一个的话那么用'|'来分开。例如： 
+</p>
+
+<p>
+<code>command [-a|-b]</code>
+</p>
+
+<p>
+这里， <code>command</code> 是假设的一个命令，这表示这个命令 <code>command</code> 中， <code>-a</code> 和 <code>-b</code> 项，两者要么都没，要么只一个。 
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">4.3</span> 关于项的参数</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+不光是命令，命令的项也可以参数。 
+</p>
+
+<ul class="org-ul">
+<li><p>
+这里举一个复杂点的命令
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">gdb [-help] [-nx] [-q] [-batch] [-cd=dir] [-f] [-b bps] [-tty=dev] [-s symfile] [-e prog] [-se prog] [-c core] [-x cmds] [-d dir] [prog[core|procID]]
+</pre>
+</div>
+
+<p>
+这是 <code>gdb</code> 命令的语法格式，关键的几个部分如下： 
+<code>[-d dir]</code> 就是指,运行gdb命令，可以添加一个可的项 <code>-d</code> ，这个项的参数是 <code>dir</code>.在本文的描述中，不太容易一下子看出 <code>[-d dir]</code> 里面哪部分是固定的字符串，哪部分是随用户输入而变的字符串,但是 <code>man</code> 手册里面都把它们标记为不同的颜色了，实际通过分析也很容易知道哪个部分是可变的。 
+</p>
+
+<p>
+有些命令项和项的参数之间可以没空格,的项和项参数之间用 = 连接,例如这里的 ~[-cd=dir]'
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+再举一个例子
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">minicom [-somMlwz8] [-c on|off] [-S script] [-d entry] [-a on|off] [-t term] [-p pty] [-C capturefile] [configuration]
+</pre>
+</div>
+
+<p>
+这是minicom的命令语法，其中[-c on|off]表示-c项是可的（即在命令中可可无，它一个选项参数，参数值可以是on或者off. 
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><span class="section-number-3">4.4</span> 基本命令</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+这里是经常使用的linux命令,用于平时查阅之用.
+</p>
+
+<p>
+一般而言，超级用户(root)的命令提示符号是 <code>#</code>,一般用户的命令提示符号是 <code>$</code>. 
+</p>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-4">
+<h4 id="orgheadline11"><span class="section-number-4">4.4.1</span> 文件管理相关</h4>
+<div class="outline-text-4" id="text-4-4-1">
+<ul class="org-ul">
+<li><p>
+创建名字为1的目录
+</p>
+
+<p>
+<code>$mkdir 1</code>
+</p></li>
+
+<li><p>
+创建名字为1的文件
+</p>
+
+<p>
+<code>$touch 1</code>
+</p></li>
+
+<li><p>
+删除名字为1的文件
+</p>
+
+<p>
+<code>$rm 1</code>
+</p></li>
+
+<li><p>
+查看文件1的内容 
+</p>
+
+<p>
+<code>$cat 1</code>
+</p></li>
+
+<li><p>
+强制删除一个目录
+</p>
+
+<p>
+<code>$rm -rf dirname</code>
+</p>
+
+<p>
+这里， <code>rm -r dirname</code> 是递归删除的意思，如果加上 <code>-i</code> 项，表示删除之前提示是否删除。 
+</p></li>
+
+<li><p>
+重命名/移动文件
+</p>
+
+<p>
+<code>$mv ./origin ./newname</code>
+</p>
+
+<p>
+这里，Linux中没专门的重命名命令，这里实际是使用了移动命令来进行的。原来的文件名 <code>origin</code>,新文件名 <code>newname</code>.
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+把文件file1拷贝一份到file2 
+</p>
+
+<p>
+<code>$cp file1 file2</code>
+</p>
+
+<p>
+这里，操作都是在当前目录下面进行的,如果拷贝到别的目录，可以指定路径，例如 <code>cp file1 /anotherdir/file2</code>.
+</p></li>
+
+<li><p>
+把目录dir1考到另一个地方为dir2
+</p>
+
+<p>
+<code>$cp -r dir1 dir2</code>
+</p>
+
+<p>
+这里， <code>-r</code> 表示递归拷贝所子目录。 
+</p></li>
+
+<li><p>
+进入到一个目录中
+</p>
+
+<p>
+<code>$cd dirname</code>
+</p></li>
+
+<li><p>
+查看目录dirname中所包含的文件
+</p>
+
+<p>
+<code>$ls dirname</code>
+</p></li>
+
+<li><p>
+查看目录dirname中所包含的文件的详细信息
+</p>
+
+<p>
+<code>$ls -l</code>
+</p>
+
+<p>
+这样，会显示相应文件的详细信息，包括属主，大小，权限等信息。 
+</p></li>
+
+<li><p>
+查看当前的目录
+</p>
+
+<p>
+<code>$pwd</code>
+</p>
+
+<p>
+这样，会输出当前所在目录的路径。 
+</p></li>
+
+<li><p>
+创建文件file的硬链接
+</p>
+
+<p>
+<code>$ln file lnfile</code>
+</p>
+
+<p>
+这里，使用链接的目录格式类似 <code>cp</code> 。建立硬链接之后，如果删除源，还可以通过这个硬链接访问到这个文件的内容，除非所的硬链接都被删除了，否则文件内容就一直存在的。硬链接不能够跨越文件系统，不能够建立目录的硬链接。 
+</p></li>
+
+<li><p>
+创建文件 <code>file</code> 的软链接
+</p>
+
+<p>
+<code>$ln -s file lnfile</code>
+</p>
+
+<p>
+这里，创建软链接，文件名里面 <code>$</code> 就用了转义 <code>\$</code> 表示 <code>$</code>,尽量用绝对路径防止出错。软链接可以跨越文件系统，可以为目录创建软链接，但是软链接的文件，如果删除源，链接会失效，类似windows中的快捷方式。 
+</p></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline12" class="outline-4">
+<h4 id="orgheadline12"><span class="section-number-4">4.4.2</span> 权限管理相关</h4>
+<div class="outline-text-4" id="text-4-4-2">
+<ul class="org-ul">
+<li><p>
+修改文件的权限为所人可读可写可执行
+</p>
+
+<p>
+<code>$chmod 777 filename</code>
+</p>
+
+<p>
+这里，文件属主必须是当前用户，否则就只能进入超级用户才能执行这个命令了。 
+</p></li>
+
+<li><p>
+修改文件filename的权限,为other用户添加写权限： 
+</p>
+
+<p>
+<code>$chmod o+w filename</code>
+</p></li>
+
+<li><p>
+修改目录以及所子目录的权限为777
+</p>
+
+<p>
+<code>$chmod 777 -R dir</code>
+</p></li>
+
+<li><p>
+查看在线登陆用户 
+</p>
+
+<p>
+<code>$who</code>
+</p></li>
+
+<li><p>
+将一个用户添加到用户组中
+</p>
+
+<p>
+<code>#usermod -a -G groupA user</code>
+</p>
+
+<p>
+这里，不要忘记 <code>-a</code> 项。如果用： <code>usermod -G groupA</code>,这做会使 <code>user</code> 用户离开其他用户组，仅仅做为这个用户组 <code>groupA</code> 的成员。 
+</p></li>
+
+<li><p>
+更改用户user的组为groupA
+</p>
+
+<p>
+<code>#usermod -G groupA user</code>
+</p></li>
+
+<li><p>
+查看所的用户
+</p>
+
+<p>
+<code>$cat /etc/passwd</code>
+</p>
+
+<p>
+这里，用户都保存在了 <code>passwd</code> 文件中，所以查看这个文件的内容就可以看到所的用户了。 
+</p>
+
+<p>
+成功创建一个新用户以后，在 <code>/etc/passwd</code> 文件中就会增加一行该用户的信息，其格式如下： 
+</p>
+<pre class="example">
+〔用户名〕：〔密码〕：〔UID〕：〔GID〕：〔身份描述〕：〔主目录〕：〔登陆Shell〕
+</pre>
+<p>
+其中每个字段被冒号 <code>:</code> 分成7各部分。 
+</p>
+
+<p>
+由于小于500的 <code>UID</code> 和 <code>GID</code> 一般都是系统自己保留，不用做普通用户和组的标志，所以新增加的用户和组一般都是 <code>UID</code> 和 <code>GID</code> 大于500的。 
+</p></li>
+
+<li><p>
+查看所的组
+</p>
+
+<p>
+<code>$cat etc/group</code>
+</p></li>
+
+<li><p>
+查看所的组
+</p>
+
+<p>
+<code>$cat etc/group</code>
+</p>
+
+<p>
+这里，用户都保存在了 <code>group</code> 文件中，所以查看这个文件的内容就可以看到所的用户了。 
+</p></li>
+
+<li><p>
+添加一个用户testusr
+</p>
+
+<p>
+<code>#useradd testusr</code>
+</p>
+
+<p>
+这里，注意在超级用户模式才能用,刚建立没密码，没自己的home,其他项可以参见man 
+</p></li>
+
+<li><p>
+添加一个用户testusr,并自动建立其用户主目录
+</p>
+
+<p>
+<code>#useradd -m testusr</code>
+</p>
+
+<p>
+运行完毕，自动生成用户的家目录，目录里面 <code>.bashrc</code> 等文件。 
+</p></li>
+
+<li><p>
+删除一个用户 <code>testusr</code>
+</p>
+
+<p>
+<code>#userdel testusr</code>
+</p>
+
+<p>
+这里，命令不会把主目录删除. 
+</p></li>
+
+<li><p>
+删除一个用户testusr,连同主目录和邮箱缓存等
+</p>
+
+<p>
+<code>#userdel -r testusr</code>
+</p></li>
+
+<li><p>
+切换到用户testusr
+</p>
+
+<p>
+<code>$su testusr</code>
+</p>
+
+<p>
+如果用户需要密码，那么需要输入密码才能登录这个用户。 
+</p></li>
+
+<li><p>
+切换到超级用户
+</p>
+
+<p>
+<code>$su</code>
+</p>
+
+<p>
+这样，会提示输入超级用户的密码，输入之后，就会切换成超级用户了。 
+</p></li>
+
+<li><p>
+以超级用户身份运行一个程序
+</p>
+
+<p>
+<code>$sudo app</code>
+</p>
+
+<p>
+这样，会以超级用户身份运行app程序，如果当前权限不够的时候，这条命令是很用的。当然，运行之前需要输入自己的密码。还有如 <code>sudo su</code> 也是类似的。 
+</p></li>
+
+<li><p>
+设置更改一个用户testusr的密码
+</p>
+
+<p>
+<code>#passwd testusr</code>
+</p>
+
+<p>
+这里，需要在超级用户下，输入之后，按照提示输入旧密码和新密码就行了。如果运行的 <code>passwd</code> 没参数，那么会修改当前用户的密码。更改自己的密码只需输入 <code>passwd</code> 不用切换到超级用户下。 
+</p></li>
+
+<li><p>
+修改用户testusr的主目录和登录的shell
+</p>
+
+<p>
+<code>#usermod -d/home/quietheart -s/bin/bash testusr</code>
+</p>
+
+<p>
+这里，用户名 <code>testusr</code> 的主目录路径设置在 <code>/home/testusr</code>,登陆的Shell设置为 <code>/usr/bin/gcc</code> ( <code>-d</code> 更新使用者新的登陆目录, <code>-s</code> 指定新用户Shell),空格无均可. 
+</p></li>
+
+<li><p>
+修改用户testusr名称为test
+</p>
+
+<p>
+<code>#usermod -l test testusr</code>
+</p>
+
+<p>
+把用户名 <code>testusr</code> 改成 <code>test</code> ( <code>-l</code> 变更用户登陆时的名称，手册说同时使用者目录名也会跟着更动成新的名称(实践了没变目录呀)) <code>usermod</code> 不允许改变正在线上的使用者帐号名称. 
+</p></li>
+
+<li><p>
+查看当前用户属于的组
+</p>
+
+<p>
+<code>$groups</code>
+</p></li>
+
+<li><p>
+查看testusr用户属于的组
+</p>
+
+<p>
+<code>$groups testusr</code>
+</p></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline13" class="outline-4">
+<h4 id="orgheadline13"><span class="section-number-4">4.4.3</span> 磁盘管理相关</h4>
+<div class="outline-text-4" id="text-4-4-3">
+<ul class="org-ul">
+<li><p>
+查看当前目录大小
+</p>
+
+<p>
+<code>$du -sh</code>
+</p></li>
+
+<li><p>
+查看文件的大小
+</p>
+
+<p>
+<code>$du -sh filename</code>
+</p>
+
+<p>
+这里， <code>filename</code> 是将要查看的文件名称。 
+</p></li>
+
+<li><p>
+查看分区信息
+</p>
+
+<p>
+<code>fdisk -l</code>
+</p>
+
+<p>
+这里，会显示你的电脑上面的所磁盘的信息，例如分区，文件系统等。当前必须是 <code>root</code> 用户，否则没权限。 
+</p></li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline18" class="outline-5">
+<h5 id="orgheadline18"><span class="section-number-5">4.4.3.1</span> 挂载磁盘相关</h5>
+<div class="outline-text-5" id="text-4-4-3-1">
+<p>
+你的linux系统必须将其他硬盘的其他分区(例如windows分区)挂载到根目录树中，才能访问相应的分区。 
+</p>
+<ul class="org-ul">
+<li><p>
+挂载分区 <code>/dev/sda7</code> 到 <code>/mnt/win</code>
+</p>
+
+<p>
+<code>#mount -t vfat /dev/sda7 /mnt/win</code>
+</p>
+
+<p>
+这样的挂载可能会出现显示中文的时候乱码,因为可能没指定解码的字符集。必须是超级用户才能执行。 
+</p></li>
+
+<li><p>
+指定gb2312字符集的挂载
+</p>
+
+<p>
+<code>#mount -t vfat -o iocharset=gb2312 /dev/sda7 /mnt/win</code>
+</p>
+
+<p>
+这样的挂载的时候，指定使用gb2312字符集，这样就可能没乱码了。其他常用的字符包括cp936,utf8等等(ntfs的一般用utf8挂载)。必须是超级用户才能执行。 
+</p></li>
+
+<li><p>
+查看已经挂载的分区
+</p>
+
+<p>
+<code>#mount</code>
+</p></li>
+
+<li><p>
+卸载已经挂载的分区
+</p>
+
+<p>
+<code>#umount /mnt/win</code>
+</p>
+
+<p>
+或 <code>#umount /dev/sda7</code>
+</p>
+
+<p>
+这里，是把 <code>/dev/sda7</code> 分区挂载到了 <code>/mnt/win</code> 上面。
+</p></li>
+
+<li><p>
+重新挂载
+</p>
+
+<p>
+<code>#mount -o rw,remount /mnt/data</code>
+</p>
+
+<p>
+这里，时候文件系统变为只读了，试试这个命令. 
+</p></li>
+
+<li><p>
+设置系统启动自动挂载某个分区
+</p>
+
+<p>
+方法之一是在 <code>/etc/fstab</code> 中加入如下内容：
+</p>
+<pre class="example">
+/dev/sda8 /mnt/winG vfat defaults,rw,exec,iocharset=utf8,umask=0000 0 0
+</pre>
+
+<p>
+必须 <code>umask=0000</code>, 否则只 <code>root</code> 可以写，并且 <code>root</code> 也不能更改 <code>chmod 777 -R ...</code> 这是自己尝试出来的。
+</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline14" class="outline-4">
+<h4 id="orgheadline14"><span class="section-number-4">4.4.4</span> 其他操作</h4>
+<div class="outline-text-4" id="text-4-4-4">
+<ul class="org-ul">
+<li><p>
+清屏
+</p>
+
+<p>
+<code>$clear</code>
+</p>
+
+<p>
+这样，当前用户的屏幕会被“清理”,并被重新刷新，原来输入的命令和命令的输出都被清理掉了，也可以使用 <code>[Ctrl]l</code> 来达到相同的效果。 
+</p></li>
+
+<li><p>
+查看系统的编码
+</p>
+
+<p>
+<code>$locale</code>
+</p>
+
+<p>
+输入之后，例如我的机器输出如下： 
+</p>
+<pre class="example">
+LANG=zh_CN.UTF-8 
+LC_CTYPE="zh_CN.UTF-8" 
+LC_NUMERIC="zh_CN.UTF-8" 
+LC_TIME="zh_CN.UTF-8" 
+LC_COLLATE="zh_CN.UTF-8" 
+LC_MONETARY="zh_CN.UTF-8" 
+LC_MESSAGES="zh_CN.UTF-8" 
+LC_PAPER="zh_CN.UTF-8" 
+LC_NAME="zh_CN.UTF-8" 
+LC_ADDRESS="zh_CN.UTF-8" 
+LC_TELEPHONE="zh_CN.UTF-8" 
+LC_MEASUREMENT="zh_CN.UTF-8" 
+LC_IDENTIFICATION="zh_CN.UTF-8" 
+LC_ALL=
+</pre></li>
+
+<li><p>
+启动xwindow图形界面
+</p>
+
+<p>
+<code>$startx</code>
+</p>
+
+<p>
+这个命令是在纯粹的命令行下面运行的命令。 
+</p></li>
+
+<li><p>
+切换到第一个纯命令行终端
+</p>
+
+<p>
+输入： <code>[Ctrl][Alt][F1]</code>
+</p>
+
+<p>
+这样，如果在图形界面中运行这个命令，会切换到第一个命令终端上面。可以是 <code>[F1]~[F7]</code> 等。 
+</p></li>
+
+<li><p>
+切换到图形界面
+</p>
+
+<p>
+输入： <code>[Ctrl][Alt][F7]</code>
+</p>
+
+<p>
+这样，如果在命令行终端，那么会切换到图形终端上面的是 <code>[F7]</code> 、 <code>[F8]</code> 等等，都不一定,一般是 <code>[F7]</code> 。 
+</p></li>
+
+<li><p>
+退出图形界面
+</p>
+
+<p>
+两种方法, 
+</p>
+
+<ol class="org-ol">
+<li>方法1， 注销(不会 <code>umount</code> )</li>
+
+<li><p>
+方法2， 输入: <code>[Ctrl][Alt][Backspace]</code>
+</p>
+
+<p>
+退出图形界面之后，不会 <code>umount</code> 之前 <code>mount</code> 过的分区。 
+</p></li>
+</ol></li>
+
+<li><p>
+查看内核版本号
+</p>
+
+<p>
+<code>$uname -r</code>
+</p>
+
+<p>
+这里，如果输入 <code>uname -a</code> 会显示所的内核信息。 
+</p></li>
+
+<li><p>
+查看发行的Linux版本号
+</p>
+
+<p>
+<code>$cat /etc/issue</code>
+</p></li>
+
+<li><p>
+搜索最近匹配的历史命令
+</p>
+
+<p>
+使用如下步骤进行： 
+</p>
+
+<ol class="org-ol">
+<li>输入 <code>[Ctrl]r</code></li>
+
+<li>输入以前输入的命令的子字符串</li>
+
+<li><p>
+根据 2 的输入会自动匹配最近的命令。 
+</p>
+
+<p>
+如果匹配了一个，但是我们需要的命令是更早的，那么再输入一下 <code>[Ctrl]r</code> 。
+</p></li>
+
+<li>输入回车，运行匹配的命令。</li>
+</ol></li>
+
+<li><p>
+在当前目录中寻找指定的文件
+</p>
+
+<p>
+<code>$find -name filename</code>
+</p>
+
+<p>
+这样，会在当前目录下递归地寻找名称为 <code>filename</code> 的文件，并且返回它的位置,这里支持通配符号。 
+</p></li>
+
+<li><p>
+在指定的目录中寻找指定的文件
+</p>
+
+<p>
+<code>$find dirname -name filename</code>
+</p>
+
+<p>
+这样，会在 <code>dirname</code> 中递归地寻找名称为 <code>filename</code> 的文件。 
+</p></li>
+
+<li><p>
+在文件中查找字符串
+</p>
+
+<p>
+<code>$grep 'string' filename</code>
+</p>
+
+<p>
+这样会在文件 <code>filename</code> 中查找指定的字符串'string'并且返回那个字符串的位置。 
+</p></li>
+
+<li><p>
+在当前目录中所文件中查找指定的字符串
+</p>
+
+<p>
+<code>$grep -r 'string' *</code>
+</p>
+
+<p>
+这里,使用了通配符号。 
+</p></li>
+
+<li><p>
+查看当前时间
+</p>
+
+<p>
+<code>$date</code>
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline15" class="outline-4">
+<h4 id="orgheadline15"><span class="section-number-4">4.4.5</span> GNome桌面下面的操作</h4>
+<div class="outline-text-4" id="text-4-4-5">
+<ul class="org-ul">
+<li><p>
+切换桌面工作区域
+</p>
+
+<p>
+输入 <code>[Ctrl][Alt]&lt;左右方向键&gt;</code>
+</p></li>
+
+<li><p>
+锁屏幕
+</p>
+
+<p>
+输入 <code>[Ctrl][Alt]l</code>
+</p></li>
+
+<li><p>
+切换不同任务窗口的快捷键
+</p>
+
+<p>
+输入 <code>[Alt][Tab]</code>
+</p></li>
+
+<li><p>
+在桌面和上次的程序之间进行切换
+</p>
+
+<p>
+输入 <code>[Ctrl][Alt]d</code>
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline16" class="outline-4">
+<h4 id="orgheadline16"><span class="section-number-4">4.4.6</span> 任务的前台和后台控制</h4>
+<div class="outline-text-4" id="text-4-4-6">
+<p>
+假设我们运行了多个vi编辑器，以及其他程序(无论前台还是后台，实际上只一个前台的程序)。
+</p>
+
+<ul class="org-ul">
+<li><p>
+将当前的程序放到后台停止
+</p>
+
+<p>
+输入 <code>[Ctrl]z</code>
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+查看所在后台运行的程序
+</p>
+
+<p>
+<code>$jobs</code>
+</p>
+
+<p>
+输入之后,输出如下： 
+</p>
+<pre class="example">
+[1]-  Stopped                 vi 
+[2]+  Stopped                 vi lex
+</pre>
+<p>
+这里，使用前面的数字来标记每一个后台运行的程序。 
+</p></li>
+
+<li><p>
+将后台停止的指定程序变成后台运行
+</p>
+
+<p>
+<code>$bg %1</code>
+</p>
+
+<p>
+这样会把第一个后台的作业调到后台运行,实际上，用 <code>bg 1</code> 就行了。 
+</p>
+
+<p>
+这样做之后，效果相当于运行了 <code>app &amp;</code> ，其中app是运行的程序，&amp;表示放在后台。 
+</p></li>
+
+<li><p>
+将指定的后台运行的作业号放到前台运行
+</p>
+
+<p>
+<code>$fg %1</code>
+</p>
+
+<p>
+这样会把第一个后台的作业调到前台运行,实际上，用 <code>fg 1</code> 就行了。 
+</p></li>
+
+<li><p>
+将最近的被停止的程序放到前台运行
+</p>
+
+<p>
+<code>$fg</code>
+</p></li>
+
+<li><p>
+杀掉指定的后台运行的程序
+</p>
+
+<p>
+<code>$kill %1</code>
+</p>
+
+<p>
+这样，会在后台运行的作业 <code>%1</code> 给杀掉。注意：这里的作业号用%来进行标记，而不像进程直接用数字了。 
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline17" class="outline-4">
+<h4 id="orgheadline17"><span class="section-number-4">4.4.7</span> 最基本的文件编辑操作</h4>
+<div class="outline-text-4" id="text-4-4-7">
+<p>
+这里提供了使用 <code>vi</code> 编辑文件的最基本的操作，能够实现大多数的编辑目的。
+</p>
+
+<ul class="org-ul">
+<li><p>
+用 <code>vi</code> 打开一个文件
+</p>
+
+<p>
+输入 <code>vi filename</code>
+</p>
+
+<p>
+这里， <code>filename</code> 就是你要打开的文件的名字，默认打开文件后 <code>vi</code> 处于指令模式。 
+</p></li>
+
+<li><p>
+进入编辑模式编辑打开的文件
+</p>
+
+<p>
+输入 <code>i</code>. 
+</p>
+
+<p>
+或输入 <code>a</code>. 
+</p>
+
+<p>
+进入编辑模式后，你可以直接敲入想要输入的字符到文件，两者的区别是 <code>i</code> 在当前字符前面开始插入， <code>a</code> 在当前字符后面开始插入。 
+</p></li>
+
+<li><p>
+退出编辑模式
+</p>
+
+<p>
+输入 <code>[Esc]</code>
+</p>
+
+<p>
+这样，将返回指令模式，准备接收你要传达给 <code>vi</code> 的指令并执行，如果之前已经在指令模式下，那么系统将响铃提醒一下。 
+</p></li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline19" class="outline-5">
+<h5 id="orgheadline19"><span class="section-number-5">4.4.7.1</span> 以下命令都是vi在命令模式下进行</h5>
+<div class="outline-text-5" id="text-4-4-7-1">
+<ul class="org-ul">
+<li><p>
+撤销修改
+</p>
+
+<p>
+输入 <code>u</code>
+</p>
+
+<p>
+这里，相比以前的vi来说，vim支持多步撤销。 
+</p></li>
+
+<li><p>
+恢复修改
+</p>
+
+<p>
+输入 <code>[Ctrl]r</code>
+</p>
+
+<p>
+这里，和撤销命令相反，是撤销的撤销，也可多步。 
+</p></li>
+
+<li><p>
+复制行到剪切板
+</p>
+
+<p>
+输入 <code>yy</code>
+</p></li>
+
+<li>复制定内容到剪切板
+
+<ol class="org-ol">
+<li>输入 <code>v</code> 。</li>
+
+<li>方向键将高亮择的内容。</li>
+
+<li><p>
+输入 <code>y</code> 。 
+</p>
+
+<p>
+这里，开始输入 <code>v</code> 使vi临时进入了一个"选择模式"，输入方向键可以择，输入 <code>y</code> 将择的内容复制剪切板。 
+</p></li>
+</ol></li>
+
+<li><p>
+删除行
+</p>
+
+<p>
+输入 <code>dd</code>
+</p>
+
+<p>
+注意，vi的删除等价于剪切，删除的内容会保存到剪切板中。 
+</p></li>
+
+<li>删除定内容
+
+<ol class="org-ol">
+<li>输入 <code>v</code> 。</li>
+
+<li>方向键将高亮择的内容。</li>
+
+<li><p>
+输入 <code>d</code> 。 
+</p>
+
+<p>
+这里，开始输入 <code>v</code> 使vi临时进入了一个“选择模式”，输入方向键可以择，输入 <code>d</code> 将择的内容删除。 
+</p></li>
+</ol></li>
+
+<li><p>
+粘贴
+</p>
+
+<p>
+输入 <code>p</code> 
+</p>
+
+<p>
+这样会将剪切板的内容粘贴到光标位置或者光标下一行。 
+</p></li>
+
+<li><p>
+查找字符并定位到第一个匹配处
+</p>
+
+<p>
+输入 <code>/character</code>
+</p>
+
+<p>
+这里 <code>character</code> 是待查找的字符，只要先输入 <code>/</code> ，再输入待查字符，最后回车即可定位到第一个匹配的字符处。 
+</p></li>
+
+<li><p>
+定位到匹配查找的下一个字符处
+</p>
+
+<p>
+输入 <code>n</code> 
+</p></li>
+
+<li><p>
+定位到匹配查找的上一个字符处
+</p>
+
+<p>
+输入 <code>N</code> 
+</p></li>
+
+<li><p>
+保存文件
+</p>
+
+<p>
+输入 <code>:w</code> 
+</p>
+
+<p>
+注意 <code>w</code> 前面的 <code>:</code> ，输入 <code>:</code> 之后，vim会将 <code>:</code> 之后的输入解释为待执行的指令。 
+</p></li>
+
+<li><p>
+退出
+</p>
+
+<p>
+输入 <code>:q</code>
+</p>
+
+<p>
+这里，如果文件没保存，将提示无法退出，除非你强制退出，不保存文件，或者保存退出。 
+</p></li>
+
+<li><p>
+强制退出
+</p>
+
+<p>
+输入 <code>:q!</code>
+</p></li>
+
+<li><p>
+保存退出
+</p>
+
+<p>
+输入 <code>:wq</code>
+</p>
+
+<p>
+或输入 <code>ZZ</code>. 
+</p></li>
+
+<li><p>
+察看帮助 
+</p>
+
+<p>
+输入 <code>:help</code>
+</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    APUE读书笔记-01UNIX系统概述（3）
+</title>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="../../../../css/partial/head.css">
+<link rel="stylesheet" href="../../../../css/partial/header.css">
+<link rel="stylesheet" href="../../../../css/partial/archives.css">
+<link rel="stylesheet" href="../../../../css/partial/categories.css">
+<link rel="stylesheet" href="../../../../css/partial/home-posts.css">
+<link rel="stylesheet" href="../../../../css/partial/page-nav.css">
+<link rel="stylesheet" href="../../../../css/partial/tags.css">
+<link rel="stylesheet" href="../../../../css/partial/about.css">
+<link rel="stylesheet" href="../../../../css/partial/more.css">
+<link rel="stylesheet" href="../../../../css/partial/footer.css">
+<link rel="stylesheet" href="../../../../css/post.css">
+<link rel="stylesheet" href="../../../../css/orgmode/hexo_orgmode_style.css">
+
+
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="../../../../lib/jquery-1.11.3.min.js"></script>
+<script src="../../../../js/common.js"></script>
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
+            <script src="js/nav.js"></script>
+<table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="../../../../index.html">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="../../../../categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(58)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="../../../../categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(6)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="../../../../categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="../../../../categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="../../../../categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="../../../../categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="../../../../categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="../../../../categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="../../../../categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="../../../../categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="../../../../categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(3)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="../../../../categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="../../../../categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="../../../../categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="../../../../categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="../../../../categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="../../../../categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="../../../../categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="../../../../categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="../../../../categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="../../../../categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="../../../../categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="../../../../categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="../../../../categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+        <h1>
+               <a href="/" title="Menu.Home">
+               QuietHeart's Site
+               </a>
+        </h1>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <article>
+                    <h1 id="header1" style="text-align: center;">
+                        APUE读书笔记-01UNIX系统概述（3）
+                    </h1>
+                    <hr id="title_line">
+                    <div>
+                        <div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 7、用户标识</a></li>
+<li><a href="#orgheadline2">2. 8、信号</a></li>
+<li><a href="#orgheadline3">3. 9、关于进程时间</a></li>
+<li><a href="#orgheadline4">4. 10、关于系统调用和库函数</a></li>
+<li><a href="#orgheadline5">5. 总结</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 7、用户标识</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<code>==============================================</code>
+（1）用户ID
+ 前面所述的密码文件中的登录项中的用户ID（user ID）是个数值，用于向系统标识各个不同的用户。通常每个用户有一个唯一的用户ID，不同用户对系统具有不同的权限（例如可以访问哪些文件，执行什么程序等）。用户ID为0的用户为根(root )或超级用户(superuser)。在密码文件中，其登录名为root，我们称这种用户的特权为超级用户特权，它具有整个系统无上的管理权限。^_^
+</p>
+
+<p>
+（2）组ID
+ 密码文件中的登录项也包括用户的组ID（group ID），它也是一个数值。一般来说，在密码文件中有多个记录项具有相同的组ID。在UNIX下，组被用于将若干用户集合到某一共同的课题或部门中去。这种机制允许同组的各个成员之间共享资源(例如文件)。4.5节将讲述到，可以设置文件的许可权使组内所有成员都能存取该文件，而组外用户则不能。
+ 组文件将组名映射为数字组ID，它通常是/etc/group。对于用户而言，使用名字比使用数值方便，所以密码文件包含了登录名和用户ID之间的映射关系，而组文件则包含了组名和组ID之间的映射关系。另外，除了在密码文件中对一个登录名指定一个组ID外，某些UNIX版本还允许一个用户属于另外一些组。
+</p>
+
+<p>
+参考：
+<a href="http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch01lev1sec8.html" target="_blank" rel="noopener">http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch01lev1sec8.html</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> 8、信号</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<code>==============================================</code>
+ 信号是通知进程发生某种条件的一种技术。例如，若某一进程执行除法操作，其除数为0，则将名为SIGFPE的信号发送给该进程。进程有三种选择处理信号：
+ (a) 忽略该信号。有些信号表示硬件异常，例如，除以0或访问进程地址空间以外的单元等，因为这些异常产生的后果不确定，所以不推荐使用这种处理方式。
+ (b) 按系统默认方式处理。对于0除，系统默认方式是终止该进程。其它信号有不同的默认行为。
+ (c) 提供一个处理函数，信号发生时则调用该函数。使用这种方式，我们将能知道什么时候产生了信号，并按所希望的方式处理它。
+ 通过系统的用户手册，我们可以了解具体有哪些信号，以及它们的编号（例如我在Linux上运行"man 7 signal"将显示当前Linux支持的信号信息）。我们可以使用kill函数，产生特定的信号，发送给指定的进程（当然我们必需是该进程的所有者）；也可以通过键盘的方式，敲入特殊按键，产生信号。例如，我们运行ls程序之后，立即键入"[Ctrl]+C"，这样会导致"ls"运行完成之前中止，因为"[Ctrl]+C"的意思就是给当前终端上运行的程序发送终止信号（这里我给出的例子其实不太好，ls命令执行的比较快，如果目录中文件不多的话，这里需要你键入的速度足够快才能看到效果，否则没等你键入，ls就执行完了，就看不到效果了^_^）。
+</p>
+
+<p>
+参考：
+<a href="http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch01lev1sec9.html" target="_blank" rel="noopener">http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch01lev1sec9.html</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">3</span> 9、关于进程时间</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<code>==============================================</code>
+ 为了衡量一个进程的执行时间，unix使用三个值：
+ （a）Clock time
+ 运行这个进程所花费的时间，这个时间还依赖于系统上执行的其他进程的数量。一般我们假设系统上没有其他进程运行。
+ （b）User CPU time
+ 运行这个进程所花费的用户cpu时间。也就是执行用户（和内核相对）指令所花费的时间。
+ （c）System CPU time
+ 运行这个进程所花费的系统（内核）cpu时间。也就是进程在核心态下所消耗的时间，例如调用系统调用。
+ 用户cpu时间和系统cpu时间统称进程的cpu时间。进程时间可以使用clock tick来衡量，例如一秒钟50个clock tick.测量一个程序的占用时间可以使用time命令。
+ 这里，再次总结一下，Clock time应该是我们看到的程序运行到结束的总时间，包括实际运行时间，以及由于调度产生的等待时间；而User+System为cpu时间，也就是除了进程调度和等待等因素后，纯粹的执行时间，也就是占用cpu的时间；user表示在用户空间占用的cpu时间，system表示在内核空间占用的cpu时间例如系统调用（一般来说，一次系统调用的时间开销，要比用户空间的一次调用开销大）。
+</p>
+
+<p>
+参考：
+<a href="http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch01lev1sec10.html" target="_blank" rel="noopener">http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch01lev1sec10.html</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4"><span class="section-number-2">4</span> 10、关于系统调用和库函数</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<code>==============================================</code>
+ 对于系统调用和库函数的关系，前面大致介绍过，这里再次对此进行说明。
+ （a）系统调用是用户和内核交互的接口，用来请求内核提供相应服务。
+ 原来的系统调用接口是用汇编声明，现在用c语言函数方式声明了，其具体的实现方式就不一定是什么了。这样使得用户只需要像用c语言函数一样地，通过包含其声明的头文件，使用系统调用就行了，而不用关心其内部是怎么实现的。
+ （b）c语言的库函数是用c语言实现的，它一般是需要调用系统调用来实现的。
+ 系统调用一般和一些c语言的库函数名称一样，用户可以像使用库函数一样使用系统调用，但是两者不同，可以自己定义库函数来取代原来的库函数，而系统调用是无法取代的。例如malloc库函数就是用sbrk系统调用实现的。system库函数就是用fork和exec系统调用实现的。
+ （c）系统调用接口简洁，并且提供了所有的功能，但是不如库函数友好。而库函数可以简单理解成是对系统调用的“封装”。
+ 注意，一般man手册里面，其第2节的内容是系统调用，第3节的内容是库函数（这一点在前面的预备知识中已经提到过）。
+</p>
+
+<p>
+参考：
+<a href="http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch01lev1sec11.html" target="_blank" rel="noopener">http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch01lev1sec11.html</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5"><a id="ID-97ab9520-9720-497c-80d2-5abd326c481c"></a><span class="section-number-2">5</span> 总结</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<code>==============================================</code>
+ 本章简单对UNIX系统进行了一下概要说明。我们对一些我们将要遇到的基本的术语进行了解释，后面将会经常提到并且进一步解释它们。
+</p>
+
+<p>
+参考：
+<a href="http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch01lev1sec12.html" target="_blank" rel="noopener">http://book.chinaunix.net/special/ebook/addisonWesley/APUE2/0201433079/ch01lev1sec12.html</a>
+</p>
+</div>
+</div>
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>

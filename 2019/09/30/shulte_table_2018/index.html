@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    2018年舒尔特数字表训练总结-心路历程
+</title>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="../../../../css/partial/head.css">
+<link rel="stylesheet" href="../../../../css/partial/header.css">
+<link rel="stylesheet" href="../../../../css/partial/archives.css">
+<link rel="stylesheet" href="../../../../css/partial/categories.css">
+<link rel="stylesheet" href="../../../../css/partial/home-posts.css">
+<link rel="stylesheet" href="../../../../css/partial/page-nav.css">
+<link rel="stylesheet" href="../../../../css/partial/tags.css">
+<link rel="stylesheet" href="../../../../css/partial/about.css">
+<link rel="stylesheet" href="../../../../css/partial/more.css">
+<link rel="stylesheet" href="../../../../css/partial/footer.css">
+<link rel="stylesheet" href="../../../../css/post.css">
+<link rel="stylesheet" href="../../../../css/orgmode/hexo_orgmode_style.css">
+
+
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="../../../../lib/jquery-1.11.3.min.js"></script>
+<script src="../../../../js/common.js"></script>
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
+            <script src="js/nav.js"></script>
+<table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="../../../../index.html">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="../../../../categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(58)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="../../../../categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(6)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="../../../../categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="../../../../categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="../../../../categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="../../../../categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="../../../../categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="../../../../categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="../../../../categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="../../../../categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="../../../../categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(3)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="../../../../categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="../../../../categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="../../../../categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="../../../../categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="../../../../categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="../../../../categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="../../../../categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="../../../../categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="../../../../categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="../../../../categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="../../../../categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="../../../../categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="../../../../categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+        <h1>
+               <a href="/" title="Menu.Home">
+               QuietHeart's Site
+               </a>
+        </h1>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <article>
+                    <h1 id="header1" style="text-align: center;">
+                        2018年舒尔特数字表训练总结-心路历程
+                    </h1>
+                    <hr id="title_line">
+                    <div>
+                        
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 20180103 *数字在心</a></li>
+<li><a href="#orgheadline2">2. 20180104 方法</a></li>
+<li><a href="#orgheadline3">3. 20180104 数字敏感度与速读</a></li>
+<li><a href="#orgheadline4">4. 20180104 等同=稳定</a></li>
+<li><a href="#orgheadline5">5. 20180109 欲速则不达</a></li>
+<li><a href="#orgheadline6">6. 20180111 可靠</a></li>
+<li><a href="#orgheadline7">7. 20180113 *指随心落</a></li>
+<li><a href="#orgheadline8">8. 20180113 心&gt;眼&gt;脑&gt;手</a></li>
+<li><a href="#orgheadline9">9. 20180125 *接纳</a></li>
+<li><a href="#orgheadline10">10. 20180202 *匹配</a></li>
+<li><a href="#orgheadline11">11. 20180202 两个重点</a></li>
+<li><a href="#orgheadline12">12. 20180202 目标</a></li>
+<li><a href="#orgheadline13">13. 20180203 结果</a></li>
+<li><a href="#orgheadline14">14. 20180203 能与快</a></li>
+<li><a href="#orgheadline15">15. 20180203 如果累了，那便错了</a></li>
+<li><a href="#orgheadline16">16. 20180204 缓存</a></li>
+<li><a href="#orgheadline17">17. 20180204 精力</a></li>
+<li><a href="#orgheadline18">18. 20180205 缓存与切换</a></li>
+<li><a href="#orgheadline19">19. 20180210 排除杂念，集中一点</a></li>
+<li><a href="#orgheadline20">20. 20180212 **整体</a></li>
+<li><a href="#orgheadline21">21. 20180311 *区间</a></li>
+<li><a href="#orgheadline22">22. 20180316 *节奏</a></li>
+<li><a href="#orgheadline23">23. 20180316 冲刺</a></li>
+<li><a href="#orgheadline24">24. 20180316 节奏</a></li>
+<li><a href="#orgheadline25">25. 20180317 *一心多用</a></li>
+<li><a href="#orgheadline26">26. 20180317 注意力</a></li>
+<li><a href="#orgheadline27">27. 20180319 *线团</a></li>
+<li><a href="#orgheadline28">28. 20180319 找与看，点与面</a></li>
+<li><a href="#orgheadline29">29. 20180319 作用</a></li>
+<li><a href="#orgheadline30">30. 20180320 排除干扰</a></li>
+<li><a href="#orgheadline31">31. 20180321 图像</a></li>
+<li><a href="#orgheadline32">32. 20180323 全部与局部</a></li>
+<li><a href="#orgheadline33">33. 20180323 王者风范</a></li>
+<li><a href="#orgheadline34">34. 20180323 真正目标</a></li>
+<li><a href="#orgheadline35">35. 20180323 整体部分交融</a></li>
+<li><a href="#orgheadline36">36. 20180324 *完整目标</a></li>
+<li><a href="#orgheadline37">37. 20180324 独立与整体</a></li>
+<li><a href="#orgheadline38">38. 20180327 顺便</a></li>
+<li><a href="#orgheadline39">39. 20180329 思想与目光</a></li>
+<li><a href="#orgheadline40">40. 20180403 关系与清空</a></li>
+<li><a href="#orgheadline41">41. 20180428 间断</a></li>
+<li><a href="#orgheadline42">42. 20180408 本来就在那</a></li>
+<li><a href="#orgheadline43">43. 20180408 看与记</a></li>
+<li><a href="#orgheadline44">44. 20180408 以手追眼而非以眼追手</a></li>
+<li><a href="#orgheadline45">45. 20180409 焦点</a></li>
+<li><a href="#orgheadline46">46. 20180409 余光</a></li>
+<li><a href="#orgheadline47">47. 20180409 思想是眼睛的焦点</a></li>
+<li><a href="#orgheadline48">48. 20180412 双食指</a></li>
+<li><a href="#orgheadline49">49. 20180418 直觉</a></li>
+<li><a href="#orgheadline50">50. 20180419 *无为</a></li>
+<li><a href="#orgheadline51">51. 20180425 *形状与意义</a></li>
+<li><a href="#orgheadline52">52. 20180425 *直觉与现状</a></li>
+<li><a href="#orgheadline53">53. 20180426 稍安勿燥</a></li>
+<li><a href="#orgheadline54">54. 20180427 **是看不是找</a></li>
+<li><a href="#orgheadline55">55. 20180427 **思维与目光</a></li>
+<li><a href="#orgheadline56">56. 20180427 不看</a></li>
+<li><a href="#orgheadline57">57. 20180427 专注</a></li>
+<li><a href="#orgheadline58">58. 20180428 间断</a></li>
+<li><a href="#orgheadline59">59. 20180428 思维与视觉</a></li>
+<li><a href="#orgheadline60">60. 20180428 清晰与范围</a></li>
+<li><a href="#orgheadline61">61. 20180503**不视而见&lt;-&gt;视而不见</a></li>
+<li><a href="#orgheadline62">62. 20180507 心无旁骛的冲刺</a></li>
+<li><a href="#orgheadline63">63. 20180507 懒惰与努力</a></li>
+<li><a href="#orgheadline64">64. 20180509 主动</a></li>
+<li><a href="#orgheadline65">65. 20180511 让眼睛解脱，让思维前进</a></li>
+<li><a href="#orgheadline66">66. 20180511 不知道自己看的见</a></li>
+<li><a href="#orgheadline67">67. 20180513 训练过程</a></li>
+<li><a href="#orgheadline68">68. 20180514 看</a></li>
+<li><a href="#orgheadline69">69. 20180514 *解脱</a></li>
+<li><a href="#orgheadline70">70. 20180514 视线与思维</a></li>
+<li><a href="#orgheadline71">71. 20180514 低阶</a></li>
+<li><a href="#orgheadline72">72. 20180515 主动成像的技巧</a></li>
+<li><a href="#orgheadline73">73. 20180518 *思维的前进</a></li>
+<li><a href="#orgheadline74">74. 20180518 **控制</a></li>
+<li><a href="#orgheadline75">75. 20180518 无用功</a></li>
+<li><a href="#orgheadline76">76. 20180519 珍惜</a></li>
+<li><a href="#orgheadline77">77. 20180521 格局</a></li>
+<li><a href="#orgheadline78">78. 20180522 目光无焦点，思维向前走</a></li>
+<li><a href="#orgheadline79">79. 20180522范围</a></li>
+<li><a href="#orgheadline80">80. 20180523*一心多用</a></li>
+<li><a href="#orgheadline81">81. 20180523各自独立</a></li>
+<li><a href="#orgheadline82">82. 20180523怎样看到</a></li>
+<li><a href="#orgheadline83">83. 20180523长远</a></li>
+<li><a href="#orgheadline84">84. 20180525 习惯并非速度</a></li>
+<li><a href="#orgheadline85">85. 20180525*是确认而非去看</a></li>
+<li><a href="#orgheadline86">86. 20180527 *清晰与快</a></li>
+<li><a href="#orgheadline87">87. 20180528 关键</a></li>
+<li><a href="#orgheadline88">88. 20180531 **追逐与捕捉</a></li>
+<li><a href="#orgheadline89">89. 20180531 自信</a></li>
+<li><a href="#orgheadline90">90. 20180601 习惯</a></li>
+<li><a href="#orgheadline91">91. 20180601 限制</a></li>
+<li><a href="#orgheadline92">92. 20180605 **切换与敏感度</a></li>
+<li><a href="#orgheadline93">93. 20180605 阶段总结</a></li>
+<li><a href="#orgheadline94">94. 20180605 预看</a></li>
+<li><a href="#orgheadline95">95. 20180606 清除</a></li>
+<li><a href="#orgheadline96">96. 20180607 总结：思维所至，目光所及，手指所点</a></li>
+<li><a href="#orgheadline97">97. 20180608 **瞬间</a></li>
+<li><a href="#orgheadline98">98. 20180608 **专注</a></li>
+<li><a href="#orgheadline99">99. 20180608 无为</a></li>
+<li><a href="#orgheadline100">100. 20180612 勿错过</a></li>
+<li><a href="#orgheadline101">101. 20180626 无意义的图像</a></li>
+<li><a href="#orgheadline102">102. 20180627 *看见与认识</a></li>
+<li><a href="#orgheadline103">103. 20180627 忘记</a></li>
+<li><a href="#orgheadline104">104. 20180706 准确</a></li>
+<li><a href="#orgheadline105">105. 20180713 眼为先</a></li>
+<li><a href="#orgheadline106">106. 20180717 原因</a></li>
+<li><a href="#orgheadline107">107. 20180708 眼睛与图形</a></li>
+<li><a href="#orgheadline108">108. 20180725 *整体非局部，图像非意义</a></li>
+<li><a href="#orgheadline109">109. 20180725 *起点</a></li>
+<li><a href="#orgheadline110">110. 20180725 *位置</a></li>
+<li><a href="#orgheadline111">111. 20180726 忘与记</a></li>
+<li><a href="#orgheadline112">112. 20180726 大视角</a></li>
+<li><a href="#orgheadline113">113. 20180802 克服恐惧</a></li>
+<li><a href="#orgheadline114">114. 20180803 推动思维</a></li>
+<li><a href="#orgheadline115">115. 20180807 专一</a></li>
+<li><a href="#orgheadline116">116. 20180828 顺便缓存附近</a></li>
+<li><a href="#orgheadline117">117. 20180828 区间的训练</a></li>
+<li><a href="#orgheadline118">118. 20180829 只有一个下一个</a></li>
+<li><a href="#orgheadline119">119. 20180906 一闪而过</a></li>
+<li><a href="#orgheadline120">120. 20180912 心</a></li>
+<li><a href="#orgheadline121">121. 20180915 专一</a></li>
+<li><a href="#orgheadline122">122. 20180915 *流畅与速度</a></li>
+<li><a href="#orgheadline123">123. 20180920 从熟悉到陌生</a></li>
+<li><a href="#orgheadline124">124. 20180920 视幅与角度</a></li>
+<li><a href="#orgheadline125">125. 20180920 过程</a></li>
+<li><a href="#orgheadline126">126. 20180921 *过滤与分辨</a></li>
+<li><a href="#orgheadline127">127. 20180926 规律外的规律</a></li>
+<li><a href="#orgheadline128">128. 20180928 与数字捉迷藏</a></li>
+<li><a href="#orgheadline129">129. 20180928 牵引还是推进？</a></li>
+<li><a href="#orgheadline130">130. 20180930 牵引与推进</a></li>
+<li><a href="#orgheadline131">131. 20181005 高阶与低阶</a></li>
+<li><a href="#orgheadline132">132. 20181009 疯狂模式</a></li>
+<li><a href="#orgheadline133">133. 20181009 过程</a></li>
+<li><a href="#orgheadline134">134. 20181011 噪音</a></li>
+<li><a href="#orgheadline135">135. 20181012*疯狂</a></li>
+<li><a href="#orgheadline136">136. 20181012*看、点</a></li>
+<li><a href="#orgheadline137">137. 20181013 *真假</a></li>
+<li><a href="#orgheadline138">138. 20181014是与非</a></li>
+<li><a href="#orgheadline139">139. 20181017 不重要</a></li>
+<li><a href="#orgheadline140">140. 20181017 *排除干扰</a></li>
+<li><a href="#orgheadline141">141. 20181018 无视变化</a></li>
+<li><a href="#orgheadline142">142. 20181018 **调节平衡</a></li>
+<li><a href="#orgheadline143">143. 20181018 *面对</a></li>
+<li><a href="#orgheadline144">144. 20181021 打地鼠</a></li>
+<li><a href="#orgheadline145">145. 20181102 稳定</a></li>
+<li><a href="#orgheadline146">146. 20181107 稳定与清晰</a></li>
+<li><a href="#orgheadline147">147. 20181114 提高效率的仪式</a></li>
+<li><a href="#orgheadline148">148. 20181116 只关注不断更新的起点</a></li>
+<li><a href="#orgheadline149">149. 20181117 专注</a></li>
+<li><a href="#orgheadline150">150. 20181119 图像稳定</a></li>
+<li><a href="#orgheadline151">151. 20181214 静止的图像</a></li>
+</ul>
+</div>
+</div>
+
+<p>
+这里是2018年舒尔特数字表的训练体悟，也是给自己参考做的记录，希望同时能继续为大家带来帮助。
+</p>
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 20180103 *数字在心</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+从单手到双手，再由双手到只用眼不用手，现在可进一步简化训练方式：不用手，不用眼，仅适用于熟悉数字敏感度。方法是：不用借助软件，闭上眼睛，心中尽快的将某个区间的数字过一遍。如果到了一定程度，就加多，或者打乱次序，只要保证每个数字在心中经过。但是要想手，眼，敏感度三者同时训练到，应该还是要结合其它方式的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> 20180104 方法</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+点到的基础是看见而非反映，看见的基础是认识而非找到，认识的是固定的内容而非动态的记忆。认识相当于敏感度与次序，看见相当于视幅与眼力，点到只是上述的结果。不是绝对的如此，但大致感觉上是这样的。所以，训练手速之上得将眼睛练好，练习眼睛之上得把需要看见的东西清晰的存放到头脑中。由此理解几种训练方式：双手练，单手练，不用手只用眼练，不用眼不用手随时练。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">3</span> 20180104 数字敏感度与速读</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+尝试训练与测试数字敏感度的一个经验：看到一个数字后，瞬间脑中浮现出尽可能多的与之相邻的数字。不用舒尔特表，只在脑中进行训练就行，任何时间、地点，比如排队、等候无聊之时等等。你脑中能同时浮现的相邻数字越快越多越好，浮现时数字在脑中的图像不用相邻，但只要这些同时在脑中的数字是相邻的那一批就行。因为脑中浮现了，眼睛就会不由自主的看，可能这就是数字敏感度以及敏感度提升速度的一个原因吧。看着舒尔特表时也对看到的每个数字以其为中心来在脑中尽量同时浮现其附近以至其后的数字，也许这就是所谓的预先看。换成速读，那就是看到一个字，就立即想到相关的词，再结合实际书上有的，完成迅速看完脑袋中映出的词中，书上有的那个词，以及句子，乃至整段。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4"><span class="section-number-2">4</span> 20180104 等同=稳定</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+看着全部的数字点该点的数字，不要想要点的数字是什么，所有数字都是一样的。只有所有数字都一样时，速度才是均匀的。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5"><span class="section-number-2">5</span> 20180109 欲速则不达</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+不要太快，有时要刻意放慢些速度，不要急着看到点到，让脑袋慢慢浮现出要点的数字再去看去点。哪个数字都不是最重要的，也不用必须立即看到，点错了慢了也不会有什么坏事发生，也没人非得说要在什么时间内必须点完，没什么急迫的事情，慢慢来。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline6" class="outline-2">
+<h2 id="orgheadline6"><span class="section-number-2">6</span> 20180111 可靠</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+提前看，应该不是提前去看了再记住，而是提前将要看的在脑中清晰住，轮到的时候根据脑中的印象去看。毕竟呆自己脑中的，才是可靠的。要看的早就在那了，根本不用找与记。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-2">
+<h2 id="orgheadline7"><span class="section-number-2">7</span> 20180113 *指随心落</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+你点到的是你找到的，你找到的，是你看到的，你看到的，是你心中的，只要内心清晰，目标就会明确。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-2">
+<h2 id="orgheadline8"><span class="section-number-2">8</span> 20180113 心&gt;眼&gt;脑&gt;手</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+下一个数字其实在心中，而非找到的。而你看到的只有一个是下一个数字，其它都是干扰。关键是要在内心一直都能很清晰的知道下一个数字。手指所点是结果，想多了是杂念（默念），看多了是干扰（眼花），只有明确好心中的目标（形状），你的目标和结果才是一致的。减少想与看，加强手指与内心映像的联结。闭上眼睛，能迅速的走过所有的数字，睁开眼睛快速的点完已知的数据。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-2">
+<h2 id="orgheadline9"><span class="section-number-2">9</span> 20180125 *接纳</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+以接纳的态度去练习，不要着急快慢，要时刻记住心中的那个数字，也要时刻的将数字表当作一个宝库，那里边全都是好东西，你所想要的那个数字一定就在那里。这样看着数字表，心情也会愉悦，不会因为看到的是别的数字而心生厌恶，接受了每个数字所在的位置，知道了每一个数字都是重要的宝贝，你需要的数字也一定能点到，你接受过的也会给你回报，也就不用在意着急找了，不是的立即不去挂念着不去点，看到了就直接去点就可以了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-2">
+<h2 id="orgheadline10"><span class="section-number-2">10</span> 20180202 *匹配</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+不是念到了再看到，而是没有声音只有图像先在头脑中，然后体会匹配到的一瞬间的成就感，不用快，不用念，要的是匹配到。上下左右环顾那个待匹配的图像，而非声音与意义。同一速度，可能是不同状态。不要因为快了而高兴，慢了而沮丧，因为那样会有起伏。高兴应该是因为匹配到了，而沮丧根本不存在，因为脑中将轮到的数字必然在表中。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-2">
+<h2 id="orgheadline11"><span class="section-number-2">11</span> 20180202 两个重点</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+只需要记住两个事情。第一个是要知道目标是什么，第二个是去看。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-2">
+<h2 id="orgheadline12"><span class="section-number-2">12</span> 20180202 目标</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+目标不是快点看完，而是能够看完。时间时真时假，只是个障眼法，因为，从某种角度上，它反映的应该不是速度，而是状态。而这又不准确，同一状态，可能用了不同的时间。真的时间，在稳定的状态下每个人自能体会到，却不是别人能判断的了。所以，忘记时间，忘记意义，忘记声音，将心中目标清楚显现。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-2">
+<h2 id="orgheadline13"><span class="section-number-2">13</span> 20180203 结果</h2>
+<div class="outline-text-2" id="text-13">
+<p>
+排行榜与速度并非没有意义，也不可能完全不关注排行榜与速度，只是在真正练习的时候，要真正去投入，它们会成为干扰。就像结果与过程一样，太注重，反而达不到，但过程却是为结果而进行。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline14" class="outline-2">
+<h2 id="orgheadline14"><span class="section-number-2">14</span> 20180203 能与快</h2>
+<div class="outline-text-2" id="text-14">
+<p>
+目标只是确认自己能看到即可，不必迅速看到。是让自己能，而非快。快是结果，能才是关键。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline15" class="outline-2">
+<h2 id="orgheadline15"><span class="section-number-2">15</span> 20180203 如果累了，那便错了</h2>
+<div class="outline-text-2" id="text-15">
+<p>
+你的成功不是速度，而是状态，是看到，轻松的看到了想看的，本身就是成就，没有不存在的数字，应该会不断让你在舒尔特中不断获取与积累正能量，而非头晕眼胀。在这个世界上，如果站到一个角度上看，负能量本不存在，都是我们自找麻烦创造的，如果累了，那便错了，但是&#x2013;不断调整，也是成长。随时能够调整，才能在这个世界上，随！心！所！欲！！
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline16" class="outline-2">
+<h2 id="orgheadline16"><span class="section-number-2">16</span> 20180204 缓存</h2>
+<div class="outline-text-2" id="text-16">
+<p>
+同一时间脑中缓存的是有限的，大概十来个。而视幅固定后，关键就在于如何不断迅速切换自己的那片缓存，到不同的数字区间上。应该不是一览无余，一览同时能看到的内容只是缓存的容量，确认了看到后迅速清空并缓存下一批的能力，才是关键。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline17" class="outline-2">
+<h2 id="orgheadline17"><span class="section-number-2">17</span> 20180204 精力</h2>
+<div class="outline-text-2" id="text-17">
+<p>
+看本身就不是一个耗精力的事情，所以不要以为看到很难，主要的精力并非看，更非找，而是将心中的目标清晰化。之所以看得很累，找得很慢，是因为，你没有将当前的目标清晰化，不要被脑中的声音误导，在舒尔特中，眼见为实，耳听为虚。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline18" class="outline-2">
+<h2 id="orgheadline18"><span class="section-number-2">18</span> 20180205 缓存与切换</h2>
+<div class="outline-text-2" id="text-18">
+<p>
+先训练一下子能缓存多少数字，再训练在各个区间的切换。比如，先看完几个，再点，再看下几个。。。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline19" class="outline-2">
+<h2 id="orgheadline19"><span class="section-number-2">19</span> 20180210 排除杂念，集中一点</h2>
+<div class="outline-text-2" id="text-19">
+<p>
+点完后，先只将下一个数字清晰现于脑中，忘记点过的，迅速去用眼睛扫视匹配脑中的，这样会比较快。只有勇往直前，才会不断前进，只有目标清晰，才能迅速发现。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline20" class="outline-2">
+<h2 id="orgheadline20"><span class="section-number-2">20</span> 20180212 **整体</h2>
+<div class="outline-text-2" id="text-20">
+<p>
+当反应迅速到一定程度，尝试将所有的数字看成一个整体，或尽可能多的看成整体，扩大每次反应的单位量，比分开一个个的看要好许多。当到一定程度，会感觉忽略了手法。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline21" class="outline-2">
+<h2 id="orgheadline21"><span class="section-number-2">21</span> 20180311 *区间</h2>
+<div class="outline-text-2" id="text-21">
+<p>
+一眼看完1-10再点，再练习一眼看完11-20再点
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline22" class="outline-2">
+<h2 id="orgheadline22"><span class="section-number-2">22</span> 20180316 *节奏</h2>
+<div class="outline-text-2" id="text-22">
+<p>
+掌握节奏就是估计好视线的速度，让手速配合视线，不超前，不等待。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline23" class="outline-2">
+<h2 id="orgheadline23"><span class="section-number-2">23</span> 20180316 冲刺</h2>
+<div class="outline-text-2" id="text-23">
+<p>
+人在冲刺的时候注意力是集中的，拉长你的冲刺时间
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline24" class="outline-2">
+<h2 id="orgheadline24"><span class="section-number-2">24</span> 20180316 节奏</h2>
+<div class="outline-text-2" id="text-24">
+<p>
+掌握好节奏，手与眼同步，手不要盲目快，渐渐的才会眼超过手的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline25" class="outline-2">
+<h2 id="orgheadline25"><span class="section-number-2">25</span> 20180317 *一心多用</h2>
+<div class="outline-text-2" id="text-25">
+<p>
+双食指的精髓在于，同时落下一心二用。由于需要顾及两个手要点的内容，会相比依次点落不知不觉拉大了视幅，增强了数字关注度，与集中了注意力。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline26" class="outline-2">
+<h2 id="orgheadline26"><span class="section-number-2">26</span> 20180317 注意力</h2>
+<div class="outline-text-2" id="text-26">
+<p>
+注意力训练，不是视幅、敏感度、手法、手速的训练。有视幅但能看也行了，有敏感度但识数也行了，有手法但能控制也行了，有手速但能动就行了，那些提升只是太专一了，治标，但得找到分心的原因并克服，这才是根本并通用。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline27" class="outline-2">
+<h2 id="orgheadline27"><span class="section-number-2">27</span> 20180319 *线团</h2>
+<div class="outline-text-2" id="text-27">
+<p>
+目标即是开始，能一下看好几个就顺便看，但不要刻意的去记与找，重要的是你的目标就一个，看到别的就算再近也不要浪费精力，只找那一个目标，其它全忘记。就好比面对一堆打乱的线团，里面有好多或长或短的断线，你要想理顺，就不断的找线头，而非线本身。或许儿童模式就恰巧让你不得不只寻找那些线头，反而让注意力更集中。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline28" class="outline-2">
+<h2 id="orgheadline28"><span class="section-number-2">28</span> 20180319 找与看，点与面</h2>
+<div class="outline-text-2" id="text-28">
+<p>
+开始一个一个找，后来一片一片找，再后来一个一个看，再后来一片一片看。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline29" class="outline-2">
+<h2 id="orgheadline29"><span class="section-number-2">29</span> 20180319 作用</h2>
+<div class="outline-text-2" id="text-29">
+<p>
+注意力舒尔特训练不一定能训练你的注意力，但它一定可以在训练中帮助你发现注意力不集中的原因与情况，很多注意力不集中的原因在生活中难以发现，在训练中会渐渐的体悟，训练是对生活的模拟，知道了这些原因，便可以。。。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline30" class="outline-2">
+<h2 id="orgheadline30"><span class="section-number-2">30</span> 20180320 排除干扰</h2>
+<div class="outline-text-2" id="text-30">
+<p>
+非目标数字都是干扰，如果一下子无法容纳下几个数字，那就一个一个的容纳，只看轮到的，没轮到的就当不认识，哪怕是邻近的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline31" class="outline-2">
+<h2 id="orgheadline31"><span class="section-number-2">31</span> 20180321 图像</h2>
+<div class="outline-text-2" id="text-31">
+<p>
+除了局部法，只看轮到的，还可整体法，不断扫视，维持图像稳定。后一下子点好几个。忘记大小与区间与次序，只顾将图像的内容依次点完。会觉得任何区间的数字都没区别了。一旦你顾及了数字的大小与轮到哪了？这样的事，图像就不稳定了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline32" class="outline-2">
+<h2 id="orgheadline32"><span class="section-number-2">32</span> 20180323 全部与局部</h2>
+<div class="outline-text-2" id="text-32">
+<p>
+重点不是点到了找到了看到了当前数字，而是保证一直能看到全部数字。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline33" class="outline-2">
+<h2 id="orgheadline33"><span class="section-number-2">33</span> 20180323 王者风范</h2>
+<div class="outline-text-2" id="text-33">
+<p>
+告诉你一个方法，必须看清所有数字，再点下一个，没看清所有看到了下一个也不点。真正的领导是不会被琐事缠身，做事是不会显得很吃力的，当你始终努力卖力的快速去点去记去找去看至多只是个将军，而悠闲地看着全局与手指自动完成的每个小目标，才具王者风范。又回到了以前的起点，你点每个数字时，也应能看到其它的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline34" class="outline-2">
+<h2 id="orgheadline34"><span class="section-number-2">34</span> 20180323 真正目标</h2>
+<div class="outline-text-2" id="text-34">
+<p>
+你的目标不是看数字，不是点到，不是点对，不是快点，也不是当前的数字，那些只是表象。要做的是能看全，看完，并且尽可能久的维持，能做至此，不点，点错，也无所谓。总之，是先做到看全看完整，做到了后，才有精力顾及对错快慢与是非。所以看开些，放松些，不要过于完美，不要太执着。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline35" class="outline-2">
+<h2 id="orgheadline35"><span class="section-number-2">35</span> 20180323 整体部分交融</h2>
+<div class="outline-text-2" id="text-35">
+<p>
+数字不是你想在哪出现就在哪出现的，所以你目光流转不是为了找数字，而是为了维持图像整体完整，然后接受数字就在它本来所在的位置等着你点到它。每个数字共同组成整体，但每个数字又在到它时不要顾及其它，每个数字的位置与其它的数字位置几乎没有关系，所以不要刻意记忆，缓存，预知，寻找，只要将所有看成一体，并清晰的知道此刻的目标。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline36" class="outline-2">
+<h2 id="orgheadline36"><span class="section-number-2">36</span> 20180324 *完整目标</h2>
+<div class="outline-text-2" id="text-36">
+<p>
+做到两点：一、维持图像整体的稳定。二、清晰地在心中映像要点的数字。简化：在维定的图像中看到清晰的目标。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline37" class="outline-2">
+<h2 id="orgheadline37"><span class="section-number-2">37</span> 20180324 独立与整体</h2>
+<div class="outline-text-2" id="text-37">
+<p>
+总是想从一个数字所在之处找出其相邻的数字与这位置有何联系，甚至通过记忆与缓存去建立这个联系，以便迅速连贯。其实，其实并不是因为你点完了上一个才点到了下一个，若明白了各个数字间没有联系，反而更能将整个舒尔特表做为整体来看待，缓存与记忆与联系无意识间就完成了，根本不用消耗什么精力。独立与整体，这两点并不矛盾。如果给自己练习加一个条件，必须看清所有数字后再落指，就更能体会这点了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline38" class="outline-2">
+<h2 id="orgheadline38"><span class="section-number-2">38</span> 20180327 顺便</h2>
+<div class="outline-text-2" id="text-38">
+<p>
+练习的不是记忆数字，而是拉伸视幅，数字只是顺便一看。把注意力从数字本身转移到整体范围上来。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline39" class="outline-2">
+<h2 id="orgheadline39"><span class="section-number-2">39</span> 20180329 思想与目光</h2>
+<div class="outline-text-2" id="text-39">
+<p>
+想着数字看，看到就点;而非看着数字想，想到再找。视幅与焦点不应因某个数字而变和转移，应从整体上从固定到清晰。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline40" class="outline-2">
+<h2 id="orgheadline40"><span class="section-number-2">40</span> 20180403 关系与清空</h2>
+<div class="outline-text-2" id="text-40">
+<p>
+这个数字在哪与上一个数字和下一个数字没关系。每个数字是一个新的开始，清空思想后的新起点。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline41" class="outline-2">
+<h2 id="orgheadline41"><span class="section-number-2">41</span> 20180428 间断</h2>
+<div class="outline-text-2" id="text-41">
+<p>
+间断的原因可能是目光未及，但更多的是思维的混乱
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline42" class="outline-2">
+<h2 id="orgheadline42"><span class="section-number-2">42</span> 20180408 本来就在那</h2>
+<div class="outline-text-2" id="text-42">
+<p>
+要再次明白，数字本来就是在那的，不是因为你看到找到才在哪的，它不会消失，所以没什么顾及的，踏踏实实的在它本来就在的地方看到它就行了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline43" class="outline-2">
+<h2 id="orgheadline43"><span class="section-number-2">43</span> 20180408 看与记</h2>
+<div class="outline-text-2" id="text-43">
+<p>
+不要以为是自己记住了数字，其实是你眼晴看着数字在点，是看清了，而非记住了。否则有时你会觉得无从记起，并且由于徒劳的寻找，与反复聚焦本已在那的数字，而显得很疲惫。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline44" class="outline-2">
+<h2 id="orgheadline44"><span class="section-number-2">44</span> 20180408 以手追眼而非以眼追手</h2>
+</div>
+
+<div id="outline-container-orgheadline45" class="outline-2">
+<h2 id="orgheadline45"><span class="section-number-2">45</span> 20180409 焦点</h2>
+<div class="outline-text-2" id="text-45">
+<p>
+脑袋里多几个目标，或许是扩大视幅的技巧。每个目标做为视幅的桩，目标尽可能拉远些，没目标，就难焦距。不是无焦，是尽可能多的分布你的焦点。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline46" class="outline-2">
+<h2 id="orgheadline46"><span class="section-number-2">46</span> 20180409 余光</h2>
+<div class="outline-text-2" id="text-46">
+<p>
+眼睛让它自由些，数字不一定总在焦点处出现，大部分内容是在余光下看到的，看到了也没必要聚焦。这才是由点到面的关键。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline47" class="outline-2">
+<h2 id="orgheadline47"><span class="section-number-2">47</span> 20180409 思想是眼睛的焦点</h2>
+</div>
+
+<div id="outline-container-orgheadline48" class="outline-2">
+<h2 id="orgheadline48"><span class="section-number-2">48</span> 20180412 双食指</h2>
+<div class="outline-text-2" id="text-48">
+<p>
+尽量让双手的距离靠近，让双手连着桌子，各自以为是一个整体。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline49" class="outline-2">
+<h2 id="orgheadline49"><span class="section-number-2">49</span> 20180418 直觉</h2>
+<div class="outline-text-2" id="text-49">
+<p>
+不要靠反应，靠直觉
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline50" class="outline-2">
+<h2 id="orgheadline50"><span class="section-number-2">50</span> 20180419 *无为</h2>
+<div class="outline-text-2" id="text-50">
+<p>
+不反应是最快的反应，不去看是最清晰的看见，不去找是最准确的找到
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline51" class="outline-2">
+<h2 id="orgheadline51"><span class="section-number-2">51</span> 20180425 *形状与意义</h2>
+<div class="outline-text-2" id="text-51">
+<p>
+需要的是看，不是找，也不是理解，如果一定要找，那也要明白，找的是形状，而非意义。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline52" class="outline-2">
+<h2 id="orgheadline52"><span class="section-number-2">52</span> 20180425 *直觉与现状</h2>
+<div class="outline-text-2" id="text-52">
+<p>
+不是去"找"下一个"的"数字"，也不是去"记住"还未点的"位置";而是先"清楚"当前目标的"图像"，再"匹配"早已看到的与"形状"相同的图像。最后，不是用手指去依次点每个"正确"的数字，而且直觉的接触所有本来已经这样的图像。不要将理解与记忆加入进来，只有看与形状；没有什何意义与原因，没有判断与控制，只有直觉与现状。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline53" class="outline-2">
+<h2 id="orgheadline53"><span class="section-number-2">53</span> 20180426 稍安勿燥</h2>
+<div class="outline-text-2" id="text-53">
+<p>
+有时候慢也无妨，心态要调整好，接受自己的水平，自然的去看，会减少杂念。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline54" class="outline-2">
+<h2 id="orgheadline54"><span class="section-number-2">54</span> 20180427 **是看不是找</h2>
+<div class="outline-text-2" id="text-54">
+<p>
+转动眼睛不是为了看目标，而且为了扩大视幅。是为了看清所有看到的，以及去看所有没看清的。因为有不清晰的地方，所以转动目光，而非找数字。目光不要聚焦，数字就在清晰当中的时候，不用刻意去找，有时你目光在左上移时，但是因为其它处已清晰，反而能看到所需数字在右下，但不要因此改变目光移向，要习惯这种方式。理想情况，一览无余不转动目光，但视幅是需要练习的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline55" class="outline-2">
+<h2 id="orgheadline55"><span class="section-number-2">55</span> 20180427 **思维与目光</h2>
+<div class="outline-text-2" id="text-55">
+<p>
+之所以停顿了可能是没看清，但更多应该是思维停止了，要不断的在内心更新自己前进的目标，需要有一个方法拉动思维，比如：假设每一次目标就是一个线头，纠缠不清的乱线只有一个头，你只要拉住它，有可能就能牵出很长，可能一下子消失了，但不断的发现新的线头，就又可能前进一大截，直至整条线，即点完所有数字，而这和你目光转动的原因无关。思维是点，连成线，目光是片，连成面，两者有联系，但不大。所以要做的是一心二用，一则找出整条线，一则看清所有面。如果想妄图快速的找出，那煅炼的不是视觉与注意力，而是反应与运气，原地踏步，难质变。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline56" class="outline-2">
+<h2 id="orgheadline56"><span class="section-number-2">56</span> 20180427 不看</h2>
+<div class="outline-text-2" id="text-56">
+<p>
+原来数字是干扰，不看才是关键。看了会影响头脑中形成清晰的目标，所以注意力，就是抗干扰的能力，能看着其它的东西也不会忘了自己所想的东西。其实不是不看，而是清晰了再看。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline57" class="outline-2">
+<h2 id="orgheadline57"><span class="section-number-2">57</span> 20180427 专注</h2>
+<div class="outline-text-2" id="text-57">
+<p>
+忘记终点，只专心致志于过程
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline58" class="outline-2">
+<h2 id="orgheadline58"><span class="section-number-2">58</span> 20180428 间断</h2>
+<div class="outline-text-2" id="text-58">
+<p>
+间断的原因可能是目光未及，但更多的是思维的混乱
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline59" class="outline-2">
+<h2 id="orgheadline59"><span class="section-number-2">59</span> 20180428 思维与视觉</h2>
+<div class="outline-text-2" id="text-59">
+<p>
+思维就是心中所期望的，视觉就是目光所至，两者有些关联但要分开不能混肴，否则便成了找与反应。分离思维与视觉的一种感觉是，感觉数字是看到的不是找到的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline60" class="outline-2">
+<h2 id="orgheadline60"><span class="section-number-2">60</span> 20180428 清晰与范围</h2>
+<div class="outline-text-2" id="text-60">
+<p>
+正方格煅炼视野清晰度，长方格煅炼视幅范围，与快慢无关。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline61" class="outline-2">
+<h2 id="orgheadline61"><span class="section-number-2">61</span> 20180503**不视而见&lt;-&gt;视而不见</h2>
+<div class="outline-text-2" id="text-61">
+<p>
+也不能说不找，只是眼睛的转动并不是在找数字，而是清晰视野。而找，并不在表中，眼前，而是在心中进行，找到后，眼前自然就有了。将心中所寻与眼前所见分开，寻到再匹配，而不要为眼前所见，干扰了心镜，学会不视而见，也要视而不见。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline62" class="outline-2">
+<h2 id="orgheadline62"><span class="section-number-2">62</span> 20180507 心无旁骛的冲刺</h2>
+<div class="outline-text-2" id="text-62">
+<p>
+缩小关注范围，不断更新关注的新区间，在有所关注下，忽略所有其它范围与停止思考，并从区间的开始"冲刺"至结尾，冲刺的同时也更新着区间的范围，从1-9，从10-15，从14-20，从……不断更新，不断冲刺，心无旁骛。冲刺的意思就是不要犹豫，尽快的走完;不断的冲刺就是不断的更新终点，不断的尽快走完;至最终。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline63" class="outline-2">
+<h2 id="orgheadline63"><span class="section-number-2">63</span> 20180507 懒惰与努力</h2>
+<div class="outline-text-2" id="text-63">
+<p>
+要坚持快速的更新头脑中将要点到的数字，用眼睛先看到便是懒惰，不要懒惰，要让思想走在目光的前面。虽说勤能补拙，但勤也可能是隐藏的懒惰，真正的努力不一定是勤奋，勇于为更好的方式探索不一定要用很久的时间，关键重要的时候抓住机会并愿意深入去做，才是更好的努力。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline64" class="outline-2">
+<h2 id="orgheadline64"><span class="section-number-2">64</span> 20180509 主动</h2>
+<div class="outline-text-2" id="text-64">
+<p>
+努力的在头脑中主动成像而非被动看到再成像。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline65" class="outline-2">
+<h2 id="orgheadline65"><span class="section-number-2">65</span> 20180511 让眼睛解脱，让思维前进</h2>
+<div class="outline-text-2" id="text-65">
+<p>
+不是就不看，看到了就立刻去点，不要给眼睛回视和顾及其它的机会，才能避免思维的停滞，决窍是每个数字尽量只认出一次，不要反复，这也能简化训练，减轻眼睛的疲劳。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline66" class="outline-2">
+<h2 id="orgheadline66"><span class="section-number-2">66</span> 20180511 不知道自己看的见</h2>
+<div class="outline-text-2" id="text-66">
+<p>
+很多时候其实是已经看到了看清了但却不相信自己，无形中把无意识慢下来的时间给了没必要的犹豫、思考、分析、重复、默念、记忆……
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline67" class="outline-2">
+<h2 id="orgheadline67"><span class="section-number-2">67</span> 20180513 训练过程</h2>
+<div class="outline-text-2" id="text-67">
+<p>
+不知道怎么努力-努力的练（训练量，手速与眼睛）-不知道自己不努力（方式不对）-知道自己不努力（不主动前进，与等待找到）-努力的练（训练思维的集中，以及不去寻找，即训练想到而非找到）-不知道自己努力（无意识的思维前进，直觉，与余光看见）-努力的练（训练思维的前进，训练想到而非找到，与明白早己看见）
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline68" class="outline-2">
+<h2 id="orgheadline68"><span class="section-number-2">68</span> 20180514 看</h2>
+<div class="outline-text-2" id="text-68">
+<p>
+目的是看到，而非找到，也非尽快看到。要看的本就存在，所以没找到不担心，找到了也无意义；要看的是数字而非时间，所以慢下了不着急，很快也没什么。不去找也不在乎速度，所以不找而"找"，不快而"快"，还很轻松。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline69" class="outline-2">
+<h2 id="orgheadline69"><span class="section-number-2">69</span> 20180514 *解脱</h2>
+<div class="outline-text-2" id="text-69">
+<p>
+摆脱舒适区训练，其实是克服习惯，只要寻找，就是训练进入了舒适区，寻找了就陷入了，摆脱舒适区，是解脱的关键。过分关注，反而中断了思维，失去了聚焦，然后你会发现不用很费劲也能进步，不用很集中也能看到，不会因视线偶尔离开手机一下而降低了连续，不会因关注周围状况而停顿了思维。不用为了训练，而头晕脑胀。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline70" class="outline-2">
+<h2 id="orgheadline70"><span class="section-number-2">70</span> 20180514 视线与思维</h2>
+<div class="outline-text-2" id="text-70">
+<p>
+视线断了还可以再看，但思维断了却很难恢复。更多的慢，不是因为没看到也不是因为没找到，要明白思维里应该容纳什么。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline71" class="outline-2">
+<h2 id="orgheadline71"><span class="section-number-2">71</span> 20180514 低阶</h2>
+<div class="outline-text-2" id="text-71">
+<p>
+低阶应该练习一下，防止思维过于缓慢。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline72" class="outline-2">
+<h2 id="orgheadline72"><span class="section-number-2">72</span> 20180515 主动成像的技巧</h2>
+<div class="outline-text-2" id="text-72">
+<p>
+先明确好再看，而非上来就看，那样难免被动。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline73" class="outline-2">
+<h2 id="orgheadline73"><span class="section-number-2">73</span> 20180518 *思维的前进</h2>
+<div class="outline-text-2" id="text-73">
+<p>
+已经知道了1-10，就把精力放在11-20，等等，不要停滞思维
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline74" class="outline-2">
+<h2 id="orgheadline74"><span class="section-number-2">74</span> 20180518 **控制</h2>
+<div class="outline-text-2" id="text-74">
+<p>
+学会视而不见，才能控制不视而见。视而不见是针对目标之外，不视而见是针对思想所至。这样思想便毫无干扰的前进，眼睛便理所应当地看见，手指会毫无停顿的点到。关键是不是心中所想便不要轻易去看，那会帮你在看前，明确好目标。因为找，是盲目的表现。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline75" class="outline-2">
+<h2 id="orgheadline75"><span class="section-number-2">75</span> 20180518 无用功</h2>
+<div class="outline-text-2" id="text-75">
+<p>
+没清晰成象就不用浪费眼力
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline76" class="outline-2">
+<h2 id="orgheadline76"><span class="section-number-2">76</span> 20180519 珍惜</h2>
+<div class="outline-text-2" id="text-76">
+<p>
+当限制了眼睛浏览的次数，大脑与眼便更易集中精力，珍惜每次机会，不会做多余的浏览与思考。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline77" class="outline-2">
+<h2 id="orgheadline77"><span class="section-number-2">77</span> 20180521 格局</h2>
+<div class="outline-text-2" id="text-77">
+<p>
+除了思想除了眼力除了视幅除了反应，格局也大一些
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline78" class="outline-2">
+<h2 id="orgheadline78"><span class="section-number-2">78</span> 20180522 目光无焦点，思维向前走</h2>
+<div class="outline-text-2" id="text-78">
+<p>
+不移动目光，不聚焦目光，不是找数字，而在清晰所有数字后，挑出想要的，没有哪片区域是更清晰的，一视同仁。与视幅无太大关系，是分辨率的训练。低阶会容易些，但不是因为数字少，而是数字大，并且头脑不用切换新区间。简言之两点，训练时，时刻注意着让头脑中不断清晰的更新目标，目光不因所见而变，会让注意力不分散。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline79" class="outline-2">
+<h2 id="orgheadline79"><span class="section-number-2">79</span> 20180522范围</h2>
+<div class="outline-text-2" id="text-79">
+<p>
+目光看远些，格局摆大些。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline80" class="outline-2">
+<h2 id="orgheadline80"><span class="section-number-2">80</span> 20180523*一心多用</h2>
+<div class="outline-text-2" id="text-80">
+<p>
+确是一心多用，但不是为了预看，记忆，控制手指，而是为了：一顾及目光尽量广，不聚焦;二顾及思维一直走，不停滞。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline81" class="outline-2">
+<h2 id="orgheadline81"><span class="section-number-2">81</span> 20180523各自独立</h2>
+<div class="outline-text-2" id="text-81">
+<p>
+不要管目光，思维一直走。不要管思维，目光不聚焦。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline82" class="outline-2">
+<h2 id="orgheadline82"><span class="section-number-2">82</span> 20180523怎样看到</h2>
+<div class="outline-text-2" id="text-82">
+<p>
+不是因为找到而看到，而是因为目光所及，思维已至。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline83" class="outline-2">
+<h2 id="orgheadline83"><span class="section-number-2">83</span> 20180523长远</h2>
+<div class="outline-text-2" id="text-83">
+<p>
+目光放宽些，思维走远些
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline84" class="outline-2">
+<h2 id="orgheadline84"><span class="section-number-2">84</span> 20180525 习惯并非速度</h2>
+<div class="outline-text-2" id="text-84">
+<p>
+训练的是习惯，而非速度。速度，不是用常规方式训练出来的，而是习惯了某种方式，自然体现的，慢无所谓，只要有助形成新习惯。习惯，是慢慢养成的，不会因为不适应而无法形成;而相反以速度为目标，会让你急躁，疲劳。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline85" class="outline-2">
+<h2 id="orgheadline85"><span class="section-number-2">85</span> 20180525*是确认而非去看</h2>
+<div class="outline-text-2" id="text-85">
+<p>
+训练时，拉大视幅，以能看清所有为目标，而非某一个。怎样证明看清了呢？那就只有有思想中将所有数字走一遍，这也给人一种错觉，误认为是要去去尽快看到那个思想中的数字，于是，聚焦，寻找，记忆，求速度……各种分神的行为&#x2013;实际上，我们只是借助思想，来证明眼睛是确认看到了所有，不能一下子确认所有，就只能一个一个确认，实际眼睛早已有了结果，时间只是用在确认上，确认的速度取决于思维，数字本来就已存在并映入，而不是不是你去主动看才这样的。总之，是要确认看到了它，你要做的只是在思想中明确下一个数字，然后去确认它是否已在眼下，而非主动去找去看它。这样，训练重点才会由找到看，不会过于在意一处无睱旁顾。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline86" class="outline-2">
+<h2 id="orgheadline86"><span class="section-number-2">86</span> 20180527 *清晰与快</h2>
+<div class="outline-text-2" id="text-86">
+<p>
+不要把快做为目标，那会让你慌乱，要把清晰做为目标，有助思维流畅，数字只是衡量是否清晰的方法，而非目标。一旦想找了，或者刻意预看了，就要慌乱了;有一种状态，就是即便当你完全未知将点的数字在哪时，仍然继续充满信心的落指。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline87" class="outline-2">
+<h2 id="orgheadline87"><span class="section-number-2">87</span> 20180528 关键</h2>
+<div class="outline-text-2" id="text-87">
+<p>
+思维的懒惰，再勤奋的动作也无法弥补
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline88" class="outline-2">
+<h2 id="orgheadline88"><span class="section-number-2">88</span> 20180531 **追逐与捕捉</h2>
+<div class="outline-text-2" id="text-88">
+<p>
+记住：并非眼等手，而是手追眼;是思维牵着目光走，而非目光被手指拖滞。目光的重点是思维，而非手指，点快点慢点对点错都无关紧要，并非一定能点到，但是眼睛要捕捉到思维。如果实在影响视线干扰思维，就先把手拿开。需要视而不见的除了无关的数字，还有手指。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline89" class="outline-2">
+<h2 id="orgheadline89"><span class="section-number-2">89</span> 20180531 自信</h2>
+<div class="outline-text-2" id="text-89">
+<p>
+大胆地往远看，不要留恋已确定的。你的目标不是固定的一处，而是是看遍所有。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline90" class="outline-2">
+<h2 id="orgheadline90"><span class="section-number-2">90</span> 20180601 习惯</h2>
+<div class="outline-text-2" id="text-90">
+<p>
+习惯是奇特的现象，既能让你不用思考的执行复杂的行动，也能你不得不专门分心去改变经常分心的习惯。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline91" class="outline-2">
+<h2 id="orgheadline91"><span class="section-number-2">91</span> 20180601 限制</h2>
+<div class="outline-text-2" id="text-91">
+<p>
+让目光摆脱手指的束缚，让思维走在目光的前面，再被目光超越。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline92" class="outline-2">
+<h2 id="orgheadline92"><span class="section-number-2">92</span> 20180605 **切换与敏感度</h2>
+<div class="outline-text-2" id="text-92">
+<p>
+切换和数字敏感都是需时间的，到一定程度要分开辨别与训练不混肴，有助提升。比如，想训练敏感度，那么在每段区间结束后，可停一下准备好视线，再立即用最快的速度完成下个区间，去除切换后二者的差距就是敏感度的差距，尽量缩小不同区间的这个差距;同理，训练切换灵活，则分离出数字敏感度的时间，另有类似的手段，比如，根据当前敏感度，以最差的敏感度做为两个数字间的间隔参考，放慢点数字的速度到合适的节奏，然后在这个速度上，尽量让思维连续以致每个数字点的速度尽量均匀。总之，要快就分区间的快，要慢就均匀的慢，各个击破，要比混肴两者不分彼此的训练更具确定性。到一定程度，就能两者同时兼顾，即不同区间的长度可以根据速度的均匀度任意轻松调整。当然，这要有一定的视幅基础，其实，这样看来，初学者低阶有助训练敏感度，高阶有助训练切换。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline93" class="outline-2">
+<h2 id="orgheadline93"><span class="section-number-2">93</span> 20180605 阶段总结</h2>
+<div class="outline-text-2" id="text-93">
+<p>
+忽略手指，推进思维，目光放宽
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline94" class="outline-2">
+<h2 id="orgheadline94"><span class="section-number-2">94</span> 20180605 预看</h2>
+<div class="outline-text-2" id="text-94">
+<p>
+其实从某个角度说，不存在预先看，眼睛一直向前，看完就是看完了。预看则意味着记忆，记忆是因为眼不及手而等手，导致注意力从眼转到手上了。若是纯粹煅炼注意力，则几乎是无记忆的，眼睛一直看完，关注的只是眼睛跟着思维，手会紧跟着自然点完的，手眼差距导致的缓存量，其实很小。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline95" class="outline-2">
+<h2 id="orgheadline95"><span class="section-number-2">95</span> 20180606 清除</h2>
+<div class="outline-text-2" id="text-95">
+<p>
+一边点，一边在思维中清除掉已过的数字。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline96" class="outline-2">
+<h2 id="orgheadline96"><span class="section-number-2">96</span> 20180607 总结：思维所至，目光所及，手指所点</h2>
+<div class="outline-text-2" id="text-96">
+<p>
+是：视幅放广不聚焦，推进思维不停滞，忘记已有不留恋，均衡各范围数字的敏感度，缩短各数字范围间的切换，凭直觉抓住瞬间，目光精准不盲目，一视同仁;
+非：手指所点，目光所见，不要默念，不要寻找，不要记忆，不要聚焦，不要看手…
+结：0。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline97" class="outline-2">
+<h2 id="orgheadline97"><span class="section-number-2">97</span> 20180608 **瞬间</h2>
+<div class="outline-text-2" id="text-97">
+<p>
+其实本来你早已看清所有，只是没抓住看清的一瞬，把时间浪费在反复的确认与寻找，你以为是找到了，找对了，其实它们只是更早被断开的那一瞬的结果，抓住所有的瞬间便无疲劳与压力的困扰，也无须关注怎样对待那些数字，所以你的目标不是看清哪个数字，而是抓住看清数字的每一个瞬间，当你能自由的抓住那个瞬间，其余时间你想做什么便做什么，你有大把的时间与精力。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline98" class="outline-2">
+<h2 id="orgheadline98"><span class="section-number-2">98</span> 20180608 **专注</h2>
+<div class="outline-text-2" id="text-98">
+<p>
+放空你的思维，减少想要进步的压力与顾虑。因为只要你的头脑被清空，你的目标才能快速清晰不被干扰的映入。这与缓存区间以练习敏感度不同，是练习你的专注。敏感度是通过对目标的清晰化，来强制掩盖掉干扰，而放空是让你不去关注外物让干扰自己消失。外物包括例如刻意去记住位置，熟悉区间，余光，预看，拉广视幅，双手落，推进思维，等可能会提升速度的手段，并不是这些不对，但毕竟不是目标。真正的目标是心无旁骛的直觉，直正专注后会自然那样去做，而非做到那样。如同你用尽所能去描述什么是酒，却失去了品尝的机会，但无论你描述的多么准确，也不如一无所知的小孩轻品一口
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline99" class="outline-2">
+<h2 id="orgheadline99"><span class="section-number-2">99</span> 20180608 无为</h2>
+<div class="outline-text-2" id="text-99">
+<p>
+开始会有你不想关注的总是出现，然后你知道了应该关注哪些开始进步，之后发现只需关注一样心无旁骛，最后什么也不用关注顺其自然。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline100" class="outline-2">
+<h2 id="orgheadline100"><span class="section-number-2">100</span> 20180612 勿错过</h2>
+<div class="outline-text-2" id="text-100">
+<p>
+目标明确，目光精准，不要总是错过，看过就应看见，看见就要看清，，不要盲目扫视，浪费多余的目光。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline101" class="outline-2">
+<h2 id="orgheadline101"><span class="section-number-2">101</span> 20180626 无意义的图像</h2>
+<div class="outline-text-2" id="text-101">
+<p>
+看到的是图像，不是数字。心中的是映像，而非含义。是心中图像更替，而非头脑中依次前进的数字。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline102" class="outline-2">
+<h2 id="orgheadline102"><span class="section-number-2">102</span> 20180627 *看见与认识</h2>
+<div class="outline-text-2" id="text-102">
+<p>
+看见数字应该是在认出数字之前，只需知道看见，不用非要认出。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline103" class="outline-2">
+<h2 id="orgheadline103"><span class="section-number-2">103</span> 20180627 忘记</h2>
+<div class="outline-text-2" id="text-103">
+<p>
+忘记速度，忘记位置，忘记时间，忘记含义。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline104" class="outline-2">
+<h2 id="orgheadline104"><span class="section-number-2">104</span> 20180706 准确</h2>
+<div class="outline-text-2" id="text-104">
+<p>
+速度不是均匀的，确定时就快些，不确定时就稳些
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline105" class="outline-2">
+<h2 id="orgheadline105"><span class="section-number-2">105</span> 20180713 眼为先</h2>
+<div class="outline-text-2" id="text-105">
+<p>
+其实脑袋反应再快，也不及眼睛，往往是先看到，再认出。尤其是困倦时你会明显觉得，看图片比认文字容易得多。认出不等于理解，只看也不等于不理解。将数字当做图像来看吧。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline106" class="outline-2">
+<h2 id="orgheadline106"><span class="section-number-2">106</span> 20180717 原因</h2>
+<div class="outline-text-2" id="text-106">
+<p>
+点到哪个数字就是哪个数字没有原因，眼睛不做无意义的转动，看不到再转。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline107" class="outline-2">
+<h2 id="orgheadline107"><span class="section-number-2">107</span> 20180708 眼睛与图形</h2>
+<div class="outline-text-2" id="text-107">
+<p>
+眼睛不要乱转，看清楚了再点，不必匀速;每个数字只是图像，都是开始，没有联系。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline108" class="outline-2">
+<h2 id="orgheadline108"><span class="section-number-2">108</span> 20180725 *整体非局部，图像非意义</h2>
+<div class="outline-text-2" id="text-108">
+<p>
+将表看做整体，首先要知道表包含数字，而非数字构成表。好比人脸是表，数字是五官。是先识别出脸再辨认出五官，而非直接去辨认五官再认出面孔。你面对的每一张表都是不同的"人"。目标是识别出表而非辨认其数字，就好比是要认识一个人而非去辨认五官。因为你早知的是每一张面孔都有五官，却不可能知道面对的五官对应怎样的面孔。你要识别的是已知的数字以怎样的方式构成表，好比识别已有的五官怎样构成一张脸，不要再拘泥于细节。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline109" class="outline-2">
+<h2 id="orgheadline109"><span class="section-number-2">109</span> 20180725 *起点</h2>
+<div class="outline-text-2" id="text-109">
+<p>
+数字无先后，一视同仁，才是正确的起点。决窍是忘记已有与临近，这样就不必恐慌与担心记不住，即已忘，何必记，不断重新开始即可。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline110" class="outline-2">
+<h2 id="orgheadline110"><span class="section-number-2">110</span> 20180725 *位置</h2>
+<div class="outline-text-2" id="text-110">
+<p>
+位置在哪并不重要，重要的是哪里都能看到。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline111" class="outline-2">
+<h2 id="orgheadline111"><span class="section-number-2">111</span> 20180726 忘与记</h2>
+<div class="outline-text-2" id="text-111">
+<p>
+学会忘记点过的，不要记忆没点的。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline112" class="outline-2">
+<h2 id="orgheadline112"><span class="section-number-2">112</span> 20180726 大视角</h2>
+<div class="outline-text-2" id="text-112">
+<p>
+你看到的不是数字，而是表中的数字
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline113" class="outline-2">
+<h2 id="orgheadline113"><span class="section-number-2">113</span> 20180802 克服恐惧</h2>
+<div class="outline-text-2" id="text-113">
+<p>
+点多了，就不愿/不敢再往下想了，顾及前面，怕失去什么。实际上，克服这种恐惧，大胆地忘记。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline114" class="outline-2">
+<h2 id="orgheadline114"><span class="section-number-2">114</span> 20180803 推动思维</h2>
+<div class="outline-text-2" id="text-114">
+<p>
+其实到一定程度后视幅已不是问题，问题在于推动思维像看待1-9一样看待其它数字。不能一步到位，但是可一点点来，只要相信自己的能力，将关注点在切换，而非担心视幅、反应与记忆即可。换一句话，关注点是：慢的原因主要是切换慢，而非看得慢，就不用分心了。眼力已经够了，需要的是脑力。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline115" class="outline-2">
+<h2 id="orgheadline115"><span class="section-number-2">115</span> 20180807 专一</h2>
+<div class="outline-text-2" id="text-115">
+<p>
+只看数字不顾次序与快慢
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline116" class="outline-2">
+<h2 id="orgheadline116"><span class="section-number-2">116</span> 20180828 顺便缓存附近</h2>
+<div class="outline-text-2" id="text-116">
+<p>
+不看附近的，只看目标。看到附近的，只是顺便。能记就记不要太远，尽量集中于附近几个，分心则忽略。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline117" class="outline-2">
+<h2 id="orgheadline117"><span class="section-number-2">117</span> 20180828 区间的训练</h2>
+<div class="outline-text-2" id="text-117">
+<p>
+先不求整体快，先一个区间快，然后可顿一会，再下一个区间，然后减少区间间隔合并成一个区间。比如1-25，就1-9,10-20,20-25，分别熟练了区间后，再然后1-20，20-25，等等。一个区间，先在头脑中清晰了（并非眼睛找到），再点，不是均匀速度，视头脑状态，不清晰则慢点，清晰则快点。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline118" class="outline-2">
+<h2 id="orgheadline118"><span class="section-number-2">118</span> 20180829 只有一个下一个</h2>
+<div class="outline-text-2" id="text-118">
+<p>
+找很多的数字，但每次只找一个下一个
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline119" class="outline-2">
+<h2 id="orgheadline119"><span class="section-number-2">119</span> 20180906 一闪而过</h2>
+<div class="outline-text-2" id="text-119">
+<p>
+不要记忆，即使快点到了，也不要记忆，只需重复的看，只看点到的，看是一瞬间的事情，为避免记忆，尝试一闪而过，不断的一闪而过。所谓预看、缓存，是熟练了这个一闪而过的前提下，用多余的精力无意识中做的。在此前，所需的只是：不断地只明确要看的，用一闪而过的方式瞥见，而非找或记或到哪个位次。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline120" class="outline-2">
+<h2 id="orgheadline120"><span class="section-number-2">120</span> 20180912 心</h2>
+<div class="outline-text-2" id="text-120">
+<p>
+将数字放在心中去看，比找到的更可靠。看到的是干扰，找是干扰的结果，不被看到的迷惑，维持心中的不变，自然会映入眼帘。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline121" class="outline-2">
+<h2 id="orgheadline121"><span class="section-number-2">121</span> 20180915 专一</h2>
+<div class="outline-text-2" id="text-121">
+<p>
+只想要点的数字在不找的情况下在哪看见，不考虑次序。每次都只想一个数字，同时确定是否在视线中。不中断思维，视线自然就是思维的速度。专注思维，便不会出现节奏脱节的情况。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline122" class="outline-2">
+<h2 id="orgheadline122"><span class="section-number-2">122</span> 20180915 *流畅与速度</h2>
+<div class="outline-text-2" id="text-122">
+<p>
+之所以找，是因为抛弃了思维，目光盲目的不定，会让你更慌乱，表面是看不到，实质是没想看。如狂风吹乱了视线，即便知道要看的，却没法控制失控的视线。没有表就训练思维的推进速度与清晰，有了表就训练确定数字是在思维的笼罩下（即数字在视线中，而不去看数字），不要在意落指的迟缓与反应迟钝，也并不存在该往哪看的问题。总结起来就是：慌乱源于盲目的视线，盲目源于求快的心情，过于在意速度会让你忽略思维，可以慢一点，让视线处于平稳的范围内，以便思维笼罩，流畅比速度更关键，让思维清澈，并找到适合你的角度，这需要习惯与适应。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline123" class="outline-2">
+<h2 id="orgheadline123"><span class="section-number-2">123</span> 20180920 从熟悉到陌生</h2>
+<div class="outline-text-2" id="text-123">
+<p>
+看多少？ 1-9熟悉就一次全看，9以后不熟就一次少看些。不是要尽量做到一次能看很多，更关键的应该是一次能只看一个。做到，无论1-9还是其它，一次只看一个。熟悉就是干扰，可以考虑训练熟悉度，然后训练让熟悉变成与陌生一样。总结四个字：一视同仁。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline124" class="outline-2">
+<h2 id="orgheadline124"><span class="section-number-2">124</span> 20180920 视幅与角度</h2>
+<div class="outline-text-2" id="text-124">
+<p>
+不是训练反应、熟练，也不是训练速度、记忆，而是训练与调整最适合的视幅与角度。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline125" class="outline-2">
+<h2 id="orgheadline125"><span class="section-number-2">125</span> 20180920 过程</h2>
+<div class="outline-text-2" id="text-125">
+<p>
+从视线引导思维（视而不见，思维被视线牵引着走，需敏锐的目光，易盲目），到思维引导视线（不视而见，只想就行了不用在意看，需明确的目标，易停顿），到视线决定思维（所见即所想，想也不用了数字就在那，需调整好视野，不稳定），到思维就是视线（所想即所见，还未至）。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline126" class="outline-2">
+<h2 id="orgheadline126"><span class="section-number-2">126</span> 20180921 *过滤与分辨</h2>
+<div class="outline-text-2" id="text-126">
+<p>
+是要看目标是否在视野中，而非分辨看到的是不是目标。是要训练注意力，而非反应速度。你分辨了意味着你要同时顾及多个数字，你在过滤则只需关注一点，两者是不用级别的消耗。每个人的反应是差不多的，差异在于将注意力集中在哪个方面。精力集中的方向错了，不但慢，而且累。将不好的习惯停止。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline127" class="outline-2">
+<h2 id="orgheadline127"><span class="section-number-2">127</span> 20180926 规律外的规律</h2>
+<div class="outline-text-2" id="text-127">
+<p>
+在状态好的时候练，状态不好就不练。在可以练的时候练，不该训练就别练。充份利用好自己的每一秒，才是正确的注意力训练，才会有更好的成就！
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline128" class="outline-2">
+<h2 id="orgheadline128"><span class="section-number-2">128</span> 20180928 与数字捉迷藏</h2>
+<div class="outline-text-2" id="text-128">
+<p>
+集中精力的一个技巧，就是先明白你的目标，然后从众多数字中看到隐藏于角落的那个，期间不考虑其它，你会逐渐发现，你的注意力无形但清晰的助你自然的去看那个下一个唯一的点。熟悉了，会感觉，它不是躲在角落了，而是清晰无比。所谓预知，也许是更熟练的情况下同时明确多个目标，然后一下子，而非依次看到。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline129" class="outline-2">
+<h2 id="orgheadline129"><span class="section-number-2">129</span> 20180928 牵引还是推进？</h2>
+<div class="outline-text-2" id="text-129">
+<p>
+再一次感觉到，不是思维让目标清楚，不是推进自己的思维前进。而是己知什么是目标后，用眼睛去看它牵引着思维前进，先牵引思维，然后随着思维滑行，然后再牵引…期间你的思维是空明自然的，而非努力成像，或费劲的寻找。换句话说，是在无意识下，目光牵引着思维而非思维推进目光，神奇的状态。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline130" class="outline-2">
+<h2 id="orgheadline130"><span class="section-number-2">130</span> 20180930 牵引与推进</h2>
+<div class="outline-text-2" id="text-130">
+<p>
+对已经映在心中的目标（如1-10），思维会自动推进视线集中看到，这个时间久会体会到;对于不够熟练的，不是想出目标，而是根本不想目标的样子，是只知道有目标就看了，然后看到目标，然后知道目标是什么，然后再点。否则视线会变成扫视，而非笼罩。换句话说，其实你能控制思维的清晰与模糊，足够清晰会推进视线，很清晰会干扰视线，若有若无视线会牵引你，完全没有则会停滞。毕竟人的大脑应是根据线索与提示的被动触发反应，完全主动推进还是困难些。不该想的时候（比如你想知道xx数字在哪，长什么样）就不要想（没有人回答你即找，最好的答案是看到即非找），掌握好节奏，可以通过控制思维的清晰程度来做到，或推进视线（心中有数），或牵引思维（装作不知），避免干扰（不勉强找与想），不要停滞（不能放弃）。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline131" class="outline-2">
+<h2 id="orgheadline131"><span class="section-number-2">131</span> 20181005 高阶与低阶</h2>
+<div class="outline-text-2" id="text-131">
+<p>
+低阶是练视读而非反应，高阶是练视幅而非寻找。低阶的误区是音读，走出误区的迹象是感觉数字无先后；高阶的误区是记忆，走出误区的迹象是感觉数字是自然出现而非看到的。两个难度一样，低阶不稳固容易被高阶影响。两者共同的误区是速度，训练的重点是感觉，速度只是结果。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline132" class="outline-2">
+<h2 id="orgheadline132"><span class="section-number-2">132</span> 20181009 疯狂模式</h2>
+<div class="outline-text-2" id="text-132">
+<p>
+只需看清再点，不需要快看。看清是从全局角度非聚焦。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline133" class="outline-2">
+<h2 id="orgheadline133"><span class="section-number-2">133</span> 20181009 过程</h2>
+<div class="outline-text-2" id="text-133">
+<p>
+速度只是结果的反映，并非过程。忘记数字，训练清晰；忘记速度快慢，训练清晰度调节；将以上状态尽可能延长与掌握。这样你的目光便不会因数字而流转，不因速度与进度而慌乱，而是在为寻找一个能够最快俯瞰全局的位置，闲庭若步。征兆就是你点的数字不是因提前看到或记忆、寻找，而是因你觉得它本来就在那。当想要寻找、以及想了解点了多少时，要告诉自己，那不重要;多舍弃几次没有必要的速度，会获得比速度更多的本已存在。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline134" class="outline-2">
+<h2 id="orgheadline134"><span class="section-number-2">134</span> 20181011 噪音</h2>
+<div class="outline-text-2" id="text-134">
+<p>
+疯狂模式是让你训练避免数字的干扰。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline135" class="outline-2">
+<h2 id="orgheadline135"><span class="section-number-2">135</span> 20181012*疯狂</h2>
+<div class="outline-text-2" id="text-135">
+<p>
+每一次都是新开始，不要明确下一个，不要记住上一个，不要在意哪里变化到哪里，要的只是忘记所有，只看当前，不变的也只是当下，花费的时间用在清空，而非寻找。看，只是动作。有个直观的技巧是：不数数，不默念，轮到某个数字后不是找，而是做4件事：1.记住当前的2.清空前面和后面的3.只看记住的4.忘记记住的是什么后立即点。或者简单点，除了当前的数字是真的，其它数字若非当下则全是不存在的假象！假象无需关注。你专注当下，当下会以被拥有回报于你；你分心于它物，本该拥有的当下会稍纵即逝。总结：其实就是在所有假的数字中，点出真的那个，即当下。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline136" class="outline-2">
+<h2 id="orgheadline136"><span class="section-number-2">136</span> 20181012*看、点</h2>
+<div class="outline-text-2" id="text-136">
+<p>
+最重要的是先看到，什么都不想，想前赶紧点完。时刻记得自己是在干什么，不是快点，不是名次不是速度而只是点，看了就点看了就点。点点点，只是点而以。先慢点，适应这个事情。训练的方式就是忘记一切，不在意一切，只进行两个动作，看到-立即点-看到-立即点…只训练这两个动作，以及其余什么都不做不想不顾（甚至中间有人叫你你可以抬头和他说会话，然后低头继续这个训练;或者不是这个状态了就停下来调整一下继续点），直至习惯。总之，确保自己只做两件事：看、点，其余什么都不做。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline137" class="outline-2">
+<h2 id="orgheadline137"><span class="section-number-2">137</span> 20181013 *真假</h2>
+<div class="outline-text-2" id="text-137">
+<p>
+你看见的不是哪个数字，无论有多少个数字是什么数字，你看见的不是数字，只有两种事物：真的（当前该点的），假的（当前不该点的）。区别只在于真的只有一个，假的可能有任意多，但正因如此，直相更突出，所以，改变习惯，不再对真相视而不见，无端犹豫。再简化一点，你看到的数字应该只有一个。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline138" class="outline-2">
+<h2 id="orgheadline138"><span class="section-number-2">138</span> 20181014是与非</h2>
+<div class="outline-text-2" id="text-138">
+<p>
+是就点，甚至不考虑是什么。那就是注意力。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline139" class="outline-2">
+<h2 id="orgheadline139"><span class="section-number-2">139</span> 20181017 不重要</h2>
+<div class="outline-text-2" id="text-139">
+<p>
+感受目光抓住思维的感觉，任数字如何跳跃，它还是在哪。其它都不重要。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline140" class="outline-2">
+<h2 id="orgheadline140"><span class="section-number-2">140</span> 20181017 *排除干扰</h2>
+<div class="outline-text-2" id="text-140">
+<p>
+主要是排除两种干扰：其它数字的干扰；心中惦记事情的干扰。前者需忘记和去掉每个数字的联系，每次记住只有一个数字，其它无关，只需从中找出唯一的真，而不用关心数字是什么，在哪里，代表什么。后者需维持那种持续的稳定的心态不去考虑速度、进度、视幅，每次以全新的状态放空思维并寻找真相，并一真持续下去。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline141" class="outline-2">
+<h2 id="orgheadline141"><span class="section-number-2">141</span> 20181018 无视变化</h2>
+<div class="outline-text-2" id="text-141">
+<p>
+维持那种不担心变化的心态，变的是虚假，不变的才是当下。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline142" class="outline-2">
+<h2 id="orgheadline142"><span class="section-number-2">142</span> 20181018 **调节平衡</h2>
+<div class="outline-text-2" id="text-142">
+<p>
+当练习到一定程度，视幅，反应，速度，准确，结果，上一个，下一个，进度，连续性等等已不是重点，重点的是每次出现你所担心的失误，或要出现时的调节。调节不怕一切，当你面对着舒尔特，你不是在看在点在想，而是不断的感受现状，并根据现状做相应的调节，不是控制，而是接受，接受了有便有了无，接受了无也会出现有，处于这种不断摆动的平衡态，没有绝对的静止，但一切事物一定都有静止的时候，所以： 不怕看不见，不怕变化，不怕点错，不怕维持不了，不怕慢下来，当要怕什么的时候，就要学会不怕它，没什么可怕的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline143" class="outline-2">
+<h2 id="orgheadline143"><span class="section-number-2">143</span> 20181018 *面对</h2>
+<div class="outline-text-2" id="text-143">
+<p>
+你面对的不是你看到的，而是你的心。不要被看到的，覆盖了你的心。所以你训练的不是所训练的，而是你的心。每当你遇见了，要告诉自己：什么也没有。不断重复着这样的过程，让人痴迷，再清醒…
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline144" class="outline-2">
+<h2 id="orgheadline144"><span class="section-number-2">144</span> 20181021 打地鼠</h2>
+<div class="outline-text-2" id="text-144">
+<p>
+图像输入非文字输入，图像在与你捉迷藏，找隐藏的那个，如同打地鼠
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline145" class="outline-2">
+<h2 id="orgheadline145"><span class="section-number-2">145</span> 20181102 稳定</h2>
+<div class="outline-text-2" id="text-145">
+<p>
+是维持视线的稳定，而非因看到了什么而过分聚焦。聚焦只是局部的清晰，稳定是全局的清晰。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline146" class="outline-2">
+<h2 id="orgheadline146"><span class="section-number-2">146</span> 20181107 稳定与清晰</h2>
+<div class="outline-text-2" id="text-146">
+<p>
+将视线的稳定与辩认的精度分离。即，不要被数字影响了视线，图像输入而非数字输入。看数字不影响视野的整体图像，视觉是整体图像不影响你看每个数字。两者不一定同时达到，也不一定同时达不到。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline147" class="outline-2">
+<h2 id="orgheadline147"><span class="section-number-2">147</span> 20181114 提高效率的仪式</h2>
+<div class="outline-text-2" id="text-147">
+<p>
+不该做时想都别想，可以做时先想一会再做。你现在想什么，就大致决定了你现在状态怎样，你在某个时段想什么，就代表这个时段内你是怎样的状态。分配自己的时间和精力，从某个程度来说，也算是分配自己的思想，控制自己的行为，不如先掌握思想。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline148" class="outline-2">
+<h2 id="orgheadline148"><span class="section-number-2">148</span> 20181116 只关注不断更新的起点</h2>
+<div class="outline-text-2" id="text-148">
+<p>
+不断地清晰与更新起点。就是当前。至少点到起点即可，其它后面的看到了就点，看不到不是起点也不管。而前面的，因为刚更新了起点，所以根本忽略。只关注起点，便不会瞻前顾后，并且不过分聚焦。更新起点，能保证前进。因为只有一个起点，所以不是的就不看，保证能不被相关数字干扰与聚焦；不要因为一下看到了好几个，就停止更新起点，看到的除了起点其它只是幸运。只要是看到了起点，就更新成下一个起点，若看到了多个，只是简化了过程，节省了额外的更新而“跳跃”到后面的起点，实质仍是更新。这里的更新，实际就是明确内心仅有的目标，以及看到了它。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline149" class="outline-2">
+<h2 id="orgheadline149"><span class="section-number-2">149</span> 20181117 专注</h2>
+<div class="outline-text-2" id="text-149">
+<p>
+有时候你不在意快慢，即便慢到一定程度，快也会到来，因为世界是平衡的。所以不要刻意去缓存更多的数字（干扰）。仔细想想，体会一下，你此刻是不是真的心中只有那一个数字？是的话，你的眼睛会自然看到它。除了那个数字，还有什么？是不是担心若仅有那个数字，会找不着它？想多看几个？是的话，你真的会找不着它。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline150" class="outline-2">
+<h2 id="orgheadline150"><span class="section-number-2">150</span> 20181119 图像稳定</h2>
+<div class="outline-text-2" id="text-150">
+<p>
+不是敏感度，是视图的稳定性。被手干扰到不清晰前点完它。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline151" class="outline-2">
+<h2 id="orgheadline151"><span class="section-number-2">151</span> 20181214 静止的图像</h2>
+<div class="outline-text-2" id="text-151">
+<p>
+图像是静止的，余光理所应当的看见，一旦聚焦了就不静止了。
+</p>
+</div>
+</div>
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>

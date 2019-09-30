@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    理解repo
+</title>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="../../../../css/partial/head.css">
+<link rel="stylesheet" href="../../../../css/partial/header.css">
+<link rel="stylesheet" href="../../../../css/partial/archives.css">
+<link rel="stylesheet" href="../../../../css/partial/categories.css">
+<link rel="stylesheet" href="../../../../css/partial/home-posts.css">
+<link rel="stylesheet" href="../../../../css/partial/page-nav.css">
+<link rel="stylesheet" href="../../../../css/partial/tags.css">
+<link rel="stylesheet" href="../../../../css/partial/about.css">
+<link rel="stylesheet" href="../../../../css/partial/more.css">
+<link rel="stylesheet" href="../../../../css/partial/footer.css">
+<link rel="stylesheet" href="../../../../css/post.css">
+<link rel="stylesheet" href="../../../../css/orgmode/hexo_orgmode_style.css">
+
+
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="../../../../lib/jquery-1.11.3.min.js"></script>
+<script src="../../../../js/common.js"></script>
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
+            <script src="js/nav.js"></script>
+<table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="../../../../index.html">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="../../../../categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(58)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="../../../../categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(6)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="../../../../categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="../../../../categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="../../../../categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="../../../../categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="../../../../categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="../../../../categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="../../../../categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="../../../../categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="../../../../categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(3)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="../../../../categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="../../../../categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="../../../../categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="../../../../categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="../../../../categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="../../../../categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="../../../../categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="../../../../categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="../../../../categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="../../../../categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="../../../../categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="../../../../categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="../../../../categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+        <h1>
+               <a href="/" title="Menu.Home">
+               QuietHeart's Site
+               </a>
+        </h1>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <article>
+                    <h1 id="header1" style="text-align: center;">
+                        理解repo
+                    </h1>
+                    <hr id="title_line">
+                    <div>
+                        <div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 须知</a>
+<ul>
+<li><a href="#orgheadline2">1.1. repo</a></li>
+<li><a href="#orgheadline3">1.2. git项目</a></li>
+<li><a href="#orgheadline4">1.3. repo项目</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline5">2. repo init</a></li>
+<li><a href="#orgheadline6">3. repo sync</a></li>
+<li><a href="#orgheadline7">4. 关于分支</a>
+<ul>
+<li><a href="#orgheadline8">4.1. repo分支</a></li>
+<li><a href="#orgheadline9">4.2. 清单文件指定的分支</a></li>
+<li><a href="#orgheadline10">4.3. git分支</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline11">5. 其它</a>
+<ul>
+<li><a href="#orgheadline12">5.1. 提交</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 须知</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><span class="section-number-3">1.1</span> repo</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+repo用于管理多个git项目，同一产品可能包含多个git项目，不同的git项目集合，可能形成不同产品，通过repo可以实现方便的管理。repo主要包含repo配置信息、以及repo所管理的git项目集合。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3"><span class="section-number-3">1.2</span> git项目</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+对于所有git管理的项目，例如 <code>mygitproject</code> ，其中 <code>mygitproject/.git</code> 是git目录（或git库）； <code>mygitproject/</code> 中除 <code>.git</code> 之外的内容为git工作目录，来自相应git目录中的某个版本。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">1.3</span> repo项目</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+对于所有repo管理的项目，例如 <code>myrepoproject</code> ，其中 <code>myrepoproject/.repo</code> 是repo目录（或repo库）； <code>myrepoproject/</code> 中除 <code>.repo</code> 之外的内容为repo工作目录，来自相应repo目录中的某个版本。
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5"><span class="section-number-2">2</span> repo init</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<code>repo init</code> 的作用是下载或更新好repo配置和脚本集（相当于对repo配置和repo脚本集进行 <code>git pull</code> ，但是它还额外做了更多的事情），repo配置和脚本本身又是由git管理的，repo配置指定使用哪些git项目，脚本是repo命令本身的实现。
+</p>
+
+<p>
+在空目录中执行这个目录后，会生成一个 <code>.repo</code> 目录，查看 <code>.repo</code> 目录，会看到有如下内容：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ls .repo
+manifests/  manifests.git/  manifest.xml  repo/
+</pre>
+</div>
+
+<p>
+具体解释如下：
+</p>
+
+<dl class="org-dl">
+<dt>.repo</dt><dd>此为repo目录，可用于提取相应项目工作目录到外面的repo工作目录。</dd>
+
+<dt>.repo/manifests.git</dt><dd>此为repo配置信息的git库，不同版本包含不同配置信息，配置信息大致描述内容见后面。</dd>
+
+<dt>.repo/manifests</dt><dd>此为repo配置信息的工作目录（将配置信息的工作目录和相应的实际git目录分离管理，并且配置信息中的.git目录实际只是指向实际git库的软连接），其中可能包含一个或多个xml文件描述的配置。每个xml文件是独立的一套配置，配置内容包括当前repo工作目录包含哪些git项目、所有git项目所处的默认公共分支、以及远端地址等。</dd>
+
+<dt>.repo/manifest.xml</dt><dd>repo工作目录中的内容同一时刻只能采用manifests中的一个xml文件做为其配置，该文件就是其软连接，通过init的-m选项指定采用哪个文件；另外，同一xml文件也可能处于manifests库的不同版本或者不同分支，通过 <code>init</code> 的 <code>-b</code> 选项指定使用manifests中的哪个分支，每次init命令都会从服务器更新最新的配置。这里通过 <code>-m</code> 指定的manifests中的xml文件中，有两个需要注意：default.xml是稳定版，default_head.xml是开发版，开发版始终包含最新的内容。</dd>
+
+<dt>.repo/repo</dt><dd>此为repo脚本集的git库，用于repo管理所需的各种脚本，repo的所有子命令就是其中的对应脚本实现。该脚本也通过git管理， <code>.repo/repo/.git</code> 为对应的git目录。这里包含repo命令所需的所有子命令脚本实现，由python完成（我们可以在 <code>.repo/repo/subcmds</code> 中看到类似repo的init等的子命令脚本实现，如repo的 <code>init</code> 子命令即 <code>repo init</code> ，它由 <code>.repo/repo/subcmds/init.py</code> 实现），这个目录本身又由git来管理。不同的repo库或者不同版本的repo库，其repo命令实现会有些不同，所以也对应不同的repo脚本集，建议每次采用对应repo项目的最新的repo库做为其repo命令集实现。第一次使用repo时，采用的repo脚本实际是一个简单的repo的引导脚本，它既符合shell语法，又符合python语法，最终会将所需的具体脚本实现下载至最新的 <code>.repo/repo</code> 中，后面类似 <code>repo init</code> 、 <code>repo sync</code> 等脚本的实现，全都有这里的内容来实现。我们发现 <code>.repo/repo/repo</code> ，这个文件其实就是当前repo库中最新的repo引导脚本，可供其它没有使用过repo的用户做为repo的引导脚本来使用。</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-orgheadline6" class="outline-2">
+<h2 id="orgheadline6"><span class="section-number-2">3</span> repo sync</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<code>repo sync</code> 的作用是下载当前repo配置的所有项目，并生成对应的repo工作目录。执行之后，会看到.repo目录包含如下内容：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ls .repo
+manifests  manifests.git  manifest.xml  projects  repo
+</pre>
+</div>
+
+<p>
+还有 <code>.repo</code> 外面也多出了许多目录。
+</p>
+
+<p>
+也就是说，多出了一个 <code>projects</code> 目录，和 <code>.repo</code> 外面的许多目录，具体内容如下：
+</p>
+
+<dl class="org-dl">
+<dt>.repo/projects</dt><dd>此为repo所管理的所有git项目集，包含repo当前配置所指定的所有git项目对应的git目录。不同的清单文件（即 <code>manifest.xml</code> ）内容，指定不同的git项目集组合，表征不同的项目版本或者项目，而如上所述，manifest.xml文件的内容又由其指向的manifests中的、具体的分支下的、xml文件来决定。</dd>
+
+<dt>.repo/../*</dt><dd>此为repo的工作区。在repo目录（即 <code>.repo</code> ）之外，根据repo配置（即 <code>.repo/manifest.xml</code> 文件），从 <code>.repo/projects/*</code> 中提取出指定分支的各个git项目（即 <code>.repo/projects</code> 中git项目的子集）的工作目录，形成repo工作目录，可供开发使用。其中每个git工作目录中的 <code>.git</code> 只是指向 <code>.repo/projects/*</code> 的软连接，在repo工作目录中的某个git工作目录更新相应的git库，其实最终会更新到 <code>.repo/projects</code> 中对应的git库。刚刚repo sync之后，当前工作目录不处于任何分支，其中的修改只能本地保存无法提交至远端，若想提交工作，需要先创建一个分支保存工作内容。</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-2">
+<h2 id="orgheadline7"><span class="section-number-2">4</span> 关于分支</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+以上描述，有几个分支的概念需要明确。
+</p>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">4.1</span> repo分支</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+这里通过 <code>repo init -b</code> ，中的 <code>-b</code> 所指定的分支，是manifests的分支，不同分支，其中的文件清单内容有所不同。
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">4.2</span> 清单文件指定的分支</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+通过清单文件 <code>manifest.xml</code> 中的default实体的revision属性，指定版本库默认的分支为revision属性值，该属性值做为 <code>repo sync</code> 之后工作目录中所有git项目的公共起点分支，也就是说，该manifest对应所有的git项目都有一个以revision属性值为名的分支， <code>repo sync</code> 之后，在任意一个repo工作目录下的git库中，使用 <code>git branch</code> 或者 <code>repo start</code> 创建的分支，都是基于该git库中revision属性值为名的分支来创建。我们可以将这个分支设置为和repo分支类似的名字。
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><span class="section-number-3">4.3</span> git分支</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+除了repo管理的用于repo配置的repo分支，和用于设置工作目录起点的清单文件分支，每个工作目录对应的git库，也可设置自己的工作分支，和平时使用git时的含义一样。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-2">
+<h2 id="orgheadline11"><span class="section-number-2">5</span> 其它</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><span class="section-number-3">5.1</span> 提交</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+可以使用 <code>git</code> 提交，也可以使用 <code>repo upload</code> 。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$repo start test_branch apollo/*
+$cd apollo/third_party
+$...edit...git add... git commit
+$repo status
+$repo upload -d --re=jerome.wang@tpv-tech.com,kiko.han@tpv-tech.com --cc=miracle.lv@tpv-tech.com
+$repo info -o
+</pre>
+</div>
+
+<p>
+以上参考《git权威指南》和网络，如有错误之处，欢迎指正，谢谢。
+</p>
+</div>
+</div>
+</div>
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>

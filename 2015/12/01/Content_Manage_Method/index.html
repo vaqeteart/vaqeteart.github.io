@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    内容管理方法
+</title>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="../../../../css/partial/head.css">
+<link rel="stylesheet" href="../../../../css/partial/header.css">
+<link rel="stylesheet" href="../../../../css/partial/archives.css">
+<link rel="stylesheet" href="../../../../css/partial/categories.css">
+<link rel="stylesheet" href="../../../../css/partial/home-posts.css">
+<link rel="stylesheet" href="../../../../css/partial/page-nav.css">
+<link rel="stylesheet" href="../../../../css/partial/tags.css">
+<link rel="stylesheet" href="../../../../css/partial/about.css">
+<link rel="stylesheet" href="../../../../css/partial/more.css">
+<link rel="stylesheet" href="../../../../css/partial/footer.css">
+<link rel="stylesheet" href="../../../../css/post.css">
+<link rel="stylesheet" href="../../../../css/orgmode/hexo_orgmode_style.css">
+
+
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="../../../../lib/jquery-1.11.3.min.js"></script>
+<script src="../../../../js/common.js"></script>
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
+            <script src="js/nav.js"></script>
+<table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="../../../../index.html">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="../../../../categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(58)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="../../../../categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(6)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="../../../../categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="../../../../categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="../../../../categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="../../../../categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="../../../../categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="../../../../categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="../../../../categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="../../../../categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="../../../../categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(3)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="../../../../categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="../../../../categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="../../../../categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="../../../../categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="../../../../categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="../../../../categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="../../../../categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="../../../../categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="../../../../categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="../../../../categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="../../../../categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="../../../../categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="../../../../categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+        <h1>
+               <a href="/" title="Menu.Home">
+               QuietHeart's Site
+               </a>
+        </h1>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <article>
+                    <h1 id="header1" style="text-align: center;">
+                        内容管理方法
+                    </h1>
+                    <hr id="title_line">
+                    <div>
+                        <div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 其它</a>
+<ul>
+<li><a href="#orgheadline2">1.1. 杂乱</a></li>
+<li><a href="#orgheadline3">1.2. 其实这些东西本质上真的可以理解成为内容管理方面的东西。</a></li>
+<li><a href="#orgheadline4">1.3. 知识管理使用git的原则</a></li>
+<li><a href="#orgheadline5">1.4. 参考资料</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline6">2. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[1/25]</code>(<code>[4%]</code>)</a>
+<ul>
+<li><a href="#orgheadline7">2.1. <span class="todo nilNEXT">NEXT</span> 使用orgmode组织内容管理体系，如何处理大文件、附件的问题？</a></li>
+<li><a href="#orgheadline8">2.2. <span class="todo nilNEXT">NEXT</span> 如何处理整理好的文档，以及导出的内容？以及内容的更新？以及版本控制？</a></li>
+<li><a href="#orgheadline9">2.3. <span class="todo nilNEXT">NEXT</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-12-01 二 11:54] </span></span> 图片和文件等引用链接处理的方式------</a>
+<ul>
+<li><a href="#orgheadline10">2.3.1. <span class="timestamp-wrapper"><span class="timestamp">&lt;2015-12-14 一 09:38&gt; </span></span> 与文章同名的目录存放相应的参考资料</a></li>
+<li><a href="#orgheadline11">2.3.2. <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-01-04 一 09:39&gt; </span></span> 三种路径</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline12">2.4. <span class="todo nilLATER">LATER</span> 使用kindle代替pocket，标签也是gtd标签来阅读网页。</a></li>
+<li><a href="#orgheadline13">2.5. <span class="todo nilNEXT">NEXT</span> 若orgmode导出功能能将每次的update时间戳都添加到html文件中就好了，不知道是否有必要。</a></li>
+<li><a href="#orgheadline14">2.6. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 最初如何将某方面的内容纳入内容管理系统</a></li>
+<li><a href="#orgheadline15">2.7. <span class="todo nilLATER">LATER</span> 如何处理jekyll引文链接的问题，以及链接失效之时如何更新被引用文章？</a></li>
+<li><a href="#orgheadline16">2.8. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 转移资料之时，为备份可以将原来位置增加一个 "_to_xxx" 的目录。</a></li>
+<li><a href="#orgheadline17">2.9. <span class="todo nilLATER">LATER</span> 云存储策略</a>
+<ul>
+<li><a href="#orgheadline18">2.9.1. 公有云</a></li>
+<li><a href="#orgheadline19">2.9.2. 私有云</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline20">2.10. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 本地同步工具</a></li>
+<li><a href="#orgheadline21">2.11. <span class="todo nilLATER">LATER</span> 如何收藏好的网页文章而非链接以便脱机查看？</a></li>
+<li><a href="#orgheadline22">2.12. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 使用maff和mht格式离线保存网页</a></li>
+<li><a href="#orgheadline23">2.13. <span class="todo nilINBOX">INBOX</span> Content jekyll 文章org发布方式</a></li>
+<li><a href="#orgheadline24">2.14. <span class="todo nilLATER">LATER</span> 云路由</a></li>
+<li><a href="#orgheadline25">2.15. <span class="done nilDONE">DONE</span> 考虑用elisp链接实现平时日常工作中文档的引用，资料输出html时链接转换为html链接。</a></li>
+<li><a href="#orgheadline26">2.16. <span class="todo nilINBOX">INBOX</span> scrap book and git backup scheme for cloud.</a></li>
+<li><a href="#orgheadline27">2.17. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 优惠、保险信息可以集中到一个地方记录，免得经常忘记这些琐碎的事情</a></li>
+<li><a href="#orgheadline28">2.18. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> git内容管理方式</a></li>
+<li><a href="#orgheadline29">2.19. <span class="todo nilMAYBE_FUTURE">MAYBE/FUTURE</span> emacs中写一个方便的创建网摘的工具</a></li>
+<li><a href="#orgheadline30">2.20. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 云存储</a>
+<ul>
+<li><a href="#orgheadline31">2.20.1. kodexplorer</a></li>
+<li><a href="#orgheadline32">2.20.2. dzzoffice</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline33">2.21. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 本地搭建owncloud存放大文件，搭建git存放文档与源码，搭建webdavfs将本地目录与owncloud挂接</a></li>
+<li><a href="#orgheadline34">2.22. <span class="todo nilLATER">LATER</span> 为orgmode网站添加文件的过程比较麻烦，如何简化？</a></li>
+<li><a href="#orgheadline35">2.23. <span class="todo nilLATER">LATER</span> 考虑使用原生orgmode来生成网站，而不依赖jekyll环境。</a></li>
+<li><a href="#orgheadline36">2.24. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> mygit repo</a></li>
+<li><a href="#orgheadline37">2.25. <span class="todo nilWAIT_FORWARD">WAIT/FORWARD</span> 考虑将xiaomi做为第一个最新的提交库，而其它库如github,bitbucket等都尽量不要直接使用，而是用xiaomi来更新。</a></li>
+<li><a href="#orgheadline38">2.26. <span class="todo nilLATER">LATER</span> orgmode的管理策略</a></li>
+<li><a href="#orgheadline39">2.27. <span class="todo nilLATER">LATER</span> 关于data数据越来越大的考虑</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<p>
+本文主要考虑内容管理方面的内容。
+</p>
+
+<p>
+和本文类似的一篇文章中，讲述了GTD管理的方式，参见：
+</p>
+
+<p>
+这里主要讲述内容管理的方式。
+</p>
+
+<p>
+内容管理本文并没有给出一个系统的、官方的方式，只是给出实践中使用的一种方法，或者说是策略。因为这里所说的内容管理，涉及的方面比较杂乱，所以文章结构也有些杂乱，会随着实践的深入和改进而更新。
+</p>
+
+<p>
+文档、书签、文件、
+</p>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><a id="ID-3a8bab47-c781-4dda-97db-e350d49b8e53"></a><span class="section-number-2">1</span> 其它</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+非问题的，待整理的内容。
+</p>
+</div>
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><span class="section-number-3">1.1</span> 杂乱</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+为知笔记可以目录无限分级，但是大多还是只能两级，所以内容管理的分类"_xxx"。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3"><span class="section-number-3">1.2</span> 其实这些东西本质上真的可以理解成为内容管理方面的东西。</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+我现在也不太清楚要做什么，最好能多了解一些相关的东西，可能会让将来的目标更清晰。
+</p>
+
+<p>
+我尝试过很多方法和工具，给你推荐几个你可以参考一下，也可以用用它们。
+1.DGT GTD。
+在Android上面，关于时间管理方面的(GTD)，工具，但是这个需要知道一些GTD相关的知识，才能理解它的便利，并且存储方面也能让数据掌握在自己手中。不足的是，存储格式和同步方式有限，但是基本的功能都有了。
+2.aTimeLogger
+在Android上面的时间记录和统计工具，可以将自己日常任何的、适合自己的、各个方面的事情所消耗的时间记录下来，并且统计，还能设定目标，同步，操作非常简单。
+3.为知笔记/云笔记
+将自己所有日常文档都归结到一个云端的笔记上，手机、电脑上都能查看，随意导出，脱机浏览。个人感觉比较全面的是为知，易用，扩展强。
+4.Git/Emacs+Orgmode
+这个是在电脑上，使用方式比较复杂，但是它们能把工作、生活、学习中的一切事情用文本的方式表达出来，并且集中管理、分布存储、既能充分利用网络的便利性，又不会受限于网络，完全可以脱机存储。搜索、统计、查询、导出各种格式等等都完全能够依据个人需要自行定制和扩展，工具的功能取决于你的思维方法。工具很强大，但是不太容易普及，可以看看相关的介绍。
+</p>
+
+
+<p>
+这几个文档可以参考：
+<a href="http://www.mifengtd.cn/categories/time-management/" target="_blank" rel="noopener">http://www.mifengtd.cn/categories/time-management/</a>
+<a href="http://vaqeteart.github.io/categories/note/GTD_Manage_Method.html" target="_blank" rel="noopener">http://vaqeteart.github.io/categories/note/GTD_Manage_Method.html</a>
+<a href="http://orgmode.org/" target="_blank" rel="noopener">http://orgmode.org/</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">1.3</span> 知识管理使用git的原则</h3>
+<div class="outline-text-3" id="text-1-3">
+<ol class="org-ol">
+<li>提交的时候，是做比较关键修改的时候，便于历史备份。</li>
+<li>提交的时候，可以是改动了很多的时候。</li>
+</ol>
+<p>
+平时的操作，不用每次都要更新。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">1.4</span> 参考资料</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+emacs,orgmode,jekyll,owncloud
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline6" class="outline-2">
+<h2 id="orgheadline6"><span class="section-number-2">2</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> FAQ <code>[1/25]</code>(<code>[4%]</code>)</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+问题形式的，待整理的内容。
+</p>
+</div>
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7"><span class="section-number-3">2.1</span> <span class="todo NEXT">NEXT</span> 使用orgmode组织内容管理体系，如何处理大文件、附件的问题？</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:21]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">2.2</span> <span class="todo NEXT">NEXT</span> 如何处理整理好的文档，以及导出的内容？以及内容的更新？以及版本控制？</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-03 四 16:21]</span></span></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><a id="ID-e27c6b8e-4029-49e9-84d9-b5b6b97ddeca"></a><span class="section-number-3">2.3</span> <span class="todo NEXT">NEXT</span> &#x2014;&#x2014; <span class="timestamp-wrapper"><span class="timestamp">[2015-12-01 二 11:54] </span></span> 图片和文件等引用链接处理的方式------</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-01-04 一 09:38]</span></span></li>
+</ul>
+<p>
+From:/home/miracle/mydata/orgmode/gtd/output/Content_Manage_Method.org
+</p>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-4">
+<h4 id="orgheadline10"><span class="section-number-4">2.3.1</span> <span class="timestamp-wrapper"><span class="timestamp">&lt;2015-12-14 一 09:38&gt; </span></span> 与文章同名的目录存放相应的参考资料</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+当前图片等链接文件都采用相对链接的方式，但是内容放在data目录下，随着文章的位置变化，可能会修改文章内部的链接。这样不便于移植。
+</p>
+
+<p>
+不可能通过配置的方式指定这种相对链接，以便文章转移时不用修改文章内容，所以干脆，在文章目录的父目录中，也就是文章所在_posts目录建立。
+</p>
+
+<p>
+方式是：
+文章名为xxx在yyy/zzz/_posts中，其对应引用的文件所处位置为：yyy/zzz/post_files/xxx/data
+档转移文章xxx到其它_posts目录时，将对应的post_files/xxx目录也转移到对应于_posts的同级目录下即可，不需要修改文章内容，文章中引用的方式是："../post_files/xxx/data/&#x2026;"
+</p>
+
+<p>
+貌似不行，这样会导致orgmode中的引用路径和html中的引用路径不一样。
+如何解决orgmode中引用路径和转换之后引用路径不一致的问题？
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-4">
+<h4 id="orgheadline11"><span class="section-number-4">2.3.2</span> <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-01-04 一 09:39&gt; </span></span> 三种路径</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+原则，修改内容之时，不应该修改内容之内的链接。
+</p>
+</div>
+<div id="outline-container-orgheadline40" class="outline-5">
+<h5 id="orgheadline40"><span class="section-number-5">2.3.2.1</span> 相对路径</h5>
+<div class="outline-text-5" id="text-2-3-2-1">
+<p>
+即，被引用文件存放在一个目录中，这个目录的名称和文章的名称一样，这个目录的路径和文章在同样的目录中。例如：文章 <code>2015-10-16-test.org</code> 中的引用文件，存放在同样目录下的 <code>2015-10-16-test.files</code> 中，引用之时，只需要使用链接 <code>file://./2015-10-16-test.files/xxx</code> 即可，迁移文章之时，文章和目录一并迁移。
+</p>
+
+<p>
+这种方式文章和目录同名（扩展名除外），并且路径相同，适合于文章做为一个整体而存在，其中的内容迁移之时的范围在于当前文章，不会被转移到其他文章中。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline41" class="outline-5">
+<h5 id="orgheadline41"><span class="section-number-5">2.3.2.2</span> 绝对路径</h5>
+<div class="outline-text-5" id="text-2-3-2-2">
+<p>
+即，所有被引用的文件放在一个固定的目录中。系统不变即可，但是系统变了，可能需要修改配置。使用与文章内的内容迁移之时，可能会迁移出文章之外。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline49" class="outline-5">
+<h5 id="orgheadline49"><span class="section-number-5">2.3.2.3</span> 相对绝对路径</h5>
+<div class="outline-text-5" id="text-2-3-2-3">
+<p>
+属于前两者的折衷。即，所有文章以及引用文件路径都在一个文件系统子目录中，该子目录有自己的层次结构。该目录的父级目录路径在系统中是相对路径，而文章的引用文件是以该目录为“根”，期内引用链接相对该目录本身是“绝对路径”。该方式，文章内的引用文件路径相对文件系统某子目录固定，文章路径视文章所处位置而定，由于引用文件和文章不是在同一目录，如果文章名称不能保证唯一性那么可能会有些问题。
+下面是例子：
+</p>
+</div>
+<ol class="org-ol"><li><a id="orgheadline48"></a><a id="ID-12c4a2e7-8ae9-4852-b4cd-ba34e8c84656"></a><span class="todo WAIT_FORWARD">WAIT/FORWARD</span> -&#x2014;设置Jekyll中文内引用链接保持在文件路径变化时文件内容不变的方式<br><div class="outline-text-6" id="text-2-3-2-3-1">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-01-08 五 17:26] </span></span> <br>
+等待进一步整理</li>
+</ul>
+
+<p>
+对于像jekyll中的文章有如下特点：
+</p>
+<ol class="org-ol">
+<li><p>
+内容迁移的时候基本上是文章整体做迁移
+</p>
+
+<p>
+即，其文章内的内容和标题的迁移范围相对固定，不会迁移到其它文章文件中。
+</p></li>
+
+<li><p>
+文章对应的文件名称全局基本唯一
+</p>
+
+<p>
+文章名称是以日期做为前缀，只要在每次写文之时，保证每个日期中没有重复的文章文件名（事实上，一天也很难写出很多文章，并且这些文章中有重名的情况），即可保证文章全局唯一。
+</p></li>
+</ol>
+
+<p>
+所以大致的思路是采用上面提到的相对绝对路径方法。
+</p>
+
+<p>
+大致描述如下：
+</p>
+</div>
+
+<ol class="org-ol"><li><a id="orgheadline42"></a>链接引用文件存放地<br><div class="outline-text-7" id="text-2-3-2-3-1-1">
+<p>
+文章引用的文件，存放在jekyll中data目录的，名为对应文章所在文件扩展名替换为 <code>.files</code> 的目录中。
+</p>
+
+<p>
+假设引用的是一个图片文件， 引用的文章文件名称是 <code>2015-12-17-testexport.org</code>, 导出到jekyll系统中的名称是 <code>2015-12-17-testexport.html</code>, 那么其文章所有被引用的文件都存放在 =data/2015-12-17-testexport.files=。
+</p>
+</div></li>
+
+<li><a id="orgheadline46"></a>org文件中引用链接到jekyll导出文件链接的转换<br><div class="outline-text-7" id="text-2-3-2-3-1-2">
+<p>
+org文件中的引用链接，在导出到jekyll的html需要进行转换才能正确显示。这里给出了文件、图片、导出到jekyll的org文章在引用时链接的转换方式，如下
+</p>
+</div>
+
+<ol class="org-ol"><li><a id="orgheadline43"></a>org文章使用链接的方式<br><div class="outline-text-8" id="text-2-3-2-3-1-2-1">
+<p>
+org文章中引用本地外部文件和普通orgmode语法一样，如下
+</p>
+<pre class="example">
+[[file:~/mygitrepo/quietheart/mydoc/prepub/orgmode/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg][image file]]
+</pre>
+
+<p>
+图片的语法
+</p>
+<pre class="example">
+[[file:~/mygitrepo/quietheart/mydoc/prepub/orgmode/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg]]
+</pre>
+
+<p>
+org文章中引用其他org文章的语法类似
+</p>
+<pre class="example">
+[[file:~/mygitrepo/quietheart/mydoc/prepub/orgmode/categories/note/_posts/2015-11-27-gtd_with_orgmode.org][gtd method]]
+</pre>
+</div></li>
+
+<li><a id="orgheadline44"></a>导出的html链接<br><div class="outline-text-8" id="text-2-3-2-3-1-2-2">
+<p>
+导出结果到jekyll对应的html文件后，对应链接变成
+</p>
+<pre class="example">
+&lt;a href="file:///home/miracle/mygitrepo/quietheart/mydoc/prepub/orgmode/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg"&gt;image file&lt;/a&gt;
+</pre>
+
+<p>
+图片如下
+</p>
+<pre class="example">
+&lt;img src="file:///home/miracle/mygitrepo/quietheart/mydoc/prepub/orgmode/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg" alt="2015-12-17-editor_study_line.jpg" /&gt;
+</pre>
+
+<p>
+org文章如下
+</p>
+<pre class="example">
+&lt;a href="file:///home/miracle/mygitrepo/quietheart/mydoc/prepub/orgmode/categories/note/_posts/2015-11-27-gtd_with_orgmode.org"&gt;gtd method&lt;/a&gt;
+</pre>
+</div></li>
+
+<li><a id="orgheadline45"></a>对导出的html链接进行转换<br><div class="outline-text-8" id="text-2-3-2-3-1-2-3">
+<p>
+这样的结果在jekyll中是无法直接正确显示链接的，需要在导出为html之后，再对相应html文件中相应的链接处进行处理，处理成jekyll可以显示的方式，这里为：
+</p>
+<pre class="example">
+&lt;a href="/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg"&gt;image file&lt;/a&gt;
+</pre>
+
+<p>
+图片链接转换成
+</p>
+<pre class="example">
+&lt;img src="/data/2015-12-17-testexport.files/2015-12-17-editor_study_line.jpg" alt="2015-12-17-editor_study_line.jpg" /&gt;
+</pre>
+
+<p>
+org文章转换成
+</p>
+<pre class="example">
+&lt;a href="/categories/note/gtd_with_orgmode.html"&gt;gtd method&lt;/a&gt;
+</pre>
+</div></li></ol></li>
+
+<li><a id="orgheadline47"></a>转换实现<br><div class="outline-text-7" id="text-2-3-2-3-1-3">
+<p>
+这里实现上述转换的方法是定义一个替换链接的函数，把它做为hook添加到 <code>org-publish-after-publishing-hook</code> 中。
+</p>
+
+<p>
+大致如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">(defun my-update-jekyll-html-link (htmlfile)
+;;replace the local file link to site relative link in jekyll.
+;;open
+(setq htmlbuffer (find-file-existing htmlfile))
+
+;;search
+(goto-char (point-min))
+
+;;file reference link convert.
+;;TODO the xxx.files, xxx is better to be replaced by the html file name.
+(while (re-search-forward "\\(&lt;a href=.*?\\)\\(file:.*?quietheart/mydoc/prepub/orgmode\\)\\(/data/[0-9]\\{4\\}-[0-1][0-9]-[0-3][0-9]-.*?\.files\\)" nil t) 
+(replace-match "\\1\\3" nil nil))
+
+;;image reference link convert.
+;;TODO the xxx.files, xxx is better to be replaced by the html file name.
+(while (re-search-forward "\\(&lt;img .*?src=.*?\\)\\(file:.*?quietheart/mydoc/prepub/orgmode\\)\\(/data/[0-9]\\{4\\}-[0-1][0-9]-[0-3][0-9]-.*?\.files\\)" nil t) 
+(replace-match "\\1\\3" nil nil))
+
+;;article reference link convert, we don't convert articles in "/_posts" that is not specify categories from file structure.
+;;TODO the xxx.files, xxx is better to be replaced by the html file name.
+(while (re-search-forward "\\(&lt;a href=.*?\\)\\(file:.*?quietheart/mydoc/prepub/orgmode\\)\\(/.*?\\)\\(_posts/[0-9]\\{4\\}-[0-1][0-9]-[0-3][0-9]-\\)\\(.*?\.html\\)" nil t) 
+(replace-match "\\1\\3\\5" nil nil))
+
+;;save and close
+(save-buffer)
+(kill-buffer htmlbuffer)))
+
+(defun my_after_pub_html_hook (orgfile htmlfile) 
+(my-update-jekyll-html-link htmlfile)
+)
+
+(add-hook 'org-publish-after-publishing-hook 'my_after_pub_html_hook)))
+</pre>
+</div>
+
+<p>
+关键在于如下三句：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">;;file reference link convert.
+;;TODO the xxx.files, xxx is better to be replaced by the html file name.
+(while (re-search-forward "\\(&lt;a href=.*?\\)\\(file:.*?quietheart/mydoc/prepub/orgmode\\)\\(/data/[0-9]\\{4\\}-[0-1][0-9]-[0-3][0-9]-.*?\.files\\)" nil t) 
+(replace-match "\\1\\3" nil nil))
+
+;;image reference link convert.
+;;TODO the xxx.files, xxx is better to be replaced by the html file name.
+(while (re-search-forward "\\(&lt;img .*?src=.*?\\)\\(file:.*?quietheart/mydoc/prepub/orgmode\\)\\(/data/[0-9]\\{4\\}-[0-1][0-9]-[0-3][0-9]-.*?\.files\\)" nil t) 
+(replace-match "\\1\\3" nil nil))
+
+;;article reference link convert, we don't convert articles in "/_posts" that is not specify categories from file structure.
+;;TODO the xxx.files, xxx is better to be replaced by the html file name.
+(while (re-search-forward "\\(&lt;a href=.*?\\)\\(file:.*?quietheart/mydoc/prepub/orgmode\\)\\(/.*?\\)\\(_posts/[0-9]\\{4\\}-[0-1][0-9]-[0-3][0-9]-\\)\\(.*?\.html\\)" nil t) 
+(replace-match "\\1\\3\\5" nil nil))
+</pre>
+</div>
+</div></li></ol></li></ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><a id="ID-ef720674-2e89-463e-b881-1fe606eeba8f"></a><span class="section-number-3">2.4</span> <span class="todo LATER">LATER</span> 使用kindle代替pocket，标签也是gtd标签来阅读网页。</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2015-12-23 三 13:53]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-23 三 11:29]</span></span>
+</p>
+<hr>
+
+<p>
+稍后阅读网页可以借助:
+<a href="http://fivefilters.org" target="_blank" rel="noopener">http://fivefilters.org</a>
+中的"send to kindle"功能，可以做为火狐插件。
+</p>
+
+<p>
+不一定只有网页，文本、pocket中的内容等等，只要在浏览器中打开之后，即可使用该插件推送到kindle中， 然后用kindle中的收藏夹代替pocket中的标签。
+期间一些内容如果无法在推送时候预览到，可以借助 <a href="http://pastepad.fivefilters.org/" target="_blank" rel="noopener">http://pastepad.fivefilters.org/</a>, pocket中的有些内容就是无法直接预览出来。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"><span class="section-number-3">2.5</span> <span class="todo NEXT">NEXT</span> 若orgmode导出功能能将每次的update时间戳都添加到html文件中就好了，不知道是否有必要。</h3>
+<div class="outline-text-3" id="text-2-5">
+<ul class="org-ul">
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-01-05 二 15:39]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2015-12-30 三 09:45]</span></span>
+</p>
+<hr>
+<p>
+update之前的如果可以备份就好了。这样结合git可以看到这些更新中，被提交的更新修改了什么，如果为时间戳加上链接，就可不借助git访问每次修改的内容，当然，每次备份的时候也可以为备份加上一个“old”标记，以及指向最新的文章的标记。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14"><span class="section-number-3">2.6</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 最初如何将某方面的内容纳入内容管理系统</h3>
+<div class="outline-text-3" id="text-2-6">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from              <span class="timestamp-wrapper"><span class="timestamp">[2016-01-08 五 17:54] </span></span> <br>
+等待整理</li>
+</ul>
+
+<p>
+以jekyll建站过程为例，其中形成的文档或者文章的诞生过程大致如下：
+</p>
+<ol class="org-ol">
+<li>由于对jekyll建站并无专门的学习和研究，所以该文章内容开始还不够系统。</li>
+<li><p>
+文中大多内容是这样产生的
+</p>
+
+<p>
+在jekyll的建站过程中首先遇到某些问题，然后将改问题放于FAQ中，通过orgmode结合GTD方法来管理，FAQ中的问题有些解决，有些没有解决，解决的问题或许会整理到更合适的文章章节中。
+</p></li>
+
+<li>如上方式会快速形成一个jekyll建站文档的雏形，虽然不够系统，也反映了在建站经历的真实过程，便于有兴趣的朋友参考。</li>
+
+<li>随着实践的增多，和文章内容的丰富，在更为熟悉之时会将所有FAQ相应内容归纳到合适的章节，该文章会逐渐形成一篇系统的文章。</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><a id="ID-f917ab81-3883-4c0c-a259-c7e43163f7d1"></a><span class="section-number-3">2.7</span> <span class="todo LATER">LATER</span> 如何处理jekyll引文链接的问题，以及链接失效之时如何更新被引用文章？</h3>
+<div class="outline-text-3" id="text-2-7">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-01-11 一 10:31]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-01-09 六 17:07]</span></span>
+</p>
+<hr>
+
+<p>
+被引用文章中，列出引用它的所有文章。
+!
+被引用文章链接更新之时，更新引用它的文章链接。
+引用文章更新之时，更新它的被引用文章中相关的链接。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16"><span class="section-number-3">2.8</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 转移资料之时，为备份可以将原来位置增加一个 "_to_xxx" 的目录。</h3>
+<div class="outline-text-3" id="text-2-8">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 10:01] </span></span> <br>
+wait for more confirm.</li>
+<li>State "NEXT"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 10:01]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-01-18 一 13:52]</span></span>
+</p>
+<hr>
+
+<p>
+比如将wiz中的内容转移至git，那么原来wiz的位置增加一个 "_to_git", 然后转移后，将原来wiz中的内容移动到这个"_to_git"目录中，而非删除。
+这样可以备份，也可了解这些内容集中到了哪里。
+</p>
+
+<p>
+再如baidu中的文件转移至megasync，那么将原来baidu中的内容放到一个 "_to_mega"的目录中。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17"><span class="section-number-3">2.9</span> <span class="todo LATER">LATER</span> 云存储策略</h3>
+<div class="outline-text-3" id="text-2-9">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 10:04]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-01-18 一 13:56]</span></span>
+</p>
+<hr>
+</div>
+
+<div id="outline-container-orgheadline18" class="outline-4">
+<h4 id="orgheadline18"><span class="section-number-4">2.9.1</span> 公有云</h4>
+<div class="outline-text-4" id="text-2-9-1">
+<p>
+baidu/weiyun/box/megasync
+</p>
+
+<p>
+暂时用megasync存放相对重要的内容。
+</p>
+
+<p>
+公有云敏感数据应该考虑安全问题，可考虑encfs做为加密手段。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline19" class="outline-4">
+<h4 id="orgheadline19"><span class="section-number-4">2.9.2</span> 私有云</h4>
+<div class="outline-text-4" id="text-2-9-2">
+<p>
+考虑 NAS/智能路由 搭建个人云站
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="section-number-3">2.10</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 本地同步工具</h3>
+<div class="outline-text-3" id="text-2-10">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "CANCEL"     <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 10:04] </span></span> <br>
+how to decide.</li>
+<li>State "CANCEL"     from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 09:57] </span></span> <br>
+It may no good than git.</li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-01-21 四 10:25]</span></span>
+</p>
+<hr>
+
+<p>
+定期将一个目录的内容同步到另外一个目录中，以便备份
+</p>
+
+<p>
+为防止数据丢失，可以设置两个备份，第二个备份备份周期要长一些，并且是手动的。
+</p>
+
+<p>
+考虑用git版本控制？可是如何管理二进制文件？
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline21" class="outline-3">
+<h3 id="orgheadline21"><span class="section-number-3">2.11</span> <span class="todo LATER">LATER</span> 如何收藏好的网页文章而非链接以便脱机查看？</h3>
+<div class="outline-text-3" id="text-2-11">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-02-09 二 10:15]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-01-31 日 12:40]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline22" class="outline-3">
+<h3 id="orgheadline22"><span class="section-number-3">2.12</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 使用maff和mht格式离线保存网页</h3>
+<div class="outline-text-3" id="text-2-12">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-02-25 四 15:44] </span></span> <br>
+wait for more.</li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-02-11 四 13:50]</span></span>
+</p>
+<hr>
+
+<p>
+maff和mht都是将当前网页保存成单一离线文件的格式.
+</p>
+
+<p>
+firefox下的MAFF Archive Format插件可以实现这一点,并且能直接查看对应文件格式.
+</p>
+
+<p>
+另外maff文件格式实质是zip压缩文件,可以将文件解压之后用普通浏览器打开其中的内容(与直接打开maff格式的区别是普通方式打开的网页缺少了源网址来源的信息提示),亦可将解压后的文件夹重新用zip压缩,重命名为xxx.maff用firefox的MAFF Archive Format插件浏览.
+</p>
+
+<p>
+当前存放外部引用网页的方式,可以采取maff方式保存(这要求我们只有使用firefox浏览网页),为便于随时浏览,可将保存的文件用zip解压. 需要时再用zip压缩\重命名为maff再打开.
+</p>
+
+<p>
+还有一个问题是:
+如何随意选取网页的部分并且离线保存?
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline23" class="outline-3">
+<h3 id="orgheadline23"><span class="section-number-3">2.13</span> <span class="todo INBOX">INBOX</span> Content jekyll 文章org发布方式</h3>
+<div class="outline-text-3" id="text-2-13">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-02-11 四 16:49]</span></span>
+</p>
+<hr>
+
+<p>
+org目录中存放待发布到jekyll的文章,包含草稿性质的文章,但是如果是没有被export到jekyll的文章,就暂时放在根目录_posts中否则放到/categories相应子目录中.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline24" class="outline-3">
+<h3 id="orgheadline24"><span class="section-number-3">2.14</span> <span class="todo LATER">LATER</span> 云路由</h3>
+<div class="outline-text-3" id="text-2-14">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-02-25 四 15:44]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-02-16 二 14:08]</span></span>
+</p>
+<hr>
+<p>
+友讯（D-Link）DAP-1160L 150M云分享USB接口直立式云AP
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline25" class="outline-3">
+<h3 id="orgheadline25"><span class="section-number-3">2.15</span> <span class="done DONE">DONE</span> 考虑用elisp链接实现平时日常工作中文档的引用，资料输出html时链接转换为html链接。</h3>
+<div class="outline-text-3" id="text-2-15">
+<ul class="org-ul">
+<li>State "DONE"       from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-06-14 二 15:18]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-02-26 五 17:50]</span></span>
+</p>
+<hr>
+<p>
+参考 <a href="http://orgmode.org/manual/Advanced-configuration.html" target="_blank" rel="noopener">http://orgmode.org/manual/Advanced-configuration.html</a> 
+</p>
+
+<p>
+借助 <code>hook</code> 和 <code>filter</code>, 对 link 类型的文档元素进行 <code>filter</code> 。相应的函数定义类似如下： 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">;; custom link function for export.
+(defun my-link-convert-elisp (file_path)
+  (setq org-file-prefix org-directory)
+  (concat org-file-prefix file_path))
+
+(defun my-link-org-file (file_path)
+  (setq org-file-prefix org-directory)
+  (find-file (my-link-convert-elisp file_path)))
+
+;;In orgmode file, it is like: [[elisp:(my-link-org-file%20"/home/miracle/mydata/orgmode/gtd/readme.org")][test]]
+;;After export to html, it is like: &lt;a href="(my-link-org-file%20"/home/miracle/mydata/orgmode/gtd/readme.org")"&gt;test&lt;/a&gt;
+;;With this link filter, it replace links like &lt;a href="(my-link-org-file%20"/home/miracle/mydata/orgmode/gtd/readme.org")"&gt;test&lt;/a&gt;
+;;to &lt;a href="/home/miracle/mydata/orgmode/gtd/readme.org"&gt;test&lt;/a&gt;
+(defun my-link-elisp-html(link backend info)
+  (when (org-export-derived-backend-p backend 'html)
+    ;;(print (concat "@@@" link "@@@") t)    
+    (replace-regexp-in-string "\\(&lt;a \s*href=\\).*my-link-org-file.*?\\(\".*\\)\")\\(.*\\)" "\\1\\2\\3" link)
+    )
+)
+
+(add-to-list 'org-export-filter-link-functions 'my-link-elisp-html)
+</pre>
+</div>
+
+<p>
+声明之后，假设文档中的链接定义为类似如下方式：
+</p>
+<pre class="example">
+[[elisp:(my-link-org-file%20"/home/miracle/mydata/orgmode/gtd/readme.org")][test]]
+</pre>
+
+<p>
+导出之时，会将其转换为：
+</p>
+<pre class="example">
+&lt;a href="/home/miracle/mydata/orgmode/gtd/readme.org"&gt;test&lt;/a&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline26" class="outline-3">
+<h3 id="orgheadline26"><span class="section-number-3">2.16</span> <span class="todo INBOX">INBOX</span> scrap book and git backup scheme for cloud.</h3>
+<div class="outline-text-3" id="text-2-16">
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-04-25 一 10:31]</span></span>
+</p>
+<hr>
+</div>
+</div>
+<div id="outline-container-orgheadline27" class="outline-3">
+<h3 id="orgheadline27"><span class="section-number-3">2.17</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 优惠、保险信息可以集中到一个地方记录，免得经常忘记这些琐碎的事情</h3>
+<div class="outline-text-3" id="text-2-17">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:11] </span></span> <br>
+目前用gtddgt和带标记的微信收藏管理。</li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-07-25 一 11:24]</span></span>
+</p>
+<hr>
+</div>
+</div>
+
+<div id="outline-container-orgheadline28" class="outline-3">
+<h3 id="orgheadline28"><span class="section-number-3">2.18</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> git内容管理方式</h3>
+<div class="outline-text-3" id="text-2-18">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "LATER"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:04] </span></span> <br>
+已有实践，有待进一步整理。</li>
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:04]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-08-17 三 16:34]</span></span>
+</p>
+<hr>
+
+<p>
+个人文档，工作项目，等资料用ｇｉｔ保存。各个git库创建一个链接到一个同一的路径中，如 <code>~/mygitrepo</code>, 便于集中访问和云管理。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline29" class="outline-3">
+<h3 id="orgheadline29"><span class="section-number-3">2.19</span> <span class="todo MAYBE_FUTURE">MAYBE/FUTURE</span> emacs中写一个方便的创建网摘的工具</h3>
+<div class="outline-text-3" id="text-2-19">
+<ul class="org-ul">
+<li>State "MAYBE/FUTURE" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:04]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-08-17 三 16:42]</span></span>
+</p>
+<hr>
+<p>
+当前网摘都是保存成maff格式，然后手动在 <code>netarticles</code> 文章中追加相应内容，并拷贝相应的文件到对应附件目录。
+</p>
+
+<p>
+例如：
+</p>
+<pre class="example">
+**&lt;2016-08-12 五 16:11&gt; [[http://www.hahack.com/codes/cmake/][CMake 入门实战]]
+
+站内链接：[[/home/miracle/mygitrepo/quietheart/mydoc/prepub/orgmode/data/2016-02-16-net_articles201602.files/CMake_usage][CMake_usage]]
+
+存档：[[/home/miracle/mygitrepo/quietheart/mydoc/prepub/orgmode/data/2016-02-16-net_articles201602.files/CMake_usage.maff][CMake_usage.maff]]
+</pre>
+
+<p>
+考虑用一种简单的方式来实现这个重复的过程。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline30" class="outline-3">
+<h3 id="orgheadline30"><span class="section-number-3">2.20</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 云存储</h3>
+<div class="outline-text-3" id="text-2-20">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:04] </span></span> <br>
+已经实践，功能上传不佳。kodexplorer还行，可以通过web访问全盘。</li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-08-18 四 11:33]</span></span>
+</p>
+<hr>
+</div>
+<div id="outline-container-orgheadline31" class="outline-4">
+<h4 id="orgheadline31"><span class="section-number-4">2.20.1</span> kodexplorer</h4>
+<div class="outline-text-4" id="text-2-20-1">
+<p>
+<a href="http://www.oschina.net/p/kodexplorer?fromerr=45mzBoOt" target="_blank" rel="noopener">http://www.oschina.net/p/kodexplorer?fromerr=45mzBoOt</a>
+</p>
+
+<p>
+<a href="http://kalcaddle.com/download.html" target="_blank" rel="noopener">http://kalcaddle.com/download.html</a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$wget "https://github.com/kalcaddle/KODExplorer/archive/3.22.zip"
+</pre>
+</div>
+
+<p>
+解压到www目录下
+</p>
+</div>
+
+<div id="outline-container-orgheadline50" class="outline-5">
+<h5 id="orgheadline50"><span class="section-number-5">2.20.1.1</span> nginx配置</h5>
+<div class="outline-text-5" id="text-2-20-1-1">
+<pre class="example">
+#KODExplorer
+server {
+    listen       80;
+    server_name  112.74.19.38;
+
+    location / {
+            root /home/webspace/www/KODExplorer;
+            index  index.php;
+    }
+
+    location ~ \.php$ {
+            fastcgi_pass   127.0.0.1:9000;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  /home/webspace/www/KODExplorer$fastcgi_script_name;
+            include        fastcgi_params;
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline32" class="outline-4">
+<h4 id="orgheadline32"><span class="section-number-4">2.20.2</span> dzzoffice</h4>
+<div class="outline-text-4" id="text-2-20-2">
+<p>
+<a href="http://www.oschina.net/p/dzzoffice?fromerr=GntHHDjl" target="_blank" rel="noopener">http://www.oschina.net/p/dzzoffice?fromerr=GntHHDjl</a>
+</p>
+
+<p>
+<a href="http://www.dzzoffice.com/download.html" target="_blank" rel="noopener">http://www.dzzoffice.com/download.html</a>
+</p>
+</div>
+<div id="outline-container-orgheadline51" class="outline-5">
+<h5 id="orgheadline51"><span class="section-number-5">2.20.2.1</span> 部署</h5>
+</div>
+
+<div id="outline-container-orgheadline52" class="outline-5">
+<h5 id="orgheadline52"><span class="section-number-5">2.20.2.2</span> 配置</h5>
+<div class="outline-text-5" id="text-2-20-2-2">
+<p>
+<code>nginx.conf</code>
+</p>
+<pre class="example">
+# another virtual host using mix of IP-, name-, and port-based configuration
+#
+server {
+    listen       80;
+    server_name  112.74.19.38;
+
+    location / {
+            root /home/webspace/www/dzzoffice/upload;
+            index  index.php;
+    }
+
+    location /install {
+            alias /home/webspace/www/dzzoffice/upload/install;
+            index  index.php;
+    }
+
+    location ~ \.php$ {
+            fastcgi_pass   127.0.0.1:9000;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  /home/webspace/www/dzzoffice/upload$fastcgi_script_name;
+            include        fastcgi_params;
+    }
+}
+</pre>
+</div>
+</div>
+<div id="outline-container-orgheadline53" class="outline-5">
+<h5 id="orgheadline53"><span class="section-number-5">2.20.2.3</span> 安装</h5>
+<div class="outline-text-5" id="text-2-20-2-3">
+<pre class="example">
++----------------------------------+
+ DzzOffice安装方法
++----------------------------------+
+1. 上传 upload 目录中的文件到服务器
+
+2. 设置目录属性（windows 服务器可忽略这一步）
+	以下这些目录需要可读写权限
+	./core/config
+	./data 含子目录
+
+3. 执行安装脚本 /install/
+   请在浏览器中运行 install 程序，即访问 http://您的域名/install/
+
+4. 参照页面提示，进行安装，直至安装完毕
+
+5.进入桌面，在开始面板中打开“系统工具”应用，更新系统缓存。
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline33" class="outline-3">
+<h3 id="orgheadline33"><span class="section-number-3">2.21</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 本地搭建owncloud存放大文件，搭建git存放文档与源码，搭建webdavfs将本地目录与owncloud挂接</h3>
+<div class="outline-text-3" id="text-2-21">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:13] </span></span> <br>
+已经实践，过程需要进一步整理。</li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-08-23 二 11:04]</span></span>
+</p>
+<hr>
+<p>
+CenterOS上，nginx+php+owncloud.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">#yum install davfs2
+$sudo mount -t davfs https://localhost/remote.php/webdav/ owncloud_webdav/
+Please enter the username to authenticate with server
+https://localhost/remote.php/webdav/ or hit enter for none.
+  Username: public
+Please enter the password to authenticate user public with server
+https://localhost/remote.php/webdav/ or hit enter for none.
+  Password:  
+/sbin/mount.davfs: the server certificate does not match the server name
+/sbin/mount.davfs: the server certificate is not trusted
+  issuer:      Public, QCY, SZ, GD, CN
+  subject:     Public, QCY, SZ, GD, CN
+  identity:    QuietHeart
+  fingerprint: 45:39:d4:81:81:35:c1:a0:35:ad:74:ca:8a:ee:84:55:d3:d0:74:70
+You only should accept this certificate, if you can
+verify the fingerprint! The server might be faked
+or there might be a man-in-the-middle-attack.
+Accept certificate for this session? [y,N] y
+/sbin/mount.davfs: warning: the server does not support locks
+/sbin/mount.davfs: Warning: can't write entry into mtab, but will mount the file system anyway
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline34" class="outline-3">
+<h3 id="orgheadline34"><span class="section-number-3">2.22</span> <span class="todo LATER">LATER</span> 为orgmode网站添加文件的过程比较麻烦，如何简化？</h3>
+<div class="outline-text-3" id="text-2-22">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:17]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-08-23 二 14:58]</span></span>
+</p>
+<hr>
+
+<p>
+目前都是，复制文章到 <code>prepub/orgmode</code>, 创建附件目录结构，复制附件，修改文章链接，&#x2026;
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline35" class="outline-3">
+<h3 id="orgheadline35"><span class="section-number-3">2.23</span> <span class="todo LATER">LATER</span> 考虑使用原生orgmode来生成网站，而不依赖jekyll环境。</h3>
+<div class="outline-text-3" id="text-2-23">
+<ul class="org-ul">
+<li>State "LATER"      from              <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:15]</span></span></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline36" class="outline-3">
+<h3 id="orgheadline36"><span class="section-number-3">2.24</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> mygit repo</h3>
+<div class="outline-text-3" id="text-2-24">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2016-08-24 三 11:16] </span></span> <br>
+私有内容，加入到jekyll之时，慎重。</li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-08-23 二 15:14]</span></span>
+</p>
+<hr>
+
+<p>
+mygitrepo with xiaomi center.
+</p>
+
+<p>
+in local pc, <code>quietheart</code> for example:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$cat .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        url = https://vaqeteart@bitbucket.org/vaqeteart/quietheart.git #config for bitbucket
+        #url = https://github.com/vaqeteart/quietheart.git
+[remote "xiaomi"]
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        url = xiaomi:/userdisk/data/mygitrepo/quietheart #config for xiaomi
+        #url = https://github.com/vaqeteart/quietheart.git
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
+[branch "gh-pages"]
+        remote = origin
+        merge = refs/heads/gh-pages
+</pre>
+</div>
+
+<p>
+you do 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$git add .
+$git commit -m 'xxx'
+$git push
+</pre>
+</div>
+
+<p>
+then for sync to xiaomi, you can do:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$git push xiaomi
+</pre>
+</div>
+
+<p>
+or, you can also do on xiaomi:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$git pull
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline37" class="outline-3">
+<h3 id="orgheadline37"><span class="section-number-3">2.25</span> <span class="todo WAIT_FORWARD">WAIT/FORWARD</span> 考虑将xiaomi做为第一个最新的提交库，而其它库如github,bitbucket等都尽量不要直接使用，而是用xiaomi来更新。</h3>
+<div class="outline-text-3" id="text-2-25">
+<ul class="org-ul">
+<li>State "WAIT/FORWARD" from "DONE"       <span class="timestamp-wrapper"><span class="timestamp">[2016-10-19 三 16:56] </span></span> <br>
+wait for more arrange with configure.</li>
+<li>State "DONE"       from "NEXT"       <span class="timestamp-wrapper"><span class="timestamp">[2016-10-19 三 16:56]</span></span></li>
+<li>State "NEXT"       from              <span class="timestamp-wrapper"><span class="timestamp">[2016-10-19 三 16:36]</span></span></li>
+</ul>
+<p>
+考虑将所有远端用自编写的类 <code>repo</code> 程序，即 <code>rgits</code> 管理，并且，所有其它项目中的内容远端都设置为 <code>rgits</code> 端，即 <code>xiaomi://xxx</code>, 例如，远端为 <code>bitbucket</code> 的quietheart, 在xiaomi上可以知道是 bitbucket的了，所以本地管理的时候，远端只需要是xiaomi即可，每次都更新xiaomi，偶尔会定期到xiaomi路由上进行reset &#x2013;hard 和 push，使得github或者bitbucket更新。最新的提交都是提交到xiaomi上。
+</p>
+
+
+<pre class="example">
+//xiaomi
+xxx/quietheart
+.git/config:
+origin is bitbucket.
+
+//bitbucket
+xxx.bigbucket/quietheart
+
+//local
+xxx/.git/config:
+origin is xiaomi,
+and another remote bitbucket.
+</pre>
+
+<p>
+work:
+</p>
+<pre class="example">
+1. local change
+git add/commit/push -&gt; to xiaomi
+2. xiaomi 
+git push -&gt; to bitbucket
+
+also in step1, we can:
+git push bitbucket -&gt; to bitbucket
+</pre>
+</div>
+</div>
+<div id="outline-container-orgheadline38" class="outline-3">
+<h3 id="orgheadline38"><span class="section-number-3">2.26</span> <span class="todo LATER">LATER</span> orgmode的管理策略</h3>
+<div class="outline-text-3" id="text-2-26">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2017-04-07 五 16:10]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2016-12-28 三 10:40]</span></span>
+</p>
+
+<p>
+不更新orgmode_with_gtd文档，更新到个人content管理文档中
+</p>
+
+<p>
+状态冠以前缀： <code>1_inbox.org</code>, <code>2_next.org</code>, &#x2026;全都是org文件。
+</p>
+
+<p>
+项目暂时划分为： <code>_work.org</code>, <code>_life.org</code>, <code>_study.org</code>, <code>_others.org</code>, <code>_active.org</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline39" class="outline-3">
+<h3 id="orgheadline39"><span class="section-number-3">2.27</span> <span class="todo LATER">LATER</span> 关于data数据越来越大的考虑</h3>
+<div class="outline-text-3" id="text-2-27">
+<ul class="org-ul">
+<li>State "LATER"      from "INBOX"      <span class="timestamp-wrapper"><span class="timestamp">[2017-04-07 五 16:11]</span></span></li>
+</ul>
+<p>
+Capture Time:<span class="timestamp-wrapper"><span class="timestamp">[2017-01-05 四 15:23]</span></span>
+</p>
+
+<p>
+orgmode中所有标题的引用文件都用data目录管理。data本身再次使用git管理，并且不是repo方式，而是单一的data目录做为git库。这样会越来越大。
+</p>
+
+<p>
+目前暂无处理，或者临时建立几个子目录。日后可以考虑用软链接方式实现，将所有标题移到特定的目录集合，不同的集合用类似repo方式同一管理数据，并且，会自动建立一个data目录，将所有的子目录软链接到这个data，这个data并不用git管理。
+</p>
+</div>
+</div>
+</div>
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>

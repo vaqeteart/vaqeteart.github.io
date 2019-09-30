@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    2017年舒尔特数字表训练补充-遗漏的记录
+</title>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="../../../../css/partial/head.css">
+<link rel="stylesheet" href="../../../../css/partial/header.css">
+<link rel="stylesheet" href="../../../../css/partial/archives.css">
+<link rel="stylesheet" href="../../../../css/partial/categories.css">
+<link rel="stylesheet" href="../../../../css/partial/home-posts.css">
+<link rel="stylesheet" href="../../../../css/partial/page-nav.css">
+<link rel="stylesheet" href="../../../../css/partial/tags.css">
+<link rel="stylesheet" href="../../../../css/partial/about.css">
+<link rel="stylesheet" href="../../../../css/partial/more.css">
+<link rel="stylesheet" href="../../../../css/partial/footer.css">
+<link rel="stylesheet" href="../../../../css/post.css">
+<link rel="stylesheet" href="../../../../css/orgmode/hexo_orgmode_style.css">
+
+
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="../../../../lib/jquery-1.11.3.min.js"></script>
+<script src="../../../../js/common.js"></script>
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
+            <script src="js/nav.js"></script>
+<table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="../../../../index.html">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="../../../../categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(58)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="../../../../categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(6)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="../../../../categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="../../../../categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="../../../../categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="../../../../categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="../../../../categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="../../../../categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="../../../../categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="../../../../categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="../../../../categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(3)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="../../../../categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="../../../../categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="../../../../categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="../../../../categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="../../../../categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="../../../../categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="../../../../categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="../../../../categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="../../../../categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="../../../../categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="../../../../categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="../../../../categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="../../../../categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+        <h1>
+               <a href="/" title="Menu.Home">
+               QuietHeart's Site
+               </a>
+        </h1>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <article>
+                    <h1 id="header1" style="text-align: center;">
+                        2017年舒尔特数字表训练补充-遗漏的记录
+                    </h1>
+                    <hr id="title_line">
+                    <div>
+                        
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 20170713 去除关联</a></li>
+<li><a href="#orgheadline2">2. 20170714 缓存</a></li>
+<li><a href="#orgheadline3">3. 20170721 面</a></li>
+<li><a href="#orgheadline4">4. 20170816 变化</a></li>
+<li><a href="#orgheadline5">5. 20170828 忘记</a></li>
+<li><a href="#orgheadline6">6. 20170908 勇往直前</a></li>
+<li><a href="#orgheadline7">7. 20170908排除杂念</a></li>
+<li><a href="#orgheadline8">8. 20170915 整体看，不要记忆</a></li>
+<li><a href="#orgheadline9">9. 20170915 看与找</a></li>
+<li><a href="#orgheadline10">10. 20171012 居高临下</a></li>
+<li><a href="#orgheadline11">11. 20171013关键</a></li>
+<li><a href="#orgheadline12">12. 20171013前进</a></li>
+<li><a href="#orgheadline13">13. 20170916 宁慢勿错</a></li>
+<li><a href="#orgheadline14">14. 20171020数字的敏感度</a></li>
+<li><a href="#orgheadline15">15. 20171021不要反应不怕点错</a></li>
+<li><a href="#orgheadline16">16. 20171022 奇迹</a></li>
+<li><a href="#orgheadline17">17. 20171024 前后</a></li>
+<li><a href="#orgheadline18">18. 20171027 看与找</a></li>
+<li><a href="#orgheadline19">19. 20171031 直觉</a></li>
+<li><a href="#orgheadline20">20. 20171031 自由</a></li>
+<li><a href="#orgheadline21">21. 20171106 一闪而过</a></li>
+<li><a href="#orgheadline22">22. 20171108 点的技巧</a></li>
+<li><a href="#orgheadline23">23. 20171110 顺序</a></li>
+<li><a href="#orgheadline24">24. 20171110 阅读的乐趣</a></li>
+<li><a href="#orgheadline25">25. 20171213 训练重点</a></li>
+<li><a href="#orgheadline26">26. 20171214 心态</a></li>
+</ul>
+</div>
+</div>
+<p>
+补充一下2017的舒尔特训练过程，每一年会有一个集中的汇总。
+</p>
+
+<p>
+这里是对已经发布出去的 <code>2017年舒尔特数字表训练总结--挣扎在路上</code> 的一些遗漏记录的补充。
+</p>
+
+<p>
+后续也将继续将相关的内容汇总出来。
+</p>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 20170713 去除关联</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+想象着如果每点一个数字就换一幅图，这样便去除了关联
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> 20170714 缓存</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+不用刻意分离每个数字，有时一下缓存到几个就缓存上，如1-9，有时找不到就一个数字自成一体，只要将开始放在每一段的第一个就行，不用每个数字都是开始，顺其自然地切換开始，忽快忽慢至匀速。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">3</span> 20170721 面</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+即便不得不寻找，也不要把视野只限制在一个点，每次搜索的单位由点变为面
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4"><span class="section-number-2">4</span> 20170816 变化</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+想像着点每个数字的同时，表格也刷新不同的序列，而非不动，这样才反应出看的速度
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5"><span class="section-number-2">5</span> 20170828 忘记</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+学会不断忘记，不断重新开始，不考虑当前进度，所有数字一视同仁，比如10以内的数字，应当与其它的一样速度才对，不因为超过10而减慢，否则便是有了杂念
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline6" class="outline-2">
+<h2 id="orgheadline6"><span class="section-number-2">6</span> 20170908 勇往直前</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+其实不是慢，而是没有忘记点过数字的习惯，尝试着训练将点过的数字抛弃，实际是将看过的抛弃，看过了就看下一个，不用管点没点到。其实开始自然手指会跟上眼睛的，而且眼睛是顺序的看的，后阶段会变成一目十行，而非串行的看了。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline7" class="outline-2">
+<h2 id="orgheadline7"><span class="section-number-2">7</span> 20170908排除杂念</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+总是不由自主回忆点过的数字，以及想知道还有多少，所以，每个数字点完后干脆尝试停止脑中活动专心只找该点的数字。点完的已经点完了，不要再占用你的精力，还有多少也与你当下"点"的目标无关。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-2">
+<h2 id="orgheadline8"><span class="section-number-2">8</span> 20170915 整体看，不要记忆</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+快速看完不用顾及手指，手指自然会点完，意思不是顺序着快速看完同时手指紧跟着目光之后，而是一眼全部看完，再转换成手指点的顺序。你的看，绝对不是顺序的，那样就变成了训练反应而非看。看，是一个整体，既然没有了顺序，自然不会瞻前顾后考虑到底到了哪里，还有多少这样的分心之事。也给人一种似乎是余光，眼睛不动，预知，的错觉，其实早已全部映入眼帘。所以如果训练正确，不存在到哪个数字后就慢了的问题，所有数字都是一样的，即便慢也是随机的慢，因为没看清，而不是没记住。这感觉，阶数高就感觉明显。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-2">
+<h2 id="orgheadline9"><span class="section-number-2">9</span> 20170915 看与找</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+练习的是看到，不是找到。点到的数字都是看到的，不是找到的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-2">
+<h2 id="orgheadline10"><span class="section-number-2">10</span> 20171012 居高临下</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+除了要看不要找，还有一点就是，尽量把目光放宽
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-2">
+<h2 id="orgheadline11"><span class="section-number-2">11</span> 20171013关键</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+记住要点，视线范围尽量放广，视线不要等待动作和反应，要靠看不靠找
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-2">
+<h2 id="orgheadline12"><span class="section-number-2">12</span> 20171013前进</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+要意识到视线始终是走在手和反应的前面的，不会等待它们。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-2">
+<h2 id="orgheadline13"><span class="section-number-2">13</span> 20170916 宁慢勿错</h2>
+<div class="outline-text-2" id="text-13">
+<p>
+练习的重点 宁慢勿错，还有就是，目光要广，不要被当前数字吸引了全部注意力，当前数字只是看到的数字之一，没什么特别的，这个习惯可能需要放慢速度来练习，一旦发现你的目光太聚焦于某个数字了，就赶紧纠正。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline14" class="outline-2">
+<h2 id="orgheadline14"><span class="section-number-2">14</span> 20171020数字的敏感度</h2>
+<div class="outline-text-2" id="text-14">
+<p>
+其实是脑中缓存的当前关注的数字区间的切换灵活度。大多开始时，会练习到对1-9很敏感，之后就慢了，其实，当到10后，脑中切换下当前应关注的区间，如11-19，就可提就速度，因人而异，但大多人应同时能关注到10个左右。这10个数字随着你点的进度而"滑动"，比如开始只关注1-10，到10的时候变成11-20，等等，再灵活些，到5的时候变成5-15，这应该就是数字的敏感度的根源吧？关键是要忘记掉点过的数字，你头脑中的区间才会向前，否则只能始终是1-10，之后就变成一个个的找数字了。所以可尝试在切换前停下来，想想下一批要点的数字是哪些，然后再点，逐渐减少切换的停顿时间，然后我们要做的就是看，而非找。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline15" class="outline-2">
+<h2 id="orgheadline15"><span class="section-number-2">15</span> 20171021不要反应不怕点错</h2>
+<div class="outline-text-2" id="text-15">
+<p>
+只需关注眼睛一下子看完，手指就别关注了，手指自动的尽快划完就行，看完即点完，可能点错，但没关系，看完才重要。渐渐的，看完后，手指点完的正确率会上升。这样有利于训练集中注意力在看上而非点上，如果不明白的话，举个例子，眼睛迅速看完，同时手指也似乎正确的尽量与目光一致地"乱点"一气也结束了，开始不要在意手指的精确度，可能点的正确率只有1/100（一般前几个数字的正确率较高），这也不奇怪，目光本来就是快于反应，最后一个正确点到的数字后就表示从那起目光就与反应拉开了距离，但至少全部数字都看过了。这样训练是为了避免过分关注手指点到了哪里而停滞了目光，看不见了后面的其它数字，等渐渐的适应了目光稳定的快速看完（这时目光速度已达到了可能手指即便想乱点，也还没点出第一下前就看完了；或者即便控制手指也不会影响目光的前进与扫视的范围），再稍微分出些精力控制下手指的精确度。也就是，心神的主要精力不要浪费在控制手指上，毕竟人的反应是有极限的，这样渐渐的，有种手指随眼睛自动落下的感觉，根本不用控制。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline16" class="outline-2">
+<h2 id="orgheadline16"><span class="section-number-2">16</span> 20171022 奇迹</h2>
+<div class="outline-text-2" id="text-16">
+<p>
+不要让手指跑在视线的前面，即使3*3一闪而过，目光也其实是在手指前面的，不要被手指打乱了视线。手指再快也无用，只有视线在手指前面才是又快又准的正确方式。一切的奇迹都应是在看的见的基础上才能可靠的出现。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline17" class="outline-2">
+<h2 id="orgheadline17"><span class="section-number-2">17</span> 20171024 前后</h2>
+<div class="outline-text-2" id="text-17">
+<p>
+先不管三七二十一把前面熟悉的迅速点完（比如1-9），然后重点熟悉和点后面的数字。将真正训练的开始定在后面，前面一带而过。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline18" class="outline-2">
+<h2 id="orgheadline18"><span class="section-number-2">18</span> 20171027 看与找</h2>
+<div class="outline-text-2" id="text-18">
+<p>
+感受看到而非找到的感觉。手自然的点在那里，不因为提前看到了而增加记忆的负担，也不因为快了一些而想更快，慢了一些而想弥补。眼睛自然的看，渐渐的会因熟练与阶数而增减转动的频率，头脑也会放松，没有了预知、记忆、寻找的负担。训练多了，感觉的至多是眼睛有些累，而非头痛。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline19" class="outline-2">
+<h2 id="orgheadline19"><span class="section-number-2">19</span> 20171031 直觉</h2>
+<div class="outline-text-2" id="text-19">
+<p>
+不断扫视，扫到即点，不要停顿到看清，因为扫视到了，就是看清了，要相信自己的视力。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline20" class="outline-2">
+<h2 id="orgheadline20"><span class="section-number-2">20</span> 20171031 自由</h2>
+<div class="outline-text-2" id="text-20">
+<p>
+不是脑袋控制手指，而是目光，在脑袋看来，手指不由自主的随目光而动。不要控制手指，顺其自然不加以控制的练习会让你切实体会到进步乐趣，脑袋控制的是目光看，而非对手指的控制反应，这样便感觉从脑袋控制反应的限制中解脱出来的舒畅与轻松感，从而更有动力。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline21" class="outline-2">
+<h2 id="orgheadline21"><span class="section-number-2">21</span> 20171106 一闪而过</h2>
+<div class="outline-text-2" id="text-21">
+<p>
+用眼睛尽量看，之后会发现手指不是依次快速落下，而是似乎双手指有时同时落下却不错，尽量不是依次点下，尽可能多的同时用上双手，又不必分心去控制落下的策略，自动的却无双手互抢的奇怪感觉，好像手不是自己的，自动寻找到最轻松迅速却又不阻挡视线的下落方式。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline22" class="outline-2">
+<h2 id="orgheadline22"><span class="section-number-2">22</span> 20171108 点的技巧</h2>
+<div class="outline-text-2" id="text-22">
+<p>
+总是说看最重要，手指就是点完看过的。但是点也有一定的技巧，快点看完，不管怎么点，看完的基础上，尽快点完。就像我亲自感受过的，单手三阶难以破1.3，单手四阶难以破2.3，双手点就能很快突破。即便双手，我想，点的方式若不变，也难以破除一定的极限的。手指会自动随着顺序进行，跟本无须控制哪个手指点。点完就行，谁点不重要，看过之后，注意力只在点上，而非谁去点，怎么点。一旦你觉得你开始控制手指了那就不是这种状态了，你会感觉手腕由于过度被控制而发酸，3阶可能也能达到0.9左右，但是感觉很难寸进，你更多的精力应该控制的是目光和思想，这样手腕任其自然，不累，有游刃有余的感觉，当然，若只用单手，因为单手只有唯一个线性的策略，为了追上思想和视线，还是会有些酸，如果双手，就会自然充分利用好双手交替的优势的。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline23" class="outline-2">
+<h2 id="orgheadline23"><span class="section-number-2">23</span> 20171110 顺序</h2>
+<div class="outline-text-2" id="text-23">
+<p>
+阅读被打乱的是文字，意义是顺序出现的。舒尔特被打乱的是数字的意义，数字本身是自然映入的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline24" class="outline-2">
+<h2 id="orgheadline24"><span class="section-number-2">24</span> 20171110 阅读的乐趣</h2>
+<div class="outline-text-2" id="text-24">
+<p>
+每一次舒尔特表，就是一篇文章。文章的意义就是数字的次序，将文章背诵下来就是将所有数字位置记住，背的过程是读，记的过程是看。将练习的过程变为阅读。每一篇文章阅读完才知其意义。虽然这里的意义比较抽象，但是，知道了这点，便与阅读一样，你可以稳步提升"阅读"的速度，而不必被无关的单字干扰，也不存在哪个数字更敏感的问题。反之，其实阅读并理解，实质就是看完文字并根据头脑中的认知按特定次序加工，与舒尔特看完数字并点完是一个道理。实质就是看，这样，便不会枯燥。所以，你今天看完50篇文章了吗？
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline25" class="outline-2">
+<h2 id="orgheadline25"><span class="section-number-2">25</span> 20171213 训练重点</h2>
+<div class="outline-text-2" id="text-25">
+<p>
+3*3手速，4*4协调双手，5*5协调手速与视幅，6*6视幅，7*7协调视幅与眼力，8*8眼力。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline26" class="outline-2">
+<h2 id="orgheadline26"><span class="section-number-2">26</span> 20171214 心态</h2>
+<div class="outline-text-2" id="text-26">
+<p>
+快点看完快点看完，顺便点一下点不好就算了，但是快点看完，看完，看，看看！
+</p>
+</div>
+</div>
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>
