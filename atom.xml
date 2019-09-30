@@ -5,9 +5,9 @@
   <subtitle>Find the things you want.</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://0.0.0.0:4000/"/>
+  <link href="http://yoursite.com/"/>
   <updated>2019-09-23T06:14:21.000Z</updated>
-  <id>http://0.0.0.0:4000/</id>
+  <id>http://yoursite.com/</id>
   
   <author>
     <name>Quiet Heart</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>hello hexo</title>
-    <link href="http://0.0.0.0:4000/2019/09/18/hello-hexo/"/>
-    <id>http://0.0.0.0:4000/2019/09/18/hello-hexo/</id>
+    <link href="http://yoursite.com/2019/09/18/hello-hexo/"/>
+    <id>http://yoursite.com/2019/09/18/hello-hexo/</id>
     <published>2019-09-18T09:55:19.000Z</published>
     <updated>2019-09-23T06:14:21.000Z</updated>
     
@@ -27,15 +27,15 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
     
   </entry>
   
   <entry>
     <title>时间管理：3.解决问题——第一步，事务分类</title>
-    <link href="http://0.0.0.0:4000/2019/04/30/timemanage_3_1_classification/"/>
-    <id>http://0.0.0.0:4000/2019/04/30/timemanage_3_1_classification/</id>
+    <link href="http://yoursite.com/2019/04/30/timemanage_3_1_classification/"/>
+    <id>http://yoursite.com/2019/04/30/timemanage_3_1_classification/</id>
     <published>2019-04-29T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:24.000Z</updated>
     
@@ -55,17 +55,17 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="note" scheme="http://0.0.0.0:4000/categories/categories/note/"/>
+      <category term="note" scheme="http://yoursite.com/categories/categories/note/"/>
     
     
   </entry>
   
   <entry>
     <title>时间管理：2.分析问题——如何开始</title>
-    <link href="http://0.0.0.0:4000/2019/02/27/timemanage_2_how_to_start/"/>
-    <id>http://0.0.0.0:4000/2019/02/27/timemanage_2_how_to_start/</id>
+    <link href="http://yoursite.com/2019/02/27/timemanage_2_how_to_start/"/>
+    <id>http://yoursite.com/2019/02/27/timemanage_2_how_to_start/</id>
     <published>2019-02-26T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:24.000Z</updated>
     
@@ -85,17 +85,17 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="note" scheme="http://0.0.0.0:4000/categories/categories/note/"/>
+      <category term="note" scheme="http://yoursite.com/categories/categories/note/"/>
     
     
   </entry>
   
   <entry>
     <title>时间管理：1.发现问题——时间的流逝</title>
-    <link href="http://0.0.0.0:4000/2019/02/19/timemanage_1_elapsed_time/"/>
-    <id>http://0.0.0.0:4000/2019/02/19/timemanage_1_elapsed_time/</id>
+    <link href="http://yoursite.com/2019/02/19/timemanage_1_elapsed_time/"/>
+    <id>http://yoursite.com/2019/02/19/timemanage_1_elapsed_time/</id>
     <published>2019-02-18T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:25.000Z</updated>
     
@@ -115,17 +115,17 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="note" scheme="http://0.0.0.0:4000/categories/categories/note/"/>
+      <category term="note" scheme="http://yoursite.com/categories/categories/note/"/>
     
     
   </entry>
   
   <entry>
     <title>2017年舒尔特数字表训练总结--挣扎在路上</title>
-    <link href="http://0.0.0.0:4000/2018/03/16/schulte_table_2017/"/>
-    <id>http://0.0.0.0:4000/2018/03/16/schulte_table_2017/</id>
+    <link href="http://yoursite.com/2018/03/16/schulte_table_2017/"/>
+    <id>http://yoursite.com/2018/03/16/schulte_table_2017/</id>
     <published>2018-03-15T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:25.000Z</updated>
     
@@ -144,19 +144,19 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="study" scheme="http://0.0.0.0:4000/categories/categories/study/"/>
+      <category term="study" scheme="http://yoursite.com/categories/categories/study/"/>
     
-      <category term="misc" scheme="http://0.0.0.0:4000/categories/categories/study/misc/"/>
+      <category term="misc" scheme="http://yoursite.com/categories/categories/study/misc/"/>
     
     
   </entry>
   
   <entry>
     <title>Linux 访问权限控制基本原理</title>
-    <link href="http://0.0.0.0:4000/2017/02/20/linux_system_access/"/>
-    <id>http://0.0.0.0:4000/2017/02/20/linux_system_access/</id>
+    <link href="http://yoursite.com/2017/02/20/linux_system_access/"/>
+    <id>http://yoursite.com/2017/02/20/linux_system_access/</id>
     <published>2017-02-19T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:26.000Z</updated>
     
@@ -176,19 +176,19 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="study" scheme="http://0.0.0.0:4000/categories/categories/study/"/>
+      <category term="study" scheme="http://yoursite.com/categories/categories/study/"/>
     
-      <category term="linux" scheme="http://0.0.0.0:4000/categories/categories/study/linux/"/>
+      <category term="linux" scheme="http://yoursite.com/categories/categories/study/linux/"/>
     
     
   </entry>
   
   <entry>
     <title>小米路由器DIY</title>
-    <link href="http://0.0.0.0:4000/2016/04/07/xiaomi_router_tips/"/>
-    <id>http://0.0.0.0:4000/2016/04/07/xiaomi_router_tips/</id>
+    <link href="http://yoursite.com/2016/04/07/xiaomi_router_tips/"/>
+    <id>http://yoursite.com/2016/04/07/xiaomi_router_tips/</id>
     <published>2016-04-06T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:32.000Z</updated>
     
@@ -208,21 +208,21 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="study" scheme="http://0.0.0.0:4000/categories/categories/study/"/>
+      <category term="study" scheme="http://yoursite.com/categories/categories/study/"/>
     
-      <category term="linux" scheme="http://0.0.0.0:4000/categories/categories/study/linux/"/>
+      <category term="linux" scheme="http://yoursite.com/categories/categories/study/linux/"/>
     
-      <category term="misc" scheme="http://0.0.0.0:4000/categories/categories/study/linux/misc/"/>
+      <category term="misc" scheme="http://yoursite.com/categories/categories/study/linux/misc/"/>
     
     
   </entry>
   
   <entry>
     <title>关于linux中的时间和时区</title>
-    <link href="http://0.0.0.0:4000/2016/02/18/linux_time_timezone/"/>
-    <id>http://0.0.0.0:4000/2016/02/18/linux_time_timezone/</id>
+    <link href="http://yoursite.com/2016/02/18/linux_time_timezone/"/>
+    <id>http://yoursite.com/2016/02/18/linux_time_timezone/</id>
     <published>2016-02-17T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:33.000Z</updated>
     
@@ -243,21 +243,21 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="study" scheme="http://0.0.0.0:4000/categories/categories/study/"/>
+      <category term="study" scheme="http://yoursite.com/categories/categories/study/"/>
     
-      <category term="linux" scheme="http://0.0.0.0:4000/categories/categories/study/linux/"/>
+      <category term="linux" scheme="http://yoursite.com/categories/categories/study/linux/"/>
     
-      <category term="misc" scheme="http://0.0.0.0:4000/categories/categories/study/linux/misc/"/>
+      <category term="misc" scheme="http://yoursite.com/categories/categories/study/linux/misc/"/>
     
     
   </entry>
   
   <entry>
     <title>网文收集201602</title>
-    <link href="http://0.0.0.0:4000/2016/02/16/net_articles201602/"/>
-    <id>http://0.0.0.0:4000/2016/02/16/net_articles201602/</id>
+    <link href="http://yoursite.com/2016/02/16/net_articles201602/"/>
+    <id>http://yoursite.com/2016/02/16/net_articles201602/</id>
     <published>2016-02-15T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:33.000Z</updated>
     
@@ -278,17 +278,17 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="others" scheme="http://0.0.0.0:4000/categories/categories/others/"/>
+      <category term="others" scheme="http://yoursite.com/categories/categories/others/"/>
     
     
   </entry>
   
   <entry>
     <title>模板文件</title>
-    <link href="http://0.0.0.0:4000/2016/02/11/template_file/"/>
-    <id>http://0.0.0.0:4000/2016/02/11/template_file/</id>
+    <link href="http://yoursite.com/2016/02/11/template_file/"/>
+    <id>http://yoursite.com/2016/02/11/template_file/</id>
     <published>2016-02-10T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:33.000Z</updated>
     
@@ -309,17 +309,17 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="others" scheme="http://0.0.0.0:4000/categories/categories/others/"/>
+      <category term="others" scheme="http://yoursite.com/categories/categories/others/"/>
     
     
   </entry>
   
   <entry>
     <title>Linux杂乱记录</title>
-    <link href="http://0.0.0.0:4000/2016/02/09/linux_misc_notes/"/>
-    <id>http://0.0.0.0:4000/2016/02/09/linux_misc_notes/</id>
+    <link href="http://yoursite.com/2016/02/09/linux_misc_notes/"/>
+    <id>http://yoursite.com/2016/02/09/linux_misc_notes/</id>
     <published>2016-02-08T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:36.000Z</updated>
     
@@ -340,21 +340,21 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="study" scheme="http://0.0.0.0:4000/categories/categories/study/"/>
+      <category term="study" scheme="http://yoursite.com/categories/categories/study/"/>
     
-      <category term="linux" scheme="http://0.0.0.0:4000/categories/categories/study/linux/"/>
+      <category term="linux" scheme="http://yoursite.com/categories/categories/study/linux/"/>
     
-      <category term="misc" scheme="http://0.0.0.0:4000/categories/categories/study/linux/misc/"/>
+      <category term="misc" scheme="http://yoursite.com/categories/categories/study/linux/misc/"/>
     
     
   </entry>
   
   <entry>
     <title>杂乱记录</title>
-    <link href="http://0.0.0.0:4000/2016/02/09/misc_notes/"/>
-    <id>http://0.0.0.0:4000/2016/02/09/misc_notes/</id>
+    <link href="http://yoursite.com/2016/02/09/misc_notes/"/>
+    <id>http://yoursite.com/2016/02/09/misc_notes/</id>
     <published>2016-02-08T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:34.000Z</updated>
     
@@ -373,17 +373,17 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="study" scheme="http://0.0.0.0:4000/categories/categories/study/"/>
+      <category term="study" scheme="http://yoursite.com/categories/categories/study/"/>
     
     
   </entry>
   
   <entry>
     <title>实用工具</title>
-    <link href="http://0.0.0.0:4000/2016/02/09/useful_tools/"/>
-    <id>http://0.0.0.0:4000/2016/02/09/useful_tools/</id>
+    <link href="http://yoursite.com/2016/02/09/useful_tools/"/>
+    <id>http://yoursite.com/2016/02/09/useful_tools/</id>
     <published>2016-02-08T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:34.000Z</updated>
     
@@ -402,19 +402,19 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="study" scheme="http://0.0.0.0:4000/categories/categories/study/"/>
+      <category term="study" scheme="http://yoursite.com/categories/categories/study/"/>
     
-      <category term="kits" scheme="http://0.0.0.0:4000/categories/categories/study/kits/"/>
+      <category term="kits" scheme="http://yoursite.com/categories/categories/study/kits/"/>
     
     
   </entry>
   
   <entry>
     <title>Linux命令学习记录</title>
-    <link href="http://0.0.0.0:4000/2016/02/02/linux_command_tips/"/>
-    <id>http://0.0.0.0:4000/2016/02/02/linux_command_tips/</id>
+    <link href="http://yoursite.com/2016/02/02/linux_command_tips/"/>
+    <id>http://yoursite.com/2016/02/02/linux_command_tips/</id>
     <published>2016-02-01T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:36.000Z</updated>
     
@@ -435,21 +435,21 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="study" scheme="http://0.0.0.0:4000/categories/categories/study/"/>
+      <category term="study" scheme="http://yoursite.com/categories/categories/study/"/>
     
-      <category term="linux" scheme="http://0.0.0.0:4000/categories/categories/study/linux/"/>
+      <category term="linux" scheme="http://yoursite.com/categories/categories/study/linux/"/>
     
-      <category term="command" scheme="http://0.0.0.0:4000/categories/categories/study/linux/command/"/>
+      <category term="command" scheme="http://yoursite.com/categories/categories/study/linux/command/"/>
     
     
   </entry>
   
   <entry>
     <title>Linux进程和线程的调度与优先级</title>
-    <link href="http://0.0.0.0:4000/2016/02/01/linux_schedule_priority/"/>
-    <id>http://0.0.0.0:4000/2016/02/01/linux_schedule_priority/</id>
+    <link href="http://yoursite.com/2016/02/01/linux_schedule_priority/"/>
+    <id>http://yoursite.com/2016/02/01/linux_schedule_priority/</id>
     <published>2016-01-31T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:36.000Z</updated>
     
@@ -470,19 +470,19 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="study" scheme="http://0.0.0.0:4000/categories/categories/study/"/>
+      <category term="study" scheme="http://yoursite.com/categories/categories/study/"/>
     
-      <category term="os" scheme="http://0.0.0.0:4000/categories/categories/study/os/"/>
+      <category term="os" scheme="http://yoursite.com/categories/categories/study/os/"/>
     
     
   </entry>
   
   <entry>
     <title>测试orgmode文章导出</title>
-    <link href="http://0.0.0.0:4000/2015/12/17/testexport/"/>
-    <id>http://0.0.0.0:4000/2015/12/17/testexport/</id>
+    <link href="http://yoursite.com/2015/12/17/testexport/"/>
+    <id>http://yoursite.com/2015/12/17/testexport/</id>
     <published>2015-12-16T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:37.000Z</updated>
     
@@ -502,17 +502,17 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="others" scheme="http://0.0.0.0:4000/categories/categories/others/"/>
+      <category term="others" scheme="http://yoursite.com/categories/categories/others/"/>
     
     
   </entry>
   
   <entry>
     <title>内容管理方法</title>
-    <link href="http://0.0.0.0:4000/2015/12/01/Content_Manage_Method/"/>
-    <id>http://0.0.0.0:4000/2015/12/01/Content_Manage_Method/</id>
+    <link href="http://yoursite.com/2015/12/01/Content_Manage_Method/"/>
+    <id>http://yoursite.com/2015/12/01/Content_Manage_Method/</id>
     <published>2015-11-30T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:38.000Z</updated>
     
@@ -533,17 +533,17 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="note" scheme="http://0.0.0.0:4000/categories/categories/note/"/>
+      <category term="note" scheme="http://yoursite.com/categories/categories/note/"/>
     
     
   </entry>
   
   <entry>
     <title>测试orgmode链接</title>
-    <link href="http://0.0.0.0:4000/2015/12/01/test_orglink/"/>
-    <id>http://0.0.0.0:4000/2015/12/01/test_orglink/</id>
+    <link href="http://yoursite.com/2015/12/01/test_orglink/"/>
+    <id>http://yoursite.com/2015/12/01/test_orglink/</id>
     <published>2015-11-30T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:37.000Z</updated>
     
@@ -563,17 +563,17 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="others" scheme="http://0.0.0.0:4000/categories/categories/others/"/>
+      <category term="others" scheme="http://yoursite.com/categories/categories/others/"/>
     
     
   </entry>
   
   <entry>
     <title>使用orgmode进行GTD管理</title>
-    <link href="http://0.0.0.0:4000/2015/11/27/gtd_with_orgmode/"/>
-    <id>http://0.0.0.0:4000/2015/11/27/gtd_with_orgmode/</id>
+    <link href="http://yoursite.com/2015/11/27/gtd_with_orgmode/"/>
+    <id>http://yoursite.com/2015/11/27/gtd_with_orgmode/</id>
     <published>2015-11-26T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:39.000Z</updated>
     
@@ -593,17 +593,17 @@
     
     </summary>
     
-      <category term="categories" scheme="http://0.0.0.0:4000/categories/categories/"/>
+      <category term="categories" scheme="http://yoursite.com/categories/categories/"/>
     
-      <category term="note" scheme="http://0.0.0.0:4000/categories/categories/note/"/>
+      <category term="note" scheme="http://yoursite.com/categories/categories/note/"/>
     
     
   </entry>
   
   <entry>
     <title></title>
-    <link href="http://0.0.0.0:4000/2015/11/18/jekyll_tips/"/>
-    <id>http://0.0.0.0:4000/2015/11/18/jekyll_tips/</id>
+    <link href="http://yoursite.com/2015/11/18/jekyll_tips/"/>
+    <id>http://yoursite.com/2015/11/18/jekyll_tips/</id>
     <published>2015-11-17T16:00:00.000Z</published>
     <updated>2019-09-29T07:39:40.000Z</updated>
     
