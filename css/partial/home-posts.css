@@ -8,12 +8,12 @@ hr.title_line {
     height: 5px;
     border: none;
     border-top: 3px ridge green;
-    align: center;
+    /*align: center;*/
     /*width: 300;*/
 }
 
 hr.article_line {
-    align: center;
+    /*align: center;*/
     height: 1px;
     border: none;
     border-top: 1px dashed #C7EDCC;
@@ -27,5 +27,5 @@ article {
     width: 100%;
     font-size: 120%;
     overflow-x: auto;
-    wrap: hard;
+    /*wrap: hard;*/
 }
