@@ -2,9 +2,12 @@
     border-style: solid;
     border-width: 2px;
     border-color: #006400;
-    valign: top;
 }
-
+#td_posts article div {
+    border-style: solid;
+    border-width: 2px;
+    border-color: #006400;
+}
 code.prettyprint {
     border-style: solid;
     border-width: 1px;
