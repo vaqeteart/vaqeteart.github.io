@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    
+</title>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="../../../../css/partial/head.css">
+<link rel="stylesheet" href="../../../../css/partial/header.css">
+<link rel="stylesheet" href="../../../../css/partial/archives.css">
+<link rel="stylesheet" href="../../../../css/partial/categories.css">
+<link rel="stylesheet" href="../../../../css/partial/home-posts.css">
+<link rel="stylesheet" href="../../../../css/partial/page-nav.css">
+<link rel="stylesheet" href="../../../../css/partial/tags.css">
+<link rel="stylesheet" href="../../../../css/partial/about.css">
+<link rel="stylesheet" href="../../../../css/partial/more.css">
+<link rel="stylesheet" href="../../../../css/partial/footer.css">
+<link rel="stylesheet" href="../../../../css/post.css">
+<link rel="stylesheet" href="../../../../css/orgmode/hexo_orgmode_style.css">
+
+
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="../../../../lib/jquery-1.11.3.min.js"></script>
+<script src="../../../../js/common.js"></script>
+<script src="../../../../js/nav.js"></script>
+
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
+            <script src="js/nav.js"></script>
+<table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="../../../../index.html">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="../../../../categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(97)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="../../../../categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(0)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="../../../../categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="../../../../categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="../../../../categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(0)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="../../../../categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="../../../../categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(0)</span></a></li><li id="os" class="categories_tree_item"><a href="../../../../categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(0)</span></a></li><li id="books" class="categories_tree_item"><a href="../../../../categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="../../../../categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="../../../../categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(0)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(0)</span></a></li><li id="command" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(0)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="../../../../categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="../../../../categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(0)</span></a></li><li id="emacs" class="categories_tree_item"><a href="../../../../categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(0)</span></a></li><li id="vim" class="categories_tree_item"><a href="../../../../categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="../../../../categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="../../../../categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="../../../../categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="../../../../categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="../../../../categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="../../../../categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(0)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="../../../../categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="../../../../categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="../../../../categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+               <a href="/" title="Menu.Home">
+               <h1>QuietHeart's Site</h1>
+               </a>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <h1 id="header1" style="text-align: center;">
+                    
+                </h1>
+                <hr id="title_line">
+                <article>
+                    <div>
+                        <p>
+&#x2014;
+layout: posts
+title: Docker实践
+categories: [categories, study, linux]
+comments: true
+&#x2014;
+#+END_HTML
+</p>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 系统相关</a>
+<ul>
+<li><a href="#orgheadline2">1.1. 安装配置</a></li>
+<li><a href="#orgheadline3">1.2. 用户组配置</a></li>
+<li><a href="#orgheadline4">1.3. Docker版本</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline5">2. Docker仓库相关</a>
+<ul>
+<li><a href="#orgheadline6">2.1. <code>docker search</code> 搜索镜像</a></li>
+<li><a href="#orgheadline7">2.2. <code>docker pull</code> 下载镜像</a></li>
+<li><a href="#orgheadline8">2.3. <code>docker login</code> 登录</a></li>
+<li><a href="#orgheadline9">2.4. <code>docker logout</code> 退出</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline10">3. Docker常用操作</a>
+<ul>
+<li><a href="#orgheadline11">3.1. <code>docker images</code> 查看本地镜像</a></li>
+<li><a href="#orgheadline12">3.2. <code>docker search</code> 搜索镜像</a></li>
+<li><a href="#orgheadline13">3.3. <code>docker pull</code> 拉取镜像</a></li>
+<li><a href="#orgheadline14">3.4. <code>docker run</code> 运行镜像</a></li>
+<li><a href="#orgheadline15">3.5. <code>docker ps</code> 查看正在运行的容器</a></li>
+<li><a href="#orgheadline16">3.6. <code>docker exec</code> 进入正在运行的容器</a></li>
+<li><a href="#orgheadline17">3.7. <code>docker attach</code> 附到正在运行的容器(attach)</a></li>
+<li><a href="#orgheadline18">3.8. <code>docker top</code> 查看容器运行的进程</a></li>
+<li><a href="#orgheadline19">3.9. <code>docker stop</code> 停止/退出容器</a></li>
+<li><a href="#orgheadline20">3.10. <code>docker start</code> 启动容器</a></li>
+<li><a href="#orgheadline21">3.11. <code>docker restart</code> 重启容器</a></li>
+<li><a href="#orgheadline22">3.12. <code>docker rm</code> 删除容器</a></li>
+<li><a href="#orgheadline23">3.13. <code>docker commit</code> 提交容器</a></li>
+<li><a href="#orgheadline24">3.14. <code>docker push</code> 上传提交的容器/镜像</a>
+<ul>
+<li><a href="#orgheadline25">3.14.1. 其它参考</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline26">3.15. <code>docker info</code> 查看docker系统配置信息</a></li>
+<li><a href="#orgheadline27">3.16. <code>docker help</code> 帮助信息</a></li>
+<li><a href="#orgheadline28">3.17. <code>docker volume</code> 数据卷管理</a>
+<ul>
+<li><a href="#orgheadline29">3.17.1. <span class="done nilREFERENCE">REFERENCE</span> 启动镜像并且创建匿名Volume</a></li>
+<li><a href="#orgheadline30">3.17.2. <span class="done nilREFERENCE">REFERENCE</span> 创建有名Volume并在启动镜像时挂载到容器中</a></li>
+<li><a href="#orgheadline31">3.17.3. <span class="done nilREFERENCE">REFERENCE</span> 启动镜像的时候将主机中一个目录挂载到容器中</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline32">4. 其它</a>
+<ul>
+<li><a href="#orgheadline33">4.1. 实践尝试</a>
+<ul>
+<li><a href="#orgheadline34">4.1.1. 重启宿主机之后容器停止，重新启动容器数据仍在</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 系统相关</h2>
+<div class="outline-text-2" id="text-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$cat /etc/issue
+Ubuntu 18.04.1 LTS \n \l
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><a id="ID-aa058cbb-f324-43e5-ad6f-6508b38c13d0"></a><span class="section-number-3">1.1</span> 安装配置</h3>
+<div class="outline-text-3" id="text-1-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$sudo apt-get install docker.io
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3"><a id="ID-901c5066-71ac-464d-a5ce-d9949b5bbc16"></a><span class="section-number-3">1.2</span> 用户组配置</h3>
+<div class="outline-text-3" id="text-1-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">$gpasswd -a miracle docker
+$systemctl docker restart
+$pkill X
+</pre>
+</div>
+
+<p>
+注：如果不进行如上的用户组配置，那么执行 <code>docker images</code> 的时候就会出现权限的错误。
+</p>
+
+<p>
+如下命令同样适用
+</p>
+<pre class="example">
+$sudo systemctl start docker
+$sudo systemctl enable docker
+$sudo systemctl restart docker
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">1.3</span> Docker版本</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+查看 <code>docker</code> 版本的命令：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker -v
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5"><span class="section-number-2">2</span> Docker仓库相关</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Docker仓库的理解参考： <a href="../../../../../../mydata/orgmode/gtd/_study.html#ID-57fefa27-644f-485e-8a53-45c52f0763b3">关于Docker仓库</a>
+</p>
+</div>
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">2.1</span> <code>docker search</code> 搜索镜像</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker search busybox
+</pre>
+</div>
+<p>
+搜索包含 busybox 的镜像，会有很多，比如
+</p>
+<pre class="example">
+miracle@xmnb4003210:~/misc$ docker search busybox
+NAME                      DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
+busybox                   Busybox base image.                             1634                [OK]                
+progrium/busybox                                                          70                                      [OK]
+radial/busyboxplus        Full-chain, Internet enabled, busybox made f…   24                                      [OK]
+arm32v7/busybox           Busybox base image.                             7                                       
+yauritux/busybox-curl     Busybox with CURL                               5                                       
+armhf/busybox             Busybox base image.                             4                                       
+arm64v8/busybox           Busybox base image.                             3                                       
+......
+</pre>
+</div>
+</div>
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7"><span class="section-number-3">2.2</span> <code>docker pull</code> 下载镜像</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker pull busybox
+</pre>
+</div>
+
+<p>
+不指定版本号会默认下载 <code>busy:latest</code> ，结果类似如下：
+</p>
+<pre class="example">
+$ docker pull busybox
+Using default tag: latest
+latest: Pulling from library/busybox
+ee153a04d683: Pull complete 
+Digest: sha256:e3b586a669fae4073bb68b5bcabea26dae469ee6f157050c212c77b50f992d5a
+Status: Downloaded newer image for busybox:latest
+</pre>
+<p>
+镜像下载中可以看到是分层下载，每一层都有一个唯一的ID值表示，每层下载的大小实际为该层进行的修改增量。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">2.3</span> <code>docker login</code> 登录</h3>
+<div class="outline-text-3" id="text-2-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker login --username=vaqeteart
+Password: 
+WARNING! Your password will be stored unencrypted in /home/miracle/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+</pre>
+</div>
+<p>
+只有登录之后，才能使用 <code>docker push</code> 推送提交的镜像到仓库。使用 <code>docker login</code> 命令直接登陆到 <code>docker hub</code>, 登陆信息均会保存在 <code>$HOME/.docker/config.json</code> 目录下
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">2.4</span> <code>docker logout</code> 退出</h3>
+<div class="outline-text-3" id="text-2-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker logout
+Removing login credentials for https://index.docker.io/v1/
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline10" class="outline-2">
+<h2 id="orgheadline10"><span class="section-number-2">3</span> Docker常用操作</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11"><span class="section-number-3">3.1</span> <code>docker images</code> 查看本地镜像</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              18.04               d131e0fa2585        10 days ago         102MB
+ubuntu              latest              d131e0fa2585        10 days ago         102MB
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><span class="section-number-3">3.2</span> <code>docker search</code> 搜索镜像</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">$ docker search busybox
+NAME                      DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
+busybox                   Busybox base image.                             1637                [OK]                
+progrium/busybox                                                          70                                      [OK]
+radial/busyboxplus        Full-chain, Internet enabled, busybox made f…   24                                      [OK]
+arm32v7/busybox           Busybox base image.                             7                                       
+yauritux/busybox-curl     Busybox with CURL                               5                           
+......
+</pre>
+</div>
+<p>
+这会搜索所有dockerhub上的镜像。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"><span class="section-number-3">3.3</span> <code>docker pull</code> 拉取镜像</h3>
+<div class="outline-text-3" id="text-3-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker pull busybox
+</pre>
+</div>
+<p>
+这会将相应名称的镜像拉取（下载）到本地，拉取之后，便可以运行镜像了。
+</p>
+
+<p>
+其它可能的命令类似：
+</p>
+<pre class="example">
+$docker pull ubuntu:latest
+或
+$docker pull ubuntu:18.04
+#或
+$docker pull registry.hub.docker.com/ubuntu:latest
+</pre>
+</div>
+</div>
+<div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14"><a id="ID-9becb2ba-65ef-4ff8-a457-1a35d77b9d75"></a><span class="section-number-3">3.4</span> <code>docker run</code> 运行镜像</h3>
+<div class="outline-text-3" id="text-3-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker run -it ubuntu:18.04 /bin/bash
+root@7b74c9092147:/#
+</pre>
+</div>
+<p>
+这样就由镜像的运行生成了一个容器，并进入到容器中了。发现，很多命令比如 <code>ifconfig</code> 等都没有。但是可以运行 <code>apt-get install update</code> 。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><span class="section-number-3">3.5</span> <code>docker ps</code> 查看正在运行的容器</h3>
+<div class="outline-text-3" id="text-3-5">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+7b74c9092147        ubuntu:18.04        "/bin/bash"         3 minutes ago       Up 3 minutes                            angry_spence
+</pre>
+</div>
+<p>
+注意，使用 <code>docker ps -a</code> 可查看所有状态的容器。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16"><a id="ID-5464c2d7-f51d-4425-866c-2f3b89272807"></a><span class="section-number-3">3.6</span> <code>docker exec</code> 进入正在运行的容器</h3>
+<div class="outline-text-3" id="text-3-6">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker exec -it 7b74c9092147 /bin/bash
+</pre>
+</div>
+<p>
+这样和使用ssh登录一样，使用 <code>C-D</code> 退出之后也不会导致整个容器退出（注意，这个容器事先必须是已经处于运行的状态），
+</p>
+
+<p>
+使用 <code>docker top &lt;容器id&gt;</code> 可以看到，执行exec之后，新多了一个bash进程。
+</p>
+<pre class="example">
+使用exec命令进入容器内部就如同进入另一个机器一样，并且使用exit命令，不会像attach那样导致容器停止，所以非常适合容器内部操作
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17"><a id="ID-d874334e-582b-4994-86fb-2f153c65f80b"></a><span class="section-number-3">3.7</span> <code>docker attach</code> 附到正在运行的容器(attach)</h3>
+<div class="outline-text-3" id="text-3-7">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker attach 7b74c9092147
+</pre>
+</div>
+<p>
+这样会进入到相应的容器中，如同exec登录一样，但是如果通过 <code>C-d</code> 退出容器的时候，会发现，原来用 <code>docker run -it</code> / <code>docker exec -it</code> 运行的容器也被退出了，并且 <code>docker ps</code> 会发现没有正在运行的容器了，而 <code>docker ps -a</code> 可以看到容器的状态是Exited(130)。退出的方式应该是： <code>C-p C-q</code>
+</p>
+<pre class="example">
+中文意思是附加、贴上、系上等意思，所以dokcer attach主要的作用就是进入容器，这个容器和后面的docker exec类似但是完全不一样。
+使用exit命令或者ctrl+C命令是停止容器，退出容器命令可使用ctrl+P，然后使用ctrl+Q命令，即可退出容器的虚拟终端，此时容器还在运行。
+官方不推荐使用docker attach命令进入开启了交互模式的容器，docker attach的主要功能是查看信息，容器内部操作有更加方便的docker exec命令，将在稍后介绍。
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18"><span class="section-number-3">3.8</span> <code>docker top</code> 查看容器运行的进程</h3>
+<div class="outline-text-3" id="text-3-8">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker top 7b74c9092147
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                7726                7700                0                   16:44               pts/0               00:00:00            /bin/bash
+root                8079                7700                0                   16:48               pts/1               00:00:00            /bin/bash
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="section-number-3">3.9</span> <code>docker stop</code> 停止/退出容器</h3>
+<div class="outline-text-3" id="text-3-9">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker stop 7b74c9092147
+</pre>
+</div>
+<p>
+这样会停止容器，同时通过 <code>exec</code> 等进入容器的终端也会退出，使用 <code>docker ps -a</code> 可以看到停止的状态是 Exit(0)， 和 <code>docker attach</code> 通过 <code>C-d</code> 或重启机器之后看到的状态Exit(130)类似。
+</p>
+
+<p>
+实践发现，对于容器中发现如下三种方式退出后，容器仍为Up或者被停止的情况视 <code>exec</code> 还是 <code>attach</code> 有所不同。
+</p>
+<dl class="org-dl">
+<dt>运行 <code>exit</code> 命令</dt><dd><code>exec -it</code> 进入、或 <code>run -it</code> 启动的，只是退出登录，容器仍然运行； <code>attach</code> 附加的会导致容器停止。</dd>
+<dt>运行 <code>C-p C-q</code> </dt><dd><code>exec -it</code> 进入、或 <code>run -it</code> 启动的、或 <code>attach</code> 附加的，只是退出登录，容器仍然运行。</dd>
+<dt>运行 <code>C-d</code></dt><dd><code>exec -it</code> 进入、或 <code>run -it</code> 启动的，只是退出登录，容器仍然运行； <code>attach</code> 附加的会导致容器停止。</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="section-number-3">3.10</span> <code>docker start</code> 启动容器</h3>
+<div class="outline-text-3" id="text-3-10">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker start 7b74c9092147
+</pre>
+</div>
+<p>
+这样会将 <code>docker ps -a</code> 看到的状态为Exit状态的容器重启起来。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline21" class="outline-3">
+<h3 id="orgheadline21"><span class="section-number-3">3.11</span> <code>docker restart</code> 重启容器</h3>
+<div class="outline-text-3" id="text-3-11">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker restart 7b74c9092147
+</pre>
+</div>
+<p>
+这样会重启容器，相当于 <code>stop</code> 再 <code>start</code>, 同时通过 <code>exec</code> 等进入容器的终端也会退出。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline22" class="outline-3">
+<h3 id="orgheadline22"><span class="section-number-3">3.12</span> <code>docker rm</code> 删除容器</h3>
+<div class="outline-text-3" id="text-3-12">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker rm 7b74c9092147
+</pre>
+</div>
+<p>
+执行之后，将会在 <code>docker ps -a</code> 中看到相应的容器已经消失。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline23" class="outline-3">
+<h3 id="orgheadline23"><span class="section-number-3">3.13</span> <code>docker commit</code> 提交容器</h3>
+<div class="outline-text-3" id="text-3-13">
+<p>
+可以提交容器，来创建相应的镜像，保存事先操作的环境。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">root@71fe2a8636b9:/#exit
+$ docker commit -m 'ubuntu with ifconfig/sudo/miracle' -a "vaqeteart" 71fe2a8636b9 vaqeteart/ubuntu:test1
+sha256:c2fd07bf051627a437da9a963ad4d06990b7b0e134f2f7e4e3936ad11474d832
+</pre>
+</div>
+<p>
+注意，先退出容器(71fe2a8636b9)。
+其中， <code>-m</code> 指定说明信息； <code>-a</code> 指定用户信息； <code>71fe2a8636b9</code> 代表容器的id； <code>vaqeteart/ubuntu:vim</code> 指定目标镜像的用户名、仓库名和 <code>tag</code> 信息，运行命令的时候使用自己注册Docker时的用户名。
+</p>
+
+<p>
+此时Docker中就有了我们新建的镜像 <code>vaqeteart/ubuntu:test1</code> ，此镜像和原有的 <code>ubuntu</code> 镜像区别在于多了一些工具。此时我们利用新镜像创建的容器，本身就自带之前提交容器相关的工具了。
+</p>
+
+<p>
+可看到相关的镜像
+</p>
+<pre class="example">
+miracle@xmnb4003210:~$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+vaqeteart/ubuntu    test1               c2fd07bf0516        5 minutes ago       132MB
+busybox             latest              db8ee88ad75f        3 months ago        1.22MB
+ubuntu              18.04               d131e0fa2585        5 months ago        102MB
+ubuntu              latest              d131e0fa2585        5 months ago        102MB
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline24" class="outline-3">
+<h3 id="orgheadline24"><a id="ID-2b07ad21-5f20-4c47-9714-a7638183428d"></a><span class="section-number-3">3.14</span> <code>docker push</code> 上传提交的容器/镜像</h3>
+<div class="outline-text-3" id="text-3-14">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker push vaqeteart/ubuntu:test1
+The push refers to repository [docker.io/vaqeteart/ubuntu]
+1b0fea03824f: Pushed 
+7660ded5319c: Mounted from library/ubuntu 
+94e5c4ea5da6: Mounted from library/ubuntu 
+5d74a98c48bc: Mounted from library/ubuntu 
+604cbde1a4c8: Mounted from library/ubuntu 
+test1: digest: sha256:b44733a335979077d46237d826a267176ea9cf1e5e80c1b5914a6277662d2b7b size: 1362
+</pre>
+</div>
+<p>
+注意，只有事先使用 <code>docker login</code> 登录之后，才能够使用 <code>docker push</code> 推送镜像，没有登录的话，会出现如下失败：
+</p>
+<pre class="example">
+$docker push vaqeteart/ubuntu:test1
+The push refers to repository [docker.io/vaqeteart/ubuntu]
+1b0fea03824f: Preparing 
+7660ded5319c: Preparing 
+94e5c4ea5da6: Preparing 
+5d74a98c48bc: Preparing 
+604cbde1a4c8: Preparing 
+denied: requested access to the resource is denied
+</pre>
+</div>
+
+<div id="outline-container-orgheadline25" class="outline-4">
+<h4 id="orgheadline25"><span class="section-number-4">3.14.1</span> 其它参考</h4>
+<div class="outline-text-4" id="text-3-14-1">
+<p>
+源自：<a href="https://www.oschina.net/question/877522_239204" target="_blank" rel="noopener">https://www.oschina.net/question/877522_239204</a>
+</p>
+<pre class="example">
+无敌菌君 2015/09/06 15:41
+step1——找到本地镜像的ID：docker images
+step2——登陆Hub：docker login --username=username --password=password --email=email
+step3——tag：docker tag &lt;imageID&gt; &lt;namespace&gt;/&lt;image name&gt;:&lt;version tag eg latest&gt;
+step4——push镜像：docker push &lt;namespace&gt;/&lt;image name&gt;
+......
+ Yashin 2015/06/12 13:07
+额，这个看一下文档就行了啊，好简单的，碰到具体问题再来提问比较好
+https://docs.docker.com/docker-hub/
+评论 (0) 引用此答案 举报
+0
+......
+xue777hua
+xue777hua 2015/09/05 13:36
+1. 建立一个private的 registry
+2. 制作一个image：可以dockerfile，也可以docker commit
+3. docker push 即可
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline26" class="outline-3">
+<h3 id="orgheadline26"><span class="section-number-3">3.15</span> <code>docker info</code> 查看docker系统配置信息</h3>
+<div class="outline-text-3" id="text-3-15">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker info
+Containers: 5
+ Running: 1
+ Paused: 0
+ Stopped: 4
+Images: 3
+Server Version: 18.09.7
+Storage Driver: overlay2
+ Backing Filesystem: extfs
+ Supports d_type: true
+ Native Overlay Diff: true
+Logging Driver: json-file
+Cgroup Driver: cgroupfs
+Plugins:
+ Volume: local
+ Network: bridge host macvlan null overlay
+ Log: awslogs fluentd gcplogs gelf journald json-file local logentries splunk syslog
+Swarm: inactive
+Runtimes: runc
+Default Runtime: runc
+Init Binary: docker-init
+containerd version: 
+runc version: N/A
+init version: v0.18.0 (expected: fec3683b971d9c3ef73f284f176672c44b448662)
+Security Options:
+ apparmor
+ seccomp
+  Profile: default
+Kernel Version: 4.15.0-43-generic
+Operating System: Ubuntu 18.04.1 LTS
+OSType: linux
+Architecture: x86_64
+CPUs: 4
+Total Memory: 7.343GiB
+Name: xmnb4003210
+ID: DPEZ:7TCA:W5LW:QFSM:PU7X:5SC6:KXU5:SN4A:VTAS:HBTZ:ZUUJ:EO6D
+Docker Root Dir: /var/lib/docker
+Debug Mode (client): false
+Debug Mode (server): false
+Registry: https://index.docker.io/v1/
+Labels:
+Experimental: false
+Insecure Registries:
+ 127.0.0.0/8
+Live Restore Enabled: false
+
+WARNING: No swap limit support
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline27" class="outline-3">
+<h3 id="orgheadline27"><a id="ID-e8046441-65fb-4081-bb86-dc538a5e4ffc"></a><span class="section-number-3">3.16</span> <code>docker help</code> 帮助信息</h3>
+<div class="outline-text-3" id="text-3-16">
+<p>
+查看整体帮助信息：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker help
+</pre>
+</div>
+
+<p>
+查看具体命令帮助信息：
+</p>
+<pre class="example">
+docker &lt;command&gt; --help
+或
+docker help &lt;command&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline28" class="outline-3">
+<h3 id="orgheadline28"><a id="ID-e12853be-29c3-46c5-8dd4-0ac37d70214a"></a><span class="section-number-3">3.17</span> <code>docker volume</code> 数据卷管理</h3>
+<div class="outline-text-3" id="text-3-17">
+<p>
+管理数据卷使用 <code>docker volume</code> 命令，数据卷是容器数据持久化的一个组件。其中：
+</p>
+<ul class="org-ul">
+<li><code>docker volume ls</code> :可以查看本机的全部数据卷</li>
+<li><code>docker volume rm</code> :删除不需要的数据卷（数据卷与容器的生命周期完全独立，所以容器删除后数据卷并不会删除，时间久了数据卷就会越来越多）</li>
+<li><code>docker volume inspect</code> :查看数据卷的详细信息</li>
+<li><code>docker volume create</code> :创建一个数据卷</li>
+<li><code>docker volume prune</code> :删除所有未使用的卷</li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline29" class="outline-4">
+<h4 id="orgheadline29"><span class="section-number-4">3.17.1</span> <span class="done REFERENCE">REFERENCE</span> 启动镜像并且创建匿名Volume</h4>
+<div class="outline-text-4" id="text-3-17-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker run --name test_volume -it  -v /home/miracle/mydata d131e0fa2585  /bin/bash
+</pre>
+</div>
+<p>
+Volume用于容器/主机数据的管理、共享、与传输等。这里，不能用 <code>docker exec</code> 来进入已有的容器，只能从镜像启动时指定。启动之后，你会发现容器中有 <code>/home/miracle/mydata</code> 这个目录。这里，使用 <code>--name</code> 指定生成的容器名称为 <code>test_volume</code>, 便于后续查看管理。
+</p>
+</div>
+
+<div id="outline-container-orgheadline35" class="outline-5">
+<h5 id="orgheadline35"><span class="section-number-5">3.17.1.1</span> 检查挂载的volume在host主机中的路径</h5>
+<div class="outline-text-5" id="text-3-17-1-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker inspect test_volume
+.....
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "3903895feecbf7054d4c0a5ceb00109da6454b5479b31fec3f1c2432af176d90",
+                "Source": "/var/lib/docker/volumes/3903895feecbf7054d4c0a5ceb00109da6454b5479b31fec3f1c2432af176d90/_data",
+                "Destination": "/home/miracle/mydata",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+......
+</pre>
+</div>
+<p>
+由上可见，容器中的 <code>/home/miracle/mydata</code> 其实是对应了主机中的 <code>/var/lib/docker/volumes/3903895feecbf7054d4c0a5ceb00109da6454b5479b31fec3f1c2432af176d90/_data</code> 的，实际操作中，在容器中，或者在主机中进行对该目录的操作（添加删除文件），在容器和主机的对应路径中都会体现出来。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline30" class="outline-4">
+<h4 id="orgheadline30"><span class="section-number-4">3.17.2</span> <span class="done REFERENCE">REFERENCE</span> 创建有名Volume并在启动镜像时挂载到容器中</h4>
+<div class="outline-text-4" id="text-3-17-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker volume create test_volume2
+test_volume2
+$sudo ls /var/lib/docker/volumes
+[sudo] miracle 的密码： 
+0b66e301bdab3edcab10ba390aa522dedd5b2dedbf49273f0ca0aa33c71d59bf  metadata.db
+3903895feecbf7054d4c0a5ceb00109da6454b5479b31fec3f1c2432af176d90  test_volume2
+$docker run --name test_volume2 -it -v test_volume2:/home/miracle/volume2 d131e0fa2585 /bin/bash
+$docker inspect test_volume2
+......
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "test_volume2",
+                "Source": "/var/lib/docker/volumes/test_volume2/_data",
+                "Destination": "/home/miracle/volume2",
+                "Driver": "local",
+                "Mode": "z",
+                "RW": true,
+                "Propagation": ""
+            }
+......
+</pre>
+</div>
+<p>
+这里，首先使用 <code>docker volume create</code> 创建一个 <code>test_volume2</code> 的volume，然后通过 <code>docker run</code> 将其挂载到容器的 <code>/home/miracle/volume2</code> 目录中，启动之后，我们可以发现，在容器中的 <code>/home/miracle/volume2</code> 对应挂载了主机中的 <code>/var/lib/docker/volumes/test_volume2/_data</code>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline31" class="outline-4">
+<h4 id="orgheadline31"><span class="section-number-4">3.17.3</span> <span class="done REFERENCE">REFERENCE</span> 启动镜像的时候将主机中一个目录挂载到容器中</h4>
+<div class="outline-text-4" id="text-3-17-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">$docker run --name test_mount -it -v /home/miracle/tmpTrans:/home/miracle/tmpTrans d131e0fa2585 /bin/bash
+</pre>
+</div>
+<p>
+这里， <code>/home/miracle/tmpTrans:/home/miracle/tmpTrans</code> 冒号前面是主机的路径，冒号后面是容器的路径。这样执行之后，你会发现，容器中会创建相应的路径，并将主机中相应的路径挂载进来。
+</p>
+
+<p>
+注：使用 <code>docker exec -v xxx</code>  是不行的。主机的路径名一定要是绝对路径或者 <code>~/xxx</code> 否则会被当成volume挂载。这个方式依赖主机的目录结构，所以可以移植性不如前面volume的方式。
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline32" class="outline-2">
+<h2 id="orgheadline32"><span class="section-number-2">4</span> 其它</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+更多学习参考： <a href="../../../../../../mydata/orgmode/gtd/_study.html#ID-b20872a2-65bf-4b14-a4b9-6ff3f90e148d">Docker实践</a>
+</p>
+</div>
+<div id="outline-container-orgheadline33" class="outline-3">
+<h3 id="orgheadline33"><span class="section-number-3">4.1</span> 实践尝试</h3>
+<div class="outline-text-3" id="text-4-1">
+</div><div id="outline-container-orgheadline34" class="outline-4">
+<h4 id="orgheadline34"><span class="section-number-4">4.1.1</span> 重启宿主机之后容器停止，重新启动容器数据仍在</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<p>
+使用 <code>docker exec -it &lt;id&gt; /bin/bash</code> 进入容器之后，再 <code>C-d</code> 退出，发现 <code>docker ps</code> 容器仍旧在运行。
+</p>
+
+<p>
+<code>docker ps</code> 发现有运行的容器之后，重启机器，会发现 <code>docker ps</code> 没有运行的容器了，但是 <code>docker ps -a</code> 会有Exit的容器。
+</p>
+
+<p>
+重启机器后， <code>docker start &lt;id&gt;</code> 会启动之前的容器，并且使用 <code>docker exec -it &lt;id&gt; /bin/bash</code> 会发现之前创建的文件仍在。
+</p>
+</div>
+</div>
+</div>
+</div>
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>
