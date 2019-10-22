@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    GTD实践
+</title>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="../../../../css/partial/head.css">
+<link rel="stylesheet" href="../../../../css/partial/header.css">
+<link rel="stylesheet" href="../../../../css/partial/archives.css">
+<link rel="stylesheet" href="../../../../css/partial/categories.css">
+<link rel="stylesheet" href="../../../../css/partial/home-posts.css">
+<link rel="stylesheet" href="../../../../css/partial/page-nav.css">
+<link rel="stylesheet" href="../../../../css/partial/tags.css">
+<link rel="stylesheet" href="../../../../css/partial/about.css">
+<link rel="stylesheet" href="../../../../css/partial/more.css">
+<link rel="stylesheet" href="../../../../css/partial/footer.css">
+<link rel="stylesheet" href="../../../../css/post.css">
+<link rel="stylesheet" href="../../../../css/orgmode/hexo_orgmode_style.css">
+
+
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="../../../../lib/jquery-1.11.3.min.js"></script>
+<script src="../../../../js/common.js"></script>
+<script src="../../../../js/nav.js"></script>
+
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
+            <script src="js/nav.js"></script>
+<table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="../../../../index.html">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="../../../../categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(56)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="../../../../categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(7)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="../../../../categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="../../../../categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="../../../../categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(4)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="../../../../categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="../../../../categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="../../../../categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="../../../../categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="../../../../categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="../../../../categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(6)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="../../../../categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="../../../../categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="../../../../categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="../../../../categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="../../../../categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="../../../../categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="../../../../categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="../../../../categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="../../../../categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="../../../../categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="../../../../categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="../../../../categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="../../../../categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/gtd-next/">gtd_next</a><span class="tag-list-count">1</span></li></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+               <a href="/" title="Menu.Home">
+               <h1>QuietHeart's Site</h1>
+               </a>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <h1 id="header1" style="text-align: center;">
+                    GTD实践
+                </h1>
+                <hr id="title_line">
+                <article>
+                    <div>
+                        
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 起点——GTD框架</a>
+<ul>
+<li><a href="#orgheadline2">1.1. Orgmode配置</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline3">2. 实现-GTD流程</a>
+<ul>
+<li><a href="#orgheadline4">2.1. 处理阶段</a>
+<ul>
+<li><a href="#orgheadline5">2.1.1. Orgmode配置</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline6">2.2. 组织整理</a>
+<ul>
+<li><a href="#orgheadline7">2.2.1. Orgmode配置</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline8">2.3. 回顾阶段</a>
+<ul>
+<li><a href="#orgheadline9">2.3.1. Orgmode配置（待回顾条目）</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline10">2.4. 执行阶段</a>
+<ul>
+<li><a href="#orgheadline11">2.4.1. Orgmode配置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline12">3. 其它</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 起点——GTD框架</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>经历了捕捉之后，或者确认将采用新的GTD规则后，将依据规则对捕捉到的新条目，以及没有应用新规则的旧条目进行处理，组织整理，回顾，执行等。</li>
+<li>实践GTD之时，将GTD的处理分为：处理、组织整理、回顾、执行四个阶段（其实处理前面还有一个捕捉，执行之后有一个归档）。</li>
+</ul>
+
+<p>
+针对GTD流程的大致管理思路，参考 <a href="../../../../../../mydata/orgmode/gtd/_study.html#ID-ec17b340-9880-49c2-b9ae-277d70c47a50">{2019-09-26 四 17:01} 一套完整的GTD流程的思考与实践</a>
+</p>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><span class="section-number-3">1.1</span> Orgmode配置</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+以不同的Agenda视图，表述GTD处理流程的各个阶段，大致如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">;;custom view
+(defun my-custom-view
+    (searchstr)
+  ;;(org-tags-view nil "PRIORITY=\"B\"")
+  (org-tags-view nil searchstr))
+
+(setq org-agenda-custom-commands nil)
+
+;;Setup Gtd views
+(setq gtd-views '("G" . "&gt;GTD process(p-process, o-organize, r-review, a-active, x-others)"))
+(setq gtd-views-process '("Gp" "GTD process view." (my-custom-view "")))
+(setq gtd-views-organize '("Go" "GTD organize view." (my-custom-view "")))
+(setq gtd-views-review '("Gr" "GTD review view." (my-custom-view "")))
+(setq gtd-views-action '("Ga" "GTD active view." (my-custom-view "")))
+(setq gtd-views-others '("Gx" "GTD others." (my-custom-view "")))
+
+(add-to-list 'org-agenda-custom-commands gtd-views t)
+(add-to-list 'org-agenda-custom-commands gtd-views-process t)
+(add-to-list 'org-agenda-custom-commands gtd-views-organize t)
+(add-to-list 'org-agenda-custom-commands gtd-views-review t)
+(add-to-list 'org-agenda-custom-commands gtd-views-active t)
+(add-to-list 'org-agenda-custom-commands gtd-views-others t)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">2</span> 实现-GTD流程</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>始于:<span class="timestamp-wrapper"><span class="timestamp">&lt;2019-10-15 二 16:15&gt;</span></span></li>
+</ul>
+
+<p>
+目前(<span class="timestamp-wrapper"><span class="timestamp">&lt;2019-10-11 五 17:04&gt;</span></span>)而言，为使GTD流程可靠，遵循后面的流程。
+</p>
+</div>
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><a id="ID-ef948755-eaed-4b99-8bce-7ad2ac712ddd"></a><span class="section-number-3">2.1</span> 处理阶段</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+符合如下流程：
+</p>
+<ul class="org-ul">
+<li>输入——待处理条目：捕捉的 <b>INBOX</b> , 以及 <b>不符合新规则的条目</b> 。</li>
+<li>输出——处理后条目：重点确认 <b>状态</b> 、 <b>类别</b> 、 <b>优先级</b> ，可能会分配其它更多属性。</li>
+</ul>
+
+<p>
+注意：
+</p>
+<ul class="org-ul">
+<li>INBOX，来自各类捕捉途径最终信息的汇集之处（参考：<a href="../../../../../../mydata/orgmode/gtd/_study.html#ID-4c188621-20a5-4146-9247-b252ecd76788">收集</a>)，处理的时候尽量由新到旧进行处理保证公平不遗漏。</li>
+<li>不符合规则的条目，是指如果更新GTD的规则，GTD系统中哪些没有应用新规则的，还在遵循旧规则的条目（便于将来扩展）。</li>
+<li>状态，这方面注意的是，日程/提醒：是具有执行时间的原子类别；下一步及其它无执行时间的原子类别；参考:待归档。（具体参考：<a href="../../../../../../mydata/orgmode/gtd/_study.html#ID-a73a8a2f-7bd0-46e3-ae6a-7a9878f9fa56">状态</a> ）。</li>
+<li>类别，主要是原子/非原子（参考：<a href="../../../../../../mydata/orgmode/gtd/_study.html#ID-70777999-a3d3-4c8e-9bc4-db9ec64a3b6d">第1层：原子行动</a> <a href="../../../../../../mydata/orgmode/gtd/_study.html#ID-64d60041-3cbd-4633-ba2f-ca0401ff3573">元素之间的关联</a> )。</li>
+<li>优先级，主要有高优先级、低优先级，前者近期关注后者推迟关注（参考：<a href="../../../../../../mydata/orgmode/gtd/_study.html#ID-a4edcf51-a2f3-461e-ade1-37fec62af444">优先级与星标</a>)，一般处理阶段大致估计一个优先级(默认C)，后续阶段仔细处理。</li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-4">
+<h4 id="orgheadline5"><span class="section-number-4">2.1.1</span> Orgmode配置</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<div class="org-src-container">
+
+<pre class="src src-elisp">(setq gtd-views-process '("Gp" "GTD处理阶段：两分钟任务（执行），分配 *状态*、*类别*、*优先级*，其它。 "
+                                 ;;输入：INBOX/不符合规则内容
+                                 ((todo "INBOX"
+                                        ;;((org-agenda-sorting-strategy '(priority-down scheduled-up)))
+                                        )
+
+                                  ;;Global options
+                                  (;;(org-agenda-regexp-filter-preset '("-PROJECT" "-TODO"))
+                                   ;;(org-agenda-regexp-filter-preset '("-PROJECT" "-TODO"))
+                                   ))))
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>通过 <code>todo "INBOX"...</code> 命令保证过滤出 <code>INBOX</code>,</li>
+<li>通过默认设置的 <code>org-agenda-files</code>, 保证若更新GTD规则，可以方便的添加新命令进行过滤。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">2.2</span> 组织整理</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+应符合如下流程：
+</p>
+<ul class="org-ul">
+<li>输入——处理后条目：主要是 <b>孤立条目</b> 、 <b>待调整条目</b> 、 <b>无回顾条目</b></li>
+<li>输出——组织整理后：重点确认 非日程的 <b>回顾周期</b> 、*项目/范围* 、其次行动的 <b>情景/提醒</b> 、 <b>合理的优先级</b>, 可能有其它属性。</li>
+</ul>
+
+<p>
+注意：
+</p>
+<ul class="org-ul">
+<li>孤立条目，所有条目要么是非原子的项目/任务，要么是原子行动，必属某一领域（参见：<a href="../../../../../../mydata/orgmode/gtd/_study.html#ID-d4b37265-f2c3-4979-afa1-8f0cac611f1d">(45min/2) 第3层：职责、领域</a>），没有领域的就是孤立条目。</li>
+<li>无回顾条目，无时间属性的条目。回顾对低优先级无时间条目以定期查看习惯模拟提醒，易添加，若处理时先添加回顾再添加范围，则只需关注孤立条目即可。</li>
+<li>待调整条目，一些比较模糊的条目的类别辨别、以及更新（比如原子行动、非原子条目更新之后，类别相应也应调整）</li>
+<li>项目/范围，涉及到任务分解和归并、及理顺思路使条目间更具有条理性(期间会对条目的类别进行调整)，一下不用太细可将回顾周期设置频繁些多次调整合适。</li>
+<li>情景/提醒，以时间为提示所以无需情景；日程一般也无需情景但若对时间不是特严格视情况可能有情景；无时间的原子行动才有情景；参考等非行动不用情景。</li>
+<li>回顾周期，日程/提醒（有时间属性、可能会重复）所以无需回顾，无时间低优先级原子行动有回顾周期，项目/参考等非行动视情况添加回顾防止遗忘。</li>
+<li>合理的优先级，主要是待调整到活动列表中的条目的高优先级，以及有待日后回顾的低优先级，可能顺便会确认每日计划的青蛙。</li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-4">
+<h4 id="orgheadline7"><span class="section-number-4">2.2.1</span> Orgmode配置</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<div class="org-src-container">
+
+<pre class="src src-elisp">(setq gtd-views-organize '("Go" "GTD组织整理：确认 行动的 *情景/提醒*、*项目/范围*、*回顾周期*、合理的 *优先级*，其它."
+                                  ;;条件1、孤立条目文件(分布于四象限），2、项目文件中没有仔细规划的原子行动，3、没有SCHEDULE、及无指定范围的内容
+                                  ((tags-todo "FILE={[1-4]_.*Important_.*_Urgent.org}"
+                                              ((org-agenda-files
+                                                (list
+                                                 (concat org-directory "gtd/1_Important_and_Urgent.org")
+                                                 (concat org-directory "gtd/2_Important_but_not_Urgent.org")
+                                                 (concat org-directory "gtd/3_Not_Important_but_Urgent.org")
+                                                 (concat org-directory "gtd/4_Not_Important_and_not_Urgent.org")))))
+
+                                   (tags-todo "CATEGORY&lt;&gt;{Q[1-4]}/!+AGENDA|+NEXT|+LATER|+{WAIT.*}|+{MAYBE.*}|+REFERENCE|+CANCEL|+DONE"
+                                              ((org-agenda-files
+                                                (list
+                                                 (concat org-directory "gtd/_life.org")
+                                                 (concat org-directory "gtd/_study.org")
+                                                 (concat org-directory "gtd/_work.org")
+                                                 (concat org-directory "gtd/_others.org")))))
+
+                                   (tags-todo "CATEGORY={Q[1-4]}/!+PROJECT|+TODO|+STOP|+FINISHED"
+                                              ((org-agenda-files
+                                                (list
+                                                 (concat org-directory "gtd/_life.org")
+                                                 (concat org-directory "gtd/_study.org")
+                                                 (concat org-directory "gtd/_work.org")
+                                                 (concat org-directory "gtd/_others.org")))))
+
+                                   (tags-todo "LEVEL&lt;=2|SCHEDULED=\"\""
+                                              (;;(org-use-property-inheritance nil)
+                                               (org-agenda-files
+                                                (list
+                                                 (concat org-directory "gtd/_life.org")
+                                                 (concat org-directory "gtd/_study.org")
+                                                 (concat org-directory "gtd/_work.org")
+                                                 (concat org-directory "gtd/_others.org")))))
+
+
+                                   ;;Global options
+                                   (;;(org-agenda-regexp-filter-preset '("-PROJECT" "-TODO"))
+                                    ;;(org-agenda-regexp-filter-preset '("-PROJECT" "-TODO"))
+                                    ))))
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>通过 <code>tags-todo "FILE={[1-4]_.*Important_.*_Urgent.org}"...</code> 从孤立文件导出孤立任务</li>
+<li>通过 <code>tags-todo "CATEGORY&lt;&gt;{Q[1-4]}/!+AGENDA|+NEXT|+LATER|+{WAIT.*}|+{MAYBE.*}|+REFERENCE|+CANCEL|+DONE"...</code> 与 <code>tags-todo "CATEGORY={Q[1-4]}/!+PROJECT|+TODO|+STOP|+FINISHED"...</code> 过滤出需要规划的原子类别、非原子类别的行动、任务、项目。</li>
+<li>通过 <code>tags-todo "LEVEL&lt;=2|SCHEDULED =\"\""...</code> 过滤出无回顾周期的条目, 顺便将一些遗漏的孤立任务(LEVEL&lt;=2)也包含进来</li>
+</ul>
+
+<p>
+几点注意：
+</p>
+<ul class="org-ul">
+<li>项目范围、回顾、层级的调整可能会将其从子视图上刷新掉</li>
+<li>优先级、情景的调整，不会影响过滤性。</li>
+<li>为便于处理，下面子视图更新一般不会影响上面的。如开始的孤立集中了分配处理后的条目不遗漏；最后的无回顾，将回顾频繁些可弥补前面处理的不完善。</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">2.3</span> 回顾阶段</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+回顾这个过程比较特殊，因为它包含了两个部分的内容：活动列表、和非活动列表的回顾。至于活动列表部分的内容，参考 <a href="#orgheadline10">执行阶段</a> ，里不再重复。
+</p>
+
+<p>
+符合如下流程：
+</p>
+<ul class="org-ul">
+<li>输入——组织整理后条目：主要是组织整理之后的 <b>活动列表</b> 、 <b>待回顾条目</b> 。</li>
+<li>输出——回顾后：主要是调整优先级、安排日程和回顾、提醒与情景、含少量的组织整理工作。包含 <b>活动前期</b> 、 <b>活动后期</b> 、 <b>回顾阶段</b> 三个方面。</li>
+</ul>
+
+<p>
+注意：
+</p>
+<ul class="org-ul">
+<li>活动列表，是指日程、提醒、高优先级行动、备忘，其中包括日计划的青蛙事项(即活动列表中今日打算必须做的事情），是本日执行行动的参照。</li>
+<li>活动前期，主要安排活动列表，如每日计划，调高今日待办优先级、并导致活动列表更新（对于活动条目其回顾属性应该会被去掉，因为自然执行时回顾了）。</li>
+<li>活动后期，是指一天活动之后将活动列表中的条目按照实际完成的情况更新同步相关属性为最新。</li>
+<li>待回顾列表，一般而言就是非活动列表的内容（除去日程和提醒），借助定期浏览的习惯以备遗忘那些没明白时间属性的条目（一般是低优先级）。</li>
+<li>回顾阶段，主要是至活动前期、活动后期、以及日间空闲之时整理已有的内容补充、优化处理/组织整理/行动期间 遗漏的事项确保体系不断完善。</li>
+</ul>
+</div>
+
+
+<div id="outline-container-orgheadline9" class="outline-4">
+<h4 id="orgheadline9"><span class="section-number-4">2.3.1</span> Orgmode配置（待回顾条目）</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<div class="org-src-container">
+
+<pre class="src src-elisp">(setq gtd-views-review '("Gr" "GTD 回顾，确认日计划、更新活动列表、以及非活动列表（低优先级）"
+                                ;;输入：*待回顾条目* 。
+                                ((agenda ""
+                                         ((org-agenda-span 2)
+                                          (org-agenda-files
+                                           (list
+                                            (concat org-directory "gtd/_life.org")
+                                            (concat org-directory "gtd/_study.org")
+                                            (concat org-directory "gtd/_work.org")
+                                            (concat org-directory "gtd/_others.org")))
+
+                                          (org-agenda-skip-function
+                                           '(org-agenda-skip-entry-if 'nottodo
+                                                                      '("NEXT" "WAIT/FORWARD" "LATER" "MAYBE/FUTURE" "CANCEL")))
+                                          (org-agenda-sorting-strategy
+                                           '(todo-state-up priority-up))))
+
+
+                                 (agenda ""
+                                         ((org-agenda-span 2)
+                                          (org-agenda-files
+                                           (list
+                                            (concat org-directory "gtd/_life.org")
+                                            (concat org-directory "gtd/_study.org")
+                                            (concat org-directory "gtd/_work.org")
+                                            (concat org-directory "gtd/_others.org")))
+
+                                          (org-agenda-skip-function
+                                           '(org-agenda-skip-entry-if 'nottodo
+                                                                      '("PROJECT" "TODO" "STOP")))
+                                          (org-agenda-sorting-strategy
+                                           '(todo-state-up priority-down))))
+
+                                 (agenda ""
+                                         ((org-agenda-files
+                                           (list
+                                            (concat org-directory "gtd/_life.org")
+                                            (concat org-directory "gtd/_study.org")
+                                            (concat org-directory "gtd/_work.org")
+                                            (concat org-directory "gtd/_others.org")))
+
+                                          (org-agenda-skip-function
+                                           '(org-agenda-skip-entry-if 'nottodo
+                                                                      '("REFERENCE" "DONE" "FINISHED")))))
+
+                                 ;;Global options
+                                 (;;(org-agenda-regexp-filter-preset '("-PROJECT" "-TODO"))
+                                  ;;(org-agenda-regexp-filter-preset '("-PROJECT" "-TODO"))
+                                  ))))
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>第一个 <code>agenda ""...</code> 命令过滤出Agenda外的原子行动，并以低优先级在前（并未过滤掉高优先级便于处理）。</li>
+<li>第二个 <code>agenda ""...</code> 命令过滤出非原子条目，并以高优先级在前排列（因为非原子是不具体的处理，不会出现在活动列表中所以高低优先级一并回顾）</li>
+<li>第三个 <code>agenda ""...</code> 命令过滤出非行动内容，可能会定期了解、参考、甚至之后的归档确认。</li>
+<li>最后，活动前期的日计划、活动后期的活动更新，结合后面的活动列表一并回顾。</li>
+</ul>
+
+<p>
+注：回顾阶段跨越了：回顾（回顾非活动列表）、执行（活动列表）两个阶段的过滤视图。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><a id="ID-7bb450ca-f302-43e4-8aea-8440c3d1f46b"></a><span class="section-number-3">2.4</span> 执行阶段</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+对于执行阶段，其中的2分钟任务在处理阶段进行了，具体参考 <a href="#orgheadline4">处理阶段</a> 。
+</p>
+
+<p>
+符合如下流程：
+</p>
+<ul class="org-ul">
+<li>输入——组织整理、回顾之后的活动列表，INBOX处理阶段的 <b>2分钟任务</b></li>
+<li>输出——尽量执行完青蛙行动，相应的行动尽可能完成，没有完成的可能滞于活动列出，或降至低优先级添加回顾属性日后回顾。</li>
+</ul>
+
+<p>
+注意：
+</p>
+<ul class="org-ul">
+<li><b>2分钟任务</b> 一般是临时发生的紧急处理的、或者处理阶段顺便处理掉的小事件，如果堆积于GTD体系中，管理其消耗的时间精力反而大于本身能够完成所需时间。</li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-4">
+<h4 id="orgheadline11"><span class="section-number-4">2.4.1</span> Orgmode配置</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<div class="org-src-container">
+
+<pre class="src src-elisp">(setq gtd-views-action '("Ga" "GTD活动列表：待安排任务（回顾前期）、待执行任务(执行)、待更新任务（回顾后期）"
+                                ;;输入：组织、整理、回顾之后的内容 。
+                                ((agenda ""
+                                         ((org-agenda-span 1)
+                                          (org-agenda-files
+                                           (list
+                                            (concat org-directory "gtd/_life.org")
+                                            (concat org-directory "gtd/_study.org")
+                                            (concat org-directory "gtd/_work.org")
+                                            (concat org-directory "gtd/_others.org")))
+
+                                          (org-agenda-skip-function
+                                           '(org-agenda-skip-entry-if 'nottodo
+                                                                      '("AGENDA")))
+                                          (org-agenda-sorting-strategy
+                                           '(priority-down))))
+
+                                 (tags-todo "CATEGORY={Q[1-4]}&amp;PRIORITY&lt;=\"B\"/!+NEXT|+{WAIT.*}|+REFERENCE"
+                                            ((org-agenda-files
+                                              (list
+                                               (concat org-directory "gtd/_life.org")
+                                               (concat org-directory "gtd/_study.org")
+                                               (concat org-directory "gtd/_work.org")
+                                               (concat org-directory "gtd/_others.org")))
+                                             (org-agenda-sorting-strategy
+                                              '(todo-state-up priority-down))))
+
+                                 ;;Global options
+                                 (;;(org-agenda-regexp-filter-preset '("-PROJECT" "-TODO"))
+                                  ;;(org-agenda-regexp-filter-preset '("-PROJECT" "-TODO"))
+                                  ))))
+</pre>
+</div>
+<ul class="org-ul">
+<li>通过 <code>agenda "" ...</code> 过滤出所有的 <code>AGENDA</code> 日程。</li>
+<li>通过 <code>tags-todo "CATEGORY={Q[1-4]}&amp;PRIORITY &lt;\"C\"/!+NEXT|+{WAIT.*}|+REFERENCE"...</code> 过滤出所有非日程高优先级行动。</li>
+</ul>
+<p>
+注意：执行阶段跨越了处理（2分钟原则）、执行（活动列表） 两个阶段的视图。
+</p>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline12" class="outline-2">
+<h2 id="orgheadline12"><span class="section-number-2">3</span> 其它</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+进一步的完善，参见：<a href="../../../../../../mydata/orgmode/gtd/_study.html#ID-c0c2658e-2186-41c4-a2b8-de4ac4c8722a">GTD实践相关</a>
+</p>
+</div>
+</div>
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>
