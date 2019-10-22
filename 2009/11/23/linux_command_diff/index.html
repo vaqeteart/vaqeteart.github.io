@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    Linux命令学习手册-diff
+</title>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="../../../../css/partial/head.css">
+<link rel="stylesheet" href="../../../../css/partial/header.css">
+<link rel="stylesheet" href="../../../../css/partial/archives.css">
+<link rel="stylesheet" href="../../../../css/partial/categories.css">
+<link rel="stylesheet" href="../../../../css/partial/home-posts.css">
+<link rel="stylesheet" href="../../../../css/partial/page-nav.css">
+<link rel="stylesheet" href="../../../../css/partial/tags.css">
+<link rel="stylesheet" href="../../../../css/partial/about.css">
+<link rel="stylesheet" href="../../../../css/partial/more.css">
+<link rel="stylesheet" href="../../../../css/partial/footer.css">
+<link rel="stylesheet" href="../../../../css/post.css">
+<link rel="stylesheet" href="../../../../css/orgmode/hexo_orgmode_style.css">
+
+
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="../../../../lib/jquery-1.11.3.min.js"></script>
+<script src="../../../../js/common.js"></script>
+<script src="../../../../js/nav.js"></script>
+
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
+            <script src="js/nav.js"></script>
+<table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="../../../../index.html">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="../../../../categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(59)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="../../../../categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(6)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="../../../../categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="../../../../categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="../../../../categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(2)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="../../../../categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="../../../../categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="../../../../categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="../../../../categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="../../../../categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="../../../../categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(4)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="../../../../categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="../../../../categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="../../../../categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="../../../../categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="../../../../categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="../../../../categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="../../../../categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="../../../../categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="../../../../categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="../../../../categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="../../../../categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="../../../../categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="../../../../categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+               <a href="/" title="Menu.Home">
+               <h1>QuietHeart's Site</h1>
+               </a>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <h1 id="header1" style="text-align: center;">
+                    Linux命令学习手册-diff
+                </h1>
+                <hr id="title_line">
+                <article>
+                    <div>
+                        <div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 功能</a></li>
+<li><a href="#orgheadline2">2. 举例</a></li>
+<li><a href="#orgheadline3">3. 描述</a></li>
+<li><a href="#orgheadline4">4. 其它</a>
+<ul>
+<li><a href="#orgheadline5">4.1. <code>diff</code> 和 <code>patch</code> 的使用:</a></li>
+<li><a href="#orgheadline6">4.2. 内核补丁</a></li>
+<li><a href="#orgheadline7">4.3. 参考资料</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<p>
+<code>diff [选项] file1 file2</code>
+</p>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 功能</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+该命令的功能为逐行比较两个文本文件，列出其不同之处。它比 <code>comm</code> 命令完成更复杂的检查。它对给出的文件进行系统的检查，并显示出两个文件中所有不同的行，不要求事先对文件进行排序。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> 举例</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+假设有这样两个文件：
+</p>
+
+<ol class="org-ol">
+<li><p>
+程序清单1 ：hello.c
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;stdio.h&gt;
+int main(void)
+{
+    char msg[] = "Hello world!";
+    puts(msg);
+    printf("Welcome to use diff commond.\n");
+    return 0;    
+}
+</pre>
+</div></li>
+
+<li><p>
+程序清单2：hello_diff.c
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int main(void)
+{
+    char msg[] = "Hello world,fome hello_diff.c";
+    puts(msg);
+    printf("hello_diff.c says,'Here you are,using diff.'\n");
+    return 0;    
+}
+</pre>
+</div></li>
+</ol>
+
+<p>
+可有如下命令：
+</p>
+
+<ul class="org-ul">
+<li><p>
+查看这两个文件的不同之处,普通格式输出:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$diff hello.c hello_diff.c 
+1a2
+&gt; #include &lt;stdlib.h&gt;
+5c6
+&lt;       char msg[] = "Hello world!";
+---
+&gt;       char msg[] = "Hello world,fome hello_diff.c";
+8c9
+&lt;       printf("Welcome to use diff commond.\n");
+---
+&gt;       printf("hello_diff.c says,'Here you are,using diff.'\n");
+</pre>
+</div>
+
+<p>
+这里， <code>1a2</code> 表示后面的一个文件 <code>hello_diff.c</code> 比前面的一个文件 <code>hello.c</code> 多了一行 <code>5c6</code> 表示第一个文件的第5行与第二个文件的第6行有区别。
+</p></li>
+
+<li><p>
+查看这两个文件的不同之处,并排输出格式:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$diff hello.c hello_diff.c -y -W 130
+#include &lt;stdio.h&gt;                                                  #include &lt;stdio.h&gt;
+                                                                  &gt; #include &lt;stdlib.h&gt;
+int main(void)                                                      int main(void)
+{                                                                   {
+      char msg[] = "Hello world!";                              |         char msg[] = "Hello world,fome hello_diff.c";
+      puts(msg);                                                          puts(msg);
+      printf("Welcome to use diff commond.\n");                 |         printf("hello_diff.c says,'Here you are,using diff.'\n");
+      return 0;                                                           return 0;
+}                                                                   }
+</pre>
+</div>
+
+<p>
+这里，并排格式的对比一目了然，可以快速找到不同的地方。 <code>-W</code> 选择可以指定输出列的宽度，这里指定输出列宽为130。
+</p></li>
+
+<li><p>
+查看这两个文件的不同之处，上下文格式输出：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$diff hello.c hello_diff.c -c
+*** hello.c     2007-09-25 17:54:51.000000000 +0800
+--- hello_diff.c        2007-09-25 17:56:00.000000000 +0800
+***************
+*** 1,11 ****
+#include &lt;stdio.h&gt;
+int main(void)
+{
+!       char msg[] = "Hello world!";
+        puts(msg);
+!       printf("Welcome to use diff commond.\n");
+        return 0;
+}
+--- 1,12 ----
+  #include &lt;stdio.h&gt;
++ #include &lt;stdlib.h&gt;
+
+int main(void)
+{
+!       char msg[] = "Hello world,fome hello_diff.c";
+        puts(msg);
+!       printf("hello_diff.c says,'Here you are,using diff.'\n");
+        return 0;
+}
+</pre>
+</div>
+
+<p>
+这里，在开头两行作了比较文件的说明，这里有三中特殊字符：
+<code>+        比较的文件的后者比前着多一行</code>
+<code>-        比较的文件的后者比前着少一行</code>
+<code>！        比较的文件两者有差别的行</code>
+</p></li>
+
+<li><p>
+查看这两个文件的不同之处，统一输出格式：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$diff hello.c hello_diff.c -u
+--- hello.c     2007-09-25 17:54:51.000000000 +0800
++++ hello_diff.c        2007-09-25 17:56:00.000000000 +0800
+@@ -1,11 +1,12 @@
+ #include &lt;stdio.h&gt;
++#include &lt;stdlib.h&gt;
+int main(void)
+{
+-       char msg[] = "Hello world!";
++       char msg[] = "Hello world,fome hello_diff.c";
+        puts(msg);
+-       printf("Welcome to use diff commond.\n");
++       printf("hello_diff.c says,'Here you are,using diff.'\n");
+        return 0;
+}
+</pre>
+</div>
+<p>
+这里，统一格式的输出更加紧凑，所以更易于理解，更易于修改。
+</p></li>
+
+<li><p>
+查看两个文件是否不同又不想显示差异之处
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$diff hello.c hello_diff.c -q
+Files hello.c and hello_diff.c differ
+</pre>
+</div>
+<p>
+这里，如果两个文件相同，那么不会输出任何信息。
+</p></li>
+
+<li><p>
+查看这两个文件的不同之处，忽略带有“ include”字样的行:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$diff hello.c hello_diff.c -c -I include
+*** hello.c     2007-09-25 17:54:51.000000000 +0800
+--- hello_diff.c        2007-09-25 17:56:00.000000000 +0800
+***************
+*** 2,11 ****
+int main(void)
+{
+!       char msg[] = "Hello world!";
+        puts(msg);
+!       printf("Welcome to use diff commond.\n");
+        return 0;
+}
+--- 3,12 ----
+int main(void)
+{
+!       char msg[] = "Hello world,fome hello_diff.c";
+        puts(msg);
+!       printf("hello_diff.c says,'Here you are,using diff.'\n");
+        return 0;
+}
+</pre>
+</div>
+<p>
+这里，另外你还可以提供一些匹配规则来忽略某中差别，可以用 <code>-I regexp(正则表达式)</code>.
+</p></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">3</span> 描述</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+说明：该命令告诉用户，为了使两个文件 <code>file1</code> 和 <code>file2</code> 一致，需要修改它们的哪些行。如果用 <code>-</code> 表示 <code>file1</code> 或 <code>fiie2</code> ，则表示标准输入。如果 <code>file1</code> 或 <code>file2</code> 是目录，那么 <code>diff</code> 将使用该目录中的同名文件进行比较。
+</p>
+
+<ul class="org-ul">
+<li>参数
+-b 忽略行尾的空格，而字符串中的一个或多个空格符都视为相等。
+-c 采用上下文输出格式（提供三行上下文）。
+-C n 采用上下文输出格式（提供n行上下文）。
+-e 产生一个合法的ed脚本作为输出。
+-r 当file1和file2是目录时，递归作用到各文件和目录上。</li>
+<li><p>
+结果
+例如： <code>diff /usr/xu mine</code> 把目录 <code>/usr/xu</code> 中名为 <code>mine</code> 的文件与当前目录中的 <code>mine</code> 文件进行比较。
+</p>
+
+<p>
+通常输出由下述形式的行组成：
+</p>
+<pre class="example">
+n1 a n3，n4
+n1，n2 d n3 
+n1，n2 c n3，n4
+</pre>
+<p>
+这些行类似 <code>ed</code> 命令把 <code>filel</code> 转换成 <code>file2</code> 。字母（ <code>a</code> 、 <code>d</code> 和 <code>c</code> ）之前的行号（ <code>n1</code> ， <code>n2</code> ）是针对 <code>file1</code> 的，其后面的行号（ <code>n3</code> ， <code>n4</code> ）是针对 <code>file2</code> 的。字母 <code>a</code> 、 <code>d</code> 和=c= 分别表示附加、删除和修改操作。
+</p>
+
+<p>
+在上述形式的每一行的后面跟随受到影响的若干行，以 <code>&lt;</code> 打头的行属于第一个文件，以 <code>&gt;</code> 打头的行属于第二个文件。
+</p>
+
+<p>
+另外，=diff= 能区别块和字符设备文件以及FIFO（管道文件），不会把它们与普通文件进行比较。 
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4"><span class="section-number-2">4</span> 其它</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">4.1</span> <code>diff</code> 和 <code>patch</code> 的使用:</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<code>diff/patch</code> 这对工具在数学上来说， <code>diff</code> 是对2个集合求差， <code>patch</code> 是求和
+</p>
+
+<ul class="org-ul">
+<li><p>
+生成 <code>A</code> 和 <code>B</code> 的diff文件 <code>C</code>:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$diff A B &gt; C
+</pre>
+</div>
+<p>
+这里 <code>C</code> 相当于 <code>A</code> 到 <code>B</code> 的一个“补丁”文件，记录两者之间的差异。
+</p></li>
+
+<li><p>
+给 <code>A</code> 打上diff文件得到 <code>B</code>:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$patch A C
+</pre>
+</div>
+<p>
+这里，如果用 <code>patch B C</code> 则会提示警告告诉你用反了。
+</p></li>
+
+<li><p>
+<code>B</code> 还原为 <code>A</code>:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$patch -R B C
+</pre>
+</div>
+<p>
+这里，如果用 <code>patch -R A C</code> 则会提示警告告诉你用反了。
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">4.2</span> 内核补丁</h3>
+<div class="outline-text-3" id="text-4-2">
+<ul class="org-ul">
+<li><p>
+生成
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$diff -uNr linux-2.6.xxx linux-2.6.xxx.1 &gt; diff.patch
+</pre>
+</div></li>
+<li><p>
+升级
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$cp diff.patch linux-2.6.xxx/.
+$cd linux-2.6.xxx
+$patch -p1 &lt; diff.patch
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7"><span class="section-number-3">4.3</span> 参考资料</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+<a href="http://baike.baidu.com/view/1374858.htm" target="_blank" rel="noopener">http://baike.baidu.com/view/1374858.htm</a>
+</p>
+
+<p>
+<a href="http://blog.csdn.net/zhanglei6645/archive/2007/10/16/1827728.aspx" target="_blank" rel="noopener">http://blog.csdn.net/zhanglei6645/archive/2007/10/16/1827728.aspx</a>
+</p>
+
+<p>
+<a href="http://www.linuxdiyf.com/viewarticle.php?id=42597" target="_blank" rel="noopener">http://www.linuxdiyf.com/viewarticle.php?id=42597</a>
+</p>
+</div>
+</div>
+</div>
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>
