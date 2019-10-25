@@ -144,36 +144,51 @@ var category_info = getCategoriesInfo();
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgheadline1">1. 起点——GTD框架</a>
+<li><a href="#orgheadline1">1. 起点——GTD框架</a></li>
+<li><a href="#orgheadline2">2. 实现-GTD流程</a>
 <ul>
-<li><a href="#orgheadline2">1.1. Orgmode配置</a></li>
+<li><a href="#orgheadline3">2.1. 说明</a>
+<ul>
+<li><a href="#orgheadline4">2.1.1. Orgmode Agenda配置</a></li>
+<li><a href="#orgheadline5">2.1.2. MLO配置思路</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline3">2. 实现-GTD流程</a>
-<ul>
-<li><a href="#orgheadline4">2.1. 处理阶段</a>
-<ul>
-<li><a href="#orgheadline5">2.1.1. Orgmode配置</a></li>
-</ul>
-</li>
-<li><a href="#orgheadline6">2.2. 组织整理</a>
+<li><a href="#orgheadline6">2.2. 处理阶段</a>
 <ul>
 <li><a href="#orgheadline7">2.2.1. Orgmode配置</a></li>
+<li><a href="#orgheadline8">2.2.2. MLO配置</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline8">2.3. 回顾阶段</a>
+<li><a href="#orgheadline9">2.3. 组织整理</a>
 <ul>
-<li><a href="#orgheadline9">2.3.1. Orgmode配置（待回顾条目）</a></li>
+<li><a href="#orgheadline10">2.3.1. Orgmode配置</a></li>
+<li><a href="#orgheadline11">2.3.2. MLO配置</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline10">2.4. 执行阶段</a>
+<li><a href="#orgheadline12">2.4. 回顾阶段</a>
 <ul>
-<li><a href="#orgheadline11">2.4.1. Orgmode配置</a></li>
+<li><a href="#orgheadline13">2.4.1. Orgmode配置（待回顾条目）</a></li>
+<li><a href="#orgheadline14">2.4.2. MLO配置</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline15">2.5. 执行阶段</a>
+<ul>
+<li><a href="#orgheadline16">2.5.1. Orgmode配置</a></li>
+<li><a href="#orgheadline17">2.5.2. MLO配置</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgheadline12">3. 其它</a></li>
+<li><a href="#orgheadline18">3. 其它</a>
+<ul>
+<li><a href="#orgheadline19">3.1. Orgmode操作技巧</a>
+<ul>
+<li><a href="#orgheadline20">3.1.1. 如何不用更改状态和优先级标记今日处理过的高优先级</a></li>
+<li><a href="#orgheadline21">3.1.2. 周期回顾不用设置成重复的任务，只需要每次都修改SCHEDULE为下次即可</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -185,17 +200,27 @@ var category_info = getCategoriesInfo();
 <li>经历了捕捉之后，或者确认将采用新的GTD规则后，将依据规则对捕捉到的新条目，以及没有应用新规则的旧条目进行处理，组织整理，回顾，执行等。</li>
 <li>实践GTD之时，将GTD的处理分为：处理、组织整理、回顾、执行四个阶段（其实处理前面还有一个捕捉，执行之后有一个归档）。</li>
 </ul>
-
-<p>
-针对GTD流程的大致管理思路，参考 <a href="../../../../../../mydata/orgmode/gtd/_study.html#ID-ec17b340-9880-49c2-b9ae-277d70c47a50">一套完整的GTD流程的思考与实践</a>
-</p>
+</div>
 </div>
 
-<div id="outline-container-orgheadline2" class="outline-3">
-<h3 id="orgheadline2"><span class="section-number-3">1.1</span> Orgmode配置</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> 实现-GTD流程</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3"><span class="section-number-3">2.1</span> 说明</h3>
+<div class="outline-text-3" id="text-2-1">
+<dl class="org-dl">
+<dt>始于:<span class="timestamp-wrapper"><span class="timestamp">&lt;2019-10-15 二 16:15&gt;</span></span></dt><dd>目前(<span class="timestamp-wrapper"><span class="timestamp">&lt;2019-10-11 五 17:04&gt;</span></span>)而言，为使GTD流程可靠，将遵循后面的流程</dd>
+<dt>(no term)</dt><dd>针对GTD流程的大致管理思路，参考 <a href="../../../../../../mydata/orgmode/gtd/_study.html#ID-ec17b340-9880-49c2-b9ae-277d70c47a50">一套完整的GTD流程的思考与实践</a></dd>
+<dt>表述整体流程框架的配置</dt><dd>以不同的视图，表述GTD处理流程的各个阶段，大致如下：</dd>
+</dl>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-4">
+<h4 id="orgheadline4"><span class="section-number-4">2.1.1</span> Orgmode Agenda配置</h4>
+<div class="outline-text-4" id="text-2-1-1">
 <p>
-以不同的Agenda视图，表述GTD处理流程的各个阶段，大致如下：
+使用Agenda做为过滤条件，标题TODO标记做为状态。
 </p>
 <div class="org-src-container">
 
@@ -225,22 +250,34 @@ var category_info = getCategoriesInfo();
 </div>
 </div>
 </div>
-</div>
 
-<div id="outline-container-orgheadline3" class="outline-2">
-<h2 id="orgheadline3"><span class="section-number-2">2</span> 实现-GTD流程</h2>
-<div class="outline-text-2" id="text-2">
-<ul class="org-ul">
-<li>始于:<span class="timestamp-wrapper"><span class="timestamp">&lt;2019-10-15 二 16:15&gt;</span></span></li>
-</ul>
+<div id="outline-container-orgheadline5" class="outline-4">
+<h4 id="orgheadline5"><span class="section-number-4">2.1.2</span> MLO配置思路</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+使用Flag做为状态，使用视图做为过滤条件。
+</p>
 
 <p>
-目前(<span class="timestamp-wrapper"><span class="timestamp">&lt;2019-10-11 五 17:04&gt;</span></span>)而言，为使GTD流程可靠，遵循后面的流程。
+与流程相关的视图，在概览视图部分，包括：
 </p>
+<ul class="org-ul">
+<li>收集箱</li>
+<li>组织整理</li>
+<li>回顾列表</li>
+<li>活动列表</li>
+</ul>
 </div>
-<div id="outline-container-orgheadline4" class="outline-3">
-<h3 id="orgheadline4"><a id="ID-ef948755-eaed-4b99-8bce-7ad2ac712ddd"></a><span class="section-number-3">2.1</span> 处理阶段</h3>
-<div class="outline-text-3" id="text-2-1">
+</div>
+</div>
+
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><a id="ID-ef948755-eaed-4b99-8bce-7ad2ac712ddd"></a><span class="section-number-3">2.2</span> 处理阶段</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+主要分辨条目。
+</p>
+
 <p>
 符合如下流程：
 </p>
@@ -261,9 +298,9 @@ var category_info = getCategoriesInfo();
 </ul>
 </div>
 
-<div id="outline-container-orgheadline5" class="outline-4">
-<h4 id="orgheadline5"><span class="section-number-4">2.1.1</span> Orgmode配置</h4>
-<div class="outline-text-4" id="text-2-1-1">
+<div id="outline-container-orgheadline7" class="outline-4">
+<h4 id="orgheadline7"><span class="section-number-4">2.2.1</span> Orgmode配置</h4>
+<div class="outline-text-4" id="text-2-2-1">
 <div class="org-src-container">
 
 <pre class="src src-elisp">(setq gtd-views-process '("Gp" "GTD处理阶段：两分钟任务（执行），分配 *状态*、*类别*、*优先级*，其它。 "
@@ -285,40 +322,58 @@ var category_info = getCategoriesInfo();
 </ul>
 </div>
 </div>
+
+<div id="outline-container-orgheadline8" class="outline-4">
+<h4 id="orgheadline8"><span class="section-number-4">2.2.2</span> MLO配置</h4>
+<div class="outline-text-4" id="text-2-2-2">
+<p>
+目前待处理任务主要集中在收集箱内，
+</p>
+
+<p>
+日后视情况可能会为不符规则的内容添加相关过滤视图。
+</p>
 </div>
-<div id="outline-container-orgheadline6" class="outline-3">
-<h3 id="orgheadline6"><span class="section-number-3">2.2</span> 组织整理</h3>
-<div class="outline-text-3" id="text-2-2">
+</div>
+</div>
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">2.3</span> 组织整理</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+主要让体系合理。
+</p>
+
 <p>
 应符合如下流程：
 </p>
 <ul class="org-ul">
-<li>输入——处理后条目：主要是 <b>孤立条目</b> 、 <b>待调整条目</b> 、 <b>无回顾条目</b></li>
-<li>输出——组织整理后：重点确认 非日程的 <b>回顾周期</b> 、*项目/范围* 、其次行动的 <b>情景/提醒</b> 、 <b>合理的优先级</b>, 可能有其它属性。</li>
+<li>输入——处理后条目：主要是 <b>无回顾条目</b> 、 <b>孤立条目</b> 、 <b>待调整条目</b></li>
+<li>输出——组织整理后：重点确认 非日程的 <b>回顾周期</b> 、行动的 <b>项目/范围</b> 、*合理属性* （如 类别 、 优先级 、 情景/提醒) , 可能有其它属性。</li>
 </ul>
 
 <p>
 注意：
 </p>
 <ul class="org-ul">
-<li>孤立条目，所有条目要么是非原子的项目/任务，要么是原子行动，必属某一领域（参见：<a href="../../../../../../mydata/orgmode/gtd/_study.html#ID-d4b37265-f2c3-4979-afa1-8f0cac611f1d">(45min/2) 第3层：职责、领域</a>），没有领域的就是孤立条目。</li>
-<li>无回顾条目，无时间属性的条目。回顾对低优先级无时间条目以定期查看习惯模拟提醒，易添加，若处理时先添加回顾再添加范围，则只需关注孤立条目即可。</li>
-<li>待调整条目，一些比较模糊的条目的类别辨别、以及更新（比如原子行动、非原子条目更新之后，类别相应也应调整）</li>
-<li>项目/范围，涉及到任务分解和归并、及理顺思路使条目间更具有条理性(期间会对条目的类别进行调整)，一下不用太细可将回顾周期设置频繁些多次调整合适。</li>
-<li>情景/提醒，以时间为提示所以无需情景；日程一般也无需情景但若对时间不是特严格视情况可能有情景；无时间的原子行动才有情景；参考等非行动不用情景。</li>
-<li>回顾周期，日程/提醒（有时间属性、可能会重复）所以无需回顾，无时间低优先级原子行动有回顾周期，项目/参考等非行动视情况添加回顾防止遗忘。</li>
-<li>合理的优先级，主要是待调整到活动列表中的条目的高优先级，以及有待日后回顾的低优先级，可能顺便会确认每日计划的青蛙。</li>
+<li>无回顾条目，无时间属性的条目。所有条目都应有回顾机会，低优先级条目以定期回顾习惯模拟提醒，易添加，若处理时先添加回顾再添加范围，则只需关注孤立条目即可。</li>
+<li>孤立条目，没有领域的就是孤立条目。所有条目要么是非原子的项目/任务，要么是原子行动，保证必属某一领域（参见：<a href="../../../../../../mydata/orgmode/gtd/_study.html#ID-d4b37265-f2c3-4979-afa1-8f0cac611f1d">(45min/2) 第3层：职责、领域</a>）。</li>
+<li>待调整条目， 可能由于对活动列表的处理，或者一些其它处理的遗漏、模糊导致分类不明确、属性不合理、同步/更新不完整的现象，对这样的条目称作待调整条目。</li>
+<li>回顾周期，尤其适于无回顾条目，日程/提醒（有时间属性、可能重复）无需回顾，无时间低优先级原子行动有回顾周期，项目/参考等非行动视情况添加回顾防止遗忘。</li>
+<li>项目/范围，尤其适于孤立条目，任务分解和归并、理顺思路使条目间更具有条理性（类别进行调整)，一下不用太细可将回顾周期设置频繁些多次调整合适。</li>
+<li>合理属性，尤其适于待调整条目，模糊、不合理条目如原子/非原子类别不对应应有的状态、无日期日程、有情景提醒、高优先级回顾等，更新后类别相应也应调整。</li>
+<li>情景/提醒，提醒以时间为提示所以无需情景；日程一般也无需情景但若对时间不是特严格视情况可能有情景；无时间的原子行动才有情景；参考等非行动不用情景。</li>
+<li>其它， 比如待调整到活动列表中的条目的高优先级，以及有待日后回顾的低优先级，可能顺便会确认每日计划的青蛙。</li>
 </ul>
 </div>
 
-<div id="outline-container-orgheadline7" class="outline-4">
-<h4 id="orgheadline7"><span class="section-number-4">2.2.1</span> Orgmode配置</h4>
-<div class="outline-text-4" id="text-2-2-1">
+<div id="outline-container-orgheadline10" class="outline-4">
+<h4 id="orgheadline10"><span class="section-number-4">2.3.1</span> Orgmode配置</h4>
+<div class="outline-text-4" id="text-2-3-1">
 <div class="org-src-container">
 
 <pre class="src src-elisp">(setq gtd-views-organize '("Go" "GTD组织整理：确认 行动的 *情景/提醒*、*项目/范围*、*回顾周期*、合理的 *优先级*，其它."
                                   ;;条件1、孤立条目文件(分布于四象限），2、项目文件中没有仔细规划的原子行动，3、没有SCHEDULE、及无指定范围的内容
-                                  ((tags-todo "FILE={[1-4]_.*Important_.*_Urgent.org}"
+                                  ((tags-todo "FILE={[1-4]_.*Important_.*_Urgent.org}|FILE={0_inbox.org}/!+AGENDA|+NEXT|+LATER|+{WAIT.*}|+{MAYBE.*}|+REFERENCE|+CANCEL|+DONE"
                                               ((org-agenda-files
                                                 (list
                                                  (concat org-directory "gtd/1_Important_and_Urgent.org")
@@ -335,6 +390,14 @@ var category_info = getCategoriesInfo();
                                                  (concat org-directory "gtd/_others.org")))))
 
                                    (tags-todo "CATEGORY={Q[1-4]}/!+PROJECT|+TODO|+STOP|+FINISHED"
+                                              ((org-agenda-files
+                                                (list
+                                                 (concat org-directory "gtd/_life.org")
+                                                 (concat org-directory "gtd/_study.org")
+                                                 (concat org-directory "gtd/_work.org")
+                                                 (concat org-directory "gtd/_others.org")))))
+
+                                   (tags-todo "SCHEDULED&lt;&gt;\"\"&amp;PRIORITY&lt;\"C\"/!+NEXT|+LATER|+{WAIT.*}|+{MAYBE.*}|+REFERENCE|+CANCEL|+DONE"
                                               ((org-agenda-files
                                                 (list
                                                  (concat org-directory "gtd/_life.org")
@@ -360,8 +423,9 @@ var category_info = getCategoriesInfo();
 </div>
 
 <ul class="org-ul">
-<li>通过 <code>tags-todo "FILE={[1-4]_.*Important_.*_Urgent.org}"...</code> 从孤立文件导出孤立任务</li>
+<li>通过 <code>tags-todo "FILE={[1-4]_.*Important_.*_Urgent.org}"...</code> 从孤立文件导出孤立任务，其中 <code>inbox.org</code> 中也包含了孤立任务，是减少refile操作次数。</li>
 <li>通过 <code>tags-todo "CATEGORY&lt;&gt;{Q[1-4]}/!+AGENDA|+NEXT|+LATER|+{WAIT.*}|+{MAYBE.*}|+REFERENCE|+CANCEL|+DONE"...</code> 与 <code>tags-todo "CATEGORY={Q[1-4]}/!+PROJECT|+TODO|+STOP|+FINISHED"...</code> 过滤出需要规划的原子类别、非原子类别的行动、任务、项目。</li>
+<li>通过 <code>tags-todo "SCHEDULED&lt;&gt;\"\"&amp;PRIORITY&lt;\"C\"/!+AGENDA|+NEXT|+LATER|+{WAIT.*}|+{MAYBE.*}|+REFERENCE|+CANCEL|+DONE</code> 过滤出要调整的高优先级回顾条目，要么保留回顾优先级降低，要么去掉回顾保留高优先级。</li>
 <li>通过 <code>tags-todo "LEVEL&lt;=2|SCHEDULED =\"\""...</code> 过滤出无回顾周期的条目, 顺便将一些遗漏的孤立任务(LEVEL&lt;=2)也包含进来</li>
 </ul>
 
@@ -375,20 +439,51 @@ var category_info = getCategoriesInfo();
 </ul>
 </div>
 </div>
+
+<div id="outline-container-orgheadline11" class="outline-4">
+<h4 id="orgheadline11"><span class="section-number-4">2.3.2</span> MLO配置</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+集中在 <code>组织整理</code> 视图中，基本过滤出无回顾、孤立、待调整条目。
+</p>
+
+<p>
+过滤条件为：
+</p>
+<pre class="example">
+1. IsFoder为假
+3. &amp; 如下
+3.1 无回顾条目(不存在NextReview &amp; 不存在Reminder &amp; Flag不等于日程)
+3.2 | 孤立条目(ParentName是 职业、工作、职场、创业、进修、学习、管理、探索……)
+3.3 | 待调整条目如下
+3.3.1 是项目却有状态(Project&amp;有Flag)
+3.3.2 | 是日程却没有时间（Flag等于日程&amp;StartDateTime不存在&amp;截止不存在）
+3.3.3 | 高优先级回顾条目(Flag大于等于下一步&amp;有NextReview存在&amp;(紧急高|重要高|标星))
+3.3.4 | 非日程却有开始截止时间（Flag大于日程&amp;(截止存在|StartDateTime存在）)
+4. &amp; 未完成条目(Complete为假）
+
+以标旗（即状态）分组，按照紧急程度、重要程度排序。
+</pre>
+</div>
+</div>
 </div>
 
-<div id="outline-container-orgheadline8" class="outline-3">
-<h3 id="orgheadline8"><span class="section-number-3">2.3</span> 回顾阶段</h3>
-<div class="outline-text-3" id="text-2-3">
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><span class="section-number-3">2.4</span> 回顾阶段</h3>
+<div class="outline-text-3" id="text-2-4">
 <p>
-回顾这个过程比较特殊，因为它包含了两个部分的内容：活动列表、和非活动列表的回顾。至于活动列表部分的内容，参考 <a href="#orgheadline10">执行阶段</a> ，里不再重复。
+主要防止遗忘。
+</p>
+
+<p>
+回顾这个过程比较特殊，因为它包含了两个部分的内容：活动列表、和非活动列表的回顾。至于活动列表部分的内容，参考 <a href="#orgheadline15">执行阶段</a> ，里不再重复。
 </p>
 
 <p>
 符合如下流程：
 </p>
 <ul class="org-ul">
-<li>输入——组织整理后条目：主要是组织整理之后的 <b>活动列表</b> 、 <b>待回顾条目</b> 。</li>
+<li>输入——组织整理后条目：主要是组织整理之后的 <b>活动列表</b> 、 <b>待回顾列表</b> 。</li>
 <li>输出——回顾后：主要是调整优先级、安排日程和回顾、提醒与情景、含少量的组织整理工作。包含 <b>活动前期</b> 、 <b>活动后期</b> 、 <b>回顾阶段</b> 三个方面。</li>
 </ul>
 
@@ -397,17 +492,17 @@ var category_info = getCategoriesInfo();
 </p>
 <ul class="org-ul">
 <li>活动列表，是指日程、提醒、高优先级行动、备忘，其中包括日计划的青蛙事项(即活动列表中今日打算必须做的事情），是本日执行行动的参照。</li>
+<li>待回顾列表，一般而言就是非活动列表的内容（除去日程和提醒），借助定期浏览的习惯以备遗忘那些没明白时间属性的条目（一般是低优先级）。</li>
 <li>活动前期，主要安排活动列表，如每日计划，调高今日待办优先级、并导致活动列表更新（对于活动条目其回顾属性应该会被去掉，因为自然执行时回顾了）。</li>
 <li>活动后期，是指一天活动之后将活动列表中的条目按照实际完成的情况更新同步相关属性为最新。</li>
-<li>待回顾列表，一般而言就是非活动列表的内容（除去日程和提醒），借助定期浏览的习惯以备遗忘那些没明白时间属性的条目（一般是低优先级）。</li>
 <li>回顾阶段，主要是至活动前期、活动后期、以及日间空闲之时整理已有的内容补充、优化处理/组织整理/行动期间 遗漏的事项确保体系不断完善。</li>
 </ul>
 </div>
 
 
-<div id="outline-container-orgheadline9" class="outline-4">
-<h4 id="orgheadline9"><span class="section-number-4">2.3.1</span> Orgmode配置（待回顾条目）</h4>
-<div class="outline-text-4" id="text-2-3-1">
+<div id="outline-container-orgheadline13" class="outline-4">
+<h4 id="orgheadline13"><span class="section-number-4">2.4.1</span> Orgmode配置（待回顾条目）</h4>
+<div class="outline-text-4" id="text-2-4-1">
 <div class="org-src-container">
 
 <pre class="src src-elisp">(setq gtd-views-review '("Gr" "GTD 回顾，确认日计划、更新活动列表、以及非活动列表（低优先级）"
@@ -425,7 +520,7 @@ var category_info = getCategoriesInfo();
                                            '(org-agenda-skip-entry-if 'nottodo
                                                                       '("NEXT" "WAIT/FORWARD" "LATER" "MAYBE/FUTURE" "CANCEL")))
                                           (org-agenda-sorting-strategy
-                                           '(todo-state-up priority-up))))
+                                           '(todo-state-up priority-down))))
 
 
                                  (agenda ""
@@ -463,7 +558,7 @@ var category_info = getCategoriesInfo();
 </div>
 
 <ul class="org-ul">
-<li>第一个 <code>agenda ""...</code> 命令过滤出Agenda外的原子行动，并以低优先级在前（并未过滤掉高优先级便于处理）。</li>
+<li>第一个 <code>agenda ""...</code> 命令过滤出Agenda外的原子行动，（这里并未过滤掉高优先级回顾，因为组织整理阶段自动会将其处理，这里出现的话也会弥补组织整理的遗漏)。</li>
 <li>第二个 <code>agenda ""...</code> 命令过滤出非原子条目，并以高优先级在前排列（因为非原子是不具体的处理，不会出现在活动列表中所以高低优先级一并回顾）</li>
 <li>第三个 <code>agenda ""...</code> 命令过滤出非行动内容，可能会定期了解、参考、甚至之后的归档确认。</li>
 <li>最后，活动前期的日计划、活动后期的活动更新，结合后面的活动列表一并回顾。</li>
@@ -474,13 +569,39 @@ var category_info = getCategoriesInfo();
 </p>
 </div>
 </div>
+
+<div id="outline-container-orgheadline14" class="outline-4">
+<h4 id="orgheadline14"><span class="section-number-4">2.4.2</span> MLO配置</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<p>
+集中在 <code>回顾</code> 视图中，基本过滤出待回顾的非日程条目。
+</p>
+
+<pre class="example">
+过滤条件为
+1. 今天及以前的待回顾条目 (NextReview 不晚于 today)
+2. &amp; 如下
+2.1 非日程条目 (Flag 不等于 日程)
+2.2 &amp; 无时间信息条目，如下
+2.2.1 无提醒（Reminder为假）
+2.2.2 | 无开始截止时间(截止不存在&amp;StartDateTime不存在）
+3. &amp; 未完成(Complete为假）
+
+根据文件夹分组，按照下次回顾日期排序，会显示分级信息,包含所有匹配项目的子级
+</pre>
+</div>
+</div>
 </div>
 
-<div id="outline-container-orgheadline10" class="outline-3">
-<h3 id="orgheadline10"><a id="ID-7bb450ca-f302-43e4-8aea-8440c3d1f46b"></a><span class="section-number-3">2.4</span> 执行阶段</h3>
-<div class="outline-text-3" id="text-2-4">
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><a id="ID-7bb450ca-f302-43e4-8aea-8440c3d1f46b"></a><span class="section-number-3">2.5</span> 执行阶段</h3>
+<div class="outline-text-3" id="text-2-5">
 <p>
-对于执行阶段，其中的2分钟任务在处理阶段进行了，具体参考 <a href="#orgheadline4">处理阶段</a> 。
+主要实现任务。
+</p>
+
+<p>
+对于执行阶段，其中的2分钟任务在处理阶段进行了，具体参考 <a href="#orgheadline6">处理阶段</a> 。
 </p>
 
 <p>
@@ -499,9 +620,9 @@ var category_info = getCategoriesInfo();
 </ul>
 </div>
 
-<div id="outline-container-orgheadline11" class="outline-4">
-<h4 id="orgheadline11"><span class="section-number-4">2.4.1</span> Orgmode配置</h4>
-<div class="outline-text-4" id="text-2-4-1">
+<div id="outline-container-orgheadline16" class="outline-4">
+<h4 id="orgheadline16"><span class="section-number-4">2.5.1</span> Orgmode配置</h4>
+<div class="outline-text-4" id="text-2-5-1">
 <div class="org-src-container">
 
 <pre class="src src-elisp">(setq gtd-views-action '("Ga" "GTD活动列表：待安排任务（回顾前期）、待执行任务(执行)、待更新任务（回顾后期）"
@@ -521,7 +642,7 @@ var category_info = getCategoriesInfo();
                                           (org-agenda-sorting-strategy
                                            '(priority-down))))
 
-                                 (tags-todo "CATEGORY={Q[1-4]}&amp;PRIORITY&lt;=\"B\"/!+NEXT|+{WAIT.*}|+REFERENCE"
+                                 (tags-todo "CATEGORY={Q[1-4]}&amp;PRIORITY&lt;\"C\"-SCHEDULED=\"&lt;today&gt;\"/!+NEXT|+{WAIT.*}|+REFERENCE"
                                             ((org-agenda-files
                                               (list
                                                (concat org-directory "gtd/_life.org")
@@ -539,23 +660,103 @@ var category_info = getCategoriesInfo();
 </div>
 <ul class="org-ul">
 <li>通过 <code>agenda "" ...</code> 过滤出所有的 <code>AGENDA</code> 日程。</li>
-<li>通过 <code>tags-todo "CATEGORY={Q[1-4]}&amp;PRIORITY &lt;\"C\"/!+NEXT|+{WAIT.*}|+REFERENCE"...</code> 过滤出所有非日程高优先级行动。</li>
+<li>通过 <code>tags-todo "CATEGORY={Q[1-4]}&amp;PRIORITY&lt;\"C\"-SCHEDULED...</code> 过滤出所有非日程高优先级行动(去掉SCHEDULED是今天)。</li>
 </ul>
 <p>
 注意：执行阶段跨越了处理（2分钟原则）、执行（活动列表） 两个阶段的视图。
 </p>
 </div>
 </div>
+
+<div id="outline-container-orgheadline17" class="outline-4">
+<h4 id="orgheadline17"><span class="section-number-4">2.5.2</span> MLO配置</h4>
+<div class="outline-text-4" id="text-2-5-2">
+<p>
+集中在 <code>活动列表</code> 视图中，基本过滤出待办原子条目。
+</p>
+
+<p>
+过滤条件为：
+</p>
+<pre class="example">
+1. 原子条目（Project为假）
+2. &amp; 如下
+2.1 星标(Starred为真）
+2.2 | 最高紧急优先级(Urgency等于200)
+2.3 | 最高重要性 (Importance等于200)
+2.3 | 有提醒(Reminder为真）
+2.4 | 日程条件如下
+2.4.1 是日程(Flag等于日程）
+2.4.2 &amp; 开始或截止日程在今天及以前(StartDateTime早于Today+1|截止早于Today+1)
+2.5 | 高紧急度下一步(Flag等于下一步&amp;Urgency大于150)
+2.6 | 高紧急度等待(Flag等于等待&amp;Urgency大于150)
+2.7 | 高重要性参考(Flag等于参考&amp;Importance大于150)
+3. &amp; 为完成条目(Complete为假）
+
+排序依次根据标星、开始日期、紧急程度、重要程度，不分级
+</pre>
+</div>
+</div>
 </div>
 </div>
 
-
-<div id="outline-container-orgheadline12" class="outline-2">
-<h2 id="orgheadline12"><span class="section-number-2">3</span> 其它</h2>
+<div id="outline-container-orgheadline18" class="outline-2">
+<h2 id="orgheadline18"><span class="section-number-2">3</span> 其它</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 进一步的完善，参见：<a href="../../../../../../mydata/orgmode/gtd/_study.html#ID-c0c2658e-2186-41c4-a2b8-de4ac4c8722a">GTD实践相关</a>
 </p>
+</div>
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="section-number-3">3.1</span> Orgmode操作技巧</h3>
+<div class="outline-text-3" id="text-3-1">
+</div><div id="outline-container-orgheadline20" class="outline-4">
+<h4 id="orgheadline20"><span class="section-number-4">3.1.1</span> 如何不用更改状态和优先级标记今日处理过的高优先级</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+如果优先级今日处理之后，日后还要处理，这样优先级和状态就不需要更改，可是在活动列表视图上，如何将其标记从活动列表中去掉呢？
+</p>
+
+<p>
+这里的技巧是：
+</p>
+<ul class="org-ul">
+<li>在orgmode的对应Agenda视图中，为高优先级加入Schedule，而Schedule的日期是今日。</li>
+<li>在显示活动列表时，去掉具有今日schedule的高优先级待办。</li>
+<li>回顾的时候，对于高优先级的待办，如果想要处理的时候，自然会处理</li>
+</ul>
+
+<p>
+这样，到了明日因为其Schedule成了“昨天”，所以自动会显示，也减少了对今日任务的干扰。
+</p>
+
+<p>
+这种非法的高优先级条目有Schedule内容，也会在活动后回顾处理的时候，将其处理成合法的：因为明天还要处理，所以优先级保留，Schedule会被处理掉。
+</p>
+
+<p>
+日计划的时候，也会有这样的一种情况：今天回顾的条目，安排为高优先级，但是却忘记了去掉其SCHEDULED，导致活动列表不显示了，但是这样的事情，是自己的失误，无关软件，自己的失误应当承担一定的风险，反正倒了明天也会再次出现的。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline21" class="outline-4">
+<h4 id="orgheadline21"><span class="section-number-4">3.1.2</span> 周期回顾不用设置成重复的任务，只需要每次都修改SCHEDULE为下次即可</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<p>
+周期性的回顾，不用设置成重复的任务，只需每次回顾后，设置好下次回顾的时间就行，这样也免得设置状态了
+（实在不行可以在标题上标记期望的回顾间隔，防止思考过于片面?其实在 <code>LOGBOOK</code> 中已经有了相关的回顾日志，可以了解细节）
+</p>
+
+<p>
+在更改SCHEDULE的时候，可加入LOG信息，修改SCHEDULE的时候，增加日志信息的配置：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp">(setq org-log-reschedule 'time)
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 
