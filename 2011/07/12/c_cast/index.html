@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    关于C++中的类型转换操作符
+</title>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="../../../../css/partial/head.css">
+<link rel="stylesheet" href="../../../../css/partial/header.css">
+<link rel="stylesheet" href="../../../../css/partial/archives.css">
+<link rel="stylesheet" href="../../../../css/partial/categories.css">
+<link rel="stylesheet" href="../../../../css/partial/home-posts.css">
+<link rel="stylesheet" href="../../../../css/partial/page-nav.css">
+<link rel="stylesheet" href="../../../../css/partial/tags.css">
+<link rel="stylesheet" href="../../../../css/partial/about.css">
+<link rel="stylesheet" href="../../../../css/partial/more.css">
+<link rel="stylesheet" href="../../../../css/partial/footer.css">
+<link rel="stylesheet" href="../../../../css/post.css">
+<link rel="stylesheet" href="../../../../css/orgmode/hexo_orgmode_style.css">
+
+
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="../../../../lib/jquery-1.11.3.min.js"></script>
+<script src="../../../../js/common.js"></script>
+<script src="../../../../js/nav.js"></script>
+
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
+            <script src="js/nav.js"></script>
+<table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="../../../../index.html">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="../../../../categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(60)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="../../../../categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(8)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="../../../../categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="../../../../categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="../../../../categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(7)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="../../../../categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="../../../../categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="../../../../categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="../../../../categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="../../../../categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="../../../../categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(6)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="../../../../categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="../../../../categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="../../../../categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="../../../../categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="../../../../categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="../../../../categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="../../../../categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="../../../../categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="../../../../categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="../../../../categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="../../../../categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="../../../../categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="../../../../categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/gtd-next/">gtd_next</a><span class="tag-list-count">1</span></li></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+               <a href="/" title="Menu.Home">
+               <h1>QuietHeart's Site</h1>
+               </a>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <h1 id="header1" style="text-align: center;">
+                    关于C++中的类型转换操作符
+                </h1>
+                <hr id="title_line">
+                <article>
+                    <div>
+                        
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 内容简介</a></li>
+<li><a href="#orgheadline2">2. <code>static_cast</code></a>
+<ul>
+<li><a href="#orgheadline3">2.1. 功能</a></li>
+<li><a href="#orgheadline4">2.2. 描述</a></li>
+<li><a href="#orgheadline5">2.3. 举例</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline6">3. <code>dynamic_cast</code></a>
+<ul>
+<li><a href="#orgheadline7">3.1. 功能</a></li>
+<li><a href="#orgheadline8">3.2. 描述</a></li>
+<li><a href="#orgheadline9">3.3. 举例</a>
+<ul>
+<li><a href="#orgheadline10">3.3.1. 在类层次间进行转换</a></li>
+<li><a href="#orgheadline11">3.3.2. 类之间的交叉转换</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline12">4. <code>reinterpret_cast</code></a>
+<ul>
+<li><a href="#orgheadline13">4.1. 功能</a></li>
+<li><a href="#orgheadline14">4.2. 描述</a></li>
+<li><a href="#orgheadline15">4.3. 举例</a></li>
+<li><a href="#orgheadline16">4.4. [其它]</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline17">5. <code>const_cast</code></a>
+<ul>
+<li><a href="#orgheadline18">5.1. 功能</a></li>
+<li><a href="#orgheadline19">5.2. 描述</a></li>
+<li><a href="#orgheadline20">5.3. 举例</a></li>
+<li><a href="#orgheadline21">5.4. 其他</a>
+<ul>
+<li><a href="#orgheadline22">5.4.1. 操作对象</a></li>
+<li><a href="#orgheadline23">5.4.2. (2)可能的误解</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline24">6. 五、其它</a>
+<ul>
+<li><a href="#orgheadline25">6.1. <code>static_cast</code> 和 <code>dynamic_cast</code> 的对比</a></li>
+<li><a href="#orgheadline26">6.2. <code>static_cast</code>, <code>dynamic_cast</code>, 和 <code>reinterpret_cast</code> 之间的对比</a>
+<ul>
+<li><a href="#orgheadline27">6.2.1. 转换的内容</a></li>
+<li><a href="#orgheadline28">6.2.2. 检测转换的时机</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline29">6.3. 参考资料</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 内容简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+本文对四种标准C++类型转换符： <code>static_cast</code>, <code>dynamic_cast</code>, <code>reinterpret_cast</code>, <code>const_cast</code> 进行介绍，通过本文应当能够理解这四个类型转换操作符的含义。
+</p>
+
+<p>
+四种标准C++的类型转换符：
+</p>
+<dl class="org-dl">
+<dt><code>dynamic_cast</code></dt><dd>动态类型转换，一般用在父类和子类指针或应用的互相转化;</dd>
+<dt><code>static_cast</code></dt><dd>静态类型转换，一般是普通数据类型转换(如 <code>int m=static_cast(3.14));</code> ）</dd>
+<dt><code>reinterpret_cast</code></dt><dd>重新解释类型转换，很像C的一般类型转换操作;</dd>
+<dt><code>const_cast</code></dt><dd>常量类型转换，是把 <code>const</code> 或 <code>volatile</code> 属性去掉。</dd>
+</dl>
+
+<p>
+下面将依次对它们进行相对详细地介绍。 
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> <code>static_cast</code></h2>
+<div class="outline-text-2" id="text-2">
+<p>
+支持子类指针到父类指针的转换，并根据实际情况调整指针的值，反过来也支持，但会给出编译警告，它作用最类似C风格的“强制转换”，一般来说可认为它是安全的。 
+</p>
+
+<p>
+用法： <code>static_cast &lt; type-id &gt; ( expression )</code>
+</p>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3"><span class="section-number-3">2.1</span> 功能</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+该运算符把 <code>expression</code> 转换为 <code>type-id</code> 类型，但没有运行时类型检查来保证转换的安全性。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">2.2</span> 描述</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+主要如下几种用法： 
+</p>
+<ul class="org-ul">
+<li>用于类层次结构中基类（父类）和派生类（子类）之间指针或引用的转换
+
+<ul class="org-ul">
+<li>进行上行转换（把派生类的指针或引用转换成基类表示是安全的)；</li>
+<li>进行下行转换（把基类指针或引用转换成派生类表示时，由于没动态类型检查，所以是不安全的)。</li>
+</ul></li>
+
+<li><p>
+用于基本数据类型之间的转换，如把 <code>int</code> 转换成 <code>char</code> ，把 <code>int</code> 转换成 <code>enum</code>
+</p>
+
+<p>
+这种转换的安全性也要开发人员来保证。
+</p></li>
+
+<li>把空指针转换成目标类型的空指针</li>
+
+<li>把任何类型的表达式转换成 <code>void</code> 类型</li>
+</ul>
+
+<p>
+注意： <code>static_cast</code> 不能转换掉 <code>expression</code> 的 <code>const</code>, <code>volitale</code>, 或者 <code>__unaligned</code> 属性。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">2.3</span> 举例</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+这里，关于 <code>static_cast</code> 的使用举例，通过与 <code>reinterpret_cast</code> 的例子进行对比，容易理解，所以参见后面 <code>reinterpret_cast</code> 的使用举例部分中对 <code>static_cast</code> 的使用方法。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline6" class="outline-2">
+<h2 id="orgheadline6"><span class="section-number-2">3</span> <code>dynamic_cast</code></h2>
+<div class="outline-text-2" id="text-3">
+<p>
+用法： <code>dynamic_cast &lt; type-id &gt; ( expression )</code>
+</p>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7"><span class="section-number-3">3.1</span> 功能</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+该运算符把 <code>expression</code> 转换成 <code>type-id</code> 类型的对象， <code>Type-id</code> 必须是类的指针、类的引用或者 <code>void *</code> 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">3.2</span> 描述</h3>
+<div class="outline-text-3" id="text-3-2">
+<ul class="org-ul">
+<li><p>
+支持子类指针到父类指针的转换，并根据实际情况调整指针的值。
+</p>
+
+<p>
+这个和 <code>static_cast</code> 不同，反过来它就不支持了（即不允许使用这个操作符号将父类强制转换到子类），会导致编译错误，所以这种转换是最安全的转换。
+</p>
+
+<p>
+如果 <code>type-id</code> 是类指针类型，那么 <code>expression</code> 也必须是一个指针，如果 <code>type-id</code> 是一个引用，那么 <code>expression</code> 也必须是一个引用。
+</p></li>
+</ul>
+
+<p>
+注： <code>dynamic_cast</code> 主要用于类层次间的上行转换和下行转换，还可以用于类之间的交叉转换。在类层次间进行上行转换时， <code>dynamic_cast</code> 和 <code>static_cast</code> 的效果是一样的；在进行下行转换时， <code>dynamic_cast</code> 具有类型检查的功能，比 <code>static_cast</code> 更安全。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">3.3</span> 举例</h3>
+<div class="outline-text-3" id="text-3-3">
+</div><div id="outline-container-orgheadline10" class="outline-4">
+<h4 id="orgheadline10"><span class="section-number-4">3.3.1</span> 在类层次间进行转换</h4>
+<div class="outline-text-4" id="text-3-3-1">
+<p>
+代码如下： 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C++">class B{
+public:
+      int m_iNum;
+      virtual void foo();
+};
+
+class D:public B{
+   public:
+      char *m_szName[100];
+};
+
+void func(B *pb){
+   D *pd1 = static_cast&lt;D *&gt;(pb);
+   D *pd2 = dynamic_cast&lt;D *&gt;(pb);
+}
+</pre>
+</div>
+
+<p>
+这里，使用 <code>dynamic_cast</code> 进行转换，如果出现了把指向父类对象的指针转换成了子类的指针的时候，就会返回空值。
+</p>
+
+<p>
+在上面的代码段中，如果 <code>pb</code> 指向一个 <code>D</code> 类型的对象， <code>pd1</code> 和 <code>pd2</code> 是一样的，并且对这两个指针执行 <code>D</code> 类型的任何操作都是安全的；但是，如果 <code>pb</code> 指向的是一个 <code>B</code> 类型的对象，那么 <code>pd1</code> 将是一个指向该对象的指针，对它进行 <code>D</code> 类型的操作将是不安全的（如访问 <code>m_szName</code> ），而 <code>pd2</code> 将是一个空指针。(大多数面向对象编程中，经常会在代码中出现父类型的指针指向子类对象，然后在合适的时候转换为子类对象类型，直接代码中看不出指针所知对象究竟是父类还是子类，通过这个 <code>dynamic_cast</code> 可以检查类型，达到安全性)。
+</p>
+
+<p>
+另外要注意：如果使用 <code>dynamic_cast</code>, <code>B</code> （父类）要有虚函数，否则会编译出错； <code>static_cast</code> 则没有这个限制。这是由于运行时类型检查需要运行时类型信息，而这个信息存储在类的虚函数表（关于虚函数表的概念，详细可见 <code>&lt;Inside c++ object model&gt;</code> ）中，只有定义了虚函数的类才有虚函数表，没有定义虚函数的类是没有虚函数表的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-4">
+<h4 id="orgheadline11"><span class="section-number-4">3.3.2</span> 类之间的交叉转换</h4>
+<div class="outline-text-4" id="text-3-3-2">
+<p>
+代码如下：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C++">class A{
+public:
+       int m_iNum;
+       virtual void f(){}
+};
+
+class B:public A{
+};
+
+class D:public A{
+};
+
+void foo(){
+   B *pb = new B;
+   pb-&gt;m_iNum = 100;
+   D *pd1 = static_cast&lt;D *&gt;(pb);    //compile error???实践好象没有编译错误
+   D *pd2 = dynamic_cast&lt;D *&gt;(pb); //pd2 is NULL
+   delete pb;
+}
+</pre>
+</div>
+
+<p>
+这里，可见，如果出现了交叉转换的情况那么 <code>dynamic_cast</code> 将会返回空值。
+</p>
+
+<p>
+在函数 <code>foo</code> 中，使用 <code>static_cast</code> 进行转换是不被允许的，将在编译时出错(实践中并没有报错)；而使用 <code>dynamic_cast</code> 的转换则是允许的，结果是空指针。 保险应当使用 <code>dynamic_cast</code> 。
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-2">
+<h2 id="orgheadline12"><span class="section-number-2">4</span> <code>reinterpret_cast</code></h2>
+<div class="outline-text-2" id="text-4">
+<p>
+用法： <code>reinterpret_cast&lt;type-id&gt; (expression)</code>
+</p>
+</div>
+
+
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"><span class="section-number-3">4.1</span> 功能</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+它可以把一个指针转换成一个整数，也可以把一个整数转换成一个指针（先把一个指针转换成一个整数，再把该整数转换成原类型的指针，还可以得到原先的指针值）。 <code>type-id</code> 必须是一个指针、引用、算术类型、函数指针或者成员指针。 
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14"><span class="section-number-3">4.2</span> 描述</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+<code>reinterpret_cast</code> 是C++里的强制类型转换符，支持任何转换，但仅仅是如它的名字所描述的“重解释”而已。也就是说：操作符修改了操作数类型,但仅仅是重新解释了给出的对象的比特模型而没有进行二进制转换。
+</p>
+
+<p>
+例如：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C++">int *n= new int;
+double *d=reinterpret_cast&lt;double*&gt; (n);
+</pre>
+</div>
+
+<p>
+在进行计算以后,  <code>d</code> 包含无用值.这是因为 <code>reinterpret_cast</code> 仅仅是复制 <code>n</code> 的比特位到 <code>d</code>, 没有进行必要的分析。
+</p>
+
+<p>
+<code>reinterpret_cast</code> 是为了映射到一个完全不同类型的意思，这个关键词在我们需要把类型映射回原有类型时用到它。我们映射到的类型仅仅是为了故弄玄虚和其他目的，这是所有映射中最危险的(C++编程思想中的原话)。将 <code>static_cast</code> 和 <code>reinterpret_cast</code> 对比一下进行解释，比较容易理解： <code>static_cast</code> 操作符修改了操作数类型，但是 <code>reinterpret_cast</code> 仅仅是重新解释了给出的对象的比特模型而没有进行二进制转换。
+</p>
+
+<p>
+例如： 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C++">int n=9;
+double d=static_cast&lt;double&gt;(n);
+</pre>
+</div>
+<p>
+上面的例子中, 我们将一个变量从 <code>int</code> 转换到 <code>double</code> 。这些类型的二进制表达式是不同的,所以将整数9转换到双精度整数9， <code>static_cast</code> 需要正确地为双精度整数 <code>d</code> 补足比特位。其结果为 <code>9.0</code> 。
+</p>
+
+<p>
+而 <code>reinterpret_cast</code> 的行为却不同: 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C++">int n=9;
+double d=reinterpret_cast&lt;double &amp; &gt;(n);
+</pre>
+</div>
+<p>
+这里, 和 <code>static_cast</code> 不同，在进行计算以后, <code>d</code> 包含无用值。这是因为 <code>reinterpret_cast</code> 仅仅是复制 <code>n</code> 的比特位到 <code>d</code>, 没有进行必要的分析。
+</p>
+
+<p>
+因此, 需要谨慎使用 <code>reinterpret_cast</code> 。 
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><span class="section-number-3">4.3</span> 举例</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+这个例子，将 <code>static_cast</code> 和 <code>reinterpret_cast</code> 对比进行测试，具体的输出参见其中的注释。 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C++"> 1 #include &lt;iostream&gt;
+ 2 using std::cout;
+ 3 using std::endl;
+ 4 class CBaseX
+ 5 {
+ 6     public:
+ 7         int x;
+ 8         CBaseX() { x = 10; }
+ 9         void foo() { printf("CBaseX::foo() x=%d/n", x); }
+10 };
+11 class CBaseY
+12 {
+13     public:
+14         int y;
+15         int* py;
+16         CBaseY() { y = 20; py = &amp;y; }
+17         void bar() { printf("CBaseY::bar() y=%d, *py=%d/n", y, *py);}
+18 };
+19 class CDerived : public CBaseX, public CBaseY
+20 {
+21     public:
+22         int z;
+23 };
+24
+25 int main(int argc, char *argv[])
+26 {
+27     float f = 12.3;
+28     float* pf = &amp;f;
+29
+30     //基本类型的转换
+31     cout&lt;&lt;"=================Basic Cast================="&lt;&lt;endl;
+32     //======static cast&lt;&gt;的使用:
+33     int n = static_cast&lt;int&gt;(f); //成功编译
+34     cout&lt;&lt;"n is :"&lt;&lt;n&lt;&lt;endl;//n = 12
+35     //int* pn = static_cast&lt;int*&gt;(pf);//编译错误，指向的类型是无关的,不能将指针指向无关的类型
+36     void* pv = static_cast&lt;void*&gt;(pf);//编译成功
+37     int* pn2 = static_cast&lt;int*&gt;(pv);//成功编译, 但是 *pn2是无意义的内存（rubbish）
+38     cout&lt;&lt;"pf is:"&lt;&lt;pf&lt;&lt;",pv is:"&lt;&lt;pv&lt;&lt;",pn2 is:"&lt;&lt;pn2&lt;&lt;endl;//三者值一样
+39     cout&lt;&lt;"*pf is:"&lt;&lt;*pf&lt;&lt;",*pn2 is:"&lt;&lt;*pn2&lt;&lt;endl;//pf=12.3,pn2是无用值，注意无法使用"*pv"因为编译错。
+40
+41     //======reinterpret_cast&lt;&gt;的使用:
+42     //int i = reinterpret_cast&lt;int&gt;(f);//编译错误，类型‘float’到类型‘int’的转换无效.
+43     //成功编译, 但是 *pn 实际上是无意义的内存,和 *pn2一样
+44     int* pi = reinterpret_cast&lt;int*&gt;(pf);
+45     cout&lt;&lt;"pf is:"&lt;&lt;pf&lt;&lt;",pi is:"&lt;&lt;pi&lt;&lt;endl;//值一样
+46     cout&lt;&lt;"*pf is:"&lt;&lt;*pf&lt;&lt;",*pi is:"&lt;&lt;*pi&lt;&lt;endl;//pi是无用值，和pn2一样。
+47
+48
+49     //对象类型的转换
+50     cout&lt;&lt;"=================Class Cast================="&lt;&lt;endl;
+51     CBaseX cx;
+52     CBaseY cy;
+53     CDerived cd;
+54
+55     CDerived* pD = &amp;cd;
+56     CBaseX *pX = &amp;cx;
+57     CBaseY *pY = &amp;cy;
+58     cout&lt;&lt;"CDerived* pD = "&lt;&lt;pD&lt;&lt;endl;
+59
+60     //======static_cast&lt;&gt;的使用:
+61     CBaseY* pY1 = pD;  //隐式static_cast转换
+62     //不一样是因为多继承，pD还要前移动以便也指向CBaseX.
+63     cout&lt;&lt;"CDerived* pD = "&lt;&lt;pD&lt;&lt;",CBaseY* pY1 = "&lt;&lt;pY1&lt;&lt;endl;//pY1=pD+4!!!!!!
+64
+65     //CDerived* pD1 = pY1;//编译错误,类型 ‘CBaseY*’ 到类型 ‘CDerived*’ 的转换无效
+66     CDerived* pD1 = static_cast&lt;CDerived*&gt;(pY1);//成功编译
+67     cout&lt;&lt;"CDerived* pD1 = "&lt;&lt;pD1&lt;&lt;endl;//现在 pD1 = pD
+68
+69     //pX = static_cast&lt;CBaseX*&gt;(pY);//编译错误，从类型 ‘CBaseY*’ 到类型 ‘CBaseX*’ 中的 static_cast 无效。
+70     pD1 = static_cast&lt;CDerived*&gt;(pY);//竟然可以编译通过!!!!!!
+71     cout&lt;&lt;"CDerived* pD1 = "&lt;&lt;pD1&lt;&lt;",CBaseY *pY = "&lt;&lt;pY&lt;&lt;endl;//现在 pD1 = pY-4
+72     //======reinterpret_cast&lt;&gt;的使用:
+73     CBaseY* pY2 = reinterpret_cast&lt;CBaseY*&gt;(pD);// 成功编译, 但是 pY2 不是 CBaseY*
+74     cout&lt;&lt;"CDerived* pD = "&lt;&lt;pD&lt;&lt;",CBaseY* pY2 = "&lt;&lt;pY2&lt;&lt;endl;//pY2=pD!!!!!!
+75
+76     //======通过void的转换注意：
+77     CBaseY* ppY = pD;
+78     cout&lt;&lt;"CDerived* pD = "&lt;&lt;pD&lt;&lt;",CBaseY* ppY = "&lt;&lt;ppY&lt;&lt;endl;//ppY = pD + 4
+79
+80     void* ppV1 = ppY; //成功编译
+81     cout&lt;&lt;"CBaseY* ppY = "&lt;&lt;ppY&lt;&lt;",void* ppV1 = "&lt;&lt;ppV1&lt;&lt;endl;//ppV1 = ppY
+82
+83     //CDerived* ppD2 = ppV1;//编译错误,类型‘void*’ 到类型 ‘CDerived*’的转换无效
+84     CDerived* ppD2 = static_cast&lt;CDerived*&gt;(ppV1);
+85     cout&lt;&lt;"CDerived* ppD2 = "&lt;&lt;ppD2&lt;&lt;endl;//ppD2 = ppY, 但是我们预期 ppD2 = ppY - 4 = pD
+86     //ppD2-&gt;bar();//系统崩溃,段错误
+87     return 0;
+88 }
+</pre>
+</div>
+
+<p>
+这里，需要注意的地方是: 
+</p>
+<ul class="org-ul">
+<li><p>
+第63行中基类指针 <code>pY1</code> 被赋予子类指针 <code>pD</code> 后， <code>pY1=pD+4</code> 而不是 <code>pD</code> ，因为 <code>pD</code> 是多继承， <code>pD</code> 还要前移动以便也指向 <code>CBaseX</code> .
+</p>
+
+<p>
+内存布局大致如下： 
+</p>
+<pre class="example">
++CDerived------------------+ 
+|   +CBase X--------+      |\ 
+|   |  int x        |      | 4 bytes 
+|   +---------------+      |/ 
+|                          | 
+|   +CBase Y--------+      | 
+|   |  int y,*py    |      | 
+|   +---------------+      | 
++--------------------------+
+</pre></li>
+
+<li>第69行和70行的可以将父类指针用 <code>static_cast</code> 强制转换成子类指针，但是两个无关的类的指针之间却不能转换。</li>
+<li>第74行中使用 <code>reinterpret_cast</code> 将子类指针强制转换赋给父类指针后，却没有像 <code>static_cast</code> 那样将父类指针位置调整以指向正确的对象位置，这样导致虽然两者值是一样的，但是父指针所指向的内容却不是父对象了。</li>
+<li><p>
+第76行之后使用 <code>void</code> 将子类转换成父类再转回子类，却无法使用了。 
+</p>
+
+<p>
+因为任何指针可以被转换到 <code>void*</code> ，而 <code>void*</code> 可以被向后转换到任何指针（对于 <code>static_cast&lt;&gt;</code> 和 <code>reinterpret_cast&lt;&gt;</code> 转换都可以这样做），如果没有小心处理的话错误可能发生。一旦我们已经转换指针为 <code>void*</code> ，我们就不能轻易将其转换回原类（因为原类的信息在代码中看不到了），所以使用 <code>void</code> 转换的时候一定要小心。在上面的例子中，从一个 <code>void*</code> 返回 <code>CDerived*</code> 的唯一方法是将其转换为 <code>CBaseY*</code> 然后再转换为 <code>CDerived*</code> 。但是如果我们不能确定它是 <code>CBaseY*</code> 还是 <code>CDerived*</code> ，这时我们不得不用 <code>dynamic_cast&lt;&gt;</code> 或 <code>typeid[2]</code> ( <code>dynamic_cast&lt;&gt;</code> 需要类成为多态，即包括“虚”函数，并因此而不能成为 <code>void*</code> )。 
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16"><span class="section-number-3">4.4</span> [其它]</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+<code>dynamic_cast&lt;&gt;</code> ，从另一方面来说，可以防止一个泛型 <code>CBaseY*</code> 被转换到 <code>CDerived*</code> 。  
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline17" class="outline-2">
+<h2 id="orgheadline17"><span class="section-number-2">5</span> <code>const_cast</code></h2>
+<div class="outline-text-2" id="text-5">
+<p>
+用法： <code>const_cast&lt;type_id&gt; (expression)</code>
+</p>
+</div>
+
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18"><span class="section-number-3">5.1</span> 功能</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+该运算符用来修改类型的 <code>const</code> 或 <code>volatile</code> 属性。除了 <code>const</code> 或 <code>volatile</code> 修饰之外， <code>type_id</code> 和 <code>expression</code> 的类型是一样的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="section-number-3">5.2</span> 描述</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+<code>const_cast</code> 剥离一个对象的 <code>const</code> 属性，允许对常量进行修改。
+</p>
+
+<ul class="org-ul">
+<li>常量指针被转化成非常量指针，并且仍然指向原来的对象；</li>
+<li>常量引用被转换成非常量引用，并且仍然指向原来的对象；</li>
+<li>常量对象被转换成非常量对象。</li>
+</ul>
+
+<p>
+<code>Voiatile</code> 和 <code>const</code> 类似。参见后面的例子可以了解更多信息。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="section-number-3">5.3</span> 举例</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+给出的源代码如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C++"> 1 #include &lt;iostream&gt;
+ 2 using std::cout;
+ 3 using std::endl;
+ 4
+ 5 class CTest
+ 6 {
+ 7     public:
+ 8         CTest(int i){m_val = i;cout&lt;&lt;"construction"&lt;&lt;m_val&lt;&lt;endl;}
+ 9         ~CTest(){cout&lt;&lt;"destructionn"&lt;&lt;endl;}
+10         void SelfAdd(){m_val++;};
+11         int m_val;
+12 };
+13
+14 int main(int argc, char *argv[])
+15 {
+16     const int ic = 100;
+17     //int cc = const_cast&lt;int&gt;(ic);//编译错误
+18     int cc = const_cast&lt;int&amp;&gt;(ic);
+19     cout&lt;&lt;cc&lt;&lt;endl;//输出100
+20     //const_cast&lt;int &amp;&gt;(&amp;ic)=200;//编译错误，从类型 ‘const int*’ 到类型 ‘int&amp;’ 中的 const_cast 无效
+21     const_cast&lt;int &amp;&gt;(ic)=200;
+22     cout&lt;&lt;ic&lt;&lt;endl;//输出100
+23     cout&lt;&lt;*(&amp;ic)&lt;&lt;endl;//输出100
+24     //int *pc = &amp;ic;//编译错误，从类型 ‘const int*’ 到类型 ‘int*’ 的转换无效
+25     const int *pc=&amp;ic;
+26     //const_cast&lt;int &amp;&gt;(pc)=200;//编译错误，从类型 ‘const int**’ 到类型 ‘int*’ 中的 const_cast 无效
+27     const_cast&lt;int &amp;&gt;(ic)=200;
+28     //printf("%d,%d/n", ic, *pc);
+29     cout&lt;&lt;ic&lt;&lt;','&lt;&lt;*pc&lt;&lt;endl;//100,200
+30     //int *ppc = const_cast&lt;int*&gt;(ic);//编译错误
+31     int *ppc = const_cast&lt;int*&gt;(&amp;ic);
+32     *ppc = 300;
+33     cout&lt;&lt;ic&lt;&lt;','&lt;&lt;*ppc&lt;&lt;endl;//100,300
+34
+35     const CTest test(1000);
+36     CTest test2(1050);
+37     //test = test2;//编译错误，无法给常量赋值
+38     const_cast&lt;CTest &amp;&gt;(test)= test2;
+39     cout&lt;&lt;test.m_val&lt;&lt;endl;//输出1050
+40 }
+</pre>
+</div>
+
+<p>
+这里，结果输出参见每行代码相应的注释。根据结果可知：
+</p>
+<ul class="org-ul">
+<li>凡是对结构体或类进行这个转换，都是成功的。</li>
+<li>对 <code>char</code>, <code>short</code> 等基本类型的转换，通过直接打印变量显示其值都是不成功的，但是通过指针却能显示出修改之后的值。</li>
+</ul>
+
+<p>
+通过对代码进行反汇编，可知，虽然本身我们没使用优化，但系统还是对 <code>ic</code> 这个 <code>const</code> 进行了预编译般的替换，将它替换成 <code>64h</code> （十六进制的64就是十进制的100），这肯定不是一般用户想要的结果，如果它不是一个C++的规范，应该算是个C++的bug吧。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline21" class="outline-3">
+<h3 id="orgheadline21"><span class="section-number-3">5.4</span> 其他</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+注意下面一些问题。
+</p>
+</div>
+<div id="outline-container-orgheadline22" class="outline-4">
+<h4 id="orgheadline22"><span class="section-number-4">5.4.1</span> 操作对象</h4>
+<div class="outline-text-4" id="text-5-4-1">
+<p>
+<code>const_cast</code> 操作的对象必须是 <code>pointer</code>, <code>reference</code>, nor a <code>pointer-to-data-member</code> type，如下代码是错误的：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C++">const int a = 5;
+int aa = const_cast&lt;int&gt;(a);
+</pre>
+</div>
+
+<p>
+而使用引用的方式,如下却是正确的：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C++">const int a = 5;
+int aa = const_cast&lt;int&amp;&gt;(a);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline23" class="outline-4">
+<h4 id="orgheadline23"><span class="section-number-4">5.4.2</span> (2)可能的误解</h4>
+<div class="outline-text-4" id="text-5-4-2">
+<p>
+可能上面的描述误解的地方，根据参考资料中的一个评论，说： <code>const_cast</code> 只能修改变量的常引用的 <code>const</code> 属性，和变量的常指针的 <code>const</code> 属性，还有对象的 <code>const</code> 属性。要想改变常量本身的值是不可能的，也就是说，你改变的是引用的 <code>const</code> 属性，而不是常量本身的 <code>const</code> 属性。估计 <code>const int ic = 100;</code> 定义的时候就已经将这个基础类型对象放入常量符号表里面了，永远不会改变它的值。 
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline24" class="outline-2">
+<h2 id="orgheadline24"><span class="section-number-2">6</span> 五、其它</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+做为一个对前面所说的四种类型转换操作符的补充，对它们之间的区别大致进行说明一下，如下。
+</p>
+</div>
+<div id="outline-container-orgheadline25" class="outline-3">
+<h3 id="orgheadline25"><span class="section-number-3">6.1</span> <code>static_cast</code> 和 <code>dynamic_cast</code> 的对比</h3>
+<div class="outline-text-3" id="text-6-1">
+<ul class="org-ul">
+<li><p>
+<code>static_cast</code> 在编译期间发现错误。
+</p>
+
+<p>
+对于基本类型，它不允许将一种类型的指针指向另一种类型。所以如下代码是错误的：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C++">float f = 12.3;
+float* pf = &amp;f;
+int* pn = static_cast&lt;int*&gt;(pf);//编译错误，指向的类型是无关的,不能将指针指向无关的类型
+</pre>
+</div>
+
+<p>
+对于复合类型（例如类、结构、联合)它允许转换子对象地址赋值给父指针，也允许转换父对象地址赋值给子指针，但是不允许两个无关的类之间的转换，所以如下是错误的：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C++">CBaseX *pX = &amp;cx;
+CBaseY *pY = &amp;cy;
+pX = static_cast&lt;CBaseX*&gt;(pY);//编译错误，从类型 ‘CBaseY*’ 到类型 ‘CBaseX*’ 中的 static_cast 无效。
+</pre>
+</div></li>
+
+<li><p>
+<code>dynamic_cast</code> 在运行期间发生错误，它只允许它允许转换子对象地址赋值给父指针，其它情况都返回空。
+</p>
+
+<p>
+例如:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C++">B *pb = new B;
+D *pd = dynamic_cast&lt;D *&gt;(pb); //pd is NULL
+delete pb;
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline26" class="outline-3">
+<h3 id="orgheadline26"><span class="section-number-3">6.2</span> <code>static_cast</code>, <code>dynamic_cast</code>, 和 <code>reinterpret_cast</code> 之间的对比</h3>
+<div class="outline-text-3" id="text-6-2">
+</div><div id="outline-container-orgheadline27" class="outline-4">
+<h4 id="orgheadline27"><span class="section-number-4">6.2.1</span> 转换的内容</h4>
+<div class="outline-text-4" id="text-6-2-1">
+</div><div id="outline-container-orgheadline30" class="outline-5">
+<h5 id="orgheadline30"><span class="section-number-5">6.2.1.1</span> <code>static_cast</code> 和 <code>dynamic_cast</code> 可转换指针之间或实例之间</h5>
+<div class="outline-text-5" id="text-6-2-1-1">
+<p>
+就是说，这两个操作符可以执行指针到指针的转换，或实例本身到实例本身的转换，但不能在实例和指针之间转换。
+</p>
+
+<p>
+<code>static_cast</code> 只能提供编译时的类型安全，而 <code>dynamic_cast</code> 可以提供运行时类型安全。
+</p>
+
+<p>
+举个例子：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C++">class a；class b:a；class c;
+</pre>
+</div>
+<p>
+上面个类 <code>a</code> 是基类， <code>b</code> 继承 <code>a</code> ， <code>c</code> 和 <code>a</code> , <code>b</code> 没有关系。假设有一个函数 <code>void function(a&amp;a);</code> 现在有一个对象是 <code>b</code> 的实例 <code>b</code> ，一个 <code>c</code> 的实例 <code>c</code> 。 <code>function(static_cast&lt;a&amp;&gt;(b)</code> 可以通过而 <code>function(static&lt;a&amp;&gt;(c))</code> 不能通过编译，因为在编译的时候编译器已经知道 <code>c</code> 和 <code>a</code> 的类型不符，因此 <code>static_cast</code> 可以保证安全。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline31" class="outline-5">
+<h5 id="orgheadline31"><span class="section-number-5">6.2.1.2</span> <code>reinterpret_cast</code> 可任意转换32bit的指针、实例</h5>
+<div class="outline-text-5" id="text-6-2-1-2">
+<p>
+就是说，它可以转换任意一个32bit整数，包括所有的指针和整数。可以把任何整数转成指针，也可以把任何指针转成整数，以及把指针转化为任意类型的指针，威力最为强大！但不能将非32bit的实例转成指针。总之，只要是32bit的东东，怎么转都行！
+</p>
+
+<p>
+对于刚刚说的例子，下面我们骗一下编译器，先把 <code>c</code> 转成类型 <code>a</code> 。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C++">b&amp; ref_b = reinterpret_cast&lt;b&amp;&gt;c;
+</pre>
+</div>
+<p>
+这样，
+</p>
+<ul class="org-ul">
+<li><code>function(static_cast&lt;a&amp;&gt;(ref_b))</code> 就通过了！因为从编译器的角度来看，在编译时并不能知道 <code>ref_b</code> 实际上是 <code>c</code> ！</li>
+<li>而 <code>function(dynamic_cast&lt;a&amp;&gt;(ref_b))</code> 编译时能过，在运行时却失败了，因为 <code>dynamic_cast</code> 在运行时检查了 <code>ref_b</code> 的实际类型，这样怎么也骗不过去了。</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline28" class="outline-4">
+<h4 id="orgheadline28"><span class="section-number-4">6.2.2</span> 检测转换的时机</h4>
+<div class="outline-text-4" id="text-6-2-2">
+<p>
+在不同时机对转换进行转换，其安全性级别也不同，一般而言，这几个运算符，若运行时检测安全性最高，编译时次之，而不检测最危险。
+</p>
+<ul class="org-ul">
+<li>运行时：在应用多态编程时，当我们无法确定传过来的对象的实际类型时使用 <code>dynamic_cast</code> ，</li>
+<li>编译时：如果能保证对象的实际类型，用 <code>static_cast</code> 就可以了，</li>
+<li>不检测：至于 <code>reinterpret_cast</code> 很象c语言那样的暴力转换。</li>
+</ul>
+<p>
+总之， <code>dynamic_cast</code> 运行检测, <code>static_cast</code> 编译检测, <code>reinterpret_cast</code> 不检测
+</p>
+
+<p>
+以上是从网上搜集的，以及根据自己的理解对C++中四种操作符号的总结，如有不准确的地方，感谢读者的告知。另外文件的图示内容由于格式转换所以不太准确，可以存成文本格式的。^_^ 
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline29" class="outline-3">
+<h3 id="orgheadline29"><span class="section-number-3">6.3</span> 参考资料</h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+<a href="http://zhidao.baidu.com/question/81318972.html" target="_blank" rel="noopener">http://zhidao.baidu.com/question/81318972.html</a>
+</p>
+
+<p>
+<a href="http://blog.csdn.net/guogangj/article/details/1545119" target="_blank" rel="noopener">http://blog.csdn.net/guogangj/article/details/1545119</a>
+</p>
+
+<p>
+<a href="http://zhidao.baidu.com/question/212970514.html" target="_blank" rel="noopener">http://zhidao.baidu.com/question/212970514.html</a>
+</p>
+
+<p>
+<a href="http://blog.csdn.net/deyili/article/details/5354242" target="_blank" rel="noopener">http://blog.csdn.net/deyili/article/details/5354242</a>
+</p>
+</div>
+</div>
+</div>
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>
