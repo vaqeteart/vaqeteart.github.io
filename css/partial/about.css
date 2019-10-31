@@ -1,1 +1,14 @@
-
+.cursor {
+    color:inherit;
+    position:relative;
+    font:inherit;
+    color:inherit;
+    line-height: inherit;
+    animation: Cursor 1s infinite;
+  }
+  
+  @keyframes Cursor{
+    0%{opacity: 1;}
+    50%{opacity: 0;}
+    100%{opacity: 1;}
+  }
