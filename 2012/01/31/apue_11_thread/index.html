@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    APUE读书笔记-11线程
+</title>
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="../../../../lib/jquery-1.11.3.min.js"></script>
+<script src="../../../../lib/typelighter.js"></script>
+<script src="../../../../js/common.js"></script>
+<script src="../../../../js/nav.js"></script>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="../../../../css/partial/head.css">
+<link rel="stylesheet" href="../../../../css/partial/header.css">
+<link rel="stylesheet" href="../../../../css/partial/archives.css">
+<link rel="stylesheet" href="../../../../css/partial/categories.css">
+<link rel="stylesheet" href="../../../../css/partial/home-posts.css">
+<link rel="stylesheet" href="../../../../css/partial/page-nav.css">
+<link rel="stylesheet" href="../../../../css/partial/tags.css">
+<link rel="stylesheet" href="../../../../css/partial/about.css">
+<link rel="stylesheet" href="../../../../css/partial/more.css">
+<link rel="stylesheet" href="../../../../css/partial/footer.css">
+<link rel="stylesheet" href="../../../../css/post.css">
+<link rel="stylesheet" href="../../../../css/orgmode/hexo_orgmode_style.css">
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
+            <table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="../../../../index.html">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="../../../../categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(62)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="../../../../categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(8)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="../../../../categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="../../../../categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="../../../../categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(4)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="../../../../categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="../../../../categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="../../../../categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="../../../../categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="../../../../categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="../../../../categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(6)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="../../../../categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="../../../../categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="../../../../categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="../../../../categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="../../../../categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="../../../../categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="../../../../categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="../../../../categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="../../../../categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="../../../../categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="../../../../categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="../../../../categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="../../../../categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/gtd-next/">gtd_next</a><span class="tag-list-count">1</span></li></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+               <a href="/" title="Menu.Home">
+               <h1>QuietHeart's Site</h1>
+               </a>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <h1 id="header1" style="text-align: center;">
+                    APUE读书笔记-11线程
+                </h1>
+                <hr id="title_line">
+                <article>
+                    <div>
+                        
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. APUE读书笔记-11线程（1）</a>
+<ul>
+<li><a href="#orgheadline2">1.1. 1、简介</a>
+<ul>
+<li><a href="#orgheadline3">1.1.1. 译者注</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline4">1.2. 2、线程的概念</a>
+<ul>
+<li><a href="#orgheadline5">1.2.1. 译者注</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline6">1.3. 3、线程标识符号</a>
+<ul>
+<li><a href="#orgheadline7">1.3.1. 译者注</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline8">2. APUE读书笔记-11线程（2）</a>
+<ul>
+<li><a href="#orgheadline9">2.1. 4、线程创建</a>
+<ul>
+<li><a href="#orgheadline10">2.1.1. 译者注</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline11">2.2. 5、线程终止</a></li>
+<li><a href="#orgheadline12">2.3. 译者注</a>
+<ul>
+<li><a href="#orgheadline13">2.3.1. 原文参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline14">3. APUE读书笔记-11线程（3）</a>
+<ul>
+<li><a href="#orgheadline15">3.1. 6、线程同步</a>
+<ul>
+<li><a href="#orgheadline16">3.1.1. 互斥信号量 (<code>mutex</code>)</a></li>
+<li><a href="#orgheadline17">3.1.2. 死锁的避免</a></li>
+<li><a href="#orgheadline18">3.1.3. 读写锁</a></li>
+<li><a href="#orgheadline19">3.1.4. 条件变量</a></li>
+<li><a href="#orgheadline20">3.1.5. 译者注</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline21">3.2. 7、总结</a>
+<ul>
+<li><a href="#orgheadline22">3.2.1. 译者注</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><a id="ID-e5f2eb44-976d-4ab3-aec8-2b9ade7530ec"></a><span class="section-number-2">1</span> APUE读书笔记-11线程（1）</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><span class="section-number-3">1.1</span> 1、简介</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+我们前面讨论了进程，知道了unix的进程环境，进程之间的关系以及控制进程的方法。我们可以看到，进程间可以进程有限的共享。
+</p>
+
+<p>
+本章，我们将会深入到进程的内部，来看看我们如何在单进程环境中使用多线程控制。所有同一个进程中的线程都可以共享访问例如文件描述符号，内存等进程资源。
+</p>
+
+<p>
+任何时候，你想要在多个用户之间共享单个资源的时候，你都需要处理一致性的问题。我们后面引入了线程的同步机制，防止在它们之间出现共享的资源不一致的情况。
+</p>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-4">
+<h4 id="orgheadline3"><span class="section-number-4">1.1.1</span> 译者注</h4>
+<div class="outline-text-4" id="text-1-1-1">
+</div><div id="outline-container-orgheadline23" class="outline-5">
+<h5 id="orgheadline23"><span class="section-number-5">1.1.1.1</span> 原文参考</h5>
+<div class="outline-text-5" id="text-1-1-1-1">
+<p>
+参考： <a href="file:///home/miracle/mygitrepo/quietheart/mydoc/prepub/orgmode/_data/books/APUE2/ch11lev1sec1.html" target="_blank" rel="noopener">APUE2/ch11lev1sec1.html</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">1.2</span> 2、线程的概念</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+一个典型的UNIX进程，可以被认为是单线程控制的：每个进程每个时刻只做一件事情。在多线程控制中，我们可以让自己的程序每次做更多的事情，每个线程处理一个任务，这样的方法有许多的好处：
+</p>
+
+<p>
+a) 我们可以通过指定一个线程来处理每个事件，来简化对异步事件处理的代码。每个线程之后可以使用一个同步的编程模型来处理它的事件。同步编程模型要比异步简单的多。
+b) 多进程需要使用操作系统提供的复杂的机制来共享内存和文件描述符号。而多线程的化，可以直接访问同一个进程中的同一个内存地址和文件描述符号。
+c) 有些问题可以被分割，这样整体的程序吞吐量会提升。而单个进程处理多个任务的话会隐式地将这些任务串行化，因为只有一个线程控制。在多线程控制中，每个线程可以处理独立的任务，独立的任务可以交叉地执行，所谓独立的任务就是它们之间不会相互依赖。
+d) 类似地，交互程序通过使用多线程技术，可以提升用户的响应时间，主要是把和用户输入输出交互的部分和程序的其它部分别用不同的线程处理。
+</p>
+
+<p>
+有些用户把多线程和多处理器联系起来。实际多线程带来的好处即使是在单个的cpu系统中也是存在的。一个程序可以通过多线程被简化，而不必考虑处理器的数目，因为处理器的数目不会影响程序的结构。另外，只要你的程序在串行任务中被阻塞，你就可能可以通过多线程提高程序吞吐，因为线程在其它线程阻塞的时候还是可以运行的。
+</p>
+
+<p>
+在进程中，一个线程包含了代表一个执行单元的必要的信息，这些信息包含：线程 <code>ID</code> （用来标识一个进程中的线程），一系列寄存器的值，一个堆栈，调度优先级和策略，一个 <code>signal mask</code> ,和 <code>errno</code> 变量，还有线程相关的数据。所有在一个进程中的东西在线程中都是可以被共享的，包含程序的可执行代码，程序的全局变量和堆内存，堆栈，和文件描述符号。
+</p>
+
+<p>
+我们将要看的线程接口来自 <code>POSIX.1-2001</code> .这些线程的接口也被称作 <code>pthreads</code> （ <code>POSIX threads</code> ），是 <code>POSIX.1-2001</code> 中的一个可选的部分。这个特性，可以使用 <code>_POSIX_THREADS</code> 宏来进行测试。应用程序可以在编译的时候使用 <code>#ifdef</code> 来测试是否支持线程，也可以在运行的时候使用 <code>sysconf</code> 的 <code>_SC_THREADS</code> 常量来确定是否支持线程。
+</p>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-4">
+<h4 id="orgheadline5"><span class="section-number-4">1.2.1</span> 译者注</h4>
+<div class="outline-text-4" id="text-1-2-1">
+</div><div id="outline-container-orgheadline24" class="outline-5">
+<h5 id="orgheadline24"><span class="section-number-5">1.2.1.1</span> 原文参考</h5>
+<div class="outline-text-5" id="text-1-2-1-1">
+<p>
+参考： <a href="file:///home/miracle/mygitrepo/quietheart/mydoc/prepub/orgmode/_data/books/APUE2/ch11lev1sec2.html" target="_blank" rel="noopener">APUE2/ch11lev1sec2.html</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">1.3</span> 3、线程标识符号</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+就像每个进程都有一个进程 <code>ID</code> ，每个线程都有线程 <code>ID</code> 。和进程 <code>ID</code> 不一样，进程 <code>ID</code> 在系统中是唯一的；线程 <code>ID</code> 只有在它所在的进程的上下文中才有意义。
+</p>
+
+<p>
+需要记住的是，进程 <code>ID</code> 使用 <code>pid_t</code> 类型来表示，并且它是一个非负的整数。线程 <code>ID</code> 用 <code>pthread_t</code> 数据类型来代替，有些实现允许使用一个数据结构来代表 <code>pthread_t</code> 数据类型，所以可移植的实现不允许把它们做为整数来看待。所以有一个专门用来比较 <code>thread ID</code> 的函数。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+int pthread_equal(pthread_t tid1, pthread_t tid2);
+</pre>
+</div>
+<p>
+返回：如果相等返回非0，如果不等返回0。
+</p>
+
+<p>
+<code>Linux2.4.22</code> 使用无符号长整数代表 <code>pthread_t</code> 数据类型。 <code>Solaris 9</code> 使用 <code>pthread_t</code> 数据类型是 <code>unsigned int</code> . <code>FreeBSD 5.2.1</code> 和 <code>Mac OS X 10.3</code> 使用一个指向 <code>pthread</code> 数据结构的指针来表示 <code>pthread_t</code> 数据类型。
+</p>
+
+<p>
+允许 <code>pthread_t</code> 数据类型是一个结构，这样会导致无法使用一个比较容易移植的方法来打印它的值。有时，在调试程序的时候打印线程 <code>ID</code> 是很重要的，但是其他时候，一般来说也没有必要非得这么做.最差的时候，会得到一个不可移植的调试程序的代码，所以这也不是一个不能接受的限制。
+</p>
+
+<p>
+线程可以通过调用 <code>thread_self</code> 函数来获得它自己的线程 <code>ID</code> 。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+pthread_t pthread_self(void);
+</pre>
+</div>
+<p>
+返回：调用线程的 <code>thread ID</code> 。
+</p>
+
+<p>
+这个函数可以和 <code>pthread_equal</code> 一块使用，来辨别一个数据结构是否是它自己的 <code>thread ID</code> .例如一个主线程可能会把工作分配到一个队列上面，使用 <code>thread ID</code> 来判断那个作业被那个工作线程处理。
+</p>
+
+<p>
+这里给出了一个图示，展示工作队列：
+</p>
+<pre class="example">
+                               +--------+
+                               | master |
+                              /| thread |
+                             / +--------+
+   +-------+                v
+   |thread1|&lt;----\  +------+
+   +-------+      \ |      |     +------+     +------+     +------+     +------+
+                   \|      |     | TID1 |     | TID3 |     | TID2 |     | TID3 |
++-------+           | work |     +------+     +------+     +------+     +------+
+|thread2|&lt;----------|queue |&lt;---&gt;|      |&lt;---&gt;|      |&lt;---&gt;|      |&lt;---&gt;|      |
++-------+           |      |     | job  |     | job  |     | job  |     | job  |
+                   /|      |     |      |     |      |     |      |     |      |
+   +-------+      / |      |     +------+     +------+     +------+     +------+
+   |thread3|&lt;----/  +------+
+   +-------+
+</pre>
+
+<p>
+图示中，一个单个的主线程将新的作业放到工作队列中，有三个工作线程会把作业从队列中移走。为了可以让每个线程处理队头的作业，主线程在每个作业结构中添加了一个thread ID成员来表示应该处理这个作业的线程，每个线程只会从工作队列中移走它对应的线程ID的工作。
+</p>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-4">
+<h4 id="orgheadline7"><span class="section-number-4">1.3.1</span> 译者注</h4>
+<div class="outline-text-4" id="text-1-3-1">
+</div><div id="outline-container-orgheadline25" class="outline-5">
+<h5 id="orgheadline25"><span class="section-number-5">1.3.1.1</span> 原文参考</h5>
+<div class="outline-text-5" id="text-1-3-1-1">
+<p>
+参考： <a href="file:///home/miracle/mygitrepo/quietheart/mydoc/prepub/orgmode/_data/books/APUE2/ch11lev1sec3.html" target="_blank" rel="noopener">APUE2/ch11lev1sec3.html</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline8" class="outline-2">
+<h2 id="orgheadline8"><a id="ID-4036a694-eebf-4c10-86fa-8a51164f5713"></a><span class="section-number-2">2</span> APUE读书笔记-11线程（2）</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">2.1</span> 4、线程创建</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+传统的 <code>unix</code> 进程模型，只支持每个进程只有一个线程控制。在概念上来说，这和基于线程模型的只有一个线程的进程是一样的。使用 <code>pthreads</code> ,当一个程序运行的时候，它会启动一个只有一个线程的进程，程序运行的时候，如果它不创建新的线程，那么它和传统的 <code>unix</code> 进程运行没有什么两样.通过 <code>pthread_create</code> 可以创建线程。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+int pthread_create(pthread_t *restrict tidp, const pthread_attr_t *restrict attr,
+                   void *(*start_rtn)(void), void *restrict arg);
+</pre>
+</div>
+<p>
+返回0表示成功，失败则返回错误号码。
+</p>
+
+<p>
+当 <code>pthread_create</code> 函数返回成功的时候， <code>tidp</code> 指向新创建的线程的 <code>id</code> 的内存地址； <code>attr</code> 用来自定义各种线程属性，后面会讲到，这里设置为 <code>NULL</code> 表示采用默认的属性.
+</p>
+
+<p>
+新创建的线程从 <code>start_rtn</code> 函数指针指向的地址开始运行， <code>arg</code> 是传递给这个函数的参数，它是一个无类型的指针，如果想要给函数传递多个参数那么就将参数存放在一个结构体中，把结构体的地址赋给 <code>arg</code> .
+</p>
+
+<p>
+当一个线程创建的时候，无法确保是调用线程先运行还是新创建的线程先运行。新创建的线程可以访问进程空间地址，继承调用线程的 <code>floating-point</code> 环境和 <code>signal mask</code> ,然而被 <code>pending</code> 的信号会被清除。
+</p>
+
+<p>
+注意，线程函数失败的时候会返回一个错误码。它不象其他会设置 <code>errno</code> 变量，为每个线程提供错误码，只是为了兼容使用它们的函数.对于线程来说，从函数中返回错误码是很清晰的做法，这样把错误的范围就只限定在产生这个错误的函数的身上了,而不是通过修改一个全局性质的变量，使得这个函数具有一些副作用。
+</p>
+
+<p>
+举例：尽管没有一个打印线程ID的可移植的方法，我们可以自己写一个小的测试程序来实现它，这样可以看到一些线程是如何工作的信息。后面的程序就是创建了一个线程，然后打印进程 <code>ID</code> ,主线程 <code>ID</code> ,以及新创建的线程 <code>ID</code> .
+</p>
+
+<p>
+为了处理主线程和新线程之间的竞争，这个例子有两个比较奇怪的行为：
+</p>
+<pre class="example">
+1）主线程需要睡眠一会。如果主线程不睡眠，那么可能在新创建的线程还没有来得及运行的时候主线程就结束了，进而导致整个进程的退出。这个取决于系统的线程功能实现以及调度算法。
+2）新线程是通过pthread_self来获取自己的线程id。新线程不是通过读取共享的内存或者pthread_create的参数(tidp)来获得它的线程id的，因为这样不安全。如果这样使用，那么新创建的线程若先运行的话，那么调用线程还没有来得及初始化这些数据，就会被新线程使用了。
+</pre>
+<p>
+对于这个例子，具体的代码参见参考资料，我们看到的现象是：
+</p>
+<pre class="example">
+Solaris中，两个线程的进程id相等，线程id是两个整数。主线程比新线程先运行。
+FreeBSD中，两个线程的进程id相等，线程id是两个相差范围不大的地址。主线程比新线程先运行。
+MacOS X中，两个线程的进程id相等，线程id是两个相差范围很大的地址。主线程比新线程先运行。
+Linux中，两个线程的进程id不相等，线程id是两个整数。新线程比主线程先运行。
+Linux中两个线程的进程id不相等，这是个不足的地方,它是使用特殊参数的clone系统调用来创建子进程，子进程可以通过参数配置共享父进程哪些上下文环境，例如文件描述符号或者内存。
+</pre>
+<p>
+注意这个例子的现象中我们可以看到，除了linux之外，其他的系统都是主线程先运行。这样我们可以知道我们不能随意假设主线程或者新线程究竟哪个首先被运行。
+</p>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-4">
+<h4 id="orgheadline10"><span class="section-number-4">2.1.1</span> 译者注</h4>
+<div class="outline-text-4" id="text-2-1-1">
+</div><div id="outline-container-orgheadline26" class="outline-5">
+<h5 id="orgheadline26"><span class="section-number-5">2.1.1.1</span> 原文参考</h5>
+<div class="outline-text-5" id="text-2-1-1-1">
+<p>
+参考： <a href="file:///home/miracle/mygitrepo/quietheart/mydoc/prepub/orgmode/_data/books/APUE2/ch11lev1sec4.html" target="_blank" rel="noopener">APUE2/ch11lev1sec4.html</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11"><span class="section-number-3">2.2</span> 5、线程终止</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<code>==============================================</code>
+当进程的任何一个线程调用 <code>exit</code> , <code>_exit</code> 或者 <code>_Exit</code> 的时候，整个进程都会被终止。类似地，当信号的默认处理动作是终止进程的时候，给一个线程发送信号会导致整个进程的终止。我们后面会讨论线程和信号的交互。
+</p>
+
+<p>
+正常地终止一个线程而不终止整个进程，有三个方法：
+</p>
+<ol class="org-ol">
+<li>线程从它的起始函数中正常地返回。这时候，线程的退出码就是返回值。</li>
+<li>线程被同一个进程中的其他线程取消。</li>
+<li>线程调用pthread_exit.</li>
+</ol>
+
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+void pthread_exit(void *rval_ptr);
+</pre>
+</div>
+<p>
+参数 <code>rval_ptr</code> 是一个无类型的指针，它可以被进程中的其他线程通过调用 <code>pthread_join</code> 来使用。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+int pthread_join(pthread_t thread, void **rval_ptr);
+</pre>
+</div>
+<p>
+如果成功返回0，如果失败，返回错误号码。
+</p>
+
+<p>
+调用这个函数的线程将会阻塞，直到这个函数所指定的线程调用了 <code>pthread_exit</code> ,或者从其主函数中返回，或者被取消。如果线程从它的主函数中返回， <code>rval_prt</code> 将会包含相应的返回码;如果线程被取消， <code>rval_ptr</code> 指向的内存地址将会被设置为 <code>PTHREAD_CANCELED</code> .
+</p>
+
+<p>
+调用 <code>pthread_join</code> 会自动地把线程置于 <code>detached</code> 状态，以便恢复线程的资源（稍后会讲到）。如果线程已经是 <code>detached</code> 状态了，那么 <code>pthread_join</code> 会失败并且返回 <code>EINVAL</code>.
+</p>
+
+<p>
+如果我们对线程的返回值不感兴趣，那么我们可以把rval_ptr设置为空，这样会等待指定的线程但是不获取线程的退出状态。
+</p>
+
+<p>
+举例
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">void *thr_fn1(void *arg)
+{
+    printf("thread 1 returning\n");
+    return((void *)1);
+}
+void *thr_fn2(void *arg)
+{
+    printf("thread 2 exiting\n");
+    pthread_exit((void *)2);
+}
+int main(void)
+{
+    int         err;
+    pthread_t   tid1, tid2;
+    void        *tret;
+    err = pthread_create(&amp;tid1, NULL, thr_fn1, NULL);
+    if (err != 0)
+        err_quit("can't create thread 1: %s\n", strerror(err));//一个出了错就退出程序的函数.
+    err = pthread_create(&amp;tid2, NULL, thr_fn2, NULL);
+    if (err != 0)
+        err_quit("can't create thread 2: %s\n", strerror(err));
+    err = pthread_join(tid1, &amp;tret);
+    if (err != 0)
+        err_quit("can't join with thread 1: %s\n", strerror(err));
+    printf("thread 1 exit code %d\n", (int)tret);
+    err = pthread_join(tid2, &amp;tret);
+    if (err != 0)
+        err_quit("can't join with thread 2: %s\n", strerror(err));
+    printf("thread 2 exit code %d\n", (int)tret);
+    exit(0);
+}
+</pre>
+</div>
+
+<p>
+运行如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$ ./a.out
+  thread 1 returning
+  thread 2 exiting
+  thread 1 exit code 1
+  thread 2 exit code 2
+</pre>
+</div>
+
+<p>
+可以看出，一个线程如果从 <code>start</code> 函数中退出，或者调用 <code>pthread_exit</code> 退出，那么其他的进程可以通过 <code>pthread_join</code> 来获取进程的结束状态。
+</p>
+
+<p>
+我们可以给 <code>pthread_create</code> 和 <code>pthread_exit</code> 传递一个无类型的指针，这样指针可以指向复杂的结构，包含更多得信息。需要注意的是当线程结束的时候，指针指向的位置应该还是合法的。如果指针指向的位置是在栈上面分配的，那么当线程结束之后，栈内容就不确定了。而调用 <code>pthread_join</code> 的调用者却使用了刚才栈所在地址的内容。
+</p>
+
+<p>
+线程可以通过调用 <code>pthread_cancel</code> 函数请求同一个进程中的其他线程被取消。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+int pthread_cancel(pthread_t tid);
+</pre>
+</div>
+<p>
+返回值：0表示成功，错误码表示失败。
+</p>
+
+<p>
+默认情况下 <code>pthread_cancel</code> 调用会导致 <code>tid</code> 指定的线程表现的像是自己调用具有 <code>PTHREAD_CANCELED</code> 参数的 <code>pthread_exit</code> 一样。线程也可以选择忽略其他线程对它的取消，以及选择如何被取消以后会讲到。然而 <code>pthread_cancel</code> 不会等待线程结束，它只是做一个请求。
+</p>
+
+<p>
+线程可以设置退出时候调用的函数，这个和进程使用 <code>atexit</code> 函数设置进程退出时候调用得函数类似。这些函数叫做“线程清理函数”，可以为线程设置多个清理函数，这些清理函数被记录在栈中，这也意味这这些函数的调用次序和它们被注册的次序相反。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+void pthread_cleanup_push(void (*rtn)(void *), void *arg);
+void pthread_cleanup_pop(int execute);
+</pre>
+</div>
+<p>
+当线程执行如下动作的时候， <code>pthread_cleanup_push</code> 会调度清理函数，函数由 <code>rtn</code> 指向并且参数是 <code>arg</code> :
+</p>
+<ol class="org-ol">
+<li>调用 <code>pthread_exit</code></li>
+<li>响应取消请求</li>
+<li>使用非0的 <code>execute</code> 参数调用 <code>pthread_cleanup_pop</code> .</li>
+</ol>
+
+<p>
+当 <code>pthread_cleanup_pop</code> 参数为0的时候，不会调用清理函数，这个时候会把最后一次调用 <code>pthread_cleanup_push</code> 的函数去掉。
+</p>
+
+<p>
+这些函数的使用限制就是它们是使用宏实现的，它们必须在一个线程的同一个作用域内成对匹配使用， <code>pthread_cleanup_push</code> 宏包含是一个 <code>{</code> , <code>pthread_cleanup_pop</code> 宏包含一个 <code>}</code> 。
+</p>
+
+<p>
+举例：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">void cleanup(void *arg)
+{
+    printf("cleanup: %s\n", (char *)arg);
+}
+
+void * thr_fn1(void *arg)
+{
+    printf("thread 1 start\n");
+    pthread_cleanup_push(cleanup, "thread 1 first handler");
+    pthread_cleanup_push(cleanup, "thread 1 second handler");
+    printf("thread 1 push complete\n");
+    if (arg)
+        return((void *)1);
+    pthread_cleanup_pop(0);
+    pthread_cleanup_pop(0);
+    return((void *)1);
+}
+
+void * thr_fn2(void *arg)
+{
+    printf("thread 2 start\n");
+    pthread_cleanup_push(cleanup, "thread 2 first handler");
+    pthread_cleanup_push(cleanup, "thread 2 second handler");
+    printf("thread 2 push complete\n");
+    if (arg)
+        pthread_exit((void *)2);
+    pthread_cleanup_pop(0);
+    pthread_cleanup_pop(0);
+    pthread_exit((void *)2);
+}
+
+int main(void)
+{
+    int         err;
+    pthread_t   tid1, tid2;
+    void        *tret;
+
+    err = pthread_create(&amp;tid1, NULL, thr_fn1, (void *)1);
+    if (err != 0)
+        err_quit("can't create thread 1: %s\n", strerror(err));
+    err = pthread_create(&amp;tid2, NULL, thr_fn2, (void *)1);
+    if (err != 0)
+        err_quit("can't create thread 2: %s\n", strerror(err));
+    err = pthread_join(tid1, &amp;tret);
+      if (err != 0)
+        err_quit("can't join with thread 1: %s\n", strerror(err));
+    printf("thread 1 exit code %d\n", (int)tret);
+    err = pthread_join(tid2, &amp;tret);
+    if (err != 0)
+        err_quit("can't join with thread 2: %s\n", strerror(err));
+    printf("thread 2 exit code %d\n", (int)tret);
+    exit(0);
+}
+</pre>
+</div>
+
+<p>
+上面的例子展示了如何使用线程的清理函数。需要注意的是尽管我们没有打算给线程的启动函数传递非0参数，我们还是需要调用 <code>pthread_cleanup_pop</code> 函数来匹配 <code>pthread_cleanup_push</code> 函数，否则程序无法编译通过。
+</p>
+
+<p>
+运行这个程序的输出是：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">$ ./a.out
+thread 1 start
+thread 1 push complete
+thread 2 start
+thread 2 push complete
+cleanup: thread 2 second handler
+cleanup: thread 2 first handler
+thread 1 exit code 1
+thread 2 exit code 2
+</pre>
+</div>
+<p>
+从输出中我们可以看到，两个线程都正常地启动和退出了，但是只有第二个线程调用了清理函数。因此，如果线程是通过从启动函数中正常返回而终止的话，就不会执行清理函数。并且我们也应该注意启动函数的调用次序和它们被安装的次序是相反的。
+</p>
+
+<p>
+实际线程和进程有许多类似的函数，下表给出了这个对比。
+</p>
+
+<p>
+进程和线程相关函数的对比
+</p>
+<pre class="example">
++-------------------------------------------------------------------------------------------------------+
+| Process primitive |  Thread primitive   |                         Description                         |
+|-------------------+---------------------+-------------------------------------------------------------|
+| fork              | pthread_create      | create a new flow of control                                |
+|-------------------+---------------------+-------------------------------------------------------------|
+| exit              | pthread_exit        | exit from an existing flow of control                       |
+|-------------------+---------------------+-------------------------------------------------------------|
+| waitpid           | pthread_join        | get exit status from flow of control                        |
+|-------------------+---------------------+-------------------------------------------------------------|
+| atexit            | pthread_cancel_push | register function to be called at exit from flow of control |
+|-------------------+---------------------+-------------------------------------------------------------|
+| getpid            | pthread_self        | get ID for flow of control                                  |
+|-------------------+---------------------+-------------------------------------------------------------|
+| abort             | pthread_cancel      | request abnormal termination of flow of control             |
++-------------------------------------------------------------------------------------------------------+
+</pre>
+
+<p>
+默认来说，一个线程的终止状态会一直保留到 <code>pthread_join</code> 被调用。一个终止的线程所占的内存会在 <code>detached</code> 的时候立即被回收，当一个线程被 <code>detached</code> 的时候，不能使用 <code>pthread_join</code> 函数等待获取它的终止状态。对一个 <code>detached</code> 的线程调用 <code>pthread_join</code> 会失败，并且返回 <code>EINVAL</code> 。我们可以使用 <code>pthread_detach</code> 来将一个线程 <code>detach</code> .
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+int pthread_detach(pthread_t tid);
+</pre>
+</div>
+<p>
+返回：如果成功返回0，如果失败返回错误编号。
+后面我们可以看到，我们可以通过修改传递给 <code>pthread_create</code> 的线程属性参数来建立一个开始就处于 <code>detached</code> 状态的线程。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><span class="section-number-3">2.3</span> 译者注</h3>
+<div class="outline-text-3" id="text-2-3">
+</div><div id="outline-container-orgheadline13" class="outline-4">
+<h4 id="orgheadline13"><span class="section-number-4">2.3.1</span> 原文参考</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+参考： <a href="file:///home/miracle/mygitrepo/quietheart/mydoc/prepub/orgmode/_data/books/APUE2/ch11lev1sec5.html" target="_blank" rel="noopener">APUE2/ch11lev1sec5.html</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline14" class="outline-2">
+<h2 id="orgheadline14"><a id="ID-de08ecf8-2b88-462d-a7e5-15eb56074796"></a><span class="section-number-2">3</span> APUE读书笔记-11线程（3）</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><span class="section-number-3">3.1</span> 6、线程同步</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+当多个线程共享同一片内存的时候，我们需要保证每个线程看到的数据是一致的。如果线程使用的变量没有被其他线程使用，那么不会存在一致性的问题。类似，如果一个变量是只读，那么多个线程同时访问也不会出现一致性的问题。然而当有一个线程可以修改这个变量，而这个变量同时也可以被其他的线程修改和读取的时候，我们需要在线程之间进行同步，来保证它们访问变量内存的内容的时候的数据是合法的。
+</p>
+
+<p>
+当一个线程修改变量的时候，别的读取这个变量的线程会潜在地遭遇不一致的情况。在修改操作占用多于一个存储周期的处理器架构上面，这个情况在两次写周期之间进行读内存的时候很容易发生。虽然这个取决于处理器架构，但是一个可移植的程序不能对使用的处理器的架构做任何的假设。
+</p>
+
+<p>
+文中先给出了一个简单的情况:
+</p>
+<pre class="example">
+线程A:读－写－写
+线程B:-----读----
+</pre>
+<p>
+当B的读发生在A的两个写周期之间的时候，A，B就存在不一致性的问题了。
+</p>
+
+<p>
+图中先给了一个解决方案：规定在访问变量之前，先对变量进行加锁。这样当一进程持有锁的时候，其它申请锁将被阻塞。
+</p>
+
+<p>
+然后又给出了一些其它导致不一致的情况的例子，具体参见参考资料以及其中的图示。
+</p>
+</div>
+
+<div id="outline-container-orgheadline16" class="outline-4">
+<h4 id="orgheadline16"><span class="section-number-4">3.1.1</span> 互斥信号量 (<code>mutex</code>)</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+通过使用 <code>pthreads</code> 中的互斥信号量接口，我们可以保护我们的数据，保证同一个时间，只有一个线程访问我们的数据。实际， <code>mutex</code> 就是我们访问共享资源设置的以及使用完共享资源时释放的锁。如果我们解锁 <code>mutex</code> 的时候有多余一个线程处于阻塞状态，那么所有在这个锁上面阻塞的线程都变成可执行，然后第一个运行的将会设置锁，其他的看到锁被设置了就继续返回阻塞等待锁的下一回释放了。这样，在一个时间里面，只有一个线程在执行。
+</p>
+
+<p>
+要想使用互斥机制，我们需要自己设计数据访问规则。操作系统不会将我们的数据访问串行化。如果我们的一个线程访问数据的时候没有获取锁那么即使其他的线程加锁，也会出现不一致的情况。
+</p>
+
+<p>
+<code>mutex</code> 变量用数据类型 <code>pthread_mutex_t</code> 数据类型替代，在我们使用 <code>mutex</code> 变量之前，我们必须首先将它用常量 <code>PTHREAD_MUTEX_INITIALIZER</code> 初始化（只用于静态分配的 <code>mutex</code> ）或者用 <code>pthread_mutex_init</code> 初始化。如果我们动态分配 <code>mutex</code> （例如通过 <code>malloc</code> ），我们 <b>需要在释放互斥量内存之前调用 <code>pthread_mutex_destroy</code> 函数</b>  。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+int pthread_mutex_init(pthread_mutex_t *restrict mutex, const pthread_mutexattr_t *restrict attr);
+int pthread_mutex_destroy(pthread_mutex_t *mutex);
+</pre>
+</div>
+<p>
+返回：如果成功，两者返回0；如果失败，返回错误码。
+</p>
+
+<p>
+我们可以把参数 <code>attr</code> 设置为 <code>NULL</code> 这样，就会使用默认的初始值。以后讨论非默认的 <code>mutex</code> 属性。
+</p>
+
+<p>
+下面的函数用来对 <code>mutex</code> 进行加锁或者解锁。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+int pthread_mutex_lock(pthread_mutex_t *mutex);
+int pthread_mutex_trylock(pthread_mutex_t *mutex);
+int pthread_mutex_unlock(pthread_mutex_t *mutex);
+</pre>
+</div>
+<p>
+如果一个线程无法接受被阻塞，那么可以使用 <code>pthread_mutex_trylock</code> 有条件地添加锁。这样，如果调用 <code>pthread_mutex_trylock</code> 的时候 <code>mutex</code> 没有被上锁，那么将会正常一样上锁并且返回0；如果之前 <code>mutex</code> 被上了锁，那么 <code>pthread_mutex_trylock</code> 将会失败并且立即返回 <code>EBUSY</code> 。
+</p>
+
+<p>
+举例：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;stdlib.h&gt;
+#include &lt;pthread.h&gt;
+struct foo {
+    int             f_count;
+    pthread_mutex_t f_lock;
+    /* ... more stuff here ... */
+};
+
+struct foo *foo_alloc(void) /* allocate the object */
+{
+    struct foo *fp;
+    if ((fp = malloc(sizeof(struct foo))) != NULL) {
+        fp-&gt;f_count = 1;
+        if (pthread_mutex_init(&amp;fp-&gt;f_lock, NULL) != 0) {
+            free(fp);
+            return(NULL);
+        }
+        /* ... continue initialization ... */
+    }
+    return(fp);
+}
+void foo_hold(struct foo *fp) /* add a reference to the object */
+{
+    pthread_mutex_lock(&amp;fp-&gt;f_lock);
+    fp-&gt;f_count++;
+    pthread_mutex_unlock(&amp;fp-&gt;f_lock);
+}
+void foo_rele(struct foo *fp) /* release a reference to the object */
+{
+    pthread_mutex_lock(&amp;fp-&gt;f_lock);
+    if (--fp-&gt;f_count == 0) { /* last reference */
+        pthread_mutex_unlock(&amp;fp-&gt;f_lock);
+        pthread_mutex_destroy(&amp;fp-&gt;f_lock);
+        free(fp);
+    } else {
+        pthread_mutex_unlock(&amp;fp-&gt;f_lock);
+    }
+}
+</pre>
+</div>
+<p>
+这个例子使用 <code>mutex</code> 来保护一个数据结构，当有多个线程访问一个动态分配的对象的时候，我们可以给这个对象内嵌一个引用计数保护对象不会在线程被访问的时候被释放。
+</p>
+
+<p>
+在增加，减少，以及检查引用计数是否为0的时候，我们都会锁住 <code>mutex</code> 来保护它，最开始 <code>foo_alloc</code> 初始化的时设置引用计数为1的时候，不用设置这个锁保护，因为此时只有分配空间的那个线程引用它。如果这时候我们把这个结构放到一个链表中，那么它可以被其他线程找到，我们需要先为它加锁。
+</p>
+
+<p>
+在使用这个对象之前，线程要增加这个结构对象的引用计数；用完之后要减少引用计数；当引用计数为0的时候，要释放结构对象的内存空间。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline17" class="outline-4">
+<h4 id="orgheadline17"><span class="section-number-4">3.1.2</span> 死锁的避免</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<p>
+当线程将要尝试对同一个信号两次加锁的时候，会产生死锁。但是实际上，由于mutex而产生死锁这个现象发生的很不明显。例如：我们在程序中使用了一个以上的互斥信号量，如果 <b>第一个线程在持有第一个互斥信号量的时候再申请第二个互斥信号量，而第二个互斥信号量被第二个线程持有并且第二个线程想要加锁第一个互斥信号量；</b> 这样两个线程都无法继续了，它们都互相等待对方持有的资源，这时发生的现象就叫做死锁。
+</p>
+
+<p>
+死锁可以通过仔细控制信号量加锁的次序来避免。例如：假设你有两个互斥信号量A和B。如果所有的线程都首先给A加锁然后才给B加锁，那么对于这两个互斥信号量之间将不会发生死锁的现象（当然你有可能在其它的信号量上面发生死锁），只有当存在其它的线程对A，B加锁的次序相反的时候，才有可能会产生死锁。
+</p>
+
+<p>
+有时一个应用程序的体系使得很难将一个特定顺序的加锁应用在它的身上。如果包含了足够的锁和数据结构，而你的函数还是无法用一个简单的方法来实现，那么应该换一个思路。这个时候，你兴许可以把你的锁释放，然后在稍后的一个时间尝试。你可以使用 <code>pthread_mutex_trylock</code> 来避免死锁。如果你已经成功的持有了 <code>pthread_mutex_trylock</code> ，那么你可以继续。如果没有，你可以释放你已经持有的资源，并且清理其它的工作，一会再尝试。
+</p>
+
+<p>
+举例
+具体的例子不多说了，参见参考资料的源代码。这里主要是给了两个例子，都使用两个信号量。为了避免死锁，在添加信号量的时候都按照相同的次序加锁。第一个例子锁的粒度比较细，导致程序代码结构有点复杂，但是性能应该更好；第二个例子锁的粒度比较粗，性能相对差一些，但是代码结构很简单。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline18" class="outline-4">
+<h4 id="orgheadline18"><span class="section-number-4">3.1.3</span> 读写锁</h4>
+<div class="outline-text-4" id="text-3-1-3">
+<p>
+读写锁和互斥信号量类似，但是读写锁允许更高程度的并行。使用互斥信号量的状态只能是锁和非锁两种状态，并且在一个时间只有一个线程可以拥有锁。读写锁有三种可能的状态：读锁，写锁，和解锁。同一时刻只能有一个线程可以有写锁的状态，但是可以有多个线程处于读锁的状态。
+</p>
+
+<p>
+当读写锁被处于写锁的时候，所有尝试加锁（无论是写锁还是读锁）的线程都会阻塞直到写锁释放；当处于读锁状态的时候，所有尝试加读锁的线程都会允许加锁，但任何尝试加写锁的线程都会被阻塞直到所有线程的读锁被释放。有一句不太确定的原句，如下：
+</p>
+<pre class="example">
+Although implementations vary, readerwriter locks usually block additional readers if a lock is already held in read mode and a thread is blocked trying to acquire the lock in write mode. This prevents a constant stream of readers from starving waiting writers.
+</pre>
+<p>
+翻译不是很确定，大致是说：尽管实现不同，读写锁经常会在如下情况阻塞额外的读取者：当一个线程持有读锁，另外一个线程阻塞在获取写锁的时候。这样做的原因是，它可以防止大量读取操作导致一个写者无限等待。
+</p>
+
+<p>
+读写锁适合读取操作比修改操作频繁的情况。读写锁也叫共享互斥锁。当一个读写所处于读锁状态的时候，它处于共享模式；当处于写锁状态的时候，它处于互斥模式。
+和互斥信号量类似，读写锁也需要初始化之后才能使用。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+int pthread_rwlock_init(pthread_rwlock_t *restrict rwlock, const pthread_rwlockattr_t *restrict attr);
+int pthread_rwlock_destroy(pthread_rwlock_t *rwlock);
+</pre>
+</div>
+<p>
+函数成功返回0，失败返回错误号码。
+</p>
+
+<p>
+读写锁通过调用 <code>pthread_rwlock_init</code> 来进行初始化，如果使用默认的属性，我们可以给 <code>attr</code> 传递一个空指针，我们后面会讨论读写锁的属性。
+</p>
+
+<p>
+<b>在释放读写锁占用的内存之前，我们需要调用 <code>pthread_rwlock_destroy</code> 来清除它。</b> 如果 <code>pthread_rwlock_init</code> 为读写锁分配了任何的内存，那么 <code>pthread_rwlock_destroy</code> 就会释放这些资源。如果我们 <b>没有调用 <code>pthread_rwlock_destroy</code> 就直接释放读写锁的内存，那那么读写锁之前占用的那些额外的资源就会丢失。</b>
+</p>
+
+<p>
+为了让一个读写锁处于读模式，我们调用 <code>pthread_rwlock_rdlock</code> 函数；使它处于写模式，我们需要调用 <code>pthread_rwlock_wrlock</code> 。无论我们处于什么锁模式，我们都使用 <code>pthread_rwlock_unlock</code> 来释放读写锁。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+int pthread_rwlock_rdlock(pthread_rwlock_t *rwlock);
+int pthread_rwlock_wrlock(pthread_rwlock_t *rwlock);
+int pthread_rwlock_unlock(pthread_rwlock_t *rwlock);
+</pre>
+</div>
+<p>
+函数成功返回0，失败返回错误号码。
+系统实现可能会对读写锁的共享模式数量有所限制，所以我们需要检查 <code>pthread_rwlock_rdlock</code> 的返回。尽管 <code>pthread_rwlock_wrlock</code> 和 <code>pthread_rwlock_unlock</code> 有错误的返回码，如果我们设计妥当，我们就不需要检查其返回，只有我们不正确地使用它们的时候才会返回定义的错误码，例如使用一个没有初始化的锁，或者当我们请求了一个我们已经持有的锁导致死锁的时候。
+</p>
+
+<p>
+Single UNIX Specification也定义了有条件的读写锁。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+int pthread_rwlock_tryrdlock(pthread_rwlock_t *rwlock);
+int pthread_rwlock_trywrlock(pthread_rwlock_t *rwlock);
+</pre>
+</div>
+<p>
+正确返回0，失败返回错误号码。
+</p>
+
+<p>
+如果能够获取到锁，这两个函数就会返回0，如果不能获取到锁，这两个函数就会返回错误码 <code>EBUSY</code> 。这些函数使用的情况和前面的类似。
+</p>
+
+<p>
+举例：
+参见相应的参考资料。这个例子是通过一个读写锁来保护一系列的工作请求队列。当有作业被插入，删除到队列中的时候，加写锁；如果只是查询队列中的作业，那么只需要读锁。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline19" class="outline-4">
+<h4 id="orgheadline19"><span class="section-number-4">3.1.4</span> 条件变量</h4>
+<div class="outline-text-4" id="text-3-1-4">
+<p>
+条件变量是另外一个用于线程的同步机制。条件变量提供一个线程同步的点，当使用互斥信号量的时候，条件变量允许线程以一种无竞争的方式等待任何条件的发生。
+</p>
+
+<p>
+条件本身被互斥信号量保护，线程改变条件状态的时候必须先锁住这个信号。其它线程在请求信号量之前，不会注意到条件的变化，因为锁住互斥信号量才能对条件进行检测。
+</p>
+
+<p>
+使用条件变量之前，必须首先对这个条件变量进行初始化。条件变量使用数据结构 <code>pthread_cond_t</code> 来进行表示。我们可以把常量 <code>PTHREAD_COND_INITIALIZER</code> 分配给静态分配的条件变量，但是如果我们采用动态的方式分配条件变量那么我们使用 <code>pthread_cond_init</code> 函数对它进行初始化。
+</p>
+
+<p>
+在 <b>释放条件变量所占用的内存空间的之前</b> 我们可以使用函数 <code>pthread_mutex_destroy</code> 对这个条件变量进行反初始化。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+int pthread_cond_init(pthread_cond_t *restrict cond, pthread_condattr_t *restrict attr);
+int pthread_cond_destroy(pthread_cond_t *cond);
+</pre>
+</div>
+<p>
+两者在成功的时候都返回0，如果失败会返回错误码。
+</p>
+
+<p>
+这里如果想要创建一个使用默认的属性的条件变量，那么我们就给 <code>pthread_cond_init</code> 函数的 <code>attr</code> 参数传递 <code>NULL</code> 指针。
+</p>
+
+<p>
+我们使用 <code>pthread_cond_wait</code> 来等待条件为 <code>true</code> 。另外，还有函数可以如果在一定的时间之内条件没有被满足，那么会返回一个错误号码到一个指定的变量中。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+int pthread_cond_wait(pthread_cond_t *restrict cond, pthread_mutex_t *restrict mutex);
+int pthread_cond_timedwait(pthread_cond_t *restrict cond, pthread_mutex_t *restrict mutex,
+                           const struct timespec *restrict timeout);
+</pre>
+</div>
+<p>
+两个函数如果成功都返回0，如果失败则返回一个错误号码。
+</p>
+
+<p>
+传递给函数 <code>pthread_cond_wait</code> 的互斥信号量 <code>mutex</code> 会保护这个条件。调用者把已经锁住的信号量传递给函数，这个函数原子性地把调用线程放到等待这个条件变量的线程等待队列上面，然后解锁这个互斥信号量。这样就把检测条件变量和线程为了等待条件变化而进入睡眠之间的时间窗口关闭了，这样线程不会错过条件的变化(因为检测到条件不行，才会解锁让其它线程有机会修改条件使之满足)。当 <code>pthread_cond_wait</code> 返回的时候， <code>mutex</code> 会再次被锁住(因为条件满足了，所以再次锁住，继续后面的操作)。（这里可能比较难理解，总之是在这个函数的内部先在检查完条件并且等待之后做了一步解锁操作，收到满足条件的通知之后继续执行准备返回但是返回前又加锁了,看后面的例子会比较容易明白）
+</p>
+
+<p>
+函数 <code>pthread_cond_timedwait</code> 和 <code>pthread_cond_wait</code> 的功能类似，但是它设置了一个超时的机制，指定我们等待的时间。这个时间通过 <code>timespec</code> 结构来表示，
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">struct timespec {
+    time_t tv_sec;   /* seconds */
+    long   tv_nsec;  /* nanoseconds */
+};
+</pre>
+</div>
+<p>
+使用这个结构，我们需要使用绝对时间值来指定我们将要等待多久，而不是一个相对的时间值。例如，我们想要等待3分钟，我们不是给这个结构赋值为3分钟，而是把 <code>now+3</code> 这个时间赋值给它。
+</p>
+
+<p>
+我们可以使用 <code>gettimeofday</code> 来获取使用 <code>timeval</code> 结构表示的当前时间，然后把这个结构转化成 <code>timespec</code> 结构，来获取绝对的时间值。
+</p>
+
+<p>
+函数如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">void maketimeout(struct timespec *tsp, long minutes)
+{
+    struct timeval now;
+    /* 获取当前时间 */
+    gettimeofday(&amp;now);
+
+    /*把timeval表示的时间转换成timespec结构表示的时间*/
+    tsp-&gt;tv_sec = now.tv_sec;
+    tsp-&gt;tv_nsec = now.tv_usec * 1000; /* 微秒转换成纳秒 */
+
+    /* 为当前时间增加超时等待时长*/
+    tsp-&gt;tv_sec += minutes * 60;
+}
+</pre>
+</div>
+<p>
+如果超时了条件也没有满足，那么 <code>pthread_cond_timewait</code> 将会重新请求互斥信号量并且返回 <code>ETIMEDOUT</code> 。当 <code>pthread_cond_wait</code> 和 <code>pthread_cond_timedwait</code> 成功返回的时候，需要一个线程重新估计条件值，因为可能另外有线程已经运行并且改变了条件。
+</p>
+
+<p>
+有两个函数用来通知线程一个条件已经被满足了。 <code>pthread_cond_signal</code> 函数将会唤醒一个等待在一个条件上面的线程; <code>pthread_cond_broadcast</code> 函数将会唤醒所有等待一个条件的线程。
+</p>
+
+<p>
+POSIX标准允许 <code>pthread_cond_signal</code> 的实现唤醒不止一个线程，这样会使得实现更为简单。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+int pthread_cond_signal(pthread_cond_t *cond);
+int pthread_cond_broadcast(pthread_cond_t *cond);
+</pre>
+</div>
+<p>
+两者如果成功返回0，如果失败返回错误号码。
+</p>
+
+<p>
+当我们调用 <code>pthread_cond_signal</code> 或者 <code>pthread_cond_broadcast</code> 的时候，也就是说我们将会给线程或者条件发送信号。我们需要足够地仔细，只能在修改了条件状态的时候才给线程发送信号。
+</p>
+
+<p>
+举例：条件变量的使用方法如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">#include &lt;pthread.h&gt;
+struct msg {
+    struct msg *m_next;
+    /* ... more stuff here ... */
+};
+struct msg *workq;
+pthread_cond_t qready = PTHREAD_COND_INITIALIZER;
+pthread_mutex_t qlock = PTHREAD_MUTEX_INITIALIZER;
+
+void process_msg(void) {
+    struct msg *mp;
+    for (;;) {
+        pthread_mutex_lock(&amp;qlock);/*这里是互斥相关，因为需要访问工作队列，所以进行操作之前首先上锁，保证其他线程不能再修改了*/
+        while (workq == NULL)
+            pthread_cond_wait(&amp;qready, &amp;qlock);/*这里是同步相关，发现队列为空，所以在相应的条件变量上面等待。等待函数的内部实际做的操作是检测并且将线程置于等待队列之后再解开锁便于其它线程修改工作队列使条件满足*/
+
+        mp = workq;/*到这里表示刚才解锁等待的时候有线程修改了工作队列并且通知本线程条件满足了，于是从前面的等待函数中返回，并且返回之前再将刚才解开的锁重新加上，防止之后的修改期间又有其他线程干扰*/
+        workq = mp-&gt;m_next;
+        pthread_mutex_unlock(&amp;qlock);/*修改之后真正地解开锁*/
+        /* now process the message mp */
+    }
+}
+
+void enqueue_msg(struct msg *mp) {
+    pthread_mutex_lock(&amp;qlock);/*这里是互斥相关，准备修改工作队列，所以加锁*/
+    mp-&gt;m_next = workq;
+    workq = mp;
+    pthread_mutex_unlock(&amp;qlock);
+    pthread_cond_signal(&amp;qready);/*这里是同步相关，通知队列状态的变化给等待的线程*/
+}
+</pre>
+</div>
+
+<p>
+上面的例子，展示了如何使用条件变量和互斥信号量一起来实现线程之间的同步。
+</p>
+
+<p>
+条件用来表示工作队列(work queue)的状态。我们通过互斥信号量来保护条件并且通过一个 <code>while</code> 循环来对条件进行检测。当我们把一个消息放到工作队列上(work queue)的时候，我们需要持有这个互斥信号量，但是我们再条件满足通知等待线程的时候不需要持有这个互斥信号量。只要线程在我们调用 <code>cond_signal</code> 之前将消息推送至工作队列，我们就可以释放互斥信号量。因为我们是在一个 <code>while</code> 循环中检查这个条件，所以不会导致问题：线程将会醒来，发现队列还是空的，然后又继续进入等待状态了。如果代码无法忍受这个竞争，那么我们将需要在发送信号给线程的时候也持有这个锁。
+</p>
+
+<p>
+译者注：这里无法忍受这个竞争的意思是，比如没有那个 <code>while</code> 循环。具体参见后面的: <a href="#orgheadline27">（1）关于使用循环 <code>while</code> 来检测条件变量的条件</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline20" class="outline-4">
+<h4 id="orgheadline20"><span class="section-number-4">3.1.5</span> 译者注</h4>
+<div class="outline-text-4" id="text-3-1-5">
+</div><div id="outline-container-orgheadline30" class="outline-5">
+<h5 id="orgheadline30"><a id="ID-73ef385d-1708-40d8-84aa-2e92cc7329fd"></a><span class="section-number-5">3.1.5.1</span> 评论与思考</h5>
+<div class="outline-text-5" id="text-3-1-5-1">
+</div>
+<ol class="org-ol"><li><a id="orgheadline27"></a><a id="ID-457a4989-4440-4c5d-ad41-2fccbce3f9f0"></a>关于使用循环 <code>while</code> 来检测条件变量的条件<br><div class="outline-text-6" id="text-3-1-5-1-1">
+<p>
+注意：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">while (workq == NULL)
+             pthread_cond_wait(&amp;qready, &amp;qlock);
+</pre>
+</div>
+<p>
+这里用 <code>while</code> 而不用 <code>if</code> 来循环判断是否等待，据我了解，是因为使用 <code>if</code> ，那从 <code>pthread_cond_wait</code> 返回后，可能 <code>workq</code> 不满足条件了，因为可能有多个线程使用这段代码，这段代码后续操作都是基于 "workq==NULL" 这个条件，第一个执行这段代码的线程返回的当然正常操作，后面的就不行了。
+</p>
+
+<p>
+具体来说，如果不带 <code>while</code> 进行检测，这个时候，代码的过程就变成：
+</p>
+<ol class="org-ol">
+<li>等待队列非空的线程1在等待时立即进入等待；</li>
+<li>增加队列元素的线程2先释放锁，再发送信号通知线程1队列非空;</li>
+<li>等待队列非空的线程1收到信号立即加锁并从等待返回，然后不再循环检测条件而直接访问新添加的元素。</li>
+</ol>
+<p>
+这里，在线程2释放锁之后、发送信号前的时间窗期间，若有其它线程3加锁访问了队列，并且恰巧是删除队列元素使队列为空，这个时候线程2才发送信号通知线程1队列非空，这时候通知的已经是错误的信息，线程1就从等待中返回来，然后在线程3解锁后加锁成功，它误以为队列非空而访问再次变空的队列导致问题了。
+</p>
+</div></li>
+
+<li><a id="orgheadline28"></a>一个不错的应用<br><div class="outline-text-6" id="text-3-1-5-1-2">
+<p>
+线程池，实现很多，可自行搜索threadpool相关代码，或参见：<a href="http://www.oschina.net/p/threadpool" target="_blank" rel="noopener">http://www.oschina.net/p/threadpool</a>
+关键：
+1、有一个队列，长度为M，每个队列元素是待执行的任务对应的函数。
+2、启动N个线程，这N个线程执行添加的任务（即队列中的函数），每个线程是一个死循环，大致做的事情是：
+    每当队列中有元素则其中的某个空闲线程读取队列元素，并执行相应的函数；当队列为空则等待队列非空。
+</p>
+</div></li>
+
+<li><a id="orgheadline29"></a>关于 <code>pthread_conf_signal</code> 函数应当在 <code>unlock</code> 之前还是之后<br><div class="outline-text-6" id="text-3-1-5-1-3">
+<p>
+有这个文章:<a href="http://blog.csdn.net/xjtuse_mal/article/details/5413101" target="_blank" rel="noopener">http://blog.csdn.net/xjtuse_mal/article/details/5413101</a>
+</p>
+
+<p>
+其中主要部分：
+</p>
+<pre class="example">
+1)线程1获取mutex，在进行数据处理的时候，线程2也想获取mutex，但是此时被线程1所占用，线程2进入休眠，等待mutex被释放。
+2)线程1做完数据处理后，调用pthread_cond_signal（）唤醒等待队列中某个线程，在本例中也就是线程2。线程1在调用 pthread_mutex_unlock（）前，因为系统调度的原因，线程2获取使用CPU的权利，那么它就想要开始处理数据，但是在开始处理之 前，mutex必须被获取，很遗憾，线程1正在使用mutex，所以线程2被迫再次进入休眠。
+3)然后就是线程1执行pthread_mutex_unlock（）后，线程2方能被再次唤醒。
+从这里看，使用的效率是比较低的，如果再多线程环境中，这种情况频繁发生的话，是一件比较痛苦的事情。
+所以觉得，如果程序不关心线程可预知的调度行为，那么最好在锁定区域以外调用他们吧：－）
+</pre>
+</div></li></ol>
+</div>
+
+<div id="outline-container-orgheadline31" class="outline-5">
+<h5 id="orgheadline31"><span class="section-number-5">3.1.5.2</span> 原文参考</h5>
+<div class="outline-text-5" id="text-3-1-5-2">
+<p>
+参考： <a href="file:///home/miracle/mygitrepo/quietheart/mydoc/prepub/orgmode/_data/books/APUE2/ch11lev1sec6.html" target="_blank" rel="noopener">APUE2/ch11lev1sec6.html</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline21" class="outline-3">
+<h3 id="orgheadline21"><span class="section-number-3">3.2</span> 7、总结</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+这一章里面我们介绍了线程相关的内容，讨论了创建和销毁一个线程的POSIX相关函数。我们也介绍了线程的同步。我们讨论了三个基本的同步机制，互斥信号量，读写锁，以及条件变量，同时我们也看到了我们是如何利用它们来保护共享资源的。
+</p>
+</div>
+<div id="outline-container-orgheadline22" class="outline-4">
+<h4 id="orgheadline22"><span class="section-number-4">3.2.1</span> 译者注</h4>
+<div class="outline-text-4" id="text-3-2-1">
+</div><div id="outline-container-orgheadline32" class="outline-5">
+<h5 id="orgheadline32"><span class="section-number-5">3.2.1.1</span> 原文参考</h5>
+<div class="outline-text-5" id="text-3-2-1-1">
+<p>
+参考： <a href="file:///home/miracle/mygitrepo/quietheart/mydoc/prepub/orgmode/_data/books/APUE2/ch11lev1sec7.html" target="_blank" rel="noopener">APUE2/ch11lev1sec7.html</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>
