@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    关于存储管理中的一些概念
+</title>
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="../../../../lib/jquery-1.11.3.min.js"></script>
+<script src="../../../../lib/typelighter.js"></script>
+<script src="../../../../js/common.js"></script>
+<script src="../../../../js/nav.js"></script>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="../../../../css/partial/head.css">
+<link rel="stylesheet" href="../../../../css/partial/header.css">
+<link rel="stylesheet" href="../../../../css/partial/archives.css">
+<link rel="stylesheet" href="../../../../css/partial/categories.css">
+<link rel="stylesheet" href="../../../../css/partial/home-posts.css">
+<link rel="stylesheet" href="../../../../css/partial/page-nav.css">
+<link rel="stylesheet" href="../../../../css/partial/tags.css">
+<link rel="stylesheet" href="../../../../css/partial/about.css">
+<link rel="stylesheet" href="../../../../css/partial/more.css">
+<link rel="stylesheet" href="../../../../css/partial/footer.css">
+<link rel="stylesheet" href="../../../../css/post.css">
+<link rel="stylesheet" href="../../../../css/orgmode/hexo_orgmode_style.css">
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
+            <table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="../../../../index.html">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="../../../../categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(67)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="../../../../categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(8)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="../../../../categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="../../../../categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="../../../../categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(7)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="../../../../categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="../../../../categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="../../../../categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="../../../../categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="../../../../categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="../../../../categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(6)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="../../../../categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="../../../../categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="../../../../categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="../../../../categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="../../../../categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="../../../../categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="../../../../categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="../../../../categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="../../../../categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="../../../../categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="../../../../categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="../../../../categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="../../../../categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/gtd-next/">gtd_next</a><span class="tag-list-count">1</span></li></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+               <a href="/" title="Menu.Home">
+               <h1>QuietHeart's Site</h1>
+               </a>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <h1 id="header1" style="text-align: center;">
+                    关于存储管理中的一些概念
+                </h1>
+                <hr id="title_line">
+                <article>
+                    <div>
+                        <div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 前言</a></li>
+<li><a href="#orgheadline2">2. 一、非易失存储（例如磁盘）的管理</a>
+<ul>
+<li><a href="#orgheadline3">2.1. 1、关于磁盘物理结构与寻址</a></li>
+<li><a href="#orgheadline4">2.2. 2、关于扇区(sector)、块(block)和簇(cluster)</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline5">3. 二、易失性存储(例如内存)的管理</a>
+<ul>
+<li><a href="#orgheadline6">3.1. 1、关于实模式和保护模式</a></li>
+<li><a href="#orgheadline7">3.2. 2、关于页(page)和段(segment)</a></li>
+<li><a href="#orgheadline8">3.3. 3、分页机制和分段机制</a></li>
+<li><a href="#orgheadline9">3.4. 4、分段机制和逻辑地址</a></li>
+<li><a href="#orgheadline10">3.5. 5、分页机制和线性地址</a></li>
+<li><a href="#orgheadline11">3.6. 6、Linux内核中的内存管理</a>
+<ul>
+<li><a href="#orgheadline12">3.6.1. (1)用户空间</a></li>
+<li><a href="#orgheadline13">3.6.2. (2)内核空间</a></li>
+<li><a href="#orgheadline14">3.6.3. (3)内核虚拟地址，用户空间虚拟地址</a></li>
+<li><a href="#orgheadline15">3.6.4. (4)内存地址空间之间的转换：</a></li>
+<li><a href="#orgheadline16">3.6.5. (5)关于分配内存：</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline17">4. 三、其他</a>
+<ul>
+<li><a href="#orgheadline18">4.1. 1，块设备的bio</a></li>
+<li><a href="#orgheadline19">4.2. 2，通过io映射将外设映射到内存空间</a></li>
+<li><a href="#orgheadline20">4.3. 参考</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 前言</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+在编写程序的时候，在学习操作系统以及编写驱动的时候，尤其是在Linux内核空间中编程的时候，经常会被一些与存储相关的概念所困扰，而这也经常是我们程序出现错误概率很大的一个原因(指针相关的错误)。
+</p>
+
+<p>
+我们经常遇到的问题，例如：什么是页？什么是段？什么是扇区？什么是块？什么是簇？什么是磁道？什么是物理地址？什么是线性地址？什么是虚拟地址？什么是逻辑地址？它们之间究竟有什么关系？……这些问题，这里暂时归结为存储管理中涉及到的问题，而存储管理，又可分为内存管理，外存管理。本文通过对外存、内存的管理的简单叙述，尝试达到理清对这些概念以及它们之间的关系的简单理解。更为具体的内容，可以参见列出的参考资料，或者其他更好的资料。
+</p>
+
+<p>
+主要内容：
+一、非易失存储（例如磁盘）的管理
+二、易失性存储(例如内存)的管理
+三、其他
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> 一、非易失存储（例如磁盘）的管理</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3"><span class="section-number-3">2.1</span> 1、关于磁盘物理结构与寻址</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+关键之处在于关于磁盘物理结构，首先理解了磁盘的柱面（磁道），扇区，以及盘面之后，再知道如下信息，就掌握了关于磁盘寻址基本的知识。
+</p>
+
+<p>
+传统的大致情况就是，一个盘面上面有多个磁道（每个磁道就是一圈，这些磁道组成盘面上的同心圆），一个磁道上面有多个扇区（就是一个同心圆上面的一个弧线部分，每个扇区实际物理大小和硬件相关，但是内核内部默认和驱动交互时候采用扇区是512字节的逻辑扇区，所以物理扇区一定是512字节的整数倍），而多个盘片上的同一位置的磁道组成的圆柱就是柱面。综上，寻址磁盘，可以通过“(盘片，磁道，扇区)”达到目的，而这样的磁盘的大小为：盘片数*每盘片上的磁道数*每磁道上的扇区数*每扇区的字节数。
+</p>
+
+<p>
+另外，磁盘的分区是以磁道为边界的，所以如果只有2个磁道，因此最多只能创建2个分区。
+</p>
+
+<p>
+传统的磁盘使用8个位表示盘面数、6个位表示每磁道扇区数、10个位表示磁道数，因此盘面、每磁道扇区、磁道的最大数值分别为255、63和1023。这也是传说中启动操作系统时的1024柱面(磁道)和硬盘容量8G限制的根源。
+</p>
+
+<p>
+现代磁盘采用线性寻址方式突破了这一限制，从本质上说，如果你的机器还没生锈，那么你的硬盘无论是内部结构还是访问方式都与常识中的盘面、每磁道扇区、磁道无关。但为了与原先的理解兼容，对于现代磁盘，我们在访问时还是假设它具有传统的结构。目前比较通用的假设是：所有磁盘具有最大数目的(也就是恒定的)盘面和每磁道扇区数，而磁盘大小与磁道数与成正比。
+</p>
+
+<p>
+因此，对于一块80G的硬盘，根据假设，这块磁盘的盘面和每磁道扇区数肯定是255和63，磁道数为：80*1024*1024*1024/512(字节每扇区)/255(盘面数)/63(每磁道扇区数)=10043(小数部分看作不完整的磁道被丢弃)。 假设写磁盘驱动程序中我们指定了磁盘大小为16M，共包含16*1024*1024/512=32768个扇区。假设这块磁盘具有最大盘面和每磁道扇区数后，那么它的磁道数就是：32768/255/63=2。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">2.2</span> 2、关于扇区(sector)、块(block)和簇(cluster)</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+扇区是硬件的磁盘的最小存储单位，而块是文件系统中数据存储的最小单元。这里，文件系统是用来规范数据文件在磁盘上以什么方式进行存储的，以便操作系统可以通过文件系统中定义好的规范，访问到磁盘上的文件。
+</p>
+
+<p>
+一个磁盘扇区一般512个字节（现在有4K的了）, 磁盘块应该是类似FAT的簇大小的概念，是操作系统中分配磁盘容量的最小单位了，一般是512B*2^n。扇区是硬件上的单位，块一般是针对上层的，块一般要比扇区大。有些地方的说法，块和扇区都无什么区别了，关心逻辑和物理的就行了。也就是说，设备驱动的相关结构中，有两个地方，一个表示物理的扇区，一个表示逻辑扇区；物理的扇区就是实际物理扇区的大小，为512字节的整数倍；而逻辑扇区，就是512字节，操作系统认为所有扇区就是512字节，使用统一的逻辑扇区大小做为操作单位，和驱动进行交互，简化了写驱动的繁琐；而具体内部是如何转化两者之间关系的，写驱动的时候不用关心，我们只要告诉物理扇区大小，逻辑扇区大小，然后在驱动里面使用逻辑扇区（512字节）就行了。
+</p>
+
+<p>
+而对于簇，在fat文件系统中，fat上面簇是多个磁道，当然不同的文件系统有所不同。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5"><span class="section-number-2">3</span> 二、易失性存储(例如内存)的管理</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">3.1</span> 1、关于实模式和保护模式</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+说到内存管理，就不能不提到实模式和保护模式。处理器的两种工作方式：保护模式和实模式。早期的dos就是运行在实模式下，而现在的windows则运行在保护模式下。实模式使用的逻辑地址直接转换成物理地址，只能访问1M多一点的内存空间，在拥有32根地址线的cpu中访问1M以上的空间则变得很困难。为了满足计算机对资源（存储资源和cpu资源等等）的管理，由此产生了新的管理方式&#x2013;保护模式。
+</p>
+
+<p>
+80386及以上的处理器功能要大大超过其先前的处理器，但只有在保护模式下，处理器才能发挥作用：
+</p>
+<ul class="org-ul">
+<li>在保护模式下，全部32根地址线有效，可寻址4G的物理地址空间；</li>
+<li>扩充的存储分段机制和可选的存储器分页机制，不仅为存储器共享和保护提供了硬件支持，而且为实现虚拟存储器提供了硬件支持；</li>
+<li>支持多任务；</li>
+<li>4个特权级和完善的特权级检查机制，实现了数据的安全和保密。</li>
+</ul>
+
+<p>
+计算机启动后首先进入的就是实模式，通过设置相应的寄存器才能进入保护模式。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7"><span class="section-number-3">3.2</span> 2、关于页(page)和段(segment)</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+和扇区和块等一般是针对于非易失存储介质（如磁盘）不同，段和页的概念一般是对于易失性存储而言的。也就是主要体现在内存访问方式上的存储方式。从逻辑地址到线性地址的转换由80386分段机制管理，分页机制是在段机制之后进行的，它进一步将线性地址转换为物理地址。
+</p>
+
+<ol class="org-ol">
+<li><p>
+段是信息的逻辑单位。
+</p>
+
+<p>
+分段的作业地址空间是二维的，程序员在标识一个地址时，既需给出段名，又需给出段内地址。细言之：段式分段由用户设计划分，每段对应一个相应的的程序模块，有完整的逻辑意义。分段的目的是为了能更好的满足用户的需要。
+</p></li>
+
+<li><p>
+页是信息的物理单位。
+</p>
+
+<p>
+分页的作业地址空间是维一的，即单一的线性空间，程序员只须利用一个记忆符，即可表示一地址。分页的目的是为实现离散分配方式，以消减内存的外零头，提高内存的利用率；或者说，分页仅仅是由于系统管理的需要，而不是用户的需要。
+</p></li>
+
+<li><p>
+页和段的大小。
+</p>
+
+<p>
+页的大小固定且由系统确定，把逻辑地址划分为页号和页内地址两部分，是由机器硬件实现的，因而一个系统只能有一种大小的页面。段的长度却不固定，决定于用户所编写的程序，通常由编辑程序在对源程序进行编辑时，根据信息的性质来划分。
+</p></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">3.3</span> 3、分页机制和分段机制</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+处理器在得到逻辑地址后首先通过分段机制转换为线性地址，线性地址再通过分页机制转换为物理地址最后读取数据。分段机制是必须的，分页机制是可选的，当不使用分页的时候线性地址将直接映射为物理地址，设立分页机制的目的主要是为了实现虚拟存储。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">3.4</span> 4、分段机制和逻辑地址</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+分段机制中，将逻辑地址转换成线性地址的细节就省略了，总的思想就是首先通过段选择子在描述符表中找到相应段的描述符，根据描述符中的段基址首先确定段的位置，再通过 <code>OFFSET</code> 加上段基址计算出线性地址。进一步解释，一个任务会涉及多个段(代码段，数据段……)，每个段需要一个描述符来描述，为了便于组织管理，80386及以后处理器把描述符组织成表，即描述符表。逻辑地址结构形式一般为: <code>seg:offset</code> 形式，用描述表中记录的段基址加上逻辑地址 <code>sel:offset</code> 中的 <code>offset</code> 部分，即转换成线性地址。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><span class="section-number-3">3.5</span> 5、分页机制和线性地址</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+通过分段机制，将逻辑地址转换成的线性地址，简单的说就是 <code>0000000h~ffffffffh</code> (即0~4G)的线性结构，是32个bite位能表示的一段连续的地址，但它是一个概念上的、抽象的地址，并不存在在现实之中。线性地址地址主要是为分页机制而产生的。
+</p>
+
+<p>
+分页机制是在段机制之后进行的，它进一步将线性地址转换为物理地址。80386使用4K字节大小的页，且每页的起始地址都被4K整除；因此，80386把4GB字节的“线性地址”空间划分为1M个页面，采用了两级页表结构进行转换。具体转换过程也省略了，大致如下：
+</p>
+<ol class="org-ol">
+<li>第一级表称为页目录，存储在一个4K字节的页中，每个表项为4个字节，线性地址最高的10位（22-31）对第一级表进行索引，索引得到的表项内容定位了二级表中的一个表的地址（即下级页表所在的内存块号）。</li>
+<li>第二级表称为页表，存储在一个4K字节页中，包含了1K字节的表项，线性地址的中间10位（12-21）位对二级页表进行索引，索引得到的表项包含了一个页的物理地址。</li>
+<li>页物理地址的高20位与线性地址的低12位形成最后的物理地址。</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11"><span class="section-number-3">3.6</span> 6、Linux内核中的内存管理</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+在Linux内核中，内存分为内核空间和用户空间。
+</p>
+</div>
+<div id="outline-container-orgheadline12" class="outline-4">
+<h4 id="orgheadline12"><span class="section-number-4">3.6.1</span> (1)用户空间</h4>
+<div class="outline-text-4" id="text-3-6-1">
+<p>
+在Linux中，每个用户进程都可以访问4GB的线性虚拟内存空间。其中从0到3GB的虚存地址是用户空间，用户进程可以直接访问。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline13" class="outline-4">
+<h4 id="orgheadline13"><span class="section-number-4">3.6.2</span> (2)内核空间</h4>
+<div class="outline-text-4" id="text-3-6-2">
+<p>
+从3GB到4GB的虚存地址为内核态空间，存放供内核访问的代码和数据，用户态进程不能访问。所有进程从3GB到4GB的虚拟空间都是一样的，linux以此方式让内核态进程共享代码段和数据段。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline14" class="outline-4">
+<h4 id="orgheadline14"><span class="section-number-4">3.6.3</span> (3)内核虚拟地址，用户空间虚拟地址</h4>
+<div class="outline-text-4" id="text-3-6-3">
+<p>
+这里的虚拟地址，实际上就是分页机制用来转化成物理地址的线性地址。讲述这里的时候，使用下面三个地址描述内存：
+</p>
+<dl class="org-dl">
+<dt>物理地址( <code>phyaddr</code> )</dt><dd>对应真实的内存.</dd>
+<dt>内核虚拟地址( <code>kervir</code> )</dt><dd>内核的虚地址空间(3g-4g)，例如 <code>_get_free_pages</code> 等就是从这里分配。</dd>
+<dt>用户虚拟地址( <code>usrvir</code> )</dt><dd>用户的虚拟空间地址(0g-3g).例如 <code>malloc</code> 等返回的就是这里的地址。</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-orgheadline15" class="outline-4">
+<h4 id="orgheadline15"><span class="section-number-4">3.6.4</span> (4)内存地址空间之间的转换：</h4>
+<div class="outline-text-4" id="text-3-6-4">
+<dl class="org-dl">
+<dt><code>phyaddr</code> &lt;-&gt; <code>kervir</code></dt><dd>有类似 <code>_pa</code> , <code>_va</code> 这样的宏。</dd>
+<dt><code>kervir</code> -&gt; <code>usrvir</code></dt><dd>有类似 <code>remap_pfn_range</code> 这样的函数，一般在驱动里面调用，返回内核地址给用户空间。</dd>
+<dt><code>phyaddr</code> -&gt; <code>usrvir</code></dt><dd>知道 <code>phyaddr</code> 的基地址，与usrvir的基地址，然后计算偏移量即可。</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-orgheadline16" class="outline-4">
+<h4 id="orgheadline16"><span class="section-number-4">3.6.5</span> (5)关于分配内存：</h4>
+<div class="outline-text-4" id="text-3-6-5">
+<ol class="org-ol">
+<li><p>
+内核空间内存分配
+</p>
+<dl class="org-dl">
+<dt><code>_get_free_pages</code></dt><dd>连续物理地址，且连续最大页为 <code>2^PAGE_SHIFT*2^MAXORDER</code> ，宏可以配置。</dd>
+<dt><code>kmalloc</code></dt><dd>连续物理地址，不过分配的空间太小了，只有128k,也有一个可以配置的宏。</dd>
+<dt><code>vmalloc</code></dt><dd>分配的地址空间物理上不连续。</dd>
+</dl>
+<p>
+想要知道更具体的信息，内核源代码中的 <code>kmalloc.h/c</code> , <code>kmalloc_size.h/c</code>, <code>slab.h/c</code> 等文件会有助于了解。
+</p></li>
+
+<li>用户空间内存分配
+<dl class="org-dl">
+<dt><code>malloc</code></dt><dd>从用户堆中动态分配内存。</dd>
+</dl></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline17" class="outline-2">
+<h2 id="orgheadline17"><span class="section-number-2">4</span> 三、其他</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+这里，是一些补充性的内容。
+</p>
+</div>
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18"><span class="section-number-3">4.1</span> 1，块设备的bio</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+编写块设备驱动，最终用户请求的数据（读或者写）都会通过 <code>bio</code> 这个结构反应出来，也就是说， <code>bio</code> 代表一次请求。这里就用到了 <code>page</code> 。对于 <code>page</code> ，一般各种cpu操作 <code>page</code> 的最小单位是4k，当然有的设成8k等，但是最小是4k。
+</p>
+
+<p>
+当块设备请求到来的时候，会为用户请求数据分配一块虚拟地址，存放在请求结构( <code>request</code> )中的 <code>bio</code> 结构中，而 <code>bio</code> 结构中的 <code>bi_io_vec</code> 数组存放实际的数据。数组元素为：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">struct bio_vec
+{
+    struct page* bv_page;
+    unsigned int bv_len;
+    unsigned int bv_offset;
+}
+</pre>
+</div>
+
+<p>
+实际上，分配给用户请求数据的虚拟地址不一定以 <code>page</code> 进行对齐，所以要对其 <code>align</code> ，如下：
+</p>
+<pre class="example">
+|--###|#####|#####|##---|
+</pre>
+<p>
+这里，分配了4个页给用户请求数据，这四个页都存放在一个 <code>bio_vec</code> 中的 <code>bv_page</code> 列表中。而由于需要 <code>align</code> ，所以'#'中的才是实际的数据，而'-'的可能是别人的或者没有用的数据等。这里， <code>bv_offset</code> 就是第一个 <code>bv_page</code> 中第一个'#'中的偏移，而 <code>bv_len</code> 就是从第1个'#'到最后一个'#'的长度。这一点要注意，不要从 <code>bv_page</code> 开始的页对应的虚拟地址访问 <code>page</code> 。
+</p>
+
+<p>
+获取一个 <code>page</code> 对应的起始地址方式是使用 <code>page_address</code> 宏，这样返回 <code>page</code> 的起始地址，再加上 <code>bv_offset</code> 就得到整个 <code>bio</code> 结构中数据的起始地址了。获取 <code>bio</code> 数据对应的虚拟地址的函数的实现就是如下：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">//include/linux/bio.h
+static inline void *bio_data(struct bio *bio)
+{
+    if (bio-&gt;bi_vcnt)
+         return page_address(bio_page(bio)) + bio_offset(bio);
+
+    return NULL;
+}
+</pre>
+</div>
+<p>
+可知，通过 <code>bio_data</code> 就可以获得 <code>bio</code> 数据的虚拟地址了，通过内核代码发现，这个虚拟地址只是 <code>bio</code> 数据的当前 <code>vec</code> 索引地址，而不一定是整个的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="section-number-3">4.2</span> 2，通过io映射将外设映射到内存空间</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+我们使用 <code>ioremap</code> 来将外设的空间映射到内存空间，借以访问外设，而这里所映射得到的就是物理地址，物理地址是一个固定的常量，而不是我们以为的随意的一个地址。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="section-number-3">4.3</span> 参考</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+以上，是本人根据理解，综合所参考的资料，书上所学，以及工作时候的时间，所做的总结。尽量只用文字的形式描述，只通过文本文件便可以学习。如其中有不准或者更好的建议，可以联系我，谢谢！
+</p>
+<ul class="org-ul">
+<li><a href="http://bbs.chinaunix.net/thread-2017377-2-1.html" target="_blank" rel="noopener">http://bbs.chinaunix.net/thread-2017377-2-1.html</a></li>
+<li><a href="http://bbs.chinaunix.net/thread-2083672-1-1.html" target="_blank" rel="noopener">http://bbs.chinaunix.net/thread-2083672-1-1.html</a>#</li>
+<li><a href="http://www.cnblogs.com/c1230v/articles/1432525.html" target="_blank" rel="noopener">http://www.cnblogs.com/c1230v/articles/1432525.html</a></li>
+<li><a href="http://hi.baidu.com/jingxshi/blog/item/7056f612fdcead58f919b865.html" target="_blank" rel="noopener">http://hi.baidu.com/jingxshi/blog/item/7056f612fdcead58f919b865.html</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>

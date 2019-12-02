@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>
+    关于中断
+</title>
+<!--javascript-->
+<!--script type="text/javascript" src="/script.js"></script-->
+<script src="../../../../lib/jquery-1.11.3.min.js"></script>
+<script src="../../../../lib/typelighter.js"></script>
+<script src="../../../../js/common.js"></script>
+<script src="../../../../js/nav.js"></script>
+
+<!--css-->
+<!--link rel="stylesheet" href="/style.css" type="text/css" /-->
+<link rel="stylesheet" href="../../../../css/partial/head.css">
+<link rel="stylesheet" href="../../../../css/partial/header.css">
+<link rel="stylesheet" href="../../../../css/partial/archives.css">
+<link rel="stylesheet" href="../../../../css/partial/categories.css">
+<link rel="stylesheet" href="../../../../css/partial/home-posts.css">
+<link rel="stylesheet" href="../../../../css/partial/page-nav.css">
+<link rel="stylesheet" href="../../../../css/partial/tags.css">
+<link rel="stylesheet" href="../../../../css/partial/about.css">
+<link rel="stylesheet" href="../../../../css/partial/more.css">
+<link rel="stylesheet" href="../../../../css/partial/footer.css">
+<link rel="stylesheet" href="../../../../css/post.css">
+<link rel="stylesheet" href="../../../../css/orgmode/hexo_orgmode_style.css">
+  </head>
+  <body>
+    <main class="main">
+      <table class="container">
+    <tbody id="tb_container">
+        <tr id="tr_navbar">
+            <table class="navbar">
+	<tbody>
+		<tr>
+			<th class="navitm">
+				<a href="../../../../index.html">主页</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../categories">分类</a>
+				<div id="category_menus" class="second">
+					
+					<!--合并内部类和自定义类。
+    每个分类的数据结构包括：
+    id: 分类唯一id
+    title: 分类名
+    parent: 父分类id
+    children:子分类数组
+注：
+内部类包含一个固定的分类结type="text/javascript"内部根分类设置为categories, title为分类在主题config.yml中有配置（待定）。
+后续文章中设置的分类如果不是内部类都会被称作自定义类，可以通过hexo本身引擎检测出来。
+最终内部类和自定义类会合并到完整分类(full_categories)中，这样让所有类能用json等通用方式表示，便于移植。
+
+使用举例：
+var category_info = getCategoriesInfo();
+<x var symbols={}; x> //定义导出变量
+<x- include('category_list', {symbols:symbols}) x> //包含该文件
+<x var category_info = symbols.getCategoriesInfo(); x> //获取分类信息：包含分类树，以及分类与文章数映射表。
+<x- symbols.list_category(category_info.categories, category_info.categories_count) x> //列出分类索引树
+
+注： '<x' 是EJS模板语言的标记比如x为%。
+-->
+
+					
+					<ul id="full_categories_tree" class="categories_tree categories_level0" type="none"><li id="categories" class="categories_tree_item"><a href="../../../../categories/" class="item_path"><span id="categories_switch" class="tree_switch">▷</span><span id="categories_title" class="item_title">分类</span><span id="categories_count" class="item_count">(67)</span></a><ul id="categories_tree" class="categories_tree categories_level2" type="none"><li id="note" class="categories_tree_item"><a href="../../../../categories/categories/note" class="item_path"><span id="note_switch" class="tree_switch">▷</span><span id="note_title" class="item_title">记事</span><span id="note_count" class="item_count">(8)</span></a><ul id="note_tree" class="categories_tree categories_level3" type="none"><li id="remind" class="categories_tree_item"><a href="../../../../categories/categories/note/remind" class="item_path"><span id="remind_switch" class="tree_switch">○</span><span id="remind_title" class="item_title">备忘</span><span id="remind_count" class="item_count">(0)</span></a></li><li id="plan" class="categories_tree_item"><a href="../../../../categories/categories/note/plan" class="item_path"><span id="plan_switch" class="tree_switch">○</span><span id="plan_title" class="item_title">计划</span><span id="plan_count" class="item_count">(0)</span></a></li>|</ul></li><li id="study" class="categories_tree_item"><a href="../../../../categories/categories/study" class="item_path"><span id="study_switch" class="tree_switch">▷</span><span id="study_title" class="item_title">学习</span><span id="study_count" class="item_count">(7)</span></a><ul id="study_tree" class="categories_tree categories_level3" type="none"><li id="problem" class="categories_tree_item"><a href="../../../../categories/categories/study/problem" class="item_path"><span id="problem_switch" class="tree_switch">○</span><span id="problem_title" class="item_title">问题</span><span id="problem_count" class="item_count">(0)</span></a></li><li id="git" class="categories_tree_item"><a href="../../../../categories/categories/study/git" class="item_path"><span id="git_switch" class="tree_switch">○</span><span id="git_title" class="item_title">git</span><span id="git_count" class="item_count">(1)</span></a></li><li id="os" class="categories_tree_item"><a href="../../../../categories/categories/study/os" class="item_path"><span id="os_switch" class="tree_switch">○</span><span id="os_title" class="item_title">操作系统</span><span id="os_count" class="item_count">(1)</span></a></li><li id="books" class="categories_tree_item"><a href="../../../../categories/categories/study/books" class="item_path"><span id="books_switch" class="tree_switch">▷</span><span id="books_title" class="item_title">books</span><span id="books_count" class="item_count">(0)</span></a><ul id="books_tree" class="categories_tree categories_level4" type="none"><li id="apue" class="categories_tree_item"><a href="../../../../categories/categories/study/books/apue" class="item_path"><span id="apue_switch" class="tree_switch">○</span><span id="apue_title" class="item_title">APUE</span><span id="apue_count" class="item_count">(0)</span></a></li>|</ul></li><li id="linux" class="categories_tree_item"><a href="../../../../categories/categories/study/linux" class="item_path"><span id="linux_switch" class="tree_switch">▷</span><span id="linux_title" class="item_title">linux</span><span id="linux_count" class="item_count">(6)</span></a><ul id="linux_tree" class="categories_tree categories_level4" type="none"><li id="misc" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/misc" class="item_path"><span id="misc_switch" class="tree_switch">○</span><span id="misc_title" class="item_title">杂乱</span><span id="misc_count" class="item_count">(3)</span></a></li><li id="command" class="categories_tree_item"><a href="../../../../categories/categories/study/linux/command" class="item_path"><span id="command_switch" class="tree_switch">○</span><span id="command_title" class="item_title">命令</span><span id="command_count" class="item_count">(19)</span></a></li>|</ul></li><li id="jekyll" class="categories_tree_item"><a href="../../../../categories/categories/study/jekyll" class="item_path"><span id="jekyll_switch" class="tree_switch">○</span><span id="jekyll_title" class="item_title">jekyll</span><span id="jekyll_count" class="item_count">(0)</span></a></li><li id="kits" class="categories_tree_item"><a href="../../../../categories/categories/study/kits" class="item_path"><span id="kits_switch" class="tree_switch">○</span><span id="kits_title" class="item_title">工具</span><span id="kits_count" class="item_count">(1)</span></a></li><li id="emacs" class="categories_tree_item"><a href="../../../../categories/categories/study/emacs" class="item_path"><span id="emacs_switch" class="tree_switch">○</span><span id="emacs_title" class="item_title">emacs</span><span id="emacs_count" class="item_count">(2)</span></a></li><li id="vim" class="categories_tree_item"><a href="../../../../categories/categories/study/vim" class="item_path"><span id="vim_switch" class="tree_switch">○</span><span id="vim_title" class="item_title">vim</span><span id="vim_count" class="item_count">(0)</span></a></li>|</ul></li><li id="work" class="categories_tree_item"><a href="../../../../categories/categories/work" class="item_path"><span id="work_switch" class="tree_switch">▷</span><span id="work_title" class="item_title">工作</span><span id="work_count" class="item_count">(0)</span></a><ul id="work_tree" class="categories_tree categories_level3" type="none"><li id="progress" class="categories_tree_item"><a href="../../../../categories/categories/work/progress" class="item_path"><span id="progress_switch" class="tree_switch">○</span><span id="progress_title" class="item_title">进度</span><span id="progress_count" class="item_count">(0)</span></a></li>|</ul></li><li id="life" class="categories_tree_item"><a href="../../../../categories/categories/life" class="item_path"><span id="life_switch" class="tree_switch">▷</span><span id="life_title" class="item_title">生活</span><span id="life_count" class="item_count">(0)</span></a><ul id="life_tree" class="categories_tree categories_level3" type="none"><li id="experience" class="categories_tree_item"><a href="../../../../categories/categories/life/experience" class="item_path"><span id="experience_switch" class="tree_switch">○</span><span id="experience_title" class="item_title">经验</span><span id="experience_count" class="item_count">(0)</span></a></li><li id="tips" class="categories_tree_item"><a href="../../../../categories/categories/life/tips" class="item_path"><span id="tips_switch" class="tree_switch">○</span><span id="tips_title" class="item_title">技巧</span><span id="tips_count" class="item_count">(0)</span></a></li>|</ul></li><li id="others" class="categories_tree_item"><a href="../../../../categories/categories/others" class="item_path"><span id="others_switch" class="tree_switch">▷</span><span id="others_title" class="item_title">其它</span><span id="others_count" class="item_count">(4)</span></a><ul id="others_tree" class="categories_tree categories_level3" type="none"><li id="rambles" class="categories_tree_item"><a href="../../../../categories/categories/others/rambles" class="item_path"><span id="rambles_switch" class="tree_switch">○</span><span id="rambles_title" class="item_title">随笔</span><span id="rambles_count" class="item_count">(0)</span></a></li><li id="temp" class="categories_tree_item"><a href="../../../../categories/categories/others/temp" class="item_path"><span id="temp_switch" class="tree_switch">○</span><span id="temp_title" class="item_title">临时</span><span id="temp_count" class="item_count">(0)</span></a></li><li id="test" class="categories_tree_item"><a href="../../../../categories/categories/others/test" class="item_path"><span id="test_switch" class="tree_switch">○</span><span id="test_title" class="item_title">测试</span><span id="test_count" class="item_count">(0)</span></a></li>|</ul></li>|</ul></li></ul>
+				</div>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../tags">标签</a>
+				<div id="tag_menus" class="second">
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/gtd-next/">gtd_next</a><span class="tag-list-count">1</span></li></ul>
+				</div>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../archives">归档</a>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navitm">
+				<a href="../../../../more">更多</a>
+			</th>
+
+			<th class="navitm">
+				<a href="../../../../about">关于</a>
+			</th>
+
+			<th class="navblank" style="width:25%;"></th>
+
+			<th class="navitm" style="margin:0; padding:0;border:none;">
+				<form method="get" id="searchform" action="/search.html" style="margin:0;padding:0;height:100%;">
+					<span style="color:#00FF00;">Q</span>
+					<span style="border-style:solid; border-width:1px; border-color:#00FF00;
+		  		border-top:0px; border-left:0px;border-right:0px; 
+				margin:0;padding:0;height:100%;">
+						<input value="Search by title (canbe regex)..." name="s" class="s" onfocus="if (this.value == 'Search by title (canbe regex)...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search by title (canbe regex)...';}" style="margin:0;padding:0;height:100%;border:none;background: #000000; color:#00A600;" type="text">
+					</span>
+					<!--input type="submit" value="Q" style="width:20%;"-->
+				</form>
+			</th>
+
+			<th class="navblank"></th>
+
+			<th class="navblank"></th>
+
+			<a href="#" id="topbtn">⇑</a>
+
+			<a href="#bottom" id="bottombtn">⇓</a>
+			<!--⇐⇑⇒⇓-->
+		</tr><tr>
+	</tr></tbody>
+</table>
+        </tr>
+        <tr>
+            <td id="td_page_header" colspan="6" valign="top" align="right" style="width:100%;">
+        <header style="text-align: center;">
+               <a href="/" title="Menu.Home">
+               <h1>QuietHeart's Site</h1>
+               </a>
+        </header>
+</td>    
+        </tr>
+        <tr>
+            <td id="td_posts" colspan="6" valign="top">
+                <h1 id="header1" style="text-align: center;">
+                    关于中断
+                </h1>
+                <hr id="title_line">
+                <article>
+                    <div>
+                        <div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 1、 <code>cpsr</code> 和 <code>spsr</code></a></li>
+<li><a href="#orgheadline2">2. 2、中断控制器</a></li>
+<li><a href="#orgheadline3">3. 3、中断发生的时候</a></li>
+<li><a href="#orgheadline4">4. 4、系统调用</a></li>
+<li><a href="#orgheadline5">5. 5、调试</a></li>
+</ul>
+</div>
+</div>
+
+<p>
+这里，对工作时候关于中断方面的一些知识进行了简单介绍与总结，内容不是特别准确，原理应该差不多的。
+</p>
+
+<p>
+另外借着中断还介绍了一些关于cpu模式以及系统调用相关的知识。
+</p>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> 1、 <code>cpsr</code> 和 <code>spsr</code></h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<code>cpsr</code> (current program status register)是 <code>cpu core</code> 上的寄存器。这里的 <code>cpu core</code> 实际就是cpu片子上面的核心部分，和cpu片子的厂商无关，而和体系相关，例如arm体系的 <code>cpu core</code> ，可能有多种厂商的cpu。
+</p>
+
+<p>
+<code>cpsr</code> 中的内容大致如下：
+</p>
+<ol class="org-ol">
+<li><p>
+表示 <code>over flow</code> 等的位
+</p>
+
+<p>
+省略。
+</p></li>
+
+<li><p>
+保留位
+</p>
+
+<p>
+省略。
+</p></li>
+
+<li><p>
+<code>I位</code> 和 <code>F位</code> (一般为第6,7两个位)
+</p>
+
+<p>
+即 <code>irq</code> 或者 <code>fiq</code> 位， <code>irq</code> 就是普通中断屏蔽位， <code>fiq</code> 就是快速中断屏蔽位，从这两个位可以在全局上设置是否屏蔽所有中断，一般设置为1表示屏蔽了所有的中断。
+</p></li>
+
+<li><p>
+cpu模式的位（例如总长一般5位）
+</p>
+
+<p>
+这些位用来表示cpu处于何种工作模式。例如：
+</p>
+<ol class="org-ol">
+<li>用户模式（ <code>usr</code> ）：普通用户工作的模式，是受限制的模式，此模式下面不能修改 <code>cpsr</code> ，所以也不能设置中断屏蔽。</li>
+<li>特权模式（ <code>svc</code> ）：一般普通用户调用系统调用的时候，会进入到这个模式，进入这个模式之后可以修改 <code>cpsr</code> 了。</li>
+<li>普通中断模式（ <code>irq</code> ）：进入普通中断的模式，可以修改 <code>cpsr</code> 。</li>
+<li>快速中断模式（ <code>fiq</code> ）：进入快速中断的模式，可以修改 <code>cpsr</code> 。</li>
+<li>数据异常模式：例如访问非法内存。</li>
+<li>指令异常模式：</li>
+<li><p>
+未定义模式（ <code>und</code> ）：例如执行了一个cpu没有定义的指令。
+</p>
+
+<p>
+当执行到一个cpu没有定义的指令的时候，会进入这个模式，然后我们可以通过给这个模式注册一个处理函数来进行相应的动作。如何执行一个cpu没有定义的指令呢？可以在cpu加载程序之后修改程序的代码段。其实调试的时候就用到了这个模式。
+</p></li>
+</ol>
+<p>
+以上的模式中，可以这样分类： <code>usr</code> 是正常模式，其他的是特殊权限模式。正常模式无法进行 <code>cpsr</code> 操作，特权模式可以。还可以分类成 <code>usr</code> 是普通模式，其他为异常模式，异常模式中利用 <code>spsr</code> 中保留的 <code>cpsr</code> 复本，可以进行恢复 <code>cpsr</code> 。 <code>cpsr</code> 只有一个， <code>spsr</code> 可以有多个，例如每个模式一个。
+</p>
+
+<p>
+注：<span class="timestamp-wrapper"><span class="timestamp">[2019-11-18 一 10:43] </span></span> 复习阅读感觉，这里描述的正常模式/特殊权限模式，普通模式/异常模式，配对成：普通模式/特权模式，正常模式/异常模式理解起来比较直观。
+</p></li>
+</ol>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> 2、中断控制器</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+这里的中断控制器，是cpu片子中的一个部分（不是 <code>cpu core</code> ），由厂商来确定其具体的情况。例如支持多少个中断等等。每个厂商其名字不同，例如 <code>armv11</code> 的可能名为 <code>avic</code> ， <code>armv9</code> 的可能为 <code>gic</code> 等，这里就将中断控制器简称为 <code>intc</code> 了。用来控制cpu片子上面各种设备产生的中断（可知中断是和cpu相关的，并不是和系统相关）。
+</p>
+
+<p>
+<code>intc</code> 中有多个寄存器，这些寄存器可以控制不同的中断的行为。重要的寄存器如下：
+</p>
+
+<ol class="org-ol">
+<li><p>
+使能寄存器组
+</p>
+
+<p>
+这些寄存器中用每一位表示一个中断号对应的中断；假设有120个中断，32位cpu，那么至少4个32位的寄存器，每位表示是否屏蔽相应中断号的中断。
+</p></li>
+
+<li><p>
+中断是否发生寄存器组
+</p>
+
+<p>
+这些寄存器中用每一位表示一个中断号对应的中断是否发生。
+</p></li>
+
+<li><p>
+中断类型寄存器组
+</p>
+
+<p>
+这组组寄存器表示每种中断向量产生中断的类型，类型有：
+</p>
+<ul class="org-ul">
+<li>上升沿产生中断( <code>rasing edge</code> )</li>
+<li>下降沿产生中断( <code>falling edge</code> )</li>
+<li>高电平产生中断( <code>high level</code> )</li>
+<li>低电平产生中断( <code>low level</code> )</li>
+<li>只要跳变时候就产生中断( <code>pulse</code> )</li>
+</ul>
+<p>
+因为类型有多种，所以每个中断向量的中断类型需要占用寄存器组中的多个位来表示。这个设置是在使能中断之前就设置好的，设置成什么样，中断就会根据相应的设置来产生了。所以这里的设置一定要根据硬件的设计初衷来进行设置。例如，硬件想要低电平产生中断，却设置成了高电平类型，那么每次产生中断的时候都是高电平了，和实际设计的硬件的初衷就不一样了。
+</p></li>
+
+<li><p>
+其它   
+</p>
+
+<p>
+另外，还有表示中断优先级别的寄存器组以及其它的寄存器组。
+</p></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">3</span> 3、中断发生的时候</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+产生中断的时候，其实是：
+</p>
+<ol class="org-ol">
+<li>首先检查 <code>cpu core</code> 中的 <code>cpsr</code> (current program status register)寄存器，检查其中的 <code>I位</code> 、 <code>F位</code> （即 <code>irq</code> 或者 <code>fiq</code> 位， <code>irq</code> 就是普通中断屏蔽位， <code>fiq</code> 就是快速中断屏蔽位，一般是第6、7位并且设置为1表示屏蔽了所有的中断），从这两个位可以设置是否全局屏蔽所有中断。</li>
+
+<li>如果没有屏蔽所有中断，那么再检查cpu片子上的 <code>intc</code> (interrupt controller)，检查 <code>intc</code> 上面表示中断是否屏蔽的寄存器组，这个寄存器组中的相应于产生的中断的中断号对应的位如果设置为屏蔽的话，则屏蔽该中断；否则就表示没有屏蔽该中断。</li>
+
+<li>如果没有屏蔽该中断，那么设置 <code>intc</code> 中的表示中断是否发生的寄存器组，设置相应于发生中断的中断号对应的位，表示该中断发生了。如果中断处理完毕，则再将该位清0（这点很重要）。</li>
+</ol>
+
+<p>
+Linux内核中，使用 <code>request_irq</code> 注册中断，注册之前，中断相关信息（例如哪个中断号对应哪个中断类型等）在内核初始化的时候已经通过一个表项指定好了，当然可以注册之后再修改例如中断类型等信息。具体这个表中包含哪些内容，根据硬件而定。代码可以参见： <code>Kernel/arch/arm/mach-diablo/irq.c</code> 中类似的文件中定义。
+</p>
+
+<p>
+可以有如下类似代码：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">static struct irq_info __initdata irq_info_array[NR_IRQS] = {
+...
+}
+</pre>
+</div>
+
+<p>
+内核初始化intc相关信息的时候会用到这个表，例如
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">static struct irq_chip irq_chip_level = {
+    .name    = "INTC-level",
+    .mask    = diablo_mask_irq,
+    .unmask  = diablo_unmask_irq,
+    .enable  = diablo_unmask_irq,
+    .disable = diablo_mask_irq,
+    .eoi     = diablo_ack_irq_level,
+};
+</pre>
+</div>
+<p>
+表项。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4"><span class="section-number-2">4</span> 4、系统调用</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+大致如下：
+</p>
+<ol class="org-ol">
+<li><p>
+系统调用通过软中断机制实现。
+</p>
+
+<p>
+具体在内核中有一个关于软中断向量的表，其中的每个表项对应一个系统调用。
+</p></li>
+
+<li><p>
+一般用户调用系统调用的时候，产生软中断，从 <code>usr</code> 模式切换到 <code>svc</code> 模式。
+</p>
+
+<p>
+例如用户调用的 <code>glibc</code> 中的 <code>read</code> 系统调用中应该有一条 <code>swi</code> （software interrupt）类似的汇编指令，以及相应的系统调用号，产生软中断，导致进入内核中的相应部分。
+</p></li>
+
+<li>进入内核，根据 <code>swi</code> 指定的软中断号等确定到具体的系统调用，以及参数，最后执行内核的系统调用相关代码。</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5"><span class="section-number-2">5</span> 5、调试</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+调试的时候，利用了cpu中的 <code>und</code> 模式。例如程序执行的时候，会一直运行下去，而调试的时候，需要设置断点等调试操作。
+</p>
+
+<p>
+以 <code>gdb</code> 调试为例，本来没有设置断点( <code>break</code> )的指令的话，那么就在设置断点的时候:
+</p>
+<ol class="org-ol">
+<li>将代码段中相应断点处的指令替换为一个没有的cpu指令（后面的指令偏移不要变化）</li>
+<li>程序当运行到这里的时候，因为执行了一个不支持的cpu指令，所以cpu会进入 <code>und</code> 模式</li>
+<li>然后调用在 <code>und</code> 模式的处理函数,调试器可以在其中打印调试的相关信息。然后等待用户输入 <code>continue</code> 等各种调试命令。</li>
+<li>如果运行 <code>continue</code> 调试命令，则在 <code>und</code> 的处理函数中将刚才 <code>break</code> 处替换的cpu不支持的指令恢复成替换前的指令，然后修改 <code>PC</code> (程序计数寄存器)，重新执行该处指令，cpu这时就又进入了正常的模式，跑完了程序，这就实现了 <code>continue</code> 。</li>
+<li>如果 <code>step</code> ，则在 <code>und</code> 的处理函数中将刚才 <code>break</code> 处替换的cpu不支持的指令恢复成替换前的指令，然后修改PC(程序计数寄存器)重新执行该处指令，同时将下一条指令设置成一个cpu不支持的指令，这样cpu进入正常模式之后，执行一条语句之后，又遇到了不支持的指令，再进入 <code>und</code> 模式，进行类似前面第2步中的过程，实现了单步调试执行。</li>
+</ol>
+</div>
+</div>
+
+                    </div>
+                </article>                        
+                
+                <!--{% include duoshuo_comment.ext %}-->
+            </td>
+        </tr>
+        <tr>
+            <td id="td_page_footer" colspan="6">
+    <footer>
+        &copy 2015
+    </footer>
+    <a id="bottom"></a>
+</td>
+        </tr>
+    </tbody>
+</table>
+    </main>
+  </body>
+</html>
